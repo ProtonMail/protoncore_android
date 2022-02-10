@@ -115,7 +115,7 @@ class GOpenPGPCrypto : PGPCrypto {
         maxSize = KEY_CACHE_LRU_MAX_SIZE,
         create = { armored -> Crypto.newKeyFromArmored(armored) }
     )
-    private fun Armored.key() = cachedKeys.get(this)
+    private fun Armored.key() = if (KEY_CACHE_ENABLED) cachedKeys.get(this) else Crypto.newKeyFromArmored(this)
     private fun Armored.keyRing() = Crypto.newKeyRing(key())
     private fun List<Armored>.keyRing() = Crypto.newKeyRing(null).apply { forEach { addKey(it.key()) } }
 
@@ -876,6 +876,8 @@ class GOpenPGPCrypto : PGPCrypto {
     companion object {
         // 32K is usually not far from the optimal buffer size on Android devices.
         const val DEFAULT_BUFFER_SIZE = 32768
+
+        const val KEY_CACHE_ENABLED = false
         const val KEY_CACHE_LRU_MAX_SIZE = 100
     }
 }

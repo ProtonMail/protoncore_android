@@ -40,6 +40,7 @@ public final class me/proton/core/crypto/android/pgp/AttachmentProcessorKt {
 public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/core/crypto/common/pgp/PGPCrypto {
 	public static final field Companion Lme/proton/core/crypto/android/pgp/GOpenPGPCrypto$Companion;
 	public static final field DEFAULT_BUFFER_SIZE I
+	public static final field KEY_CACHE_ENABLED Z
 	public static final field KEY_CACHE_LRU_MAX_SIZE I
 	public fun <init> ()V
 	public fun decryptAndVerifyData (Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedData;
