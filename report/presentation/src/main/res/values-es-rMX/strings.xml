@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Reportar error</string>
+  <string name="core_report_bug_activity_title">Reportar un problema</string>
   <string name="core_report_bug_close">Cerrar</string>
   <string name="core_report_bug_subject_field_hint">Asunto</string>
-  <string name="core_report_bug_description_field_hint">Descripción</string>
-  <string name="core_report_bug_description_field_placeholder">Describa el problema e incluya cualquier mensaje de error.</string>
-  <string name="core_report_bug_discard_changes_title">Cambios sin guardar</string>
-  <string name="core_report_bug_discard_changes_description">Hay entradas sin guardar en el formulario. ¿Está seguro que desea descartarlas?</string>
+  <string name="core_report_bug_subject_field_required">Ingrese un asunto</string>
+  <string name="core_report_bug_description_field_hint">¿Cuál es el problema? Mínimo 10 caracteres</string>
+  <string name="core_report_bug_description_field_placeholder">Describa el problema con tanto detalle como pueda. Si hubo un mensaje de error, inclúyalo también.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Ingrese al menos %d caracter</item>
+    <item quantity="other">Ingrese al menos %d caracteres</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">¿Cerrar reporte de errores?</string>
+  <string name="core_report_bug_discard_changes_description">Si abandona esta página, su reporte no se guardará.</string>
   <string name="core_report_bug_discard_changes_cancel">Continuar escribiendo</string>
-  <string name="core_report_bug_discard_changes_confirm">Descartar</string>
-  <string name="core_report_bug_form_field_required">Este campo es obligatorio</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">Este campo debe tener al menos %d caracter</item>
-    <item quantity="other">Este campo debe tener al menos %d caracteres</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Cerrar sin guardar</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Este campo debe tener como máximo %d caracter</item>
-    <item quantity="other">Este campo debe tener como máximo %d caracteres</item>
+    <item quantity="one">Máximo %d caracter</item>
+    <item quantity="other">Máximo %d caracteres</item>
   </plurals>
-  <string name="core_report_bug_general_error">Error al enviar el reporte, intente de nuevo más tarde</string>
-  <string name="core_report_bug_send">Enviar</string>
+  <string name="core_report_bug_general_error">Hubo un problema. Intente de nuevo en unos minutos.</string>
+  <string name="core_report_bug_send">Enviar reporte</string>
   <string name="core_report_bug_success">Gracias por su reporte</string>
 </resources>

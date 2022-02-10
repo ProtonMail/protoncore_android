@@ -17,29 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Звіт про помилку</string>
+  <string name="core_report_bug_activity_title">Повідомити про проблему</string>
   <string name="core_report_bug_close">Закрити</string>
   <string name="core_report_bug_subject_field_hint">Тема</string>
-  <string name="core_report_bug_description_field_hint">Опис</string>
-  <string name="core_report_bug_description_field_placeholder">Опишіть проблему та додайте повідомлення про помилки.</string>
-  <string name="core_report_bug_discard_changes_title">Незбережені зміни</string>
-  <string name="core_report_bug_discard_changes_description">Виявлено незбереженні записи у формі. Ви дійсно хочете відхилити їх?</string>
+  <string name="core_report_bug_subject_field_required">Введіть тему</string>
+  <string name="core_report_bug_description_field_hint">Що сталося? Введіть щонайменше 10 символів</string>
+  <string name="core_report_bug_description_field_placeholder">Якнайдокладніше опишіть проблему. Якщо було повідомлення про помилку, повідомте нам його зміст.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Введіть принаймні %d символ</item>
+    <item quantity="few">Введіть принаймні %d символи</item>
+    <item quantity="many">Введіть принаймні %d символів</item>
+    <item quantity="other">Введіть принаймні %d символи</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Закрити звіт про помилку?</string>
+  <string name="core_report_bug_discard_changes_description">Якщо ви залишите цю сторінку, ваш звіт не буде збережено.</string>
   <string name="core_report_bug_discard_changes_cancel">Продовжити писати</string>
-  <string name="core_report_bug_discard_changes_confirm">Відхилити</string>
-  <string name="core_report_bug_form_field_required">Це поле обов\'язкове</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">Поле повинно мати принаймні %d символ</item>
-    <item quantity="few">Поле повинно мати принаймні %d символи</item>
-    <item quantity="many">Поле повинно мати принаймні %d символів</item>
-    <item quantity="other">Поле повинно мати принаймні %d символів</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Закрити без збереження</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Це поле повинно мати не більше %d символу</item>
-    <item quantity="few">Це поле повинно мати не більше %d символи</item>
-    <item quantity="many">Це поле повинно мати не більше %d символів</item>
-    <item quantity="other">Це поле повинно мати не більше %d символів</item>
+    <item quantity="one">Не більше як %d символ</item>
+    <item quantity="few">Не більше як %d символи</item>
+    <item quantity="many">Не більше як %d символів</item>
+    <item quantity="other">Не більше як %d символи</item>
   </plurals>
-  <string name="core_report_bug_general_error">Помилка надсилання звіту. Спробуйте знову пізніше</string>
-  <string name="core_report_bug_send">Надіслати</string>
+  <string name="core_report_bug_general_error">Сталася помилка. Повторіть спробу за кілька хвилин.</string>
+  <string name="core_report_bug_send">Надіслати звіт</string>
   <string name="core_report_bug_success">Дякуємо за ваш звіт</string>
 </resources>

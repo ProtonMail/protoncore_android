@@ -17,29 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Zgłoś błąd</string>
+  <string name="core_report_bug_activity_title">Zgłoś problem</string>
   <string name="core_report_bug_close">Zamknij</string>
   <string name="core_report_bug_subject_field_hint">Temat</string>
-  <string name="core_report_bug_description_field_hint">Opis</string>
-  <string name="core_report_bug_description_field_placeholder">Opisz problem i dołącz wszelkie informacje o błędach.</string>
-  <string name="core_report_bug_discard_changes_title">Niezapisane zmiany</string>
-  <string name="core_report_bug_discard_changes_description">W formularzu są niezapisane dane. Czy na pewno chcesz je odrzucić?</string>
+  <string name="core_report_bug_subject_field_required">Wpisz temat</string>
+  <string name="core_report_bug_description_field_hint">Co poszło nie tak? Wpisz minimum 10 znaków</string>
+  <string name="core_report_bug_description_field_placeholder">Opisz dokładnie problem. Jeśli posiadasz informacje o błędach, dołącz je.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Wpisz co najmniej %d znak</item>
+    <item quantity="few">Wpisz co najmniej %d znaki</item>
+    <item quantity="many">Wpisz co najmniej %d znaków</item>
+    <item quantity="other">Wpisz co najmniej %d znaków</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Zamknąć zgłaszanie błędu?</string>
+  <string name="core_report_bug_discard_changes_description">Jeśli wyjdziesz teraz, zmiany nie zostaną zapisane.</string>
   <string name="core_report_bug_discard_changes_cancel">Edytuj dalej</string>
-  <string name="core_report_bug_discard_changes_confirm">Odrzuć</string>
-  <string name="core_report_bug_form_field_required">Pole jest wymagane</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">Pole musi zawierać co najmniej %d znak</item>
-    <item quantity="few">Pole musi zawierać co najmniej %d znaki</item>
-    <item quantity="many">Pole musi zawierać co najmniej %d znaków</item>
-    <item quantity="other">Pole musi zawierać co najmniej %d znaków</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Zamknij bez zapisywania</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Pole może zawierać maksymalnie %d znak</item>
-    <item quantity="few">Pole może zawierać maksymalnie %d znaki</item>
-    <item quantity="many">Pole może zawierać maksymalnie %d znaków</item>
-    <item quantity="other">Pole może zawierać maksymalnie %d znaków</item>
+    <item quantity="one">Wpisz maksymalnie %d znak</item>
+    <item quantity="few">Wpisz maksymalnie %d znaki</item>
+    <item quantity="many">Wpisz maksymalnie %d znaków</item>
+    <item quantity="other">Wpisz maksymalnie %d znaków</item>
   </plurals>
-  <string name="core_report_bug_general_error">Wystąpił błąd podczas wysyłania raportu. Spróbuj ponownie później</string>
-  <string name="core_report_bug_send">Wyślij</string>
+  <string name="core_report_bug_general_error">Coś poszło nie tak. Spróbuj ponownie za kilka minut.</string>
+  <string name="core_report_bug_send">Wyślij raport</string>
   <string name="core_report_bug_success">Dziękujemy za przesłanie zgłoszenia</string>
 </resources>

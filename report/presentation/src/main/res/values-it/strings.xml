@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Segnala un bug</string>
+  <string name="core_report_bug_activity_title">Segnala un problema</string>
   <string name="core_report_bug_close">Chiudi</string>
   <string name="core_report_bug_subject_field_hint">Oggetto</string>
-  <string name="core_report_bug_description_field_hint">Descrizione</string>
-  <string name="core_report_bug_description_field_placeholder">Per favore descrivi il problema e includi eventuali messaggi di errore.</string>
-  <string name="core_report_bug_discard_changes_title">Modifiche non salvate</string>
-  <string name="core_report_bug_discard_changes_description">Ci sono delle voci non salvate nel modulo. Sei sicuro di volerle scartare?</string>
+  <string name="core_report_bug_subject_field_required">Inserisci un oggetto</string>
+  <string name="core_report_bug_description_field_hint">Che cosa è andato storto? Minimo 10 caratteri</string>
+  <string name="core_report_bug_description_field_placeholder">Descrivi il problema nel modo più dettagliato possibile. Se c\'è stato un messaggio di errore, facci sapere cosa ha detto.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Inserisci almeno %d carattere</item>
+    <item quantity="other">Inserisci almeno %d caratteri</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Chiudere la segnalazione di bug?</string>
+  <string name="core_report_bug_discard_changes_description">Se esci da questa pagina, il tuo rapporto non verrà salvato.</string>
   <string name="core_report_bug_discard_changes_cancel">Continua a scrivere</string>
-  <string name="core_report_bug_discard_changes_confirm">Scarta</string>
-  <string name="core_report_bug_form_field_required">Questo campo è obbligatorio</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">Questo campo dovrebbe avere almeno %d carattere</item>
-    <item quantity="other">Questo campo dovrebbe avere almeno %d caratteri</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Chiudi senza salvare</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Questo campo dovrebbe avere al massimo %d carattere</item>
-    <item quantity="other">Questo campo dovrebbe avere al massimo %d caratteri</item>
+    <item quantity="one">Massimo %d carattere</item>
+    <item quantity="other">Massimo %d caratteri</item>
   </plurals>
-  <string name="core_report_bug_general_error">Errore durante l\'invio del rapporto, riprova più tardi</string>
-  <string name="core_report_bug_send">Invia</string>
+  <string name="core_report_bug_general_error">Qualcosa è andato storto. Riprova tra qualche minuto.</string>
+  <string name="core_report_bug_send">Invia segnalazione</string>
   <string name="core_report_bug_success">Grazie per la segnalazione</string>
 </resources>

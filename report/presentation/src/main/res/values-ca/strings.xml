@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Informeu d\'un error</string>
+  <string name="core_report_bug_activity_title">Report an issue</string>
   <string name="core_report_bug_close">Tancar</string>
   <string name="core_report_bug_subject_field_hint">Assumpte</string>
-  <string name="core_report_bug_description_field_hint">Descripció</string>
-  <string name="core_report_bug_description_field_placeholder">Descriviu el problema i incloeu qualsevol missatge d\'error.</string>
-  <string name="core_report_bug_discard_changes_title">Canvis sense desar</string>
-  <string name="core_report_bug_discard_changes_description">Hi ha entrades sense desar al formulari. Esteu segur que voleu descartar-les?</string>
+  <string name="core_report_bug_subject_field_required">Enter a subject</string>
+  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
+  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Enter at least %d character</item>
+    <item quantity="other">Enter at least %d characters</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
+  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
   <string name="core_report_bug_discard_changes_cancel">Continuar escrivint</string>
-  <string name="core_report_bug_discard_changes_confirm">Descartar</string>
-  <string name="core_report_bug_form_field_required">Aquest camp és obligatori</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">Aquest camp hauria de tenir almenys %d caràcter</item>
-    <item quantity="other">Aquest camp hauria de tenir almenys %d caràcters</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Aquest camp hauria de tenir com a molt %d caràcter</item>
-    <item quantity="other">Aquest camp hauria de tenir com a molt %d caràcters</item>
+    <item quantity="one">Maximum %d character</item>
+    <item quantity="other">Maximum %d characters</item>
   </plurals>
-  <string name="core_report_bug_general_error">Error enviant l\'informe, torneu-ho a provar més tard</string>
-  <string name="core_report_bug_send">Enviar</string>
+  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
+  <string name="core_report_bug_send">Send report</string>
   <string name="core_report_bug_success">Gràcies pel vostre informe d\'errors</string>
 </resources>
