@@ -62,14 +62,14 @@ class FeatureFlagRepositoryImpl(
         )
     ).buildProtonStore()
 
-    override fun observe(userId: UserId, featureId: FeatureId): Flow<FeatureFlag?> =
+    override fun observe(userId: UserId, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
         StoreKey(userId = userId, featureId = featureId).let { key ->
-            store.stream(StoreRequest.cached(key, false)).map { it.dataOrNull() }
+            store.stream(StoreRequest.cached(key, refresh)).map { it.dataOrNull() }
         }
 
-    override suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag =
+    override suspend fun get(userId: UserId, featureId: FeatureId, refresh: Boolean): FeatureFlag =
         StoreKey(userId = userId, featureId = featureId).let { key ->
-            store.get(key)
+            if (refresh) store.fresh(key) else store.get(key)
         }
 
     override suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>) {
