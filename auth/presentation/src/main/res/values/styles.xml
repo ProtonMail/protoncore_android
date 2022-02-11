@@ -30,7 +30,7 @@
         <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
         <item name="add_account_title">@string/welcome_title</item>
         <item name="add_account_subtitle">@string/welcome_subtitle</item>
-        <item name="add_account_logo">@drawable/logo_proton</item>
+        <item name="add_account_logo">@drawable/logo_proton_brand</item>
     </style>
 
     <style name="ProtonTheme.Mail.AddAccount">
@@ -45,7 +45,7 @@
         <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
         <item name="add_account_title">@string/welcome_title_mail</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_mail</item>
-        <item name="add_account_logo">@drawable/logo_mail</item>
+        <item name="add_account_logo">@drawable/logo_mail_daylight</item>
     </style>
 
     <style name="ProtonTheme.Calendar.AddAccount">
@@ -60,7 +60,7 @@
         <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
         <item name="add_account_title">@string/welcome_title_calendar</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_calendar</item>
-        <item name="add_account_logo">@drawable/logo_calendar</item>
+        <item name="add_account_logo">@drawable/logo_calendar_daylight</item>
     </style>
 
     <style name="ProtonTheme.Drive.AddAccount">
@@ -75,7 +75,7 @@
         <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
         <item name="add_account_title">@string/welcome_title_drive</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_drive</item>
-        <item name="add_account_logo">@drawable/logo_drive</item>
+        <item name="add_account_logo">@drawable/logo_drive_daylight</item>
     </style>
 
     <style name="ProtonTheme.Vpn.AddAccount">
@@ -90,7 +90,7 @@
         <item name="add_account_illustration">@drawable/welcome_illustration_vpn</item>
         <item name="add_account_title">@string/welcome_title_vpn</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_vpn</item>
-        <item name="add_account_logo">@drawable/logo_vpn</item>
+        <item name="add_account_logo">@drawable/logo_vpn_daylight</item>
     </style>
 
     <style name="AuthContent">

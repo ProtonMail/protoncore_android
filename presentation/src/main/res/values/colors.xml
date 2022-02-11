@@ -132,4 +132,7 @@
       See: https://github.com/material-components/material-components-android/issues/2455
     -->
     <color name="ripple_norm_workaround">#1f17181C</color>
+
+    <!-- Background for adaptive icons -->
+    <color name="ic_logo_adaptive_background">#FFFFFF</color>
 </resources>
