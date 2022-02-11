@@ -25,6 +25,10 @@ import me.proton.core.featureflag.domain.entity.FeatureId
  */
 enum class ClientFeatureFlags(val id: FeatureId, val defaultLocalValue: Boolean = false) {
 
+    // Remote flags
     AndroidThreading(FeatureId("ThreadingAndroid")),
-    BundledNotifications(FeatureId("BundledNotifications"), true);
+    CanUserSendFeedback(FeatureId("CanUserSendFeedback"), true),
+
+    // Local only flag (unknown to remote API)
+    BundledNotifications(FeatureId("BundledNotifications"));
 }

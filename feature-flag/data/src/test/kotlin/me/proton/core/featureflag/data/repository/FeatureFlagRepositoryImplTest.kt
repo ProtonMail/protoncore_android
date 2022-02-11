@@ -32,13 +32,11 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.featureflag.data.api.FeaturesApi
-import me.proton.core.featureflag.data.api.response.FeatureApiResponse
 import me.proton.core.featureflag.data.api.response.FeaturesApiResponse
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.data.db.dao.FeatureFlagDao
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
-import me.proton.core.featureflag.data.testdata.FeatureIdTestData
 import me.proton.core.featureflag.data.testdata.SessionIdTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData
 import me.proton.core.featureflag.domain.entity.FeatureFlag
@@ -59,6 +57,7 @@ class FeatureFlagRepositoryImplTest {
 
     private val featureFlagDao = mockk<FeatureFlagDao> {
         coEvery { this@mockk.insertOrUpdate(any<FeatureFlagEntity>()) } just Runs
+        coEvery { this@mockk.insertOrUpdate(*anyVararg<FeatureFlagEntity>()) } just Runs
     }
     private val database = mockk<FeatureFlagDatabase> {
         every { this@mockk.featureFlagDao() } returns featureFlagDao
@@ -69,14 +68,7 @@ class FeatureFlagRepositoryImplTest {
     private val featuresApi = mockk<FeaturesApi> {
         coEvery { this@mockk.getFeatureFlag(any()) } returns FeaturesApiResponse(
             1000,
-            listOf(
-                FeatureApiResponse(
-                    FeatureIdTestData.featureId.id,
-                    isGlobal = false,
-                    defaultValue = false,
-                    value = true
-                )
-            )
+            listOf(FeatureFlagTestData.enabledFeatureApiResponse)
         )
     }
     private val apiManagerFactory = mockk<ApiManagerFactory> {
@@ -97,13 +89,13 @@ class FeatureFlagRepositoryImplTest {
     @Ignore("Disabled as failing after introducing Store, awaiting for feedback")
     fun featureFlagIsFetchedFromApiWhenNotAvailableInDb() = runBlockingTest {
         // Given
-        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureIdTestData.featureId.id) } returns flowOf(null)
+        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureFlagTestData.featureId.id) } returns flowOf(null)
 
         // When
-        repository.get(UserIdTestData.userId, FeatureIdTestData.featureId)
+        repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
 
         // Then
-        coVerify { featuresApi.getFeatureFlag(FeatureIdTestData.featureId.id) }
+        coVerify { featuresApi.getFeatureFlag(FeatureFlagTestData.featureId.id) }
     }
 
     @Test
@@ -112,15 +104,15 @@ class FeatureFlagRepositoryImplTest {
         coEvery {
             featureFlagDao.observe(
                 UserIdTestData.userId,
-                FeatureIdTestData.featureId.id
+                FeatureFlagTestData.featureId.id
             )
-        } returns flowOf(FeatureFlagTestData.enabledFeatureFlagEntity)
+        } returns flowOf(FeatureFlagTestData.enabledFeatureEntity)
 
         // When
-        val actual = repository.get(UserIdTestData.userId, FeatureIdTestData.featureId)
+        val actual = repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
 
         // Then
-        val expected = FeatureFlag(FeatureIdTestData.featureId, true)
+        val expected = FeatureFlag(FeatureFlagTestData.featureId, true)
         assertEquals(expected, actual)
         verify { featuresApi wasNot Called }
     }
@@ -129,15 +121,15 @@ class FeatureFlagRepositoryImplTest {
     @Ignore("Disabled as failing after introducing Store, awaiting for feedback")
     fun featureFlagIsSavedToDbWhenFetchedFromApi() = runBlockingTest {
         // Given
-        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureIdTestData.featureId.id) } returns flowOf(null)
+        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureFlagTestData.featureId.id) } returns flowOf(null)
 
         // When
-        repository.get(UserIdTestData.userId, FeatureIdTestData.featureId)
+        repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
 
         // Then
         val expected = FeatureFlagEntity(
             UserIdTestData.userId,
-            FeatureIdTestData.featureId.id,
+            FeatureFlagTestData.featureId.id,
             isGlobal = false,
             defaultValue = false,
             value = true
@@ -148,21 +140,27 @@ class FeatureFlagRepositoryImplTest {
     @Test
     fun featureFlagValueIsObservedInDb() = runBlockingTest {
         // Given
-        val mutableDbFlow = MutableStateFlow<FeatureFlagEntity?>(FeatureFlagTestData.enabledFeatureFlagEntity)
-        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureIdTestData.featureId.id) } returns mutableDbFlow
+        val mutableDbFlow = MutableStateFlow<FeatureFlagEntity?>(FeatureFlagTestData.enabledFeatureEntity)
+        coEvery {
+            featureFlagDao.observe(
+                UserIdTestData.userId,
+                FeatureFlagTestData.featureId.id
+            )
+        } returns mutableDbFlow
 
         // When
-        repository.observe(UserIdTestData.userId, FeatureIdTestData.featureId).test {
+        repository.observe(UserIdTestData.userId, FeatureFlagTestData.featureId).test {
             // Then
             assertEquals(
-                FeatureFlag(FeatureIdTestData.featureId, true),
+                FeatureFlag(FeatureFlagTestData.featureId, true),
                 awaitItem()
             )
 
             // simulate this feature flag's value changes in the DB
-            mutableDbFlow.emit(FeatureFlagTestData.disabledFeatureFlagEntity)
+            val disabledFeature = FeatureFlagTestData.enabledFeatureEntity.copy(value = false)
+            mutableDbFlow.emit(disabledFeature)
             assertEquals(
-                FeatureFlag(FeatureIdTestData.featureId, false),
+                FeatureFlag(FeatureFlagTestData.featureId, false),
                 awaitItem()
             )
         }
@@ -170,27 +168,46 @@ class FeatureFlagRepositoryImplTest {
         verify { featuresApi wasNot Called }
     }
 
-    @OptIn(ExperimentalTime::class)
     @Test
+    @OptIn(ExperimentalTime::class)
     fun featureFlagValueIsFetchedFromApiAndObservedInDbWhenNotAlreadyAvailableLocally() = runBlocking {
         // Given
         val mutableDbFlow = MutableStateFlow<FeatureFlagEntity?>(null)
-        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureIdTestData.featureId.id) } returns mutableDbFlow
+        coEvery {
+            featureFlagDao.observe(
+                UserIdTestData.userId,
+                FeatureFlagTestData.featureId.id
+            )
+        } returns mutableDbFlow
 
         // When
-        repository.observe(UserIdTestData.userId, FeatureIdTestData.featureId).test(timeout = 2000.milliseconds) {
+        repository.observe(UserIdTestData.userId, FeatureFlagTestData.featureId).test(timeout = 2000.milliseconds) {
             // First item is emitted from DB is null
             assertNull(awaitItem())
 
             // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
-            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(FeatureFlagTestData.enabledFeatureFlagEntity) }
+            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(FeatureFlagTestData.enabledFeatureEntity) }
 
             // Inserting the API response into DB causes it to be emitted
-            mutableDbFlow.emit(FeatureFlagTestData.enabledFeatureFlagEntity)
+            mutableDbFlow.emit(FeatureFlagTestData.enabledFeatureEntity)
 
-            val expectedFlag = FeatureFlag(FeatureIdTestData.featureId, true)
+            val expectedFlag = FeatureFlag(FeatureFlagTestData.featureId, true)
             assertEquals(expectedFlag, awaitItem())
         }
     }
 
+    @Test
+    fun prefetchFeatureFlagsFetchesFlagsFromApiAndStoresThemInDb() = runBlockingTest {
+        val featureIdsString = "${FeatureFlagTestData.featureId.id},${FeatureFlagTestData.featureId1.id}"
+        coEvery { featuresApi.getFeatureFlags(featureIdsString) } returns FeaturesApiResponse(
+            1000,
+            listOf(FeatureFlagTestData.enabledFeatureApiResponse, FeatureFlagTestData.disabledFeatureApiResponse)
+        )
+
+        val featureIds = listOf(FeatureFlagTestData.featureId, FeatureFlagTestData.featureId1)
+        repository.prefetch(UserIdTestData.userId, featureIds)
+
+        val expected = arrayOf(FeatureFlagTestData.enabledFeatureEntity, FeatureFlagTestData.disabledFeatureEntity)
+        coVerify { featureFlagDao.insertOrUpdate(*expected) }
+    }
 }

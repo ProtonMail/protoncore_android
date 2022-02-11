@@ -88,6 +88,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         reportsViewModel.register(this)
         plansViewModel.register(this)
         settingsViewModel.register(this)
+        featureFlagViewModel.prefetch()
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }

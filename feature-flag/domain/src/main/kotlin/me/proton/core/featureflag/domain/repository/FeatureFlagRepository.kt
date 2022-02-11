@@ -28,4 +28,6 @@ interface FeatureFlagRepository {
     fun observe(userId: UserId, featureId: FeatureId): Flow<FeatureFlag?>
 
     suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag?
+
+    suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>)
 }

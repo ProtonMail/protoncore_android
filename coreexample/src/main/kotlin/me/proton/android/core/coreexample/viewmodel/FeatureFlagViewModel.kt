@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
@@ -43,6 +44,11 @@ class FeatureFlagViewModel @Inject constructor(
 
     private val mutableState = MutableStateFlow<ViewModelResult<FeatureFlag>>(ViewModelResult.Processing)
     val state = mutableState.asStateFlow()
+
+    fun prefetch() = accountManager.getPrimaryUserId().filterNotNull().mapLatest { userId ->
+        val featureIds = ClientFeatureFlags.values().map { it.id }
+        featureFlagRepository.prefetch(userId, featureIds)
+    }.launchIn(viewModelScope)
 
     fun isFeatureEnabled(featureId: FeatureId) = viewModelScope.launch {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())

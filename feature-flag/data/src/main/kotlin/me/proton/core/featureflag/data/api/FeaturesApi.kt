@@ -31,4 +31,12 @@ interface FeaturesApi : BaseRetrofitApi {
     suspend fun getFeatureFlag(
         @Query("Code") code: String
     ): FeaturesApiResponse
+
+    /**
+     * @param codes is a comma-separated list of featureIds (eg. "feature1,feature2,[...]")
+     */
+    @GET("core/v4/features?$FILTER_FEATURES_FLAGS")
+    suspend fun getFeatureFlags(
+        @Query("Code") codes: String
+    ): FeaturesApiResponse
 }

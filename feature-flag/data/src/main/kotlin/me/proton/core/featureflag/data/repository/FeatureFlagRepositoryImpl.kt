@@ -72,4 +72,15 @@ class FeatureFlagRepositoryImpl(
             store.get(key)
         }
 
+    override suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>) {
+        val apiResponse = apiProvider.get<FeaturesApi>(userId).invoke {
+            getFeatureFlags(featureIds.joinToString(separator = ",") { it.id })
+        }.valueOrNull
+
+        apiResponse?.let {
+            val entities = apiResponse.features.map { it.toEntity(userId) }.toTypedArray()
+            featureFlagDao.insertOrUpdate(*entities)
+        }
+    }
+
 }
