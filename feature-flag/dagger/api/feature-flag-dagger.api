@@ -1,0 +1,24 @@
+public class hilt_aggregated_deps/_me_proton_core_featureflag_dagger_FeatureFlagModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/featureflag/dagger/FeatureFlagModule {
+	public static final field INSTANCE Lme/proton/core/featureflag/dagger/FeatureFlagModule;
+	public final fun provideFeatureFlagRepositoryImpl (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;
+}
+
+public final class me/proton/core/featureflag/dagger/FeatureFlagModule_ProvideFeatureFlagRepositoryImplFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/dagger/FeatureFlagModule_ProvideFeatureFlagRepositoryImplFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;
+	public static fun provideFeatureFlagRepositoryImpl (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;
+}
+
+public final class me/proton/core/featureflags/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
