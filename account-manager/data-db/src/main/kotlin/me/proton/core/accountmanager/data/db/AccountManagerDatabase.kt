@@ -39,6 +39,8 @@ import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.eventmanager.data.db.EventManagerConverters
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.eventmanager.data.entity.EventMetadataEntity
+import me.proton.core.featureflag.data.db.FeatureFlagDatabase
+import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.humanverification.data.db.HumanVerificationConverters
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity
@@ -99,6 +101,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         EventMetadataEntity::class,
         // label
         LabelEntity::class,
+        FeatureFlagEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -126,11 +129,12 @@ abstract class AccountManagerDatabase :
     OrganizationDatabase,
     ContactDatabase,
     EventMetadataDatabase,
-    LabelDatabase {
+    LabelDatabase,
+    FeatureFlagDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 13
+        const val version = 14
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -145,14 +149,13 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_10_11,
             AccountManagerDatabaseMigrations.MIGRATION_11_12,
             AccountManagerDatabaseMigrations.MIGRATION_12_13,
+            AccountManagerDatabaseMigrations.MIGRATION_13_14
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =
             databaseBuilder<AccountManagerDatabase>(context, name)
                 .apply { migrations.forEach { addMigrations(it) } }
 
-        fun buildDatabase(context: Context): AccountManagerDatabase =
-            databaseBuilder(context)
-                .build()
+        fun buildDatabase(context: Context): AccountManagerDatabase = databaseBuilder(context).build()
     }
 }

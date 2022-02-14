@@ -16,7 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.android
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
@@ -74,6 +73,7 @@ dependencies {
         project(Module.contactDomain),
         project(Module.eventManagerData),
         project(Module.eventManagerDomain),
+        project(Module.featureFlagData),
 
         // Kotlin
         `coroutines-core`,
