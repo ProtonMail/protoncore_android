@@ -30,11 +30,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FeatureFlagModule {
+internal object FeatureFlagModule {
 
     @Provides
     @Singleton
-    fun provideFeatureFlagRepositoryImpl(
+    internal fun provideFeatureFlagRepositoryImpl(
         db: FeatureFlagDatabase,
         provider: ApiProvider
     ): FeatureFlagRepository = FeatureFlagRepositoryImpl(db, provider)

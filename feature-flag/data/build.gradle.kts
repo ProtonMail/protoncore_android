@@ -20,7 +20,6 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
-    protonDagger
     kotlin("plugin.serialization")
 }
 
@@ -28,25 +27,21 @@ proton {
     apiModeDisabled()
 }
 
-protonDagger {
-    workManagerHiltIntegration = true
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+
+    api(
+        project(Module.domain),
+        project(Module.featureFlagDomain),
+        project(Module.network)
+    )
 
     implementation(
         project(Module.kotlinUtil),
         project(Module.data),
         project(Module.dataRoom),
-        project(Module.domain),
-        project(Module.network),
-        project(Module.eventManagerDomain),
-        project(Module.presentation),
-
         project(Module.user),
-        project(Module.featureFlagDomain),
 
         `android-work-runtime`,
         `serialization-json`,

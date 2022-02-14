@@ -18,7 +18,7 @@
 
 package me.proton.core.featureflag.domain.entity
 
-data class FeatureFlag(
+public data class FeatureFlag(
     val featureId: FeatureId,
     val isEnabled: Boolean
 )

@@ -33,24 +33,24 @@ import me.proton.core.featureflag.domain.entity.FeatureId
  * Clients should take care of implementing some logic to use default values when it wasn't possible to
  * receive them through this repo.
  */
-interface FeatureFlagRepository {
+public interface FeatureFlagRepository {
 
     /**
      * Observe a feature flag's value from the local data source.
      * @param refresh allows to trigger a background fetch of the value against the remote data source.
      */
-    fun observe(userId: UserId, featureId: FeatureId, refresh: Boolean = false): Flow<FeatureFlag?>
+    public fun observe(userId: UserId, featureId: FeatureId, refresh: Boolean = false): Flow<FeatureFlag?>
 
     /**
      * Get a feature flag's value from the local data source.
      * @param refresh allows to trigger a background fetch of the value against the remote data source.
      */
-    suspend fun get(userId: UserId, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
+    public suspend fun get(userId: UserId, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
 
     /**
      * Fetches the given featureIds from the remote data source and stores them in the local one.
      * @param featureIds a list of features to be fetched. Passing any id that does not exist in the
      * remote data source will not have no consequence (said ids will just be ignored).
      */
-    suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>)
+    public suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>)
 }

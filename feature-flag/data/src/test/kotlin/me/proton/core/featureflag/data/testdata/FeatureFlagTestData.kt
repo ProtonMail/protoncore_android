@@ -22,7 +22,7 @@ import me.proton.core.featureflag.data.api.response.FeatureApiResponse
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.featureflag.domain.entity.FeatureId
 
-object FeatureFlagTestData {
+internal object FeatureFlagTestData {
     private const val RAW_FEATURE_ID = "featureId"
     private const val RAW_FEATURE_ID_1 = "featureId1"
 

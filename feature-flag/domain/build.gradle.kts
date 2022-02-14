@@ -23,24 +23,23 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-proton {
-    apiModeDisabled()
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 
+    api(
+        project(Module.domain),
+        `coroutines-core`
+    )
+
     implementation(
 
         project(Module.kotlinUtil),
-        project(Module.domain),
         project(Module.cryptoCommon),
         project(Module.networkDomain),
 
         // Kotlin
         `serialization-json`,
-        `coroutines-core`
     )
 
     testImplementation(project(Module.kotlinTest))

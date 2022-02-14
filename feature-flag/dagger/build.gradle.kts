@@ -23,14 +23,10 @@ plugins {
     protonDagger
 }
 
-proton {
-    apiModeDisabled()
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
+    api(
         project(Module.networkData),
         project(Module.featureFlagData),
         project(Module.featureFlagDomain)
