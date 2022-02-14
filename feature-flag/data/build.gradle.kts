@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
 }
 
@@ -46,7 +47,7 @@ dependencies {
         `android-work-runtime`,
         `serialization-json`,
         `coroutines-core`,
-        `retrofit`,
+        retrofit,
         `retrofit-kotlin-serialization`,
         `room-ktx`,
         store4

@@ -66,7 +66,7 @@ class FeatureFlagRepositoryImplTest {
         coEvery { this@mockk.getSessionId(UserIdTestData.userId) } returns SessionIdTestData.sessionId
     }
     private val featuresApi = mockk<FeaturesApi> {
-        coEvery { this@mockk.getFeatureFlag(any()) } returns FeaturesApiResponse(
+        coEvery { this@mockk.getFeatureFlags(any()) } returns FeaturesApiResponse(
             1000,
             listOf(FeatureFlagTestData.enabledFeatureApiResponse)
         )
@@ -95,7 +95,7 @@ class FeatureFlagRepositoryImplTest {
         repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
 
         // Then
-        coVerify { featuresApi.getFeatureFlag(FeatureFlagTestData.featureId.id) }
+        coVerify { featuresApi.getFeatureFlags(FeatureFlagTestData.featureId.id) }
     }
 
     @Test

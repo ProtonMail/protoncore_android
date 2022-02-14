@@ -23,20 +23,13 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val FILTER_FEATURES_FLAGS = "Type=boolean"
-
 interface FeaturesApi : BaseRetrofitApi {
 
-    @GET("core/v4/features?$FILTER_FEATURES_FLAGS")
-    suspend fun getFeatureFlag(
-        @Query("Code") code: String
-    ): FeaturesApiResponse
-
     /**
-     * @param codes is a comma-separated list of featureIds (eg. "feature1,feature2,[...]")
+     * @param codes can be a single featureId or a comma-separated list of featureIds (eg. "feature1,feature2,[...]")
      */
-    @GET("core/v4/features?$FILTER_FEATURES_FLAGS")
+    @GET("core/v4/features?Type=boolean")
     suspend fun getFeatureFlags(
-        @Query("Code") codes: String
+        @Query("Code") code: String
     ): FeaturesApiResponse
 }

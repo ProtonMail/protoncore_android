@@ -34,8 +34,11 @@ import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FeatureFlagRepositoryImpl(
+@Singleton
+class FeatureFlagRepositoryImpl @Inject constructor(
     database: FeatureFlagDatabase,
     private val apiProvider: ApiProvider
 ) : FeatureFlagRepository {
@@ -47,14 +50,12 @@ class FeatureFlagRepositoryImpl(
     private val store: ProtonStore<StoreKey, FeatureFlag> = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
             apiProvider.get<FeaturesApi>(key.userId).invoke {
-                getFeatureFlag(key.featureId.id).features.first()
+                getFeatureFlags(key.featureId.id).features.first()
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { key: StoreKey ->
-                featureFlagDao.observe(key.userId, key.featureId.id).map {
-                    it?.toFeatureFlag()
-                }
+                featureFlagDao.observe(key.userId, key.featureId.id).map { it?.toFeatureFlag() }
             },
             writer = { key, apiResponse: FeatureApiResponse ->
                 featureFlagDao.insertOrUpdate(apiResponse.toEntity(key.userId))
