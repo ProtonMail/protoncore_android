@@ -22,8 +22,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.featureflag.data.FeatureFlagManagerImpl
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.data.repository.FeatureFlagRepositoryImpl
+import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
@@ -38,4 +40,10 @@ internal object FeatureFlagModule {
         db: FeatureFlagDatabase,
         provider: ApiProvider
     ): FeatureFlagRepository = FeatureFlagRepositoryImpl(db, provider)
+
+    @Provides
+    @Singleton
+    internal fun provideFeatureFlagManagerImpl(
+        repository: FeatureFlagRepository
+    ): FeatureFlagManager = FeatureFlagManagerImpl(repository)
 }

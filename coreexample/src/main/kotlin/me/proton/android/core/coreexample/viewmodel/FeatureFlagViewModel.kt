@@ -30,16 +30,16 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.ClientFeatureFlags
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
-import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import javax.inject.Inject
 
 @HiltViewModel
 class FeatureFlagViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val featureFlagRepository: FeatureFlagRepository
+    private val featureFlagManager: FeatureFlagManager
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<ViewModelResult<FeatureFlag>>(ViewModelResult.Processing)
@@ -47,12 +47,12 @@ class FeatureFlagViewModel @Inject constructor(
 
     fun prefetch() = accountManager.getPrimaryUserId().filterNotNull().mapLatest { userId ->
         val featureIds = ClientFeatureFlags.values().map { it.id }
-        featureFlagRepository.prefetch(userId, featureIds)
+        featureFlagManager.prefetch(userId, featureIds)
     }.launchIn(viewModelScope)
 
     fun isFeatureEnabled(featureId: FeatureId) = viewModelScope.launch {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        featureFlagRepository.observe(userId, featureId).mapLatest { featureFlag ->
+        featureFlagManager.observe(userId, featureId).mapLatest { featureFlag ->
             val result = featureFlag ?: defaultValueOf(featureId)
             mutableState.emit(ViewModelResult.Success(result))
 
