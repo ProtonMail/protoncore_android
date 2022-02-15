@@ -23,14 +23,14 @@ import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.featureflag.data.db.dao.FeatureFlagDao
 
-interface FeatureFlagDatabase : Database {
-    fun featureFlagDao(): FeatureFlagDao
+public interface FeatureFlagDatabase : Database {
+    public fun featureFlagDao(): FeatureFlagDao
 
-    companion object {
+    public companion object {
         /**
          * Add Table FeatureFlagEntity.
          */
-        val MIGRATION_0 = object : DatabaseMigration {
+        public val MIGRATION_0: DatabaseMigration = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Added Table FeatureFlagEntity.
                 database.execSQL("CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` (`userId` TEXT NOT NULL, `featureId` TEXT NOT NULL, `isGlobal` INTEGER NOT NULL, `defaultValue` INTEGER NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`userId`, `featureId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")

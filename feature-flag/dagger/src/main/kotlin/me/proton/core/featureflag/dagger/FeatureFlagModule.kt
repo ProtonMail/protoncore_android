@@ -18,32 +18,25 @@
 
 package me.proton.core.featureflag.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.featureflag.data.FeatureFlagManagerImpl
-import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.data.repository.FeatureFlagRepositoryImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
-import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object FeatureFlagModule {
+internal abstract class FeatureFlagModule {
 
-    @Provides
+    @Binds
     @Singleton
-    internal fun provideFeatureFlagRepositoryImpl(
-        db: FeatureFlagDatabase,
-        provider: ApiProvider
-    ): FeatureFlagRepository = FeatureFlagRepositoryImpl(db, provider)
+    abstract fun provideRepository(featureFlagRepositoryImpl: FeatureFlagRepositoryImpl): FeatureFlagRepository
 
-    @Provides
+    @Binds
     @Singleton
-    internal fun provideFeatureFlagManagerImpl(
-        repository: FeatureFlagRepository
-    ): FeatureFlagManager = FeatureFlagManagerImpl(repository)
+    abstract fun provideManager(featureFlagManagerImpl: FeatureFlagManagerImpl): FeatureFlagManager
 }

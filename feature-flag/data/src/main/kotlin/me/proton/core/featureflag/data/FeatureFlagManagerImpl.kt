@@ -18,19 +18,23 @@
 
 package me.proton.core.featureflag.data
 
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.FeatureFlagManager
+import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import javax.inject.Inject
 
-class FeatureFlagManagerImpl @Inject constructor(
-    val repository: FeatureFlagRepository
+public class FeatureFlagManagerImpl @Inject internal constructor(
+    private val repository: FeatureFlagRepository
 ) : FeatureFlagManager {
 
-    override fun observe(userId: UserId, featureId: FeatureId) = repository.observe(userId, featureId)
+    override fun observe(userId: UserId, featureId: FeatureId): Flow<FeatureFlag?> =
+        repository.observe(userId, featureId)
 
-    override suspend fun get(userId: UserId, featureId: FeatureId) = repository.get(userId, featureId)
+    override suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag? = repository.get(userId, featureId)
 
-    override suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>) = repository.prefetch(userId, featureIds)
+    override suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>): Unit =
+        repository.prefetch(userId, featureIds)
 }

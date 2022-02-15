@@ -26,14 +26,14 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 
 @Dao
-abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
+public abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
 
     @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId = :userId")
-    abstract fun observe(userId: UserId, feature: String): Flow<FeatureFlagEntity?>
+    internal abstract fun observe(userId: UserId, feature: String): Flow<FeatureFlagEntity?>
 
     @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId = :userId")
-    abstract suspend fun get(userId: UserId, feature: String): FeatureFlagEntity?
+    internal abstract suspend fun get(userId: UserId, feature: String): FeatureFlagEntity?
 
     @Query("DELETE FROM FeatureFlagEntity WHERE userId = :userId")
-    abstract suspend fun deleteAll(userId: UserId)
+    internal abstract suspend fun deleteAll(userId: UserId)
 }

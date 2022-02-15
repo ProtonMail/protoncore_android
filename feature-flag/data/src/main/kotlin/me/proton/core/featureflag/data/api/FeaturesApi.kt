@@ -23,10 +23,10 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface FeaturesApi : BaseRetrofitApi {
+internal interface FeaturesApi : BaseRetrofitApi {
 
     /**
-     * @param codes can be a single featureId or a comma-separated list of featureIds (eg. "feature1,feature2,[...]")
+     * @param code can be a single featureId or a comma-separated list of featureIds (eg. "feature1,feature2,[...]")
      */
     @GET("core/v4/features?Type=boolean")
     suspend fun getFeatureFlags(

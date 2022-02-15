@@ -38,7 +38,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FeatureFlagRepositoryImpl @Inject constructor(
+public class FeatureFlagRepositoryImpl @Inject internal constructor(
     database: FeatureFlagDatabase,
     private val apiProvider: ApiProvider
 ) : FeatureFlagRepository {

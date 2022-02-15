@@ -41,12 +41,12 @@ import me.proton.core.user.data.entity.UserEntity
         )
     ]
 )
-data class FeatureFlagEntity(
+public data class FeatureFlagEntity(
     val userId: UserId,
     val featureId: String,
     val isGlobal: Boolean,
     val defaultValue: Boolean,
     val value: Boolean
 ) {
-    fun toFeatureFlag() = FeatureFlag(FeatureId(featureId), value)
+    internal fun toFeatureFlag() = FeatureFlag(FeatureId(featureId), value)
 }

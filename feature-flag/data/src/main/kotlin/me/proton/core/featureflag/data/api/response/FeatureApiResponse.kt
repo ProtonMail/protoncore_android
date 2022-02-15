@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 
 @Serializable
-data class FeaturesApiResponse(
+internal data class FeaturesApiResponse(
     @SerialName("Code")
     val resultCode: Int,
     @SerialName("Features")
@@ -32,7 +32,7 @@ data class FeaturesApiResponse(
 )
 
 @Serializable
-data class FeatureApiResponse(
+internal data class FeatureApiResponse(
     @SerialName("Code")
     val featureId: String,
     @SerialName("Global")
@@ -42,7 +42,7 @@ data class FeatureApiResponse(
     @SerialName("Value")
     val value: Boolean
 ) {
-    fun toEntity(userId: UserId) = FeatureFlagEntity(
+    internal fun toEntity(userId: UserId) = FeatureFlagEntity(
         userId = userId,
         featureId = featureId,
         isGlobal = isGlobal,
