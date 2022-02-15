@@ -173,7 +173,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun showPasswordChooser(
+    fun onBeforePasswordChooser(
         clicks: Int,
         focusTime: Long,
         copies: List<String>,

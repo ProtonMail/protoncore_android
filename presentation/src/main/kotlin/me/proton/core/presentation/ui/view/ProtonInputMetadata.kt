@@ -123,7 +123,7 @@ class ProtonInputMetadata : ProtonInput {
         input.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 clicksCounter++
-                Handler(Looper.getMainLooper()).postDelayed(
+                handler.postDelayed(
                     {
                         focused = input.hasFocus()
                         if (focused) {

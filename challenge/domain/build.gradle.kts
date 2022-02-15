@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonKotlinLibrary
+    kotlin("plugin.serialization")
 }
 
 proton {

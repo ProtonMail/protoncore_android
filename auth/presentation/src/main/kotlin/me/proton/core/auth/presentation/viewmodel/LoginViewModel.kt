@@ -37,9 +37,6 @@ import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
-import me.proton.core.challenge.domain.ChallengeFrameType
-import me.proton.core.challenge.domain.ChallengeManagerConfig
-import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt

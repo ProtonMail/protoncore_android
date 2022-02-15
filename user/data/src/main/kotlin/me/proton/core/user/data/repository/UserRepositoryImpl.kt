@@ -58,6 +58,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
+import java.lang.RuntimeException
 import javax.inject.Singleton
 
 @Singleton
@@ -157,6 +158,9 @@ class UserRepositoryImpl(
             AuthRequest.from(auth),
             Payload.createFromFrames(context = context, frames = frames)
         )
+        if (true) {
+            throw RuntimeException("Test")
+        }
         createUser(request).user.toUser()
     }.valueOrThrow
 

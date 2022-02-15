@@ -170,7 +170,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         signupViewModel.username = username
         signupViewModel.domain = domain
         with(binding.usernameInput) {
-            viewModel.showPasswordChooser(clicksCounter, calculateFocus(), copies, pastes, keys)
+            viewModel.onBeforePasswordChooser(clicksCounter, calculateFocus(), copies, pastes, keys)
         }
         parentFragmentManager.showPasswordChooser()
     }

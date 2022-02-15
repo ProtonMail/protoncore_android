@@ -23,9 +23,4 @@ interface ChallengeManagerProvider {
      * Get an [ChallengeManager] associated with the given [config].
      */
     suspend fun get(config: ChallengeManagerConfig): ChallengeManager
-
-    /**
-     * Get all [ChallengeManager].
-     */
-    fun getAll(): List<ChallengeManager>
 }

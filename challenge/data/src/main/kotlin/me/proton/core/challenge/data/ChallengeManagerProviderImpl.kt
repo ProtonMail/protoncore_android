@@ -36,7 +36,7 @@ class ChallengeManagerProviderImpl(
 
     override suspend fun get(config: ChallengeManagerConfig): ChallengeManager {
         return managers.getOrPut(config) {
-            val clientId = when(config) {
+            val clientId = when (config) {
                 is ChallengeManagerConfig.Login,
                 is ChallengeManagerConfig.SignUp -> clientIdProvider.getClientId(sessionId = null)
             }.exhaustive
@@ -46,9 +46,4 @@ class ChallengeManagerProviderImpl(
             challengeManager
         }
     }
-
-    override fun getAll(): List<ChallengeManager> {
-        TODO("Not yet implemented")
-    }
-
 }

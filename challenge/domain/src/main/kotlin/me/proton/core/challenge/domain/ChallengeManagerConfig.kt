@@ -23,15 +23,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class ChallengeManagerConfig {
 
-    abstract val challengeUseCase: ChallengeUseCase
+    @Serializable
+    object SignUp : ChallengeManagerConfig()
 
     @Serializable
-    object SignUp : ChallengeManagerConfig() {
-        override val challengeUseCase = ChallengeUseCase.SignUp
-    }
-
-    @Serializable
-    object Login : ChallengeManagerConfig() {
-        override val challengeUseCase = ChallengeUseCase.Login
-    }
+    object Login : ChallengeManagerConfig()
 }

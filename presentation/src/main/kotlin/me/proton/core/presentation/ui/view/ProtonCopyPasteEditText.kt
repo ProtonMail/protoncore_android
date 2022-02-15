@@ -43,7 +43,8 @@ class ProtonCopyPasteEditText : TextInputEditText {
     override fun onTextContextMenuItem(id: Int): Boolean {
         val consumed = super.onTextContextMenuItem(id)
         when (id) {
-            android.R.id.copy -> onCopy()
+            android.R.id.copy,
+            android.R.id.cut -> onCopy()
             android.R.id.paste -> onPaste()
         }
         return consumed

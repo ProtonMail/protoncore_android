@@ -41,5 +41,8 @@ interface ChallengeManager {
 
     suspend fun getFramesByChallengeId(challengeId: ChallengeId): List<ChallengeFrameDetails>
 
-    suspend fun getFramesByClientIdAndChallengeId(clientId: ClientId, challengeId: ChallengeId): List<ChallengeFrameDetails>
+    suspend fun getFramesByClientIdAndChallengeId(
+        clientId: ClientId,
+        challengeId: ChallengeId
+    ): List<ChallengeFrameDetails>
 }
