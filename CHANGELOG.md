@@ -36,6 +36,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Updated strings for (bug) report module
 - The internal Kotlin plugin (`me.proton.kotlin` / `me.proton.core.gradle-plugins.kotlin`) has been removed, but it's still accessible via Maven
 - Improvements for Username Signup
+- Add Feature Flags module
 
 ### Fixes
 

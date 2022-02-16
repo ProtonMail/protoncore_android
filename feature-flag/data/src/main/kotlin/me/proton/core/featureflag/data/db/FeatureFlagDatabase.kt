@@ -33,10 +33,24 @@ public interface FeatureFlagDatabase : Database {
         public val MIGRATION_0: DatabaseMigration = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Added Table FeatureFlagEntity.
-                database.execSQL("CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` (`userId` TEXT NOT NULL, `featureId` TEXT NOT NULL, `isGlobal` INTEGER NOT NULL, `defaultValue` INTEGER NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`userId`, `featureId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
-
-                database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_userId` ON `FeatureFlagEntity` (`userId`)")
-                database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_featureId` ON `FeatureFlagEntity` (`featureId`)")
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` " +
+                        "(`userId` TEXT NOT NULL, " +
+                        "`featureId` TEXT NOT NULL, " +
+                        "`isGlobal` INTEGER NOT NULL, " +
+                        "`defaultValue` INTEGER NOT NULL, " +
+                        "`value` INTEGER NOT NULL, " +
+                        "PRIMARY KEY(`userId`, `featureId`), " +
+                        "FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) " +
+                        "ON UPDATE NO ACTION ON DELETE CASCADE)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_userId` ON `FeatureFlagEntity` (`userId`)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS " +
+                        "`index_FeatureFlagEntity_featureId` ON `FeatureFlagEntity` (`featureId`)"
+                )
             }
         }
     }

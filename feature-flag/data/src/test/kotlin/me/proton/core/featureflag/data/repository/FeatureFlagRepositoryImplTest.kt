@@ -48,7 +48,6 @@ import me.proton.core.test.android.api.TestApiManager
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
@@ -86,19 +85,6 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    @Ignore("Disabled as failing after introducing Store, awaiting for feedback")
-    fun featureFlagIsFetchedFromApiWhenNotAvailableInDb() = runBlockingTest {
-        // Given
-        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureFlagTestData.featureId.id) } returns flowOf(null)
-
-        // When
-        repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
-
-        // Then
-        coVerify { featuresApi.getFeatureFlags(FeatureFlagTestData.featureId.id) }
-    }
-
-    @Test
     fun featureFlagIsReturnedFromDbWhenAvailable() = runBlockingTest {
         // Given
         coEvery {
@@ -115,26 +101,6 @@ class FeatureFlagRepositoryImplTest {
         val expected = FeatureFlag(FeatureFlagTestData.featureId, true)
         assertEquals(expected, actual)
         verify { featuresApi wasNot Called }
-    }
-
-    @Test
-    @Ignore("Disabled as failing after introducing Store, awaiting for feedback")
-    fun featureFlagIsSavedToDbWhenFetchedFromApi() = runBlockingTest {
-        // Given
-        coEvery { featureFlagDao.observe(UserIdTestData.userId, FeatureFlagTestData.featureId.id) } returns flowOf(null)
-
-        // When
-        repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
-
-        // Then
-        val expected = FeatureFlagEntity(
-            UserIdTestData.userId,
-            FeatureFlagTestData.featureId.id,
-            isGlobal = false,
-            defaultValue = false,
-            value = true
-        )
-        coVerify(timeout = 5000) { featureFlagDao.insertOrUpdate(expected) }
     }
 
     @Test

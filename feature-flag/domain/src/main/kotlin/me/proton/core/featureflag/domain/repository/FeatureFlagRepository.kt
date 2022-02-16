@@ -24,14 +24,7 @@ import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 
 /**
- * Repository to access Remote [FeatureFlag]s.
- * The suggested usage is for clients to call [prefetch] at boot, passing a list of all the featureIds
- * that will be needed during the lifecycle. This will help ensuring that the flags' values are always
- * up-to-date with remote while avoiding to perform an API call to each time we need a flag.
- * (The client can store a list of all features in a similar fashion as done in core's [ClientFeatureFlags] enum)
- *
- * Clients should take care of implementing some logic to use default values when it wasn't possible to
- * receive them through this repo.
+ * Repository to access [FeatureFlag]s which are local or remote
  */
 public interface FeatureFlagRepository {
 

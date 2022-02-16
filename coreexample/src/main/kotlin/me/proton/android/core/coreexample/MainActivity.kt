@@ -141,18 +141,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 removeScopeViewModel.removeScopes()
             }
 
-            featureFlag.onClick {
-                val androidThreading = ClientFeatureFlags.AndroidThreading
-                featureFlagViewModel.state.onEach { result ->
-                    when (result) {
-                        is ViewModelResult.Success -> showToast("Feature flag ${androidThreading.name} is ${result.value.isEnabled}")
-                        is ViewModelResult.Error -> showToast("Failed getting feature flag ${result.throwable}")
-                        ViewModelResult.None -> Unit
-                        ViewModelResult.Processing -> Unit
-                    }
-                }.launchIn(lifecycleScope)
-                featureFlagViewModel.isFeatureEnabled(androidThreading.id)
-            }
+            setupFeatureFlagButton()
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {
@@ -208,6 +197,21 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 showToast("PublicAddress: $it")
             }
         }.launchIn(lifecycleScope)
+    }
+
+    private fun ActivityMainBinding.setupFeatureFlagButton() = featureFlag.onClick {
+        val androidThreading = ClientFeatureFlags.AndroidThreading
+        featureFlagViewModel.state.onEach { result ->
+            when (result) {
+                is ViewModelResult.Success -> {
+                    showToast("Feature flag ${androidThreading.name} is ${result.value.isEnabled}")
+                }
+                is ViewModelResult.Error -> showToast("Failed getting feature flag ${result.throwable}")
+                ViewModelResult.None -> Unit
+                ViewModelResult.Processing -> Unit
+            }
+        }.launchIn(lifecycleScope)
+        featureFlagViewModel.isFeatureEnabled(androidThreading.id)
     }
 
     @SuppressLint("SetTextI18n")

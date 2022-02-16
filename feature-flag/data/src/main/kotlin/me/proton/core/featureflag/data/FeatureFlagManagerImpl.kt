@@ -33,7 +33,8 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
     override fun observe(userId: UserId, featureId: FeatureId): Flow<FeatureFlag?> =
         repository.observe(userId, featureId)
 
-    override suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag? = repository.get(userId, featureId)
+    override suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag? =
+        repository.get(userId, featureId)
 
     override suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>): Unit =
         repository.prefetch(userId, featureIds)
