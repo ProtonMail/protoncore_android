@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.challenge.dagger
 
 import dagger.Module
 import dagger.Provides

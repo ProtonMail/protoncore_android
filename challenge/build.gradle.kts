@@ -26,6 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.challengeDagger),
         project(Module.challengeData),
         project(Module.challengeDomain)
     )
