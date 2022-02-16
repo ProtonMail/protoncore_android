@@ -26,8 +26,8 @@ include:
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: "$CI_COMMIT_REF_NAME =~ /^release/"
-    - if: "$CI_COMMIT_REF_NAME == 'main'"
+    - if: $CI_COMMIT_REF_NAME =~ /^release/
+    - if: $CI_COMMIT_REF_NAME == 'main'
 
 stages:
   - prepare
@@ -62,13 +62,18 @@ prepare-environment:
     NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_NAME} --data tag=${CI_COMMIT_REF_SLUG}"
   script:
-    - get_name.py -v -o deploy.env -d "$ATLAS_BASE_DOMAIN" --release "$ATLAS_RELEASE_SUFFIX" "${ENV_TAG:-$CI_COMMIT_REF_SLUG}" "$CI_PROJECT_PATH" "$CI_COMMIT_REF_NAME"
-    - export $(cat deploy.env)
-    - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
-    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
-    - mkdir -p coreexample/src/androidTest/assets/sensitive
-    - cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
-    - cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
+    - |
+      if [ $CI_PIPELINE_SOURCE == "merge_request_event" ]; then
+        get_name.py -v -o deploy.env -d "$ATLAS_BASE_DOMAIN" --release "$ATLAS_RELEASE_SUFFIX" "${ENV_TAG:-$CI_COMMIT_REF_SLUG}" "$CI_PROJECT_PATH" "$CI_COMMIT_REF_NAME"
+        export $(cat deploy.env)
+        echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
+        echo HOST="$DYNAMIC_DOMAIN" >> local.properties
+        mkdir -p coreexample/src/androidTest/assets/sensitive
+        cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
+        cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
+      else
+        echo "No need to prepare env"
+      fi
   artifacts:
     paths:
       - coreexample/src/androidTest/assets/sensitive
@@ -76,8 +81,6 @@ prepare-environment:
     reports:
       dotenv: deploy.env
     expire_in: never
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 detekt-analyze:
   extends: .gradle-job
@@ -90,8 +93,6 @@ detekt-analyze:
     expire_in: 1 month
     reports:
       codequality: config/detekt/reports/mergedReport.json
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 ## bot stage #######################################################################################
 i18n-sync-crowdin:
@@ -119,7 +120,7 @@ deploy:review:
       artifacts: true
   rules:
     # We deploy automatically if the ATLAS_DEPLOY_ENV variable is set to true
-    - if: '$ATLAS_DEPLOY_ENV == "true" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $ATLAS_DEPLOY_ENV == "true" && $CI_PIPELINE_SOURCE == "merge_request_event"
     # But never otherwise
     - when: never
 
@@ -167,7 +168,7 @@ start-review:
   extends: .startReview
   stage: test
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 binary-compatibility-check:
   extends: .gradle-job
@@ -191,7 +192,7 @@ trigger-client-integration-tests:
   script:
     - echo "Trigger all clients integration tests"
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 .client-integration-tests:
   needs:
@@ -201,7 +202,7 @@ trigger-client-integration-tests:
   variables:
     CORE_COMMIT_SHA: $CI_COMMIT_SHA
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 mail-v6-integration-tests:
   extends: .client-integration-tests
@@ -251,7 +252,7 @@ mail-v6-integration-tests:
       - video.mp4
       - logs
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 uitest:signup:
   variables:
@@ -359,15 +360,14 @@ danger-review:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
   interruptible: true
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 ## cleanup stage ###################################################################################
 cleanup:review:
   tags:
     - medium
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: manual
       allow_failure: true
 
@@ -376,6 +376,6 @@ stopReview:
   extends: .stopReview
   stage: cleanup
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: manual
       allow_failure: true
