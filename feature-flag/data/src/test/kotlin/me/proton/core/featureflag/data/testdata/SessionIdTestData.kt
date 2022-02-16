@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.mailsettings.data
+package me.proton.core.featureflag.data.testdata
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.domain.ApiManager
-import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.SessionId
 
-class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
-    override suspend fun <T> invoke(
-        forceNoRetryOnConnectionErrors: Boolean,
-        block: suspend Api.() -> T
-    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
+object SessionIdTestData {
+    private const val RAW_SESSION_ID = "sessionId"
+    val sessionId = SessionId(RAW_SESSION_ID)
 }

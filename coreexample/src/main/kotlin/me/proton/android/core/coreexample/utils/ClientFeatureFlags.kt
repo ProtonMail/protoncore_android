@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.repository
+package me.proton.android.core.coreexample.utils
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.domain.ApiManager
-import me.proton.core.network.domain.ApiResult
+import me.proton.core.featureflag.domain.entity.FeatureId
 
-class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
-    override suspend fun <T> invoke(
-        forceNoRetryOnConnectionErrors: Boolean,
-        block: suspend Api.() -> T
-    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
+/**
+ * Represents all of the feature flags that are available to this client
+ */
+enum class ClientFeatureFlags(val id: FeatureId, val defaultLocalValue: Boolean = false) {
+
+    // Remote flags
+    AndroidThreading(FeatureId("ThreadingAndroid")),
+    CanUserSendFeedback(FeatureId("CanUserSendFeedback"), true),
+
+    // Local only flag (unknown to remote API)
+    BundledNotifications(FeatureId("BundledNotifications"));
 }

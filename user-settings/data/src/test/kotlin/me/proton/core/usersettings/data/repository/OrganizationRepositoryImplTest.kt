@@ -19,25 +19,20 @@
 package me.proton.core.usersettings.data.repository
 
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.usersettings.data.api.OrganizationApi
-import me.proton.core.usersettings.data.api.response.FlagsResponse
 import me.proton.core.usersettings.data.api.response.OrganizationResponse
-import me.proton.core.usersettings.data.api.response.PasswordResponse
-import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
 import me.proton.core.usersettings.data.api.response.SingleOrganizationResponse
-import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.dao.OrganizationDao
 import me.proton.core.usersettings.data.extension.fromResponse

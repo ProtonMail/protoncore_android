@@ -48,6 +48,11 @@ public final class me/proton/core/test/android/RunBlockingWithTimeoutKt {
 	public static synthetic fun runBlockingWithTimeout$default (JLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/test/android/api/TestApiManager : me/proton/core/network/domain/ApiManager {
+	public fun <init> (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;)V
+	public fun invoke (ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/test/android/lifecycle/TestLifecycle : androidx/lifecycle/LifecycleOwner {
 	public fun <init> ()V
 	public final fun create ()Lme/proton/core/test/android/lifecycle/TestLifecycle;

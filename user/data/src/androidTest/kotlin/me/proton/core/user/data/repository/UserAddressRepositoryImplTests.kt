@@ -51,7 +51,6 @@ import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
 import me.proton.core.user.data.TestAddresses
-import me.proton.core.user.data.TestApiManager
 import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi

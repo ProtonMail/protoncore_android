@@ -162,5 +162,12 @@ public object Module {
     public const val reportData: String = ":report:report-data"
     public const val reportPresentation: String = ":report:report-presentation"
     public const val reportDagger: String = ":report:report-dagger"
+
+    // Feature flags
+    public const val featureFlag: String = ":feature-flag"
+    public const val featureFlagData: String = "$featureFlag:feature-flag-data"
+    public const val featureFlagDomain: String = "$featureFlag:feature-flag-domain"
+    public const val featureFlagDagger: String = "$featureFlag:feature-flag-dagger"
+
     // endregion
 }

@@ -1,0 +1,67 @@
+public final class me/proton/core/featureflag/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
+	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Lkotlinx/coroutines/flow/Flow;
+	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
+}
+
+public abstract interface class me/proton/core/featureflag/data/db/FeatureFlagDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/featureflag/data/db/FeatureFlagDatabase$Companion;
+	public abstract fun featureFlagDao ()Lme/proton/core/featureflag/data/db/dao/FeatureFlagDao;
+}
+
+public final class me/proton/core/featureflag/data/db/FeatureFlagDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract class me/proton/core/featureflag/data/db/dao/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/featureflag/data/entity/FeatureFlagEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ZZZ)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ZZZ)Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;
+	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ZZZILjava/lang/Object;)Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultValue ()Z
+	public final fun getFeatureId ()Ljava/lang/String;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun getValue ()Z
+	public fun hashCode ()I
+	public final fun isGlobal ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository {
+	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+}
+

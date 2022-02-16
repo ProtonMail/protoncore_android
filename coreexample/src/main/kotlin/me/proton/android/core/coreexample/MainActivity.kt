@@ -36,7 +36,9 @@ import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.LabelsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
+import me.proton.android.core.coreexample.utils.ClientFeatureFlags
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
+import me.proton.android.core.coreexample.viewmodel.FeatureFlagViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
@@ -54,6 +56,7 @@ import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.successSnack
+import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -74,6 +77,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val settingsViewModel: UserSettingsViewModel by viewModels()
     private val removeScopeViewModel: RemoveScopeViewModel by viewModels()
+    private val featureFlagViewModel: FeatureFlagViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +88,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         reportsViewModel.register(this)
         plansViewModel.register(this)
         settingsViewModel.register(this)
+        featureFlagViewModel.prefetch()
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
@@ -135,6 +140,8 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             lockScope.onClick {
                 removeScopeViewModel.removeScopes()
             }
+
+            setupFeatureFlagButton()
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {
@@ -190,6 +197,21 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 showToast("PublicAddress: $it")
             }
         }.launchIn(lifecycleScope)
+    }
+
+    private fun ActivityMainBinding.setupFeatureFlagButton() = featureFlag.onClick {
+        val androidThreading = ClientFeatureFlags.AndroidThreading
+        featureFlagViewModel.state.onEach { result ->
+            when (result) {
+                is ViewModelResult.Success -> {
+                    showToast("Feature flag ${androidThreading.name} is ${result.value.isEnabled}")
+                }
+                is ViewModelResult.Error -> showToast("Failed getting feature flag ${result.throwable}")
+                ViewModelResult.None -> Unit
+                ViewModelResult.Processing -> Unit
+            }
+        }.launchIn(lifecycleScope)
+        featureFlagViewModel.isFeatureEnabled(androidThreading.id)
     }
 
     @SuppressLint("SetTextI18n")

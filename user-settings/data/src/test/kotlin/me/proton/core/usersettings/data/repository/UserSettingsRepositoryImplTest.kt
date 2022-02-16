@@ -33,6 +33,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.usersettings.data.api.UserSettingsApi
 import me.proton.core.usersettings.data.api.response.FlagsResponse
 import me.proton.core.usersettings.data.api.response.PasswordResponse
