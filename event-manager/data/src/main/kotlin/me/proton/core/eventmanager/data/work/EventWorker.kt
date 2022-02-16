@@ -38,6 +38,7 @@ import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration
 
 @HiltWorker
@@ -55,8 +56,13 @@ open class EventWorker @AssistedInject constructor(
                 Result.success()
             },
             onFailure = {
-                CoreLogger.e(LogTag.WORKER_ERROR, it)
-                Result.retry()
+                if (it is CancellationException) {
+                    // Worker was cancelled, so there's no point in retrying. Periodic job will launch the worker again.
+                    Result.failure()
+                } else {
+                    CoreLogger.e(LogTag.WORKER_ERROR, it)
+                    Result.retry()
+                }
             }
         )
     }
