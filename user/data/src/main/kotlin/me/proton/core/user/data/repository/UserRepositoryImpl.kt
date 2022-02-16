@@ -158,9 +158,6 @@ class UserRepositoryImpl(
             AuthRequest.from(auth),
             Payload.createFromFrames(context = context, frames = frames)
         )
-        if (true) {
-            throw RuntimeException("Test")
-        }
         createUser(request).user.toUser()
     }.valueOrThrow
 

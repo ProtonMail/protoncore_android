@@ -83,7 +83,7 @@ data class UsernameFrame(
                     timezoneOffset = 1,
                     rooted = isDeviceRooted(),
                     fontSize = context.deviceFontSize().toString(),
-                    storage = context.deviceStorage(), // todo
+                    storage = context.deviceStorage(),
                     darkMode = context.nightMode(),
                     timeOnField = listOf(frame.focusTime), // todo
                     clickOnField = frame.clicks,
