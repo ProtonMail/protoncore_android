@@ -5,78 +5,18 @@ public final class me/proton/core/featureflag/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public abstract interface class me/proton/core/featureflag/data/api/FeaturesApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
-	public abstract fun getFeatureFlag (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getFeatureFlags (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
+	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Lkotlinx/coroutines/flow/Flow;
+	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/featureflag/data/api/response/FeatureApiResponse {
-	public static final field Companion Lme/proton/core/featureflag/data/api/response/FeatureApiResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;ZZZ)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Z
-	public final fun component3 ()Z
-	public final fun component4 ()Z
-	public final fun copy (Ljava/lang/String;ZZZ)Lme/proton/core/featureflag/data/api/response/FeatureApiResponse;
-	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/api/response/FeatureApiResponse;Ljava/lang/String;ZZZILjava/lang/Object;)Lme/proton/core/featureflag/data/api/response/FeatureApiResponse;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDefaultValue ()Z
-	public final fun getFeatureId ()Ljava/lang/String;
-	public final fun getValue ()Z
-	public fun hashCode ()I
-	public final fun isGlobal ()Z
-	public final fun toEntity (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/api/response/FeatureApiResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/featureflag/data/api/response/FeatureApiResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/featureflag/data/api/response/FeatureApiResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/featureflag/data/api/response/FeatureApiResponse;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/featureflag/data/api/response/FeatureApiResponse;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/featureflag/data/api/response/FeatureApiResponse$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/featureflag/data/api/response/FeaturesApiResponse {
-	public static final field Companion Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse$Companion;
-	public synthetic fun <init> (IILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (ILjava/util/List;)V
-	public final fun component1 ()I
-	public final fun component2 ()Ljava/util/List;
-	public final fun copy (ILjava/util/List;)Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse;
-	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse;ILjava/util/List;ILjava/lang/Object;)Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getFeatures ()Ljava/util/List;
-	public final fun getResultCode ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/featureflag/data/api/response/FeaturesApiResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/featureflag/data/api/response/FeaturesApiResponse;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/featureflag/data/api/response/FeaturesApiResponse$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
 }
 
 public abstract interface class me/proton/core/featureflag/data/db/FeatureFlagDatabase : me/proton/core/data/room/db/Database {
@@ -90,9 +30,6 @@ public final class me/proton/core/featureflag/data/db/FeatureFlagDatabase$Compan
 
 public abstract class me/proton/core/featureflag/data/db/dao/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
-	public abstract fun deleteAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun get (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public final class me/proton/core/featureflag/data/entity/FeatureFlagEntity {
@@ -111,14 +48,20 @@ public final class me/proton/core/featureflag/data/entity/FeatureFlagEntity {
 	public final fun getValue ()Z
 	public fun hashCode ()I
 	public final fun isGlobal ()Z
-	public final fun toFeatureFlag ()Lme/proton/core/featureflag/domain/entity/FeatureFlag;
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository {
-	public fun <init> (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;Lme/proton/core/network/data/ApiProvider;)V
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
 }
 
