@@ -16,18 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.eventmanager.domain
+package me.proton.core.eventmanager.data
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerConfigProvider
+import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 
-interface EventManagerProvider {
-    /**
-     * Get an [EventManager] associated with the given [config].
-     */
-    fun get(config: EventManagerConfig): EventManager
+class EventManagerConfigProviderImpl(
+    private val eventMetadataRepository: EventMetadataRepository
+) : EventManagerConfigProvider {
 
-    /**
-     * Get all [EventManager] associated with an existing [EventManagerConfig], by [userId].
-     */
-    suspend fun getAll(userId: UserId): List<EventManager>
+    override suspend fun getAll(userId: UserId): List<EventManagerConfig> =
+        eventMetadataRepository.getAll(userId).map { it.config }.toSet().toList()
+
+    override suspend fun getAll(userId: UserId, type: EventListener.Type): List<EventManagerConfig> =
+        getAll(userId).filter { it.listenerType == type }
 }

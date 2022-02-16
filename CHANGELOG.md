@@ -32,6 +32,7 @@ But, clients have still control tools on what they want to show. Mainly the tool
 - Added UserManager/UserAddressManager observeUser/observeAddresses (deprecated getUserFlow/getAddressesFlow).
 - Downgraded Material lib to 1.4.0 (user-data androidTest issues).
 - Downgraded TrustKit to 1.1.3 (1.1.5 is not existing https://github.com/datatheorem/TrustKit-Android/releases).
+- Added EventManagerConfigProvider.
 
 ### Fixes
 - Use viewLifecycleOwner.lifeCycleScope for coroutines launched in Fragments.

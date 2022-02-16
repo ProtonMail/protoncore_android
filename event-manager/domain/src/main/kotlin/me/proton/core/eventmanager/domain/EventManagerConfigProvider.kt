@@ -20,14 +20,14 @@ package me.proton.core.eventmanager.domain
 
 import me.proton.core.domain.entity.UserId
 
-interface EventManagerProvider {
+interface EventManagerConfigProvider {
     /**
-     * Get an [EventManager] associated with the given [config].
+     * Get all [EventManagerConfig] by [userId].
      */
-    fun get(config: EventManagerConfig): EventManager
+    suspend fun getAll(userId: UserId): List<EventManagerConfig>
 
     /**
-     * Get all [EventManager] associated with an existing [EventManagerConfig], by [userId].
+     * Get all [EventManagerConfig] by [userId] and [type].
      */
-    suspend fun getAll(userId: UserId): List<EventManager>
+    suspend fun getAll(userId: UserId, type: EventListener.Type): List<EventManagerConfig>
 }
