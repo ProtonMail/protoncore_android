@@ -21,14 +21,24 @@ include:
 
   - project: 'proton/devops/atlas-deploy'
     ref: 'main'
-    file: '/jobs/variables.yml'
+    file: '/scenarios/pipeline-env.yml'
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: "$CI_COMMIT_REF_NAME =~ /^release/"
+    - if: "$CI_COMMIT_REF_NAME == 'main'"
 
 stages:
   - prepare
   - bot
+  - deploy
   - build
   - test
+  - firebase
   - publish
+  - review
+  - cleanup
 
 variables:
   # Use fastzip to improve cache times
@@ -66,6 +76,8 @@ prepare-environment:
     reports:
       dotenv: deploy.env
     expire_in: never
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 detekt-analyze:
   extends: .gradle-job
@@ -78,18 +90,8 @@ detekt-analyze:
     expire_in: 1 month
     reports:
       codequality: config/detekt/reports/mergedReport.json
-
-## deploy stage ####################################################################################
-deploy-atlas:
-  stage: build
-  needs:
-    - prepare-environment
-  trigger:
-    strategy: depend
-    include:
-      - local: ci/templates/atlas-deploy.gitlab-ci.yml
-  variables:
-    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 ## bot stage #######################################################################################
 i18n-sync-crowdin:
@@ -105,6 +107,21 @@ i18n-commit-locales:
     I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
     I18N_COMMIT_BRANCH_PUSH: 'main'
     I18N_COMMIT_BRANCH_ALLOWED: 'main'
+
+## deploy stage ####################################################################################
+deploy:review:
+  tags:
+    - medium
+  allow_failure: true
+  retry: 1
+  needs:
+    - job: prepare-environment
+      artifacts: true
+  rules:
+    # We deploy automatically if the ATLAS_DEPLOY_ENV variable is set to true
+    - if: '$ATLAS_DEPLOY_ENV == "true" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    # But never otherwise
+    - when: never
 
 ## build stage #####################################################################################
 assemble:
@@ -123,20 +140,6 @@ assemble:
       - coreexample/build/outputs/
 
 ## test stage ######################################################################################
-ui-tests:
-  stage: test
-  when: always
-  allow_failure: true
-  needs:
-    - deploy-atlas
-    - assemble
-  trigger:
-    strategy: depend
-    include:
-      - local: coreexample/ci/test.coreexample.uitests.yml
-  variables:
-    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
-
 unit-tests-and-coverage-report:
   extends: .gradle-job
   needs:
@@ -163,6 +166,8 @@ start-review:
     - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
   extends: .startReview
   stage: test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 binary-compatibility-check:
   extends: .gradle-job
@@ -185,6 +190,8 @@ trigger-client-integration-tests:
     - source /load-env.sh
   script:
     - echo "Trigger all clients integration tests"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 .client-integration-tests:
   needs:
@@ -193,6 +200,8 @@ trigger-client-integration-tests:
     variables: false
   variables:
     CORE_COMMIT_SHA: $CI_COMMIT_SHA
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 mail-v6-integration-tests:
   extends: .client-integration-tests
@@ -200,13 +209,80 @@ mail-v6-integration-tests:
     project: android/mail/proton-mail
     branch: master
 
+## firebase stage ##################################################################################
+.firebase-tests-common:
+  stage: firebase
+  when: always
+  image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
+  variables:
+    RESULTS_DIR: "${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
+  tags:
+    - medium
+  allow_failure: true
+  script:
+    - gcloud config set project $CLOUD_PROJECT_ID_CORE
+    - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
+    - gcloud firebase test android run
+      --app coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk
+      --test coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk
+      --device model=Pixel2,version=28
+      --test-targets "$TEST_TARGET"
+      --timeout 25m
+      --results-dir=$RESULTS_DIR
+  after_script:
+    - mkdir -p screenshots
+    - mkdir -p logs
+    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/logcat logcat.txt
+    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/video.mp4 video.mp4
+    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/test_result_1.xml test_result_1.xml
+    - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/test_cases ./logs
+    - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
+    - python3 coreexample/ci/process_report.py test_result_1.xml test_result.xml
+  needs:
+    - assemble
+    - deploy:review
+  artifacts:
+    when: always
+    reports:
+      junit: test_result.xml
+    paths:
+      - screenshots
+      - logcat.txt
+      - video.mp4
+      - logs
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+uitest:signup:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.signup"
+  extends: .firebase-tests-common
+
+uitest:login:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.login"
+  extends: .firebase-tests-common
+
+uitest:payments:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.payments"
+  extends: .firebase-tests-common
+
+uitest:plans:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.plans"
+  extends: .firebase-tests-common
+
+uitest:usersettings:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.usersettings"
+  extends: .firebase-tests-common
+
 ## publish stage ###################################################################################
 release-publish-github:
   stage: publish
   tags:
     - xlarge-k8s
-  only:
-    - main
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
     RELEASE_SYNC_TO_BRANCH: 'main'
@@ -225,17 +301,17 @@ publish-libs:
   script:
     - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
     - ./gradlew notifyNewRelease
-  only:
-    - /^release\/libs\/.*/ # stable release with notification
-    - main # main-snapshot release without notification
+  rules:
+    - if: $CI_COMMIT_BRANCH == /^release\/libs\/.*/ # stable release with notification
+    - if: $CI_COMMIT_BRANCH == 'main' # main-snapshot release without notification
 
 tag-libs-release:
   extends: .gradle-job
   stage: publish
   needs:
     - job: publish-libs
-  only:
-    - /^release\/libs\/.*/
+  rules:
+    - if: $CI_COMMIT_BRANCH == /^release\/libs\/.*/
   before_script:
     - !reference [ .git, before_script ]
   script:
@@ -251,28 +327,28 @@ publish-gradle-plugins:
     ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
   script:
     - ./gradlew -p plugins publishToSonatype closeAndReleaseSonatypeStagingRepository
-  only:
-    - /^release\/gradle-plugins\/.*/ # stable release
-    - main # main-snapshot release
+  rules:
+    - if: $CI_COMMIT_BRANCH == /^release\/gradle-plugins\/.*/ # stable release with notification
+    - if: $CI_COMMIT_BRANCH == 'main' # main-snapshot release without notification
 
 tag-gradle-plugins-release:
   extends: .gradle-job
   stage: publish
   needs:
     - job: publish-gradle-plugins
-  only:
-    - /^release\/gradle-plugins\/.*/
   before_script:
     - !reference [ .git, before_script ]
   script:
     - ./gradlew -p plugins tagRelease
+  rules:
+    - if: $CI_COMMIT_BRANCH == /^release\/gradle-plugins\/.*/
 
-## post stage ######################################################################################
+## review stage ######################################################################################
 danger-review:
   tags:
     - medium
   extends: .ruby-job
-  stage: .post
+  stage: review
   when: always
   needs:
     - unit-tests-and-coverage-report
@@ -282,7 +358,24 @@ danger-review:
   variables:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
   interruptible: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_COMMIT_BRANCH == 'main'
+
+## cleanup stage ###################################################################################
+cleanup:review:
+  tags:
+    - medium
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true
 
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
   extends: .stopReview
+  stage: cleanup
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true
