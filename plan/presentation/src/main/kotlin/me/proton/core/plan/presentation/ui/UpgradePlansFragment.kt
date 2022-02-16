@@ -29,6 +29,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
@@ -44,9 +45,12 @@ import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) {
+
+    @Inject lateinit var product: Product
 
     private val upgradePlanViewModel by viewModels<UpgradePlansViewModel>()
     private val binding by viewBinding(FragmentPlansUpgradeBinding::bind)
@@ -74,6 +78,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                 }
                 toolbar.title = getString(R.string.plans_subscription)
                 toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
+                plansView.setProduct(product)
             }
 
             upgradePlanViewModel.subscribedPlansState.onEach {

@@ -27,6 +27,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
@@ -41,9 +42,12 @@ import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
+
+    @Inject lateinit var product: Product
 
     private val signupPlansViewModel by viewModels<SignupPlansViewModel>()
 
@@ -79,6 +83,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                         plansTitle.text = getString(R.string.plans_upgrade_plan)
                     }
                 }
+                plansView.setProduct(product)
             }
             signupPlansViewModel.availablePlansState.onEach {
                 when (it) {
