@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             app:menu="@menu/core_report_bug_menu"
             app:navigationContentDescription="@string/core_report_bug_close"
-            app:navigationIcon="@drawable/ic_close"
+            app:navigationIcon="@drawable/ic_proton_close"
             app:title="@string/core_report_bug_activity_title" />
 
     </com.google.android.material.appbar.AppBarLayout>

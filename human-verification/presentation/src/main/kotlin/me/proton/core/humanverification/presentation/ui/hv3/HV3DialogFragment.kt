@@ -98,7 +98,10 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navigationIconId = if (parsedArgs.isPartOfFlow) R.drawable.ic_arrow_back else R.drawable.ic_close
+        val navigationIconId = if (parsedArgs.isPartOfFlow)
+            R.drawable.ic_proton_arrow_back
+        else
+            R.drawable.ic_proton_close
 
         if (savedInstanceState == null) {
             setLoading(true)

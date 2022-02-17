@@ -97,7 +97,7 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment(R.layout.fragmen
         binding.apply {
             // this should go inside the custom edit text input view (validation also with error text below the view)
             toolbar.apply {
-                navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
+                navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_proton_arrow_back)
                 setNavigationOnClickListener { onBackPressed() }
                 setOnMenuItemClickListener {
                     when (it.itemId) {

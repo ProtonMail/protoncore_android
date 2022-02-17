@@ -95,10 +95,9 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             text = getString(R.string.plans_upgrade_plan)
                         }
                         manageSubscriptionText.visibility = GONE
-                        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
                     }
                 }
-                toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
+                toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_proton_close)
             }
 
             upgradePlanViewModel.subscribedPlansState.onEach {
@@ -144,7 +143,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                                 plans = it.plans
                                 visibility = if (it.plans.isEmpty()) GONE else VISIBLE
                             }
-                            plansTitle.visibility = if (it.plans.size > 0) VISIBLE else android.view.View.GONE
+                            plansTitle.visibility = if (it.plans.size > 0) VISIBLE else GONE
                         }
                     }
                     is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {

@@ -66,7 +66,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
             findOutPlan()
             toolbar.apply {
                 if (input.userId != null) {
-                    navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
+                    navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_proton_arrow_back)
                 }
                 setNavigationOnClickListener {
                     onBackPressed()

@@ -29,7 +29,7 @@
     <me.proton.core.presentation.ui.view.ProtonNavigationButton
         android:id="@+id/closeButton"
         style="@style/ProtonButton.Navigation.Borderless"
-        app:icon="@drawable/ic_close"
+        app:icon="@drawable/ic_proton_close"
         app:layout_constraintBottom_toBottomOf="@+id/filterEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/filterEditText" />
