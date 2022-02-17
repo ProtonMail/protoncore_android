@@ -84,8 +84,9 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun processFirstFromConfig() {
-        val metadata = eventMetadataRepository.get(config).firstOrNull() ?: return
+        val metadata = eventMetadataRepository.get(config).firstOrNull()
         when {
+            metadata == null -> cancel()
             metadata.retry > retriesBeforeReset -> {
                 reportFailure(metadata)
                 reset()
@@ -271,6 +272,8 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun cancel() {
+        observeAccountJob?.cancel()
+        observeAppStateJob?.cancel()
         eventWorkerManager.cancel(config)
         eventMetadataRepository.updateState(config, State.Cancelled)
     }
@@ -293,12 +296,10 @@ class EventManagerImpl @AssistedInject constructor(
         isStarted = true
     }
 
-    private fun internalStop() {
+    private suspend fun internalStop() {
         if (!isStarted) return
 
-        observeAccountJob?.cancel()
-        observeAppStateJob?.cancel()
-        eventWorkerManager.cancel(config)
+        cancel()
 
         isStarted = false
     }

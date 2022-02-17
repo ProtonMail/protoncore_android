@@ -40,6 +40,7 @@ But, clients have still control tools on what they want to show. Mainly the tool
 - Fix incorrect design of the alert dialog
 - Fix for VPN plans features showing unrelated items.
 - Fix bug where a user with VPN basic plan couldn't upgrade to higher plan.
+- Fixed Cancellation handling for EventManager/Worker.
 
 ## [7.1.2]
 
