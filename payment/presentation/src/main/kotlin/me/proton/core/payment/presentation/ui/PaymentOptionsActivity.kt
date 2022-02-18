@@ -100,6 +100,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             selectedPlanDetailsLayout.plan = input.plan
             payButton.apply {
                 isEnabled = false
+                text = String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
                 onClick {
                     viewModel.subscribe(
                         user,
@@ -131,7 +132,10 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             when (it) {
                 is BillingCommonViewModel.PlansValidationState.Success -> {
                     amountDue = it.subscription.amountDue
-                    binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
+                    with(binding) {
+                        selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
+                        payButton.text = String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
+                    }
                 }
                 is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
                 else -> {

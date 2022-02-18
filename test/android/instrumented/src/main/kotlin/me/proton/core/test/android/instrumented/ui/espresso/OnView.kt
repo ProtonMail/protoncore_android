@@ -32,6 +32,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.RootMatchers.DEFAULT
 import androidx.test.espresso.matcher.ViewMatchers
+import me.proton.core.test.android.NestedScrollViewExtension
 import me.proton.core.test.android.instrumented.ConditionWatcher
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.commandTimeout
 import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
@@ -328,6 +329,10 @@ class OnView : ConditionWatcher {
 
     fun scrollTo() = apply {
         viewInteraction(matches(CoreMatchers.anything())).perform(ViewActions.scrollTo())
+    }
+
+    fun scrollToNestedScrollView() = apply {
+        viewInteraction(matches(CoreMatchers.anything())).perform(NestedScrollViewExtension())
     }
 
     /** Assertion wrappers **/

@@ -26,10 +26,8 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
-import me.proton.core.plan.presentation.entity.PlanCurrency
-import me.proton.core.plan.presentation.entity.PlanDetailsListItem
-import me.proton.core.plan.presentation.entity.PlanPricing
-import me.proton.core.test.kotlin.assertEquals
+import me.proton.core.plan.presentation.R
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -40,7 +38,7 @@ class PlanItemFeaturesKtTest {
     private val typedArray = mockk<TypedArray>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
     private val resources = mockk<Resources>(relaxed = true)
-    private val mockedPlan = mockk<PlanDetailsListItem.PaidPlanDetailsListItem>(relaxed = true)
+    private val mockedPlan = mockk<PlanDetailsItem.PaidPlanDetailsItem>(relaxed = true)
 
     private val testResourceId = 1
 
@@ -69,7 +67,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0 B", result)
+        assertEquals("test-string-0 B", result.first)
+        assertEquals(R.drawable.ic_storage, result.second)
         verify { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
         verify(exactly = 0) { mockedPlan.connections }
@@ -91,7 +90,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0", result)
+        assertEquals("test-string-0", result.first)
+        assertEquals(R.drawable.ic_envelope, result.second)
         verify { mockedPlan.addresses }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.connections }
@@ -116,7 +116,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-plural-2", result)
+        assertEquals("test-string-plural-2", result.first)
+        assertEquals(R.drawable.ic_envelope, result.second)
         verify { mockedPlan.addresses }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.connections }
@@ -138,7 +139,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0", result)
+        assertEquals("test-string-0", result.first)
+        assertEquals(R.drawable.ic_shield, result.second)
         verify { mockedPlan.connections }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -163,7 +165,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-plural-2", result)
+        assertEquals("test-string-plural-2", result.first)
+        assertEquals(R.drawable.ic_shield, result.second)
         verify { mockedPlan.connections }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -185,7 +188,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0", result)
+        assertEquals("test-string-0", result.first)
+        assertEquals(R.drawable.ic_globe_language, result.second)
         verify { mockedPlan.domains }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -210,7 +214,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-plural-2", result)
+        assertEquals("test-string-plural-2", result.first)
+        assertEquals(R.drawable.ic_globe_language, result.second)
         verify { mockedPlan.domains }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -232,7 +237,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0", result)
+        assertEquals("test-string-0", result.first)
+        assertEquals(R.drawable.ic_user, result.second)
         verify { mockedPlan.members }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -257,7 +263,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-plural-2", result)
+        assertEquals("test-string-plural-2", result.first)
+        assertEquals(R.drawable.ic_user, result.second)
         verify { mockedPlan.members }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -279,7 +286,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0", result)
+        assertEquals("test-string-0", result.first)
+        assertEquals(R.drawable.ic_calendar_checkmark, result.second)
         verify { mockedPlan.calendars }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -304,7 +312,8 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-plural-2", result)
+        assertEquals("test-string-plural-2", result.first)
+        assertEquals(R.drawable.ic_calendar_checkmark, result.second)
         verify { mockedPlan.calendars }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }

@@ -29,4 +29,11 @@ interface PlansRepository {
     suspend fun getPlans(
         sessionUserId: SessionUserId?
     ): List<Plan>
+
+    /**
+     * Returns from the API all plans available for the user in the moment.
+     */
+    suspend fun getPlansDefault(
+        sessionUserId: SessionUserId?
+    ): Plan
 }

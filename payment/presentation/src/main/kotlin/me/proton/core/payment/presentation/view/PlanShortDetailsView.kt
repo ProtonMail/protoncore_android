@@ -41,6 +41,8 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
         binding.amountProgress.visibility = View.VISIBLE
     }
 
+    var userReadablePlanAmount: String? = null
+
     var plan: PlanShortDetails? = null
         set(value) = with(binding) {
             val notAvailable = context.getString(R.string.payments_info_not_available)
@@ -49,11 +51,13 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
                 SubscriptionCycle.MONTHLY -> context.getString(R.string.payments_billing_monthly)
                 SubscriptionCycle.YEARLY -> context.getString(R.string.payments_billing_yearly)
                 SubscriptionCycle.TWO_YEARS -> context.getString(R.string.payments_billing_two_years)
+                SubscriptionCycle.FREE,
                 null -> notAvailable
             }
             value?.amount?.let {
                 amountProgress.visibility = View.GONE
-                amountText.text = it.toDouble().formatCentsPriceDefaultLocale(value.currency.name)
+                userReadablePlanAmount = it.toDouble().formatCentsPriceDefaultLocale(value.currency.name)
+                amountText.text = userReadablePlanAmount
             } ?: run {
                 amountProgress.visibility = View.VISIBLE
             }

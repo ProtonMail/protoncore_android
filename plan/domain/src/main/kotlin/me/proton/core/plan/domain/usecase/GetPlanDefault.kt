@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,15 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.entity
+package me.proton.core.plan.domain.usecase
 
-enum class SubscriptionCycle(val value: Int) {
-    FREE(0),
-    MONTHLY(1),
-    YEARLY(12),
-    TWO_YEARS(24);
+import me.proton.core.domain.entity.UserId
+import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.repository.PlansRepository
+import javax.inject.Inject
 
-    companion object {
-        val map = values().associateBy { it.value }
-    }
+class GetPlanDefault @Inject constructor(
+    private val plansRepository: PlansRepository
+) {
+    suspend operator fun invoke(userId: UserId?): Plan = plansRepository.getPlansDefault(userId)
 }

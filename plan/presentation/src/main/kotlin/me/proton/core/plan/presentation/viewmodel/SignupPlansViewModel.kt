@@ -26,37 +26,38 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportedSignupPaidPlans
+import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
-import me.proton.core.plan.presentation.entity.PlanDetailsListItem
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
+import me.proton.core.plan.presentation.entity.SupportedPlan
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SignupPlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
-    @SupportedSignupPaidPlans val supportedPaidPlanNames: List<String>,
+    private val getPlanDefault: GetPlanDefault,
+    @SupportedSignupPaidPlans val supportedPaidPlanNames: List<SupportedPlan>,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(paymentsOrchestrator) {
 
     fun getAllPlansForSignup() = flow {
         emit(PlanState.Processing)
-
-        val plans: MutableList<PlanDetailsListItem> = mutableListOf()
-
+        val plans: MutableList<PlanDetailsItem> = mutableListOf()
         plans.apply {
-            addAll(getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it }, userId = null)
-                .map {
-                    it.toPaidPlanDetailsItem(
-                        subscribedPlans = null,
-                        upgrade = false
-                    )
-                }
+            addAll(
+                getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it.name }, userId = null)
+                    .map { plan ->
+                        plan.toPaidPlanDetailsItem(
+                            supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
+                        )
+                    }
             )
-            add(createFreePlan(currentlySubscribed = false, selectable = true))
+            add(createFreePlan(getPlanDefault(userId = null)))
         }
         emit(PlanState.Success.Plans(plans = plans))
     }.catch { error ->
-        _availablePlansState.tryEmit(PlanState.Error(error))
+        state.tryEmit(PlanState.Error(error))
     }.onEach { plans ->
-        _availablePlansState.tryEmit(plans)
+        state.tryEmit(plans)
     }.launchIn(viewModelScope)
 }

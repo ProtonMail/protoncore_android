@@ -20,14 +20,12 @@ package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
@@ -42,12 +40,9 @@ import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
-
-    @Inject lateinit var product: Product
 
     private val signupPlansViewModel by viewModels<SignupPlansViewModel>()
 
@@ -70,20 +65,8 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (signupPlansViewModel.supportedPaidPlanNames.isNotEmpty()) {
-            binding.apply {
-                toolbar.setNavigationOnClickListener {
-                    setResult()
-                }
-                input.user?.let {
-                    if (input.showCurrent) {
-                        plansTitle.visibility = View.GONE
-                        toolbar.title = getString(R.string.plans_subscription)
-                    } else {
-                        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
-                        plansTitle.text = getString(R.string.plans_upgrade_plan)
-                    }
-                }
-                plansView.setProduct(product)
+            binding.toolbar.setNavigationOnClickListener {
+                setResult()
             }
             signupPlansViewModel.availablePlansState.onEach {
                 when (it) {
@@ -98,11 +81,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                                     // proceed with result return
                                     setResult(selectedPlan)
                                 } else {
-                                    val cycle = when (selectedPlan.cycle) {
-                                        PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
-                                        PlanCycle.YEARLY -> SubscriptionCycle.YEARLY
-                                        PlanCycle.TWO_YEARS -> SubscriptionCycle.TWO_YEARS
-                                    }.exhaustive
+                                    val cycle = selectedPlan.cycle.toSubscriptionCycle()
                                     signupPlansViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
                                 }
                             }
@@ -125,8 +104,9 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
         progress.visibility = if (loading) View.VISIBLE else View.GONE
     }
 
-    private fun onError(message: String?) {
+    private fun onError(message: String?) = with(binding) {
         showLoading(false)
+        connectivityIssueView.visibility = View.VISIBLE
         binding.root.errorSnack(message = message ?: getString(R.string.plans_fetching_general_error))
     }
 

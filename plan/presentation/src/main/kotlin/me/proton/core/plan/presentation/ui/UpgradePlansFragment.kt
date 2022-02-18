@@ -19,6 +19,8 @@
 package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -31,11 +33,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
-import me.proton.core.plan.presentation.entity.PlanCurrency
-import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
@@ -76,31 +76,46 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                 toolbar.setNavigationOnClickListener {
                     setResult()
                 }
-                toolbar.title = getString(R.string.plans_subscription)
+                manageSubscriptionText.movementMethod = LinkMovementMethod.getInstance()
+                input.user?.let {
+                    if (input.showCurrent) {
+                        toolbar.title = getString(R.string.plans_subscription)
+                    } else {
+                        plansTitle.apply {
+                            gravity = Gravity.CENTER_HORIZONTAL
+                            text = getString(R.string.plans_upgrade_plan)
+                        }
+                        manageSubscriptionText.visibility = GONE
+                        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
+                    }
+                }
                 toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
                 plansView.setProduct(product)
             }
 
             upgradePlanViewModel.subscribedPlansState.onEach {
+                @Suppress("IMPLICIT_CAST_TO_ANY")
                 when (it) {
                     is UpgradePlansViewModel.SubscribedPlansState.Error ->
                         onError(it.error.getUserMessage(resources))
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
-                        val subscribedPlans = it.subscribedPlans
+                        val plan = it.subscribedPlans[0]
+                        val cycle = plan.cycle
+                        val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency
+                        binding.manageSubscriptionText.visibility = VISIBLE
                         binding.currentPlan.apply {
-                            visibility = VISIBLE
-                            cycle = PlanCycle.YEARLY
-                            currency = PlanCurrency.CHF
-                            planDetailsListItem = subscribedPlans[0]
+                            setBackgroundResource(R.drawable.background_current_plan)
+                            visibility = if (input.showCurrent) VISIBLE else GONE
+                            setData(plan = plan, cycle = cycle, currency = currency, collapsible = false)
                         }
-                        Unit
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
             upgradePlanViewModel.availablePlansState.onEach {
+                @Suppress("IMPLICIT_CAST_TO_ANY")
                 when (it) {
                     is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
                     is BasePlansViewModel.PlanState.Idle -> Unit
@@ -113,16 +128,15 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                                     // proceed with result return
                                     setResult(selectedPlan)
                                 } else {
-                                    val cycle = when (selectedPlan.cycle) {
-                                        PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
-                                        PlanCycle.YEARLY -> SubscriptionCycle.YEARLY
-                                        PlanCycle.TWO_YEARS -> SubscriptionCycle.TWO_YEARS
-                                    }.exhaustive
+                                    val cycle = selectedPlan.cycle.toSubscriptionCycle()
                                     upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
                                 }
                             }
-                            plansTitle.visibility = if (it.plans.isNotEmpty()) VISIBLE else GONE
-                            plansView.plans = it.plans
+                            with(plansView) {
+                                plans = it.plans
+                                visibility = if (it.plans.isEmpty()) GONE else VISIBLE
+                            }
+                            plansTitle.visibility = if (it.plans.size > 0) VISIBLE else android.view.View.GONE
                         }
                     }
                     is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
@@ -140,12 +154,13 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
-        progress.visibility = if (loading) VISIBLE else View.GONE
+        progress.visibility = if (loading) VISIBLE else GONE
     }
 
-    private fun onError(message: String?) {
+    private fun onError(message: String?) = with(binding) {
         showLoading(false)
-        binding.root.errorSnack(message = message ?: getString(R.string.plans_fetching_general_error))
+        connectivityIssueView.visibility = VISIBLE
+        root.errorSnack(message = message ?: getString(R.string.plans_fetching_general_error))
     }
 
     companion object {

@@ -37,4 +37,9 @@ class PlansRepositoryImpl(
                 it.toPlan()
             }
         }.valueOrThrow
+
+    override suspend fun getPlansDefault(sessionUserId: SessionUserId?): Plan =
+        provider.get<PlansApi>(sessionUserId).invoke {
+            getPlansDefault().plan.toPlan()
+        }.valueOrThrow
 }

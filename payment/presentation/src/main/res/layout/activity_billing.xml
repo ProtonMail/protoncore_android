@@ -160,7 +160,6 @@
             android:layout_marginStart="@dimen/default_gap"
             android:layout_marginEnd="@dimen/default_gap"
             android:layout_marginBottom="@dimen/default_extended_margin"
-            android:text="@string/payments_pay"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

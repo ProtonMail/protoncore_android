@@ -48,13 +48,25 @@ class SelectPlanRobot : CoreRobot() {
     }
 
     /**
+     * Clicks on the chevron button on a provided [plan]
+     */
+    fun expandPlan(plan: Plan): SelectPlanRobot {
+        view.withId(R.id.collapse)
+            .hasSibling(
+                view.withText(plan.text)
+            ).scrollToNestedScrollView()
+            .click()
+        return this
+    }
+
+    /**
      * Clicks 'Select' button on a provided [plan]
      * @param T next Robot in flow
      * @return an instance of [T]
      */
     inline fun <reified T> selectPlan(plan: Plan): T =
         scrollToPlan(plan)
-            .clickPlanButtonWithText(plan, R.string.plans_select_plan)
+            .clickPlanButtonWithText(plan, R.string.plans_get_proton)
 
     /**
      * Clicks 'Upgrade' button on a provided [plan]
@@ -71,7 +83,7 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [T]
      */
     inline fun <reified T> clickPlanButtonWithText(plan: Plan, @StringRes textId: Int): T {
-        view.withText(textId)
+        view.withId(R.id.select)
             .isDescendantOf(
                 view.withId(R.id.planGroup).hasSibling(
                     view.withText(plan.text)
@@ -107,8 +119,18 @@ class SelectPlanRobot : CoreRobot() {
             view.withText(plan.text).checkDisplayed()
         }
 
+        fun planDetailsNotDisplayed(plan: Plan) {
+            view.withText(plan.text).checkNotDisplayed()
+        }
+
         fun canSelectPlan(plan: Plan) {
-            view.withText(R.string.plans_select_plan)
+            view.withId(R.id.collapse)
+                .hasSibling(
+                    view.withText(plan.text)
+                )
+                .click()
+
+            view.withId(R.id.select)
                 .isDescendantOf(
                     view.withId(R.id.planGroup).hasSibling(
                         view.withText(plan.text)
@@ -117,7 +139,7 @@ class SelectPlanRobot : CoreRobot() {
         }
 
         fun canUpgradeToPlan(plan: Plan) {
-            view.withText(R.string.plans_upgrade_plan)
+            view.withId(R.id.select)
                 .isDescendantOf(
                     view.withId(R.id.planGroup).hasSibling(
                         view.withText(plan.text)
@@ -125,16 +147,25 @@ class SelectPlanRobot : CoreRobot() {
                 ).checkDisplayed()
         }
 
-        fun billingCycleIs(billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
+        fun billingCycleIs(plan: Plan, billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
             view.withId(R.id.planPriceText).withText("${currency.symbol}${billingCycle.monthlyPrice}")
+            val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
+            val billedAsString =
+                stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}$yearlyPriceString")
             if (billingCycle == BillingCycle.Monthly) {
-                view.withText(R.string.plans_save_20).checkDisplayed()
+                view.withId(R.id.planPriceDescriptionText)
+                    .isDescendantOf(
+                        view.withId(R.id.planGroup).hasSibling(
+                            view.withText(plan.text)
+                        )
+                    ).checkNotDisplayed()
             } else {
-                val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
-                val billedAsString =
-                    stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}$yearlyPriceString")
-                view.withId(R.id.planPriceDescriptionText).withText(billedAsString).checkDisplayed()
-                view.withText(R.string.plans_renew_info).checkDisplayed()
+                view.withId(R.id.planPriceDescriptionText).withText(billedAsString)
+                    .isDescendantOf(
+                        view.withId(R.id.planGroup).hasSibling(
+                            view.withText(plan.text)
+                        )
+                    ).checkDisplayed()
             }
         }
     }

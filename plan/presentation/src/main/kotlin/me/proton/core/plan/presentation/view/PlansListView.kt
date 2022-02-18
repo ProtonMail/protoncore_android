@@ -19,7 +19,6 @@
 package me.proton.core.plan.presentation.view
 
 import android.content.Context
-import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +33,7 @@ import me.proton.core.plan.presentation.databinding.PlanListViewItemBinding
 import me.proton.core.plan.presentation.databinding.PlansListViewBinding
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
-import me.proton.core.plan.presentation.entity.PlanDetailsListItem
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
 import me.proton.core.presentation.utils.PRICE_ZERO
@@ -44,33 +43,33 @@ internal class PlansListView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
-
     private val binding = PlansListViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val plansAdapter = ProtonAdapter(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
             planDetails.apply {
-                cycle = selectedCycle
-                currency = selectedCurrency
+                setData(plan = plan, cycle = selectedCycle, currency = selectedCurrency, collapsible = plansSize != 1)
+
                 planSelectionListener = { planId, planName, amount ->
-                    selectPlanListener(SelectedPlan(planId, planName, amount == PRICE_ZERO, cycle, currency, amount))
+                    selectPlanListener(
+                        SelectedPlan(planId, planName, amount == PRICE_ZERO, selectedCycle, selectedCurrency, amount)
+                    )
                 }
-                planDetailsListItem = plan
+                setBackgroundResource(R.drawable.background_plan_list_item)
             }
         },
-        diffCallback = PlanDetailsListItem.DiffCallback,
+        diffCallback = PlanDetailsItem.DiffCallback,
         recyclable = false
     )
 
     lateinit var selectPlanListener: (SelectedPlan) -> Unit
     private var selectedCurrency: PlanCurrency
     private var selectedCycle: PlanCycle
-    private var selectable: Boolean = false
 
     init {
         selectedCycle = PlanCycle.YEARLY
-        selectedCurrency = PlanCurrency.CHF
+        selectedCurrency = PlanCurrency.EUR
 
         binding.apply {
             planListRecyclerView.apply {
@@ -83,23 +82,9 @@ internal class PlansListView @JvmOverloads constructor(
             }
 
             billingCycleSpinner.selected { cyclePosition ->
-                selectedCycle = PlanCycle.values()[cyclePosition]
+                selectedCycle = PlanCycle.getPlanCycleByPositionIgnoreFree(cyclePosition)
                 plansAdapter.notifyDataSetChanged()
-
-                val renewInfoText = when (selectedCycle) {
-                    PlanCycle.MONTHLY -> {
-                        context.getString(R.string.plans_save_20)
-                    }
-                    PlanCycle.YEARLY -> {
-                        context.getString(R.string.plans_renew_info)
-                    }
-                    PlanCycle.TWO_YEARS -> {
-                        context.getString(R.string.plans_renew_info)
-                    }
-                }
-                billingCycleDescriptionText.text = renewInfoText
             }
-            customizableFeaturesText.movementMethod = LinkMovementMethod.getInstance()
         }
 
         ArrayAdapter.createFromResource(
@@ -120,30 +105,25 @@ internal class PlansListView @JvmOverloads constructor(
         }
     }
 
-    var plans: List<PlanDetailsListItem>? = null
+    private var plansSize: Int = 0
+    var plans: List<PlanDetailsItem>? = null
         set(value) = with(binding) {
             value?.let { it ->
-                selectable = it.any { plan ->
-                    plan is PlanDetailsListItem.PaidPlanDetailsListItem && plan.selectable
-                }
-                val paidPlan = it.firstOrNull { plan -> plan is PlanDetailsListItem.PaidPlanDetailsListItem }
+                val paidPlan = it.firstOrNull { plan -> plan is PlanDetailsItem.PaidPlanDetailsItem }
                 selectedCurrency =
-                    (paidPlan as? PlanDetailsListItem.PaidPlanDetailsListItem)?.currency ?: PlanCurrency.CHF
-                currencySpinner.setSelection(PlanCurrency.values().indexOf(selectedCurrency))
-                plansAdapter.submitList(it)
-                binding.apply {
-                    currencySpinner.visibility = if (!selectable) GONE else VISIBLE
-                    billingCycleSpinner.visibility = if (!selectable) GONE else VISIBLE
-                    customizableFeaturesLayout.visibility = if (!selectable) GONE else VISIBLE
-                    billingCycleDescriptionText.visibility = if (!selectable) GONE else VISIBLE
+                    (paidPlan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: PlanCurrency.CHF
+                currencySpinner.apply {
+                    setSelection(PlanCurrency.values().indexOf(selectedCurrency))
+                    visibility = VISIBLE
                 }
+                billingCycleSpinner.visibility = VISIBLE
+                plansSize = it.size
+                plansAdapter.submitList(it)
             } ?: run {
                 plansAdapter.submitList(emptyList())
                 binding.apply {
                     currencySpinner.visibility = GONE
                     billingCycleSpinner.visibility = GONE
-                    customizableFeaturesLayout.visibility = GONE
-                    billingCycleDescriptionText.visibility = GONE
                 }
             }
         }

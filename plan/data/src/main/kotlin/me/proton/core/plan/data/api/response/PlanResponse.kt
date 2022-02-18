@@ -26,17 +26,17 @@ import me.proton.core.plan.domain.entity.PlanPricing
 @Serializable
 internal data class PlanResponse(
     @SerialName("ID")
-    val id: String,
+    val id: String? = null,
     @SerialName("Type")
     val type: Int,
     @SerialName("Cycle")
-    val cycle: Int,
+    val cycle: Int? = null,
     @SerialName("Name")
     val name: String,
     @SerialName("Title")
     val title: String,
     @SerialName("Currency")
-    val currency: String,
+    val currency: String? = null,
     @SerialName("Amount")
     val amount: Int,
     @SerialName("MaxDomains")
@@ -52,13 +52,13 @@ internal data class PlanResponse(
     @SerialName("MaxVPN")
     val maxVPN: Int,
     @SerialName("Services")
-    val services: Int,
+    val services: Int? = null,
     @SerialName("Features")
     val features: Int,
     @SerialName("Quantity")
     val quantity: Int,
     @SerialName("MaxTier")
-    val maxTier: Int,
+    val maxTier: Int? = null,
     @SerialName("Pricing")
     val pricing: Pricing? = null
 ) {

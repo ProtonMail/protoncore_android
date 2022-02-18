@@ -18,26 +18,24 @@
 
 package me.proton.core.plan.presentation.view
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
-import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.text.bold
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
-import me.proton.core.plan.presentation.entity.PlanDetailsListItem
-import me.proton.core.presentation.ui.view.ProtonButton
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PlanItemView @JvmOverloads constructor(
     context: Context,
@@ -45,195 +43,177 @@ class PlanItemView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding = PlanItemBinding.inflate(LayoutInflater.from(context), this, true)
-    private lateinit var selectBtn: ProtonButton
+    internal val binding = PlanItemBinding.inflate(LayoutInflater.from(context), this, true)
+    internal var collapsible: Boolean = true
 
     var planSelectionListener: ((String, String, Double) -> Unit)? = null
+    var billableAmount = PRICE_ZERO
 
-    private var billableAmount = PRICE_ZERO
-    private lateinit var planName: String
-    private lateinit var planDisplayName: String
+    private lateinit var currency: PlanCurrency
+    private lateinit var cycle: PlanCycle
+    private lateinit var planDetailsItem: PlanDetailsItem
 
-    lateinit var cycle: PlanCycle
-    lateinit var currency: PlanCurrency
+    fun setData(plan: PlanDetailsItem, cycle: PlanCycle, currency: PlanCurrency?, collapsible: Boolean = true) {
+        this.planDetailsItem = plan
+        this.cycle = cycle
+        this.currency = currency ?: PlanCurrency.EUR
+        this.collapsible = collapsible
 
-    var planDetailsListItem: PlanDetailsListItem? = null
-        set(value) {
-            value?.let { plan ->
-                field = value
-                planName = plan.name
-                when (plan) {
-                    is PlanDetailsListItem.FreePlanDetailsListItem -> {
-                        selectBtn = plan.createSelectButton(context)
-                        bindFreePlan(plan)
-                    }
-                    is PlanDetailsListItem.PaidPlanDetailsListItem -> {
-                        selectBtn = plan.createSelectButton(context)
-                        bindPaidPlan(plan)
-                    }
-                }.exhaustive
-                addSelectButtonToView()
+        initCommonViews(plan)
+        when (plan) {
+            is PlanDetailsItem.FreePlanDetailsItem -> bindFreePlan(plan)
+            is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(plan)
+            is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(plan)
+        }.exhaustive
+    }
+
+    private fun initCommonViews(plan: PlanDetailsItem) = with(binding) {
+        planNameText.text = plan.displayName
+        planGroup.visibility = if (!collapsible) VISIBLE else GONE
+        collapse.apply {
+            visibility = if (collapsible) VISIBLE else GONE
+            onClick { rotate() }
+        }
+        select.onClick {
+            planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount)
+        }
+    }
+
+    private fun bindCurrentPlan(plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
+        currentPlanGroup.visibility = VISIBLE
+        storageProgress.apply {
+            setIndicatorColor(ContextCompat.getColor(context, R.color.green_pea))
+            progress = plan.progressValue
+        }
+        storageText.text = formatUsedSpace(context, plan.usedSpace, plan.maxSpace)
+
+        planDescriptionText.text = context.getString(R.string.plans_current_plan)
+        planPercentageText.visibility = GONE
+        select.visibility = GONE
+        val featureOrder = context.getStringArrayByName(R.array.plan_current_order)
+        context.getIntegerArrayByName(R.array.plan_current)?.let {
+            bindPlanFeatures(
+                length = it.length()
+            ) { index: Int ->
+                createCurrentPlanFeature(featureOrder!![index - 1], it, index - 1, context, plan)
             }
+            it.recycle()
         }
 
-    private fun addSelectButtonToView() = with(binding) {
-        planGroup.addView(selectBtn)
-        val set = ConstraintSet()
-        set.clone(planGroup)
-        set.connect(selectBtn.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-        set.connect(selectBtn.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-        set.connect(selectBtn.id, ConstraintSet.TOP, planRenewalText.id, ConstraintSet.BOTTOM)
-        set.connect(planPriceDescriptionText.id, ConstraintSet.TOP, selectBtn.id, ConstraintSet.BOTTOM)
-        set.applyTo(planGroup)
-        selectBtn.onClick {
-            planSelectionListener?.invoke(planName, planDisplayName, billableAmount)
-        }
-    }
-
-    private fun bindFreePlan(plan: PlanDetailsListItem.FreePlanDetailsListItem) = with(binding) {
-        planDisplayName = context.getString(R.string.plans_free_name)
-        planNameText.text = planDisplayName
-
-        planCycleText.visibility = View.GONE
-        planPriceDescriptionText.visibility = View.GONE
-        planPriceText.visibility = View.GONE
-        billableAmount = PRICE_ZERO
-
-        val features = resources.getStringArray(R.array.free)
-
-        if (plan.currentlySubscribed) {
-            planDescriptionText.text = context.getString(R.string.plans_current_plan)
-        } else {
-            binding.planDescriptionText.text = features[0]
-        }
-        planContents.removeAllViews()
-        features.drop(1).forEach { item ->
-            planContents.addView(PlanContentItemView(context).apply {
-                planItem = item
-            })
-        }
-
-        if (!plan.selectable) {
-            selectBtn.visibility = GONE
-        }
-    }
-
-    private fun bindPaidPlan(plan: PlanDetailsListItem.PaidPlanDetailsListItem) = with(binding) {
-        planDisplayName = plan.displayName
-        planNameText.text = planDisplayName
-
-        plan.renewalDate?.let {
+        when (cycle) {
+            PlanCycle.FREE -> planCycleText.visibility = GONE
+            PlanCycle.MONTHLY -> planCycleText.text = context.getString(R.string.plans_billing_monthly)
+            PlanCycle.YEARLY -> planCycleText.text = context.getString(R.string.plans_billing_yearly)
+            PlanCycle.TWO_YEARS -> planCycleText.text = context.getString(R.string.plans_billing_two_years)
+        }.exhaustive
+        val renewalInfoText = if (plan.isAutoRenewal) R.string.plans_renewal_date else R.string.plans_expiration_date
+        plan.endDate?.let {
             planRenewalText.apply {
-                text = SpannableStringBuilder(context.getString(R.string.plans_renewal_date))
-                    .bold { append(" $it") }
+                text = HtmlCompat.fromHtml(
+                    String.format(
+                        context.getString(renewalInfoText),
+                        SimpleDateFormat(RENEWAL_DATE_FORMAT, Locale.getDefault()).format(it)
+                    ),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
                 visibility = View.VISIBLE
             }
             separator.visibility = View.VISIBLE
         }
 
-        val planFeatures = context.getIntegerArrayByName("plan_id_${plan.name}")
-        val planFeaturesOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
-        if (plan.currentlySubscribed) {
-            planDescriptionText.text = context.getString(R.string.plans_current_plan)
-            planPriceText.visibility = View.GONE
+        val amount = plan.price?.let { price -> cycle.getPrice(price) } ?: PRICE_ZERO
+        billableAmount = amount
+        planPriceText.text = amount.formatCentsPriceDefaultLocale(currency.name)
+    }
+
+    private fun bindFreePlan(plan: PlanDetailsItem.FreePlanDetailsItem) = with(binding) {
+        select.text = context.getString(R.string.plans_proton_for_free)
+        planCycleText.visibility = View.GONE
+        planPriceText.text = PRICE_ZERO.formatCentsPriceDefaultLocale(currency.name)
+        val featureOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
+
+        context.getIntegerArrayByName("plan_id_${plan.name}")?.let {
+            bindPlanFeatures(
+                length = it.length().minus(1)
+            ) { index: Int ->
+                createPlanFeature(featureOrder!![index - 1], it, index, context, plan)
+            }
+            binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
+            it.recycle()
         }
+    }
 
-        billableAmount = plan.price?.yearly ?: PRICE_ZERO
-        planFeatures?.let {
-            if (!plan.currentlySubscribed) {
-                val headerResId = it.getResourceId(0, 0)
-                binding.planDescriptionText.text = context.getString(headerResId)
+    private fun bindPaidPlan(plan: PlanDetailsItem.PaidPlanDetailsItem) = with(binding) {
+        select.text = String.format(context.getString(R.string.plans_get_proton), plan.displayName)
+        starred.visibility = if (plan.starred) VISIBLE else INVISIBLE
+        val featureOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
+        context.getIntegerArrayByName("plan_id_${plan.name}")?.let {
+            bindPlanFeatures(
+                length = it.length().minus(1)
+            ) { index: Int ->
+                createPlanFeature(featureOrder!![index - 1], it, index, context, plan)
             }
-            planContents.removeAllViews()
-
-            val len = it.length() - 1
-            for (i in 1..len) {
-                planContents.addView(
-                    PlanContentItemView(context).apply {
-                        planItem = createPlanFeature(planFeaturesOrder!![i - 1], it, i, context, plan)
-                    }
-                )
-            }
+            binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
             it.recycle()
         }
 
-        selectBtn.visibility = if (plan.selectable) VISIBLE else GONE
-        if (!plan.selectable) {
-            selectBtn.visibility = GONE
-        }
-        if (plan.upgrade) {
-            selectBtn.text = context.getString(R.string.plans_upgrade_plan)
-        }
-        calculateAndUpdatePriceUI(plan.currentlySubscribed)
+        val maxMonthlyPrice = PlanCycle.MONTHLY.getPrice(plan.price) ?: PRICE_ZERO
+        when (cycle) {
+            PlanCycle.MONTHLY,
+            PlanCycle.FREE -> planPriceDescriptionText.visibility = GONE
+            PlanCycle.YEARLY,
+            PlanCycle.TWO_YEARS -> planPriceDescriptionText.visibility = VISIBLE
+        }.exhaustive
+        calculatePaidPlanPrice(plan = plan, maxMonthlyPrice = maxMonthlyPrice)
     }
 
-    private fun calculateAndUpdatePriceUI(current: Boolean) = with(binding) {
-        planDetailsListItem.let {
-            billableAmount = when (it) {
-                is PlanDetailsListItem.FreePlanDetailsListItem -> PRICE_ZERO
-                is PlanDetailsListItem.PaidPlanDetailsListItem -> {
-                    val planPricing = it.price
-                    planPricing?.let { price ->
-                        cycle.getPrice(price)
-                    } ?: PRICE_ZERO
+    private fun bindPlanFeatures(
+        length: Int,
+        createFeatureItem: (Int) -> Pair<String, Int>
+    ) = with(binding) {
+        planContents.removeAllViews()
+        for (i in 1..length) {
+            planContents.addView(
+                PlanContentItemView(context).apply {
+                    val planItems = createFeatureItem(i)
+                    planItemText = planItems.first
+                    planItemIcon = planItems.second
                 }
-                null -> PRICE_ZERO
-            }.exhaustive
+            )
         }
+    }
 
-        val monthlyPrice: Double = when (cycle) {
-            PlanCycle.MONTHLY -> {
-                planPriceDescriptionText.visibility = GONE
-                billableAmount
-            }
-            PlanCycle.YEARLY -> {
-                planPriceDescriptionText.visibility = VISIBLE
-                billableAmount / MONTHS_IN_YEAR
-            }
-            PlanCycle.TWO_YEARS -> {
-                planPriceDescriptionText.visibility = VISIBLE
-                billableAmount / MONTHS_IN_2YEARS
-            }
-        }.exhaustive.toDouble()
+    private fun calculatePaidPlanPrice(plan: PlanDetailsItem.PaidPlanDetailsItem, maxMonthlyPrice: Double) =
+        with(binding) {
+            val amount = plan.price.let { price -> cycle.getPrice(price) } ?: PRICE_ZERO
 
-        val price = monthlyPrice.formatCentsPriceDefaultLocale(currency.name)
-        planPriceText.text = price
-        if (!current) {
+            val monthlyPrice = calculateMonthlyPrice(amount)
+            if (amount != PRICE_ZERO) {
+                val discount = (maxMonthlyPrice - monthlyPrice) / maxMonthlyPrice * 100
+                planPercentageText.visibility = if (discount > 0) VISIBLE else GONE
+                planPercentageText.text = "(-${discount.toInt()}%)"
+            }
+            val price = monthlyPrice.formatCentsPriceDefaultLocale(currency.name)
+            planPriceText.text = price
+
             planCycleText.visibility = VISIBLE
             planPriceDescriptionText.text = String.format(
                 context.getString(R.string.plans_billed_yearly),
                 (monthlyPrice * MONTHS_IN_YEAR).formatCentsPriceDefaultLocale(currency.name, fractionDigits = 2)
             )
-        } else {
-            when (cycle) {
-                PlanCycle.MONTHLY -> planCycleText.text = context.getString(R.string.plans_billed_monthly)
-                PlanCycle.YEARLY -> planCycleText.text = context.getString(R.string.plans_billed_anually)
-                PlanCycle.TWO_YEARS -> planCycleText.text = context.getString(R.string.plans_billed_every_2years)
-            }.exhaustive
-            planCycleText.visibility = GONE
-            planPriceDescriptionText.visibility = GONE
-            planPriceText.visibility = VISIBLE
-            planCycleText.visibility = VISIBLE
+            billableAmount = amount
         }
-    }
+
+    private fun calculateMonthlyPrice(amount: Double) = when (cycle) {
+        PlanCycle.MONTHLY -> amount
+        PlanCycle.YEARLY -> amount / MONTHS_IN_YEAR
+        PlanCycle.TWO_YEARS -> amount / MONTHS_IN_2YEARS
+        PlanCycle.FREE -> PRICE_ZERO
+    }.exhaustive.toDouble()
 
     companion object {
         private const val MONTHS_IN_YEAR = 12
         private const val MONTHS_IN_2YEARS = 24
+        private const val RENEWAL_DATE_FORMAT = "MMM dd, yyyy"
     }
 }
-
-private fun Context.getStringArrayByName(aString: String) =
-    try {
-        resources.getStringArray(resources.getIdentifier(aString, "array", packageName))
-    } catch (notFound: Resources.NotFoundException) {
-        null
-    }
-
-@SuppressLint("Recycle")
-private fun Context.getIntegerArrayByName(aString: String) =
-    try {
-        resources.obtainTypedArray(resources.getIdentifier(aString, "array", packageName))
-    } catch (notFound: Resources.NotFoundException) {
-        null
-    }

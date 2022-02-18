@@ -19,30 +19,34 @@
 package me.proton.core.plan.presentation.entity
 
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import me.proton.core.util.kotlin.exhaustive
 
 enum class PlanCycle(val value: Int) {
-    MONTHLY(1), YEARLY(12), TWO_YEARS(24);
+    FREE(0), MONTHLY(1), YEARLY(12), TWO_YEARS(24);
 
     fun getPrice(pricing: PlanPricing): Price? {
         return when (this) {
             MONTHLY -> pricing.monthly
             YEARLY -> pricing.yearly
             TWO_YEARS -> pricing.twoYearly
+            FREE -> PRICE_ZERO
         }?.toDouble().exhaustive
     }
 
-    fun toSubscriptionCycle(): SubscriptionCycle {
-        return when(this) {
+    fun toSubscriptionCycle(): SubscriptionCycle =
+        when (this) {
             MONTHLY -> SubscriptionCycle.MONTHLY
             YEARLY -> SubscriptionCycle.YEARLY
             TWO_YEARS -> SubscriptionCycle.TWO_YEARS
+            FREE -> SubscriptionCycle.FREE
         }.exhaustive
-    }
 
     companion object {
         val map = values().associateBy { it.value }
+
+        fun getPlanCycleByPositionIgnoreFree(position: Int) = values()[position + 1]
     }
 }
 

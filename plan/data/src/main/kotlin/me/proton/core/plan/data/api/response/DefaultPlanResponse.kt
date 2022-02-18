@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,15 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.entity
+package me.proton.core.plan.data.api.response
 
-enum class SubscriptionCycle(val value: Int) {
-    FREE(0),
-    MONTHLY(1),
-    YEARLY(12),
-    TWO_YEARS(24);
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-    companion object {
-        val map = values().associateBy { it.value }
-    }
-}
+@Serializable
+internal data class DefaultPlanResponse(
+    @SerialName("Plans")
+    val plan: PlanResponse
+)

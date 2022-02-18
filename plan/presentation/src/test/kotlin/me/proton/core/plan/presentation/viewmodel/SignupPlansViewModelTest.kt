@@ -21,13 +21,12 @@ package me.proton.core.plan.presentation.viewmodel
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Subscription
-import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.SupportedPlan
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -40,13 +39,14 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val getPlansUseCase = mockk<GetPlans>()
-    private val getCurrentSubscription = mockk<GetCurrentSubscription>(relaxed = true)
+    private val getPlanDefaultUseCase = mockk<GetPlanDefault>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     // endregion
 
     // region test data
-    private val testUserId = UserId("test-user-id")
-    private val testDefaultSupportedPlans = listOf("plan-name-1", "plan-name-2")
+    private val testDefaultSupportedPlans = listOf(
+        SupportedPlan("plan-name-1"), SupportedPlan("plan-name-2")
+    )
     private val testPlan = Plan(
         id = "plan-name-1",
         type = 1,
@@ -69,18 +69,25 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             1, 10, 20
         )
     )
-    private val testSubscription = Subscription(
-        id = "test-subscription-id",
-        invoiceId = "test-invoice-id",
-        cycle = 12,
-        periodStart = 1,
-        periodEnd = 2,
-        couponCode = null,
-        currency = "EUR",
-        amount = 5,
-        plans = listOf(
-            testPlan
-        )
+
+    private val testDefaultPlan = Plan(
+        id = null,
+        type = 1,
+        cycle = null,
+        name = "plan-default",
+        title = "Plan Default",
+        currency = null,
+        amount = 0,
+        maxDomains = 0,
+        maxAddresses = 1,
+        maxCalendars = 0,
+        maxSpace = 1,
+        maxMembers = 1,
+        maxVPN = 0,
+        services = 0,
+        features = 0,
+        quantity = 0,
+        maxTier = 0
     )
     // endregion
 
@@ -88,13 +95,14 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
+        coEvery { getPlanDefaultUseCase.invoke(any()) } returns testDefaultPlan
         viewModel =
-            SignupPlansViewModel(getPlansUseCase, testDefaultSupportedPlans, paymentOrchestrator)
+            SignupPlansViewModel(getPlansUseCase, getPlanDefaultUseCase, testDefaultSupportedPlans, paymentOrchestrator)
     }
 
     @Test
     fun `get plans for signup success handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, any()) } returns listOf(
+        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans.map { it.name }, any()) } returns listOf(
             testPlan,
             testPlan.copy(id = "plan-name-2", name = "plan-name-2")
         )
@@ -110,7 +118,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             val planOne = plansStatus.plans[0]
             val planTwo = plansStatus.plans[1]
             val planThree = plansStatus.plans[2]
-            assertEquals("free", planThree.name)
+            assertEquals("plan-default", planThree.name)
             assertEquals("plan-name-1", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
         }

@@ -41,9 +41,12 @@ dependencies {
         project(Module.networkDomain),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),
+        project(Module.userSettingsDomain),
 
         // Features
         project(Module.planDomain),
+        project(Module.userDomain),
+        project(Module.keyDomain),
 
         // Android
         `android-ktx`,

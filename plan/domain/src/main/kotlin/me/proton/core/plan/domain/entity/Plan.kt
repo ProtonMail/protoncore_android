@@ -19,12 +19,12 @@
 package me.proton.core.plan.domain.entity
 
 data class Plan(
-    val id: String,
+    val id: String?,
     val type: Int,
-    val cycle: Int,
+    val cycle: Int?,
     val name: String,
     val title: String,
-    val currency: String,
+    val currency: String?,
     val amount: Int,
     val maxDomains: Int,
     val maxAddresses: Int,
@@ -32,10 +32,10 @@ data class Plan(
     val maxSpace: Long,
     val maxMembers: Int,
     val maxVPN: Int,
-    val services: Int,
+    val services: Int?,
     val features: Int,
     val quantity: Int,
-    val maxTier: Int,
+    val maxTier: Int?,
     val pricing: PlanPricing? = null
 )
 
