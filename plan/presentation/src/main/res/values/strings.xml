@@ -21,6 +21,7 @@
     <string name="plans_select_a_plan">Select a Plan</string>
     <string name="plans_customizable_features">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
     <string name="plans_customizable_features_web">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to customize your plan.</string>
+    <string name="plans_customizable_features_vpn">Visit <a href="https://protonvpn.com/pricing">protonvpn.com</a> to customize your plan.</string>
     <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
     <string name="plans_free_name">Free</string>
     <string name="plan_price_monthly">per month*</string>

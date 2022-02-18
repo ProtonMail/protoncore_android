@@ -75,9 +75,8 @@
             style="@style/Proton.Text.DefaultSmall.Weak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autoLink="web"
             android:maxLines="4"
-            android:text="@string/plans_customizable_features" />
+            tools:text="@string/plans_customizable_features" />
 
     </LinearLayout>
 

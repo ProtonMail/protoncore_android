@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import me.proton.core.domain.entity.Product
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanListViewItemBinding
 import me.proton.core.plan.presentation.databinding.PlansListViewBinding
@@ -146,6 +147,14 @@ internal class PlansListView @JvmOverloads constructor(
                 }
             }
         }
+
+    fun setProduct(product: Product) {
+        val descriptionRes = if (product == Product.Vpn)
+            R.string.plans_customizable_features_vpn
+        else
+            R.string.plans_customizable_features
+        binding.customizableFeaturesText.setText(descriptionRes)
+    }
 
     private fun Spinner.selected(action: (Int) -> Unit) {
         onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.
+- Fixes wrong link on plans view for VPN
 
 ## [7.0.0]
 
