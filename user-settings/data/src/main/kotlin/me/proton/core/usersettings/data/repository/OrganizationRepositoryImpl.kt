@@ -90,9 +90,8 @@ class OrganizationRepositoryImpl(
     override fun getOrganizationFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
-    ): Flow<DataResult<Organization>> {
-        return storeOrganization.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
-    }
+    ): Flow<DataResult<Organization>> =
+        storeOrganization.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
 
     override suspend fun getOrganization(sessionUserId: SessionUserId, refresh: Boolean): Organization =
         if (refresh) storeOrganization.fresh(sessionUserId) else storeOrganization.get(sessionUserId)
@@ -113,9 +112,8 @@ class OrganizationRepositoryImpl(
     override fun getOrganizationKeysFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
-    ): Flow<DataResult<OrganizationKeys>> {
-        return storeOrganizationKeys.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
-    }
+    ): Flow<DataResult<OrganizationKeys>> =
+        storeOrganizationKeys.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
 
     override suspend fun getOrganizationKeys(sessionUserId: SessionUserId, refresh: Boolean) =
         if (refresh) storeOrganizationKeys.fresh(sessionUserId) else storeOrganizationKeys.get(sessionUserId)

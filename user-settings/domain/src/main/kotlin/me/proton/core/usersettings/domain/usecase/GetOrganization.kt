@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,36 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.usersettings.domain.usecase
 
-plugins {
-    protonKotlinLibrary
-}
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import javax.inject.Inject
 
-proton {
-    apiModeDisabled()
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.accountDomain),
-
-        // Feature
-        project(Module.keyDomain),
-
-        // Android
-        `javax-inject`,
-        
-        // Kotlin
-        `coroutines-core`,
-    )
-
-    testImplementation(project(Module.kotlinTest))
+class GetOrganization @Inject constructor(
+    private val organizationRepository: OrganizationRepository
+) {
+    suspend operator fun invoke(sessionUserId: SessionUserId, refresh: Boolean) = runCatching {
+        organizationRepository.getOrganization(sessionUserId, refresh)
+    }.getOrNull()
 }

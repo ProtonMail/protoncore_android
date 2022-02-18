@@ -33,6 +33,7 @@
     <dimen name="gap_tiny">2dp</dimen>
     <dimen name="gap_small">4dp</dimen>
     <dimen name="gap_medium">8dp</dimen>
+    <dimen name="gap_medium_plus">12dp</dimen>
     <dimen name="gap_large">16dp</dimen>
     <dimen name="gap_large_plus">24dp</dimen>
     <dimen name="gap_huge">32dp</dimen>

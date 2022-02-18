@@ -47,6 +47,8 @@ data class OrganizationResponse(
     val maxMembers: Int,
     @SerialName("MaxVPN")
     val maxVPN: Int?,
+    @SerialName("MaxCalendars")
+    val maxCalendars: Int?,
     @SerialName("Features")
     val features: Int,
     @SerialName("Flags")
@@ -63,6 +65,8 @@ data class OrganizationResponse(
     val usedMembers: Int,
     @SerialName("UsedVPN")
     val usedVPN: Int?,
+    @SerialName("UsedCalendars")
+    val usedCalendars: Int?,
     @SerialName("HasKeys")
     val hasKeys: Int,
     @SerialName("ToMigrate")

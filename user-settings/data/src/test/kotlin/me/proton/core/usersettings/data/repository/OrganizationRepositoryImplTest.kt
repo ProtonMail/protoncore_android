@@ -98,7 +98,9 @@ class OrganizationRepositoryImplTest {
             usedMembers = 2,
             usedVPN = 0,
             hasKeys = 0,
-            toMigrate = 1
+            toMigrate = 1,
+            maxCalendars = 0,
+            usedCalendars = 0
         )
         coEvery { organizationApi.getOrganization() } returns SingleOrganizationResponse(organization)
         every { organizationDao.observeByUserId(any()) } returns flowOf(

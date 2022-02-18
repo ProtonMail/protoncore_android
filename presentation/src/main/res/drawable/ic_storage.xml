@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <path
+        android:fillColor="?attr/brand_norm"
+        android:fillType="evenOdd"
+        android:pathData="M12.62,2.8098C11.89,1.9998 10.08,1.5098 8,1.5098C5.52,1.5098 3,2.2698 3,3.7098V12.7998C3.0054,13.1406 3.1414,13.4663 3.38,13.7098C4.11,14.4998 5.92,14.9998 8,14.9998C10.08,14.9998 11.89,14.4898 12.62,13.6898C12.8598,13.4512 12.9962,13.128 13,12.7898V3.7098C12.9921,3.3724 12.8562,3.0507 12.62,2.8098ZM8,2.5098C9.3685,2.403 10.7336,2.7548 11.88,3.5098C12,3.6498 12,3.7198 12,3.7398C12,4.1498 10.59,4.9498 8,4.9498C5.41,4.9498 4,4.1498 4,3.7398C4,3.3298 5.41,2.5098 8,2.5098ZM11.88,12.9998C10.7362,13.7605 9.369,14.1128 8,13.9998C6.6315,14.1066 5.2664,13.7547 4.12,12.9998C4,12.8998 4,12.8298 4,12.7998V11.1498C5.2456,11.7506 6.6177,12.0422 8,11.9998C9.3806,12.0484 10.7527,11.7637 12,11.1698V12.7998C12,12.7998 12,12.8998 11.88,12.9998ZM8,10.9998C5.41,10.9998 4,10.1998 4,9.7898V8.1198C5.243,8.7309 6.6153,9.0328 8,8.9998C9.3806,9.0484 10.7527,8.7637 12,8.1698V9.7698C12,10.1798 10.59,10.9998 8,10.9998ZM8,7.9998C5.41,7.9998 4,7.1998 4,6.7898V5.0898C5.2473,5.6837 6.6194,5.9684 8,5.9198C9.3806,5.9684 10.7527,5.6837 12,5.0898V6.7398C12,7.1498 10.59,7.9998 8,7.9998Z" />
+</vector>
