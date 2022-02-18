@@ -92,13 +92,12 @@
 
             <TextView
                 android:id="@+id/manageSubscriptionText"
-                style="@style/Proton.Text.DefaultSmall.Weak"
+                style="@style/Proton.Text.Caption.Weak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/gap_large_plus"
                 android:drawablePadding="@dimen/gap_medium"
-                android:maxLines="1"
-                android:text="@string/plans_manage_your_subscription"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:drawableStartCompat="@drawable/ic_info_circle"
                 app:layout_constraintEnd_toEndOf="parent"

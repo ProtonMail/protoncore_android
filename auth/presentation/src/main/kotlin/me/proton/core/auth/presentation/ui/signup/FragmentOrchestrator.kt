@@ -84,10 +84,9 @@ internal fun FragmentManager.showTermsConditions() {
 
 internal fun FragmentManager.showUsernameChooser(
     containerId: Int = android.R.id.content,
-    requiredAccountType: AccountType,
-    product: Product?
+    requiredAccountType: AccountType
 ) = findFragmentByTag(TAG_USERNAME_CHOOSER) ?: run {
-    val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType, product = product)
+    val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)

@@ -53,12 +53,16 @@ import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
 
     private val signUpViewModel by viewModels<SignupViewModel>()
     private val loginViewModel by viewModels<LoginViewModel>()
+
+    @Inject
+    lateinit var product: Product
 
     private val input: SignUpInput by lazy {
         val value = requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) as SignUpInput
@@ -69,10 +73,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signUpViewModel.register(this)
-        supportFragmentManager.showUsernameChooser(
-            requiredAccountType = input.requiredAccountType,
-            product = input.product
-        )
+        supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
 
         signUpViewModel.inputState.onEach {
             when (it) {
@@ -175,10 +176,10 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     private fun onLoginSuccess(userId: UserId) {
-        if (input.product == Product.Vpn) {
+        if (product == Product.Vpn) {
             signupDone(userId)
         } else {
-            supportFragmentManager.showCongrats(product = input.product)
+            supportFragmentManager.showCongrats()
             supportFragmentManager.setFragmentResultListener(
                 SignupFinishedFragment.KEY_START_USING_SELECTED, this
             ) { _, _ ->

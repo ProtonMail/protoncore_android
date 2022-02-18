@@ -568,9 +568,12 @@ public final class me/proton/core/plan/presentation/ui/UpgradeActivity_MembersIn
 
 public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment : me/proton/core/plan/presentation/ui/BasePlansFragment {
 	public static final field Companion Lme/proton/core/plan/presentation/ui/UpgradePlansFragment$Companion;
+	public field product Lme/proton/core/domain/entity/Product;
 	public fun <init> ()V
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setProduct (Lme/proton/core/domain/entity/Product;)V
 }
 
 public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment$Companion {
@@ -579,6 +582,14 @@ public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment$Comp
 
 public abstract interface class me/proton/core/plan/presentation/ui/UpgradePlansFragment_GeneratedInjector {
 	public abstract fun injectUpgradePlansFragment (Lme/proton/core/plan/presentation/ui/UpgradePlansFragment;)V
+}
+
+public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/plan/presentation/ui/UpgradePlansFragment;)V
+	public static fun injectProduct (Lme/proton/core/plan/presentation/ui/UpgradePlansFragment;Lme/proton/core/domain/entity/Product;)V
 }
 
 public final class me/proton/core/plan/presentation/view/LogTag {

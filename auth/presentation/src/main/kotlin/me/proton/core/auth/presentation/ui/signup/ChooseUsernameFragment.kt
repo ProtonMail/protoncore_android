@@ -55,9 +55,8 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
     private val input: SignUpInput by lazy {
         val arguments = requireArguments()
         val requiredAccountType = AccountType.values()[arguments.getInt(ARG_INPUT)]
-        val product = Product.values()[arguments.getInt(ARG_PRODUCT)]
         viewModel.setClientAppRequiredAccountType(accountType = requiredAccountType)
-        SignUpInput(requiredAccountType = requiredAccountType, product = product)
+        SignUpInput(requiredAccountType = requiredAccountType)
     }
 
     override fun onBackPressed() {
@@ -198,10 +197,9 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         const val ARG_INPUT = "arg.chooseUsernameInput"
         const val ARG_PRODUCT = "arg.product"
 
-        operator fun invoke(requiredAccountType: AccountType, product: Product?) = ChooseUsernameFragment().apply {
+        operator fun invoke(requiredAccountType: AccountType) = ChooseUsernameFragment().apply {
             arguments = bundleOf(
-                ARG_INPUT to requiredAccountType.ordinal,
-                ARG_PRODUCT to product?.ordinal
+                ARG_INPUT to requiredAccountType.ordinal
             )
         }
     }

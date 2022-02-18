@@ -27,16 +27,14 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished) {
 
     private val binding by viewBinding(FragmentSignupFinishedBinding::bind)
 
-    private val product: Product? by lazy {
-        val arguments = requireArguments()
-        val ordinal = arguments.getInt(ChooseUsernameFragment.ARG_PRODUCT, -1)
-        Product.values().getOrNull(ordinal)
-    }
+    @Inject
+    lateinit var product: Product
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,12 +72,7 @@ class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished)
 
     companion object {
         const val KEY_START_USING_SELECTED = "key.start_using_selected"
-        private const val ARG_PRODUCT = "arg.product"
 
-        operator fun invoke(product: Product?) = SignupFinishedFragment().apply {
-            arguments = bundleOf(
-                ARG_PRODUCT to product?.ordinal
-            )
-        }
+        operator fun invoke() = SignupFinishedFragment()
     }
 }

@@ -21,10 +21,8 @@ package me.proton.core.auth.presentation.entity.signup
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.domain.entity.Product
 
 @Parcelize
 data class SignUpInput(
-    val requiredAccountType: AccountType,
-    val product: Product?
+    val requiredAccountType: AccountType
 ) : Parcelable

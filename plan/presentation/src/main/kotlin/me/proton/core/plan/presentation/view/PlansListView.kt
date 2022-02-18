@@ -128,14 +128,6 @@ internal class PlansListView @JvmOverloads constructor(
             }
         }
 
-    fun setProduct(product: Product) {
-        val descriptionRes = if (product == Product.Vpn)
-            R.string.plans_customizable_features_vpn
-        else
-            R.string.plans_customizable_features
-        binding.customizableFeaturesText.setText(descriptionRes)
-    }
-
     private fun Spinner.selected(action: (Int) -> Unit) {
         onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}

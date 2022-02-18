@@ -89,10 +89,9 @@ fun FragmentManager.removeCreatingUser() {
 }
 
 fun FragmentManager.showCongrats(
-    containerId: Int = android.R.id.content,
-    product: Product?
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_CONGRATS) ?: run {
-    val congratsFragment = SignupFinishedFragment(product = product)
+    val congratsFragment = SignupFinishedFragment()
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, congratsFragment, TAG_CONGRATS)

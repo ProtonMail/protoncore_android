@@ -38,6 +38,7 @@
     <string name="plans_get_proton">Get %s</string>
     <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
     <string name="plans_used_space">%s of %s</string>
+    <string name="plans_manage_your_subscription_vpn">Manage your subscription at <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
 
     <!-- region all possible plan item types. this could be updated as per language requirements.-->
     <plurals name="item_storage" comment="please do not modify the text between #">

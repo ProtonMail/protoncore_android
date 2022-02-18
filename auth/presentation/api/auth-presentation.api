@@ -167,8 +167,8 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 	public final fun startLoginWorkflow (Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;)V
 	public static synthetic fun startLoginWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun startSecondFactorWorkflow (Lme/proton/core/account/domain/entity/Account;)V
-	public final fun startSignupWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)V
-	public static synthetic fun startSignupWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)V
+	public final fun startSignupWorkflow (Lme/proton/core/account/domain/entity/AccountType;)V
+	public static synthetic fun startSignupWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;ILjava/lang/Object;)V
 	public final fun startTwoPassModeWorkflow (Lme/proton/core/account/domain/entity/Account;)V
 	public final fun unregister ()V
 }
@@ -956,14 +956,12 @@ public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod
 
 public final class me/proton/core/auth/presentation/entity/signup/SignUpInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)V
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;)V
 	public final fun component1 ()Lme/proton/core/account/domain/entity/AccountType;
-	public final fun component2 ()Lme/proton/core/domain/entity/Product;
-	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SignUpInput;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
+	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SignUpInput;Lme/proton/core/account/domain/entity/AccountType;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1307,8 +1305,8 @@ public abstract interface class me/proton/core/auth/presentation/ui/TwoPassModeA
 public final class me/proton/core/auth/presentation/ui/UtilsKt {
 	public static final fun removeCongrats (Landroidx/fragment/app/FragmentManager;)V
 	public static final fun removeCreatingUser (Landroidx/fragment/app/FragmentManager;)V
-	public static final fun showCongrats (Landroidx/fragment/app/FragmentManager;ILme/proton/core/domain/entity/Product;)Landroidx/fragment/app/Fragment;
-	public static synthetic fun showCongrats$default (Landroidx/fragment/app/FragmentManager;ILme/proton/core/domain/entity/Product;ILjava/lang/Object;)Landroidx/fragment/app/Fragment;
+	public static final fun showCongrats (Landroidx/fragment/app/FragmentManager;I)Landroidx/fragment/app/Fragment;
+	public static synthetic fun showCongrats$default (Landroidx/fragment/app/FragmentManager;IILjava/lang/Object;)Landroidx/fragment/app/Fragment;
 	public static final fun showCreatingUser (Landroidx/fragment/app/FragmentManager;I)Landroidx/fragment/app/Fragment;
 	public static synthetic fun showCreatingUser$default (Landroidx/fragment/app/FragmentManager;IILjava/lang/Object;)Landroidx/fragment/app/Fragment;
 	public static final fun showPasswordChangeDialog (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Z)V
@@ -1336,7 +1334,7 @@ public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFrag
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion {
-	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment;
+	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment_GeneratedInjector {
@@ -1490,7 +1488,10 @@ public final class me/proton/core/auth/presentation/ui/signup/SignupActivity : m
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/SignupActivity$Companion;
+	public field product Lme/proton/core/domain/entity/Product;
 	public fun <init> ()V
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public final fun setProduct (Lme/proton/core/domain/entity/Product;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/SignupActivity$Companion {
@@ -1500,16 +1501,35 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Signu
 	public abstract fun injectSignupActivity (Lme/proton/core/auth/presentation/ui/signup/SignupActivity;)V
 }
 
+public final class me/proton/core/auth/presentation/ui/signup/SignupActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/SignupActivity;)V
+	public static fun injectProduct (Lme/proton/core/auth/presentation/ui/signup/SignupActivity;Lme/proton/core/domain/entity/Product;)V
+}
+
 public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment$Companion;
 	public static final field KEY_START_USING_SELECTED Ljava/lang/String;
+	public field product Lme/proton/core/domain/entity/Product;
 	public fun <init> ()V
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setProduct (Lme/proton/core/domain/entity/Product;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFragment$Companion {
-	public final fun invoke (Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;
+	public final fun invoke ()Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;)V
+	public static fun injectProduct (Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;Lme/proton/core/domain/entity/Product;)V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment : me/proton/core/presentation/ui/ProtonSecureFragment {

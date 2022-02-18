@@ -50,7 +50,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) {
 
-    @Inject lateinit var product: Product
+    @Inject
+    lateinit var product: Product
 
     private val upgradePlanViewModel by viewModels<UpgradePlansViewModel>()
     private val binding by viewBinding(FragmentPlansUpgradeBinding::bind)
@@ -76,7 +77,15 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                 toolbar.setNavigationOnClickListener {
                     setResult()
                 }
-                manageSubscriptionText.movementMethod = LinkMovementMethod.getInstance()
+                manageSubscriptionText.apply {
+                    setText(
+                        if (product == Product.Vpn)
+                            R.string.plans_manage_your_subscription_vpn
+                        else
+                            R.string.plans_manage_your_subscription
+                    )
+                    movementMethod = LinkMovementMethod.getInstance()
+                }
                 input.user?.let {
                     if (input.showCurrent) {
                         toolbar.title = getString(R.string.plans_subscription)
@@ -90,7 +99,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     }
                 }
                 toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
-                plansView.setProduct(product)
             }
 
             upgradePlanViewModel.subscribedPlansState.onEach {
