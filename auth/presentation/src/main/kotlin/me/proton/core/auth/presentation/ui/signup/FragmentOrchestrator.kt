@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
+import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
@@ -83,9 +84,10 @@ internal fun FragmentManager.showTermsConditions() {
 
 internal fun FragmentManager.showUsernameChooser(
     containerId: Int = android.R.id.content,
-    requiredAccountType: AccountType
+    requiredAccountType: AccountType,
+    product: Product?
 ) = findFragmentByTag(TAG_USERNAME_CHOOSER) ?: run {
-    val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType)
+    val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType, product = product)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)

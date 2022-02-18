@@ -80,7 +80,7 @@ open class CoreexampleRobot : CoreRobot() {
 
         fun userStateIs(user: User, accountState: AccountState, sessionState: SessionState?) {
             val userState = getUserState(user, accountState, sessionState)
-            view.instanceOf(ScrollView::class.java).swipeUp()
+            view.withId(R.id.parentSwipeView).swipeUp()
             view.withText(userState).checkDisplayed()
         }
 

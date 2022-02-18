@@ -36,14 +36,14 @@ import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.AuthActivity
+import me.proton.core.auth.presentation.ui.showCongrats
 import me.proton.core.auth.presentation.ui.showCreatingUser
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_BILLING_DETAILS
@@ -69,7 +69,10 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signUpViewModel.register(this)
-        supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
+        supportFragmentManager.showUsernameChooser(
+            requiredAccountType = input.requiredAccountType,
+            product = input.product
+        )
 
         signUpViewModel.inputState.onEach {
             when (it) {
@@ -130,11 +133,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         if (billingResult == null) {
             signUpViewModel.startCreateUserWorkflow()
         } else {
-            val cycle = when (plan.cycle) {
-                PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
-                PlanCycle.YEARLY -> SubscriptionCycle.YEARLY
-                PlanCycle.TWO_YEARS -> SubscriptionCycle.TWO_YEARS
-            }.exhaustive
+            val cycle = plan.cycle.toSubscriptionCycle()
             signUpViewModel.startCreatePaidUserWorkflow(plan.planName, plan.planDisplayName, cycle, billingResult)
         }
     }
@@ -176,6 +175,19 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     private fun onLoginSuccess(userId: UserId) {
+        if (input.product == Product.Vpn) {
+            signupDone(userId)
+        } else {
+            supportFragmentManager.showCongrats(product = input.product)
+            supportFragmentManager.setFragmentResultListener(
+                SignupFinishedFragment.KEY_START_USING_SELECTED, this
+            ) { _, _ ->
+                signupDone(userId)
+            }
+        }
+    }
+
+    private fun signupDone(userId: UserId) {
         setResult(
             Activity.RESULT_OK,
             Intent().apply {
@@ -193,6 +205,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                 )
             }
         )
+
         finish()
     }
 

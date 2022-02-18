@@ -257,7 +257,7 @@ class AuthOrchestrator {
      */
     fun startAddAccountWorkflow(
         requiredAccountType: AccountType,
-        product: Product? = null,
+        product: Product,
         loginUsername: String? = null
     ) {
         checkRegistered(addAccountWorkflowLauncher).launch(
@@ -330,9 +330,9 @@ class AuthOrchestrator {
     /**
      * Starts the SignUp workflow.
      */
-    fun startSignupWorkflow(requiredAccountType: AccountType = AccountType.Internal) {
+    fun startSignupWorkflow(requiredAccountType: AccountType = AccountType.Internal, product: Product? = null) {
         checkRegistered(signUpWorkflowLauncher).launch(
-            SignUpInput(requiredAccountType)
+            SignUpInput(requiredAccountType, product)
         )
     }
     // endregion

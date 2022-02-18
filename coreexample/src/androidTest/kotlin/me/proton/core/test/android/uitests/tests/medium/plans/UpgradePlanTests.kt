@@ -60,7 +60,7 @@ class UpgradePlanTests : BaseTest() {
 
         coreExampleRobot
             .plansUpgrade()
-            .verify { planDetailsDisplayed(paidUser.plan) }
+            .verify { planDetailsNotDisplayed(paidUser.plan) }
     }
 
     @Test
@@ -77,7 +77,7 @@ class UpgradePlanTests : BaseTest() {
             Currency.values().forEach { currency ->
                 selectPlanRobot
                     .changeCurrency(currency)
-                    .verify { billingCycleIs(cycle, currency) }
+                    .verify { billingCycleIs(Plan.Dev, cycle, currency) }
             }
         }
     }
