@@ -376,3 +376,8 @@ public final class me/proton/core/user/domain/repository/UserRepository$DefaultI
 	public static synthetic fun getUserFlow$default (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 }
 
+public final class me/proton/core/user/domain/usecase/GetUser {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

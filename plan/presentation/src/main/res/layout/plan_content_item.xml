@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/itemText"
-        style="@style/Proton.Text.Default"
+        style="@style/Proton.Text.DefaultSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"

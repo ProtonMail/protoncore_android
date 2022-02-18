@@ -60,6 +60,7 @@ class SelectPlanTests : BaseTest() {
     @Test
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
+            .expandPlan(Free)
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {
                 hvElementsDisplayed()
@@ -77,11 +78,13 @@ class SelectPlanTests : BaseTest() {
     @SmokeTest
     fun selectPlusAndCancelPayment() {
         selectPlanRobot
+            .expandPlan(Dev)
             .selectPlan<AddCreditCardRobot>(Dev)
             .verify { addCreditCardElementsDisplayed() }
 
         AddCreditCardRobot()
             .close<SelectPlanRobot>()
+            .expandPlan(Free)
             .verify { planDetailsDisplayed(Free) }
     }
 }

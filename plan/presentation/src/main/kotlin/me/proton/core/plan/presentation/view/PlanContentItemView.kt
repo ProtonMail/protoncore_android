@@ -22,6 +22,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanContentItemBinding
 
 internal class PlanContentItemView @JvmOverloads constructor(
@@ -32,8 +33,13 @@ internal class PlanContentItemView @JvmOverloads constructor(
 
     private val binding = PlanContentItemBinding.inflate(LayoutInflater.from(context), this, true)
 
-    var planItem: String? = null
+    var planItemText: String? = null
         set(value) = with(binding) {
             itemText.text = value
+        }
+
+    var planItemIcon: Int = R.drawable.ic_baseline_check
+        set(value) = with(binding) {
+            icon.setImageResource(value)
         }
 }

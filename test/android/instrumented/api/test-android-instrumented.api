@@ -1,3 +1,12 @@
+public final class me/proton/core/test/android/NestedScrollViewExtension : androidx/test/espresso/ViewAction {
+	public fun <init> ()V
+	public fun <init> (Landroidx/test/espresso/ViewAction;)V
+	public synthetic fun <init> (Landroidx/test/espresso/ViewAction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getConstraints ()Lorg/hamcrest/Matcher;
+	public fun getDescription ()Ljava/lang/String;
+	public fun perform (Landroidx/test/espresso/UiController;Landroid/view/View;)V
+}
+
 public final class me/proton/core/test/android/instrumented/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -379,6 +388,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnView :
 	public final fun pressImeActionBtn ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun scrollToNestedScrollView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun startsWith (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun supportsInputMethods ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
@@ -1001,17 +1011,19 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot : me
 	public fun <init> ()V
 	public final fun changeBillingCycle (Lme/proton/core/test/android/plugins/data/BillingCycle;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 	public final fun changeCurrency (Lme/proton/core/test/android/plugins/data/Currency;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
+	public final fun expandPlan (Lme/proton/core/test/android/plugins/data/Plan;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 	public final fun scrollToPlan (Lme/proton/core/test/android/plugins/data/Plan;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;
 }
 
 public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
-	public final fun billingCycleIs (Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;)V
-	public static synthetic fun billingCycleIs$default (Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;ILjava/lang/Object;)V
+	public final fun billingCycleIs (Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;)V
+	public static synthetic fun billingCycleIs$default (Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;ILjava/lang/Object;)V
 	public final fun canSelectPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun canUpgradeToPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
+	public final fun planDetailsNotDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
 }
 
 public final class me/proton/core/test/android/robots/reports/BugReportRobot : me/proton/core/test/android/robots/CoreRobot {

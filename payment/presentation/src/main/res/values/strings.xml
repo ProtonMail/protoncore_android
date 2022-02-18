@@ -17,41 +17,41 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <!-- region payment errors -->
-  <string name="payments_general_error">An error occurred.</string>
-  <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
-  <string name="payments_3ds_not_approved">3DS approval has been rejected.</string>
-  <string name="payments_error_card_name">Name on card required.</string>
-  <string name="payments_error_card_number">Invalid card number.</string>
-  <string name="payments_error_cvc">Please enter valid security code.</string>
-  <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
-  <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
-  <string name="payments_error_invalid_session">Invalid session.</string>
-  <!-- endregion -->
-  <!-- region payment options -->
-  <string name="payments_choose_payment_method">Choose your payment method</string>
-  <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
-  <string name="payments_billing_monthly">Billed monthly</string>
-  <string name="payments_billing_yearly">Billed yearly</string>
-  <string name="payments_billing_two_years">Billed every two years</string>
-  <string name="payments_pay">Pay</string>
-  <string name="payments_method_icon">Payment method icon.</string>
-  <!-- endregion -->
-  <!-- region billing -->
-  <string name="payments_payment_details">Payment details</string>
-  <string name="payments_card_name">Name on card</string>
-  <string name="payments_card_number">Card number</string>
-  <string name="payments_expiration_date">Expiration date</string>
-  <string name="payments_security_code">Security code</string>
-  <string name="payments_postal_code">ZIP</string>
-  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">MM/YY</string>
-  <string name="payments_security_code_hint">123</string>
-  <string name="payments_country">Country</string>
-  <string name="payments_paying_in_process">Paying</string>
-  <string name="payments_choose_country">Choose country</string>
-  <string name="payments_info_not_available">n/a</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
-  <string name="payment_paypal_list_item">PayPal</string>
-  <!-- endregion -->
+    <!-- region payment errors -->
+    <string name="payments_general_error">An error occurred.</string>
+    <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
+    <string name="payments_3ds_not_approved">3DS approval has been rejected.</string>
+    <string name="payments_error_card_name">Name on card required.</string>
+    <string name="payments_error_card_number">Invalid card number.</string>
+    <string name="payments_error_cvc">Please enter valid security code.</string>
+    <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
+    <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
+    <string name="payments_error_invalid_session">Invalid session.</string>
+    <!-- endregion -->
+    <!-- region payment options -->
+    <string name="payments_choose_payment_method">Choose your payment method</string>
+    <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
+    <string name="payments_billing_monthly">For 1 month</string>
+    <string name="payments_billing_yearly">For 1 year</string>
+    <string name="payments_billing_two_years">For 2 years</string>
+    <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
+    <string name="payments_method_icon">Payment method icon.</string>
+    <!-- endregion -->
+    <!-- region billing -->
+    <string name="payments_payment_details">Payment details</string>
+    <string name="payments_card_name">Name on card</string>
+    <string name="payments_card_number">Card number</string>
+    <string name="payments_expiration_date">Expiration date</string>
+    <string name="payments_security_code">Security code</string>
+    <string name="payments_postal_code">ZIP code</string>
+    <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+    <string name="payments_expiration_date_hint">MM/YY</string>
+    <string name="payments_security_code_hint">123</string>
+    <string name="payments_country">Country</string>
+    <string name="payments_paying_in_process">Paying</string>
+    <string name="payments_choose_country">Select country</string>
+    <string name="payments_info_not_available">n/a</string>
+    <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
+    <string name="payment_paypal_list_item">PayPal</string>
+    <!-- endregion -->
 </resources>

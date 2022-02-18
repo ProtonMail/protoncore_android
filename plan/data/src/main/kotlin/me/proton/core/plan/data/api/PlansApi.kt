@@ -19,9 +19,9 @@
 package me.proton.core.plan.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.plan.data.api.response.DefaultPlanResponse
 import me.proton.core.plan.data.api.response.PlansResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 internal interface PlansApi : BaseRetrofitApi {
 
@@ -30,4 +30,10 @@ internal interface PlansApi : BaseRetrofitApi {
      */
     @GET("payments/v4/plans")
     suspend fun getPlans(): PlansResponse
+
+    /**
+     * Returns the default plan values from the API.
+     */
+    @GET("payments/v4/plans/default")
+    suspend fun getPlansDefault(): DefaultPlanResponse
 }

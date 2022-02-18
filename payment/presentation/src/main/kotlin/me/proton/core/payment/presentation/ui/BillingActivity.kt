@@ -101,11 +101,17 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
         viewModel.plansValidationState.onEach {
             when (it) {
                 is BillingCommonViewModel.PlansValidationState.Success -> {
-                    binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
+                    val amountDue = it.subscription.amountDue
+                    with(binding) {
+                        selectedPlanDetailsLayout.plan = input.plan.copy(amount = amountDue)
+                        payButton.text = String.format(
+                            getString(R.string.payments_pay),
+                            selectedPlanDetailsLayout.userReadablePlanAmount
+                        )
+                    }
                 }
                 is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
-                else -> {
-                }
+                else -> Unit
             }.exhaustive
         }.launchIn(lifecycleScope)
 
@@ -156,7 +162,11 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
         if (plan.amount == null) {
             viewModel.validatePlan(user, listOf(plan.name), codes, plan.currency, plan.subscriptionCycle)
         }
-        binding.selectedPlanDetailsLayout.plan = plan
+        with(binding) {
+            selectedPlanDetailsLayout.plan = plan
+            payButton.text =
+                String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
+        }
     }
 
     override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {

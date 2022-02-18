@@ -57,6 +57,7 @@
                 style="@style/ProtonTextView.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:maxLines="1"
                 android:text="@string/plans_select_a_plan"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,47 +65,78 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Select a plan" />
 
+            <TextView
+                android:id="@+id/plansSubtitle"
+                style="@style/ProtonTextView.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:text="@string/plans_select_a_plan_subtitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plansTitle"
+                tools:text="Select a plan" />
+
+            <LinearLayout
+                android:id="@+id/protonServicesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plansSubtitle">
+
+                <ImageView
+                    android:id="@+id/ic_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/gap_medium"
+                    android:src="@drawable/ic_logo_mail"
+                    app:tint="?attr/brand_norm" />
+
+                <ImageView
+                    android:id="@+id/ic_calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/gap_medium"
+                    android:src="@drawable/ic_logo_calendar"
+                    app:tint="?attr/brand_norm" />
+
+                <ImageView
+                    android:id="@+id/ic_drive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/gap_medium"
+                    android:src="@drawable/ic_logo_drive"
+                    app:tint="?attr/brand_norm" />
+
+                <ImageView
+                    android:id="@+id/ic_vpn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/gap_medium"
+                    android:src="@drawable/ic_logo_vpn"
+                    app:tint="?attr/brand_norm" />
+
+            </LinearLayout>
+
             <me.proton.core.plan.presentation.view.PlansListView
                 android:id="@+id/plansView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/gap_large"
-                android:layout_marginBottom="@dimen/gap_large"
-                app:layout_constraintBottom_toTopOf="@id/customizableFeaturesLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plansTitle" />
-
-            <LinearLayout
-                android:id="@+id/customizableFeaturesLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/gap_large"
-                android:orientation="horizontal"
-                android:visibility="gone"
+                android:layout_marginTop="@dimen/gap_large_plus"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/protonServicesLayout" />
 
-                <TextView
-                    style="@style/Proton.Text.Default.Weak"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_margin"
-                    android:autoLink="web"
-                    android:maxLines="4"
-                    android:text="*"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/customizableFeaturesText"
-                    style="@style/Proton.Text.DefaultSmall.Weak"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:maxLines="4"
-                    android:text="@string/plans_customizable_features" />
-
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -116,4 +148,13 @@
         android:indeterminate="true"
         android:indeterminateTint="?attr/brand_norm"
         android:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/connectivityIssueView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <include layout="@layout/connectivity_issue_view" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

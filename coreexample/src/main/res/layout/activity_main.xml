@@ -25,6 +25,7 @@
     tools:context="me.proton.android.core.coreexample.MainActivity">
 
     <ScrollView
+        android:id="@+id/parentSwipeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

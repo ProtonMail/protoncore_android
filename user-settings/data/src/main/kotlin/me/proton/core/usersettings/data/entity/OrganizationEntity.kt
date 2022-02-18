@@ -20,7 +20,6 @@ package me.proton.core.usersettings.data.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import kotlinx.serialization.SerialName
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
 
@@ -49,6 +48,7 @@ data class OrganizationEntity(
     val maxSpace: Long?,
     val maxMembers: Int?,
     val maxVPN: Int?,
+    val maxCalendars: Int?,
     val features: Int?,
     val flags: Int?,
     val usedDomains: Int?,
@@ -57,6 +57,7 @@ data class OrganizationEntity(
     val assignedSpace: Long?,
     val usedMembers: Int?,
     val usedVPN: Int?,
+    val usedCalendars: Int?,
     val hasKeys: Int?,
     val toMigrate: Int?
 )

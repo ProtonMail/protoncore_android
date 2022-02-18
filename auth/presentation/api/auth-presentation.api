@@ -525,6 +525,18 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupCh
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseUsernameBinding;
 }
 
+public final class me/proton/core/auth/presentation/databinding/FragmentSignupFinishedBinding : androidx/viewbinding/ViewBinding {
+	public final field congratsView Landroid/widget/ImageView;
+	public final field startUsingProton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field subtitleText Landroid/widget/TextView;
+	public final field titleText Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupFinishedBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentSignupFinishedBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentSignupFinishedBinding;
+}
+
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding : androidx/viewbinding/ViewBinding {
 	public final field fragmentOptionsContainer Landroid/widget/FrameLayout;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
@@ -1291,7 +1303,10 @@ public abstract interface class me/proton/core/auth/presentation/ui/TwoPassModeA
 }
 
 public final class me/proton/core/auth/presentation/ui/UtilsKt {
+	public static final fun removeCongrats (Landroidx/fragment/app/FragmentManager;)V
 	public static final fun removeCreatingUser (Landroidx/fragment/app/FragmentManager;)V
+	public static final fun showCongrats (Landroidx/fragment/app/FragmentManager;I)Landroidx/fragment/app/Fragment;
+	public static synthetic fun showCongrats$default (Landroidx/fragment/app/FragmentManager;IILjava/lang/Object;)Landroidx/fragment/app/Fragment;
 	public static final fun showCreatingUser (Landroidx/fragment/app/FragmentManager;I)Landroidx/fragment/app/Fragment;
 	public static synthetic fun showCreatingUser$default (Landroidx/fragment/app/FragmentManager;IILjava/lang/Object;)Landroidx/fragment/app/Fragment;
 	public static final fun showPasswordChangeDialog (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Z)V
@@ -1310,6 +1325,7 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field ARG_INPUT Ljava/lang/String;
+	public static final field ARG_PRODUCT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
@@ -1472,7 +1488,10 @@ public final class me/proton/core/auth/presentation/ui/signup/SignupActivity : m
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/SignupActivity$Companion;
+	public field product Lme/proton/core/domain/entity/Product;
 	public fun <init> ()V
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public final fun setProduct (Lme/proton/core/domain/entity/Product;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/SignupActivity$Companion {
@@ -1480,6 +1499,37 @@ public final class me/proton/core/auth/presentation/ui/signup/SignupActivity$Com
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/SignupActivity_GeneratedInjector {
 	public abstract fun injectSignupActivity (Lme/proton/core/auth/presentation/ui/signup/SignupActivity;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/SignupActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/SignupActivity;)V
+	public static fun injectProduct (Lme/proton/core/auth/presentation/ui/signup/SignupActivity;Lme/proton/core/domain/entity/Product;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment$Companion;
+	public static final field KEY_START_USING_SELECTED Ljava/lang/String;
+	public field product Lme/proton/core/domain/entity/Product;
+	public fun <init> ()V
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public fun onBackPressed ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setProduct (Lme/proton/core/domain/entity/Product;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFragment$Companion {
+	public final fun invoke ()Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;)V
+	public static fun injectProduct (Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;Lme/proton/core/domain/entity/Product;)V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment : me/proton/core/presentation/ui/ProtonSecureFragment {

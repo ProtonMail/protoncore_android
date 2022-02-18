@@ -23,14 +23,21 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.SupportedPlan
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.usersettings.domain.entity.Organization
+import me.proton.core.usersettings.domain.usecase.GetOrganization
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -40,13 +47,17 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val getPlansUseCase = mockk<GetPlans>()
+    private val getPlanDefaultUseCase = mockk<GetPlanDefault>(relaxed = true)
+    private val getOrganizationUseCase = mockk<GetOrganization>(relaxed = true)
+    private val getUserUseCase = mockk<GetUser>(relaxed = true)
+    private val getPaymentMethodsUseCase = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getSubscriptionUseCase = mockk<GetCurrentSubscription>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     // endregion
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testDefaultSupportedPlans = listOf("plan-name-1", "plan-name-2")
+    private val testDefaultSupportedPlans = listOf(SupportedPlan("plan-name-1"), SupportedPlan("plan-name-2"))
     private val testSubscribedPlan = Plan(
         id = "subscribed-plan-name-1",
         type = 1,
@@ -93,6 +104,72 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         )
     )
 
+    private val testDefaultPlan = Plan(
+        id = null,
+        type = 1,
+        cycle = null,
+        name = "plan-default",
+        title = "Plan Default",
+        currency = null,
+        amount = 0,
+        maxDomains = 0,
+        maxAddresses = 1,
+        maxCalendars = 0,
+        maxSpace = 1,
+        maxMembers = 1,
+        maxVPN = 0,
+        services = 0,
+        features = 0,
+        quantity = 0,
+        maxTier = 0
+    )
+
+    val testOrganization = Organization(
+        userId = testUserId,
+        email = "test-email",
+        name = "test-name",
+        theme = "test-theme",
+        flags = 1,
+        displayName = "test-display-name",
+        planName = "test-plan-name",
+        vpnPlanName = null,
+        twoFactorGracePeriod = null,
+        maxDomains = 1,
+        maxAddresses = 10,
+        maxSpace = 100,
+        maxMembers = 2,
+        maxVPN = null,
+        features = 2,
+        usedDomains = 1,
+        usedAddresses = 2,
+        usedSpace = 2,
+        assignedSpace = 5,
+        usedMembers = 2,
+        usedVPN = 0,
+        hasKeys = 0,
+        toMigrate = 1,
+        maxCalendars = 0,
+        usedCalendars = 0
+    )
+
+    private val testUser = User(
+        userId = testUserId,
+        email = null,
+        name = "test-username",
+        displayName = null,
+        currency = "test-currency",
+        credit = 0,
+        usedSpace = 0,
+        maxSpace = 100,
+        maxUpload = 100,
+        role = null,
+        private = true,
+        services = 1,
+        subscribed = 0,
+        delinquent = null,
+        keys = emptyList()
+    )
+
     private val testSubscription = Subscription(
         id = "test-subscription-id",
         invoiceId = "test-invoice-id",
@@ -112,14 +189,23 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, testUserId) } returns listOf(
+        coEvery { getPlanDefaultUseCase.invoke(any()) } returns testDefaultPlan
+        coEvery { getOrganizationUseCase.invoke(any(), true) } returns testOrganization
+        coEvery { getUserUseCase.invoke(any(), true) } returns testUser
+        coEvery { getPaymentMethodsUseCase.invoke(any()) } returns emptyList()
+
+        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans.map { it.name }, testUserId) } returns listOf(
             testPlan
         )
 
         viewModel = UpgradePlansViewModel(
             getPlansUseCase,
+            getPlanDefaultUseCase,
             getSubscriptionUseCase,
             testDefaultSupportedPlans,
+            getOrganizationUseCase,
+            getUserUseCase,
+            getPaymentMethodsUseCase,
             paymentOrchestrator
         )
     }

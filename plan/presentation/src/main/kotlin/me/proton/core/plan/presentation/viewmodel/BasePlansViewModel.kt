@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -31,25 +32,31 @@ import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.entity.PlanCurrency
-import me.proton.core.plan.presentation.entity.PlanDetailsListItem
+import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.view.calculateUsedSpacePercentage
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.entity.User
+import me.proton.core.usersettings.domain.entity.Organization
+import java.util.Date
+import kotlin.math.roundToInt
 
 internal abstract class BasePlansViewModel(
     private val paymentsOrchestrator: PaymentsOrchestrator
 ) : ProtonViewModel() {
 
-    protected val _availablePlansState = MutableStateFlow<PlanState>(PlanState.Idle)
+    protected val state = MutableStateFlow<PlanState>(PlanState.Idle)
 
-    val availablePlansState = _availablePlansState.asStateFlow()
+    val availablePlansState = state.asStateFlow()
 
     sealed class PlanState {
         object Idle : PlanState()
         object Processing : PlanState()
         sealed class Success : PlanState() {
             data class Plans(
-                val plans: List<PlanDetailsListItem>
+                val plans: List<PlanDetailsItem>
             ) : Success()
 
             data class PaidPlanPayment(val selectedPlan: SelectedPlan, val billing: BillingResult) : Success()
@@ -62,36 +69,65 @@ internal abstract class BasePlansViewModel(
         paymentsOrchestrator.register(context)
     }
 
-    protected fun createFreePlan(currentlySubscribed: Boolean, selectable: Boolean): PlanDetailsListItem {
-        return PlanDetailsListItem.FreePlanDetailsListItem(
-            name = SelectedPlan.FREE_PLAN_ID,
-            displayName = SelectedPlan.FREE_PLAN_ID,
-            currentlySubscribed = currentlySubscribed,
-            selectable = selectable
+    protected fun createFreePlan(
+        freePlan: Plan
+    ): PlanDetailsItem =
+        PlanDetailsItem.FreePlanDetailsItem(
+            name = freePlan.name,
+            displayName = freePlan.title,
+            storage = freePlan.maxSpace,
+            members = freePlan.maxMembers,
+            addresses = freePlan.maxAddresses,
+            calendars = freePlan.maxCalendars,
+            domains = freePlan.maxDomains,
+            connections = freePlan.maxVPN
+        )
+
+    protected fun createCurrentPlan(
+        plan: Plan,
+        user: User,
+        paymentMethods: List<PaymentMethod>,
+        organization: Organization?, // there can be no organization for free plans
+        endDate: Date?
+    ): PlanDetailsItem {
+        val autoRenewal = paymentMethods.isNotEmpty() || user.credit >= plan.amount
+        return PlanDetailsItem.CurrentPlanDetailsItem(
+            name = plan.name,
+            displayName = plan.title,
+            price = PlanPricing.fromPlan(plan),
+            isAutoRenewal = autoRenewal,
+            endDate = endDate,
+            cycle = plan.cycle?.let { PlanCycle.map[it] } ?: PlanCycle.FREE,
+            storage = plan.maxSpace,
+            members = plan.maxMembers,
+            addresses = plan.maxAddresses,
+            calendars = plan.maxCalendars,
+            domains = plan.maxDomains,
+            connections = plan.maxVPN,
+            usedSpace = user.usedSpace,
+            maxSpace = user.maxSpace,
+            progressValue = user.calculateUsedSpacePercentage().roundToInt(),
+            usedAddresses = organization?.usedAddresses ?: plan.maxAddresses,
+            usedDomains = organization?.usedDomains ?: plan.maxDomains,
+            usedMembers = organization?.usedMembers ?: plan.maxMembers,
+            usedCalendars = organization?.usedCalendars ?: plan.maxCalendars
         )
     }
 
-    protected fun Plan.toPaidPlanDetailsItem(
-        subscribedPlans: List<PlanDetailsListItem>?,
-        upgrade: Boolean
-    ) =
-        PlanDetailsListItem.PaidPlanDetailsListItem(
+    protected fun Plan.toPaidPlanDetailsItem(starred: Boolean) =
+        PlanDetailsItem.PaidPlanDetailsItem(
             name = name,
             displayName = title,
+            cycle = cycle?.let { PlanCycle.map[it] } ?: PlanCycle.FREE,
             price = PlanPricing.fromPlan(this),
-            selectable = if (upgrade) true else subscribedPlans.isNullOrEmpty(),
-            currentlySubscribed = subscribedPlans?.find { currentPlan ->
-                currentPlan.name == id
-            } != null,
-            upgrade = upgrade,
-            renewalDate = null,
             storage = maxSpace,
             members = maxMembers,
             addresses = maxAddresses,
             calendars = maxCalendars,
             domains = maxDomains,
             connections = maxVPN,
-            currency = PlanCurrency.valueOf(currency)
+            currency = PlanCurrency.valueOf(currency!!), // paid plan has to have currency
+            starred = starred
         )
 
     fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
@@ -100,7 +136,7 @@ internal abstract class BasePlansViewModel(
                 result.let { billingResult ->
                     if (billingResult?.paySuccess == true) {
                         viewModelScope.launch {
-                            _availablePlansState.emit(PlanState.Success.PaidPlanPayment(selectedPlan, billingResult))
+                            state.emit(PlanState.Success.PaidPlanPayment(selectedPlan, billingResult))
                         }
                     }
                 }

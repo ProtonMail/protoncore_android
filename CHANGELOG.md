@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking changes
+- Supported plans should be provided by SupportedPlan list instead of String.
+
+### Changes
+- Plans and Payments have been updated to the latest version.
+
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.
 - Fixes wrong link on plans view for VPN

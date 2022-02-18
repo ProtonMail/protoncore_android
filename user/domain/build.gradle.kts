@@ -40,6 +40,9 @@ dependencies {
         // Feature
         project(Module.keyDomain),
 
+        // Android
+        `javax-inject`,
+        
         // Kotlin
         `coroutines-core`,
     )

@@ -34,6 +34,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.canSwitchToExternal
+import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -52,7 +53,8 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
     private val binding by viewBinding(FragmentSignupChooseUsernameBinding::bind)
 
     private val input: SignUpInput by lazy {
-        val requiredAccountType = AccountType.values()[requireArguments().getInt(ARG_INPUT)]
+        val arguments = requireArguments()
+        val requiredAccountType = AccountType.values()[arguments.getInt(ARG_INPUT)]
         viewModel.setClientAppRequiredAccountType(accountType = requiredAccountType)
         SignUpInput(requiredAccountType = requiredAccountType)
     }
@@ -193,6 +195,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
 
     companion object {
         const val ARG_INPUT = "arg.chooseUsernameInput"
+        const val ARG_PRODUCT = "arg.product"
 
         operator fun invoke(requiredAccountType: AccountType) = ChooseUsernameFragment().apply {
             arguments = bundleOf(

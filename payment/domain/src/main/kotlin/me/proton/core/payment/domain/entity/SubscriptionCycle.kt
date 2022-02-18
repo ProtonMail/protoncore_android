@@ -19,6 +19,7 @@
 package me.proton.core.payment.domain.entity
 
 enum class SubscriptionCycle(val value: Int) {
+    FREE(0),
     MONTHLY(1),
     YEARLY(12),
     TWO_YEARS(24);

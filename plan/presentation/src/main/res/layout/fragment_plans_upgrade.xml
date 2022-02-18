@@ -57,9 +57,9 @@
                 android:id="@+id/currentPlan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_current_plan"
-                android:padding="@dimen/gap_large"
+                android:layout_marginBottom="@dimen/gap_huge"
                 android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/plansTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,10 +69,11 @@
                 style="@style/ProtonTextView.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/gap_huge"
+                android:layout_marginBottom="@dimen/gap_large_plus"
                 android:maxLines="1"
                 android:text="@string/plans_upgrade_your_plan"
                 android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/plansView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/currentPlan"
@@ -82,10 +83,26 @@
                 android:id="@+id/plansView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/gap_small"
+                android:layout_marginTop="@dimen/gap_large_plus"
                 android:layout_marginBottom="@dimen/gap_small"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/plansTitle" />
+
+            <TextView
+                android:id="@+id/manageSubscriptionText"
+                style="@style/Proton.Text.Caption.Weak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large_plus"
+                android:drawablePadding="@dimen/gap_medium"
+                android:maxLines="2"
+                android:visibility="gone"
+                app:drawableStartCompat="@drawable/ic_info_circle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plansView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -97,4 +114,13 @@
         android:indeterminate="true"
         android:indeterminateTint="?attr/brand_norm"
         android:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/connectivityIssueView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <include layout="@layout/connectivity_issue_view" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

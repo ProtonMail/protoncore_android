@@ -24,9 +24,7 @@
         android:id="@+id/planDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large"
-        android:background="@drawable/background_plan_list_item"
-        android:padding="@dimen/gap_large" />
+        android:layout_marginTop="@dimen/gap_large" />
 
 </FrameLayout>
 

@@ -34,6 +34,7 @@ data class Organization(
     val maxSpace: Long?,
     val maxMembers: Int?,
     val maxVPN: Int?,
+    val maxCalendars: Int?,
     val features: Int?,
     val flags: Int?,
     val usedDomains: Int?,
@@ -42,6 +43,7 @@ data class Organization(
     val assignedSpace: Long?,
     val usedMembers: Int?,
     val usedVPN: Int?,
+    val usedCalendars: Int?,
     val hasKeys: Int?,
     val toMigrate: Int?
 )

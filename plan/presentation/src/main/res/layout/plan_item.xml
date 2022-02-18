@@ -21,18 +21,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/planItemParent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/gap_small"
+    android:paddingTop="@dimen/gap_large"
+    android:paddingEnd="@dimen/gap_small"
+    android:paddingBottom="@dimen/gap_large">
 
     <TextView
         android:id="@+id/planNameText"
-        style="@style/Proton.Text.Headline"
+        style="@style/ProtonTextView.Body1.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/gap_large_plus"
+        android:gravity="center_vertical"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ProtonMail PLUS" />
+
+    <ImageView
+        android:id="@+id/starred"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gap_medium"
+        android:layout_marginEnd="@dimen/gap_medium"
+        android:src="@drawable/ic_star_filled"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/planNameText"
+        app:layout_constraintStart_toEndOf="@id/planNameText"
+        app:layout_constraintTop_toTopOf="@id/planNameText" />
 
     <LinearLayout
         android:id="@+id/priceCycleLayout"
@@ -45,28 +62,46 @@
 
         <TextView
             android:id="@+id/planPriceText"
-            style="@style/Proton.Text.Headline"
+            style="@style/ProtonTextView.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/gap_small"
+            android:layout_gravity="end"
+            android:gravity="end"
             android:maxLines="1"
+            android:padding="0dp"
             tools:text="€0.00" />
 
         <TextView
             android:id="@+id/planCycleText"
-            style="@style/Proton.Text.DefaultSmall.Weak"
+            style="@style/Proton.Text.Caption.Weak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
             android:maxLines="1"
-            android:text="@string/plan_price_monthly"
-            tools:text="/month" />
+            android:text="@string/plan_price_annually"
+            tools:text="per month*" />
+
+        <TextView
+            android:id="@+id/planPercentageText"
+            style="@style/Proton.Text.Caption.Weak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="?attr/brand_norm"
+            android:visibility="gone"
+            tools:text="(-33%)"
+            tools:visibility="visible" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/planDescriptionText"
-        style="@style/Proton.Text.DefaultSmall.Weak"
+        style="@style/Proton.Text.Caption.Weak"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_medium"
         android:layout_marginEnd="@dimen/gap_medium"
         android:maxLines="4"
         app:layout_constraintEnd_toStartOf="@id/priceCycleLayout"
@@ -74,13 +109,45 @@
         app:layout_constraintTop_toBottomOf="@id/planNameText"
         tools:text="The ultimate privacy pack with access to all premium Proton services." />
 
+    <ImageButton
+        android:id="@+id/collapse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_large"
+        android:background="@null"
+        android:src="@drawable/ic_chevron_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priceCycleLayout"
+        app:tint="?attr/brand_norm" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/planGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/planDescriptionText">
+
+        <TextView
+            android:id="@+id/storageText"
+            style="@style/Proton.Text.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_large"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/storageProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/storageText"
+            app:trackColor="@color/icon_hint" />
 
         <LinearLayout
             android:id="@+id/planContents"
@@ -90,7 +157,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/storageProgress" />
 
         <View
             android:id="@+id/separator"
@@ -117,18 +184,35 @@
             app:layout_constraintTop_toBottomOf="@id/separator"
             tools:text="Your plan will be automatically renewed on " />
 
-        <TextView
-            android:id="@+id/planPriceDescriptionText"
-            style="@style/Proton.Text.DefaultSmall.Weak"
-            android:layout_width="0dp"
+        <me.proton.core.presentation.ui.view.ProtonButton
+            android:id="@+id/select"
+            style="@style/ProtonButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_gap"
-            android:gravity="center"
-            android:maxLines="1"
+            android:layout_marginTop="@dimen/gap_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planRenewalText"
+            app:layout_constraintTop_toBottomOf="@id/planRenewalText" />
+
+        <TextView
+            android:id="@+id/planPriceDescriptionText"
+            style="@style/Proton.Text.Overline.Weak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select"
             tools:text="Billed as $48 per year" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/currentPlanGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="storageProgress, storageText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,24 +27,29 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportedUpgradePaidPlans
+import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
-import me.proton.core.plan.presentation.entity.PlanCurrency
-import me.proton.core.plan.presentation.entity.PlanDetailsListItem
-import me.proton.core.plan.presentation.entity.PlanPricing
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
-import java.text.SimpleDateFormat
+import me.proton.core.plan.presentation.entity.SupportedPlan
+import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.usersettings.domain.usecase.GetOrganization
 import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 internal class UpgradePlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
+    private val getPlanDefault: GetPlanDefault,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedUpgradePaidPlans val supportedPaidPlanNames: List<String>,
+    @SupportedUpgradePaidPlans val supportedPaidPlanNames: List<SupportedPlan>,
+    private val getOrganization: GetOrganization,
+    private val getUser: GetUser,
+    private val getPaymentMethods: GetAvailablePaymentMethods,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(paymentsOrchestrator) {
 
@@ -52,7 +57,7 @@ internal class UpgradePlansViewModel @Inject constructor(
 
     val subscribedPlansState = _subscribedPlansState.asStateFlow()
 
-    private lateinit var subscribedPlans: List<PlanDetailsListItem>
+    private lateinit var subscribedPlans: List<PlanDetailsItem>
 
     sealed class SubscribedPlansState {
         object Idle : SubscribedPlansState()
@@ -60,7 +65,7 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         sealed class Success : SubscribedPlansState() {
             data class SubscribedPlans(
-                val subscribedPlans: List<PlanDetailsListItem>
+                val subscribedPlans: List<PlanDetailsItem>
             ) : Success()
         }
 
@@ -70,31 +75,36 @@ internal class UpgradePlansViewModel @Inject constructor(
     fun getCurrentSubscribedPlans(userId: UserId) = flow {
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
-        val subscribedPlans: MutableList<PlanDetailsListItem> = currentSubscription?.plans?.filter {
+        val organization = getOrganization(userId, true)
+        val user = getUser(userId, true)
+        val paymentMethods = getPaymentMethods(userId)
+
+        val subscribedPlans: MutableList<PlanDetailsItem> = currentSubscription?.plans?.filter {
             it.type == PlanType.NORMAL.value
         }?.map {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = currentSubscription.periodEnd * 1000
-            PlanDetailsListItem.PaidPlanDetailsListItem(
-                name = it.name,
-                displayName = it.title,
-                price = PlanPricing.fromPlan(it),
-                selectable = false,
-                currentlySubscribed = true,
-                upgrade = false,
-                renewalDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.time),
-                storage = it.maxSpace,
-                members = it.maxMembers,
-                addresses = it.maxAddresses,
-                calendars = it.maxCalendars,
-                domains = it.maxDomains,
-                connections = it.maxVPN,
-                currency = PlanCurrency.valueOf(it.currency)
+            createCurrentPlan(
+                plan = it,
+                endDate = calendar.time,
+                user = user,
+                paymentMethods = paymentMethods,
+                organization = organization
             )
         }?.toMutableList() ?: mutableListOf()
+
         if (subscribedPlans.isEmpty()) {
-            subscribedPlans.add(createFreePlan(currentlySubscribed = true, selectable = false))
+            subscribedPlans.add(
+                createCurrentPlan(
+                    plan = getPlanDefault(userId),
+                    endDate = null,
+                    user = user,
+                    paymentMethods = paymentMethods,
+                    organization = organization
+                ) // creates free plan
+            )
         }
+
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
         getAvailablePlansForUpgrade(userId)
@@ -107,14 +117,18 @@ internal class UpgradePlansViewModel @Inject constructor(
 
     private fun getAvailablePlansForUpgrade(userId: UserId) = flow {
         emit(PlanState.Processing)
-        val availablePlans = getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it }, userId = userId)
+        val availablePlans = getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it.name }, userId = userId)
             .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-            .map { it.toPaidPlanDetailsItem(subscribedPlans, true) }
+            .map { plan ->
+                plan.toPaidPlanDetailsItem(
+                    supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
+                )
+            }
 
         emit(PlanState.Success.Plans(plans = availablePlans))
     }.catch { error ->
-        _availablePlansState.tryEmit(PlanState.Error(error))
+        state.tryEmit(PlanState.Error(error))
     }.onEach { plans ->
-        _availablePlansState.tryEmit(plans)
+        state.tryEmit(plans)
     }.launchIn(viewModelScope)
 }
