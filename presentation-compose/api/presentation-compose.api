@@ -256,10 +256,11 @@ public final class me/proton/core/compose/component/ProtonModalBottomSheetLayout
 }
 
 public final class me/proton/core/compose/component/ProtonOutlinedTextFieldKt {
-	public static final fun OutlinedTextFieldWithError (Landroidx/compose/runtime/MutableState;Landroidx/compose/ui/Modifier;Ljava/lang/String;Landroidx/compose/ui/focus/FocusRequester;ILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
-	public static final fun OutlinedTextFieldWithError (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/ranges/IntRange;Ljava/lang/String;Landroidx/compose/ui/focus/FocusRequester;ILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PreviewOutlinedTextFieldWithError (Landroidx/compose/runtime/Composer;I)V
 	public static final fun PreviewOutlinedTextFieldWithProtonColors (Landroidx/compose/runtime/Composer;I)V
+	public static final fun ProtonOutlinedTextField (Landroidx/compose/ui/text/input/TextFieldValue;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;ZILandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/material/TextFieldColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun ProtonOutlinedTextFieldWithError (Landroidx/compose/runtime/MutableState;Landroidx/compose/ui/Modifier;Ljava/lang/String;Landroidx/compose/ui/focus/FocusRequester;ILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonOutlinedTextFieldWithError (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/ranges/IntRange;Ljava/lang/String;Landroidx/compose/ui/focus/FocusRequester;ILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun protonOutlineTextFieldColors (Landroidx/compose/material/TextFieldDefaults;Landroidx/compose/runtime/Composer;I)Landroidx/compose/material/TextFieldColors;
 }
 

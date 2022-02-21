@@ -9,6 +9,9 @@ to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.
 See [README.md](README.md#allowed-commit-types) for commit types which are used to generate the changelog.
 If needed, you can also manually update this file (provided the general structure is kept).
 
+### [Rebranding]
+- Update corner radius for Buttons, TextFields, Snackbars, Dialogs and Drowndown menus.
+
 ## [Unreleased]
 
 ## [7.2.3] - 2022-05-05
@@ -445,7 +448,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Updated strings for (bug) report module
 - The internal Kotlin plugin (`me.proton.kotlin` / `me.proton.core.gradle-plugins.kotlin`) has been removed, but it's still accessible via Maven
 - Improvements for Username Signup
-- Add Feature Flags module
+- Add Feature Flags module.
 
 ### Fixes
 

@@ -81,7 +81,7 @@ fun ProtonSnackbar(
     type: ProtonSnackbarType,
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
-    shape: Shape = ProtonTheme.shapes.small,
+    shape: Shape = ProtonTheme.shapes.medium,
     contentColor: Color = ProtonTheme.colors.textInverted,
     actionColor: Color = ProtonTheme.colors.textInverted,
     elevation: Dp = 6.dp,

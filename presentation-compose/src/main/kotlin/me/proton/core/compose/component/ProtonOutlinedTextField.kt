@@ -17,7 +17,11 @@
  */
 package me.proton.core.compose.component
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldColors
@@ -29,13 +33,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
 import me.proton.core.compose.theme.default
+
+private const val MaxLines = 2
 
 @Composable
 fun TextFieldDefaults.protonOutlineTextFieldColors(): TextFieldColors =
@@ -57,7 +66,50 @@ fun TextFieldDefaults.protonOutlineTextFieldColors(): TextFieldColors =
     )
 
 @Composable
-fun OutlinedTextFieldWithError(
+fun ProtonOutlinedTextField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    textStyle: TextStyle = LocalTextStyle.current,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions(),
+    singleLine: Boolean = false,
+    maxLines: Int = Int.MAX_VALUE,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    shape: Shape = ProtonTheme.shapes.medium,
+    colors: TextFieldColors = TextFieldDefaults.protonOutlineTextFieldColors(),
+) = OutlinedTextField(
+    value = value,
+    onValueChange = onValueChange,
+    modifier = modifier,
+    enabled = enabled,
+    readOnly = readOnly,
+    textStyle = textStyle,
+    label = label,
+    placeholder = placeholder,
+    leadingIcon = leadingIcon,
+    trailingIcon = trailingIcon,
+    isError = isError,
+    visualTransformation = visualTransformation,
+    keyboardOptions = keyboardOptions,
+    keyboardActions = keyboardActions,
+    singleLine = singleLine,
+    maxLines = maxLines,
+    interactionSource = interactionSource,
+    shape = shape,
+    colors = colors,
+)
+
+@Composable
+fun ProtonOutlinedTextFieldWithError(
     text: String,
     modifier: Modifier = Modifier,
     selection: IntRange = IntRange(text.length, text.length),
@@ -74,7 +126,7 @@ fun OutlinedTextFieldWithError(
             )
         )
     }
-    OutlinedTextFieldWithError(
+    ProtonOutlinedTextFieldWithError(
         textFieldValue = textFieldValue,
         modifier = modifier,
         errorText = errorText,
@@ -87,7 +139,7 @@ fun OutlinedTextFieldWithError(
 }
 
 @Composable
-fun OutlinedTextFieldWithError(
+fun ProtonOutlinedTextFieldWithError(
     textFieldValue: MutableState<TextFieldValue>,
     modifier: Modifier = Modifier,
     errorText: String? = null,
@@ -128,7 +180,5 @@ fun PreviewOutlinedTextFieldWithProtonColors() {
 @Preview
 @Composable
 fun PreviewOutlinedTextFieldWithError() {
-    OutlinedTextFieldWithError(text = "Some text", onValueChanged = {}, errorText = "Validation failed!")
+    ProtonOutlinedTextFieldWithError(text = "Some text", onValueChanged = {}, errorText = "Validation failed!")
 }
-
-private const val MaxLines = 2

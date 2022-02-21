@@ -20,7 +20,7 @@
     <item>
         <shape>
             <solid android:color="?attr/proton_background_secondary" />
-            <corners android:radius="5dp" />
+            <corners android:radius="@dimen/default_corner_radius" />
             <padding
                 android:bottom="3dp"
                 android:left="3dp"

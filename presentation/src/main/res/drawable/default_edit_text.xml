@@ -24,5 +24,5 @@
         android:left="@dimen/input_padding"
         android:right="@dimen/input_padding"
         android:top="@dimen/input_padding" />
-    <corners android:radius="2dp" />
+    <corners android:radius="@dimen/default_corner_radius" />
 </shape>

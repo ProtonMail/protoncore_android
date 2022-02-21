@@ -211,6 +211,10 @@
         <item name="boxStrokeColor">@color/input_outlined_stroke_color</item>
         <item name="boxStrokeWidth">1dp</item>
         <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/default_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/default_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/default_corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/default_corner_radius</item>
     </style>
 
     <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
@@ -221,6 +225,10 @@
         <item name="boxStrokeColor">@color/input_outlined_stroke_color</item>
         <item name="boxStrokeWidth">1dp</item>
         <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/default_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/default_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/default_corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/default_corner_radius</item>
     </style>
     <!-- endregion -->
 
@@ -228,6 +236,7 @@
     <style name="ProtonButton" parent="Widget.MaterialComponents.Button">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">@dimen/default_corner_radius</item>
     </style>
 
     <style name="ProtonButtonTextAppearance" parent="@style/TextAppearance.MaterialComponents.Button">
@@ -253,6 +262,7 @@
         <item name="textAllCaps">false</item>
         <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
         <item name="strokeColor">@color/btn_stroke_color_selector</item>
+        <item name="cornerRadius">@dimen/default_corner_radius</item>
     </style>
 
     <style name="ProtonButton.OutlinedButton.Toggle">
