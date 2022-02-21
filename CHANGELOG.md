@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.
-- Fixes wrong link on plans view for VPN
+- Fixes wrong link on plans view for VPN.
+- Crash when HV2 received no valid methods (either the user or the methods were banned).
 
 ## [7.0.0]
 
