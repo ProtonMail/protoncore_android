@@ -120,7 +120,7 @@ internal class ApiManagerTests {
 
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        coEvery { clientIdProvider.getClientId(any()) } returns clientId
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
 

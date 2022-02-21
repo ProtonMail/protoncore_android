@@ -74,7 +74,7 @@ class UserVerificationRepositoryImplTest {
         MockKAnnotations.init(this)
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        coEvery { clientIdProvider.getClientId(any()) } returns clientId
         every { apiManagerFactory.create(sessionId, UserVerificationApi::class) } returns apiManager
 
         remoteRepository = UserVerificationRepositoryImpl(apiProvider)

@@ -96,6 +96,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:mail-settings-data|
 |me.proton.core:mail-settings-domain|
 |me.proton.core:network|
+|me.proton.core:network-dagger|
 |me.proton.core:network-data|
 |me.proton.core:network-domain|
 |me.proton.core:payment|

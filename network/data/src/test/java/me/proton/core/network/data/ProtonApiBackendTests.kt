@@ -73,8 +73,6 @@ import kotlin.test.assertTrue
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
 
-    private fun javaWallClockMs(): Long = System.currentTimeMillis()
-
     val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
@@ -97,7 +95,7 @@ internal class ProtonApiBackendTests {
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
-    private val cookieStore = mockk<ProtonCookieStore>()
+    private val cookieJar = mockk<ProtonCookieStore>()
 
     private lateinit var client: MockApiClient
 
@@ -107,6 +105,8 @@ internal class ProtonApiBackendTests {
 
     private lateinit var prefs: NetworkPrefs
 
+    private fun javaWallClockMs(): Long = System.currentTimeMillis()
+
     @BeforeTest
     fun before() {
         MockKAnnotations.init(this)
@@ -115,10 +115,10 @@ internal class ProtonApiBackendTests {
 
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        coEvery { clientIdProvider.getClientId(any()) } returns clientId
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
-        every { cookieStore.get(any()) } returns emptyList()
+        every { cookieJar.loadForRequest(any()) } returns emptyList()
         every { extraHeaderProvider.headers }.answers { emptyList() }
 
         apiManagerFactory = ApiManagerFactory(
@@ -133,7 +133,7 @@ internal class ProtonApiBackendTests {
             humanVerificationProvider,
             humanVerificationListener,
             missingScopeListener,
-            cookieStore,
+            cookieJar,
             scope,
             cache = { null },
             apiConnectionListener = null
@@ -181,7 +181,7 @@ internal class ProtonApiBackendTests {
             pinningInit,
             ::javaWallClockMs,
             prefs,
-            cookieStore,
+            cookieJar,
             extraHeaderProvider,
         )
 

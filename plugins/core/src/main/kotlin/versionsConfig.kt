@@ -64,6 +64,7 @@ internal fun initVersions(libs: VersionCatalog) {
 // region Android
 public const val `android-tools version`: String =             "30.0.2"        // Updated: Jun, 2020
 public const val `compose version`: String =                   "1.2.0-alpha01"
+public const val `datastore version`: String =                 "1.0.0"
 public const val `hilt-navigation-compose version`: String =   "1.0.0-rc01"
 public const val `material3 version`: String =                 "1.0.0-alpha03"
 public const val `navigation version`: String =                "2.4.0-rc01"
@@ -73,11 +74,9 @@ public const val `startup-runtime version`: String =           "1.1.0"         /
 // region Other
 public const val `apacheCommon-codec version`: String =    "1.15"
 public const val `bcrypt version`: String =                "0.9.0"             // Released: Oct 29, 2019
-public const val `gotev-cookieStore version`: String =     "1.4.0"
 public const val `googleTink version`: String =            "1.6.1"             // Released: Oct 15, 2020
 public const val `miniDns version`: String =               "1.0.0"             // Released: Jul 18, 2020
 public const val `okHttp version`: String =                "4.9.1"
-public const val `okHttp-url-connection version`: String = "4.9.1"
 public const val `trustKit version`: String =              "1.1.5"
 public const val `store4 version`: String =                "4.0.4-KT15"        // Released: Dec 10, 2021
 public const val `lifecycle-extensions version`: String =  "2.2.0"             // Released: Jan 00, 2020

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.client
+package me.proton.core.network.data.cookie
 
-import me.proton.core.network.domain.session.SessionId
+import kotlinx.coroutines.flow.Flow
+import okhttp3.Cookie
 
-interface ClientIdProvider {
-    suspend fun getClientId(sessionId: SessionId?): ClientId?
+interface CookieStorage {
+    fun all(): Flow<Cookie>
+    suspend fun set(cookie: Cookie)
+    suspend fun remove(cookie: Cookie)
 }

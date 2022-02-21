@@ -81,7 +81,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val networkPrefs: NetworkPrefs,
     private val cookieStore: ProtonCookieStore?,
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
-    ) : ApiBackend<Api> {
+) : ApiBackend<Api> {
 
     private val api: Api
 
@@ -141,7 +141,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 request.header("Authorization", "Bearer $accessToken")
             }
         }
-        clientIdProvider.getClientId(sessionId)?.let { clientId ->
+        val clientId = runBlocking { clientIdProvider.getClientId(sessionId) }
+        if (clientId != null) {
             runBlocking { humanVerificationProvider.getHumanVerificationDetails(clientId) }?.let { details ->
                 details.tokenType?.let { tokenType ->
                     request.header("x-pm-human-verification-token-type", tokenType)

@@ -196,7 +196,7 @@ internal class SignupViewModel @Inject constructor(
         planDisplayName: String,
         cycle: SubscriptionCycle,
         billingResult: BillingResult
-    ) {
+    ) = viewModelScope.launch {
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         subscriptionDetails = SubscriptionDetails(
             billingResult = billingResult,
