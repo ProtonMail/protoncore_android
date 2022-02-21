@@ -21,8 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.
 - Fixes wrong link on plans view for VPN.
+- Allow sign in action by pressing enter key / done action in the password field.
 - Crash when HV2 received no valid methods (either the user or the methods were banned).
-- Fixed "Invalid cookie" log error
+- Fixed "Invalid cookie" log error.
 
 ## [7.0.0]
 

@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_content_top_margin"
                 android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 app:actionMode="password_toggle"
                 app:label="@string/auth_password_label" />
 
