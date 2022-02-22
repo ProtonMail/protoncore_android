@@ -48,6 +48,18 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.compose.R
 
 @Composable
+fun ProtonRawListItem(
+    modifier: Modifier = Modifier,
+    content: (@Composable @ExtensionFunctionType RowScope.() -> Unit),
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content
+    )
+}
+
+@Composable
 fun ProtonListItem(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
@@ -55,14 +67,13 @@ fun ProtonListItem(
     onClick: () -> Unit = {},
     content: (@Composable @ExtensionFunctionType RowScope.() -> Unit),
 ) {
-    Row(
+    ProtonRawListItem(
         modifier = modifier
             .fillMaxWidth()
             .background(color = if (isSelected) ProtonTheme.colors.interactionPressed else Color.Transparent)
             .height(height = ProtonDimens.ListItemHeight)
             .clickable(enabled = isClickable, onClick = onClick)
             .padding(horizontal = ProtonDimens.DefaultSpacing),
-        verticalAlignment = Alignment.CenterVertically,
         content = content
     )
 }
