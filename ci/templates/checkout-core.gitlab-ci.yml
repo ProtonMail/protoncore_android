@@ -1,14 +1,16 @@
 # For project using core as a git submodule in 'proton-libs' folder, this job allows to:
 # - Pull the submodule and checkout it where parent project defined it.
-# - (Optional) Override parent checkout and used $CORE_COMMIT_SHA instead. Useful for testing.
-.checkout-core:
+# - (Optional) Override parent checkout and use $CORE_COMMIT_SHA instead. Useful for testing.
+# This job can be referenced e.g. from the `default` > `before_script` section.
+# However, the job only executes if both of these variables are set to "true":
+# - ORG_GRADLE_PROJECT_useCoreGitSubmodule - should be set in the global `variables` section
+# - CHECKOUT_CORE_SUBMODULE - should be set for each job that needs to build with Gradle
+.checkout-core-submodule:
   before_script:
-    - |
-      git submodule sync ./proton-libs
-      git submodule update --init --remote ./proton-libs
-      if [ -n "$CORE_COMMIT_SHA" ]; then
-        echo "Checking out core at $CORE_COMMIT_SHA"
-        git -C ./proton-libs checkout "$CORE_COMMIT_SHA"
-        echo "Set gradle property useCoreGitSubmodule to true"
-        export ORG_GRADLE_PROJECT_useCoreGitSubmodule=true
+    - if [[ "$ORG_GRADLE_PROJECT_useCoreGitSubmodule" == "true" && "$CHECKOUT_CORE_SUBMODULE" == "true" ]]; then
+        if [[ ! -d ./proton-libs/.git ]]; then rm -rf ./proton-libs; fi;
+        git submodule update --init -- proton-libs;
+        if [[ -n "$CORE_COMMIT_SHA" ]]; then
+          git -C ./proton-libs checkout "$CORE_COMMIT_SHA";
+        fi
       fi

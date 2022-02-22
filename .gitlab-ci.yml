@@ -201,6 +201,7 @@ trigger-client-integration-tests:
     variables: false
   variables:
     CORE_COMMIT_SHA: $CI_COMMIT_SHA
+    ORG_GRADLE_PROJECT_useCoreGitSubmodule: "true"
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
@@ -208,7 +209,13 @@ mail-v6-integration-tests:
   extends: .client-integration-tests
   trigger:
     project: android/mail/proton-mail
-    branch: master
+    branch: feat/core_ci_integration # TODO change to master branch
+
+vpn-integration-tests:
+  extends: .client-integration-tests
+  trigger:
+    project: ProtonVPN/android/android-app-new
+    branch: development
 
 ## firebase stage ##################################################################################
 .firebase-tests-common:
