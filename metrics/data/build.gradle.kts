@@ -48,6 +48,7 @@ dependencies {
         retrofit,
         `retrofit-kotlin-serialization`,
     )
+    testImplementation(project(Module.androidTest))
 
     kaptTest(`room-compiler`)
 }

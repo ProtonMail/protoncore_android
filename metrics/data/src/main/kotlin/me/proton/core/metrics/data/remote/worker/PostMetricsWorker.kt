@@ -62,8 +62,8 @@ internal class PostMetricsWorker @AssistedInject constructor(
     }
 
     companion object {
-        private const val INPUT_USER_ID = "arg.userId"
-        private const val INPUT_METRICS = "arg.metrics"
+        const val INPUT_USER_ID = "arg.userId"
+        const val INPUT_METRICS = "arg.metrics"
 
         private fun makeInputData(userId: UserId?, metrics: Metrics): Data {
             return workDataOf(
