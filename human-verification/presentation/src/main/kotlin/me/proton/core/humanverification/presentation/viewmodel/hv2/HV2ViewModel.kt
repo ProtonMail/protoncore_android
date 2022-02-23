@@ -45,7 +45,7 @@ class HV2ViewModel @Inject constructor(
 
     private lateinit var currentActiveVerificationMethod: TokenType
 
-    private var availableVerificationMethods: List<String> =
+    private val availableVerificationMethods: List<String> =
         savedStateHandle.get<List<String>>(HV2DialogFragment.ARG_VERIFICATION_OPTIONS)!!
 
     private val _activeMethod = MutableStateFlow<String?>(null)
@@ -55,15 +55,13 @@ class HV2ViewModel @Inject constructor(
     val enabledMethods = _enabledMethods.asStateFlow()
 
     init {
+        _enabledMethods.tryEmit(availableVerificationMethods)
         // A list of all available methods that the API is currently supporting for this particular user and device.
         // The UI should present the verification methods for each one of them.
         // It is safe to use !! here, guaranteed that there will be at least 1 verification method available
-        if (availableVerificationMethods.isEmpty()) {
-            throw NotEnoughVerificationOptions("Please provide at least 1 verification method")
+        if (availableVerificationMethods.isNotEmpty()) {
+            defineActiveVerificationMethod()
         }
-
-        _enabledMethods.tryEmit(availableVerificationMethods)
-        defineActiveVerificationMethod()
     }
 
     /**

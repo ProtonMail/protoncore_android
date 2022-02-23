@@ -25,11 +25,12 @@ import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class HV2ViewModelTest : CoroutinesTest {
 
@@ -53,12 +54,15 @@ class HV2ViewModelTest : CoroutinesTest {
         }
     }
 
-    @Test(expected = NotEnoughVerificationOptions::class)
-    fun `incorrect initialization throws exception`() {
+    @Test
+    fun `incorrect initialization does nothing`() {
         val availableMethods = emptyList<String>()
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
-        HV2ViewModel(humanVerificationWorkflowHandler, savedStateHandle)
+        val viewModel = HV2ViewModel(humanVerificationWorkflowHandler, savedStateHandle)
+
+        assertNull(viewModel.activeMethod.value)
+        assertTrue(viewModel.enabledMethods.value.isEmpty())
     }
 
     @Test

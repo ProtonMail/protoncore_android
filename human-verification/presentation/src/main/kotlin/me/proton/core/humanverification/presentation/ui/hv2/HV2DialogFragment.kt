@@ -88,7 +88,6 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         childFragmentManager.setFragmentResultListener(KEY_PHASE_TWO, this) { _, bundle ->
             val destination = bundle.getString(ARG_DESTINATION)
             val tokenType = TokenType.fromString(bundle.getString(ARG_TOKEN_TYPE)!!)
@@ -160,13 +159,18 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     }
 
     private fun setEnabledVerificationMethods(enabledMethods: List<String>) {
-        binding.verificationOptions.apply {
-            for (method in enabledMethods) {
-                val tab = newTab().apply {
-                    text = method
-                    tag = TokenType.fromString(method)
+        if (enabledMethods.isEmpty()) {
+            // If there are not available methods, dismiss the fragment with an error result
+            setResultAndDismiss(null)
+        } else {
+            binding.verificationOptions.apply {
+                for (method in enabledMethods) {
+                    val tab = newTab().apply {
+                        text = method
+                        tag = TokenType.fromString(method)
+                    }
+                    addTab(tab)
                 }
-                addTab(tab)
             }
         }
     }
