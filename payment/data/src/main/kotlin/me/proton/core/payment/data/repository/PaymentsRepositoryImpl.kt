@@ -33,6 +33,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
+import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
@@ -159,5 +160,10 @@ class PaymentsRepositoryImpl(
                     cycle.value
                 )
             ).subscription.toSubscription()
+        }.valueOrThrow
+
+    override suspend fun getPaymentStatus(sessionUserId: SessionUserId?): PaymentStatus =
+        provider.get<PaymentsApi>(sessionUserId).invoke {
+            paymentStatus().toPaymentStatus()
         }.valueOrThrow
 }

@@ -16,37 +16,36 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.data.api.response
+package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.entity.FeatureFlagEntity
+import me.proton.core.payment.domain.entity.PaymentStatus
 
 @Serializable
-internal data class FeaturesApiResponse(
-    @SerialName("Code")
-    val resultCode: Int,
-    @SerialName("Features")
-    val features: List<FeatureApiResponse>
-)
-
-@Serializable
-internal data class FeatureApiResponse(
-    @SerialName("Code")
-    val featureId: String,
-    @SerialName("Global")
-    val isGlobal: Boolean,
-    @SerialName("DefaultValue")
-    val defaultValue: Boolean,
-    @SerialName("Value")
-    val value: Boolean
+internal data class PaymentStatusResponse(
+    @SerialName("Card")
+    val card: Boolean,
+    @SerialName("Paypal")
+    val paypal: Boolean,
+    @SerialName("Apple")
+    val apple: Boolean,
+    @SerialName("Bitcoin")
+    val bitcoin: Boolean,
+    @SerialName("Stripe")
+    val stripe: Boolean,
+    @SerialName("Paymentwall")
+    val paymentWall: Boolean,
+    @SerialName("Blockchain.info")
+    val blockchainInfo: Boolean
 ) {
-    internal fun toEntity(userId: UserId?) = FeatureFlagEntity(
-        featureId = featureId,
-        userId = userId,
-        isGlobal = isGlobal,
-        defaultValue = defaultValue,
-        value = value
+    fun toPaymentStatus(): PaymentStatus = PaymentStatus(
+        card = card,
+        paypal = paypal,
+        apple = apple,
+        bitcoin = bitcoin,
+        stripe = stripe,
+        paymentWall = paymentWall,
+        blockchainInfo = blockchainInfo
     )
 }

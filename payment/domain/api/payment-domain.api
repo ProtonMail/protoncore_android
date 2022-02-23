@@ -163,6 +163,29 @@ public final class me/proton/core/payment/domain/entity/PaymentMethodType$Compan
 	public final fun getMap ()Ljava/util/Map;
 }
 
+public final class me/proton/core/payment/domain/entity/PaymentStatus {
+	public fun <init> (ZZZZZZZ)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Z
+	public final fun copy (ZZZZZZZ)Lme/proton/core/payment/domain/entity/PaymentStatus;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentStatus;ZZZZZZZILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentStatus;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApple ()Z
+	public final fun getBitcoin ()Z
+	public final fun getBlockchainInfo ()Z
+	public final fun getCard ()Z
+	public final fun getPaymentWall ()Z
+	public final fun getPaypal ()Z
+	public final fun getStripe ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract class me/proton/core/payment/domain/entity/PaymentToken {
 	public synthetic fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
@@ -317,6 +340,7 @@ public abstract interface class me/proton/core/payment/domain/repository/Payment
 	public abstract fun createPaymentTokenNewCreditCard (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createPaymentTokenNewPayPal (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAvailablePaymentMethods (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPaymentStatus (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPaymentTokenStatus (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSubscription (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun validateSubscription (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -364,6 +388,11 @@ public final class me/proton/core/payment/domain/usecase/PerformSubscribe {
 	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/PurchaseEnabled {
+	public fun <init> (Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/domain/usecase/ValidateSubscriptionPlan {

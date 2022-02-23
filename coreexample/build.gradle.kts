@@ -73,7 +73,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
         productFlavors.register("dev") {
             dimension = flavorDimensions.env
             applicationIdSuffix = ".dev"
-            buildConfigField("String", buildConfigFieldKeys.HOST, "proton.black".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.HOST, "ostwald.proton.black".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
         }
         productFlavors.register("prod") {
@@ -91,7 +91,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
                 }
             }
             val proxyToken: String? = localProperties.getProperty(buildConfigFieldKeys.PROXY_TOKEN)
-            val host: String = localProperties.getProperty(buildConfigFieldKeys.HOST) ?: "proton.black"
+            val host: String = localProperties.getProperty(buildConfigFieldKeys.HOST) ?: "ostwald.proton.black"
             val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
 
             buildConfigField(

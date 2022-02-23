@@ -27,7 +27,6 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import me.proton.core.domain.entity.Product
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanListViewItemBinding
 import me.proton.core.plan.presentation.databinding.PlansListViewBinding
@@ -106,25 +105,30 @@ internal class PlansListView @JvmOverloads constructor(
     }
 
     private var plansSize: Int = 0
+
+    var purchaseEnabled: Boolean = true
     var plans: List<PlanDetailsItem>? = null
         set(value) = with(binding) {
-            value?.let { it ->
+            value?.let {
                 val paidPlan = it.firstOrNull { plan -> plan is PlanDetailsItem.PaidPlanDetailsItem }
                 selectedCurrency =
                     (paidPlan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: PlanCurrency.CHF
                 currencySpinner.apply {
                     setSelection(PlanCurrency.values().indexOf(selectedCurrency))
-                    visibility = VISIBLE
                 }
-                billingCycleSpinner.visibility = VISIBLE
                 plansSize = it.size
-                plansAdapter.submitList(it)
+
+                setSpinnersVisibility(if (purchaseEnabled) View.VISIBLE else View.GONE)
+                plansAdapter.submitList(
+                    it.map { plan ->
+                        if (plan is PlanDetailsItem.PaidPlanDetailsItem)
+                            plan.copy(purchaseEnabled = purchaseEnabled)
+                        else plan
+                    }
+                )
             } ?: run {
                 plansAdapter.submitList(emptyList())
-                binding.apply {
-                    currencySpinner.visibility = GONE
-                    billingCycleSpinner.visibility = GONE
-                }
+                setSpinnersVisibility(View.GONE)
             }
         }
 
@@ -135,5 +139,10 @@ internal class PlansListView @JvmOverloads constructor(
                 action(position)
             }
         }
+    }
+
+    private fun setSpinnersVisibility(visibility: Int) = with(binding) {
+        currencySpinner.visibility = visibility
+        billingCycleSpinner.visibility = visibility
     }
 }

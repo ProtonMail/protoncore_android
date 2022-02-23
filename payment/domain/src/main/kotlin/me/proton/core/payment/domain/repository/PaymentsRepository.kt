@@ -19,10 +19,10 @@
 package me.proton.core.payment.domain.repository
 
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
@@ -126,4 +126,9 @@ interface PaymentsRepository {
         cycle: SubscriptionCycle
     ): Subscription
     // endregion
+
+    /**
+     * These are the global values for all platforms indicating what payment methods are being supported.
+     */
+    suspend fun getPaymentStatus(sessionUserId: SessionUserId?): PaymentStatus
 }

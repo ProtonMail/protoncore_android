@@ -106,7 +106,8 @@ sealed class PlanDetailsItem(
         override val cycle: PlanCycle,
         val price: PlanPricing,
         val currency: PlanCurrency,
-        val starred: Boolean
+        val starred: Boolean,
+        val purchaseEnabled: Boolean = true
     ) : PlanDetailsItem(
         name,
         displayName,

@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupFinishedBinding
 import me.proton.core.domain.entity.Product
@@ -29,6 +30,7 @@ import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished) {
 
     private val binding by viewBinding(FragmentSignupFinishedBinding::bind)

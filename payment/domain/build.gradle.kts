@@ -38,6 +38,7 @@ dependencies {
 
         // Features
         project(Module.accountDomain),
+        project(Module.featureFlagDomain),
 
         // Kotlin
         `coroutines-core`,

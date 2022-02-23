@@ -84,7 +84,7 @@ class PlansOrchestrator @Inject constructor() {
      */
     fun showCurrentPlanWorkflow(userId: UserId) {
         checkRegistered(plansLauncher).launch(
-            PlanInput(userId = userId.id, showCurrent = true)
+            PlanInput(userId = userId.id, showSubscription = true)
         )
     }
 
@@ -95,7 +95,7 @@ class PlansOrchestrator @Inject constructor() {
      */
     fun startUpgradeWorkflow(userId: UserId) {
         checkRegistered(plansLauncher).launch(
-            PlanInput(userId = userId.id, showCurrent = false)
+            PlanInput(userId = userId.id, showSubscription = false)
         )
     }
 }

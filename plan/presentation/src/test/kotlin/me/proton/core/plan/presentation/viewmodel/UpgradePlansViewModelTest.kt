@@ -25,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
+import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
@@ -53,6 +54,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     private val getPaymentMethodsUseCase = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getSubscriptionUseCase = mockk<GetCurrentSubscription>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val purchaseEnabled = mockk<PurchaseEnabled>(relaxed = true)
     // endregion
 
     // region test data
@@ -193,6 +195,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getOrganizationUseCase.invoke(any(), true) } returns testOrganization
         coEvery { getUserUseCase.invoke(any(), true) } returns testUser
         coEvery { getPaymentMethodsUseCase.invoke(any()) } returns emptyList()
+        coEvery { purchaseEnabled.invoke() } returns true
 
         coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans.map { it.name }, testUserId) } returns listOf(
             testPlan
@@ -206,7 +209,8 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             getOrganizationUseCase,
             getUserUseCase,
             getPaymentMethodsUseCase,
-            paymentOrchestrator
+            purchaseEnabled,
+            paymentOrchestrator,
         )
     }
 
@@ -215,7 +219,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
         viewModel.availablePlansState.test {
             // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+            viewModel.getCurrentSubscribedPlans(testUserId, false)
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -232,7 +236,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
         viewModel.availablePlansState.test {
             // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+            viewModel.getCurrentSubscribedPlans(testUserId, false)
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())

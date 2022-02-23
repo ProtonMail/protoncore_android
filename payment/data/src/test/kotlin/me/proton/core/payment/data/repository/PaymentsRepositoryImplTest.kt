@@ -38,6 +38,7 @@ import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
+import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
@@ -49,7 +50,9 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class PaymentsRepositoryImplTest {
 
@@ -410,5 +413,49 @@ class PaymentsRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+    }
+
+    @Test
+    fun `payment status success android true`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
+            PaymentStatus(
+                card = true,
+                paypal = true,
+                apple = true,
+                bitcoin = true,
+                stripe = true,
+                paymentWall = true,
+                blockchainInfo = true
+            )
+        )
+        // WHEN
+        val paymentStatusResponse = repository.getPaymentStatus(sessionUserId = SessionUserId(testUserId))
+        // THEN
+        assertNotNull(paymentStatusResponse)
+        assertTrue(paymentStatusResponse.card)
+        assertTrue(paymentStatusResponse.paypal)
+    }
+
+    @Test
+    fun `payment status success android false`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
+            PaymentStatus(
+                card = true,
+                paypal = true,
+                apple = true,
+                bitcoin = true,
+                stripe = true,
+                paymentWall = true,
+                blockchainInfo = true
+            )
+        )
+        // WHEN
+        val paymentStatusResponse = repository.getPaymentStatus(sessionUserId = SessionUserId(testUserId))
+        // THEN
+        assertNotNull(paymentStatusResponse)
+        assertTrue(paymentStatusResponse.card)
+        assertTrue(paymentStatusResponse.paypal)
     }
 }

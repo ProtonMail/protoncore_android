@@ -45,7 +45,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
 
     private val featureFlagDao = database.featureFlagDao()
 
-    private data class StoreKey(val userId: UserId, val featureId: FeatureId)
+    private data class StoreKey(val userId: UserId?, val featureId: FeatureId)
 
     private val store: ProtonStore<StoreKey, FeatureFlag> = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
@@ -63,17 +63,17 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         )
     ).buildProtonStore()
 
-    override fun observe(userId: UserId, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
+    override fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
         StoreKey(userId = userId, featureId = featureId).let { key ->
             store.stream(StoreRequest.cached(key, refresh)).map { it.dataOrNull() }
         }
 
-    override suspend fun get(userId: UserId, featureId: FeatureId, refresh: Boolean): FeatureFlag =
+    override suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean): FeatureFlag =
         StoreKey(userId = userId, featureId = featureId).let { key ->
             if (refresh) store.fresh(key) else store.get(key)
         }
 
-    override suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>) {
+    override suspend fun prefetch(userId: UserId?, featureIds: List<FeatureId>) {
         val apiResponse = apiProvider.get<FeaturesApi>(userId).invoke {
             getFeatureFlags(featureIds.joinToString(separator = ",") { it.id })
         }.valueOrNull
@@ -83,5 +83,4 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
             featureFlagDao.insertOrUpdate(*entities)
         }
     }
-
 }

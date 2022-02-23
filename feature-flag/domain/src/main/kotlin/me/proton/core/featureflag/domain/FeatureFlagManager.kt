@@ -38,18 +38,18 @@ public interface FeatureFlagManager {
     /**
      * Observe a feature flag's value
      */
-    public fun observe(userId: UserId, featureId: FeatureId): Flow<FeatureFlag?>
+    public fun observe(userId: UserId?, featureId: FeatureId): Flow<FeatureFlag?>
 
     /**
      * Get a feature flag's value from the local data source.
      */
-    public suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag?
+    public suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
 
     /**
      * Fetches the given featureIds from the remote data source and stores them in the local one.
      * @param featureIds a list of features to be fetched. Passing any id that does not exist in the
      * remote data source will not have no consequence (said ids will just be ignored).
      */
-    public suspend fun prefetch(userId: UserId, featureIds: List<FeatureId>)
+    public suspend fun prefetch(userId: UserId?, featureIds: List<FeatureId>)
 
 }

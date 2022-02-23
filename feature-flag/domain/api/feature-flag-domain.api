@@ -1,7 +1,11 @@
 public abstract interface class me/proton/core/featureflag/domain/FeatureFlagManager {
-	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/featureflag/domain/FeatureFlagManager$DefaultImpls {
+	public static synthetic fun get$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/featureflag/domain/entity/FeatureFlag {

@@ -25,6 +25,7 @@ import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
 import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
 import me.proton.core.payment.data.api.response.PaymentMethodsResponse
+import me.proton.core.payment.data.api.response.PaymentStatusResponse
 import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
 import me.proton.core.payment.data.api.response.SubscriptionResponse
 import retrofit2.http.Body
@@ -79,4 +80,10 @@ internal interface PaymentsApi : BaseRetrofitApi {
      */
     @POST("payments/v4/subscription/check")
     suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
+
+    /**
+     * Returns the payment processor status.
+     */
+    @GET("payments/status")
+    suspend fun paymentStatus(): PaymentStatusResponse
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.entity
+package me.proton.core.payment.domain.entity
 
-import android.os.Parcelable
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
-import me.proton.core.domain.entity.UserId
-
-@Parcelize
-data class PlanInput(
-    val userId: String? = null,
-    val showSubscription: Boolean = true
-) : Parcelable {
-    @IgnoredOnParcel
-    val user = if (userId.isNullOrBlank()) null else UserId(userId)
-}
+data class PaymentStatus(
+    val card: Boolean,
+    val paypal: Boolean,
+    val apple: Boolean,
+    val bitcoin: Boolean,
+    val stripe: Boolean,
+    val paymentWall: Boolean,
+    val blockchainInfo: Boolean
+)
