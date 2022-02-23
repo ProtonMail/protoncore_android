@@ -21,7 +21,6 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -37,8 +36,7 @@ class PurchaseEnabledTest {
     // endregion
 
     // region test data
-    private val testUserId = UserId("test-user-id")
-    private val paymentsAndroidFeatureFlag = FeatureId("PaymentsAndroidEnabled")
+    private val paymentsAndroidFeatureFlag = FeatureId(PurchaseEnabled.PAYMENTS_ANDROID_FEATURE_FLAG)
 
     // endregion
     private lateinit var useCase: PurchaseEnabled
@@ -52,7 +50,7 @@ class PurchaseEnabledTest {
                 featureId = paymentsAndroidFeatureFlag,
                 refresh = true
             )
-        } returns FeatureFlag(paymentsAndroidFeatureFlag, true)
+        } returns FeatureFlag(paymentsAndroidFeatureFlag, false)
     }
 
     @Test
@@ -70,7 +68,7 @@ class PurchaseEnabledTest {
                 featureId = paymentsAndroidFeatureFlag,
                 refresh = true
             )
-        } returns FeatureFlag(paymentsAndroidFeatureFlag, false)
+        } returns FeatureFlag(paymentsAndroidFeatureFlag, true)
         val result = useCase.invoke()
         assertNotNull(result)
         assertFalse(result)

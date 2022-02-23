@@ -391,8 +391,17 @@ public final class me/proton/core/payment/domain/usecase/PerformSubscribe {
 }
 
 public final class me/proton/core/payment/domain/usecase/PurchaseEnabled {
+	public static final field Companion Lme/proton/core/payment/domain/usecase/PurchaseEnabled$Companion;
 	public fun <init> (Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/PurchaseEnabled$Companion {
+}
+
+public final class me/proton/core/payment/domain/usecase/PurchaseEnabled$Companion$LogTag {
+	public static final field DEFAULT Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/payment/domain/usecase/PurchaseEnabled$Companion$LogTag;
 }
 
 public final class me/proton/core/payment/domain/usecase/ValidateSubscriptionPlan {

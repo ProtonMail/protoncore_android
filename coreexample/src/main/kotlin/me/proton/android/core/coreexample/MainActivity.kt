@@ -204,7 +204,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         featureFlagViewModel.state.onEach { result ->
             when (result) {
                 is ViewModelResult.Success -> {
-                    showToast("Feature flag ${androidThreading.name} is ${result.value.isEnabled}")
+                    showToast("Feature flag ${androidThreading.name} is ${result.value.value}")
                 }
                 is ViewModelResult.Error -> showToast("Failed getting feature flag ${result.throwable}")
                 ViewModelResult.None -> Unit

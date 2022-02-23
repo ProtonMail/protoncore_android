@@ -20,18 +20,35 @@ package me.proton.core.payment.domain.usecase
 
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.util.kotlin.CoreLogger
+import java.io.IOException
 import javax.inject.Inject
 
 class PurchaseEnabled @Inject constructor(
     private val featureFlagManager: FeatureFlagManager
 ) {
     suspend operator fun invoke(): Boolean {
-        val paymentsFeatureFlag = featureFlagManager.get(
-            userId = null,
-            featureId = FeatureId("PaymentsAndroidEnabled"),
-            refresh = true
-        )?.isEnabled
+        val isEnabled = try {
+            val paymentsFeatureFlag = featureFlagManager.get(
+                userId = null,
+                featureId = FeatureId(PAYMENTS_ANDROID_FEATURE_FLAG),
+                refresh = true
+            )?.value
+            paymentsFeatureFlag == false
+        } catch (exception: IOException) {
+            // if the flag does not exists at all on the api, we assume that the payments are default enabled
+            CoreLogger.e(LogTag.DEFAULT, exception)
+            true
+        }
 
-        return paymentsFeatureFlag == true
+        return isEnabled
+    }
+
+    companion object {
+        internal const val PAYMENTS_ANDROID_FEATURE_FLAG = "PaymentsAndroidDisabled"
+
+        object LogTag {
+            const val DEFAULT = "core.payments.default"
+        }
     }
 }
