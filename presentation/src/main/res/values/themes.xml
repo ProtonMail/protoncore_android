@@ -45,12 +45,14 @@
         <item name="android:textColorSecondary">@color/text_weak</item>
         <item name="android:textColorSecondaryInverse">@color/text_inverted</item>
 
-        <!-- Edge-to-edge app content -->
+        <!-- Nav bar and Edge-to-edge app content -->
         <item name="android:navigationBarColor">@color/nav_bar</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="29">@bool/light_mode</item>
 
         <!-- Status bar and App bars -->
         <item name="android:statusBarColor">@color/status_bar</item>
-        <item name="android:windowLightStatusBar">@bool/light_status_bar</item>
+        <item name="android:windowLightStatusBar">@bool/light_mode</item>
+
         <item name="appBarLayoutStyle">@style/ProtonAppBar</item>
         <item name="toolbarStyle">@style/ProtonToolbar</item>
         <item name="searchViewStyle">@style/ProtonSearchView</item>
@@ -142,31 +144,30 @@
     <style name="ProtonTheme.Mail" parent="ProtonTheme" />
     <style name="ProtonTheme.Vpn" parent="ProtonTheme"/>
 
-    <style name="ProtonTheme.Splash">
-        <item name="android:statusBarColor">?proton_background_norm</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="brand_splash_logo">@drawable/splash_logo_mail</item>
-        <item name="brand_splash_text">@drawable/splash_text_protonmail</item>
+    <style name="ProtonTheme.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/background_norm</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_mail_no_bg_scaled</item>
+        <item name="postSplashScreenTheme">@style/ProtonTheme</item>
     </style>
 
     <style name="ProtonTheme.Splash.Mail">
-        <item name="brand_splash_logo">@drawable/splash_logo_mail</item>
-        <item name="brand_splash_text">@drawable/splash_text_protonmail</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_mail_no_bg_scaled</item>
+        <item name="postSplashScreenTheme">@style/ProtonTheme.Mail</item>
     </style>
 
     <style name="ProtonTheme.Splash.Drive">
-        <item name="brand_splash_logo">@drawable/splash_logo_drive</item>
-        <item name="brand_splash_text">@drawable/splash_text_protondrive</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_drive_no_bg_scaled</item>
+        <item name="postSplashScreenTheme">@style/ProtonTheme.Drive</item>
     </style>
 
     <style name="ProtonTheme.Splash.Calendar">
-        <item name="brand_splash_logo">@drawable/splash_logo_calendar</item>
-        <item name="brand_splash_text">@drawable/splash_text_protoncalendar</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_calendar_no_bg_scaled</item>
+        <item name="postSplashScreenTheme">@style/ProtonTheme.Calendar</item>
     </style>
 
     <style name="ProtonTheme.Splash.Vpn">
-        <item name="brand_splash_logo">@drawable/splash_logo_vpn</item>
-        <item name="brand_splash_text">@drawable/splash_text_protonvpn</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_vpn_no_bg_scaled</item>
+        <item name="postSplashScreenTheme">@style/ProtonTheme.Vpn</item>
     </style>
 
     <style name="ProtonTheme.Transparent">

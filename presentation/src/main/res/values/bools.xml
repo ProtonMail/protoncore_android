@@ -20,5 +20,5 @@
 <resources>
     <!-- decides if the layout is large or not. useful for phone or tabled design distinguishment -->
     <bool name="large_layout">false</bool>
-    <bool name="light_status_bar">true</bool>
+    <bool name="light_mode">true</bool>
 </resources>

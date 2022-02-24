@@ -102,6 +102,10 @@ class AccountViewModel @Inject constructor(
                     _state.tryEmit(State.AccountList(accounts))
             }.launchIn(context.lifecycleScope)
 
+        authOrchestrator.setOnAddAccountResult {
+            if (it == null) _state.tryEmit(State.AccountList(emptyList()))
+        }
+
         with(authOrchestrator) {
             accountManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
                 .onSessionForceLogout { userManager.lock(it.userId) }

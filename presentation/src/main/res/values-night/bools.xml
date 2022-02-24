@@ -18,5 +18,5 @@
   -->
 
 <resources>
-    <bool name="light_status_bar">false</bool>
+    <bool name="light_mode">false</bool>
 </resources>

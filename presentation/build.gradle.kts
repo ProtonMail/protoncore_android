@@ -49,6 +49,7 @@ dependencies {
         `android-ktx`,
         `activity`,
         `appcompat`,
+        `core-splashscreen`,
         `constraint-layout`,
         `fragment`,
         `lifecycle-common`,

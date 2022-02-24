@@ -153,6 +153,7 @@ dependencies {
         `activity`,
         `appcompat`,
         `android-work-runtime`,
+        `core-splashscreen`,
         `constraint-layout`,
         `fragment`,
         `lifecycle-extensions`,

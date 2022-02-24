@@ -31,6 +31,11 @@ import studio.forface.easygradle.dsl.google
 import studio.forface.easygradle.dsl.squareup
 import studio.forface.easygradle.dsl.version
 
+// region AndroidX
+public val DependencyHandler.`core-splashscreen`: Any
+    get() = androidx("core", moduleSuffix = "splashscreen") version `core-splashscreen version`
+// end region
+
 // region Compose
 public val DependencyHandler.`activity-compose`: Any
     get() = androidx("activity", moduleSuffix = "compose") version `activity version`

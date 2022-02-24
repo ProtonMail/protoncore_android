@@ -14,6 +14,7 @@ If needed, you can also manually update this file (provided the general structur
 - Add new logos, replace existing ones.
 - Update color taxonomy.
 - Removed VPN specific brand colors.
+- Updated Splash/Welcome/SignIn/SignUp Screens. Added SplashScreen API support (https://developer.android.com/guide/topics/ui/splash-screen). Client MainActivity migration: Call `installSplashScreen()` before `onCreate`, and optionally `setKeepOnScreenCondition` to minimize transition between Splash and next Activity.
 
 ## [Unreleased]
 

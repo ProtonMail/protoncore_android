@@ -23,6 +23,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,7 +84,9 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.ProtonTheme)
+        installSplashScreen().setKeepOnScreenCondition {
+            accountViewModel.state.value !is AccountViewModel.State.AccountList
+        }
         super.onCreate(savedInstanceState)
 
         accountViewModel.register(this)

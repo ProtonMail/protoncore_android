@@ -63,6 +63,7 @@ internal fun initVersions(libs: VersionCatalog) {
 
 // region Android
 public const val `android-tools version`: String =             "30.0.2"        // Updated: Jun, 2020
+public const val `core-splashscreen version`: String =         "1.0.0-beta01"
 public const val `compose version`: String =                   "1.2.0-alpha01"
 public const val `datastore version`: String =                 "1.0.0"
 public const val `hilt-navigation-compose version`: String =   "1.0.0-rc01"
