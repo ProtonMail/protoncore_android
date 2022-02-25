@@ -58,6 +58,7 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
                         .onFailure { setInputError(getString(R.string.auth_signup_validation_password_length)) }
                         .onSuccess { clearInputError() }
                 }
+                setOnNextActionListener { binding.confirmPasswordInput.requestFocus() }
             }
 
             confirmPasswordInput.apply {
@@ -66,6 +67,7 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
                         .onFailure { setInputError(getString(R.string.auth_signup_validation_password_length)) }
                         .onSuccess { clearInputError() }
                 }
+                setOnDoneActionListener { onNextClicked() }
             }
         }
     }

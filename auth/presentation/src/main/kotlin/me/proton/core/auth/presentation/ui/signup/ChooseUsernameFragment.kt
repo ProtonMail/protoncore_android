@@ -75,6 +75,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                         .onFailure { setInputError() }
                         .onSuccess { clearInputError() }
                 }
+                setOnDoneActionListener { onNextClicked() }
             }
 
             nextButton.onClick(::onNextClicked)

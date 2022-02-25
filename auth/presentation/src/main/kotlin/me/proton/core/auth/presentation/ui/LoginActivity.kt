@@ -22,6 +22,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -93,6 +96,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     .onFailure { passwordInput.setInputError() }
                     .onSuccess { passwordInput.clearInputError() }
             }
+            passwordInput.setOnDoneActionListener { onSignInClicked() }
 
             if (input.password != null) onSignInClicked()
 

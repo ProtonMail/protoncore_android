@@ -360,8 +360,11 @@ public final class me/proton/core/presentation/ui/view/ProtonInput : android/wid
 	public final fun setKeyListener (Landroid/text/method/KeyListener;)V
 	public final fun setLabelText (Ljava/lang/CharSequence;)V
 	public final fun setMinLines (I)V
+	public final fun setOnActionListener (ILkotlin/jvm/functions/Function0;)V
+	public final fun setOnDoneActionListener (Lkotlin/jvm/functions/Function0;)V
 	public final fun setOnEditorActionListener (Landroid/widget/TextView$OnEditorActionListener;)V
 	public final fun setOnFocusLostListener (Landroid/view/View$OnFocusChangeListener;)V
+	public final fun setOnNextActionListener (Lkotlin/jvm/functions/Function0;)V
 	public final fun setPrefixText (Ljava/lang/CharSequence;)V
 	public final fun setSuffixText (Ljava/lang/CharSequence;)V
 	public final fun setSuffixTextVisible (Z)V

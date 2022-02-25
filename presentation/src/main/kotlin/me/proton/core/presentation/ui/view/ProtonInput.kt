@@ -27,6 +27,7 @@ import android.text.method.DigitsKeyListener
 import android.text.method.KeyListener
 import android.util.AttributeSet
 import android.util.SparseArray
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -326,6 +327,20 @@ class ProtonInput : LinearLayout {
     fun setOnEditorActionListener(listener: TextView.OnEditorActionListener?) {
         binding.input.setOnEditorActionListener(listener)
     }
+
+    fun setOnActionListener(action: Int, block: () -> Unit) {
+        imeOptions = action
+        setOnEditorActionListener { v, actionId, event ->
+            if (actionId == action || event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                block()
+                true
+            } else false
+        }
+    }
+
+    fun setOnNextActionListener(block: () -> Unit) = setOnActionListener(EditorInfo.IME_ACTION_NEXT, block)
+
+    fun setOnDoneActionListener(block: () -> Unit) = setOnActionListener(EditorInfo.IME_ACTION_DONE, block)
 
     /**
      * Set the enabled state of this view.
