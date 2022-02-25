@@ -19,6 +19,7 @@
 package me.proton.android.core.coreexample.api
 
 import android.os.Build
+import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.network.domain.ApiClient
 import java.util.Locale
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
      * VPN connection is active). Will be checked before  each API call.
      */
     override val shouldUseDoh: Boolean
-        get() = false
+        get() = BuildConfig.USE_DOH
 
     /**
      * Client's value for 'x-pm-appversion' header.

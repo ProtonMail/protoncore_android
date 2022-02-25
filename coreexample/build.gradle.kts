@@ -58,6 +58,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val PROXY_TOKEN = "PROXY_TOKEN"
             val HOST = "HOST"
             val USE_DEFAULT_PINS = "USE_DEFAULT_PINS"
+            val CAN_USE_DOH = "USE_DOH"
         }
         val flavorDimensions = object {
             val env = "env"
@@ -68,6 +69,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
         defaultConfig {
             buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, null.toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, true.toBuildConfigValue())
+            buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, false.toBuildConfigValue())
         }
 
         productFlavors.register("dev") {
@@ -79,6 +81,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
             buildConfigField("String", buildConfigFieldKeys.HOST, "protonmail.ch".toBuildConfigValue())
+            buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
         }
         productFlavors.register("localProperties") {
             dimension = flavorDimensions.env
