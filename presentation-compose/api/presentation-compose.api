@@ -414,7 +414,24 @@ public final class me/proton/core/compose/navigation/NavBackStackEntryKt {
 	public static final fun requireArguments (Landroidx/navigation/NavBackStackEntry;)Landroid/os/Bundle;
 }
 
+public final class me/proton/core/compose/theme/AccentColors {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/compose/theme/AccentColors;
+	public final fun getCarrot ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getFern ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getOlive ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getPacific ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getPink ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getPurple ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getReef ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getSahara ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getSlateBlue ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getStrawberry ()Lme/proton/core/compose/theme/ProtonAccentColor;
+}
+
 public final class me/proton/core/compose/theme/ColorsKt {
+	public static final fun intenseVariant-8_81llA (J)J
+	public static final fun strongVariant-8_81llA (J)J
 	public static final fun textInverted (Lme/proton/core/compose/theme/ProtonColors;Z)J
 	public static synthetic fun textInverted$default (Lme/proton/core/compose/theme/ProtonColors;ZILjava/lang/Object;)J
 	public static final fun textNorm (Lme/proton/core/compose/theme/ProtonColors;Z)J
@@ -426,6 +443,23 @@ public final class me/proton/core/compose/theme/ColorsKt {
 public final class me/proton/core/compose/theme/ColorsThemeCompatKt {
 	public static final fun colorsFromXml (Landroid/content/Context;Z)Lme/proton/core/compose/theme/ProtonColors;
 	public static final fun rememberColorsFromXml (Landroid/content/Context;ZLandroidx/compose/runtime/Composer;II)Lme/proton/core/compose/theme/ProtonColors;
+}
+
+public final class me/proton/core/compose/theme/ProtonAccentColor {
+	public static final field $stable I
+	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun component3-0d7_KjU ()J
+	public final fun copy-ysEtTa8 (JJJ)Lme/proton/core/compose/theme/ProtonAccentColor;
+	public static synthetic fun copy-ysEtTa8$default (Lme/proton/core/compose/theme/ProtonAccentColor;JJJILjava/lang/Object;)Lme/proton/core/compose/theme/ProtonAccentColor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBase-0d7_KjU ()J
+	public final fun getIntense-0d7_KjU ()J
+	public final fun getStrong-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/compose/theme/ProtonColors {

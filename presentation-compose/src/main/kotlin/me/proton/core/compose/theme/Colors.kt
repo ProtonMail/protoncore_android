@@ -25,6 +25,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import me.proton.core.presentation.utils.ProtonColorUtils.intenseColorVariant
+import me.proton.core.presentation.utils.ProtonColorUtils.strongColorVariant
 
 private object ProtonPalette {
     val Chambray = Color(0xFF372580)
@@ -69,6 +72,18 @@ private object ProtonPalette {
     val Pomegranate = Color(0xFFDC3251)
     val Sunglow = Color(0xFFFF9900)
     val Apple = Color(0xFF1EA885)
+
+    // New accent colors for rebranding
+    val PurpleBase = Color(0xFF8080FF)
+    val StrawberryBase = Color(0xFFEC3E7C)
+    val PinkBase = Color(0xFFDB60D6)
+    val SlateBlueBase = Color(0xFF415DF0)
+    val PacificBase = Color(0xFF179FD9)
+    val ReefBase = Color(0xFF1DA583)
+    val FernBase = Color(0xFF3CBB3A)
+    val OliveBase = Color(0xFFB4A40E)
+    val SaharaBase = Color(0xFF936D58)
+    val CarrotBase = Color(0xFFF78400)
 }
 
 @Stable
@@ -507,5 +522,29 @@ internal fun ProtonColors.updateColorsFrom(other: ProtonColors) {
 
     sidebarColors = other.sidebarColors
 }
+
+object AccentColors {
+    val Purple = ProtonAccentColor(ProtonPalette.PurpleBase)
+    val Pink = ProtonAccentColor(ProtonPalette.PinkBase)
+    val Strawberry = ProtonAccentColor(ProtonPalette.StrawberryBase)
+    val Carrot = ProtonAccentColor(ProtonPalette.CarrotBase)
+    val Sahara = ProtonAccentColor(ProtonPalette.SaharaBase)
+    val SlateBlue = ProtonAccentColor(ProtonPalette.SlateBlueBase)
+    val Pacific = ProtonAccentColor(ProtonPalette.PacificBase)
+    val Reef = ProtonAccentColor(ProtonPalette.ReefBase)
+    val Fern = ProtonAccentColor(ProtonPalette.FernBase)
+    val Olive = ProtonAccentColor(ProtonPalette.OliveBase)
+}
+
+data class ProtonAccentColor(
+    val base: Color,
+    val strong: Color,
+    val intense: Color,
+) {
+    constructor(base: Color) : this(base, base.strongVariant(), base.intenseVariant())
+}
+
+fun Color.strongVariant(): Color = Color(strongColorVariant(toArgb()))
+fun Color.intenseVariant(): Color = Color(intenseColorVariant(toArgb()))
 
 internal val LocalColors = staticCompositionLocalOf { ProtonColors.Light }

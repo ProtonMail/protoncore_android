@@ -601,6 +601,34 @@ public final class me/proton/core/presentation/utils/ProtectScreenConfiguration 
 	public final fun getPreventScreenRecording ()Z
 }
 
+public final class me/proton/core/presentation/utils/ProtonAccentColorCompat {
+	public static final field Companion Lme/proton/core/presentation/utils/ProtonAccentColorCompat$Companion;
+	public fun <init> (I)V
+	public fun <init> (III)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (III)Lme/proton/core/presentation/utils/ProtonAccentColorCompat;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/ProtonAccentColorCompat;IIIILjava/lang/Object;)Lme/proton/core/presentation/utils/ProtonAccentColorCompat;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBase ()I
+	public final fun getIntense ()I
+	public final fun getStrong ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/ProtonAccentColorCompat$Companion {
+	public final fun fromColorResource (Landroid/content/Context;I)Lme/proton/core/presentation/utils/ProtonAccentColorCompat;
+}
+
+public final class me/proton/core/presentation/utils/ProtonColorUtils {
+	public static final field INSTANCE Lme/proton/core/presentation/utils/ProtonColorUtils;
+	public final fun intenseColorVariant (I)I
+	public final fun rgbToHsl (I)[F
+	public final fun strongColorVariant (I)I
+}
+
 public final class me/proton/core/presentation/utils/ScreenContentProtector {
 	public static final field Companion Lme/proton/core/presentation/utils/ScreenContentProtector$Companion;
 	public static final field TAG Ljava/lang/String;

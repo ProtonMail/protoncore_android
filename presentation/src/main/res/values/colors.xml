@@ -71,6 +71,46 @@
     <color name="sunglow">#FF9900</color>
     <color name="apple">#1EA885</color>
 
+    <color name="purple_base">#8080FF</color>
+    <color name="purple_strong">#5151FB</color>
+    <color name="purple_intense">#2E2EFA</color>
+
+    <color name="strawberry_base">#EC3E7C</color>
+    <color name="strawberry_strong">#D91C5F</color>
+    <color name="strawberry_intense">#B91852</color>
+
+    <color name="pink_base">#DB60D6</color>
+    <color name="pink_strong">#CC3EC6</color>
+    <color name="pink_intense">#B530B0</color>
+
+    <color name="slateblue_base">#415DF0</color>
+    <color name="slateblue_strong">#1A3AE5</color>
+    <color name="slateblue_intense">#1632C5</color>
+
+    <color name="pacific_base">#179FD9</color>
+    <color name="pacific_strong">#177BA6</color>
+    <color name="pacific_intense">#126487</color>
+
+    <color name="reef_base">#1DA583</color>
+    <color name="reef_strong">#19765F</color>
+    <color name="reef_intense">#135847</color>
+
+    <color name="fern_base">#3CBB3A</color>
+    <color name="fern_strong">#339032</color>
+    <color name="fern_intense">#2A7529</color>
+
+    <color name="olive_base">#B4A40E</color>
+    <color name="olive_strong">#81760E</color>
+    <color name="olive_intense">#61590A</color>
+
+    <color name="sahara_base">#936D58</color>
+    <color name="sahara_strong">#6E5749</color>
+    <color name="sahara_intense">#59463B</color>
+
+    <color name="carrot_base">#F78400</color>
+    <color name="carrot_strong">#BD6705</color>
+    <color name="carrot_intense">#9A5404</color>
+
     <!-- design color aliases -->
 
     <color name="shade_100">@color/cinder</color>
@@ -155,7 +195,48 @@
     -->
     <color name="ripple_norm_workaround">#1f17181C</color>
 
-    <color name="ic_logo_adaptive_background">#ffffff</color>
+    <!-- Background for adaptive icons -->
+    <color name="ic_logo_adaptive_background">#FFFFFF</color>
+
+    <!-- Accent colors for rebranding -->
+    <array name="accent_colors_base">
+        <item>@color/purple_base</item>
+        <item>@color/pink_base</item>
+        <item>@color/strawberry_base</item>
+        <item>@color/carrot_base</item>
+        <item>@color/sahara_base</item>
+        <item>@color/slateblue_base</item>
+        <item>@color/pacific_base</item>
+        <item>@color/reef_base</item>
+        <item>@color/fern_base</item>
+        <item>@color/olive_base</item>
+    </array>
+
+    <array name="accent_colors_strong">
+        <item>@color/purple_strong</item>
+        <item>@color/pink_strong</item>
+        <item>@color/strawberry_strong</item>
+        <item>@color/carrot_strong</item>
+        <item>@color/sahara_strong</item>
+        <item>@color/slateblue_strong</item>
+        <item>@color/pacific_strong</item>
+        <item>@color/reef_strong</item>
+        <item>@color/fern_strong</item>
+        <item>@color/olive_strong</item>
+    </array>
+
+    <array name="accent_colors_intense">
+        <item>@color/purple_intense</item>
+        <item>@color/pink_intense</item>
+        <item>@color/strawberry_intense</item>
+        <item>@color/carrot_intense</item>
+        <item>@color/sahara_intense</item>
+        <item>@color/slateblue_intense</item>
+        <item>@color/pacific_intense</item>
+        <item>@color/reef_intense</item>
+        <item>@color/fern_intense</item>
+        <item>@color/olive_intense</item>
+    </array>
 
     <!--End of Global Colors -->
 </resources>
