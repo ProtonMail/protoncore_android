@@ -6,7 +6,7 @@ public final class me/proton/core/featureflag/data/BuildConfig {
 }
 
 public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
-	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Lkotlinx/coroutines/flow/Flow;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -26,6 +26,7 @@ public abstract interface class me/proton/core/featureflag/data/db/FeatureFlagDa
 
 public final class me/proton/core/featureflag/data/db/FeatureFlagDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/featureflag/data/db/dao/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {

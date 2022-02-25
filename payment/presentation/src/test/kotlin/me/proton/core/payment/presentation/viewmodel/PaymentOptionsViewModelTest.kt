@@ -62,10 +62,6 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val validateSubscription = mockk<ValidateSubscriptionPlan>(relaxed = true)
     private val billingViewModelHelper = mockk<BillingCommonViewModel>(relaxed = true)
-    private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>(relaxed = true)
-    private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>(relaxed = true)
-    private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>(relaxed = true)
-    private val performSubscribe = mockk<PerformSubscribe>(relaxed = true)
     private val getCountryCode = mockk<GetCountry>(relaxed = true)
     private val getAvailablePaymentMethods = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getCurrentSubscription = mockk<GetCurrentSubscription>(relaxed = true)

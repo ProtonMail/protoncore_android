@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
+import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportedUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
@@ -50,8 +51,9 @@ internal class UpgradePlansViewModel @Inject constructor(
     private val getOrganization: GetOrganization,
     private val getUser: GetUser,
     private val getPaymentMethods: GetAvailablePaymentMethods,
+    purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
-) : BasePlansViewModel(paymentsOrchestrator) {
+) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
 
     private val _subscribedPlansState = MutableStateFlow<SubscribedPlansState>(SubscribedPlansState.Idle)
 
@@ -72,7 +74,7 @@ internal class UpgradePlansViewModel @Inject constructor(
         data class Error(val error: Throwable) : SubscribedPlansState()
     }
 
-    fun getCurrentSubscribedPlans(userId: UserId) = flow {
+    fun getCurrentSubscribedPlans(userId: UserId, isUpsell: Boolean) = flow {
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
         val organization = getOrganization(userId, true)
@@ -107,7 +109,7 @@ internal class UpgradePlansViewModel @Inject constructor(
 
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
-        getAvailablePlansForUpgrade(userId)
+        getAvailablePlansForUpgrade(userId, isUpsell)
         emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans))
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
@@ -115,17 +117,23 @@ internal class UpgradePlansViewModel @Inject constructor(
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private fun getAvailablePlansForUpgrade(userId: UserId) = flow {
+    private fun getAvailablePlansForUpgrade(userId: UserId, isUpsell: Boolean) = flow {
         emit(PlanState.Processing)
-        val availablePlans = getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it.name }, userId = userId)
-            .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-            .map { plan ->
-                plan.toPaidPlanDetailsItem(
-                    supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
-                )
-            }
+        val purchaseStatus = getPurchaseStatus()
 
-        emit(PlanState.Success.Plans(plans = availablePlans))
+        val availablePlans =
+            if (!isUpsell && !purchaseStatus) emptyList()
+            else getPlans(
+                supportedPaidPlans = supportedPaidPlanNames.map { it.name },
+                userId = userId
+            ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
+                .map { plan ->
+                    plan.toPaidPlanDetailsItem(
+                        supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
+                    )
+                }
+
+        emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = purchaseStatus))
     }.catch { error ->
         state.tryEmit(PlanState.Error(error))
     }.onEach { plans ->

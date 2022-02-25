@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New implementation of cookie store:
   - Removed dependency on `net.gotev:cookie-store`
   - Class `ProtonCookieStore` is now a subclass of `okhttp3.CookieJar` (previously it was a subclass of `java.net.CookieStore`)
+- Add support for Payments feature flag.
 
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.

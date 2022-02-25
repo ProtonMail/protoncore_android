@@ -64,6 +64,10 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         input.user
     }
 
+    private val isUpsell: Boolean by lazy {
+        !input.showSubscription
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         upgradePlanViewModel.register(this)
@@ -87,7 +91,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     movementMethod = LinkMovementMethod.getInstance()
                 }
                 input.user?.let {
-                    if (input.showCurrent) {
+                    if (input.showSubscription) {
                         toolbar.title = getString(R.string.plans_subscription)
                     } else {
                         plansTitle.apply {
@@ -114,7 +118,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         binding.manageSubscriptionText.visibility = VISIBLE
                         binding.currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
-                            visibility = if (input.showCurrent) VISIBLE else GONE
+                            visibility = if (input.showSubscription) VISIBLE else GONE
                             setData(plan = plan, cycle = cycle, currency = currency, collapsible = false)
                         }
                     }
@@ -130,30 +134,35 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is BasePlansViewModel.PlanState.Success.Plans -> {
                         showLoading(false)
                         with(binding) {
-                            plansView.selectPlanListener = { selectedPlan ->
-                                if (selectedPlan.free) {
-                                    // proceed with result return
-                                    setResult(selectedPlan)
-                                } else {
-                                    val cycle = selectedPlan.cycle.toSubscriptionCycle()
-                                    upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
-                                }
-                            }
                             with(plansView) {
-                                plans = it.plans
+                                selectPlanListener = { selectedPlan ->
+                                    if (selectedPlan.free) {
+                                        // proceed with result return
+                                        setResult(selectedPlan)
+                                    } else {
+                                        val cycle = selectedPlan.cycle.toSubscriptionCycle()
+                                        upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                    }
+                                }
                                 visibility = if (it.plans.isEmpty()) GONE else VISIBLE
+                                purchaseEnabled = it.purchaseEnabled
+                                plans = it.plans
                             }
-                            plansTitle.visibility = if (it.plans.size > 0) VISIBLE else GONE
+                            if (!it.purchaseEnabled) {
+                                manageSubscriptionText.setText(R.string.plans_can_not_upgrade_from_mobile)
+                            }
+                            plansTitle.visibility = if (it.plans.isNotEmpty()) VISIBLE else GONE
                         }
                     }
                     is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
                         setResult(it.selectedPlan, it.billing)
-                        upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
+                        // refresh
+                        upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, isUpsell)
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-            upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
+            upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, isUpsell)
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
             setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
@@ -161,7 +170,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
-        progress.visibility = if (loading) VISIBLE else GONE
+        progressParent.visibility = if (loading) VISIBLE else GONE
     }
 
     private fun onError(message: String?) = with(binding) {

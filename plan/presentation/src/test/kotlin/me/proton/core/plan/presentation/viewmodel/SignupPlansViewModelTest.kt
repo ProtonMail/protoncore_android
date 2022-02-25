@@ -21,6 +21,7 @@ package me.proton.core.plan.presentation.viewmodel
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
+import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
@@ -41,6 +42,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
     private val getPlansUseCase = mockk<GetPlans>()
     private val getPlanDefaultUseCase = mockk<GetPlanDefault>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val purchaseEnabled = mockk<PurchaseEnabled>(relaxed = true)
     // endregion
 
     // region test data
@@ -96,8 +98,16 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         coEvery { getPlanDefaultUseCase.invoke(any()) } returns testDefaultPlan
+        coEvery { purchaseEnabled.invoke() } returns true
+
         viewModel =
-            SignupPlansViewModel(getPlansUseCase, getPlanDefaultUseCase, testDefaultSupportedPlans, paymentOrchestrator)
+            SignupPlansViewModel(
+                getPlansUseCase,
+                getPlanDefaultUseCase,
+                testDefaultSupportedPlans,
+                purchaseEnabled,
+                paymentOrchestrator
+            )
     }
 
     @Test

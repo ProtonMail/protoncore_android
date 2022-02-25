@@ -27,10 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
@@ -85,7 +83,11 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                                     signupPlansViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
                                 }
                             }
-                            plansView.plans = it.plans
+                            if (it.plans.isNotEmpty()) {
+                                plansView.plans = it.plans
+                            } else {
+                                onFreeSelected()
+                            }
                         }
                     }
                     is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
@@ -94,14 +96,18 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
 
             signupPlansViewModel.getAllPlansForSignup()
         } else {
-            // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
-            parentFragmentManager.removePlansSignup()
-            setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
+            onFreeSelected()
         }
     }
 
+    private fun onFreeSelected() {
+        // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
+        parentFragmentManager.removePlansSignup()
+        setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
+    }
+
     private fun showLoading(loading: Boolean) = with(binding) {
-        progress.visibility = if (loading) View.VISIBLE else View.GONE
+        progressParent.visibility = if (loading) View.VISIBLE else View.GONE
     }
 
     private fun onError(message: String?) = with(binding) {

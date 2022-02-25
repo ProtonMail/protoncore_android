@@ -26,7 +26,7 @@ import me.proton.core.domain.entity.UserId
 @Parcelize
 data class PlanInput(
     val userId: String? = null,
-    val showCurrent: Boolean = true
+    val showSubscription: Boolean = true
 ) : Parcelable {
     @IgnoredOnParcel
     val user = if (userId.isNullOrBlank()) null else UserId(userId)

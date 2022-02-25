@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportedSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
@@ -37,24 +38,28 @@ internal class SignupPlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
     @SupportedSignupPaidPlans val supportedPaidPlanNames: List<SupportedPlan>,
+    purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
-) : BasePlansViewModel(paymentsOrchestrator) {
+) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
 
     fun getAllPlansForSignup() = flow {
         emit(PlanState.Processing)
         val plans: MutableList<PlanDetailsItem> = mutableListOf()
-        plans.apply {
-            addAll(
-                getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it.name }, userId = null)
-                    .map { plan ->
-                        plan.toPaidPlanDetailsItem(
-                            supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
-                        )
-                    }
-            )
-            add(createFreePlan(getPlanDefault(userId = null)))
+        val purchaseStatus = getPurchaseStatus()
+        if (purchaseStatus) {
+            plans.apply {
+                addAll(
+                    getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it.name }, userId = null)
+                        .map { plan ->
+                            plan.toPaidPlanDetailsItem(
+                                supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
+                            )
+                        }
+                )
+                add(createFreePlan(getPlanDefault(userId = null)))
+            }
         }
-        emit(PlanState.Success.Plans(plans = plans))
+        emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = purchaseStatus))
     }.catch { error ->
         state.tryEmit(PlanState.Error(error))
     }.onEach { plans ->

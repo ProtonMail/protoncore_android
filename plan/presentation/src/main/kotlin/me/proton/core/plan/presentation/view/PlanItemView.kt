@@ -165,6 +165,12 @@ class PlanItemView @JvmOverloads constructor(
             PlanCycle.TWO_YEARS -> planPriceDescriptionText.visibility = VISIBLE
         }.exhaustive
         calculatePaidPlanPrice(plan = plan, maxMonthlyPrice = maxMonthlyPrice)
+
+        if (!plan.purchaseEnabled) {
+            select.visibility = GONE
+            priceCycleLayout.visibility = GONE
+            planPriceDescriptionText.visibility = GONE
+        }
     }
 
     private fun bindPlanFeatures(

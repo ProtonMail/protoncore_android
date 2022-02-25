@@ -16,9 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.entity
+package me.proton.core.payment.domain.entity
 
-public data class FeatureFlag(
-    val featureId: FeatureId,
-    val value: Boolean
+data class PaymentStatus(
+    val card: Boolean,
+    val paypal: Boolean,
+    val apple: Boolean,
+    val bitcoin: Boolean,
+    val stripe: Boolean,
+    val paymentWall: Boolean,
+    val blockchainInfo: Boolean
 )

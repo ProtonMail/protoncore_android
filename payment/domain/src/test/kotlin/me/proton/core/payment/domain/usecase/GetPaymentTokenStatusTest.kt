@@ -24,14 +24,11 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
-import java.lang.IllegalArgumentException
-import java.lang.RuntimeException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -45,6 +42,7 @@ class GetPaymentTokenStatusTest {
     private val testUserId = UserId("test-user-id")
     private val testPaymentToken = "test-payment-token"
     private val testDefaultPaymentTokenStatusResult = PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
+
     // endregion
     private lateinit var useCase: GetPaymentTokenStatus
 

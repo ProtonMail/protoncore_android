@@ -19,30 +19,20 @@
 package me.proton.core.featureflag.data.entity
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
-import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
-    primaryKeys = ["userId", "featureId"],
+    primaryKeys = ["featureId"],
     indices = [
         Index("userId"),
         Index("featureId")
-    ],
-    foreignKeys = [
-        ForeignKey(
-            entity = UserEntity::class,
-            parentColumns = ["userId"],
-            childColumns = ["userId"],
-            onDelete = ForeignKey.CASCADE
-        )
     ]
 )
 public data class FeatureFlagEntity(
-    val userId: UserId,
+    val userId: UserId?,
     val featureId: String,
     val isGlobal: Boolean,
     val defaultValue: Boolean,

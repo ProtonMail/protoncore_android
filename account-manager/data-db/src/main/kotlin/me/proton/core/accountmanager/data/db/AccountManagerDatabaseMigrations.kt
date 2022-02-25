@@ -127,4 +127,10 @@ object AccountManagerDatabaseMigrations {
             OrganizationDatabase.MIGRATION_1.migrate(database)
         }
     }
+
+    val MIGRATION_15_16 = object : Migration(15, 16) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            FeatureFlagDatabase.MIGRATION_1.migrate(database)
+        }
+    }
 }
