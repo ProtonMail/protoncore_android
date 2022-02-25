@@ -122,6 +122,9 @@
         <item name="proton_sidebar_icon_norm">@color/sidebar_icon_norm</item>
         <item name="proton_sidebar_icon_weak">@color/sidebar_icon_weak</item>
         <item name="proton_sidebar_interaction_pressed">@color/sidebar_interaction_pressed</item>
+        <item name="proton_floaty_background">@color/floaty_background</item>
+        <item name="proton_floaty_pressed">@color/floaty_pressed</item>
+        <item name="proton_floaty_text">@color/floaty_text</item>
 
         <!-- Tell MIUI Dark Mode to stop breaking our theming. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>

@@ -19,7 +19,7 @@
 <resources>
 
     <style name="ProtonTheme" parent="ProtonThemeBase">
-        <item name="proton_text_accent">?attr/brand_norm</item>
-        <item name="proton_icon_accent">?attr/brand_norm</item>
+        <item name="proton_text_accent">?attr/brand_lighten_20</item>
+        <item name="proton_icon_accent">?attr/brand_lighten_20</item>
     </style>
 </resources>

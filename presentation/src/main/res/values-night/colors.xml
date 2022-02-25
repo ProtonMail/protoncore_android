@@ -20,13 +20,13 @@
     <!-- design color aliases -->
 
     <color name="shade_100">@color/white</color>
-    <color name="shade_80">@color/santas_gray</color>
-    <color name="shade_60">@color/storm_gray</color>
-    <color name="shade_50">@color/abbey</color>
-    <color name="shade_40">@color/abbey</color>
-    <color name="shade_20">@color/tuna</color>
-    <color name="shade_10">@color/charade</color>
-    <color name="shade_0">@color/woodsmoke</color>
+    <color name="shade_80">@color/cadet_blue</color>
+    <color name="shade_60">@color/dolphin</color>
+    <color name="shade_50">@color/smoky</color>
+    <color name="shade_40">@color/gunpowder</color>
+    <color name="shade_20">@color/blackcurrant</color>
+    <color name="shade_10">@color/bastille</color>
+    <color name="shade_0">@color/baltic_sea</color>
 
     <!-- colors to use in the app -->
 

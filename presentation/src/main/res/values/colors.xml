@@ -22,6 +22,27 @@
     <color name="transparent">#00000000</color>
     <color name="scrim">#C3000000</color>
 
+    <color name="cinder">#0C0C14</color>
+    <color name="baltic_sea">#1C1B24</color>
+    <color name="bastille">#292733</color>
+    <color name="steel_gray">#343140</color>
+    <color name="ship_gray">#35333D</color>
+    <color name="blackcurrant">#3B3747</color>
+    <color name="gunpowder">#4A4658</color>
+    <color name="smoky">#5B576B</color>
+    <color name="dolphin">#6D697D</color>
+    <color name="dove_gray">#706D6B</color>
+    <color name="dawn">#999693</color>
+    <color name="cadet_blue">#A7A4B5</color>
+    <color name="cotton_seed">#C2BFBC</color>
+    <color name="cloud">#D1CFCD</color>
+    <color name="ebb">#EAE7E4</color>
+    <color name="cararra">#F5F4F2</color>
+
+    <color name="port_gore">#1c223d</color>
+    <color name="pickled_bluewood">#29304d</color>
+    <color name="rhino">#353e60</color>
+
     <color name="woodsmoke">#17181C</color>
     <color name="charade">#25272C</color>
     <color name="tuna">#303239</color>
@@ -34,11 +55,11 @@
     <color name="whisper">#F5F6FA</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="chambray">#3C4B88</color>
-    <color name="san_marino">#5064B6</color>
-    <color name="cornflower_blue">#657EE4</color>
-    <color name="portage">#8498E9</color>
-    <color name="perano">#A2B1EE</color>
+    <color name="chambray">#372580</color>
+    <color name="san_marino">#4D34B3</color>
+    <color name="cornflower_blue">#6D4AFF</color>
+    <color name="portage">#8A6EFF</color>
+    <color name="perano">#C4B7FF</color>
 
     <color name="green_pea">#2F6336</color>
     <color name="goblin">#3E8347</color>
@@ -46,23 +67,19 @@
     <color name="mantis">#71B579</color>
     <color name="fern">#94C89B</color>
 
-    <color name="pomegranate">#E84118</color>
-    <color name="apple">#44BD32</color>
-    <color name="sunglow">#FBC531</color>
-
-    <color name="port_gore">#1c223d</color>
-    <color name="pickled_bluewood">#29304d</color>
-    <color name="rhino">#353e60</color>
+    <color name="pomegranate">#DC3251</color>
+    <color name="sunglow">#FF9900</color>
+    <color name="apple">#1EA885</color>
 
     <!-- design color aliases -->
 
-    <color name="shade_100">@color/woodsmoke</color>
-    <color name="shade_80">@color/storm_gray</color>
-    <color name="shade_60">@color/santas_gray</color>
-    <color name="shade_50">@color/french_gray</color>
-    <color name="shade_40">@color/mischka</color>
-    <color name="shade_20">@color/athens_gray</color>
-    <color name="shade_10">@color/whisper</color>
+    <color name="shade_100">@color/cinder</color>
+    <color name="shade_80">@color/dove_gray</color>
+    <color name="shade_60">@color/dawn</color>
+    <color name="shade_50">@color/cotton_seed</color>
+    <color name="shade_40">@color/cloud</color>
+    <color name="shade_20">@color/ebb</color>
+    <color name="shade_10">@color/cararra</color>
     <color name="shade_0">@color/white</color>
 
     <!-- colors to use in the app -->
@@ -125,6 +142,11 @@
     <color name="sidebar_icon_weak">@color/shade_60</color>
     <color name="sidebar_interaction_pressed">@color/san_marino</color>
 
+    <!-- Floaty view colors -->
+    <color name="floaty_background">@color/ship_gray</color>
+    <color name="floaty_pressed">@color/cinder</color>
+    <color name="floaty_text">@color/white</color>
+
     <!--
       ripple_norm is defined as proton_text_norm with 12% alpha and this is implemented by using
       a selector. Unfortunately using selectors in Material dialogs crashes the app, let's use a
@@ -133,6 +155,7 @@
     -->
     <color name="ripple_norm_workaround">#1f17181C</color>
 
-    <!-- Background for adaptive icons -->
-    <color name="ic_logo_adaptive_background">#FFFFFF</color>
+    <color name="ic_logo_adaptive_background">#ffffff</color>
+
+    <!--End of Global Colors -->
 </resources>

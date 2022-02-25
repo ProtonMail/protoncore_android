@@ -24,8 +24,6 @@
         <attr name="brand_darken_20" format="reference" />
         <attr name="brand_lighten_40" format="reference" />
         <attr name="brand_lighten_20" format="reference" />
-        <attr name="brand_splash_logo" format="reference" />
-        <attr name="brand_splash_text" format="reference" />
 
         <!-- App specific attributes -->
         <attr name="proton_text_norm" format="reference" />
@@ -65,6 +63,9 @@
         <attr name="proton_sidebar_icon_norm" format="reference" />
         <attr name="proton_sidebar_icon_weak" format="reference" />
         <attr name="proton_sidebar_interaction_pressed" format="reference" />
+        <attr name="proton_floaty_background" format="reference"/>
+        <attr name="proton_floaty_pressed" format="reference"/>
+        <attr name="proton_floaty_text" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="ProtonProgressButton">

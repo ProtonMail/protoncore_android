@@ -27,11 +27,28 @@ import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.graphics.Color
 
 private object ProtonPalette {
-    val Chambray = Color(0xFF3C4B88)
-    val SanMarino = Color(0xFF5064B6)
-    val CornflowerBlue = Color(0xFF657EE4)
-    val Portage = Color(0xFF8498E9)
-    val Perano = Color(0xFFA2B1EE)
+    val Chambray = Color(0xFF372580)
+    val SanMarino = Color(0xFF4D34B3)
+    val CornflowerBlue = Color(0xFF6D4AFF)
+    val Portage = Color(0xFF8A6EFF)
+    val Perano = Color(0xFFC4B7FF)
+
+    val BalticSea = Color(0xFF1C1B24)
+    val Bastille = Color(0xFF292733)
+    val SteelGray = Color(0xFF343140)
+    val BlackCurrant = Color(0xFF3B3747)
+    val GunPowder = Color(0xFF4A4658)
+    val Smoky = Color(0xFF5B576B)
+    val Dolphin = Color(0xFF6D697D)
+    val CadetBlue = Color(0xFFA7A4B5)
+    val Cinder = Color(0xFF0C0C14)
+    val ShipGray = Color(0xFF35333D)
+    val DoveGray = Color(0xFF706D6B)
+    val Dawn = Color(0xFF999693)
+    val CottonSeed = Color(0xFFC2BFBC)
+    val Cloud = Color(0xFFD1CFCD)
+    val Ebb = Color(0xFFEAE7E4)
+    val Carrara = Color(0xFFF5F4F2)
 
     val Woodsmoke = Color(0xFF17181C)
     val Charade = Color(0xFF25272C)
@@ -49,9 +66,9 @@ private object ProtonPalette {
     val AthensGray = Color(0xFFEAECF1)
     val Whisper = Color(0xFFF5F6FA)
 
-    val Pomegranate = Color(0xFFE84118)
-    val Sunglow = Color(0xFFFBC531)
-    val Apple = Color(0xFF44BD32)
+    val Pomegranate = Color(0xFFDC3251)
+    val Sunglow = Color(0xFFFF9900)
+    val Apple = Color(0xFF1EA885)
 }
 
 @Stable
@@ -109,8 +126,8 @@ class ProtonColors(
     interactionPressed: Color = brandDarken20,
     interactionDisabled: Color = brandLighten40,
 
-    floatyBackground: Color = ProtonPalette.Tuna,
-    floatyPressed: Color = ProtonPalette.Woodsmoke,
+    floatyBackground: Color = ProtonPalette.ShipGray,
+    floatyPressed: Color = ProtonPalette.Cinder,
     floatyText: Color = Color.White,
 
     shadowNorm: Color,
@@ -357,13 +374,13 @@ class ProtonColors(
 
         private val BaseLight = ProtonColors(
             isDark = false,
-            shade100 = ProtonPalette.Woodsmoke,
-            shade80 = ProtonPalette.StormGray,
-            shade60 = ProtonPalette.SantasGray,
-            shade50 = ProtonPalette.FrenchGray,
-            shade40 = ProtonPalette.Mischka,
-            shade20 = ProtonPalette.AthensGray,
-            shade10 = ProtonPalette.Whisper,
+            shade100 = ProtonPalette.Cinder,
+            shade80 = ProtonPalette.DoveGray,
+            shade60 = ProtonPalette.Dawn,
+            shade50 = ProtonPalette.CottonSeed,
+            shade40 = ProtonPalette.Cloud,
+            shade20 = ProtonPalette.Ebb,
+            shade10 = ProtonPalette.Carrara,
             shade0 = Color.White,
             shadowNorm = Color.Black.copy(alpha = 0.1f),
             shadowRaised = Color.Black.copy(alpha = 0.1f),
@@ -374,13 +391,13 @@ class ProtonColors(
         private val BaseDark = ProtonColors(
             isDark = true,
             shade100 = Color.White,
-            shade80 = ProtonPalette.SantasGray,
-            shade60 = ProtonPalette.StormGray,
-            shade50 = ProtonPalette.Abbey,
-            shade40 = ProtonPalette.Abbey,
-            shade20 = ProtonPalette.Tuna,
-            shade10 = ProtonPalette.Charade,
-            shade0 = ProtonPalette.Woodsmoke,
+            shade80 = ProtonPalette.CadetBlue,
+            shade60 = ProtonPalette.Dolphin,
+            shade50 = ProtonPalette.Smoky,
+            shade40 = ProtonPalette.GunPowder,
+            shade20 = ProtonPalette.BlackCurrant,
+            shade10 = ProtonPalette.Bastille,
+            shade0 = ProtonPalette.BalticSea,
             shadowNorm = Color.Black.copy(alpha = 0.8f),
             shadowRaised = Color.Black.copy(alpha = 0.8f),
             shadowLifted = Color.Black.copy(alpha = 0.86f),
