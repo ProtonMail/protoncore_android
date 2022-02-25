@@ -13,6 +13,7 @@ If needed, you can also manually update this file (provided the general structur
 - Update corner radius for Buttons, TextFields, Snackbars, Dialogs and Drowndown menus.
 - Add new logos, replace existing ones.
 - Update color taxonomy.
+- Removed VPN specific brand colors.
 
 ## [Unreleased]
 

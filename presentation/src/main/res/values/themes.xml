@@ -140,13 +140,7 @@
     <style name="ProtonTheme.Calendar" parent="ProtonTheme" />
     <style name="ProtonTheme.Drive" parent="ProtonTheme" />
     <style name="ProtonTheme.Mail" parent="ProtonTheme" />
-    <style name="ProtonTheme.Vpn" parent="ProtonTheme">
-        <item name="brand_norm">@color/fruit_salad</item>
-        <item name="brand_darken_20">@color/goblin</item>
-        <item name="brand_darken_40">@color/green_pea</item>
-        <item name="brand_lighten_20">@color/mantis</item>
-        <item name="brand_lighten_40">@color/fern</item>
-    </style>
+    <style name="ProtonTheme.Vpn" parent="ProtonTheme"/>
 
     <style name="ProtonTheme.Splash">
         <item name="android:statusBarColor">?proton_background_norm</item>
