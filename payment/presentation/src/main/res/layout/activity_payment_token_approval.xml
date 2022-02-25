@@ -26,7 +26,7 @@
         android:id="@+id/closeButton"
         style="@style/ProtonButton.Navigation"
         android:layout_marginStart="@dimen/button_nav_margin_start"
-        app:icon="@drawable/ic_close" />
+        app:icon="@drawable/ic_proton_close" />
 
     <me.proton.core.presentation.ui.webview.ProtonWebView
         android:id="@+id/tokenApprovalWebView"

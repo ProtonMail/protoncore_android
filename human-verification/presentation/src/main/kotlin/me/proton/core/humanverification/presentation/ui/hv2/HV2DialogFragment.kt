@@ -121,7 +121,7 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
         binding.toolbar.apply {
             val useBackArrow = arguments?.getBoolean(ARG_IS_PART_OF_FLOW) ?: false
-            val navigationIconId = if (useBackArrow) R.drawable.ic_arrow_back else R.drawable.ic_close
+            val navigationIconId = if (useBackArrow) R.drawable.ic_proton_arrow_back else R.drawable.ic_proton_close
             navigationIcon = AppCompatResources.getDrawable(requireContext(), navigationIconId)
             setNavigationOnClickListener {
                 setResultAndDismiss(token = null)

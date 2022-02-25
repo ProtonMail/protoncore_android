@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 - Plans and Payments have been updated to the latest version.
+- Added new sets of icons shared with the clients.
 
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.
