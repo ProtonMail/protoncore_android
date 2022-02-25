@@ -53,11 +53,8 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.Cache
-import okhttp3.JavaNetCookieJar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import java.net.CookieManager
-import java.net.CookiePolicy
 import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
@@ -66,8 +63,7 @@ import kotlin.reflect.KClass
  * Factory for creating [ApiManager] instances. There should be a single instance per [baseUrl].
  *
  * @param baseUrl Base url for the api e.g. "https://api.protonvpn.ch/"
- * @param cookieStore The cookie store. If set to null, a default InMemory cookie store will be used. Otherwise, for
- * permanent Cookie Store please use instance of [ProtonCookieStore].
+ * @param cookieStore The storage for cookies.
  * @param cache [Cache] shared across all user, session, api or call.
  */
 class ApiManagerFactory(
@@ -82,7 +78,7 @@ class ApiManagerFactory(
     private val humanVerificationProvider: HumanVerificationProvider,
     private val humanVerificationListener: HumanVerificationListener,
     private val missingScopeListener: MissingScopeListener,
-    private val cookieStore: ProtonCookieStore?,
+    private val cookieStore: ProtonCookieStore,
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
@@ -107,21 +103,13 @@ class ApiManagerFactory(
         require(apiClient.timeoutSeconds >= ApiClient.MIN_TIMEOUT_SECONDS) {
             "Minimum timeout for ApiClient is ${ApiClient.MIN_TIMEOUT_SECONDS} seconds."
         }
-        val builder = OkHttpClient.Builder()
+        OkHttpClient.Builder()
             .cache(cache())
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-
-        if (cookieStore != null) {
-            val cookieManager = CookieManager(
-                cookieStore,
-                CookiePolicy.ACCEPT_ALL
-            )
-            CookieManager.setDefault(cookieManager)
-            builder.cookieJar(JavaNetCookieJar(cookieManager))
-        }
-        builder.build()
+            .cookieJar(cookieStore)
+            .build()
     }
 
     private val dohProvider by lazy {

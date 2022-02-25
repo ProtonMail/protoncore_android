@@ -19,6 +19,7 @@ package me.proton.core.util.kotlin
 
 import me.proton.core.util.kotlin.CoreLogger.set
 import org.jetbrains.annotations.NonNls
+import java.util.logging.LogManager
 
 /**
  * Abstract logger for Proton core. Should be used instead of directly logging to e.g. logcat.
@@ -73,6 +74,10 @@ object CoreLogger : Logger {
 
     fun set(logger: Logger) {
         this.logger = logger
+        LogManager.getLogManager().apply {
+            reset()
+            getLogger("").addHandler(LoggingHandler(logger))
+        }
     }
 
     override fun e(tag: String, e: Throwable) {

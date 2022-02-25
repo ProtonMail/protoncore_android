@@ -18,25 +18,29 @@
 
 package me.proton.core.network.data.client
 
+import androidx.annotation.VisibleForTesting
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.session.SessionId
-import java.net.HttpCookie
-import java.net.URI
+import okhttp3.Cookie
+import okhttp3.HttpUrl.Companion.toHttpUrl
 
-class ClientIdProviderImpl(
+class ClientIdProviderImpl constructor(
     private val baseUrl: String,
-    private val cookieStore: ProtonCookieStore,
+    private val cookieStore: ProtonCookieStore
 ) : ClientIdProvider {
 
-    override fun getClientId(sessionId: SessionId?): ClientId? {
-        val cookieSessionId = cookieStore.get(URI.create(baseUrl)).cookieSessionId()
+    override suspend fun getClientId(sessionId: SessionId?): ClientId? {
+        val cookieSessionId = cookieStore.get(baseUrl.toHttpUrl()).cookieSessionId()
         // When DoH is working, the Session-Id cookie might not be related to the current baseUrl
-        val fallbackSessionId = cookieStore.cookies.cookieSessionId()
-        return ClientId.newClientId(sessionId, cookieSessionId ?: fallbackSessionId)
+        val fallbackSessionId = suspend { cookieStore.all().cookieSessionId() } // lazy evaluation
+        return ClientId.newClientId(sessionId, cookieSessionId ?: fallbackSessionId())
     }
 
 }
 
-internal fun List<HttpCookie>.cookieSessionId(): String? = find { it.name == "Session-Id" }?.value
+@VisibleForTesting
+internal suspend fun Flow<Cookie>.cookieSessionId(): String? = firstOrNull { it.name == "Session-Id" }?.value

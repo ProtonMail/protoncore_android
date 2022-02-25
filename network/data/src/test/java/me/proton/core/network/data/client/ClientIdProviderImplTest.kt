@@ -20,32 +20,35 @@ package me.proton.core.network.data.client
 
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.test.kotlin.CoroutinesTest
+import okhttp3.Cookie
 import org.junit.Before
 import org.junit.Test
-import java.net.HttpCookie
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class ClientIdProviderImplTest : CoroutinesTest {
 
     lateinit var provider: ClientIdProviderImpl
-    private val cookieStore = mockk<ProtonCookieStore>(relaxed = true)
+    private val cookieJar = mockk<ProtonCookieStore>()
 
-    private val sessionCookie = HttpCookie("Session-Id", "default cookie")
-    private val fallbackCookie = HttpCookie("Session-Id", "fallback cookie")
+    private val domain = "proton.me"
+    private val sessionCookie = Cookie.Builder().name("Session-Id").value("default cookie").domain(domain).build()
+    private val fallbackCookie = Cookie.Builder().name("Session-Id").value("fallback cookie").domain(domain).build()
 
     @Before
     fun setup() {
-        provider = ClientIdProviderImpl("https://proton.me", cookieStore)
+        provider = ClientIdProviderImpl("https://$domain", cookieJar)
     }
 
     @Test
-    fun `cookieSessionId extension fun searchs for Session-Id cookie value in list`() {
+    fun `cookieSessionId extension fun searchs for Session-Id cookie value in list`() = runBlockingTest {
         // GIVEN
-        val cookies = listOf(sessionCookie)
+        val cookies = flowOf(sessionCookie)
         // WHEN
         val sessionId = cookies.cookieSessionId()
         // THEN
@@ -53,9 +56,9 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `If a Session-Id cookie with the right Uri is found, we use it`() {
+    fun `If a Session-Id cookie with the right Uri is found, we use it`() = runBlockingTest {
         // GIVEN
-        every { cookieStore.get(any()) } returns listOf(sessionCookie)
+        every { cookieJar.get(any()) } returns flowOf(sessionCookie)
         // WHEN
         val sessionId = provider.getClientId(null)
         // THEN
@@ -63,10 +66,10 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `If a Session-Id cookie with the right Uri is not found, we use the fallback one`() {
+    fun `If a Session-Id cookie with the right Uri is not found, we use the fallback one`() = runBlockingTest {
         // GIVEN
-        every { cookieStore.get(any()) } returns emptyList()
-        every { cookieStore.cookies } returns listOf(fallbackCookie)
+        every { cookieJar.get(any()) } returns flowOf()
+        every { cookieJar.all() } returns flowOf(fallbackCookie)
         // WHEN
         val sessionId = provider.getClientId(null)
         // THEN
@@ -74,10 +77,10 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `If no Session-Id cookie is found and fallback one is null, sessionId will be null too`() {
+    fun `If no Session-Id cookie is found and fallback one is null, sessionId will be null too`() = runBlockingTest {
         // GIVEN
-        every { cookieStore.get(any()) } returns emptyList()
-        every { cookieStore.cookies } returns emptyList()
+        every { cookieJar.get(any()) } returns flowOf()
+        every { cookieJar.all() } returns flowOf()
         // WHEN
         val sessionId = provider.getClientId(null)
         // THEN

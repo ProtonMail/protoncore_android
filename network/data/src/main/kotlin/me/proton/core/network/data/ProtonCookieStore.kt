@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,63 @@
 package me.proton.core.network.data
 
 import android.content.Context
-import net.gotev.cookiestore.SharedPreferencesCookieStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import me.proton.core.network.data.cookie.CookieStorage
+import me.proton.core.network.data.cookie.DiskCookieStorage
+import me.proton.core.network.data.cookie.MemoryCookieStorage
+import me.proton.core.network.data.cookie.hasExpired
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
 
 /**
- * Wraps the [SharedPreferencesCookieStore] so that it constraint the cookie file name to be unique across clients.
- * @author Dino Kadrikj.
+ * @param persistentStorage Storage for persistent cookies.
+ * @param sessionStorage Storage for session (non-persistent) cookies.
  */
-class ProtonCookieStore(context: Context) : SharedPreferencesCookieStore(context, "protonCookieStore")
+class ProtonCookieStore constructor(
+    private val persistentStorage: CookieStorage,
+    private val sessionStorage: CookieStorage
+) : CookieJar {
+    constructor(context: Context) : this(
+        persistentStorage = DiskCookieStorage(context, DISK_COOKIE_STORAGE_NAME),
+        sessionStorage = MemoryCookieStorage()
+    )
+
+    override fun loadForRequest(url: HttpUrl): List<Cookie> = runBlocking {
+        get(url).toList()
+    }
+
+    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) = runBlocking {
+        cookies.forEach { storeCookie(it) }
+    }
+
+    internal fun all(): Flow<Cookie> = flow {
+        emitAll(persistentStorage.all())
+        emitAll(sessionStorage.all())
+    }
+
+    internal fun get(forUrl: HttpUrl): Flow<Cookie> =
+        all().filter { !it.hasExpired() && it.matches(forUrl) }
+
+    private suspend fun storeCookie(cookie: Cookie) {
+        persistentStorage.remove(cookie)
+        sessionStorage.remove(cookie)
+
+        if (!cookie.hasExpired()) {
+            if (cookie.persistent) {
+                persistentStorage.set(cookie)
+            } else {
+                sessionStorage.set(cookie)
+            }
+        }
+    }
+
+    companion object {
+        const val DISK_COOKIE_STORAGE_NAME: String = "protonCookieStore"
+    }
+}

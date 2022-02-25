@@ -31,6 +31,10 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        `coroutines-core`,
+        okhttp
+    )
 
     implementation(
 
@@ -40,16 +44,14 @@ dependencies {
         project(Module.domain),
 
         // Kotlin
-        `coroutines-core`,
         `serialization-json`,
 
         // Other
         `android-annotation`,
         `apacheCommon-codec`,
-        `gotev-cookieStore`,
+        datastore,
         `miniDns`,
         `okHttp-logging`,
-        `okhttp-url-connection`,
         `retrofit`,
         `retrofit-kotlin-serialization`,
         `trustKit`,

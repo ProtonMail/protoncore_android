@@ -47,6 +47,7 @@ public object Module {
     // region Support
     // Network
     public const val network: String = ":network"
+    public const val networkDagger: String = "$network:network-dagger"
     public const val networkDomain: String = "$network:network-domain"
     public const val networkData: String = "$network:network-data"
     // endregion

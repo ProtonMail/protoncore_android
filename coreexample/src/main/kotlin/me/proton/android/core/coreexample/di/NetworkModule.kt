@@ -38,9 +38,9 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
-import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
+import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
@@ -75,13 +75,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideProtonCookieStore(@ApplicationContext context: Context): ProtonCookieStore =
-        ProtonCookieStore(context)
-
-    @Provides
-    @Singleton
-    fun provideClientIdProvider(protonCookieStore: ProtonCookieStore): ClientIdProvider =
-        ClientIdProviderImpl(Constants.BASE_URL, protonCookieStore)
+    fun provideClientIdProvider(cookieStore: ProtonCookieStore): ClientIdProvider =
+        ClientIdProviderImpl(Constants.BASE_URL, cookieStore)
 
     @Provides
     @Singleton
@@ -110,7 +105,7 @@ class NetworkModule {
         serverTimeListener: ServerTimeListener,
         networkManager: NetworkManager,
         networkPrefs: NetworkPrefs,
-        protonCookieStore: ProtonCookieStore,
+        cookieStore: ProtonCookieStore,
         sessionProvider: SessionProvider,
         sessionListener: SessionListener,
         humanVerificationProvider: HumanVerificationProvider,
@@ -141,7 +136,7 @@ class NetworkModule {
             humanVerificationProvider,
             humanVerificationListener,
             missingScopeListener,
-            protonCookieStore,
+            cookieStore,
             CoroutineScope(Job() + Dispatchers.Default),
             certificatePins,
             alternativeApiPins,

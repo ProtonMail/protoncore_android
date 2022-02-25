@@ -1,0 +1,19 @@
+public class hilt_aggregated_deps/_me_proton_core_network_dagger_NetworkModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/network/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/network/dagger/NetworkModule_ProvideCookieJarFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/NetworkModule_ProvideCookieJarFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/ProtonCookieStore;
+	public static fun provideCookieJar (Lme/proton/core/network/dagger/NetworkModule;Landroid/content/Context;)Lme/proton/core/network/data/ProtonCookieStore;
+}
+

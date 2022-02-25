@@ -56,6 +56,7 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.equalsNoCase
+import okhttp3.Cookie
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -64,7 +65,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.net.HttpCookie
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -107,8 +107,6 @@ internal class HumanVerificationTests {
             }
         """.trimIndent()
 
-    private fun javaWallClockMs(): Long = System.currentTimeMillis()
-
     private val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
@@ -132,7 +130,7 @@ internal class HumanVerificationTests {
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
-    private val cookieStore = mockk<ProtonCookieStore>()
+    private val cookieJar = mockk<ProtonCookieStore>()
 
     private var isNetworkAvailable = true
     private val networkManager = mockk<NetworkManager>()
@@ -149,11 +147,11 @@ internal class HumanVerificationTests {
 
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        coEvery { clientIdProvider.getClientId(any()) } returns clientId
 
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
-        every { cookieStore.get(any()) } returns emptyList()
+        every { cookieJar.loadForRequest(any()) } returns emptyList()
 
         apiManagerFactory =
             ApiManagerFactory(
@@ -168,7 +166,7 @@ internal class HumanVerificationTests {
                 humanVerificationProvider,
                 humanVerificationListener,
                 missingScopeListener,
-                cookieStore,
+                cookieJar,
                 scope,
                 cache = { null },
                 apiConnectionListener = null
@@ -192,7 +190,7 @@ internal class HumanVerificationTests {
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            { apiManagerFactory.baseOkHttpClient } ,
+            { apiManagerFactory.baseOkHttpClient },
             listOf(
                 ScalarsConverterFactory.create(),
                 apiManagerFactory.jsonConverter
@@ -202,7 +200,7 @@ internal class HumanVerificationTests {
             pinningInit,
             ::javaWallClockMs,
             prefs,
-            cookieStore
+            cookieJar
         )
 
     @After
@@ -243,8 +241,8 @@ internal class HumanVerificationTests {
     @Test
     fun `test human verification for cookie returned`() = runBlocking {
         val clientId = MockClientId.getForCookie(CookieSessionId("test-cookie-id"))
-        every { cookieStore.get(any()) } returns listOf(HttpCookie("Session-Id", "test-cookie-id"))
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        every { cookieJar.loadForRequest(any()) } returns listOf(testSessionCookie())
+        coEvery { clientIdProvider.getClientId(any()) } returns clientId
 
         val backend = createBackend(null) {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
@@ -337,8 +335,8 @@ internal class HumanVerificationTests {
     @Test
     fun `test human verification headers for cookieId`() = runBlocking {
         val clientId = MockClientId.getForCookie(CookieSessionId("test-cookie-id"))
-        every { cookieStore.get(any()) } returns listOf(HttpCookie("Session-Id", "test-cookie-id"))
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        every { cookieJar.loadForRequest(any()) } returns listOf(testSessionCookie())
+        coEvery { clientIdProvider.getClientId(any()) } returns clientId
 
         val backend = createBackend(null) {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
@@ -372,4 +370,9 @@ internal class HumanVerificationTests {
         assertTrue(headers.contains(Pair("x-pm-human-verification-token-type", "captcha")))
         assertTrue(headers.contains(Pair("x-pm-human-verification-token", "captcha token")))
     }
+
+    private fun javaWallClockMs(): Long = System.currentTimeMillis()
+
+    private fun testSessionCookie(): Cookie =
+        Cookie.Builder().name("Session-Id").value("test-cookie-id").domain(webServer.hostName).build()
 }

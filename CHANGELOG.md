@@ -12,11 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 - Plans and Payments have been updated to the latest version.
 - Added new sets of icons shared with the clients.
+- Logs from the root `java.util.logging.Logger` are redirected to `CoreLogger`
+- New implementation of cookie store:
+  - Removed dependency on `net.gotev:cookie-store`
+  - Class `ProtonCookieStore` is now a subclass of `okhttp3.CookieJar` (previously it was a subclass of `java.net.CookieStore`)
 
 ### Fixes
 - Don't log CancellationExceptions in `EventWorker.doWork`.
 - Fixes wrong link on plans view for VPN.
 - Crash when HV2 received no valid methods (either the user or the methods were banned).
+- Fixed "Invalid cookie" log error
 
 ## [7.0.0]
 

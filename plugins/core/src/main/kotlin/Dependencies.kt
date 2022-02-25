@@ -67,8 +67,8 @@ public val DependencyHandler.miniDns: Any
     get() = dependency("org.minidns", module = "minidns-hla") version `miniDns version`
 public val DependencyHandler.`retrofit-scalars-converter`: Any
     get() = squareup("retrofit2", "converter-scalars") version `retrofit version`
-public val DependencyHandler.`okhttp-url-connection`: Any
-    get() = squareup("okhttp3", "okhttp-urlconnection") version `okHttp-url-connection version`
+public val DependencyHandler.okhttp: Any
+    get() = squareup("okhttp3", "okhttp") version `okHttp version`
 public val DependencyHandler.mockWebServer: Any
     get() = squareup("okhttp3", "mockwebserver") version `okHttp version`
 public val DependencyHandler.trustKit: Any
@@ -79,10 +79,10 @@ public val DependencyHandler.`apacheCommon-codec`: Any
     get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
 public val DependencyHandler.bcrypt: Any
     get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
+public val DependencyHandler.datastore: Any
+    get() = dependency("androidx.datastore", module = "datastore") version `datastore version`
 public val DependencyHandler.googleTink: Any
     get() = google("crypto.tink", module = "tink-android") version `googleTink version`
-public val DependencyHandler.`gotev-cookieStore`: Any
-    get() = dependency("net.gotev", module = "cookie-store") version `gotev-cookieStore version`
 public val DependencyHandler.`lint-core`: Any
     get() = lint()
 public val DependencyHandler.`lint-api`: Any

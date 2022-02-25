@@ -312,7 +312,7 @@ public final class me/proton/core/network/domain/client/ClientIdKt {
 }
 
 public abstract interface class me/proton/core/network/domain/client/ClientIdProvider {
-	public abstract fun getClientId (Lme/proton/core/network/domain/session/SessionId;)Lme/proton/core/network/domain/client/ClientId;
+	public abstract fun getClientId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/domain/client/ClientIdType : java/lang/Enum {

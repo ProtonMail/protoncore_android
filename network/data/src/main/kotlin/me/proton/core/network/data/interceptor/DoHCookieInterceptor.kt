@@ -21,28 +21,28 @@ package me.proton.core.network.data.interceptor
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.kotlin.CoreLogger
+import okhttp3.Cookie
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.net.HttpCookie
-import java.net.URI
 
 class DoHCookieInterceptor(
     private val networkPrefs: NetworkPrefs,
-    private val cookieStore: ProtonCookieStore,
-): Interceptor {
+    private val cookieStore: ProtonCookieStore
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         // Won't be null if DoH is working
-        val baseURI = networkPrefs.activeAltBaseUrl?.let {
-            runCatching { URI.create(networkPrefs.activeAltBaseUrl) }
+        val baseHttpUrl = networkPrefs.activeAltBaseUrl?.let { url ->
+            runCatching { url.toHttpUrl() }
                 .onFailure { CoreLogger.e(TAG, it) }
                 .getOrNull()
         }
         val url = chain.request().url
 
-        if (baseURI == null || url.host != baseURI.host)
+        if (baseHttpUrl == null || url.host != baseHttpUrl.host)
             return chain.proceed(chain.request())
 
-        val cookies = cookieStore.get(baseURI)
+        val cookies = cookieStore.loadForRequest(baseHttpUrl)
         // Add all cookies from the default baseUrl to request that go to the alternative base url
         val response = chain.proceed(
             chain.request().newBuilder()
@@ -51,10 +51,8 @@ class DoHCookieInterceptor(
         )
 
         // Save any cookies received from the alternative base url
-        response.headers("Set-Cookie")
-            .mapNotNull { runCatching { HttpCookie.parse(it) }.getOrNull() }
-            .flatten()
-            .forEach { cookie -> cookieStore.add(baseURI, cookie) }
+        val responseCookies = Cookie.parseAll(baseHttpUrl, response.headers)
+        cookieStore.saveFromResponse(baseHttpUrl, responseCookies)
 
         return response
     }

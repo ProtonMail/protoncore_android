@@ -51,8 +51,16 @@ public final class me/proton/core/network/data/NetworkPrefsImpl : me/proton/core
 public final class me/proton/core/network/data/NetworkPrefsImpl$Companion {
 }
 
-public final class me/proton/core/network/data/ProtonCookieStore : net/gotev/cookiestore/SharedPreferencesCookieStore {
+public final class me/proton/core/network/data/ProtonCookieStore : okhttp3/CookieJar {
+	public static final field Companion Lme/proton/core/network/data/ProtonCookieStore$Companion;
+	public static final field DISK_COOKIE_STORAGE_NAME Ljava/lang/String;
 	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Lme/proton/core/network/data/cookie/CookieStorage;Lme/proton/core/network/data/cookie/CookieStorage;)V
+	public fun loadForRequest (Lokhttp3/HttpUrl;)Ljava/util/List;
+	public fun saveFromResponse (Lokhttp3/HttpUrl;Ljava/util/List;)V
+}
+
+public final class me/proton/core/network/data/ProtonCookieStore$Companion {
 }
 
 public final class me/proton/core/network/data/ProtonErrorException : java/io/IOException {
@@ -70,7 +78,7 @@ public final class me/proton/core/network/data/ProtonErrorException : java/io/IO
 
 public final class me/proton/core/network/data/client/ClientIdProviderImpl : me/proton/core/network/domain/client/ClientIdProvider {
 	public fun <init> (Ljava/lang/String;Lme/proton/core/network/data/ProtonCookieStore;)V
-	public fun getClientId (Lme/proton/core/network/domain/session/SessionId;)Lme/proton/core/network/domain/client/ClientId;
+	public fun getClientId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/data/client/ExtraHeaderProviderImpl : me/proton/core/network/domain/client/ExtraHeaderProvider {
@@ -80,6 +88,27 @@ public final class me/proton/core/network/data/client/ExtraHeaderProviderImpl : 
 	public fun getHeaders ()Ljava/util/List;
 	public fun removeAll (Ljava/lang/String;)V
 	public fun removeFirst (Ljava/lang/String;)V
+}
+
+public abstract interface class me/proton/core/network/data/cookie/CookieStorage {
+	public abstract fun all ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun remove (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun set (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/data/cookie/DiskCookieStorage : me/proton/core/network/data/cookie/CookieStorage {
+	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Landroid/content/Context;Ljava/lang/String;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun all ()Lkotlinx/coroutines/flow/Flow;
+	public fun remove (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun set (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/data/cookie/MemoryCookieStorage : me/proton/core/network/data/cookie/CookieStorage {
+	public fun <init> ()V
+	public fun all ()Lkotlinx/coroutines/flow/Flow;
+	public fun remove (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun set (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/data/di/Constants {
