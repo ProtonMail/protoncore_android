@@ -98,12 +98,21 @@ class PlanItemView @JvmOverloads constructor(
         planPercentageText.visibility = GONE
         select.visibility = GONE
         val featureOrder = context.getStringArrayByName(R.array.plan_current_order)
+        val featureIcons = context.getIntegerArrayByName(R.array.plan_current_icons)
         context.getIntegerArrayByName(R.array.plan_current)?.let {
             bindPlanFeatures(
                 length = it.length()
             ) { index: Int ->
-                createCurrentPlanFeature(featureOrder!![index - 1], it, index - 1, context, plan)
+                createCurrentPlanFeature(
+                    featureOrder!![index - 1],
+                    featureIcons?.getResourceId(index - 1, 0) ?: 0,
+                    it,
+                    index - 1,
+                    context,
+                    plan
+                )
             }
+            featureIcons?.recycle()
             it.recycle()
         }
 
@@ -138,14 +147,23 @@ class PlanItemView @JvmOverloads constructor(
         planCycleText.visibility = View.GONE
         planPriceText.text = PRICE_ZERO.formatCentsPriceDefaultLocale(currency.name)
         val featureOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
+        val featureIcons = context.getIntegerArrayByName("plan_id_${plan.name}_icons")
 
         context.getIntegerArrayByName("plan_id_${plan.name}")?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->
-                createPlanFeature(featureOrder!![index - 1], it, index, context, plan)
+                createPlanFeature(
+                    featureOrder!![index - 1],
+                    featureIcons?.getResourceId(index - 1, 0) ?: 0,
+                    it,
+                    index,
+                    context,
+                    plan
+                )
             }
             binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
+            featureIcons?.recycle()
             it.recycle()
         }
         select.onClick {
@@ -157,14 +175,23 @@ class PlanItemView @JvmOverloads constructor(
         select.text = String.format(context.getString(R.string.plans_get_proton), plan.displayName)
         starred.visibility = if (plan.starred) VISIBLE else INVISIBLE
         val featureOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
+        val featureIcons = context.getIntegerArrayByName("plan_id_${plan.name}_icons")
         context.getIntegerArrayByName("plan_id_${plan.name}")?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->
-                createPlanFeature(featureOrder!![index - 1], it, index, context, plan)
+                createPlanFeature(
+                    featureOrder!![index - 1],
+                    featureIcons?.getResourceId(index - 1, 0) ?: 0,
+                    it,
+                    index,
+                    context,
+                    plan
+                )
             }
             binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
             it.recycle()
+            featureIcons?.recycle()
         }
 
         val maxMonthlyPrice = PlanCycle.MONTHLY.getPrice(plan.price) ?: PRICE_ZERO

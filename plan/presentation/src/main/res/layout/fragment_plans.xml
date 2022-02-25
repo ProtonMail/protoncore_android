@@ -70,60 +70,52 @@
                 style="@style/ProtonTextView.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_medium"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
                 android:text="@string/plans_select_a_plan_subtitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plansTitle"
-                tools:text="Select a plan" />
+                app:layout_constraintTop_toBottomOf="@id/plansTitle" />
 
             <LinearLayout
                 android:id="@+id/protonServicesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_medium"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:padding="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/plansSubtitle">
 
                 <ImageView
                     android:id="@+id/ic_mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    app:srcCompat="@drawable/ic_logo_mail"
-                    app:tint="?attr/brand_norm" />
+                    app:srcCompat="@drawable/ic_logo_mail_no_bg" />
 
                 <ImageView
                     android:id="@+id/ic_calendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    app:srcCompat="@drawable/ic_logo_calendar"
-                    app:tint="?attr/brand_norm" />
+                    app:srcCompat="@drawable/ic_logo_calendar_no_bg" />
 
                 <ImageView
                     android:id="@+id/ic_drive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    app:srcCompat="@drawable/ic_logo_drive"
-                    app:tint="?attr/brand_norm" />
+                    app:srcCompat="@drawable/ic_logo_drive_no_bg"  />
 
                 <ImageView
                     android:id="@+id/ic_vpn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    app:srcCompat="@drawable/ic_logo_vpn"
-                    app:tint="?attr/brand_norm" />
+                    app:srcCompat="@drawable/ic_logo_vpn_no_bg" />
 
             </LinearLayout>
 

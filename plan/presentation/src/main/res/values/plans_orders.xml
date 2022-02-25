@@ -24,6 +24,12 @@
         <item>#proton_calendars#</item>
         <item>#proton_vpn#</item>
     </string-array>
+    <integer-array name="plan_current_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_user</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+        <item>@drawable/ic_proton_shield</item>
+    </integer-array>
     <integer-array name="plan_current">
         <item>@plurals/item_users_current</item>
         <item>@plurals/item_address_current</item>
@@ -38,6 +44,12 @@
         <item>#proton_calendars#</item>
         <item>#proton_vpn#</item>
     </string-array>
+    <integer-array name="plan_id_free_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+        <item>@drawable/ic_proton_shield</item>
+    </integer-array>
     <integer-array name="plan_id_free">
         <item>@string/plan_id_free_header</item>
         <item>@plurals/item_storage_free</item>
@@ -52,6 +64,11 @@
         <item>#proton_addresses#</item>
         <item>#proton_domains#</item>
     </string-array>
+    <integer-array name="plan_id_plus_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_globe</item>
+    </integer-array>
     <integer-array name="plan_id_plus">
         <item>@string/plan_id_plus_header</item>
         <item>@plurals/item_storage</item>
@@ -65,6 +82,14 @@
         <item>#proton_vpn#</item>
         <item>string</item>
     </string-array>
+
+    <integer-array name="plan_id_vpnbasic_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_shield</item>
+        <item>@drawable/ic_proton_checkmark</item>
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+    </integer-array>
     <integer-array name="plan_id_vpnbasic">
         <item>@string/plan_id_vpnbasic_header</item>
         <item>@string/plan_id_vpnbasic_countries</item>
@@ -72,7 +97,7 @@
         <item>@string/plan_id_vpnbasic_high_speed</item>
     </integer-array>
     <!-- endregion -->
-    <!-- region plan vpn plus -->
+    <!-- region vpn plus -->
     <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>string</item>
         <item>#proton_vpn#</item>
@@ -80,6 +105,13 @@
         <item>string</item>
         <item>string</item>
     </string-array>
+    <integer-array name="plan_id_vpnplus_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_shield</item>
+        <item>@drawable/ic_proton_checkmark</item>
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+    </integer-array>
     <integer-array name="plan_id_vpnplus">
         <item>@string/plan_id_vpnplus_header</item>
         <item>@string/plan_id_vpnplus_countries</item>
@@ -96,6 +128,12 @@
         <item>#proton_domains#</item>
         <item>string</item>
     </string-array>
+    <integer-array name="plan_id_professional_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_globe</item>
+        <item>@drawable/ic_proton_checkmark</item>
+    </integer-array>
     <integer-array name="plan_id_professional">
         <item>@string/plan_id_professional_header</item>
         <item>@plurals/item_storage_multiuser</item>
@@ -113,6 +151,14 @@
         <item>#proton_domains#</item>
         <item>#proton_users#</item>
     </string-array>
+    <integer-array name="plan_id_visionary_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+        <item>@drawable/ic_proton_shield</item>
+        <item>@drawable/ic_proton_globe</item>
+        <item>@drawable/ic_proton_user</item>
+    </integer-array>
     <integer-array name="plan_id_visionary">
         <item>@string/plan_id_visionary_header</item>
         <item>@plurals/item_storage</item>
@@ -121,6 +167,93 @@
         <item>@plurals/item_connections_highspeed</item>
         <item>@plurals/item_domain</item>
         <item>@plurals/item_users</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region mail 2022 -->
+    <string-array name="plan_id_mail2022_order" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_domains#</item>
+        <item>string</item>
+        <item>#proton_calendars#</item>
+        <item>#proton_vpn#</item>
+    </string-array>
+    <integer-array name="plan_id_mail2022_icons" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_globe</item>
+        <item>@drawable/ic_proton_tag</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+        <item>@drawable/ic_proton_shield</item>
+    </integer-array>
+    <integer-array name="plan_id_mail2022">
+        <item>@string/plan_id_mail2022_header</item>
+        <item>@plurals/item_storage</item>
+        <item>@plurals/item_address</item>
+        <item>@plurals/item_domain</item>
+        <item>@string/unlimited_folders_labels_filters</item>
+        <item>@plurals/item_calendar</item>
+        <item>@plurals/item_connections</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region vpn 2022 -->
+    <string-array name="plan_id_vpn2022_order" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_vpn#</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+    </string-array>
+    <integer-array name="plan_id_vpn2022_icons" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_mobile_plus</item>
+        <item>@drawable/ic_proton_rocket</item>
+        <item>@drawable/ic_proton_servers</item>
+        <item>@drawable/ic_proton_shield</item>
+        <item>@drawable/ic_proton_play</item>
+        <item>@drawable/ic_proton_lock</item>
+        <item>@drawable/ic_proton_tor</item>
+        <item>@drawable/ic_proton_arrows_switch</item>
+    </integer-array>
+    <integer-array name="plan_id_vpn2022">
+        <item>@string/plan_id_vpn2022_header</item>
+        <item>@plurals/item_connections</item>
+        <item>@string/highest_vpn_speed</item>
+        <item>@string/servers_in_countries</item>
+        <item>@string/ad_blocker</item>
+        <item>@string/streaming_services_access</item>
+        <item>@string/secure_core</item>
+        <item>@string/tor_vpn</item>
+        <item>@string/p2p_bittorrent</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region bundle 2022 -->
+    <string-array name="plan_id_bundle2022_order" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_domains#</item>
+        <item>string</item>
+        <item>#proton_calendars#</item>
+        <item>#proton_vpn#</item>
+    </string-array>
+    <integer-array name="plan_id_bundle2022_icons" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_envelope</item>
+        <item>@drawable/ic_proton_globe</item>
+        <item>@drawable/ic_proton_tag</item>
+        <item>@drawable/ic_proton_calendar_checkmark</item>
+        <item>@drawable/ic_proton_shield</item>
+    </integer-array>
+    <integer-array name="plan_id_bundle2022">
+        <item>@string/plan_id_bundle2022_header</item>
+        <item>@plurals/item_storage</item>
+        <item>@plurals/item_address</item>
+        <item>@plurals/item_domain</item>
+        <item>@string/unlimited_folders_labels_filters</item>
+        <item>@plurals/item_calendar</item>
+        <item>@plurals/item_connections</item>
     </integer-array>
     <!-- endregion -->
 </resources>

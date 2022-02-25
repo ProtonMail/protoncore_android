@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toStartOf="@id/itemText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_check" />
+        app:srcCompat="@drawable/ic_baseline_check"
+        app:tint="?brand_norm" />
 
     <TextView
         android:id="@+id/itemText"

@@ -20,7 +20,7 @@ package me.proton.core.plan.presentation.view
 
 import android.content.Context
 import android.content.res.TypedArray
-import me.proton.core.plan.presentation.R
+import androidx.annotation.DrawableRes
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.presentation.utils.formatByteToHumanReadable
 
@@ -33,6 +33,7 @@ private const val KEY_FEATURE_CALENDARS = "#proton_calendars#"
 
 internal fun createPlanFeature(
     type: String,
+    @DrawableRes icon: Int,
     resourceValuesArray: TypedArray,
     index: Int,
     context: Context,
@@ -41,41 +42,43 @@ internal fun createPlanFeature(
     if (type.contains(KEY_FEATURE_STORAGE)) {
         val quantity = plan.storage.formatByteToHumanReadable()
         val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), 0)
-        return Pair(value.replace(KEY_FEATURE_STORAGE, quantity), R.drawable.ic_baseline_check)
+        return Pair(value.replace(KEY_FEATURE_STORAGE, quantity), icon)
     }
     if (type.contains(KEY_FEATURE_ADDRESSES)) {
         val quantity = plan.addresses
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), R.drawable.ic_baseline_check)
+        return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_VPN)) {
         val quantity = plan.connections
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), R.drawable.ic_baseline_check)
+        return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_DOMAINS)) {
         val quantity = plan.domains
         val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), plan.domains)
-        return Pair(value.replace(KEY_FEATURE_DOMAINS, quantity.toString()), R.drawable.ic_baseline_check)
+        return Pair(value.replace(KEY_FEATURE_DOMAINS, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_USERS)) {
         val quantity = plan.members
         val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_USERS, quantity.toString()), R.drawable.ic_baseline_check)
+        return Pair(value.replace(KEY_FEATURE_USERS, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_CALENDARS)) {
         val quantity = plan.calendars
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_CALENDARS, quantity.toString()), R.drawable.ic_baseline_check)
+        return Pair(value.replace(KEY_FEATURE_CALENDARS, quantity.toString()), icon)
     }
-    return Pair(context.getString(resourceValuesArray.getResourceId(index, 0)), R.drawable.ic_baseline_check)
+
+    return Pair(context.getString(resourceValuesArray.getResourceId(index, 0)), icon)
 }
 
 internal fun createCurrentPlanFeature(
     type: String,
+    @DrawableRes icon: Int,
     resourceValuesArray: TypedArray,
     index: Int,
     context: Context,
@@ -87,13 +90,13 @@ internal fun createCurrentPlanFeature(
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity),
             plan.usedAddresses
         )
-        return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), R.drawable.ic_envelope)
+        return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_VPN)) {
         val quantity = plan.connections
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), R.drawable.ic_shield)
+        return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_DOMAINS)) {
         val quantity = plan.domains
@@ -101,7 +104,7 @@ internal fun createCurrentPlanFeature(
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), plan.domains),
             plan.usedDomains
         )
-        return Pair(value.replace(KEY_FEATURE_DOMAINS, quantity.toString()), R.drawable.ic_globe_language)
+        return Pair(value.replace(KEY_FEATURE_DOMAINS, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_USERS)) {
         val quantity = plan.members
@@ -109,7 +112,7 @@ internal fun createCurrentPlanFeature(
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity),
             plan.usedMembers
         )
-        return Pair(value.replace(KEY_FEATURE_USERS, quantity.toString()), R.drawable.ic_user)
+        return Pair(value.replace(KEY_FEATURE_USERS, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_CALENDARS)) {
         val quantity = plan.calendars
@@ -117,7 +120,7 @@ internal fun createCurrentPlanFeature(
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity),
             plan.usedCalendars
         )
-        return Pair(value.replace(KEY_FEATURE_CALENDARS, quantity.toString()), R.drawable.ic_calendar_checkmark)
+        return Pair(value.replace(KEY_FEATURE_CALENDARS, quantity.toString()), icon)
     }
-    return Pair(context.getString(resourceValuesArray.getResourceId(index, 0)), R.drawable.ic_baseline_check)
+    return Pair(context.getString(resourceValuesArray.getResourceId(index, 0)), icon)
 }

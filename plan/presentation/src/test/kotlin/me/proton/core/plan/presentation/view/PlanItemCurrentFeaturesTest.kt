@@ -65,13 +65,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_addresses#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_envelope,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 1 address", result.first)
-        assertEquals(R.drawable.ic_envelope, result.second)
+        assertEquals(R.drawable.ic_proton_envelope, result.second)
         verify { currentPlanDetails.usedAddresses }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.connections }
@@ -92,13 +93,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_addresses#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_envelope,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 2 addresses", result.first)
-        assertEquals(R.drawable.ic_envelope, result.second)
+        assertEquals(R.drawable.ic_proton_envelope, result.second)
         verify { currentPlanDetails.addresses }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.connections }
@@ -116,13 +118,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_vpn#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_shield,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 connection", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_shield, result.second)
         verify { currentPlanDetails.connections }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -143,13 +146,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_vpn#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_shield,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("2 connections", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_shield, result.second)
         verify { currentPlanDetails.connections }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -168,13 +172,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_domains#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_globe,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 1 domain", result.first)
-        assertEquals(R.drawable.ic_globe_language, result.second)
+        assertEquals(R.drawable.ic_proton_globe, result.second)
         verify { currentPlanDetails.domains }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -196,13 +201,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_domains#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_globe,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 2 domains", result.first)
-        assertEquals(R.drawable.ic_globe_language, result.second)
+        assertEquals(R.drawable.ic_proton_globe, result.second)
         verify { currentPlanDetails.domains }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -221,13 +227,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_users#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_user,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 1 user", result.first)
-        assertEquals(R.drawable.ic_user, result.second)
+        assertEquals(R.drawable.ic_proton_user, result.second)
         verify { currentPlanDetails.members }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -249,13 +256,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_users#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_user,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 2 users", result.first)
-        assertEquals(R.drawable.ic_user, result.second)
+        assertEquals(R.drawable.ic_proton_user, result.second)
         verify { currentPlanDetails.members }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -274,13 +282,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_calendars#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_calendar_checkmark,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 1 calendar", result.first)
-        assertEquals(R.drawable.ic_calendar_checkmark, result.second)
+        assertEquals(R.drawable.ic_proton_calendar_checkmark, result.second)
         verify { currentPlanDetails.calendars }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -302,13 +311,14 @@ class PlanItemCurrentFeaturesTest {
         val testType = "#proton_calendars#"
         val result = createCurrentPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_calendar_checkmark,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = currentPlanDetails
         )
         assertEquals("1 of 2 calendars", result.first)
-        assertEquals(R.drawable.ic_calendar_checkmark, result.second)
+        assertEquals(R.drawable.ic_proton_calendar_checkmark, result.second)
         verify { currentPlanDetails.calendars }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }

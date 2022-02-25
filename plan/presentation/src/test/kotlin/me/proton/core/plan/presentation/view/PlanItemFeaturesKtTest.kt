@@ -62,13 +62,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_storage#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_storage,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-0 B", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_storage, result.second)
         verify { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
         verify(exactly = 0) { mockedPlan.connections }
@@ -85,13 +86,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_addresses#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_envelope,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-0", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_envelope, result.second)
         verify { mockedPlan.addresses }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.connections }
@@ -111,13 +113,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_addresses#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_envelope,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-plural-2", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_envelope, result.second)
         verify { mockedPlan.addresses }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.connections }
@@ -134,13 +137,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_vpn#"
         val result = createPlanFeature(
             type = testType,
+            R.drawable.ic_proton_shield,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-0", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_shield, result.second)
         verify { mockedPlan.connections }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -160,13 +164,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_vpn#"
         val result = createPlanFeature(
             type = testType,
+            R.drawable.ic_proton_shield,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-plural-2", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_shield, result.second)
         verify { mockedPlan.connections }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -183,13 +188,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_domains#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_globe,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-0", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_globe, result.second)
         verify { mockedPlan.domains }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -209,13 +215,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_domains#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_globe,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-plural-2", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_globe, result.second)
         verify { mockedPlan.domains }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -232,13 +239,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_users#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_user,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-0", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_user, result.second)
         verify { mockedPlan.members }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -258,13 +266,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_users#"
         val result = createPlanFeature(
             type = testType,
+            R.drawable.ic_proton_user,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-plural-2", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_user, result.second)
         verify { mockedPlan.members }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -281,13 +290,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_calendars#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_calendar_checkmark,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-0", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_calendar_checkmark, result.second)
         verify { mockedPlan.calendars }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
@@ -307,13 +317,14 @@ class PlanItemFeaturesKtTest {
         val testType = "#proton_calendars#"
         val result = createPlanFeature(
             type = testType,
+            icon = R.drawable.ic_proton_calendar_checkmark,
             resourceValuesArray = typedArray,
             index = 0,
             context = context,
             plan = mockedPlan
         )
         assertEquals("test-string-plural-2", result.first)
-        assertEquals(R.drawable.ic_baseline_check, result.second)
+        assertEquals(R.drawable.ic_proton_calendar_checkmark, result.second)
         verify { mockedPlan.calendars }
         verify(exactly = 0) { mockedPlan.storage }
         verify(exactly = 0) { mockedPlan.addresses }
