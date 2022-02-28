@@ -303,7 +303,7 @@ publish-libs:
     - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
     - ./gradlew notifyNewRelease
   rules:
-    - if: $CI_COMMIT_BRANCH == /^release\/libs\/.*/ # stable release with notification
+    - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/ # stable release with notification
     - if: $CI_COMMIT_BRANCH == 'main' # main-snapshot release without notification
 
 tag-libs-release:
@@ -312,7 +312,7 @@ tag-libs-release:
   needs:
     - job: publish-libs
   rules:
-    - if: $CI_COMMIT_BRANCH == /^release\/libs\/.*/
+    - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/
   before_script:
     - !reference [ .git, before_script ]
   script:
@@ -329,7 +329,7 @@ publish-gradle-plugins:
   script:
     - ./gradlew -p plugins publishToSonatype closeAndReleaseSonatypeStagingRepository
   rules:
-    - if: $CI_COMMIT_BRANCH == /^release\/gradle-plugins\/.*/ # stable release with notification
+    - if: $CI_COMMIT_BRANCH =~ /^release\/gradle-plugins\/.*/ # stable release with notification
     - if: $CI_COMMIT_BRANCH == 'main' # main-snapshot release without notification
 
 tag-gradle-plugins-release:
@@ -342,7 +342,7 @@ tag-gradle-plugins-release:
   script:
     - ./gradlew -p plugins tagRelease
   rules:
-    - if: $CI_COMMIT_BRANCH == /^release\/gradle-plugins\/.*/
+    - if: $CI_COMMIT_BRANCH =~ /^release\/gradle-plugins\/.*/
 
 ## review stage ######################################################################################
 danger-review:
