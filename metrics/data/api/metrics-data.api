@@ -1,0 +1,57 @@
+public class hilt_aggregated_deps/_me_proton_core_metrics_data_remote_worker_PostMetricsWorker_HiltModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/metrics/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/metrics/data/MetricsManagerImpl : me/proton/core/metrics/domain/MetricsManager {
+	public fun <init> (Landroidx/work/WorkManager;)V
+	public fun send (Lme/proton/core/domain/entity/UserId;Lme/proton/core/metrics/domain/entity/Metrics;)V
+}
+
+public final class me/proton/core/metrics/data/MetricsManagerImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/metrics/data/MetricsManagerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/metrics/data/MetricsManagerImpl;
+	public static fun newInstance (Landroidx/work/WorkManager;)Lme/proton/core/metrics/data/MetricsManagerImpl;
+}
+
+public abstract interface class me/proton/core/metrics/data/remote/worker/PostMetricsWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/metrics/data/remote/worker/PostMetricsWorker_AssistedFactory_Impl : me/proton/core/metrics/data/remote/worker/PostMetricsWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/metrics/data/remote/worker/PostMetricsWorker;
+	public static fun create (Lme/proton/core/metrics/data/remote/worker/PostMetricsWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/metrics/data/remote/worker/PostMetricsWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/metrics/data/remote/worker/PostMetricsWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/metrics/data/remote/worker/PostMetricsWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/metrics/domain/repository/MetricsRepository;)Lme/proton/core/metrics/data/remote/worker/PostMetricsWorker;
+}
+
+public abstract interface class me/proton/core/metrics/data/remote/worker/PostMetricsWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/metrics/data/remote/worker/PostMetricsWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public final class me/proton/core/metrics/data/repository/MetricsRepositoryImpl : me/proton/core/metrics/domain/repository/MetricsRepository {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun post (Lme/proton/core/domain/entity/UserId;Lme/proton/core/metrics/domain/entity/Metrics;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/metrics/data/repository/MetricsRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/metrics/data/repository/MetricsRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/metrics/data/repository/MetricsRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/metrics/data/repository/MetricsRepositoryImpl;
+}
+

@@ -170,5 +170,11 @@ public object Module {
     public const val featureFlagDomain: String = "$featureFlag:feature-flag-domain"
     public const val featureFlagDagger: String = "$featureFlag:feature-flag-dagger"
 
+    // Metrics
+    public const val metrics: String = ":metrics"
+    public const val metricsDomain: String = "$metrics:metrics-domain"
+    public const val metricsData: String = "$metrics:metrics-data"
+    public const val metricsDagger: String = "$metrics:metrics-dagger"
+
     // endregion
 }
