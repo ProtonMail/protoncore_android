@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.0]
+
+### New
+- Added FeatureFlag modules ("feature-flag") - needed by Payment modules.
+
+### New Migration
+
+- Please apply changes as follow to your AppDatabase:
+  - Add ```FeatureFlagEntity``` to your AppDatabase ```entities```.
+  - Extends ```FeatureFlagDatabase```.
+  - Add a migration to your AppDatabase (```addMigration```):
+```kotlin
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        FeatureFlagDatabase.MIGRATION_0.migrate(database)
+        FeatureFlagDatabase.MIGRATION_1.migrate(database)
+    }
+}
+```
+
 ### Breaking changes
 - Supported plans should be provided by SupportedPlan list instead of String.
 
