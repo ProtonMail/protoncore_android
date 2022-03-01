@@ -22,6 +22,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserKey
@@ -33,10 +34,12 @@ import javax.inject.Inject
  *
  * - With keys: on UnlockResult.Success, the passphrase is stored and the User keys ready to be used.
  * - Without keys: this function always return UnlockResult.Success.
+ * - For VPN: this function always return UnlockResult.Success.
  */
 class UnlockUserPrimaryKey @Inject constructor(
     private val userManager: UserManager,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val product: Product
 ) {
     /**
      * Try to unlock the user with the given password.
@@ -45,10 +48,10 @@ class UnlockUserPrimaryKey @Inject constructor(
         userId: UserId,
         password: EncryptedString
     ): UserManager.UnlockResult {
-        return if (!userManager.getUser(userId).hasKeys()) {
-            UserManager.UnlockResult.Success
-        } else {
-            password.decrypt(keyStoreCrypto).toByteArray().use {
+        return when {
+            product == Product.Vpn -> UserManager.UnlockResult.Success
+            !userManager.getUser(userId).hasKeys() -> UserManager.UnlockResult.Success
+            else -> password.decrypt(keyStoreCrypto).toByteArray().use {
                 userManager.unlockWithPassword(userId, it)
             }
         }
