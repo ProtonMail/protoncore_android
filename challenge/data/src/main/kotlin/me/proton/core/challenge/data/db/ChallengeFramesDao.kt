@@ -21,21 +21,37 @@ package me.proton.core.challenge.data.db
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.challenge.data.entity.FrameEntity
+import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.data.room.db.BaseDao
 
 @Dao
-abstract class ChallengeFramesDao : BaseDao<FrameEntity>() {
+abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
 
-    @Query("SELECT * FROM FrameEntity")
-    abstract fun getAll(): Flow<List<FrameEntity>>
+    @Query("SELECT * FROM ChallengeFrameEntity")
+    abstract fun getAll(): Flow<List<ChallengeFrameEntity>>
 
-    @Query("SELECT * FROM FrameEntity WHERE clientId = :clientId")
-    abstract suspend fun getByClientId(clientId: String): List<FrameEntity>?
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId")
+    abstract suspend fun getByClientId(clientId: String): List<ChallengeFrameEntity>?
 
-    @Query("DELETE FROM FrameEntity")
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE challengeId = :challengeId")
+    abstract suspend fun getByChallengeId(challengeId: String): List<ChallengeFrameEntity>?
+
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND challengeId = :challengeId")
+    abstract suspend fun getByClientAndChallengeId(clientId: String, challengeId: String): List<ChallengeFrameEntity>?
+
+    @Query("DELETE FROM ChallengeFrameEntity")
     abstract suspend fun deleteAll()
 
-    @Query("DELETE FROM FrameEntity WHERE clientId = :clientId")
+    @Query("DELETE FROM ChallengeFrameEntity WHERE clientId = :clientId")
     abstract suspend fun deleteByClientId(clientId: String)
+
+    @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste WHERE clientId = :clientId AND challengeId = :challengeId")
+    abstract suspend fun updateFrame(
+        clientId: String,
+        challengeId: String,
+        focusTime: Long,
+        clicks: Int,
+        copy: List<String>,
+        paste: List<String>
+    )
 }

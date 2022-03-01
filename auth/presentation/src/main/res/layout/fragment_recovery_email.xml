@@ -21,7 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <me.proton.core.presentation.ui.view.ProtonInput
+    <me.proton.core.presentation.ui.view.ProtonInputMetadata
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +30,7 @@
         app:label="@string/auth_signup_recovery_method_email_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:metricsEnabled="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,11 +70,12 @@
                 android:gravity="center"
                 android:text="@string/auth_one_account_all_services" />
 
-            <me.proton.core.presentation.ui.view.ProtonInput
+            <me.proton.core.presentation.ui.view.ProtonInputMetadata
                 android:id="@+id/usernameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_large_plus"
+                app:metricsEnabled="true"
                 android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:label="@string/auth_signup_username" />
 

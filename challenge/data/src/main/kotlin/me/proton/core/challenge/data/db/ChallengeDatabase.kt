@@ -32,7 +32,7 @@ interface ChallengeDatabase : Database {
         val MIGRATION_0 = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Added Table FrameEntity.
-                database.execSQL("CREATE TABLE IF NOT EXISTS `FrameEntity` (`clientId` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `type` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, PRIMARY KEY(`clientId`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`clientId` TEXT NOT NULL, `challengeId` TEXT NOT NULL, `challengeType` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeId`, `challengeType`))")
             }
         }
     }

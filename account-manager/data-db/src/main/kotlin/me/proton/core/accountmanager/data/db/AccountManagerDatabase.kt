@@ -28,7 +28,7 @@ import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.challenge.data.db.ChallengeDatabase
-import me.proton.core.challenge.data.entity.FrameEntity
+import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.contact.data.local.db.ContactConverters
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.entity.ContactCardEntity
@@ -106,7 +106,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         LabelEntity::class,
         FeatureFlagEntity::class,
         // challenge
-        FrameEntity::class
+        ChallengeFrameEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true

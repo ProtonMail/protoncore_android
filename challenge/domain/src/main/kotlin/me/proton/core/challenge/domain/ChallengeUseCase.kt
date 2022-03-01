@@ -16,20 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.data.entity
+package me.proton.core.challenge.domain
 
-import androidx.room.Entity
-import me.proton.core.network.domain.client.ClientIdType
-
-@Entity(
-    primaryKeys = ["clientId"]
-)
-data class FrameEntity(
-    val clientId: String,
-    val clientIdType: ClientIdType,
-    val type: String,
-    val focusTime: Long,
-    val clicks: Int,
-    val copy: List<String>,
-    val paste: List<String>
-)
+enum class ChallengeUseCase {
+    SignUp,
+    Login
+}

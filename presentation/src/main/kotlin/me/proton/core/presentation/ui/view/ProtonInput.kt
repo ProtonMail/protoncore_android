@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.parcelize.Parcelize
@@ -59,7 +60,25 @@ import me.proton.core.presentation.utils.saveChildViewStates
  * ProtonInput supports displaying error according to the latest Proton Android design guidelines, so, the client
  * does not need to worry about.
  */
-class ProtonInput : LinearLayout {
+open class ProtonInput : LinearLayout {
+
+    protected open val binding: ViewBinding by lazy {
+        ProtonInputBinding.inflate(LayoutInflater.from(context), this)
+    }
+
+    protected open val input by lazy {
+        (binding as ProtonInputBinding).input
+    }
+
+    protected open val inputLayout by lazy {
+        (binding as ProtonInputBinding).inputLayout
+    }
+
+    protected open val label by lazy {
+        (binding as ProtonInputBinding).label
+    }
+
+    private var lastEditTimeMillis: Long? = null
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -85,10 +104,6 @@ class ProtonInput : LinearLayout {
     ) {
         init(context, attrs)
     }
-
-    private val binding = ProtonInputBinding.inflate(LayoutInflater.from(context), this)
-
-    private var lastEditTimeMillis: Long? = null
 
     private fun init(context: Context, attrs: AttributeSet? = null) {
         orientation = VERTICAL
@@ -123,11 +138,11 @@ class ProtonInput : LinearLayout {
         }
 
         // Clear error on text changed.
-        binding.input.addTextChangedListener { editable ->
+        input.addTextChangedListener { editable ->
             if (editable?.isNotEmpty() == true) clearInputError()
         }
 
-        binding.input.addTextChangedListener {
+        input.addTextChangedListener {
             lastEditTimeMillis = System.currentTimeMillis()
         }
     }
@@ -170,51 +185,50 @@ class ProtonInput : LinearLayout {
         super.onRestoreInstanceState(protonInputState.superSavedState)
     }
 
-    // region Public API
     /**
      * Input text property. It is nullable for more convenient use. Defaults to an empty string when {@code null}.
      */
     var text: CharSequence?
-        get() = binding.input.text
+        get() = input.text
         set(value) {
-            binding.input.setText(value ?: "")
+            input.setText(value ?: "")
         }
 
     /**
      * Label (above the input view) property.
      */
     var labelText: CharSequence?
-        get() = binding.label.text
+        get() = label.text
         set(value) {
-            binding.label.setTextOrGoneIfNull(value)
+            label.setTextOrGoneIfNull(value)
         }
 
     /**
      * The input [EditText] hint value.
      */
     var hintText: CharSequence?
-        get() = binding.input.hint
+        get() = input.hint
         set(value) {
-            binding.input.hint = value
+            input.hint = value
         }
 
     /**
      * Optional help (below the input view) property.
      */
     var helpText: CharSequence?
-        get() = binding.inputLayout.helperText
+        get() = inputLayout.helperText
         set(value) {
-            binding.inputLayout.helperText = value
+            inputLayout.helperText = value
         }
 
     /**
      * Optional suffix text (inside the input view) property.
      */
     var suffixText: CharSequence?
-        get() = binding.inputLayout.suffixText
+        get() = inputLayout.suffixText
         set(value) {
-            binding.inputLayout.suffixText = value
-            binding.inputLayout.isExpandedHintEnabled = false
+            inputLayout.suffixText = value
+            inputLayout.isExpandedHintEnabled = false
         }
 
     var isSuffixTextVisible: Boolean
@@ -227,72 +241,72 @@ class ProtonInput : LinearLayout {
      * Optional prefix text (inside the input view) property.
      */
     var prefixText: CharSequence?
-        get() = binding.inputLayout.prefixText
+        get() = inputLayout.prefixText
         set(value) {
-            binding.inputLayout.prefixText = value
+            inputLayout.prefixText = value
         }
 
     /**
      * The imeOptions property of the compound EditText of the view.
      */
     var imeOptions: Int
-        get() = binding.input.imeOptions
+        get() = input.imeOptions
         set(value) {
-            binding.input.imeOptions = value
+            input.imeOptions = value
         }
 
     /**
      * The keyListener property of the compound EditText of the view.
      */
     var keyListener: KeyListener
-        get() = binding.input.keyListener
+        get() = input.keyListener
         set(value) {
-            binding.input.keyListener = value
+            input.keyListener = value
         }
 
     /**
      * The [InputType] property of the compound EditText of the view.
      */
     var inputType: Int
-        get() = binding.input.inputType
+        get() = input.inputType
         set(value) {
-            binding.input.inputType = value
+            input.inputType = value
         }
 
     /**
      * The minLines property of the compound EditText of the view.
      */
     var minLines: Int
-        get() = binding.input.minLines
+        get() = input.minLines
         set(value) {
-            binding.input.minLines = value
+            input.minLines = value
         }
 
     /**
      * The textDirection property of the compound EditText of the view.
      */
     var editTextDirection: Int
-        get() = binding.input.textDirection
+        get() = input.textDirection
         set(value) {
-            binding.input.textDirection = value
+            input.textDirection = value
         }
 
     /**
      * The textAlignment property of the compound EditText of the view.
      */
     var editTextAlignment: Int
-        get() = binding.input.textAlignment
+        get() = input.textAlignment
         set(value) {
-            binding.input.textAlignment = value
+            input.textAlignment = value
         }
 
     /**
      * The input filters of the compound EditText of the view.
      */
     var filters: Array<InputFilter>
-        get() = binding.input.filters
+        get() = input.filters
         set(value) {
-            binding.input.filters = value
+            input.filters = value
         }
 
     /**
@@ -306,26 +320,26 @@ class ProtonInput : LinearLayout {
      * Call #endIconMode with [EndIconMode.CUSTOM_ICON] before setting the end drawable.
      */
     var endIconDrawable: Drawable?
-        get() = binding.inputLayout.endIconDrawable
+        get() = inputLayout.endIconDrawable
         set(value) {
-            binding.inputLayout.apply {
+            inputLayout.apply {
                 setEndIconTintList(null)
                 endIconDrawable = value
             }
         }
 
     var endIconMode: EndIconMode
-        get() = EndIconMode.map[binding.inputLayout.endIconMode] ?: EndIconMode.NONE
+        get() = EndIconMode.map[inputLayout.endIconMode] ?: EndIconMode.NONE
         set(value) {
             setActionMode(value)
         }
 
     fun addTextChangedListener(watcher: TextWatcher) {
-        binding.input.addTextChangedListener(watcher)
+        input.addTextChangedListener(watcher)
     }
 
     fun setOnEditorActionListener(listener: TextView.OnEditorActionListener?) {
-        binding.input.setOnEditorActionListener(listener)
+        input.setOnEditorActionListener(listener)
     }
 
     fun setOnActionListener(action: Int, block: () -> Unit) {
@@ -350,9 +364,9 @@ class ProtonInput : LinearLayout {
      * @param enabled True if this view is enabled, false otherwise.
      */
     override fun setEnabled(enabled: Boolean) {
-        binding.inputLayout.isEnabled = enabled
-        binding.input.isEnabled = enabled
-        binding.label.isEnabled = enabled
+        inputLayout.isEnabled = enabled
+        input.isEnabled = enabled
+        label.isEnabled = enabled
     }
 
     /**
@@ -360,7 +374,7 @@ class ProtonInput : LinearLayout {
      *
      * The interpretation of the enabled state varies by subclass.
      */
-    override fun isEnabled(): Boolean = binding.inputLayout.isEnabled
+    override fun isEnabled(): Boolean = inputLayout.isEnabled
 
     /**
      * Clear input text and overwrite the input text memory.
@@ -370,7 +384,7 @@ class ProtonInput : LinearLayout {
      * Make sure to avoid making copies of the password when using it!
      */
     fun clearTextAndOverwriteMemory() {
-        binding.input.clearTextAndOverwriteMemory()
+        input.clearTextAndOverwriteMemory()
     }
 
     /**
@@ -381,21 +395,21 @@ class ProtonInput : LinearLayout {
      * @param error error message to show. If [String.isNullOrEmpty], helpText is taken instead.
      */
     fun setInputError(error: String? = null) {
-        binding.inputLayout.error = error ?: helpText ?: " "
-        binding.inputLayout.errorIconDrawable = null
-        binding.label.setTextColor(ContextCompat.getColor(context, R.color.notification_error))
+        inputLayout.error = error ?: helpText ?: " "
+        inputLayout.errorIconDrawable = null
+        label.setTextColor(ContextCompat.getColor(context, R.color.notification_error))
     }
 
     /**
      * Clear the error UI layout of the ProtonInput view.
      */
     fun clearInputError() {
-        binding.inputLayout.error = null
-        binding.label.setTextColor(ContextCompat.getColor(context, R.color.text_norm))
+        inputLayout.error = null
+        label.setTextColor(ContextCompat.getColor(context, R.color.text_norm))
     }
 
     fun setOnFocusLostListener(listener: OnFocusChangeListener) {
-        binding.input.setOnFocusChangeListener { v, hasFocus ->
+        input.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) listener.onFocusChange(v, hasFocus)
         }
     }
@@ -408,23 +422,23 @@ class ProtonInput : LinearLayout {
         when (mode) {
             // None
             EndIconMode.NONE -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_NONE
-                binding.inputLayout.setEndIconActivated(false)
+                inputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                inputLayout.setEndIconActivated(false)
             }
             // Clear Text
             EndIconMode.CLEAR_TEXT -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
-                binding.inputLayout.setEndIconActivated(true)
+                inputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                inputLayout.setEndIconActivated(true)
             }
             // PasswordToggle
             EndIconMode.PASSWORD_TOGGLE -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-                binding.inputLayout.setEndIconActivated(true)
+                inputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+                inputLayout.setEndIconActivated(true)
             }
             // Custom Icon
             EndIconMode.CUSTOM_ICON -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
-                binding.inputLayout.setEndIconActivated(true)
+                inputLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                inputLayout.setEndIconActivated(true)
             }
         }
     }

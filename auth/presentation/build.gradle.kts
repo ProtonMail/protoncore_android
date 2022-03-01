@@ -56,6 +56,7 @@ dependencies {
         project(Module.planPresentation),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),
+        project(Module.challengeDomain),
 
         // Kotlin
         `coroutines-android`,

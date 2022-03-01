@@ -24,7 +24,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.parcelize.Parcelize
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -32,6 +31,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
@@ -41,6 +41,9 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
+import me.proton.core.challenge.domain.ChallengeFrameType
+import me.proton.core.challenge.domain.ChallengeManagerConfig
+import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -69,6 +72,7 @@ internal class SignupViewModel @Inject constructor(
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
     private val performLogin: PerformLogin,
+    private val challengeManagerProvider: ChallengeManagerProvider,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
     savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -152,9 +156,25 @@ internal class SignupViewModel @Inject constructor(
         humanVerificationObserver?.cancelAllObservers()
     }
 
-    fun skipRecoveryMethod() = setRecoveryMethod(null)
+    fun skipRecoveryMethod() = setRecoveryMethod(null, 4, 1000, emptyList(), emptyList())
 
-    fun setRecoveryMethod(recoveryMethod: RecoveryMethod?) {
+    fun setRecoveryMethod(
+        recoveryMethod: RecoveryMethod?,
+        clicks: Int, focusTime: Long, copies: List<String>, pastes: List<String>
+    ) {
+        viewModelScope.launch {
+            val config = ChallengeManagerConfig.SignUp
+            val challengeManager = challengeManagerProvider.get(config)
+
+            challengeManager.addOrUpdateFrame(
+                challengeType = ChallengeFrameType.Recovery,
+                focusTime = focusTime,
+                clicks = clicks,
+                copies = copies,
+                pastes = pastes
+            )
+        }
+
         _recoveryMethod = recoveryMethod
         _inputState.tryEmit(InputState.Ready)
     }

@@ -19,21 +19,70 @@
 package me.proton.core.challenge.data.repository
 
 import me.proton.core.challenge.data.db.ChallengeDatabase
-import me.proton.core.challenge.domain.entity.Frame
+import me.proton.core.challenge.data.entity.ChallengeFrameEntity
+import me.proton.core.challenge.domain.ChallengeId
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
 import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.getType
 
 class ChallengeRepositoryImpl(
     private val db: ChallengeDatabase
 ) : ChallengeRepository {
 
-    private val challengeFramesDao = db.challengeFramesDao()
+    private val challengeDao = db.challengeFramesDao()
 
-    override suspend fun getFramesByClientId(clientId: ClientId): List<Frame>? {
-        TODO("Not yet implemented")
+    override suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>? =
+        challengeDao.getByClientId(clientId.id)?.map { it.toFrameDetails() }
+
+    override suspend fun getFramesByChallengeId(challengeId: ChallengeId): List<ChallengeFrameDetails>? =
+        challengeDao.getByChallengeId(challengeId.toString())?.map { it.toFrameDetails() }
+
+    override suspend fun getFramesByClientAndChallengeId(
+        clientId: ClientId,
+        challengeId: ChallengeId
+    ): List<ChallengeFrameDetails>? =
+        challengeDao.getByClientAndChallengeId(clientId.id, challengeId.toString())?.map { it.toFrameDetails() }
+
+    override suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails) {
+        val clientId = challengeFrameDetails.clientId
+        db.inTransaction {
+            challengeDao.insertOrUpdate(
+                ChallengeFrameEntity(
+                    clientId = clientId.id,
+                    clientIdType = clientId.getType(),
+                    challengeId = challengeFrameDetails.challengeId.toString(),
+                    challengeType = challengeFrameDetails.challengeTypeChallenge.name,
+                    focusTime = challengeFrameDetails.focusTime,
+                    clicks = challengeFrameDetails.clicks,
+                    copy = challengeFrameDetails.copy,
+                    paste = challengeFrameDetails.paste
+                )
+            )
+        }
     }
 
-    override suspend fun addFrame(frame: Frame) {
-        TODO("Not yet implemented")
+    override suspend fun deleteFrames(clientId: ClientId) =
+        challengeDao.deleteByClientId(clientId.id)
+
+    override suspend fun deleteFrames() {
+        challengeDao.deleteAll()
+    }
+
+    override suspend fun updateFrame(
+        clientId: ClientId,
+        challengeId: ChallengeId,
+        challengeFrameDetails: ChallengeFrameDetails
+    ) {
+        db.inTransaction {
+            challengeDao.updateFrame(
+                clientId.id,
+                challengeId.toString(),
+                challengeFrameDetails.focusTime,
+                challengeFrameDetails.clicks,
+                challengeFrameDetails.copy,
+                challengeFrameDetails.paste
+            )
+        }
     }
 }

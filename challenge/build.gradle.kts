@@ -30,7 +30,6 @@ android()
 dependencies {
     api(
         project(Module.challengeData),
-        project(Module.challengeDomain),
-        project(Module.challengePresentation)
+        project(Module.challengeDomain)
     )
 }

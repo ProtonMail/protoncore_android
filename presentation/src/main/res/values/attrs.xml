@@ -78,6 +78,10 @@
         <attr name="progressDrawable" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="ProtonInputMetadata">
+        <attr name="metricsEnabled" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="ProtonInput">
         <attr name="android:text" />
         <attr name="android:hint" />

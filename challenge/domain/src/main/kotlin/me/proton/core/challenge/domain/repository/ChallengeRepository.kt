@@ -18,18 +18,51 @@
 
 package me.proton.core.challenge.domain.repository
 
-import me.proton.core.challenge.domain.entity.Frame
+import me.proton.core.challenge.domain.ChallengeId
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.network.domain.client.ClientId
 
 interface ChallengeRepository {
 
     /**
-     * Get [Frame] if exist, by sessionId.
+     * Get a list of [ChallengeFrameDetails] if exist, by clientId.
      */
-    suspend fun getFramesByClientId(clientId: ClientId): List<Frame>?
+    suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>?
 
     /**
-     * Insert new [Frame].
+     * Get a list of [ChallengeFrameDetails] if exist, by challengeId.
      */
-    suspend fun addFrame(frame: Frame)
+    suspend fun getFramesByChallengeId(challengeId: ChallengeId): List<ChallengeFrameDetails>?
+
+    /**
+     * Get a list of [ChallengeFrameDetails] if exist, by clientId and challengeId.
+     */
+    suspend fun getFramesByClientAndChallengeId(
+        clientId: ClientId,
+        challengeId: ChallengeId
+    ): List<ChallengeFrameDetails>?
+
+    /**
+     * Insert new [ChallengeFrameDetails].
+     */
+    suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails)
+
+    /**
+     * Delete all [ChallengeFrameDetails] by clientId and challengeId.
+     */
+    suspend fun deleteFrames(clientId: ClientId)
+
+    /**
+     * Delete all [ChallengeFrameDetails].
+     */
+    suspend fun deleteFrames()
+
+    /**
+     * Update existing [ChallengeFrameDetails] by clientId and challengeId.
+     */
+    suspend fun updateFrame(
+        clientId: ClientId,
+        challengeId: ChallengeId,
+        challengeFrameDetails: ChallengeFrameDetails
+    )
 }

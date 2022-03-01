@@ -104,7 +104,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                     if (it.value) {
                         // if recovery destination is valid
                         val recoveryMethod = viewModel.recoveryMethod
-                        signupViewModel.setRecoveryMethod(recoveryMethod)
+                        signupViewModel.setRecoveryMethod(recoveryMethod, 2, 2000, emptyList(), emptyList())
                     } else {
                         showError(getString(R.string.auth_signup_error_validation_recovery_destination))
                     }

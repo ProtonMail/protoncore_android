@@ -46,8 +46,7 @@ dependencies {
         `coroutines-core`,
 
         // Other
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
+        `hilt-android`,
         `room-ktx`
     )
 

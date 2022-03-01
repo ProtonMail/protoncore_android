@@ -53,11 +53,11 @@ import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
-import me.proton.core.challenge.presentation.defaultDeviceInputMethod
-import me.proton.core.challenge.presentation.deviceFontSize
-import me.proton.core.challenge.presentation.deviceInputMethods
-import me.proton.core.challenge.presentation.deviceStorage
-import me.proton.core.challenge.presentation.isDeviceRooted
+import me.proton.core.challenge.data.defaultDeviceInputMethod
+import me.proton.core.challenge.data.deviceFontSize
+import me.proton.core.challenge.data.deviceInputMethods
+import me.proton.core.challenge.data.deviceStorage
+import me.proton.core.challenge.data.isDeviceRooted
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick

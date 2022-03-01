@@ -28,18 +28,24 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.challenge.domain.ChallengeFrameType
+import me.proton.core.challenge.domain.ChallengeManagerConfig
+import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
-    private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
+    private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination,
+    private val challengeManagerProvider: ChallengeManagerProvider
 ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
@@ -167,6 +173,28 @@ internal class ChooseUsernameViewModel @Inject constructor(
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
+
+    fun showPasswordChooser(clicks: Int, focusTime: Long, copies: List<String>, pastes: List<String>) {
+        viewModelScope.launch {
+            val config = ChallengeManagerConfig.SignUp
+            val challengeManager = challengeManagerProvider.get(config)
+            challengeManager.addOrUpdateFrame(
+                challengeType = ChallengeFrameType.Username,
+                focusTime = focusTime,
+                clicks = clicks,
+                copies = copies,
+                pastes = pastes
+            )
+        }
+    }
+
+    fun onFinish() {
+        viewModelScope.launch {
+            val config = ChallengeManagerConfig.SignUp
+            val challengeManager = challengeManagerProvider.get(config)
+            challengeManager.removeFrames()
+        }
+    }
 }
 
 /**

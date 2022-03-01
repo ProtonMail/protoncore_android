@@ -16,37 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.challenge.domain
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-}
+import kotlinx.serialization.Serializable
 
-publishOption.shouldBePublishedAsLib = true
+@Serializable
+sealed class ChallengeManagerConfig {
 
-android(useViewBinding = true)
+    abstract val challengeUseCase: ChallengeUseCase
 
-dependencies {
+    @Serializable
+    object SignUp : ChallengeManagerConfig() {
+        override val challengeUseCase = ChallengeUseCase.SignUp
+    }
 
-    implementation(
-        // Core
-        project(Module.presentation),
-        project(Module.kotlinUtil),
-        project(Module.domain),
-
-        // Android
-        `android-ktx`,
-        `appcompat`,
-        `constraint-layout`,
-        `fragment`,
-        `lifecycle-viewModel`,
-        `material`
-    )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    @Serializable
+    object Login : ChallengeManagerConfig() {
+        override val challengeUseCase = ChallengeUseCase.Login
+    }
 }

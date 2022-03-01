@@ -16,9 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.domain
+package me.proton.core.challenge.domain.entity
 
-enum class FrameType {
-    Username,
-    Recovery
-}
+import me.proton.core.challenge.domain.ChallengeFrameType
+import me.proton.core.network.domain.client.ClientId
+import java.util.UUID
+
+data class ChallengeFrameDetails(
+    val clientId: ClientId,
+    val challengeId: UUID,
+    val challengeTypeChallenge: ChallengeFrameType,
+    val focusTime: Long,
+    val clicks: Int,
+    val copy: List<String>,
+    val paste: List<String>
+)

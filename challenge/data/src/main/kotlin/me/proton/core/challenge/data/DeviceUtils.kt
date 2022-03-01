@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.presentation
+package me.proton.core.challenge.data
 
 import android.app.usage.StorageStatsManager
 import android.content.Context
@@ -30,7 +30,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.util.UUID
-
 
 fun isDeviceRooted() = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
 
