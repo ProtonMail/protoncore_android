@@ -118,6 +118,10 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:report-data|
 |me.proton.core:report-domain|
 |me.proton.core:report-presentation|
+|me.proton.core:challenge|
+|me.proton.core:challenge-data|
+|me.proton.core:challenge-domain|
+|me.proton.core:challenge-presentation|
 |me.proton.core:test-android|
 |me.proton.core:test-android-instrumented|
 |me.proton.core:test-kotlin|
