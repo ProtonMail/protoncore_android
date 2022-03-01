@@ -16,21 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.challenge.domain.repository
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.challenge.domain.entity.Frame
+import me.proton.core.network.domain.client.ClientId
 
-publishOption.shouldBePublishedAsLib = true
+interface ChallengeRepository {
 
-android()
+    /**
+     * Get [Frame] if exist, by sessionId.
+     */
+    suspend fun getFramesByClientId(clientId: ClientId): List<Frame>?
 
-dependencies {
-    api(
-        project(Module.challengeData),
-        project(Module.challengeDomain),
-        project(Module.challengePresentation)
-    )
+    /**
+     * Insert new [Frame].
+     */
+    suspend fun addFrame(frame: Frame)
 }

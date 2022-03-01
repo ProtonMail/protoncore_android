@@ -31,15 +31,24 @@ android()
 dependencies {
 
     implementation(
-//        project(Module.challengeDomain),
+        project(Module.challengeDomain),
         project(Module.kotlinUtil),
         project(Module.network),
         project(Module.data),
         project(Module.domain),
 
+        // Features
+        project(Module.data),
+        project(Module.dataRoom),
+        project(Module.crypto),
+
+        // Kotlin
+        `coroutines-core`,
+
         // Other
         `retrofit`,
-        `retrofit-kotlin-serialization`
+        `retrofit-kotlin-serialization`,
+        `room-ktx`
     )
 
     testImplementation(project(Module.androidTest))

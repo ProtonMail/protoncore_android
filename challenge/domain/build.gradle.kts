@@ -31,6 +31,9 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
 
+        // Features
+        project(Module.networkDomain),
+
         // Kotlin
         `kotlin-jdk8`,
         `coroutines-core`,

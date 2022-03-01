@@ -27,6 +27,8 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.challenge.data.db.ChallengeDatabase
+import me.proton.core.challenge.data.entity.FrameEntity
 import me.proton.core.contact.data.local.db.ContactConverters
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.entity.ContactCardEntity
@@ -102,7 +104,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         EventMetadataEntity::class,
         // label
         LabelEntity::class,
-        FeatureFlagEntity::class
+        FeatureFlagEntity::class,
+        // challenge
+        FrameEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -132,7 +136,8 @@ abstract class AccountManagerDatabase :
     ContactDatabase,
     EventMetadataDatabase,
     LabelDatabase,
-    FeatureFlagDatabase {
+    FeatureFlagDatabase,
+    ChallengeDatabase {
 
     companion object {
         const val name = "db-account-manager"

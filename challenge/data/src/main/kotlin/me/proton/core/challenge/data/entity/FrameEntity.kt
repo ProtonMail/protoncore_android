@@ -16,21 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.challenge.data.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.room.Entity
+import me.proton.core.network.domain.client.ClientIdType
 
-publishOption.shouldBePublishedAsLib = true
-
-android()
-
-dependencies {
-    api(
-        project(Module.challengeData),
-        project(Module.challengeDomain),
-        project(Module.challengePresentation)
-    )
-}
+@Entity(
+    primaryKeys = ["clientId"]
+)
+data class FrameEntity(
+    val clientId: String,
+    val clientIdType: ClientIdType,
+    val type: String,
+    val focusTime: Long,
+    val clicks: Int,
+    val copy: List<String>,
+    val paste: List<String>
+)

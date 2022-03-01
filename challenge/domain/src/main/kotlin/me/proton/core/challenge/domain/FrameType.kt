@@ -16,21 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.challenge.domain
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-android()
-
-dependencies {
-    api(
-        project(Module.challengeData),
-        project(Module.challengeDomain),
-        project(Module.challengePresentation)
-    )
+enum class FrameType {
+    Username,
+    Recovery
 }
