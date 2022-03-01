@@ -421,7 +421,7 @@ public final class me/proton/core/auth/domain/usecase/SetupPrimaryKeys {
 }
 
 public final class me/proton/core/auth/domain/usecase/UnlockUserPrimaryKey {
-	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
+	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/domain/entity/Product;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
