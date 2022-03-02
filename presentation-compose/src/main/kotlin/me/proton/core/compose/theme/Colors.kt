@@ -387,8 +387,22 @@ class ProtonColors(
 
     companion object {
 
-        private val BaseLight = ProtonColors(
+        val Light = baseLight().copy(sidebarColors = sidebarLight())
+        val Dark = baseDark().copy(sidebarColors = sidebarDark())
+
+        private fun baseLight(
+            brandDarken40: Color = ProtonPalette.Chambray,
+            brandDarken20: Color = ProtonPalette.SanMarino,
+            brandNorm: Color = ProtonPalette.CornflowerBlue,
+            brandLighten20: Color = ProtonPalette.Portage,
+            brandLighten40: Color = ProtonPalette.Perano,
+        ) = ProtonColors(
             isDark = false,
+            brandDarken40 = brandDarken40,
+            brandDarken20 = brandDarken20,
+            brandNorm = brandNorm,
+            brandLighten20 = brandLighten20,
+            brandLighten40 = brandLighten40,
             shade100 = ProtonPalette.Cinder,
             shade80 = ProtonPalette.DoveGray,
             shade60 = ProtonPalette.Dawn,
@@ -403,8 +417,19 @@ class ProtonColors(
             blenderNorm = ProtonPalette.Woodsmoke.copy(alpha = 0.48f),
         )
 
-        private val BaseDark = ProtonColors(
+        private fun baseDark(
+            brandDarken40: Color = ProtonPalette.Chambray,
+            brandDarken20: Color = ProtonPalette.SanMarino,
+            brandNorm: Color = ProtonPalette.CornflowerBlue,
+            brandLighten20: Color = ProtonPalette.Portage,
+            brandLighten40: Color = ProtonPalette.Perano,
+        ) = ProtonColors(
             isDark = true,
+            brandDarken40 = brandDarken40,
+            brandDarken20 = brandDarken20,
+            brandNorm = brandNorm,
+            brandLighten20 = brandLighten20,
+            brandLighten40 = brandLighten40,
             shade100 = Color.White,
             shade80 = ProtonPalette.CadetBlue,
             shade60 = ProtonPalette.Dolphin,
@@ -419,23 +444,77 @@ class ProtonColors(
             blenderNorm = Color.Black.copy(alpha = 0.52f),
         )
 
-        private val SidebarLight = BaseLight.copy(
-            backgroundNorm = ProtonPalette.PortGore,
-            backgroundSecondary = ProtonPalette.PortGore,
-            interactionWeakNorm = ProtonPalette.PickledBluewood,
-            interactionWeakPressed = ProtonPalette.Rhino,
-            separatorNorm = ProtonPalette.PickledBluewood,
-            textNorm = Color.White,
-            textWeak = ProtonPalette.SantasGray,
-            iconNorm = Color.White,
-            iconWeak = ProtonPalette.SantasGray,
-            interactionPressed = ProtonPalette.SanMarino,
+        private fun sidebarLight(
+            brandDarken40: Color = ProtonPalette.Chambray,
+            brandDarken20: Color = ProtonPalette.SanMarino,
+            brandNorm: Color = ProtonPalette.CornflowerBlue,
+            brandLighten20: Color = ProtonPalette.Portage,
+            brandLighten40: Color = ProtonPalette.Perano,
+        ) = baseLight(
+            brandDarken40 = brandDarken40,
+            brandDarken20 = brandDarken20,
+            brandNorm = brandNorm,
+            brandLighten20 = brandLighten20,
+            brandLighten40 = brandLighten40,
         )
 
-        private val SidebarDark = BaseDark
+        private fun sidebarDark(
+            brandDarken40: Color = ProtonPalette.Chambray,
+            brandDarken20: Color = ProtonPalette.SanMarino,
+            brandNorm: Color = ProtonPalette.CornflowerBlue,
+            brandLighten20: Color = ProtonPalette.Portage,
+            brandLighten40: Color = ProtonPalette.Perano,
+        ) = baseDark(
+            brandDarken40 = brandDarken40,
+            brandDarken20 = brandDarken20,
+            brandNorm = brandNorm,
+            brandLighten20 = brandLighten20,
+            brandLighten40 = brandLighten40,
+        )
 
-        val Light = BaseLight.copy(sidebarColors = SidebarLight)
-        val Dark = BaseDark.copy(sidebarColors = SidebarDark)
+        fun light(
+            brandDarken40: Color = ProtonPalette.Chambray,
+            brandDarken20: Color = ProtonPalette.SanMarino,
+            brandNorm: Color = ProtonPalette.CornflowerBlue,
+            brandLighten20: Color = ProtonPalette.Portage,
+            brandLighten40: Color = ProtonPalette.Perano,
+        ) = baseLight(
+            brandDarken40 = brandDarken40,
+            brandDarken20 = brandDarken20,
+            brandNorm = brandNorm,
+            brandLighten20 = brandLighten20,
+            brandLighten40 = brandLighten40,
+        ).copy(
+            sidebarColors = sidebarLight(
+                brandDarken40 = brandDarken40,
+                brandDarken20 = brandDarken20,
+                brandNorm = brandNorm,
+                brandLighten20 = brandLighten20,
+                brandLighten40 = brandLighten40,
+            )
+        )
+
+        fun dark(
+            brandDarken40: Color = ProtonPalette.Chambray,
+            brandDarken20: Color = ProtonPalette.SanMarino,
+            brandNorm: Color = ProtonPalette.CornflowerBlue,
+            brandLighten20: Color = ProtonPalette.Portage,
+            brandLighten40: Color = ProtonPalette.Perano,
+        ) = baseDark(
+            brandDarken40 = brandDarken40,
+            brandDarken20 = brandDarken20,
+            brandNorm = brandNorm,
+            brandLighten20 = brandLighten20,
+            brandLighten40 = brandLighten40,
+        ).copy(
+            sidebarColors = sidebarDark(
+                brandDarken40 = brandDarken40,
+                brandDarken20 = brandDarken20,
+                brandNorm = brandNorm,
+                brandLighten20 = brandLighten20,
+                brandLighten40 = brandLighten40,
+            )
+        )
     }
 }
 

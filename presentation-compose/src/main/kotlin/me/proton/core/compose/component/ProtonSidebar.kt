@@ -151,8 +151,8 @@ fun ProtonSidebarItem(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
     isSelected: Boolean = false,
-    textColor: Color = Color.Unspecified,
-    iconTint: Color = ProtonTheme.colors.iconHint,
+    textColor: Color = if (isSelected) Color.White else Color.Unspecified,
+    iconTint: Color = if (isSelected) Color.White else ProtonTheme.colors.iconHint,
     count: Int? = null,
     onClick: () -> Unit = {},
 ) {

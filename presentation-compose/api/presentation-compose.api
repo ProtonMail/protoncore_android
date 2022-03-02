@@ -519,8 +519,12 @@ public final class me/proton/core/compose/theme/ProtonColors {
 }
 
 public final class me/proton/core/compose/theme/ProtonColors$Companion {
+	public final fun dark-t635Npw (JJJJJ)Lme/proton/core/compose/theme/ProtonColors;
+	public static synthetic fun dark-t635Npw$default (Lme/proton/core/compose/theme/ProtonColors$Companion;JJJJJILjava/lang/Object;)Lme/proton/core/compose/theme/ProtonColors;
 	public final fun getDark ()Lme/proton/core/compose/theme/ProtonColors;
 	public final fun getLight ()Lme/proton/core/compose/theme/ProtonColors;
+	public final fun light-t635Npw (JJJJJ)Lme/proton/core/compose/theme/ProtonColors;
+	public static synthetic fun light-t635Npw$default (Lme/proton/core/compose/theme/ProtonColors$Companion;JJJJJILjava/lang/Object;)Lme/proton/core/compose/theme/ProtonColors;
 }
 
 public final class me/proton/core/compose/theme/ProtonDimens {
