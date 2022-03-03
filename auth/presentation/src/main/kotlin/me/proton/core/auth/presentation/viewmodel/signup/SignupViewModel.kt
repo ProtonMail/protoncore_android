@@ -199,7 +199,7 @@ internal class SignupViewModel @Inject constructor(
      * previously set [AccountType].
      * @see currentAccountType public property
      */
-    fun startCreateUserWorkflow() {
+    fun startCreateUserWorkflow() = viewModelScope.launch {
         _userCreationState.tryEmit(State.Idle)
 
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))

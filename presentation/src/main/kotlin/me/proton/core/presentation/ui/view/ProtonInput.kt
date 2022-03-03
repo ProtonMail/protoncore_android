@@ -232,9 +232,9 @@ open class ProtonInput : LinearLayout {
         }
 
     var isSuffixTextVisible: Boolean
-        get() = binding.inputLayout.suffixTextView.isVisible
+        get() = inputLayout.suffixTextView.isVisible
         set(value) {
-            binding.inputLayout.suffixTextView.isVisible = value
+            inputLayout.suffixTextView.isVisible = value
         }
 
     /**

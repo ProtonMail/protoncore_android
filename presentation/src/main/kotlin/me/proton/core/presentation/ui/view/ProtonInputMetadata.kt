@@ -20,8 +20,6 @@ package me.proton.core.presentation.ui.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
