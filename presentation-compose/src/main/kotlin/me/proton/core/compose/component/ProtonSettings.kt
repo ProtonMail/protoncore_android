@@ -22,6 +22,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -165,9 +167,36 @@ fun ProtonSettingsItem(
             }
         }
     }
-
 }
 
+@Composable
+fun ProtonSettingsToggleItem(
+    modifier: Modifier = Modifier,
+    name: String,
+    value: Boolean,
+    onToggle: (Boolean) -> Unit = {}
+) {
+    ProtonRawListItem(
+        modifier = modifier
+            .clickable(onClick = { onToggle(!value) })
+            .padding(
+                horizontal = ProtonDimens.DefaultSpacing
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            modifier = Modifier,
+            text = name,
+            color = ProtonTheme.colors.textNorm,
+            style = LocalTypography.current.body1Regular
+        )
+        Switch(
+            modifier = Modifier,
+            checked = value,
+            onCheckedChange = onToggle
+        )
+    }
+}
 
 @Preview(
     name = "Proton settings top bar",
@@ -185,6 +214,15 @@ fun previewSettingsTopBar() {
 @Composable
 fun previewSettingsItem() {
     ProtonSettingsItem(name = "Setting name", hint = "This settings does nothing") { }
+}
+
+@Preview(
+    name = "Proton settings toggleable item",
+    showBackground = true
+)
+@Composable
+fun previewSettingsToggleableItem() {
+    ProtonSettingsToggleItem(name = "Setting toggle", value = true) { }
 }
 
 @Preview(

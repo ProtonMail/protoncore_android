@@ -21,6 +21,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Horizontal
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
@@ -50,12 +52,14 @@ import me.proton.core.presentation.compose.R
 @Composable
 fun ProtonRawListItem(
     modifier: Modifier = Modifier,
-    content: (@Composable @ExtensionFunctionType RowScope.() -> Unit),
+    horizontalArrangement: Horizontal = Arrangement.Start,
+    content: @Composable (RowScope.() -> Unit),
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        content = content
+        content = content,
+        horizontalArrangement = horizontalArrangement
     )
 }
 
