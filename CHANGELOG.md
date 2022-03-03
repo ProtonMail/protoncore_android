@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+- Disabled AutoFill for several Auth inputs.
+
 ## [7.1.1]
 
 ### New
