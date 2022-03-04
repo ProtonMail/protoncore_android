@@ -6,24 +6,20 @@ public final class me/proton/core/challenge/data/BuildConfig {
 }
 
 public abstract interface class me/proton/core/challenge/data/ChallengeManagerFactory {
-	public abstract fun create (Ljava/util/UUID;Lme/proton/core/network/domain/client/ClientId;)Lme/proton/core/challenge/data/ChallengeManagerImpl;
+	public abstract fun create (Lme/proton/core/network/domain/client/ClientId;)Lme/proton/core/challenge/data/ChallengeManagerImpl;
 }
 
 public final class me/proton/core/challenge/data/ChallengeManagerImpl : me/proton/core/challenge/domain/ChallengeManager {
-	public fun <init> (Lme/proton/core/challenge/domain/repository/ChallengeRepository;Ljava/util/UUID;Lme/proton/core/network/domain/client/ClientId;)V
+	public fun <init> (Lme/proton/core/challenge/domain/repository/ChallengeRepository;Lme/proton/core/network/domain/client/ClientId;)V
 	public fun addOrUpdateFrame (Lme/proton/core/challenge/domain/ChallengeFrameType;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getClientId ()Lme/proton/core/network/domain/client/ClientId;
-	public fun getFramesByChallengeId (Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFramesByClientId (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getFramesByClientIdAndChallengeId (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getId ()Ljava/util/UUID;
 	public fun removeFrames (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/challenge/data/ChallengeManagerProviderImpl : me/proton/core/challenge/domain/ChallengeManagerProvider {
 	public fun <init> (Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/challenge/data/ChallengeManagerFactory;)V
 	public fun get (Lme/proton/core/challenge/domain/ChallengeManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getAll ()Ljava/util/List;
 }
 
 public final class me/proton/core/challenge/data/DeviceUtilsKt {
@@ -36,6 +32,7 @@ public final class me/proton/core/challenge/data/DeviceUtilsKt {
 	public static final fun deviceStorage (Landroid/content/Context;)D
 	public static final fun deviceTimezone ()Ljava/lang/String;
 	public static final fun deviceUID ()Ljava/lang/String;
+	public static final fun deviceVolumesStorage (Landroid/content/Context;)D
 	public static final fun isDeviceRooted ()Z
 	public static final fun nightMode (Landroid/content/Context;)Z
 }
@@ -268,27 +265,24 @@ public abstract class me/proton/core/challenge/data/db/ChallengeFramesDao : me/p
 	public abstract fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteByClientId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAll ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getByChallengeId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getByClientAndChallengeId (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getByClientId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun updateFrame (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getByClientIdAndType (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateFrame (Ljava/lang/String;JILjava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/challenge/data/entity/ChallengeFrameEntity {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/network/domain/client/ClientIdType;JILjava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/network/domain/client/ClientIdType;JILjava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Lme/proton/core/network/domain/client/ClientIdType;
-	public final fun component5 ()J
-	public final fun component6 ()I
+	public final fun component3 ()Lme/proton/core/network/domain/client/ClientIdType;
+	public final fun component4 ()J
+	public final fun component5 ()I
+	public final fun component6 ()Ljava/util/List;
 	public final fun component7 ()Ljava/util/List;
 	public final fun component8 ()Ljava/util/List;
-	public final fun component9 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/network/domain/client/ClientIdType;JILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;
-	public static synthetic fun copy$default (Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/network/domain/client/ClientIdType;JILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/network/domain/client/ClientIdType;JILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/network/domain/client/ClientIdType;JILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getChallengeId ()Ljava/lang/String;
 	public final fun getChallengeType ()Ljava/lang/String;
 	public final fun getClicks ()I
 	public final fun getClientId ()Ljava/lang/String;
@@ -306,10 +300,8 @@ public final class me/proton/core/challenge/data/repository/ChallengeRepositoryI
 	public fun <init> (Lme/proton/core/challenge/data/db/ChallengeDatabase;)V
 	public fun deleteFrames (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteFrames (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getFramesByChallengeId (Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getFramesByClientAndChallengeId (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFramesByClientId (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertFrameDetails (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateFrame (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateFrame (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

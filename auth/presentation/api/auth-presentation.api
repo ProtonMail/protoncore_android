@@ -481,7 +481,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentCreating
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentRecoveryEmailBinding : androidx/viewbinding/ViewBinding {
-	public final field emailEditText Lme/proton/core/presentation/ui/view/ProtonInputMetadata;
+	public final field emailEditText Lme/proton/core/challenge/presentation/RecoveryEmailInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentRecoveryEmailBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -492,7 +492,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentRecovery
 public final class me/proton/core/auth/presentation/databinding/FragmentRecoverySmsBinding : androidx/viewbinding/ViewBinding {
 	public final field callingCodeText Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
 	public final field header Landroid/widget/TextView;
-	public final field smsEditText Lme/proton/core/presentation/ui/view/ProtonInputMetadata;
+	public final field smsEditText Lme/proton/core/challenge/presentation/RecoveryEmailInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentRecoverySmsBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -521,7 +521,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupCh
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
 	public final field useCurrentEmailButton Lme/proton/core/presentation/ui/view/ProtonButton;
-	public final field usernameInput Lme/proton/core/presentation/ui/view/ProtonInputMetadata;
+	public final field usernameInput Lme/proton/core/challenge/presentation/UsernameInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseUsernameBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
@@ -2099,11 +2099,11 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/RecoverySMS
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/signup/PerformCreateUser;Lme/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/auth/domain/usecase/PerformLogin;Lme/proton/core/challenge/domain/ChallengeManagerProvider;Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Landroidx/lifecycle/SavedStateHandle;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/signup/PerformCreateUser;Lme/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/auth/domain/usecase/PerformLogin;Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Landroidx/lifecycle/SavedStateHandle;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_HiltModules {

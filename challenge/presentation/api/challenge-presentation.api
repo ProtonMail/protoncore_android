@@ -1,0 +1,115 @@
+public class hilt_aggregated_deps/_me_proton_core_challenge_presentation_RecoveryEmailInput_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_challenge_presentation_UsernameInput_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/challenge/presentation/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract class me/proton/core/challenge/presentation/Hilt_RecoveryEmailInput : me/proton/core/challenge/presentation/ProtonMetadataInput, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ViewComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ViewComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	protected fun inject ()V
+}
+
+public abstract class me/proton/core/challenge/presentation/Hilt_UsernameInput : me/proton/core/challenge/presentation/ProtonMetadataInput, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ViewComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ViewComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	protected fun inject ()V
+}
+
+public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText : com/google/android/material/textfield/TextInputEditText {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun onTextContextMenuItem (I)Z
+}
+
+public class me/proton/core/challenge/presentation/ProtonMetadataInput : me/proton/core/presentation/ui/view/ProtonInput {
+	public static final field Companion Lme/proton/core/challenge/presentation/ProtonMetadataInput$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	protected final fun calculateFocus (Z)J
+	public static synthetic fun calculateFocus$default (Lme/proton/core/challenge/presentation/ProtonMetadataInput;ZILjava/lang/Object;)J
+	protected fun getBinding ()Landroidx/viewbinding/ViewBinding;
+	protected final fun getClicksCounter ()I
+	protected final fun getCopies ()Ljava/util/List;
+	public synthetic fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
+	protected fun getInput ()Lme/proton/core/challenge/presentation/ProtonCopyPasteEditText;
+	protected fun getInputLayout ()Lcom/google/android/material/textfield/TextInputLayout;
+	protected final fun getKeys ()Ljava/util/List;
+	protected fun getLabel ()Landroid/widget/TextView;
+	protected final fun getPastes ()Ljava/util/List;
+	protected final fun setClicksCounter (I)V
+}
+
+public final class me/proton/core/challenge/presentation/ProtonMetadataInput$Companion {
+}
+
+public final class me/proton/core/challenge/presentation/RecoveryEmailInput : me/proton/core/challenge/presentation/ProtonMetadataInput {
+	public field challengeManagerProvider Lme/proton/core/challenge/domain/ChallengeManagerProvider;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getChallengeManagerProvider ()Lme/proton/core/challenge/domain/ChallengeManagerProvider;
+	public final fun setChallengeManagerProvider (Lme/proton/core/challenge/domain/ChallengeManagerProvider;)V
+}
+
+public abstract interface class me/proton/core/challenge/presentation/RecoveryEmailInput_GeneratedInjector {
+	public abstract fun injectRecoveryEmailInput (Lme/proton/core/challenge/presentation/RecoveryEmailInput;)V
+}
+
+public final class me/proton/core/challenge/presentation/RecoveryEmailInput_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectChallengeManagerProvider (Lme/proton/core/challenge/presentation/RecoveryEmailInput;Lme/proton/core/challenge/domain/ChallengeManagerProvider;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/challenge/presentation/RecoveryEmailInput;)V
+}
+
+public final class me/proton/core/challenge/presentation/UsernameInput : me/proton/core/challenge/presentation/ProtonMetadataInput {
+	public field challengeManagerProvider Lme/proton/core/challenge/domain/ChallengeManagerProvider;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getChallengeManagerProvider ()Lme/proton/core/challenge/domain/ChallengeManagerProvider;
+	public final fun setChallengeManagerProvider (Lme/proton/core/challenge/domain/ChallengeManagerProvider;)V
+}
+
+public abstract interface class me/proton/core/challenge/presentation/UsernameInput_GeneratedInjector {
+	public abstract fun injectUsernameInput (Lme/proton/core/challenge/presentation/UsernameInput;)V
+}
+
+public final class me/proton/core/challenge/presentation/UsernameInput_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectChallengeManagerProvider (Lme/proton/core/challenge/presentation/UsernameInput;Lme/proton/core/challenge/domain/ChallengeManagerProvider;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/challenge/presentation/UsernameInput;)V
+}
+
+public final class me/proton/core/challenge/presentation/databinding/ProtonMetadataInputBinding : androidx/viewbinding/ViewBinding {
+	public final field input Lme/proton/core/challenge/presentation/ProtonCopyPasteEditText;
+	public final field inputLayout Lcom/google/android/material/textfield/TextInputLayout;
+	public final field label Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/challenge/presentation/databinding/ProtonMetadataInputBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/challenge/presentation/databinding/ProtonMetadataInputBinding;
+}
+

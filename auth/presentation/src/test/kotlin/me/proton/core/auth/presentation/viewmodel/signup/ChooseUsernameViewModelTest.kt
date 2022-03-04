@@ -23,6 +23,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -39,13 +40,18 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val usernameDomainAvailability = mockk<UsernameDomainAvailability>(relaxed = true)
     private val sendVerificationCodeToEmailDestination = mockk<SendVerificationCodeToEmailDestination>(relaxed = true)
+    private val challengeManagerProvider = mockk<ChallengeManagerProvider>(relaxed = true)
     // endregion
 
     private lateinit var viewModel: ChooseUsernameViewModel
 
     @Before
     fun beforeEveryTest() {
-        viewModel = ChooseUsernameViewModel(usernameDomainAvailability, sendVerificationCodeToEmailDestination)
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManagerProvider
+        )
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
     }
 

@@ -179,20 +179,23 @@ internal class SignupViewModel @Inject constructor(
      * previously set [AccountType].
      * @see currentAccountType public property
      */
-    fun startCreateUserWorkflow() = viewModelScope.launch {
+    @Suppress("IMPLICIT_CAST_TO_ANY")
+    fun startCreateUserWorkflow() {
         _userCreationState.tryEmit(State.Idle)
-
-        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-        val password by lazy { requireNotNull(_password) { "Password is not set (initialized)." } }
 
         when (currentAccountType) {
             AccountType.Username,
             AccountType.Internal -> {
                 val username = requireNotNull(username) { "Username is not set." }
-                createUser(clientId, username, password)
+                val password = requireNotNull(_password) { "Password is not set (initialized)." }
+                viewModelScope.launch {
+                    val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+                    createUser(clientId, username, password)
+                }
             }
             AccountType.External -> {
                 val email = requireNotNull(externalEmail) { "External email is not set." }
+                val password = requireNotNull(_password) { "Password is not set (initialized)." }
                 createExternalUser(email, password)
             }
         }.exhaustive
