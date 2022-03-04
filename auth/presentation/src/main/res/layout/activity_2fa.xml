@@ -62,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_content_top_margin"
                 android:inputType="number"
+                android:importantForAutofill="no"
                 app:help="@string/auth_2fa_assistive_text"
                 app:label="@string/auth_2fa_label" />
 
