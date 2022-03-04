@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixes
 
 - Fixed Login for Product VPN with TwoPassMode enabled.
+- Fixed Android 6 crashes in upgrade screens (all ImageViews now use app:srcCompat).
 
 ## [7.1.0]
 

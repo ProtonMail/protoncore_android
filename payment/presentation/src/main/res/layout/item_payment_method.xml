@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/gap_small"
         android:layout_marginEnd="@dimen/gap_small"
         android:contentDescription="@string/payments_method_icon"
-        android:src="@drawable/ic_credit_card"
+        app:srcCompat="@drawable/ic_credit_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

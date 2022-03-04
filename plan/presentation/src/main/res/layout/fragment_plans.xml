@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    android:src="@drawable/ic_logo_mail"
+                    app:srcCompat="@drawable/ic_logo_mail"
                     app:tint="?attr/brand_norm" />
 
                 <ImageView
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    android:src="@drawable/ic_logo_calendar"
+                    app:srcCompat="@drawable/ic_logo_calendar"
                     app:tint="?attr/brand_norm" />
 
                 <ImageView
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    android:src="@drawable/ic_logo_drive"
+                    app:srcCompat="@drawable/ic_logo_drive"
                     app:tint="?attr/brand_norm" />
 
                 <ImageView
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:layout_marginEnd="@dimen/gap_medium"
-                    android:src="@drawable/ic_logo_vpn"
+                    app:srcCompat="@drawable/ic_logo_vpn"
                     app:tint="?attr/brand_norm" />
 
             </LinearLayout>

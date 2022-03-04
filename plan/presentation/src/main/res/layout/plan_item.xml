@@ -45,11 +45,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/gap_medium"
         android:layout_marginEnd="@dimen/gap_medium"
-        android:src="@drawable/ic_star_filled"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/planNameText"
         app:layout_constraintStart_toEndOf="@id/planNameText"
-        app:layout_constraintTop_toTopOf="@id/planNameText" />
+        app:layout_constraintTop_toTopOf="@id/planNameText"
+        app:srcCompat="@drawable/ic_star_filled" />
 
     <LinearLayout
         android:id="@+id/priceCycleLayout"
@@ -115,9 +115,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gap_large"
         android:background="@null"
-        android:src="@drawable/ic_chevron_down"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/priceCycleLayout"
+        app:srcCompat="@drawable/ic_chevron_down"
         app:tint="?attr/brand_norm" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
