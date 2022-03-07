@@ -74,6 +74,9 @@ class PlanItemView @JvmOverloads constructor(
             visibility = if (collapsible) VISIBLE else GONE
             onClick { rotate() }
         }
+        planItemParent.onClick {
+            rotate()
+        }
         select.onClick {
             planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount)
         }
