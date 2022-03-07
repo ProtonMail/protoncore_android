@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.2]
+
 ### Changes
 - Disabled AutoFill for several Auth inputs.
 - Replace icons with improved versions in icon set.
+- Make whole plan item tile clickable for expand/collapse.
 
 ## [7.1.1]
 
