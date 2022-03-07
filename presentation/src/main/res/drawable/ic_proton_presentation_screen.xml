@@ -1,0 +1,27 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M9.4461,20.3726C9.0997,20.5996 9.0028,21.0645 9.2298,21.411C9.4568,21.7575 9.9217,21.8543 10.2681,21.6274L9.4461,20.3726ZM13.7319,21.6274C14.0783,21.8543 14.5432,21.7575 14.7702,21.411C14.9972,21.0645 14.9003,20.5996 14.5539,20.3726L13.7319,21.6274ZM2,2C1.5858,2 1.25,2.3358 1.25,2.75C1.25,3.1642 1.5858,3.5 2,3.5V2ZM22,3.5C22.4142,3.5 22.75,3.1642 22.75,2.75C22.75,2.3358 22.4142,2 22,2V3.5ZM12.75,19.5962V16.0865H11.25V19.5962H12.75ZM11.589,18.9688L9.4461,20.3726L10.2681,21.6274L12.411,20.2235L11.589,18.9688ZM11.589,20.2235L13.7319,21.6274L14.5539,20.3726L12.411,18.9688L11.589,20.2235ZM2,3.5H22V2H2V3.5ZM20.5357,4.8558V14.6827H22.0357V4.8558H20.5357ZM19.8571,15.3365H4.1429V16.8365H19.8571V15.3365ZM3.4643,14.6827V4.8558H1.9643V14.6827H3.4643ZM4.1429,15.3365C3.7557,15.3365 3.4643,15.0315 3.4643,14.6827H1.9643C1.9643,15.8845 2.9521,16.8365 4.1429,16.8365V15.3365ZM20.5357,14.6827C20.5357,15.0315 20.2443,15.3365 19.8571,15.3365V16.8365C21.0479,16.8365 22.0357,15.8845 22.0357,14.6827H20.5357Z"
+      android:fillColor="@color/icon_norm"/>
+</vector>

@@ -1,9 +1,27 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M3.5,5.25C3.0858,5.25 2.75,5.5858 2.75,6C2.75,6.4142 3.0858,6.75 3.5,6.75L3.5,5.25ZM20.5,6.75C20.9142,6.75 21.25,6.4142 21.25,6C21.25,5.5858 20.9142,5.25 20.5,5.25V6.75ZM3.5,11.75C3.0858,11.75 2.75,12.0858 2.75,12.5C2.75,12.9142 3.0858,13.25 3.5,13.25V11.75ZM20.5,13.25C20.9142,13.25 21.25,12.9142 21.25,12.5C21.25,12.0858 20.9142,11.75 20.5,11.75V13.25ZM3.5,18.25C3.0858,18.25 2.75,18.5858 2.75,19C2.75,19.4142 3.0858,19.75 3.5,19.75V18.25ZM20.5,19.75C20.9142,19.75 21.25,19.4142 21.25,19C21.25,18.5858 20.9142,18.25 20.5,18.25V19.75ZM3.5,6.75L20.5,6.75V5.25L3.5,5.25L3.5,6.75ZM3.5,13.25H20.5V11.75H3.5V13.25ZM3.5,19.75H20.5V18.25H3.5V19.75Z"
+      android:pathData="M3.5,4.75C3.0858,4.75 2.75,5.0858 2.75,5.5C2.75,5.9142 3.0858,6.25 3.5,6.25L3.5,4.75ZM20.5,6.25C20.9142,6.25 21.25,5.9142 21.25,5.5C21.25,5.0858 20.9142,4.75 20.5,4.75V6.25ZM3.5,11.25C3.0858,11.25 2.75,11.5858 2.75,12C2.75,12.4142 3.0858,12.75 3.5,12.75V11.25ZM20.5,12.75C20.9142,12.75 21.25,12.4142 21.25,12C21.25,11.5858 20.9142,11.25 20.5,11.25V12.75ZM3.5,17.75C3.0858,17.75 2.75,18.0858 2.75,18.5C2.75,18.9142 3.0858,19.25 3.5,19.25V17.75ZM20.5,19.25C20.9142,19.25 21.25,18.9142 21.25,18.5C21.25,18.0858 20.9142,17.75 20.5,17.75V19.25ZM3.5,6.25L20.5,6.25V4.75L3.5,4.75L3.5,6.25ZM3.5,12.75H20.5V11.25H3.5V12.75ZM3.5,19.25H20.5V17.75H3.5V19.25Z"
       android:fillColor="@color/icon_norm"/>
 </vector>

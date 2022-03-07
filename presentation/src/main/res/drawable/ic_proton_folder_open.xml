@@ -1,10 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M12.0769,20.4999H4.3964C3.6252,20.4999 3,19.8487 3,19.0453V5.9545C3,5.1512 3.6252,4.5 4.3964,4.5H8.0841C8.4084,4.5 8.7226,4.6176 8.9727,4.8325L11.3013,6.8335C11.3513,6.8765 11.4141,6.9 11.479,6.9L18.3609,6.9001C19.1321,6.9001 19.7573,7.5513 19.7573,8.3546V10.3182M4.169,20.5H16.1841C16.669,20.5 17.1192,20.238 17.3734,19.8078L21.8953,12.1539C22.1816,11.6693 21.8469,11.0455 21.3007,11.0455H8.7216C8.2079,11.0455 7.7357,11.3393 7.4921,11.8104L3.5542,19.4279C3.3037,19.9125 3.6407,20.5 4.169,20.5Z"
+      android:pathData="M12.0769,19.9999H4.3964C3.6252,19.9999 3,19.3487 3,18.5453V5.4545C3,4.6512 3.6252,4 4.3964,4H8.0841C8.4084,4 8.7226,4.1176 8.9727,4.3325L11.3013,6.3335C11.3513,6.3765 11.4141,6.4 11.479,6.4L18.3609,6.4001C19.1321,6.4001 19.7573,7.0513 19.7573,7.8546V9.8182M4.169,20H16.1841C16.669,20 17.1192,19.738 17.3734,19.3078L21.8953,11.6539C22.1816,11.1693 21.8469,10.5455 21.3007,10.5455H8.7216C8.2079,10.5455 7.7357,10.8393 7.4921,11.3104L3.5542,18.9279C3.3037,19.4125 3.6407,20 4.169,20Z"
       android:strokeWidth="1.5"
       android:fillColor="#00000000"
       android:strokeColor="@color/icon_norm"/>

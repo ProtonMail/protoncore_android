@@ -1,9 +1,27 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M10.2275,3.25C10.2275,2.8358 9.8918,2.5 9.4775,2.5C9.0633,2.5 8.7275,2.8358 8.7275,3.25L10.2275,3.25ZM8.7275,21.75C8.7275,22.1642 9.0633,22.5 9.4775,22.5C9.8918,22.5 10.2275,22.1642 10.2275,21.75H8.7275ZM15.273,3.25C15.273,2.8358 14.9372,2.5 14.523,2.5C14.1088,2.5 13.773,2.8358 13.773,3.25H15.273ZM13.773,21.75C13.773,22.1642 14.1088,22.5 14.523,22.5C14.9372,22.5 15.273,22.1642 15.273,21.75H13.773ZM8.7275,3.25V21.75H10.2275V3.25L8.7275,3.25ZM13.773,3.25V21.75H15.273V3.25H13.773Z"
+      android:pathData="M10.2275,2.75C10.2275,2.3358 9.8918,2 9.4775,2C9.0633,2 8.7275,2.3358 8.7275,2.75L10.2275,2.75ZM8.7275,21.25C8.7275,21.6642 9.0633,22 9.4775,22C9.8918,22 10.2275,21.6642 10.2275,21.25H8.7275ZM15.273,2.75C15.273,2.3358 14.9372,2 14.523,2C14.1088,2 13.773,2.3358 13.773,2.75H15.273ZM13.773,21.25C13.773,21.6642 14.1088,22 14.523,22C14.9372,22 15.273,21.6642 15.273,21.25H13.773ZM8.7275,2.75V21.25H10.2275V2.75L8.7275,2.75ZM13.773,2.75V21.25H15.273V2.75H13.773Z"
       android:fillColor="@color/icon_norm"/>
 </vector>

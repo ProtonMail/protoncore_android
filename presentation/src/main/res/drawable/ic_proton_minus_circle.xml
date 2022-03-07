@@ -1,13 +1,31 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <group>
     <clip-path
-        android:pathData="M22,12.5C22,18.0228 17.5228,22.5 12,22.5C6.4771,22.5 2,18.0228 2,12.5C2,6.9771 6.4771,2.5 12,2.5C17.5228,2.5 22,6.9771 22,12.5Z"/>
+        android:pathData="M22,12C22,17.5228 17.5228,22 12,22C6.4771,22 2,17.5228 2,12C2,6.4771 6.4771,2 12,2C17.5228,2 22,6.4771 22,12Z"/>
     <path
-        android:pathData="M15.572,13.2499C15.9862,13.2499 16.322,12.9141 16.322,12.4999C16.322,12.0857 15.9862,11.7499 15.572,11.7499L15.572,13.2499ZM8.4291,11.7499C8.0149,11.7499 7.6791,12.0857 7.6791,12.4999C7.6791,12.9141 8.0149,13.2499 8.4291,13.2499L8.4291,11.7499ZM15.572,11.7499L8.4291,11.7499L8.4291,13.2499L15.572,13.2499L15.572,11.7499ZM20.5,12.5C20.5,17.1944 16.6944,21 12,21V24C18.3513,24 23.5,18.8513 23.5,12.5H20.5ZM12,21C7.3056,21 3.5,17.1944 3.5,12.5H0.5C0.5,18.8513 5.6487,24 12,24V21ZM3.5,12.5C3.5,7.8056 7.3056,4 12,4V1C5.6487,1 0.5,6.1487 0.5,12.5H3.5ZM12,4C16.6944,4 20.5,7.8056 20.5,12.5H23.5C23.5,6.1487 18.3513,1 12,1V4Z"
+        android:pathData="M15.572,12.7499C15.9862,12.7499 16.322,12.4141 16.322,11.9999C16.322,11.5857 15.9862,11.2499 15.572,11.2499L15.572,12.7499ZM8.4291,11.2499C8.0149,11.2499 7.6791,11.5857 7.6791,11.9999C7.6791,12.4141 8.0149,12.7499 8.4291,12.7499L8.4291,11.2499ZM15.572,11.2499L8.4291,11.2499L8.4291,12.7499L15.572,12.7499L15.572,11.2499ZM20.5,12C20.5,16.6944 16.6944,20.5 12,20.5V23.5C18.3513,23.5 23.5,18.3513 23.5,12H20.5ZM12,20.5C7.3056,20.5 3.5,16.6944 3.5,12H0.5C0.5,18.3513 5.6487,23.5 12,23.5V20.5ZM3.5,12C3.5,7.3056 7.3056,3.5 12,3.5V0.5C5.6487,0.5 0.5,5.6487 0.5,12H3.5ZM12,3.5C16.6944,3.5 20.5,7.3056 20.5,12H23.5C23.5,5.6487 18.3513,0.5 12,0.5V3.5Z"
         android:fillColor="@color/icon_norm"/>
   </group>
 </vector>

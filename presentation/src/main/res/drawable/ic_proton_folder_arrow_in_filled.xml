@@ -1,10 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M4.8571,3.9287C3.2792,3.9287 2,5.2079 2,6.7859V12.4646H10.9036L9.3268,10.8878C9.0339,10.5949 9.0339,10.12 9.3268,9.8271C9.6197,9.5342 10.0946,9.5342 10.3875,9.8271L13.0426,12.4822C13.4471,12.8867 13.4471,13.5425 13.0426,13.9469L10.3875,16.602C10.0946,16.8949 9.6197,16.8949 9.3268,16.602C9.0339,16.3091 9.0339,15.8343 9.3268,15.5414L10.9036,13.9646H2V18.2144C2,19.7924 3.2792,21.0716 4.8571,21.0716H19.1429C20.7208,21.0716 22,19.7924 22,18.2144V8.9287C22,7.3507 20.7208,6.0716 19.1429,6.0716H12.8095C12.7477,6.0716 12.6876,6.0515 12.6381,6.0144L10.619,4.5001C10.1245,4.1292 9.523,3.9287 8.9048,3.9287H4.8571Z"
+      android:pathData="M4.8571,3.4287C3.2792,3.4287 2,4.7079 2,6.2859V11.9646H10.9036L9.3268,10.3878C9.0339,10.0949 9.0339,9.62 9.3268,9.3271C9.6197,9.0342 10.0946,9.0342 10.3875,9.3271L13.0426,11.9822C13.4471,12.3867 13.4471,13.0425 13.0426,13.4469L10.3875,16.102C10.0946,16.3949 9.6197,16.3949 9.3268,16.102C9.0339,15.8091 9.0339,15.3343 9.3268,15.0414L10.9036,13.4646H2V17.7144C2,19.2924 3.2792,20.5716 4.8571,20.5716H19.1429C20.7208,20.5716 22,19.2924 22,17.7144V8.4287C22,6.8507 20.7208,5.5716 19.1429,5.5716H12.8095C12.7477,5.5716 12.6876,5.5515 12.6381,5.5144L10.619,4.0001C10.1245,3.6292 9.523,3.4287 8.9048,3.4287H4.8571Z"
       android:fillColor="@color/icon_norm"
       android:fillType="evenOdd"/>
 </vector>

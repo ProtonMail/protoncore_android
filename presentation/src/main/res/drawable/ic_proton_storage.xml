@@ -1,10 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M18.4034,6.0961C18.4034,8.061 14.8457,8.9423 11.9995,8.9423C9.1534,8.9423 5.5957,8.061 5.5957,6.0961M18.4034,6.0961C18.4034,4.1313 14.8457,3.25 11.9995,3.25C9.1534,3.25 5.5957,4.1313 5.5957,6.0961M18.4034,6.0961V18.1923C18.4034,20.1572 15.5572,21.75 11.9995,21.75C8.4419,21.75 5.5957,20.1572 5.5957,18.1923V6.0961M18.4034,10.3654C18.4034,12.3302 14.8457,13.2115 11.9995,13.2115C9.1534,13.2115 5.5957,12.3302 5.5957,10.3654M18.4034,14.6346C18.4034,16.5995 14.8457,17.4808 11.9995,17.4808C9.1534,17.4808 5.5957,16.5995 5.5957,14.6346"
+      android:pathData="M18.4034,5.5961C18.4034,7.561 14.8457,8.4423 11.9995,8.4423C9.1534,8.4423 5.5957,7.561 5.5957,5.5961M18.4034,5.5961C18.4034,3.6313 14.8457,2.75 11.9995,2.75C9.1534,2.75 5.5957,3.6313 5.5957,5.5961M18.4034,5.5961V17.6923C18.4034,19.6572 15.5572,21.25 11.9995,21.25C8.4419,21.25 5.5957,19.6572 5.5957,17.6923V5.5961M18.4034,9.8654C18.4034,11.8302 14.8457,12.7115 11.9995,12.7115C9.1534,12.7115 5.5957,11.8302 5.5957,9.8654M18.4034,14.1346C18.4034,16.0995 14.8457,16.9808 11.9995,16.9808C9.1534,16.9808 5.5957,16.0995 5.5957,14.1346"
       android:strokeWidth="1.5"
       android:fillColor="#00000000"
       android:strokeColor="@color/icon_norm"/>

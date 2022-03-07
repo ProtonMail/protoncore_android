@@ -1,13 +1,31 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <group>
     <clip-path
-        android:pathData="M2,6.7859C2,5.2079 3.2792,3.9287 4.8571,3.9287H8.9048C9.523,3.9287 10.1245,4.1292 10.619,4.5001L12.6381,6.0144C12.6876,6.0515 12.7477,6.0716 12.8095,6.0716H19.1429C20.7208,6.0716 22,7.3507 22,8.9287V18.2144C22,19.7924 20.7208,21.0716 19.1429,21.0716H4.8571C3.2792,21.0716 2,19.7924 2,18.2144V6.7859Z"/>
+        android:pathData="M2,6.2859C2,4.7079 3.2792,3.4287 4.8571,3.4287H8.9048C9.523,3.4287 10.1245,3.6292 10.619,4.0001L12.6381,5.5144C12.6876,5.5515 12.7477,5.5716 12.8095,5.5716H19.1429C20.7208,5.5716 22,6.8507 22,8.4287V17.7144C22,19.2924 20.7208,20.5716 19.1429,20.5716H4.8571C3.2792,20.5716 2,19.2924 2,17.7144V6.2859Z"/>
     <path
-        android:pathData="M2,6.7859C2,5.2079 3.2792,3.9287 4.8571,3.9287H8.9048C9.523,3.9287 10.1245,4.1292 10.619,4.5001L12.6381,6.0144C12.6876,6.0515 12.7477,6.0716 12.8095,6.0716H19.1429C20.7208,6.0716 22,7.3507 22,8.9287V18.2144C22,19.7924 20.7208,21.0716 19.1429,21.0716H4.8571C3.2792,21.0716 2,19.7924 2,18.2144V6.7859Z"
+        android:pathData="M2,6.2859C2,4.7079 3.2792,3.4287 4.8571,3.4287H8.9048C9.523,3.4287 10.1245,3.6292 10.619,4.0001L12.6381,5.5144C12.6876,5.5515 12.7477,5.5716 12.8095,5.5716H19.1429C20.7208,5.5716 22,6.8507 22,8.4287V17.7144C22,19.2924 20.7208,20.5716 19.1429,20.5716H4.8571C3.2792,20.5716 2,19.2924 2,17.7144V6.2859Z"
         android:strokeWidth="3"
         android:fillColor="#00000000"
         android:strokeColor="@color/icon_norm"/>

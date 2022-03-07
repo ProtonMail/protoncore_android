@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 - Disabled AutoFill for several Auth inputs.
+- Replace icons with improved versions in icon set.
 
 ## [7.1.1]
 
