@@ -18,12 +18,12 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">Ett fel inträffade.</string>
+  <string name="payments_general_error">Ett fel uppstod.</string>
   <string name="payments_no_connectivity">Ingen anslutning för att visa 3DS-bekräftelsesidan.</string>
   <string name="payments_3ds_not_approved">3DS-godkännande har avvisats.</string>
   <string name="payments_error_card_name">Namn på kort krävs.</string>
   <string name="payments_error_card_number">Ogiltigt kortnummer.</string>
-  <string name="payments_error_cvc">Vänligen ange en giltig säkerhetskod.</string>
+  <string name="payments_error_cvc">Ange en giltig säkerhetskod.</string>
   <string name="payments_error_session">Giltigt sessions-ID behövs vid prenumeration på en inloggad användare.</string>
   <string name="payments_error_signup_paymentmethod">Kunde inte registrera med befintlig betalningsmetod.</string>
   <string name="payments_error_invalid_session">Ogiltig session.</string>
@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Välj din betalningsmetod</string>
   <string name="payments_add_credit_debit_card">Lägg till ett nytt kredit-/betalkort</string>
-  <string name="payments_billing_monthly">Faktureras månadsvis</string>
-  <string name="payments_billing_yearly">Faktureras årligen</string>
-  <string name="payments_billing_two_years">Faktureras vartannat år</string>
-  <string name="payments_pay">Betala</string>
+  <string name="payments_billing_monthly">För 1 månad</string>
+  <string name="payments_billing_yearly">För 1 år</string>
+  <string name="payments_billing_two_years">För 2 år</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Betala %s</string>
   <string name="payments_method_icon">Ikon för betalningsmetod.</string>
   <!-- endregion -->
   <!-- region billing -->

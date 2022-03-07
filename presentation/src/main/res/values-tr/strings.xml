@@ -41,4 +41,6 @@
   <string name="presentation_skip">Atla</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Sunucu ile bağlantı kurulamadı.</string>
+  <string name="presentation_check_your_connection">Bağlantınızı denetleyin</string>
+  <string name="presentation_connectivity_issues">Bağlantı sorunları</string>
 </resources>

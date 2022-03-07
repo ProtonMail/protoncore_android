@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Vælg din betalingsmetode</string>
   <string name="payments_add_credit_debit_card">Tilføj kredit / betalingskort</string>
-  <string name="payments_billing_monthly">Faktureret månedligt</string>
-  <string name="payments_billing_yearly">Faktureret årligt</string>
-  <string name="payments_billing_two_years">Faktureres hvert andet år</string>
-  <string name="payments_pay">Betal</string>
+  <string name="payments_billing_monthly">I 1 måned</string>
+  <string name="payments_billing_yearly">I 1 år</string>
+  <string name="payments_billing_two_years">I 2 år</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Betal %s</string>
   <string name="payments_method_icon">Betalingsmetode ikon.</string>
   <!-- endregion -->
   <!-- region billing -->

@@ -41,4 +41,6 @@
   <string name="presentation_skip">Kihagyás</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Could not connect to server.</string>
+  <string name="presentation_check_your_connection">Check your connection</string>
+  <string name="presentation_connectivity_issues">Connectivity issues</string>
 </resources>

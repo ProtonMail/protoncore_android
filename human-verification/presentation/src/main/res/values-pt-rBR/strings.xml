@@ -29,7 +29,7 @@
   <string name="human_verification_option_email_subtitle">Seu e-mail será usado apenas esta única verificação. Se você não encontrar o e-mail em sua caixa de entrada, confira a pasta de spam.</string>
   <string name="human_verification_option_sms">Número de telefone</string>
   <string name="human_verification_option_sms_subtitle">O seu número de telefone será utilizado somente nesta verificação única.</string>
-  <string name="human_verification_get_verification_code">Obtenha o código de verificação</string>
+  <string name="human_verification_get_verification_code">Obter código de verificação</string>
   <string name="human_verification_already_have_code">Eu já tenho um código</string>
   <string name="human_verification_request_replacement_code">Não recebeu o código?</string>
   <string name="human_verification_verify">Verificar</string>

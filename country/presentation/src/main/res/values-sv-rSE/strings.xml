@@ -17,5 +17,5 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="countries_search">Sök efter land</string>
+  <string name="countries_search">Sök land</string>
 </resources>

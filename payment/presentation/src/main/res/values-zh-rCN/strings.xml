@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">请选择您的支付方式</string>
   <string name="payments_add_credit_debit_card">添加新的信用卡/借记卡</string>
-  <string name="payments_billing_monthly">按月付费</string>
-  <string name="payments_billing_yearly">按年付费</string>
-  <string name="payments_billing_two_years">按每两年付费</string>
-  <string name="payments_pay">支付</string>
+  <string name="payments_billing_monthly">For 1 month</string>
+  <string name="payments_billing_yearly">For 1 year</string>
+  <string name="payments_billing_two_years">For 2 years</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
   <string name="payments_method_icon">支付方式图标。</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -43,13 +43,13 @@
   <string name="payments_card_number">卡号</string>
   <string name="payments_expiration_date">有效期至</string>
   <string name="payments_security_code">安全码</string>
-  <string name="payments_postal_code">邮编</string>
+  <string name="payments_postal_code">ZIP code</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">国家</string>
   <string name="payments_paying_in_process">正在支付</string>
-  <string name="payments_choose_country">选择国家/地区</string>
+  <string name="payments_choose_country">Select country</string>
   <string name="payments_info_not_available">无</string>
   <string name="payment_cc_list_item">%1$s - %2$s（有效期至 %3$s/%4$s）</string>
   <string name="payment_paypal_list_item">PayPal</string>

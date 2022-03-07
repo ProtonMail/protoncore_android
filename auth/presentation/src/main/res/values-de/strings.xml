@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Schützen Sie Ihre Privatsphäre mit ProtonMail</string>
   <string name="welcome_subtitle_mail">Verschlüsselte E-Mails halten Ihre Konversationen privat. Ihr Posteingang gehört ausschließlich Ihnen.</string>
   <string name="welcome_title_drive">Schützen Sie Ihre Privatsphäre mit Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Der Komfort von Cloud-Speicher und die Sicherheit der Verschlüsselungstechnologie. Endlich eine Cloud-Speicherlösung, der Sie vertrauen können.</string>
   <string name="welcome_title_calendar">Schützen Sie Ihre Privatsphäre mit Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Verschlüsselter Kalender, der deine Lebensereignisse privat, sicher und geschützt hält.</string>
   <string name="welcome_title_vpn">Schützen Sie Ihre Privatsphäre mit Proton VPN</string>
@@ -70,7 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Ihre Wiederherstellungs-E-Mail-Adresse lautet:</string>
   <string name="auth_create_address_create">Neue E-Mail-Adresse</string>
   <string name="auth_create_address_creating">Neue E-Mail-Adresse</string>
-  <string name="auth_create_address_terms">Indem Sie auf „Adresse erstellen” klicken, erklären Sie sich mit den <a href="https://protonmail.com/terms-and-conditions">Nutzungsbedingungen</a> von Proton einverstanden.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Anmeldeinformationen müssen eingegeben werden.</string>
   <string name="auth_create_address_error_no_available_domain">Keine verfügbare Domain.</string>
   <string name="auth_create_address_error_private_key">Das Erzeugen des privaten Schlüssels ist fehlgeschlagen.</string>
@@ -99,7 +99,9 @@
   <string name="auth_signup_choose_password">Passwort erstellen</string>
   <string name="auth_signup_repeat_password">Passwort erneut eingeben</string>
   <string name="auth_signup_recovery_method_title">Wiederherstellungsmethode festlegen (optional)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Wiederherstellungsmethode festlegen</string>
   <string name="auth_signup_recovery_method_subtitle">Wir senden Ihnen Anweisungen zur Wiederherstellung an diese E-Mail-Adresse oder Telefonnummer, wenn Sie von Ihrem Konto ausgesperrt wurden.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Falls du von deinem Konto ausgesperrt wirst, senden wir dir Anweisungen zur Wiederherstellung an diese E-Mail-Adresse oder Telefonnummer.</string>
   <string name="auth_signup_recovery_method_email">E-Mail-Adresse</string>
   <string name="auth_signup_recovery_method_phone">Rufnummer</string>
   <string name="auth_signup_recovery_method_email_hint">E-Mail-Adresse für die Wiederherstellung</string>
@@ -123,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Geben Sie den an „%s” gesendeten Bestätigungscode ein:</string>
   <string name="auth_signup_error_human_verification_failed">Menschliche Bestätigung fehlgeschlagen.</string>
   <string name="auth_signup_token_code_resent">Token-Code erneut gesendet.</string>
+  <string name="auth_signup_congratulations_subtitle">Dein Proton-Konto wurde erfolgreich erstellt.\nGenieße die Welt der Privatsphäre.</string>
+  <string name="auth_signup_congratulations">Herzlichen Glückwunsch!</string>
+  <string name="auth_signup_start_using_proton">Beginne Proton zu nutzen</string>
+  <string name="auth_signup_start_using_calendar">Beginne Proton Calendar zu nutzen</string>
+  <string name="auth_signup_start_using_mail">Start using Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Start using Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Start using Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Ungültiges Wiederherstellungsziel.</string>
 </resources>

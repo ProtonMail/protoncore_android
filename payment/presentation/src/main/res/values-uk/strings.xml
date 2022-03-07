@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>
   <string name="payments_add_credit_debit_card">Додати нову кредитну/платіжну картку</string>
-  <string name="payments_billing_monthly">Сплачується щомісяця</string>
-  <string name="payments_billing_yearly">Сплачується щороку</string>
-  <string name="payments_billing_two_years">Сплачується кожні два роки</string>
-  <string name="payments_pay">Сплатити</string>
+  <string name="payments_billing_monthly">На 1 місяць</string>
+  <string name="payments_billing_yearly">На 1 рік</string>
+  <string name="payments_billing_two_years">На 2 роки</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Сплатити %s</string>
   <string name="payments_method_icon">Піктограма способу оплати.</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -43,7 +43,7 @@
   <string name="payments_card_number">Номер картки</string>
   <string name="payments_expiration_date">Термін дії</string>
   <string name="payments_security_code">Код безпеки</string>
-  <string name="payments_postal_code">Індекс</string>
+  <string name="payments_postal_code">Поштовий індекс</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">00/00</string>
   <string name="payments_security_code_hint">123</string>

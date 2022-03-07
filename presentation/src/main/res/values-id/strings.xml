@@ -41,4 +41,6 @@
   <string name="presentation_skip">Lewati</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Tidak dapat terhubung ke server.</string>
+  <string name="presentation_check_your_connection">Periksa sambungan Anda</string>
+  <string name="presentation_connectivity_issues">Masalah pada sambungan</string>
 </resources>

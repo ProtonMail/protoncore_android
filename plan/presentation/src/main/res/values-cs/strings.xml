@@ -17,98 +17,123 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Vybrat</string>
   <string name="plans_select_a_plan">Vyberte plán</string>
-  <string name="plans_customizable_features">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
-  <string name="plans_customizable_features_web">    Navštivte  pro přizpůsobení Vašeho plánu.
-    <a href="https://protonmail.com/pricing">protonmail.com</a>
-  </string>
+  <string name="plans_select_a_plan_subtitle">Jeden plán pro všechny Proton služby</string>
   <string name="plans_fetching_general_error">Při načítání plánů došlo k chybě.</string>
   <string name="plans_free_name">Zdarma</string>
-  <string name="plan_price_monthly">per month*</string>
+  <string name="plan_price_monthly">za měsíc</string>
+  <string name="plan_price_annually">za měsíc*</string>
   <string name="plans_current_plan">Aktuální plán</string>
-  <string name="plans_upgrade_plan">Upgradovat plán</string>
+  <string name="plans_upgrade_plan">Přejít na vyšší tarif</string>
   <string name="plans_subscription">Předplatné</string>
-  <string name="plans_renewal_date">Váš plán se automaticky obnoví dne</string>
-  <string name="plans_billed_yearly">*Billed annually at %s</string>
-  <string name="plans_billed_anually">Billed annually</string>
+  <string name="plans_renewal_date">Váš plán se automaticky obnoví &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Váš plán vyprší &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_billed_yearly">*Účtováno ročně %s</string>
   <string name="plans_billed_monthly">Účtováno měsíčně</string>
-  <string name="plans_billed_every_2years">Billed every 2 years</string>
-  <string name="plans_save_20">Ušetřete 20% přechodem na roční fakturaci</string>
-  <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+  <string name="plans_billing_monthly">Na měsíc</string>
+  <string name="plans_billing_yearly">Na rok</string>
+  <string name="plans_billing_two_years">Na dva roky</string>
   <string name="plans_upgrade_your_plan">Přejít na vyšší tarif</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">0,5GB úložiště</string>
-  <string name="plans_feature_free_item_address">1 adresa</string>
-  <string name="plans_feature_free_item_calendar">1 calendar</string>
-  <string name="plans_feature_free_item_vpn">1 VPN připojení</string>
+  <string name="plans_proton_for_free">Získejte Proton zdarma</string>
+  <string name="plans_get_proton">Získejte %s</string>
+  <string name="plans_manage_your_subscription">Spravujte své předplatné na <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s z %s</string>
+  <string name="plans_manage_your_subscription_vpn">Spravujte své předplatné na <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">Z mobilní aplikace nelze upgradovat.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
-    <item quantity="one">#proton_storage# storage</item>
-    <item quantity="few">#proton_storage# storage</item>
-    <item quantity="many">#proton_storage# storage</item>
-    <item quantity="other">#proton_storage# storage</item>
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# úložiště</item>
+    <item quantity="few">#proton_storage# úložiště</item>
+    <item quantity="many">#proton_storage# úložiště</item>
+    <item quantity="other">#proton_storage# úložiště</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_storage# storage / user</item>
-    <item quantity="few">#proton_storage# storage / user</item>
-    <item quantity="many">#proton_storage# storage / user</item>
-    <item quantity="other">#proton_storage# storage / user</item>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# úložiště / uživatel</item>
+    <item quantity="few">#proton_storage# úložiště / uživatel</item>
+    <item quantity="many">#proton_storage# úložiště / uživatel</item>
+    <item quantity="other">#proton_storage# úložiště / uživatel</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address</item>
-    <item quantity="few">#proton_addresses# addresses</item>
-    <item quantity="many">#proton_addresses# addresses</item>
-    <item quantity="other">#proton_addresses# addresses</item>
+    <item quantity="one">#proton_addresses# adresa</item>
+    <item quantity="few">#proton_addresses# adresy</item>
+    <item quantity="many">#proton_addresses# adres</item>
+    <item quantity="other">#proton_addresses# adres</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address / user</item>
-    <item quantity="few">#proton_addresses# addresses / user</item>
-    <item quantity="many">#proton_addresses# addresses / user</item>
-    <item quantity="other">#proton_addresses# addresses / user</item>
+    <item quantity="one">#proton_addresses# adresa / uživatel</item>
+    <item quantity="few">#proton_addresses# adresy / uživatel</item>
+    <item quantity="many">#proton_addresses# adres / uživatel</item>
+    <item quantity="other">#proton_addresses# adres / uživatel</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d z #proton_addresses# adresy</item>
+    <item quantity="few">%d z #proton_addresses# adres</item>
+    <item quantity="many">%d z #proton_addresses# adres</item>
+    <item quantity="other">%d z #proton_addresses# adres</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# custom domain</item>
-    <item quantity="few">#proton_domains# custom domains</item>
-    <item quantity="many">#proton_domains# custom domains</item>
-    <item quantity="other">#proton_domains# custom domains</item>
+    <item quantity="one">#proton_domains# vlastní doména</item>
+    <item quantity="few">#proton_domains# vlastní domény</item>
+    <item quantity="many">#proton_domains# vlastních domén</item>
+    <item quantity="other">#proton_domains# vlastních domén</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# calendar</item>
-    <item quantity="few">#proton_calendars# calendars</item>
-    <item quantity="many">#proton_calendars# calendars</item>
-    <item quantity="other">#proton_calendars# calendars</item>
+    <item quantity="one">#proton_calendars# kalendář</item>
+    <item quantity="few">#proton_calendars# kalendáře</item>
+    <item quantity="many">#proton_calendars# kalendářů</item>
+    <item quantity="other">#proton_calendars# kalendářů</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d z #proton_calendars# kalendáře</item>
+    <item quantity="few">%d z #proton_calendars# kalendářů</item>
+    <item quantity="many">%d z #proton_calendars# kalendářů</item>
+    <item quantity="other">%d z #proton_calendars# kalendářů</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN connection</item>
-    <item quantity="few">#proton_vpn# VPN connections</item>
-    <item quantity="many">#proton_vpn# VPN connections</item>
-    <item quantity="other">#proton_vpn# VPN connections</item>
+    <item quantity="one">#proton_vpn# VPN připojení</item>
+    <item quantity="few">#proton_vpn# VPN připojení</item>
+    <item quantity="many">#proton_vpn# VPN připojení</item>
+    <item quantity="other">#proton_vpn# VPN připojení</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="few">#proton_vpn# high-speed VPN connections</item>
-    <item quantity="many">#proton_vpn# high-speed VPN connections</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# VPN vysokorychlostní připojení</item>
+    <item quantity="few">#proton_vpn# VPN vysokorychlostní připojení</item>
+    <item quantity="many">#proton_vpn# VPN vysokorychlostních připojení</item>
+    <item quantity="other">#proton_vpn# VPN vysokorychlostních připojení</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# user</item>
-    <item quantity="few">#proton_users# users</item>
-    <item quantity="many">#proton_users# users</item>
-    <item quantity="other">#proton_users# users</item>
+    <item quantity="one">#proton_users# uživatel</item>
+    <item quantity="few">#proton_users# uživatelé</item>
+    <item quantity="many">#proton_users# uživatelů</item>
+    <item quantity="other">#proton_users# uživatelů</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d z #proton_users# uživatelů</item>
+    <item quantity="few">%d z #proton_users# uživatelů</item>
+    <item quantity="many">%d z #proton_users# uživatelů</item>
+    <item quantity="other">%d z #proton_users# uživatelů</item>
   </plurals>
   <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>Základ pro soukromou a bezpečnou komunikaci.</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">Základ pro soukromou a bezpečnou komunikaci.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
-  <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
+  <string name="plan_id_plus_header">Plně vybavená e-mailová schránka s pokročilou ochranou.</string>
   <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
@@ -117,7 +142,7 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_high_speed">High speed</string>
+  <string name="plan_id_vpnbasic_high_speed">Vysoká rychlost</string>
   <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
     <item>string</item>
@@ -128,7 +153,7 @@
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string name="plan_id_vpnplus_highest_speed">Nejvyšší rychlost</string>
   <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
     <item>string</item>
@@ -139,7 +164,7 @@
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Multi-user support</string>
+  <string name="plan_id_professional_multiuser">Podpora pro více uživatelů</string>
   <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
@@ -166,7 +191,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Platit měsíčně</item>
-    <item>Pay annual (save up to 20%)</item>
-    <item>Pay every 2 years (save 33%)</item>
+    <item>Platit ročně</item>
+    <item>Platit každé 2 roky</item>
   </string-array>
 </resources>

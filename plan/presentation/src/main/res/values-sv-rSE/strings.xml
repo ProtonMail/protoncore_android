@@ -17,35 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Välj</string>
   <string name="plans_select_a_plan">Välj en plan</string>
-  <string name="plans_customizable_features">Besök <a href="https://protonmail.com/pricing">protonmail.com</a> för att uppgradera till Professional och Visionary-planer eller för att anpassa din plan.</string>
-  <string name="plans_customizable_features_web">Besök <a href="https://protonmail.com/pricing">protonmail.com</a> för att anpassa din plan.</string>
+  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">Ett fel uppstod när planerna skulle hämtas.</string>
   <string name="plans_free_name">Free</string>
-  <string name="plan_price_monthly">per månad*</string>
+  <string name="plan_price_monthly">per månad</string>
+  <string name="plan_price_annually">per månad*</string>
   <string name="plans_current_plan">Nuvarande plan</string>
-  <string name="plans_upgrade_plan">Uppgradera</string>
+  <string name="plans_upgrade_plan">Upgrade your plan</string>
   <string name="plans_subscription">Prenumeration</string>
-  <string name="plans_renewal_date">Din plan förnyas automatiskt den</string>
+  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Faktureras årligen med %s</string>
-  <string name="plans_billed_anually">Faktureras årligen</string>
   <string name="plans_billed_monthly">Faktureras månadsvis</string>
-  <string name="plans_billed_every_2years">Faktureras vartannat år</string>
-  <string name="plans_save_20">Spara 20% genom att byta till årlig fakturering</string>
-  <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+  <string name="plans_billing_monthly">För 1 månad</string>
+  <string name="plans_billing_yearly">För 1 år</string>
+  <string name="plans_billing_two_years">För 2 år</string>
   <string name="plans_upgrade_your_plan">Uppgradera ditt abonnemang</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">0.5 GB lagringsutrymme</string>
-  <string name="plans_feature_free_item_address">1 adress</string>
-  <string name="plans_feature_free_item_calendar">1 kalender</string>
-  <string name="plans_feature_free_item_vpn">1 VPN-anslutning</string>
+  <string name="plans_proton_for_free">Skaffa Proton gratis</string>
+  <string name="plans_get_proton">Skaffa %s</string>
+  <string name="plans_manage_your_subscription">Hantera din prenumeration på <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s av %s</string>
+  <string name="plans_manage_your_subscription_vpn">Hantera din prenumeration på <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">Du kan inte uppgradera från mobilappen.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
+  <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagringsutrymme</item>
     <item quantity="other">#proton_storage# lagringsutrymme</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagringsutrymme/användare</item>
     <item quantity="other">#proton_storage# lagringsutrymme/användare</item>
   </plurals>
@@ -57,6 +57,10 @@
     <item quantity="one">#proton_addresses# adress/användare</item>
     <item quantity="other">#proton_addresses# adresser/användare</item>
   </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d av #proton_addresses# adress</item>
+    <item quantity="other">%d av #proton_addresses# adresser</item>
+  </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">#proton_domains# anpassad domän</item>
     <item quantity="other">#proton_domains# anpassade domäner</item>
@@ -65,26 +69,43 @@
     <item quantity="one">#proton_calendars# kalender</item>
     <item quantity="other">#proton_calendars# kalendrar</item>
   </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d av #proton_calendars# kalender</item>
+    <item quantity="other">%d av #proton_calendars# kalendrar</item>
+  </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN-anslutning</item>
     <item quantity="other">#proton_vpn# VPN-anslutningar</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# VPN-anslutning med hög hastighet</item>
+    <item quantity="other">#proton_vpn# VPN-anslutningar med hög hastighet</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# användare</item>
     <item quantity="other">#proton_users# användare</item>
   </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d av #proton_users# användare</item>
+    <item quantity="other">%d av #proton_users# användare</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>Det grundläggande för privat och säker kommunikation.</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">Det grundläggande för privat och säker kommunikation.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
@@ -146,7 +167,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Betala månadsvis</item>
-    <item>Betala årligen (spara upp till 20 %)</item>
-    <item>Betala vartannat år (spara 33%)</item>
+    <item>Betala årligen</item>
+    <item>Betala vartannat år</item>
   </string-array>
 </resources>

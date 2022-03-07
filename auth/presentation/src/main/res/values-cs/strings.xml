@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Chraňte své soukromí pomocí ProtonMail</string>
   <string name="welcome_subtitle_mail">Šifrovaný e-mail, který udržuje Vaše konverzace soukromé. Vaše doručená pošta skutečně patří Vám.</string>
   <string name="welcome_title_drive">Chraňte své soukromí pomocí Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Pohodlí cloudového úložiště a bezpečnost šifrovací technologie. Konečně cloudové úložiště, kterému můžete důvěřovat.</string>
   <string name="welcome_title_calendar">Chraňte své soukromí pomocí Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Šifrovaný kalendář, který udržuje Vaše životní události v soukromí, v bezpečí a chráněné.</string>
   <string name="welcome_title_vpn">Chraňte své soukromí pomocí Proton VPN</string>
@@ -70,8 +70,7 @@
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
   <string name="auth_create_address_creating">Vytváření adresy</string>
-  <string name="auth_create_address_terms">Kliknutím vytvořte adresu, souhlasíte s Protonovými <a href="https://protonmail.com/terms-and-conditions"> podmínkami a náležitostmi.</a>
-  </string>
+  <string name="auth_create_address_terms">Kliknutím vytvořte adresu, souhlasíte s <a href="https://protonmail.com/terms-and-conditions">podmínkami a náležitostmi</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Pověřovací listiny by neměly být prázdné.</string>
   <string name="auth_create_address_error_no_available_domain">Žádná dostupná doména.</string>
   <string name="auth_create_address_error_private_key">Generování soukromého klíče se nezdařilo.</string>
@@ -87,7 +86,7 @@
   <string name="auth_user_check_one_free_error">Je povolen pouze jeden bezplatný Proton účet.</string>
   <string name="auth_user_check_delinquent_error">Váš účet je aktuálně pozastaven kvůli faktuře po splatnosti.</string>
   <string name="auth_user_check_delinquent_action">Zaplatit fakturu</string>
-  <string name="auth_account_not_found_error">Error with the account</string>
+  <string name="auth_account_not_found_error">Problém s účtem</string>
   <string name="auth_one_account_all_services">Jeden účet pro všechny Proton služby.</string>
   <string name="auth_create_account">Vytvořit účet</string>
   <!-- signup related strings -->
@@ -100,7 +99,9 @@
   <string name="auth_signup_choose_password">Vytvořte si heslo</string>
   <string name="auth_signup_repeat_password">Zopakovat heslo</string>
   <string name="auth_signup_recovery_method_title">Nastavit metodu obnovení (volitelné)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Nastavit metodu obnovení</string>
   <string name="auth_signup_recovery_method_subtitle">Pokud dojde k zablokování účtu, zašleme Vám pokyny k obnovení na tento e-mail nebo telefonní číslo.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Pokud dojde k zablokování účtu, zašleme Vám pokyny k obnovení na tento e-mail.</string>
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">Sekundární e-mail</string>
@@ -124,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s:</string>
   <string name="auth_signup_error_human_verification_failed">Ověření CAPTCHA se nezdařilo.</string>
   <string name="auth_signup_token_code_resent">Kód tokenu byl znovu odeslán.</string>
+  <string name="auth_signup_congratulations_subtitle">Váš účet Proton byl úspěšně vytvořen.\nUžívejte si svět soukromí.</string>
+  <string name="auth_signup_congratulations">Blahopřejeme!</string>
+  <string name="auth_signup_start_using_proton">Začněte používat Proton</string>
+  <string name="auth_signup_start_using_calendar">Začněte používat Proton kalendář</string>
+  <string name="auth_signup_start_using_mail">Začněte používat Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Začněte používat Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Začněte používat Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Cíl obnovení je neplatný.</string>
 </resources>

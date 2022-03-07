@@ -22,14 +22,14 @@
   <string name="welcome_title_mail">Protect your privacy with ProtonMail</string>
   <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
   <string name="welcome_title_drive">Protect your privacy with Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_title_calendar">Protect your privacy with Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
   <string name="auth_password_label">Lykilorð</string>
   <string name="auth_password_help">Password must contain at least 8 characters</string>
-  <string name="auth_current_login_password">Current login Password</string>
+  <string name="auth_current_login_password">Current login password</string>
   <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
   <string name="auth_second_factor_code">Two-Factor code</string>
   <string name="auth_email_username">Tölvupóstfang eða notandanafn</string>
@@ -70,9 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
   <string name="auth_create_address_create">Búa til vistfang</string>
   <string name="auth_create_address_creating">Creating address</string>
-  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
-    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
-  </string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">No available domain.</string>
   <string name="auth_create_address_error_private_key">Generating private key failed.</string>
@@ -101,7 +99,9 @@
   <string name="auth_signup_choose_password">Create your password</string>
   <string name="auth_signup_repeat_password">Endurtaka lykilorð</string>
   <string name="auth_signup_recovery_method_title">Set recovery method (optional)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Set recovery method</string>
   <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
   <string name="auth_signup_recovery_method_email">Tölvupóstur</string>
   <string name="auth_signup_recovery_method_phone">Sími</string>
   <string name="auth_signup_recovery_method_email_hint">Endurheimtupóstur</string>
@@ -125,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Enter the verification code that was sent to %s:</string>
   <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
   <string name="auth_signup_token_code_resent">Token code resent.</string>
+  <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
+  <string name="auth_signup_congratulations">Congratulations!</string>
+  <string name="auth_signup_start_using_proton">Start using Proton</string>
+  <string name="auth_signup_start_using_calendar">Start using Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Start using Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Start using Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Start using Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
 </resources>

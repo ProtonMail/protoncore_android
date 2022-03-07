@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Обеспечьте конфиденциальность ваших данных с ProtonMail</string>
   <string name="welcome_subtitle_mail">Шифрование почты позволяет сохранить вашу переписку в тайне. Ваша почта по-настоящему ваша.</string>
   <string name="welcome_title_drive">Обеспечьте конфиденциальность ваших данных с Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Удобство облачного хранилища и безопасность технологии шифрования. Наконец-то появилось облачное хранилище, которому можно доверять.</string>
   <string name="welcome_title_calendar">Обеспечьте конфиденциальность ваших данных с Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Шифрование календаря позволяет сохранить ваши события вне досягаемости и безопасности.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
@@ -70,9 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Ваш электронный адрес для восстановления доступов:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создаем адрес</string>
-  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
-    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
-  </string>
+  <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\" вы соглашаетесь с <a href="https://protonmail.com/terms-and-conditions">Условиями</a> компании Proton</string>
   <string name="auth_create_address_error_credentials">Значения учетных данных не должны быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать секретный ключ.</string>
@@ -101,7 +99,9 @@
   <string name="auth_signup_choose_password">Создайте пароль</string>
   <string name="auth_signup_repeat_password">Повторите пароль</string>
   <string name="auth_signup_recovery_method_title">Задать метод для аварийного восстановления (по желанию)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Установите метод восстановления</string>
   <string name="auth_signup_recovery_method_subtitle">Мы отправим инструкции для аварийного восстановления доступа на эту почту или телефон, если по каким-то причинам вы не сможете получить доступ к вашей учетной записи.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Мы вышлем инструкции по восстановлению на этот адрес электронной почты, если ваш аккаунт будет заблокирован.</string>
   <string name="auth_signup_recovery_method_email">Эл. почта</string>
   <string name="auth_signup_recovery_method_phone">Телефон</string>
   <string name="auth_signup_recovery_method_email_hint">Резервный адрес электронной почты</string>
@@ -125,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Введите код подтверждения, отправленный на $%s:</string>
   <string name="auth_signup_error_human_verification_failed">Проверка пользователя не удалась.</string>
   <string name="auth_signup_token_code_resent">Токен выслан повторно.</string>
+  <string name="auth_signup_congratulations_subtitle">Ваш аккаунт в Proton был успешно создан. \пОткройте для себя мир конфиденциальности.</string>
+  <string name="auth_signup_congratulations">Поздравляем!</string>
+  <string name="auth_signup_start_using_proton">Начать использовать Proton</string>
+  <string name="auth_signup_start_using_calendar">Начать использовать Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Начать использовать Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Начать использовать Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Начать использовать Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Неверные данные в методе для восстановления доступа.</string>
 </resources>

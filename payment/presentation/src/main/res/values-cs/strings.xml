@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Zvolte způsob platby</string>
   <string name="payments_add_credit_debit_card">Přidat novou kreditní/debetní kartu</string>
-  <string name="payments_billing_monthly">Účtováno měsíčně</string>
-  <string name="payments_billing_yearly">Účtováno ročně</string>
-  <string name="payments_billing_two_years">Účtováno každé dva roky</string>
-  <string name="payments_pay">Zaplatit</string>
+  <string name="payments_billing_monthly">Na měsíc</string>
+  <string name="payments_billing_yearly">Na rok</string>
+  <string name="payments_billing_two_years">Na dva roky</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Zaplatit %s</string>
   <string name="payments_method_icon">Ikona platební metody.</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -49,7 +49,7 @@
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Země</string>
   <string name="payments_paying_in_process">Platba</string>
-  <string name="payments_choose_country">Zvolte zemi</string>
+  <string name="payments_choose_country">Vyberte stát</string>
   <string name="payments_info_not_available">není k dispozici</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>

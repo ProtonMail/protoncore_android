@@ -22,14 +22,14 @@
   <string name="welcome_title_mail">Lindungi privasi Anda dengan ProtonMail</string>
   <string name="welcome_subtitle_mail">Email terenkripsi yang menjaga percakapan Anda tetap privat. Kotak masuk Anda adalah milik Anda.</string>
   <string name="welcome_title_drive">Lindungi privasi Anda dengan Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_title_calendar">Lindungi privasi Anda dengan Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga hidup Anda tetap privat, aman, dan terkunci rapat.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="auth_password_label">Kata Sandi</string>
   <string name="auth_password_help">Kata sandi minimal memiliki 8 karakter</string>
-  <string name="auth_current_login_password">Kata sandi masuk saat ini</string>
+  <string name="auth_current_login_password">Kata sandi saat ini</string>
   <string name="auth_enter_six_digit_code">Masukkan kode 6 digit</string>
   <string name="auth_second_factor_code">Kode Dua Faktor</string>
   <string name="auth_email_username">Surel atau nama pengguna</string>
@@ -70,9 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>
-  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
-    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
-  </string>
+  <string name="auth_create_address_terms">Dengan mengklik Buat alamat, Anda menyetujui <a href="https://protonmail.com/terms-and-conditions">Syarat dan Ketentuan</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
   <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>
@@ -101,7 +99,9 @@
   <string name="auth_signup_choose_password">Buat kata sandi Anda</string>
   <string name="auth_signup_repeat_password">Ulangi kata sandi</string>
   <string name="auth_signup_recovery_method_title">Atur metode pemulihan (opsional)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Atur metode pemulihan</string>
   <string name="auth_signup_recovery_method_subtitle">Kami akan mengirimkan instruksi pemulihan ke surel berikut atau nomor telepon jika Anda terkunci dari akun Anda.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Kami akan mengirimkan instruksi pemulihan ke email ini seandainya Anda terkunci dari akun Anda.</string>
   <string name="auth_signup_recovery_method_email">Surel</string>
   <string name="auth_signup_recovery_method_phone">Telepon</string>
   <string name="auth_signup_recovery_method_email_hint">Alamat email pemulihan</string>
@@ -125,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s:</string>
   <string name="auth_signup_error_human_verification_failed">Gagal melakukan verifikasi manusia.</string>
   <string name="auth_signup_token_code_resent">Kode token dikirim ulang.</string>
+  <string name="auth_signup_congratulations_subtitle">Akun Proton Anda berhasil dibuat. \nNikmati dunia yang mengedepankan privasi.</string>
+  <string name="auth_signup_congratulations">Selamat!</string>
+  <string name="auth_signup_start_using_proton">Mulai menggunakan Proton</string>
+  <string name="auth_signup_start_using_calendar">Mulai menggunakan Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Mulai menggunakan Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Mulai menggunakan Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Mulai menggunakan Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Destinasi pemulihan tidak valid.</string>
 </resources>

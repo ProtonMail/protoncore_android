@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Protégez votre vie privée avec ProtonMail</string>
   <string name="welcome_subtitle_mail">E-mails chiffrés qui préservent la confidentialité de vos conversations. Votre boîte de réception vous appartient vraiment.</string>
   <string name="welcome_title_drive">Protégez votre vie privée avec Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">La commodité du stockage sur le cloud et la sécurité de la technologie de chiffrement. Enfin une solution de stockage sur le cloud en laquelle vous pouvez avoir confiance.</string>
   <string name="welcome_title_calendar">Protégez votre vie privée avec Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendrier chiffré qui préserve la confidentialité et la sécurité des événements de votre vie.</string>
   <string name="welcome_title_vpn">Protégez votre vie privée avec ProtonVPN</string>
@@ -99,7 +99,9 @@
   <string name="auth_signup_choose_password">Créer votre mot de passe</string>
   <string name="auth_signup_repeat_password">Confirmez le mot de passe</string>
   <string name="auth_signup_recovery_method_title">Définir la méthode de récupération (facultatif)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Définir une méthode de récupération</string>
   <string name="auth_signup_recovery_method_subtitle">Nous vous enverrons les instructions de récupération à cette adresse électronique ou à ce numéro de téléphone si vous êtes bloqué avec votre compte.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Nous vous enverrons les instructions de récupération à cette adresse si vous êtes bloqué avec votre compte.</string>
   <string name="auth_signup_recovery_method_email">Adresse électronique</string>
   <string name="auth_signup_recovery_method_phone">Numéro de téléphone</string>
   <string name="auth_signup_recovery_method_email_hint">Adresse électronique de récupération</string>
@@ -123,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s :</string>
   <string name="auth_signup_error_human_verification_failed">La vérification humaine a échoué.</string>
   <string name="auth_signup_token_code_resent">Code jeton renvoyé.</string>
+  <string name="auth_signup_congratulations_subtitle">Votre compte Proton a été correctement créé.\nProfitez du monde de la confidentialité.</string>
+  <string name="auth_signup_congratulations">Félicitations !</string>
+  <string name="auth_signup_start_using_proton">Commencez à utiliser Proton</string>
+  <string name="auth_signup_start_using_calendar">Commencez à utiliser Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Commencez à utiliser Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Commencez à utiliser Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Commencez à utiliser Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">La destination de récupération n\'est pas valide.</string>
 </resources>

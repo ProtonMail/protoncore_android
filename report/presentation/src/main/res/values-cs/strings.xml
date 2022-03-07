@@ -17,29 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Report an issue</string>
+  <string name="core_report_bug_activity_title">Nahlásit problém</string>
   <string name="core_report_bug_close">Zavřít</string>
   <string name="core_report_bug_subject_field_hint">Předmět</string>
-  <string name="core_report_bug_subject_field_required">Enter a subject</string>
-  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_subject_field_required">Zadejte předmět</string>
+  <string name="core_report_bug_description_field_hint">Co se pokazilo? Minimálně 10 znaků</string>
+  <string name="core_report_bug_description_field_placeholder">Popište problém co nejpodrobněji. Pokud se objevila chybová zpráva, uveďte, co v ní bylo napsáno.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Enter at least %d character</item>
-    <item quantity="few">Enter at least %d characters</item>
-    <item quantity="many">Enter at least %d characters</item>
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="one">Zadejte alespoň %d znak</item>
+    <item quantity="few">Zadejte alespoň %d znaky</item>
+    <item quantity="many">Zadejte alespoň %d znaků</item>
+    <item quantity="other">Zadejte alespoň %d znaků</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
+  <string name="core_report_bug_discard_changes_title">Zavřít hlášení o chybě?</string>
+  <string name="core_report_bug_discard_changes_description">Pokud opustíte tuto stránku, vaše zpráva nebude uložena.</string>
   <string name="core_report_bug_discard_changes_cancel">Pokračovat v psaní</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_confirm">Zavřít bez uložení</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="few">Maximum %d characters</item>
-    <item quantity="many">Maximum %d characters</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">Maximálně %d znak</item>
+    <item quantity="few">Maximálně %d znaky</item>
+    <item quantity="many">Maximálně %d znaků</item>
+    <item quantity="other">Maximálně %d znaků</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
-  <string name="core_report_bug_send">Send report</string>
+  <string name="core_report_bug_general_error">Něco se pokazilo. Prosím zkuste to znovu za několik minut.</string>
+  <string name="core_report_bug_send">Odeslat hlášení</string>
   <string name="core_report_bug_success">Děkujeme za Vaši zprávu</string>
 </resources>

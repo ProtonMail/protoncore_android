@@ -17,19 +17,19 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">Proteja a sua privacidade com uma Proton</string>
+  <string name="welcome_title">Proteja a sua privacidade com Proton</string>
   <string name="welcome_subtitle">Criptografia mantém seus dados privados. Seus dados pertencem a você.</string>
   <string name="welcome_title_mail">Proteja sua privacidade com ProtonMail</string>
   <string name="welcome_subtitle_mail">E-mail criptografado que mantém suas conversas privadas. Sua caixa de mensagens pertence a você.</string>
   <string name="welcome_title_drive">Proteja sua privacidade com Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_title_calendar">Proteja sua privacidade com Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendário criptografado que mantém seus eventos particulares privados e a salvo.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">VPN suiça de alta velocidade que protege sua privacidade criptografando sua conexão à internet.</string>
   <string name="auth_password_label">Senha</string>
   <string name="auth_password_help">A senha deve conter ao menos 8 caracteres</string>
-  <string name="auth_current_login_password">Senha de login atual</string>
+  <string name="auth_current_login_password">Senha de acesso atual</string>
   <string name="auth_enter_six_digit_code">Insira o código de 6 dígitos</string>
   <string name="auth_second_factor_code">Código de autenticação em dois fatores</string>
   <string name="auth_email_username">E-mail ou nome de usuário</string>
@@ -45,13 +45,13 @@
   <string name="auth_help_other">Ainda precisa de ajuda? Contate-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Suporte ao cliente</string>
   <string name="auth_2fa_title">Autenticação de dois fatores</string>
-  <string name="auth_2fa_label">Código de autenticação em dois fatores</string>
+  <string name="auth_2fa_label">Código de dois fatores</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperação</string>
   <string name="auth_2fa_assistive_text">Insira o código de 6 dígitos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Insira um código de recuperação de 8 caracteres.</string>
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Usar código de recuperação</string>
-  <string name="auth_2fa_use_2fa_code">Usar código de autenticação de dois fatores</string>
+  <string name="auth_2fa_use_2fa_code">Usar código de dois fatores</string>
   <string name="auth_2fa_error_empty_code">Código de autenticação de dois fatores não deveria ser vazio</string>
   <string name="auth_mailbox_title">Desbloqueie sua caixa de correio</string>
   <string name="auth_mailbox_password_label">Senha da caixa de correio</string>
@@ -70,9 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Seu endereço de e-mail de recuperação é:</string>
   <string name="auth_create_address_create">Criar endereço</string>
   <string name="auth_create_address_creating">Criando endereço</string>
-  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
-    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
-  </string>
+  <string name="auth_create_address_terms">Ao clicar em Criar endereço, você concorda com <a href="https://protonmail.com/terms-and-conditions">Termos e Condições</a> da Proton</string>
   <string name="auth_create_address_error_credentials">Credenciais não deveriam ser vazias.</string>
   <string name="auth_create_address_error_no_available_domain">Sem domínios disponíveis.</string>
   <string name="auth_create_address_error_private_key">A geração da chave privada falhou.</string>
@@ -101,7 +99,9 @@
   <string name="auth_signup_choose_password">Crie sua senha</string>
   <string name="auth_signup_repeat_password">Repita a senha</string>
   <string name="auth_signup_recovery_method_title">Defina o método de recuperação (opcional)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Definir o método de recuperação</string>
   <string name="auth_signup_recovery_method_subtitle">Enviaremos instruções de recuperação para este e-mail ou telefone se você tiver seu acesso a sua conta bloqueado.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Enviaremos instruções de recuperação para este e-mail se você tiver seu acesso a sua conta bloqueado.</string>
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Telefone</string>
   <string name="auth_signup_recovery_method_email_hint">E-mail de recuperação</string>
@@ -125,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Digite o código de verificação que foi enviado para $%s:</string>
   <string name="auth_signup_error_human_verification_failed">Verificação humana falhou.</string>
   <string name="auth_signup_token_code_resent">Código token reenviado.</string>
+  <string name="auth_signup_congratulations_subtitle">Sua conta da Proton foi criada com sucesso.\nAproveite o mundo da privacidade.</string>
+  <string name="auth_signup_congratulations">Parabéns!</string>
+  <string name="auth_signup_start_using_proton">Iniciar usando o Proton</string>
+  <string name="auth_signup_start_using_calendar">Iniciar usando Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Iniciar usando o Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Iniciar usando o Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Iniciar usando o Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Destino de recuperação é inválido.</string>
 </resources>

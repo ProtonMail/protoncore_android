@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Beskyt dit privatliv med ProtonMail</string>
   <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke tilhører virkelig dig.</string>
   <string name="welcome_title_drive">Beskyt dit privatliv med Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_title_calendar">Beskyt dit privatliv med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypteret kalender, der holder dine livsbegivenheder private, sikre og trygge.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
@@ -70,8 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Din e-mailadresse til gendannelse er:</string>
   <string name="auth_create_address_create">Opret adresse</string>
   <string name="auth_create_address_creating">Opretter adresse</string>
-  <string name="auth_create_address_terms">Ved at klikke på Opret adresse, accepterer du Proton\'s <a href="https://protonmail.com/terms-and-conditions">Vilkår og Betingelser.</a>
-  </string>
+  <string name="auth_create_address_terms">Ved at klikke på Opret adresse, accepterer du Proton\'s <a href="https://protonmail.com/terms-and-conditions">Vilkår og Betingelser.</a></string>
   <string name="auth_create_address_error_credentials">Brugeroplysninger må ikke stå tomt.</string>
   <string name="auth_create_address_error_no_available_domain">Intet tilgængeligt domæne.</string>
   <string name="auth_create_address_error_private_key">Generering af privat nøgle mislykkedes.</string>
@@ -100,7 +99,9 @@
   <string name="auth_signup_choose_password">Opret din adgangskode</string>
   <string name="auth_signup_repeat_password">Gentag adgangskode</string>
   <string name="auth_signup_recovery_method_title">Indstil gendannelsesmetode (valgfrit)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Indstil gendannelsesmetode</string>
   <string name="auth_signup_recovery_method_subtitle">Vi vil sende gendannelsesinstruktioner til denne e-mail eller telefonnummer, hvis du bliver låst ude af din konto.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Vi vil sende gendannelsesinstruktioner til denne e-mail, hvis du bliver låst ude af din konto.</string>
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">E-mail til gendannelse</string>
@@ -124,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Indtast den bekræftelseskode, der blev sendt til %s:</string>
   <string name="auth_signup_error_human_verification_failed">Menneskelig verifikation mislykkedes.</string>
   <string name="auth_signup_token_code_resent">Token-kode gensendt.</string>
+  <string name="auth_signup_congratulations_subtitle">Din Proton-konto blev oprettet.\nNyd en verden med privatliv.</string>
+  <string name="auth_signup_congratulations">Tillykke!</string>
+  <string name="auth_signup_start_using_proton">Begynd at bruge Proton</string>
+  <string name="auth_signup_start_using_calendar">Begynd at bruge Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Begynd at bruge Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Begynd at bruge Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Begynd at bruge Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Gendannelsesdestination er ugyldig.</string>
 </resources>

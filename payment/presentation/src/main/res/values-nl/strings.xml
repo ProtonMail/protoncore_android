@@ -29,12 +29,12 @@
   <string name="payments_error_invalid_session">Ongeldige sessie.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Kies uw betaalwijze</string>
+  <string name="payments_choose_payment_method">Kies uw betaalmethode</string>
   <string name="payments_add_credit_debit_card">Nieuwe krediet/debietkaart toevoegen</string>
-  <string name="payments_billing_monthly">Maandelijks gefactureerd</string>
-  <string name="payments_billing_yearly">Jaarlijks gefactureerd</string>
-  <string name="payments_billing_two_years">Om de twee jaar gefactureerd</string>
-  <string name="payments_pay">Betalen</string>
+  <string name="payments_billing_monthly">Voor 1 maand</string>
+  <string name="payments_billing_yearly">Voor 1 jaar</string>
+  <string name="payments_billing_two_years">Voor 2 jaar</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Betaal %s</string>
   <string name="payments_method_icon">Pictogram betaalmethode.</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -43,13 +43,13 @@
   <string name="payments_card_number">Creditcardnummer</string>
   <string name="payments_expiration_date">Vervaldatum</string>
   <string name="payments_security_code">Beveiligingscode</string>
-  <string name="payments_postal_code">ZIP</string>
+  <string name="payments_postal_code">Postcode</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">MM/JJ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
   <string name="payments_paying_in_process">Betalen</string>
-  <string name="payments_choose_country">Kies uw land</string>
+  <string name="payments_choose_country">Selecteer land</string>
   <string name="payments_info_not_available">n.v.t.</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
