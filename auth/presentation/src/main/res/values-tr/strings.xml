@@ -22,10 +22,10 @@
   <string name="welcome_title_mail">ProtonMail ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_mail">Görüşmelerinizi gizli tutan şifrelenmiş e-posta. Gelen kutunuz tamamıyla size ait.</string>
   <string name="welcome_title_drive">Proton Drive ile kişisel gizliliğinizi koruyun</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Bulut depolamanın rahatlığı ve şifreleme teknolojisinin güvenliği. Sonunda güvenebileceğiniz bir bulut depolama çözümü var.</string>
   <string name="welcome_title_calendar">Proton Calendar ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">ProtonVPN ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
   <string name="auth_password_label">Parola</string>
   <string name="auth_password_help">Parola en az 8 karakter uzunluğunda olmalıdır</string>
@@ -33,7 +33,7 @@
   <string name="auth_enter_six_digit_code">6 rakamlı kodu yazın</string>
   <string name="auth_second_factor_code">İki aşamalı kimlik doğrulama kodu</string>
   <string name="auth_email_username">E-posta ya da kullanıcı adı</string>
-  <string name="auth_account_details">Proton hesabınızın ayrıntılarını yazın.</string>
+  <string name="auth_account_details">Proton hesabınızın bilgilerini yazın.</string>
   <string name="auth_sign_in">Oturum aç</string>
   <string name="auth_sign_in_action">Oturum aç</string>
   <string name="auth_need_help">Yardım gerekiyor mu?</string>
@@ -99,11 +99,13 @@
   <string name="auth_signup_choose_password">Parolanızı oluşturun</string>
   <string name="auth_signup_repeat_password">Parola onayı</string>
   <string name="auth_signup_recovery_method_title">Kurtarma yöntemini ayarla (isteğe bağlı)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Kurtarma yöntemini ayarla</string>
   <string name="auth_signup_recovery_method_subtitle">Hesabınızda oturum açamadığınızda, kurtarma yönergelerini bu e-posta ya da telefon numarasına göndereceğiz.</string>
-  <string name="auth_signup_recovery_method_email">E-posta</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Hesabınıza oturum açamadığınızda, kurtarma yönergelerini bu e-posta adresine göndereceğiz.</string>
+  <string name="auth_signup_recovery_method_email">E-posta adresi</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
-  <string name="auth_signup_recovery_method_email_hint">Kurtarma e-postası</string>
-  <string name="auth_signup_recovery_method_phone_hint">Kurtarma telefon numarası</string>
+  <string name="auth_signup_recovery_method_email_hint">Kurtarma e-posta adresi</string>
+  <string name="auth_signup_recovery_method_phone_hint">Kurtarma telefonu numarası</string>
   <string name="auth_signup_terms_conditions">Hüküm ve Koşullar</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Sonraki üzerine tıkladığınızda Proton <annotation link="terms">Hüküm ve Koşulları</annotation> metnini kabul etmiş olursunuz.</string>
   <string name="auth_signup_skip_recovery_title">Kurtarma yöntemi atlansın mı?</string>
@@ -123,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın:</string>
   <string name="auth_signup_error_human_verification_failed">Kişinin gerçekliği doğrulanamadı.</string>
   <string name="auth_signup_token_code_resent">Kod yeniden gönderildi.</string>
+  <string name="auth_signup_congratulations_subtitle">Proton hesabınız açıldı.\nKişisel gizlilik dünyasının tadını çıkarın.</string>
+  <string name="auth_signup_congratulations">Tebrikler!</string>
+  <string name="auth_signup_start_using_proton">Proton kullanmaya başlayın</string>
+  <string name="auth_signup_start_using_calendar">Proton Calendar kullanmaya başlayın</string>
+  <string name="auth_signup_start_using_mail">Proton Mail kullanmaya başlayın</string>
+  <string name="auth_signup_start_using_drive">Proton Drive kullanmaya başlayın</string>
+  <string name="auth_signup_start_using_vpn">Proton VPN kullanmaya başlayın</string>
   <string name="auth_signup_error_validation_recovery_destination">Kurtarma hedefi geçersiz.</string>
 </resources>

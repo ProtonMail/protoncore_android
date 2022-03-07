@@ -41,4 +41,6 @@
   <string name="presentation_skip">Overslaan</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Kon geen verbinding maken met de server.</string>
+  <string name="presentation_check_your_connection">Controleer uw verbinding</string>
+  <string name="presentation_connectivity_issues">Verbindingsproblemen</string>
 </resources>

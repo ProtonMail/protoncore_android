@@ -41,4 +41,6 @@
   <string name="presentation_skip">Пропустити</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Не вдалося під\'єднатися до сервера.</string>
+  <string name="presentation_check_your_connection">Перевірте з\'єднання</string>
+  <string name="presentation_connectivity_issues">Проблеми зі з\'єднанням</string>
 </resources>

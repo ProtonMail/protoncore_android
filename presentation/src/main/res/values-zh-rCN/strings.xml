@@ -32,7 +32,7 @@
   <string name="presentation_alert_cancel">取消</string>
   <string name="presentation_alert_submit">提交</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report an issue</string>
+  <string name="presentation_menu_item_title_report_a_bug">反馈问题</string>
   <string name="presentation_menu_item_title_settings">设置</string>
   <string name="presentation_menu_item_title_subscription">账户等级</string>
   <string name="presentation_menu_item_title_sign_out">退出账户</string>
@@ -40,5 +40,7 @@
   <string name="presentation_close">关闭</string>
   <string name="presentation_skip">跳过</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Could not connect to server.</string>
+  <string name="presentation_general_connection_error">无法连接服务器。</string>
+  <string name="presentation_check_your_connection">Check your connection</string>
+  <string name="presentation_connectivity_issues">Connectivity issues</string>
 </resources>

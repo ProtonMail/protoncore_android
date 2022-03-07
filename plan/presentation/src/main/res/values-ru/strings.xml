@@ -17,41 +17,37 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Выбрать</string>
   <string name="plans_select_a_plan">Выберите тариф</string>
-  <string name="plans_customizable_features">    Visit  to upgrade to Professional and Visionary plans, or to customize your plan.
-    <a href="https://protonmail.com/pricing">protonmail.com</a>
-  </string>
-  <string name="plans_customizable_features_web">    Visit  to customize your plan.
-    <a href="https://protonmail.com/pricing">protonmail.com</a>
-  </string>
+  <string name="plans_select_a_plan_subtitle">Один аккаунт для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
   <string name="plans_free_name">Бесплатный</string>
-  <string name="plan_price_monthly">в месяц*</string>
+  <string name="plan_price_monthly">в месяц</string>
+  <string name="plan_price_annually">в месяц*</string>
   <string name="plans_current_plan">Текущий тариф</string>
-  <string name="plans_upgrade_plan">Улучшить план</string>
+  <string name="plans_upgrade_plan">Улучшить тариф</string>
   <string name="plans_subscription">Подписка</string>
-  <string name="plans_renewal_date">Ваш тариф автоматически обновится</string>
+  <string name="plans_renewal_date">Ваш тариф будет автоматически продлен &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Срок действия вашего тарифа истекает &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Ежегодная оплата %s</string>
-  <string name="plans_billed_anually">Ежегодная оплата</string>
   <string name="plans_billed_monthly">Ежемесячная оплата</string>
-  <string name="plans_billed_every_2years">Оплата каждые 2 года</string>
-  <string name="plans_save_20">Сэкономьте 20%, переключившись на ежегодную оплату</string>
-  <string name="plans_renew_info">Автоматическое продление. Можно отменить или изменить тариф в любой момент.</string>
+  <string name="plans_billing_monthly">За 1 месяц</string>
+  <string name="plans_billing_yearly">За 1 год</string>
+  <string name="plans_billing_two_years">За 2 года</string>
   <string name="plans_upgrade_your_plan">Улучшить план</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">0.5 Гб хранилища</string>
-  <string name="plans_feature_free_item_address">1 адрес</string>
-  <string name="plans_feature_free_item_calendar">1 календарь</string>
-  <string name="plans_feature_free_item_vpn">1 подключение VPN</string>
+  <string name="plans_proton_for_free">Получить Proton бесплатно</string>
+  <string name="plans_get_proton">Получить %s</string>
+  <string name="plans_manage_your_subscription">Управляйте своей подпиской по ссылке: <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s из %s</string>
+  <string name="plans_manage_your_subscription_vpn">Управляйте своей подпиской по ссылке: <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">Обновление через мобильное приложение невозможно.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
+  <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# хранилища</item>
     <item quantity="few">#proton_storage# хранилищ</item>
     <item quantity="many">#proton_storage# хранилищ</item>
     <item quantity="other">#proton_storage# хранилищ</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# хранилище на пользователя</item>
     <item quantity="few">#proton_storage# хранилища на пользователя</item>
     <item quantity="many">#proton_storage# хранилищ на пользователя</item>
@@ -69,6 +65,12 @@
     <item quantity="many">#proton_addresses# адресов</item>
     <item quantity="other">#proton_addresses# адреса</item>
   </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d из #proton_addresses# адреса</item>
+    <item quantity="few">%d из #proton_addresses# адресов</item>
+    <item quantity="many">%d из #proton_addresses# адресов</item>
+    <item quantity="other">%d из #proton_addresses# адресов</item>
+  </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">#proton_domains# свой домен</item>
     <item quantity="few">#proton_domains# своих домена</item>
@@ -80,6 +82,12 @@
     <item quantity="few">#proton_calendars# календаря</item>
     <item quantity="many">#proton_calendars# календарей</item>
     <item quantity="other">#proton_calendars# календаря</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d из #proton_calendars# календаря</item>
+    <item quantity="few">%d из #proton_calendars# календарей</item>
+    <item quantity="many">%d из #proton_calendars# календарей</item>
+    <item quantity="other">%d из #proton_calendars# календарей</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# подключение VPN</item>
@@ -99,14 +107,29 @@
     <item quantity="many">#proton_users# пользователей</item>
     <item quantity="other">#proton_users# пользователя</item>
   </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d из #proton_users# пользователя</item>
+    <item quantity="few">%d из #proton_users# пользователей</item>
+    <item quantity="many">%d из #proton_users# пользователей</item>
+    <item quantity="other">%d из #proton_users# пользователей</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>Базовые функции для обеспечения конфиденциальности коммуникаций.</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">Основа для конфиденциальных и безопасных коммуникаций.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
@@ -168,7 +191,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Ежемесячный платёж</item>
-    <item>Ежегодный платеж (экономия до 20%)</item>
-    <item>Платеж раз в 2 года (экономия 33%)</item>
+    <item>Платите раз в год</item>
+    <item>Платите каждые 2 года</item>
   </string-array>
 </resources>

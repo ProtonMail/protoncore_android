@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Escolha seu método de pagamento</string>
   <string name="payments_add_credit_debit_card">Adicionar um novo cartão de crédito/débito</string>
-  <string name="payments_billing_monthly">Faturado mensalmente</string>
-  <string name="payments_billing_yearly">Faturado anualmente</string>
-  <string name="payments_billing_two_years">Faturado a cada 2 anos</string>
-  <string name="payments_pay">Pagar</string>
+  <string name="payments_billing_monthly">Por 1 mês</string>
+  <string name="payments_billing_yearly">Por 1 ano</string>
+  <string name="payments_billing_two_years">Por 2 anos</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Pagar %s</string>
   <string name="payments_method_icon">Ícone do método de pagamento.</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -49,7 +49,7 @@
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">País</string>
   <string name="payments_paying_in_process">Pagando</string>
-  <string name="payments_choose_country">Escolha o país</string>
+  <string name="payments_choose_country">Selecione o país</string>
   <string name="payments_info_not_available">n/a</string>
   <string name="payment_cc_list_item">%1$s - %2$s (validade %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>

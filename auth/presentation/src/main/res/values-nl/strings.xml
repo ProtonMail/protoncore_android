@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Bescherm uw privacy met ProtonMail</string>
   <string name="welcome_subtitle_mail">Versleutelde e-mail die uw gesprekken privé houdt. Uw inbox is echt van u.</string>
   <string name="welcome_title_drive">Bescherm uw privacy met Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Het gemak van cloudopslag en de beveiliging van encryptietechnologie. Eindelijk een cloudopslagdienst die u kunt vertrouwen.</string>
   <string name="welcome_title_calendar">Bescherm uw privacy met Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Gecodeerde agenda die uw levensgebeurtenissen privé, veilig en beveiligd houdt.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
@@ -70,8 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Uw herstel e-mailadres is:</string>
   <string name="auth_create_address_create">Adres toevoegen</string>
   <string name="auth_create_address_creating">Adres aanmaken</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
-  </string>
+  <string name="auth_create_address_terms">Door op Volgende te klikken, gaat u akkoord met de <a href="https://protonmail.com/terms-and-conditions">Voorwaarden van Proton</a></string>
   <string name="auth_create_address_error_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_create_address_error_no_available_domain">Geen beschikbaar domein.</string>
   <string name="auth_create_address_error_private_key">Genereren van private sleutel mislukt.</string>
@@ -100,7 +99,9 @@
   <string name="auth_signup_choose_password">Maak uw wachtwoord</string>
   <string name="auth_signup_repeat_password">Wachtwoord herhalen</string>
   <string name="auth_signup_recovery_method_title">Herstelmethode instellen (optioneel)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Herstelmethode instellen</string>
   <string name="auth_signup_recovery_method_subtitle">Wij sturen herstelinstructies naar dit e-mailadres of telefoonnummer als u van uw account wordt afgesloten.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Wij sturen herstelinstructies naar dit e-mailadres als u van uw account wordt afgesloten.</string>
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Telefoonnummer</string>
   <string name="auth_signup_recovery_method_email_hint">Herstel-e-mailadres</string>
@@ -124,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Voer de verificatiecode in die is verzonden naar %s:</string>
   <string name="auth_signup_error_human_verification_failed">Persoonsverificatie is mislukt.</string>
   <string name="auth_signup_token_code_resent">Token code opnieuw verzonden.</string>
+  <string name="auth_signup_congratulations_subtitle">Uw Proton account is succesvol aangemaakt.\nGeniet van de wereld van privacy.</string>
+  <string name="auth_signup_congratulations">Gefeliciteerd!</string>
+  <string name="auth_signup_start_using_proton">Aan de slag met Proton</string>
+  <string name="auth_signup_start_using_calendar">Begin Proton Calendar te gebruiken</string>
+  <string name="auth_signup_start_using_mail">Begin Proton Mail te gebruiken</string>
+  <string name="auth_signup_start_using_drive">Begin Proton Drive te gebruiken</string>
+  <string name="auth_signup_start_using_vpn">Begin Proton VPN te gebruiken</string>
   <string name="auth_signup_error_validation_recovery_destination">Herstelbestemming is ongeldig.</string>
 </resources>

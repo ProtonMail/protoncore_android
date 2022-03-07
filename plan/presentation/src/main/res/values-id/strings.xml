@@ -17,38 +17,34 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Pilih</string>
   <string name="plans_select_a_plan">Pilih Paket</string>
-  <string name="plans_customizable_features">    Visit  to upgrade to Professional and Visionary plans, or to customize your plan.
-    <a href="https://protonmail.com/pricing">protonmail.com</a>
-  </string>
-  <string name="plans_customizable_features_web">    Visit  to customize your plan.
-    <a href="https://protonmail.com/pricing">protonmail.com</a>
-  </string>
+  <string name="plans_select_a_plan_subtitle">Satu paket untuk semua layanan Proton</string>
   <string name="plans_fetching_general_error">Terjadi galat mengambil paket.</string>
   <string name="plans_free_name">Gratis</string>
-  <string name="plan_price_monthly">per bulan*</string>
+  <string name="plan_price_monthly">per bulan</string>
+  <string name="plan_price_annually">per bulan*</string>
   <string name="plans_current_plan">Paket saat ini</string>
-  <string name="plans_upgrade_plan">Tingkatkan</string>
+  <string name="plans_upgrade_plan">Tingkatkan paket langganan Anda</string>
   <string name="plans_subscription">Langganan</string>
-  <string name="plans_renewal_date">Paket Anda akan diperbarui secara otomatis pada</string>
+  <string name="plans_renewal_date">Paket langganan Anda akan otomatis diperbarui pada &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Paket langganan Anda akan berakhir pada &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Ditagihkan per tahun seharga %s</string>
-  <string name="plans_billed_anually">Ditagihkan per tahun</string>
   <string name="plans_billed_monthly">Ditagih per bulan</string>
-  <string name="plans_billed_every_2years">Ditagih setiap 2 tahun</string>
-  <string name="plans_save_20">Hemat 20% dengan beralih ke pembayaran tahunan</string>
-  <string name="plans_renew_info">Memperbarui langganan secara otomatis. Batalkan atau ganti paket kapan saja.</string>
+  <string name="plans_billing_monthly">Untuk 1 bulan</string>
+  <string name="plans_billing_yearly">Untuk 1 tahun</string>
+  <string name="plans_billing_two_years">Untuk 2 tahun</string>
   <string name="plans_upgrade_your_plan">Tingkatkan rencana Anda</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">Penyimpanan 0.5 GB</string>
-  <string name="plans_feature_free_item_address">1 alamat</string>
-  <string name="plans_feature_free_item_calendar">1 kalender</string>
-  <string name="plans_feature_free_item_vpn">1 koneksi VPN</string>
+  <string name="plans_proton_for_free">Dapatkan Proton gratis</string>
+  <string name="plans_get_proton">Dapatkan %s</string>
+  <string name="plans_manage_your_subscription">Kelola langganan Anda di <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s dari %s</string>
+  <string name="plans_manage_your_subscription_vpn">Kelola langganan Anda di <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
+  <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# storage</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# storage / user</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
@@ -57,11 +53,17 @@
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# addresses / user</item>
   </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="other">%d dari #proton_addresses# address</item>
+  </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">#proton_domains# custom domains</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# calendars</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="other">%d dari #proton_calendars# calendar</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# VPN connections</item>
@@ -72,14 +74,26 @@
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="other">#proton_users# users</item>
   </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="other">%d dari #proton_users# user</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>Dasar untuk komunikasi aman dan pribadi.</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">Dasar-dasar komunikasi privat dan aman.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
@@ -141,7 +155,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Bayar bulanan</item>
-    <item>Bayar per tahun (hemat hingga 20%)</item>
-    <item>Bayar setiap 2 tahun (hemat 33%)</item>
+    <item>Bayar setiap tahun</item>
+    <item>Bayar setiap 2 tahun</item>
   </string-array>
 </resources>

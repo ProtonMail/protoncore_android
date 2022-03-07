@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Report an issue</string>
+  <string name="core_report_bug_activity_title">Rapportera ett problem</string>
   <string name="core_report_bug_close">Stäng</string>
   <string name="core_report_bug_subject_field_hint">Ämne</string>
-  <string name="core_report_bug_subject_field_required">Enter a subject</string>
-  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_subject_field_required">Ange ett ämne</string>
+  <string name="core_report_bug_description_field_hint">Vad gick fel? Minst 10 tecken</string>
+  <string name="core_report_bug_description_field_placeholder">Beskriv problemet så detaljerat du kan. Om det fanns ett felmeddelande, låt oss veta vad det stod.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Enter at least %d character</item>
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="one">Ange minst %d tecken</item>
+    <item quantity="other">Ange minst %d tecken</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
+  <string name="core_report_bug_discard_changes_title">Stäng felrapport?</string>
+  <string name="core_report_bug_discard_changes_description">Om du lämnar denna sida kommer din rapport inte att sparas.</string>
   <string name="core_report_bug_discard_changes_cancel">Fortsätt skriva</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_confirm">Stäng utan att spara</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">Maximalt %d tecken</item>
+    <item quantity="other">Maximalt %d tecken</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
-  <string name="core_report_bug_send">Send report</string>
+  <string name="core_report_bug_general_error">Något gick fel. Försök igen om några minuter.</string>
+  <string name="core_report_bug_send">Skicka rapport</string>
   <string name="core_report_bug_success">Tack för din rapport</string>
 </resources>

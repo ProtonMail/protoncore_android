@@ -22,8 +22,8 @@
   <string name="settings_recovery_email_current">Huidig herstel-e-mailadres</string>
   <string name="settings_recovery_email_new">Nieuwe Reset/Notificatie e-mail</string>
   <string name="settings_recovery_email_confirm">Bevestig Reset/Notificatie e-mail</string>
-  <string name="settings_recovery_email_new_hint">Emailadres invoeren</string>
-  <string name="settings_recovery_email_confirm_hint">Voer e-mail adres opnieuw in</string>
+  <string name="settings_recovery_email_new_hint">E-mailadres invoeren</string>
+  <string name="settings_recovery_email_confirm_hint">Voer e-mailadres opnieuw in</string>
   <string name="settings_save">Opslaan</string>
   <string name="settings_password_required">Voer uw wachtwoord in</string>
   <string name="settings_password_required_ok">OK</string>

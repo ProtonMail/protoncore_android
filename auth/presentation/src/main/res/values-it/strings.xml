@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Proteggi la tua privacy con ProtonMail</string>
   <string name="welcome_subtitle_mail">Email crittografata che mantiene private le tue conversazioni. La tua casella di posta ti appartiene davvero.</string>
   <string name="welcome_title_drive">Proteggi la tua privacy con Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">La comodità del cloud storage e la sicurezza della tecnologia di crittografia. Finalmente una soluzione di archiviazione cloud di cui ti puoi fidare.</string>
   <string name="welcome_title_calendar">Proteggi la tua privacy con Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene i tuoi eventi della vita privati, protetti e protetti.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
@@ -70,8 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Il tuo indirizzo email di recupero è:</string>
   <string name="auth_create_address_create">Crea indirizzo</string>
   <string name="auth_create_address_creating">Creazione indirizzo</string>
-  <string name="auth_create_address_terms">Facendo clic su Crea indirizzo, accetti i <a href="https://protonmail.com/terms-and-conditions">Termini e condizioni di Proton. </a>
-  </string>
+  <string name="auth_create_address_terms">Facendo clic su Crea indirizzo, accetti i <a href="https://protonmail.com/terms-and-conditions">Termini e condizioni di Proton. </a></string>
   <string name="auth_create_address_error_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_create_address_error_no_available_domain">Nessun dominio disponibile.</string>
   <string name="auth_create_address_error_private_key">Generazione della chiave privata non riuscita.</string>
@@ -100,7 +99,9 @@
   <string name="auth_signup_choose_password">Crea la tua password</string>
   <string name="auth_signup_repeat_password">Ripeti la password</string>
   <string name="auth_signup_recovery_method_title">Imposta metodo di recupero (opzionale)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Impostare metodo di recupero</string>
   <string name="auth_signup_recovery_method_subtitle">Invieremo le istruzioni per il recupero a questo numero di telefono o email se non riesci ad accedere al tuo account.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Invieremo le istruzioni per il recupero a questa email se non riesci ad accedere al tuo account.</string>
   <string name="auth_signup_recovery_method_email">Email</string>
   <string name="auth_signup_recovery_method_phone">Telefono</string>
   <string name="auth_signup_recovery_method_email_hint">Email di recupero</string>
@@ -124,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Inserisci il codice di verifica inviato a %s:</string>
   <string name="auth_signup_error_human_verification_failed">Verifica umana fallita.</string>
   <string name="auth_signup_token_code_resent">Codice token reinviato.</string>
+  <string name="auth_signup_congratulations_subtitle">Il tuo account Proton è stato creato con successo.\nGoditi il ​​mondo della privacy.</string>
+  <string name="auth_signup_congratulations">Congratulazioni!</string>
+  <string name="auth_signup_start_using_proton">Inizia a usare Proton</string>
+  <string name="auth_signup_start_using_calendar">Inizia a usare Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Inizia a usare Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Inizia a usare Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Inizia a utilizzare Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">La destinazione di ripristino non è valida.</string>
 </resources>

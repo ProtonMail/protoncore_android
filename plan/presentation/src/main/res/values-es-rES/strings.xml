@@ -17,35 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Seleccionar</string>
   <string name="plans_select_a_plan">Selecciona un plan</string>
-  <string name="plans_customizable_features">Visita <a href="https://protonmail.com/pricing">protonmail.com</a> para actualizar a los planes Professional y Visionary, o para personalizar tu plan.</string>
-  <string name="plans_customizable_features_web">Visita <a href="https://protonmail.com/pricing">protonmail.com</a> para personalizar tu plan.</string>
+  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
   <string name="plans_free_name">Gratuito</string>
-  <string name="plan_price_monthly">al mes*</string>
+  <string name="plan_price_monthly">per month</string>
+  <string name="plan_price_annually">per month*</string>
   <string name="plans_current_plan">Plan actual</string>
-  <string name="plans_upgrade_plan">Upgrade plan</string>
+  <string name="plans_upgrade_plan">Upgrade your plan</string>
   <string name="plans_subscription">Suscripción</string>
-  <string name="plans_renewal_date">El plan actual se renovará automáticamente el</string>
+  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Facturado anualmente en %s</string>
-  <string name="plans_billed_anually">Facturado anualmente</string>
   <string name="plans_billed_monthly">Facturado mensualmente</string>
-  <string name="plans_billed_every_2years">Facturado cada 2 años</string>
-  <string name="plans_save_20">Ahorra un 20% cambiando a la facturación anual</string>
-  <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+  <string name="plans_billing_monthly">For 1 month</string>
+  <string name="plans_billing_yearly">For 1 year</string>
+  <string name="plans_billing_two_years">For 2 years</string>
   <string name="plans_upgrade_your_plan">Mejora tu plan</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">0,5 GB de almacenamiento</string>
-  <string name="plans_feature_free_item_address">1 dirección</string>
-  <string name="plans_feature_free_item_calendar">1 calendario</string>
-  <string name="plans_feature_free_item_vpn">1 conexión VPN</string>
+  <string name="plans_proton_for_free">Get Proton for free</string>
+  <string name="plans_get_proton">Get %s</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s of %s</string>
+  <string name="plans_manage_your_subscription_vpn">Manage your subscription at <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
+  <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# almacenamiento</item>
     <item quantity="other">#proton_storage# almacenamiento</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# storage / user</item>
     <item quantity="other">#proton_storage# storage / user</item>
   </plurals>
@@ -57,6 +57,10 @@
     <item quantity="one">#proton_addresses# address / user</item>
     <item quantity="other">#proton_addresses# addresses / user</item>
   </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d of #proton_addresses# address</item>
+    <item quantity="other">%d of #proton_addresses# addresses</item>
+  </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">#proton_domains# custom domain</item>
     <item quantity="other">#proton_domains# custom domains</item>
@@ -64,6 +68,10 @@
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# calendar</item>
     <item quantity="other">#proton_calendars# calendars</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d of #proton_calendars# calendar</item>
+    <item quantity="other">%d of #proton_calendars# calendars</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN connection</item>
@@ -77,14 +85,27 @@
     <item quantity="one">#proton_users# user</item>
     <item quantity="other">#proton_users# users</item>
   </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d of #proton_users# user</item>
+    <item quantity="other">%d of #proton_users# users</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>La básica para comunicaciones privadas y seguras.</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">The basic for private and secure communications.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
@@ -146,7 +167,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Pago mensual</item>
-    <item>Pago anual (ahorra hasta un 20%)</item>
-    <item>Pago cada 2 años (ahorra un 33%)</item>
+    <item>Pay annually</item>
+    <item>Pay every 2 years</item>
   </string-array>
 </resources>

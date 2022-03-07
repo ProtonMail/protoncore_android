@@ -22,11 +22,11 @@
   <string name="human_verification_title">İnsan doğrulaması</string>
   <string name="human_verification_main_subtitle">Kötüye kullanımı önlemek için lütfen aşağıdaki seçeneklerden birini kullanarak insan olduğunuzu doğrulayın</string>
   <string name="human_verification_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın.</string>
-  <string name="human_verification_enter_code_subtitle_email">%s alıcısına gönderilen doğrulama kodunu yazın. E-postayı gelen kutunuzda bulamazsanız, istenmeyenler klasörüne bakmayı unutmayın.</string>
+  <string name="human_verification_enter_code_subtitle_email">%s alıcısına gönderilen doğrulama kodunu yazın. E-postayı gelen kutunuzda bulamazsanız, istenmeyen kutusuna bakmayı unutmayın.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Elinizdeki doğrulama kodunu yazın:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-posta</string>
-  <string name="human_verification_option_email_subtitle">E-postanız yalnızca bu tek seferlik doğrulama için kullanılacak. E-postayı gelen kutunuzda bulamazsanız istenmeyenler klasörüne bakmayı unutmayın.</string>
+  <string name="human_verification_option_email_subtitle">E-postanız yalnızca bu tek seferlik doğrulama için kullanılacak. E-postayı gelen kutunuzda bulamazsanız istenmeyen kutusuna bakmayı unutmayın.</string>
   <string name="human_verification_option_sms">Telefon numarası</string>
   <string name="human_verification_option_sms_subtitle">Telefon numaranız yalnızca bu tek seferlik doğrulama için kullanılacak.</string>
   <string name="human_verification_get_verification_code">Doğrulama kodu al</string>

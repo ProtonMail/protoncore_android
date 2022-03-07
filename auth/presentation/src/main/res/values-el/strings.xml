@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Προστατέψτε την ιδιοτικότητά σας με το ProtonMail</string>
   <string name="welcome_subtitle_mail">Το κρυπτογραφημένο email διατηρεί τις συνομιλίες σας απόρρητες. Τα εισερχόμενά σας ανήκουν πραγματικά σε εσάς.</string>
   <string name="welcome_title_drive">Προστατέψτε την ιδιοτικότητά σας με το Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Η άνεση της αποθήκευσης στο νέφος και η διασφάλιση της τεχνολογίας κρυπτογράφησης. Επιτέλους μια αξιόπιστη λύση αποθήκευσης στο νέφος.</string>
   <string name="welcome_title_calendar">Προστατέψτε την ιδιοτικότητά σας με το Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Κρυπτογραφημένο ημερολόγιο που κρατά τις εκδηλώσεις σας ιδιωτικές, ασφαλείς και διασφαλισμένες.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
@@ -70,9 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Η διεύθυνση email ανάκτησης είναι:</string>
   <string name="auth_create_address_create">Δημιουργία διεύθυνσης</string>
   <string name="auth_create_address_creating">Δημιούργηση διεύθυνσης</string>
-  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
-    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
-  </string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
   <string name="auth_create_address_error_no_available_domain">Μη διαθέσιμοι τομείς.</string>
   <string name="auth_create_address_error_private_key">Generating private key failed.</string>
@@ -101,7 +99,9 @@
   <string name="auth_signup_choose_password">Δημιουργήσετε τον κωδικό σας</string>
   <string name="auth_signup_repeat_password">Επανάληψη κωδικού</string>
   <string name="auth_signup_recovery_method_title">Set recovery method (optional)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Ορισμός μεθόδου ανάκτησης</string>
   <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Θα στείλουμε οδηγίες ανάκτησης σε αυτήν τη διεύθυνση αν κλειδωθείτε έξω από τον λογαριασμό σας.</string>
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Τηλέφωνο</string>
   <string name="auth_signup_recovery_method_email_hint">Διεύθυνση ανάκτησης</string>
@@ -125,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Εισάγετε τον κωδικό επαλήθευσης στον οποίο εστάλη %s:</string>
   <string name="auth_signup_error_human_verification_failed">Αποτυχία επαλήθευσης ανθρώπου.</string>
   <string name="auth_signup_token_code_resent">Token code resent.</string>
+  <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
+  <string name="auth_signup_congratulations">Συγχαρητήρια!</string>
+  <string name="auth_signup_start_using_proton">Έναρξη χρήσης Proton</string>
+  <string name="auth_signup_start_using_calendar">Έναρξη χρήσης Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Έναρξη χρήσης Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Έναρξη χρήσης Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Έναρξη χρήσης Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
 </resources>

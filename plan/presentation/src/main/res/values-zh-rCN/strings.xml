@@ -17,34 +17,34 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">选择</string>
   <string name="plans_select_a_plan">选择套餐</string>
-  <string name="plans_customizable_features">请访问 <a href="https://protonmail.com/pricing">protonmail.com</a> 升级到专业版套餐和尊享版套餐，或自定义您的套餐。</string>
-  <string name="plans_customizable_features_web">请访问 <a href="https://protonmail.com/pricing">protonmail.com</a> 自定义您的套餐。</string>
+  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">获取套餐时出错了。</string>
   <string name="plans_free_name">免费版</string>
-  <string name="plan_price_monthly">每月*</string>
+  <string name="plan_price_monthly">per month</string>
+  <string name="plan_price_annually">per month*</string>
   <string name="plans_current_plan">当前等级</string>
-  <string name="plans_upgrade_plan">升级账户</string>
+  <string name="plans_upgrade_plan">Upgrade your plan</string>
   <string name="plans_subscription">订阅</string>
-  <string name="plans_renewal_date">下次自动续费日期为</string>
+  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">* 按每年 %s 收费</string>
-  <string name="plans_billed_anually">按年计费</string>
   <string name="plans_billed_monthly">按月计费</string>
-  <string name="plans_billed_every_2years">按每两年计费</string>
-  <string name="plans_save_20">年费可享八折优惠</string>
-  <string name="plans_renew_info">自动续订，可随时取消或更换套餐。</string>
+  <string name="plans_billing_monthly">For 1 month</string>
+  <string name="plans_billing_yearly">For 1 year</string>
+  <string name="plans_billing_two_years">For 2 years</string>
   <string name="plans_upgrade_your_plan">升级您的账户</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">0.5GB 存储空间</string>
-  <string name="plans_feature_free_item_address">1 个邮箱地址</string>
-  <string name="plans_feature_free_item_calendar">1 个日历</string>
-  <string name="plans_feature_free_item_vpn">1 台设备可接入 VPN</string>
+  <string name="plans_proton_for_free">Get Proton for free</string>
+  <string name="plans_get_proton">Get %s</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s of %s</string>
+  <string name="plans_manage_your_subscription_vpn">Manage your subscription at <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
+  <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间 / 用户</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
@@ -53,11 +53,17 @@
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# 个邮箱地址 / 用户</item>
   </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="other">%d of #proton_addresses# addresses</item>
+  </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">#proton_domains# 个自有域名</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# 个日历</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="other">%d of #proton_calendars# calendars</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 台设备可接入 VPN</item>
@@ -68,14 +74,26 @@
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="other">#proton_users# 位用户</item>
   </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="other">%d of #proton_users# users</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>基础的私密及安全通信功能。</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">The basic for private and secure communications.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
@@ -137,7 +155,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>月付</item>
-    <item>年付（立省 20%）</item>
-    <item>两年付（节省 33%）</item>
+    <item>Pay annually</item>
+    <item>Pay every 2 years</item>
   </string-array>
 </resources>

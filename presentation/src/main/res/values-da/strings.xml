@@ -41,4 +41,6 @@
   <string name="presentation_skip">Spring over</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Kunne ikke oprette forbindelse til server.</string>
+  <string name="presentation_check_your_connection">Tjek din forbindelse</string>
+  <string name="presentation_connectivity_issues">Problemer med forbindelse</string>
 </resources>

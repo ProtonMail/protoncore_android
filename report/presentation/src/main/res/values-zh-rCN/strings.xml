@@ -17,23 +17,23 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Report an issue</string>
+  <string name="core_report_bug_activity_title">反馈问题</string>
   <string name="core_report_bug_close">关闭</string>
   <string name="core_report_bug_subject_field_hint">主题</string>
-  <string name="core_report_bug_subject_field_required">Enter a subject</string>
-  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_subject_field_required">输入标题</string>
+  <string name="core_report_bug_description_field_hint">您遇到了什么问题？请至少填写 10 个字符</string>
+  <string name="core_report_bug_description_field_placeholder">请尽可能详细地描述您的问题。如果看到错误提示，也请附上其内容。</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="other">至少需输入 %d 个字符</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
+  <string name="core_report_bug_discard_changes_title">关闭问题反馈？</string>
+  <string name="core_report_bug_discard_changes_description">如果离开此页面，您的反馈内容不会被保存。</string>
   <string name="core_report_bug_discard_changes_cancel">继续编辑</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_confirm">关闭且不保存</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="other">最多可输入 %d 个字符</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
-  <string name="core_report_bug_send">Send report</string>
+  <string name="core_report_bug_general_error">出错了，请过几分钟再试。</string>
+  <string name="core_report_bug_send">提交反馈</string>
   <string name="core_report_bug_success">感谢您的反馈</string>
 </resources>

@@ -22,14 +22,14 @@
   <string name="welcome_title_mail">Protegiu la vostra privadesa amb ProtonMail</string>
   <string name="welcome_subtitle_mail">El correu electrònic xifrat manté en privat les vostres converses. La vostra safata d\'entrada us pertany.</string>
   <string name="welcome_title_drive">Protegiu la vostra privadesa amb ProtonDrive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_title_calendar">Protegiu la vostra privadesa amb ProtonCalendar</string>
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_title_vpn">Protegiu la vostra privadesa amb ProtonVPN</string>
   <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat xifrant la vostra connexió a Internet.</string>
   <string name="auth_password_label">Contrasenya</string>
   <string name="auth_password_help">La contrasenya ha de tenir com a mínim 8 caràcters</string>
-  <string name="auth_current_login_password">Contrasenya d\'inici de sessió actual</string>
+  <string name="auth_current_login_password">Current login password</string>
   <string name="auth_enter_six_digit_code">Introduïu el codi de 6 dígits</string>
   <string name="auth_second_factor_code">Codi de dos factors</string>
   <string name="auth_email_username">Adreça electrònica o nom d\'usuari</string>
@@ -70,7 +70,7 @@
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crear adreça</string>
   <string name="auth_create_address_creating">Creant adreça</string>
-  <string name="auth_create_address_terms">Clicant a Crear adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i Condicions</a> de Proton.</string>
+  <string name="auth_create_address_terms">En fer clic a Crea l\'adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i condicions</a> de Proton.</string>
   <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>
@@ -99,7 +99,9 @@
   <string name="auth_signup_choose_password">Creeu la vostra contrasenya</string>
   <string name="auth_signup_repeat_password">Repetir contrasenya</string>
   <string name="auth_signup_recovery_method_title">Establiu el mètode de recuperació (opcional)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Set recovery method</string>
   <string name="auth_signup_recovery_method_subtitle">Enviarem instruccions de recuperació a aquest correu electrònic o número de telèfon si no podeu accedir al vostre compte.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
   <string name="auth_signup_recovery_method_email">Correu electrònic</string>
   <string name="auth_signup_recovery_method_phone">Telèfon</string>
   <string name="auth_signup_recovery_method_email_hint">Correu electrònic de recuperació</string>
@@ -123,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Introduïu el codi de verificació que s’ha enviat a %s:</string>
   <string name="auth_signup_error_human_verification_failed">Ha fallat la verificació humana.</string>
   <string name="auth_signup_token_code_resent">Codi Token reenviat.</string>
+  <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
+  <string name="auth_signup_congratulations">Congratulations!</string>
+  <string name="auth_signup_start_using_proton">Start using Proton</string>
+  <string name="auth_signup_start_using_calendar">Start using Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Start using Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Start using Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Start using Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">La destinació de recuperació és invàlida.</string>
 </resources>

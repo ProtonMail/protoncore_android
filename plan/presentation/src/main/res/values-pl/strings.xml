@@ -17,37 +17,37 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Wybierz</string>
   <string name="plans_select_a_plan">Wybierz plan</string>
-  <string name="plans_customizable_features">Odwiedź <a href="https://protonmail.com/pricing">protonmail.com</a>, aby dostosować plan lub ulepszyć go do wersji Professional lub Visionary.</string>
-  <string name="plans_customizable_features_web">Odwiedź <a href="https://protonmail.com/pricing">protonmail.com</a>, aby dostosować plan.</string>
+  <string name="plans_select_a_plan_subtitle">Jeden plan do wszystkich usług Proton</string>
   <string name="plans_fetching_general_error">Wystąpił błąd podczas pobierania planów.</string>
   <string name="plans_free_name">Free</string>
-  <string name="plan_price_monthly">miesięcznie*</string>
+  <string name="plan_price_monthly">miesięcznie</string>
+  <string name="plan_price_annually">miesięcznie*</string>
   <string name="plans_current_plan">Obecny plan</string>
-  <string name="plans_upgrade_plan">Ulepsz</string>
+  <string name="plans_upgrade_plan">Ulepsz plan</string>
   <string name="plans_subscription">Subskrypcja</string>
-  <string name="plans_renewal_date">Twój plan odnowi się automatycznie</string>
+  <string name="plans_renewal_date">Twój plan odnowi się automatycznie &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Twój plan wygaśnie &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Płatne rocznie jako %s</string>
-  <string name="plans_billed_anually">Płatne rocznie</string>
   <string name="plans_billed_monthly">Płatne miesięcznie</string>
-  <string name="plans_billed_every_2years">Płatne co 2 lata</string>
-  <string name="plans_save_20">Zaoszczędź 20% zmieniając na plan roczny</string>
-  <string name="plans_renew_info">Odnawia się automatycznie. Anuluj lub zmień plan w dowolnym momencie.</string>
+  <string name="plans_billing_monthly">Na miesiąc</string>
+  <string name="plans_billing_yearly">Na rok</string>
+  <string name="plans_billing_two_years">Na 2 lata</string>
   <string name="plans_upgrade_your_plan">Ulepsz plan</string>
-  <!-- plan details -->
-  <string name="plans_feature_free_item_storage">500 MB przestrzeni dyskowej</string>
-  <string name="plans_feature_free_item_address">1 adres</string>
-  <string name="plans_feature_free_item_calendar">1 kalendarz</string>
-  <string name="plans_feature_free_item_vpn">1 połączenie VPN</string>
+  <string name="plans_proton_for_free">Załóż darmowe konto</string>
+  <string name="plans_get_proton">Wybierz plan %s</string>
+  <string name="plans_manage_your_subscription">Zarządzaj swoją subskrypcją na stronie <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s z %s</string>
+  <string name="plans_manage_your_subscription_vpn">Zarządzaj swoją subskrypcją na stronie <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">Nie możesz ulepszyć planu za pomocą aplikacji mobilnej.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
-  <plurals name="item_storage" comment="please do not modify the test between #">
+  <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# przestrzeni dyskowej</item>
     <item quantity="few">#proton_storage# przestrzeni dyskowej</item>
     <item quantity="many">#proton_storage# przestrzeni dyskowej</item>
     <item quantity="other">#proton_storage# przestrzeni dyskowej</item>
   </plurals>
-  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# przestrzeni dyskowej / użytkownika</item>
     <item quantity="few">#proton_storage# przestrzeni dyskowej / użytkownika</item>
     <item quantity="many">#proton_storage# przestrzeni dyskowej / użytkownika</item>
@@ -65,6 +65,12 @@
     <item quantity="many">#proton_addresses# adresów / użytkownika</item>
     <item quantity="other">#proton_addresses# adresów / użytkownika</item>
   </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">Adres: %d / #proton_addresses#</item>
+    <item quantity="few">Adresy: %d / #proton_addresses#</item>
+    <item quantity="many">Adresy: %d / #proton_addresses#</item>
+    <item quantity="other">Adresy: %d / #proton_addresses#</item>
+  </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">#proton_domains# niestandardowa domena</item>
     <item quantity="few">#proton_domains# niestandardowe domeny</item>
@@ -76,6 +82,12 @@
     <item quantity="few">#proton_calendars# kalendarze</item>
     <item quantity="many">#proton_calendars# kalendarzy</item>
     <item quantity="other">#proton_calendars# kalendarzy</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">Kalendarz: %d / #proton_calendars#</item>
+    <item quantity="few">Kalendarze: %d / #proton_calendars#</item>
+    <item quantity="many">Kalendarze: %d / #proton_calendars#</item>
+    <item quantity="other">Kalendarze: %d / #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# połączenie VPN</item>
@@ -95,14 +107,29 @@
     <item quantity="many">#proton_users# użytkowników</item>
     <item quantity="other">#proton_users# użytkowników</item>
   </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">Użytkownik: %d / #proton_users#</item>
+    <item quantity="few">Użytkownicy: %d / #proton_users#</item>
+    <item quantity="many">Użytkownicy: %d / #proton_users#</item>
+    <item quantity="other">Użytkownicy: %d / #proton_users#</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region current plan -->
+  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_users#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+  </string-array>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- region plan free -->
-  <string-array name="free">
-    <item>Podstawowa ochrona prywatności i bezpieczna komunikacja.</item>
-    <item>@string/plans_feature_free_item_storage</item>
-    <item>@string/plans_feature_free_item_address</item>
-    <item>@string/plans_feature_free_item_calendar</item>
-    <item>@string/plans_feature_free_item_vpn</item>
+  <string name="plan_id_free_header">Podstawowa ochrona prywatności i bezpieczna komunikacja.</string>
+  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
@@ -164,7 +191,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Plan miesięczny</item>
-    <item>Plan roczny (zaoszczędź do 20%)</item>
-    <item>Płać co 2 lata (zaoszczędź 33%)</item>
+    <item>Plan roczny</item>
+    <item>Płać co 2 lata</item>
   </string-array>
 </resources>

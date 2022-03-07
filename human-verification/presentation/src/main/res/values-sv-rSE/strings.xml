@@ -26,7 +26,7 @@
   <string name="human_verification_enter_code_subtitle_already_have_code">Ange verifieringskoden som du redan har:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-post</string>
-  <string name="human_verification_option_email_subtitle">Din e-postadress kommer endast att användas för denna engångsverifiering. Om du inte hittar e-postmeddelandet i din inkorg, vänligen kontrollera din skräppost.</string>
+  <string name="human_verification_option_email_subtitle">Din e-post kommer endast att användas för denna engångsverifiering. Om du inte hittar e-postmeddelandet i din inkorg, kontrollera din skräppostmapp.</string>
   <string name="human_verification_option_sms">Telefonnummer</string>
   <string name="human_verification_option_sms_subtitle">Ditt telefonnummer kommer endast att användas för denna engångsverifiering.</string>
   <string name="human_verification_get_verification_code">Skaffa verifieringskod</string>
@@ -45,12 +45,12 @@
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Begär en inbjudan</string>
-  <string name="human_verification_help_manual">Om du har problem med att skapa ditt konto, vänligen begär en inbjudan så svarar vi inom en arbetsdag.</string>
-  <string name="human_verification_help_website_title">Besök vårt Hjälpcenter</string>
+  <string name="human_verification_help_manual">Om du har problem med att skapa ditt konto, begär en inbjudan så svarar vi inom en arbetsdag.</string>
+  <string name="human_verification_help_website_title">Besök vårt hjälpcenter</string>
   <string name="human_verification_help_website">Lär dig mer om mänsklig verifiering och varför vi ber om det.</string>
   <string name="human_verification_sending_failed">Misslyckades att skicka verifieringskod. Försök igen.</string>
-  <string name="human_verification_incorrect_code">Felaktig kod. Var god försök igen.</string>
-  <string name="human_verification_resent_code">Vi har skickat en ny kod till dig.</string>
+  <string name="human_verification_incorrect_code">Felaktig kod. Försök igen.</string>
+  <string name="human_verification_resent_code">Vi har skickat en annan kod till dig.</string>
   <string name="human_verification_captcha_failed">CAPTCHA-verifiering misslyckades. Försök en gång till eller välj ett annat verifieringsalternativ.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Ingen anslutning. Det gick inte att ladda CAPTCHA.</string>

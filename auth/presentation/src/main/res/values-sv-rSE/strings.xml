@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Skydda din integritet med ProtonMail</string>
   <string name="welcome_subtitle_mail">Krypterad e-post som håller dina konversationer privata. Din inkorg tillhör dig på riktigt.</string>
   <string name="welcome_title_drive">Skydda din integritet med Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_title_calendar">Skydda din integritet med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypterad kalender som håller dina livshändelser privat, skyddad och säker.</string>
   <string name="welcome_title_vpn">Skydda din integritet med ProtonVPN</string>
@@ -70,8 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Din e-postadress för återställning är:</string>
   <string name="auth_create_address_create">Skapa adress</string>
   <string name="auth_create_address_creating">Skapar adress</string>
-  <string name="auth_create_address_terms">Genom att klicka på Skapa adress godkänner du Proton’s <a href="https://protonmail.com/terms-and-conditions">Villkor.</a>
-  </string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_create_address_error_no_available_domain">Ingen tillgänglig domän.</string>
   <string name="auth_create_address_error_private_key">Misslyckades att generera privat nyckel.</string>
@@ -100,7 +99,9 @@
   <string name="auth_signup_choose_password">Skapa ditt lösenord</string>
   <string name="auth_signup_repeat_password">Upprepa lösenord</string>
   <string name="auth_signup_recovery_method_title">Ange återställningsmetod (Valfritt)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Ställ in återställningsmetod</string>
   <string name="auth_signup_recovery_method_subtitle">Vi kommer skicka återställningsinstruktioner till denna e-post eller telefonnummer om du blir utelåst från ditt konto.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Vi kommer att skicka återställningsinstruktioner till denna e-post om du blir utelåst från ditt konto.</string>
   <string name="auth_signup_recovery_method_email">E-post</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">E-post för återställning</string>
@@ -124,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Ange verifieringskoden som skickades till %s:</string>
   <string name="auth_signup_error_human_verification_failed">Mänsklig verifiering misslyckades.</string>
   <string name="auth_signup_token_code_resent">Token-kod skickat igen.</string>
+  <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
+  <string name="auth_signup_congratulations">Grattis!</string>
+  <string name="auth_signup_start_using_proton">Börja använda Proton</string>
+  <string name="auth_signup_start_using_calendar">Börja använda Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Börja använda Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Börja använda Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Börja använda Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Återställningsdestinationen är ogiltig.</string>
 </resources>

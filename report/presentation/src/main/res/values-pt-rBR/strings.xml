@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Report an issue</string>
+  <string name="core_report_bug_activity_title">Reportar um problema</string>
   <string name="core_report_bug_close">Fechar</string>
   <string name="core_report_bug_subject_field_hint">Assunto</string>
   <string name="core_report_bug_subject_field_required">Enter a subject</string>
@@ -30,12 +30,12 @@
   <string name="core_report_bug_discard_changes_title">Close bug report?</string>
   <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
   <string name="core_report_bug_discard_changes_cancel">Continuar editando</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_confirm">Fechar sem salvar</string>
   <plurals name="core_report_bug_form_field_too_long">
     <item quantity="one">Maximum %d character</item>
     <item quantity="other">Maximum %d characters</item>
   </plurals>
   <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
-  <string name="core_report_bug_send">Send report</string>
+  <string name="core_report_bug_send">Enviar relatório</string>
   <string name="core_report_bug_success">Obrigado por seu relatório</string>
 </resources>

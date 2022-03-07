@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Захистіть свою приватність за допомогою ProtonMail</string>
   <string name="welcome_subtitle_mail">Зашифрована електронна пошта, яка зберігає ваші розмови приватними. Ваша поштова скринька справді належить вам.</string>
   <string name="welcome_title_drive">Захистіть свою приватність за допомогою Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Зручність хмарного сховища й безпека технології шифрування. Нарешті з\'явилося рішення для хмарного сховища, якому можна довіряти.</string>
   <string name="welcome_title_calendar">Захистіть свою приватність за допомогою Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Зашифрований календар, який зберігає ваші події з життя приватними, безпечними та захищеними.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
@@ -70,7 +70,7 @@
   <string name="auth_create_address_result_recovery_title">Ваша електронна пошта для відновлення:</string>
   <string name="auth_create_address_create">Створити адресу</string>
   <string name="auth_create_address_creating">Створення адреси</string>
-  <string name="auth_create_address_terms">Натискаючи створити адресу, ви погоджуєтеся з <a href="https://protonmail.com/terms-and-conditions">Умовами та положеннями</a> Proton.</string>
+  <string name="auth_create_address_terms">Натискаючи створити адресу, ви погоджуєтеся з <a href="https://protonmail.com/terms-and-conditions">Умовами та положеннями Proton.</a></string>
   <string name="auth_create_address_error_credentials">Поле з обліковими даними не повинне бути порожнім.</string>
   <string name="auth_create_address_error_no_available_domain">Немає доступного домену.</string>
   <string name="auth_create_address_error_private_key">Не вдалося згенерувати приватний ключ.</string>
@@ -99,7 +99,9 @@
   <string name="auth_signup_choose_password">Створіть пароль</string>
   <string name="auth_signup_repeat_password">Повторіть пароль</string>
   <string name="auth_signup_recovery_method_title">Встановити спосіб відновлення (необов’язково)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Додати спосіб відновлення</string>
   <string name="auth_signup_recovery_method_subtitle">Ми надішлемо настанови щодо відновлення на цю електронну адресу або номер телефону, якщо ви втратите доступ до свого облікового запису.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Ми надішлемо вказівки щодо відновлення на цю електронну адресу, якщо ви втратите доступ до свого облікового запису.</string>
   <string name="auth_signup_recovery_method_email">Е-пошта</string>
   <string name="auth_signup_recovery_method_phone">Телефон</string>
   <string name="auth_signup_recovery_method_email_hint">Пошта для відновлення доступу</string>
@@ -123,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Введіть код перевірки, який був надісланий на %s:</string>
   <string name="auth_signup_error_human_verification_failed">Не вдалося перевірити чи ви людина.</string>
   <string name="auth_signup_token_code_resent">Код повторно надіслано.</string>
+  <string name="auth_signup_congratulations_subtitle">Ваш обліковий запис Proton успішно створено.\nНасолоджуйтеся світом приватності.</string>
+  <string name="auth_signup_congratulations">Вітаємо!</string>
+  <string name="auth_signup_start_using_proton">Почати користування Proton</string>
+  <string name="auth_signup_start_using_calendar">Почати користування Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Почати користування Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Почати користування Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Почати користування Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Недійсні дані способу відновлення доступу.</string>
 </resources>

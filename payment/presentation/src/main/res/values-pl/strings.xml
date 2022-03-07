@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Wybierz metodę płatności</string>
   <string name="payments_add_credit_debit_card">Dodaj nową kartę płatniczą</string>
-  <string name="payments_billing_monthly">Płatne miesięcznie</string>
-  <string name="payments_billing_yearly">Płatne rocznie</string>
-  <string name="payments_billing_two_years">Płatne co 2 lata</string>
-  <string name="payments_pay">Zapłać</string>
+  <string name="payments_billing_monthly">Na miesiąc</string>
+  <string name="payments_billing_yearly">Na rok</string>
+  <string name="payments_billing_two_years">Na 2 lata</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Zapłać %s</string>
   <string name="payments_method_icon">Ikona metody płatności.</string>
   <!-- endregion -->
   <!-- region billing -->

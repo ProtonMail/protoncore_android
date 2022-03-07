@@ -22,7 +22,7 @@
   <string name="welcome_title_mail">Chroń swoją prywatność z pocztą ProtonMail</string>
   <string name="welcome_subtitle_mail">Szyfrowana poczta e-mail, która zapewnia prywatną komunikację. Twoja skrzynka należy do Ciebie.</string>
   <string name="welcome_title_drive">Chroń swoją prywatność z dyskiem Proton Drive</string>
-  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_subtitle_drive">Wygoda przechowywania danych w chmurze i bezpieczeństwo technologii szyfrowania. Wreszcie rozwiązanie do przechowywania danych w chmurze, któremu możesz zaufać.</string>
   <string name="welcome_title_calendar">Chroń swoją prywatność z kalendarzem Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Szyfrowany kalendarz, który zapewnia Twoim wydarzeniom prywatność i bezpieczeństwo.</string>
   <string name="welcome_title_vpn">Chroń swoją prywatność z usługą ProtonVPN</string>
@@ -99,7 +99,9 @@
   <string name="auth_signup_choose_password">Utwórz hasło</string>
   <string name="auth_signup_repeat_password">Potwierdź hasło</string>
   <string name="auth_signup_recovery_method_title">Ustaw metodę odzyskiwania (opcjonalnie)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Ustaw metodę odzyskiwania</string>
   <string name="auth_signup_recovery_method_subtitle">Jeśli zablokujesz konto, wyślemy instrukcję odzyskiwania na ten adres e-mail lub numer telefonu.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Jeśli zablokujesz konto, wyślemy instrukcję odzyskiwania na ten adres e-mail.</string>
   <string name="auth_signup_recovery_method_email">Adres e-mail</string>
   <string name="auth_signup_recovery_method_phone">Numer telefonu</string>
   <string name="auth_signup_recovery_method_email_hint">Adres pomocniczy</string>
@@ -123,5 +125,12 @@
   <string name="auth_signup_enter_code_subtitle">Wpisz kod weryfikacyjny wysłany do %s:</string>
   <string name="auth_signup_error_human_verification_failed">Weryfikacja antyspamowa nie powiodła się.</string>
   <string name="auth_signup_token_code_resent">Kod tokena został ponownie wysłany.</string>
+  <string name="auth_signup_congratulations_subtitle">Konto Proton zostało utworzone.\nCiesz się prywatnością.</string>
+  <string name="auth_signup_congratulations">Gratulacje!</string>
+  <string name="auth_signup_start_using_proton">Zacznij korzystać z usługi Proton</string>
+  <string name="auth_signup_start_using_calendar">Zacznij korzystać z aplikacji Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Zacznij korzystać z aplikacji Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Zacznij korzystać z aplikacji Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Zacznij korzystać z aplikacji Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Kontakt pomocniczy jest nieprawidłowy.</string>
 </resources>
