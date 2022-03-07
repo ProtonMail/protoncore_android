@@ -122,7 +122,7 @@ class PlanItemCurrentFeaturesTest {
             plan = currentPlanDetails
         )
         assertEquals("1 connection", result.first)
-        assertEquals(R.drawable.ic_shield, result.second)
+        assertEquals(R.drawable.ic_baseline_check, result.second)
         verify { currentPlanDetails.connections }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }
@@ -149,7 +149,7 @@ class PlanItemCurrentFeaturesTest {
             plan = currentPlanDetails
         )
         assertEquals("2 connections", result.first)
-        assertEquals(R.drawable.ic_shield, result.second)
+        assertEquals(R.drawable.ic_baseline_check, result.second)
         verify { currentPlanDetails.connections }
         verify(exactly = 0) { currentPlanDetails.storage }
         verify(exactly = 0) { currentPlanDetails.addresses }

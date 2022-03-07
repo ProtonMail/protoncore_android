@@ -141,40 +141,40 @@
 
     <!-- region vpn basic -->
     <string name="plan_id_vpnbasic_header">VPN Basic</string>
+    <string name="plan_id_vpnbasic_countries">63 countries</string>
     <string name="plan_id_vpnbasic_high_speed">High speed</string>
     <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
         <item>#proton_vpn#</item>
         <item>string</item>
-        <item>#proton_storage#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_calendars#</item>
     </string-array>
     <integer-array name="plan_id_vpnbasic">
         <item>@string/plan_id_vpnbasic_header</item>
+        <item>@string/plan_id_vpnbasic_countries</item>
         <item>@plurals/item_connections</item>
         <item>@string/plan_id_vpnbasic_high_speed</item>
-        <item>@plurals/item_storage</item>
-        <item>@plurals/item_address</item>
-        <item>@plurals/item_calendar</item>
     </integer-array>
     <!-- endregion -->
     <!-- region plan vpn plus -->
     <string name="plan_id_vpnplus_header">VPN Plus</string>
+    <string name="plan_id_vpnplus_countries">63 countries</string>
     <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+    <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+    <string name="plan_id_vpnplus_streaming">Streaming service support</string>
     <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
         <item>#proton_vpn#</item>
         <item>string</item>
-        <item>#proton_storage#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_calendars#</item>
+        <item>string</item>
+        <item>string</item>
     </string-array>
     <integer-array name="plan_id_vpnplus">
         <item>@string/plan_id_vpnplus_header</item>
+        <item>@string/plan_id_vpnplus_countries</item>
         <item>@plurals/item_connections</item>
         <item>@string/plan_id_vpnplus_highest_speed</item>
-        <item>@plurals/item_storage</item>
-        <item>@plurals/item_address</item>
-        <item>@plurals/item_calendar</item>
+        <item>@string/plan_id_vpnplus_adblock</item>
+        <item>@string/plan_id_vpnplus_streaming</item>
     </integer-array>
     <!-- endregion -->
     <!-- region plan professional -->

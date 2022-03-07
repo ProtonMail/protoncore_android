@@ -41,35 +41,35 @@ internal fun createPlanFeature(
     if (type.contains(KEY_FEATURE_STORAGE)) {
         val quantity = plan.storage.formatByteToHumanReadable()
         val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), 0)
-        return Pair(value.replace(KEY_FEATURE_STORAGE, quantity), R.drawable.ic_storage)
+        return Pair(value.replace(KEY_FEATURE_STORAGE, quantity), R.drawable.ic_baseline_check)
     }
     if (type.contains(KEY_FEATURE_ADDRESSES)) {
         val quantity = plan.addresses
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), R.drawable.ic_envelope)
+        return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), R.drawable.ic_baseline_check)
     }
     if (type.contains(KEY_FEATURE_VPN)) {
         val quantity = plan.connections
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), R.drawable.ic_shield)
+        return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), R.drawable.ic_baseline_check)
     }
     if (type.contains(KEY_FEATURE_DOMAINS)) {
         val quantity = plan.domains
         val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), plan.domains)
-        return Pair(value.replace(KEY_FEATURE_DOMAINS, quantity.toString()), R.drawable.ic_globe_language)
+        return Pair(value.replace(KEY_FEATURE_DOMAINS, quantity.toString()), R.drawable.ic_baseline_check)
     }
     if (type.contains(KEY_FEATURE_USERS)) {
         val quantity = plan.members
         val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_USERS, quantity.toString()), R.drawable.ic_user)
+        return Pair(value.replace(KEY_FEATURE_USERS, quantity.toString()), R.drawable.ic_baseline_check)
     }
     if (type.contains(KEY_FEATURE_CALENDARS)) {
         val quantity = plan.calendars
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
-        return Pair(value.replace(KEY_FEATURE_CALENDARS, quantity.toString()), R.drawable.ic_calendar_checkmark)
+        return Pair(value.replace(KEY_FEATURE_CALENDARS, quantity.toString()), R.drawable.ic_baseline_check)
     }
     return Pair(context.getString(resourceValuesArray.getResourceId(index, 0)), R.drawable.ic_baseline_check)
 }
