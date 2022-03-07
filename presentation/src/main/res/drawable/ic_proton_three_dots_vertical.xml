@@ -1,15 +1,33 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M12.0846,18.1667C12.867,18.1667 13.5013,18.8009 13.5013,19.5833C13.5013,20.3657 12.867,21 12.0846,21C11.3022,21 10.668,20.3657 10.668,19.5833C10.668,18.8009 11.3022,18.1667 12.0846,18.1667Z"
+      android:pathData="M12.0846,17.6667C12.867,17.6667 13.5013,18.3009 13.5013,19.0833C13.5013,19.8657 12.867,20.5 12.0846,20.5C11.3022,20.5 10.668,19.8657 10.668,19.0833C10.668,18.3009 11.3022,17.6667 12.0846,17.6667Z"
       android:fillColor="@color/icon_norm"/>
   <path
-      android:pathData="M12.0846,11.0833C12.867,11.0833 13.5013,11.7176 13.5013,12.5C13.5013,13.2824 12.867,13.9167 12.0846,13.9167C11.3022,13.9167 10.668,13.2824 10.668,12.5C10.668,11.7176 11.3022,11.0833 12.0846,11.0833Z"
+      android:pathData="M12.0846,10.5833C12.867,10.5833 13.5013,11.2176 13.5013,12C13.5013,12.7824 12.867,13.4167 12.0846,13.4167C11.3022,13.4167 10.668,12.7824 10.668,12C10.668,11.2176 11.3022,10.5833 12.0846,10.5833Z"
       android:fillColor="@color/icon_norm"/>
   <path
-      android:pathData="M12.0846,4C12.867,4 13.5013,4.6343 13.5013,5.4167C13.5013,6.1991 12.867,6.8333 12.0846,6.8333C11.3022,6.8333 10.668,6.1991 10.668,5.4167C10.668,4.6343 11.3022,4 12.0846,4Z"
+      android:pathData="M12.0846,3.5C12.867,3.5 13.5013,4.1343 13.5013,4.9167C13.5013,5.6991 12.867,6.3333 12.0846,6.3333C11.3022,6.3333 10.668,5.6991 10.668,4.9167C10.668,4.1343 11.3022,3.5 12.0846,3.5Z"
       android:fillColor="@color/icon_norm"/>
 </vector>

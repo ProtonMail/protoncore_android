@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M21.25,5.5962V19.8269C21.25,20.6129 20.6129,21.25 19.8269,21.25H4.8846C3.7057,21.25 2.75,20.2943 2.75,19.1154L2.75,6.3077M21.25,5.5962C21.25,4.8102 20.6129,4.1731 19.8269,4.1731L4.8846,4.1731C3.7057,4.1731 2.75,5.1288 2.75,6.3077M21.25,5.5962V8.4423H4.8846C3.7057,8.4423 2.75,7.4866 2.75,6.3077M18.4038,14.8462C18.4038,15.6321 17.7667,16.2692 16.9808,16.2692C16.1948,16.2692 15.5577,15.6321 15.5577,14.8462C15.5577,14.0602 16.1948,13.4231 16.9808,13.4231C17.7667,13.4231 18.4038,14.0602 18.4038,14.8462Z"
+      android:strokeWidth="1.5"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/icon_norm"/>
+</vector>

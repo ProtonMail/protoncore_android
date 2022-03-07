@@ -1,13 +1,31 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <group>
     <clip-path
-        android:pathData="M2,6.3571C2,4.7792 3.2792,3.5 4.8571,3.5H19.1429C20.7208,3.5 22,4.7792 22,6.3571V15.3573C22,16.9352 20.7208,18.2144 19.1429,18.2144H14.1429L10.1294,22.4571C9.7743,22.8325 9.1429,22.5812 9.1429,22.0644V18.2144H4.8571C3.2792,18.2144 2,16.9352 2,15.3573V6.3571Z"/>
+        android:pathData="M2,5.8571C2,4.2792 3.2792,3 4.8571,3H19.1429C20.7208,3 22,4.2792 22,5.8571V14.8573C22,16.4352 20.7208,17.7144 19.1429,17.7144H14.1429L10.1294,21.9571C9.7743,22.3325 9.1429,22.0812 9.1429,21.5644V17.7144H4.8571C3.2792,17.7144 2,16.4352 2,14.8573V5.8571Z"/>
     <path
-        android:pathData="M2,6.3571C2,4.7792 3.2792,3.5 4.8571,3.5H19.1429C20.7208,3.5 22,4.7792 22,6.3571V15.3573C22,16.9352 20.7208,18.2144 19.1429,18.2144H14.1429L10.1294,22.4571C9.7743,22.8325 9.1429,22.5812 9.1429,22.0644V18.2144H4.8571C3.2792,18.2144 2,16.9352 2,15.3573V6.3571Z"
+        android:pathData="M2,5.8571C2,4.2792 3.2792,3 4.8571,3H19.1429C20.7208,3 22,4.2792 22,5.8571V14.8573C22,16.4352 20.7208,17.7144 19.1429,17.7144H14.1429L10.1294,21.9571C9.7743,22.3325 9.1429,22.0812 9.1429,21.5644V17.7144H4.8571C3.2792,17.7144 2,16.4352 2,14.8573V5.8571Z"
         android:strokeWidth="3"
         android:fillColor="#00000000"
         android:strokeColor="@color/icon_norm"

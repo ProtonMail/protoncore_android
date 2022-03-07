@@ -1,13 +1,31 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <group>
     <clip-path
-        android:pathData="M3.3537,4.3931H20.6463C21.784,4.3931 22.4124,5.7133 21.6949,6.5963L14.7024,15.2025L14.7024,21.5409C14.7024,22.0431 14.1739,22.3698 13.7247,22.1452L9.6712,20.1184C9.4423,20.004 9.2977,19.77 9.2977,19.5141L9.2976,15.2025L2.3051,6.5963C1.5876,5.7133 2.216,4.3931 3.3537,4.3931Z"/>
+        android:pathData="M3.3537,3.8926H20.6463C21.784,3.8926 22.4124,5.2128 21.6949,6.0958L14.7024,14.702L14.7024,21.0404C14.7024,21.5426 14.1739,21.8693 13.7247,21.6447L9.6712,19.6179C9.4423,19.5035 9.2977,19.2695 9.2977,19.0137L9.2976,14.702L2.3051,6.0958C1.5876,5.2128 2.216,3.8926 3.3537,3.8926Z"/>
     <path
-        android:pathData="M3.3537,4.3931H20.6463C21.784,4.3931 22.4124,5.7133 21.6949,6.5963L14.7024,15.2025L14.7024,21.5409C14.7024,22.0431 14.1739,22.3698 13.7247,22.1452L9.6712,20.1184C9.4423,20.004 9.2977,19.77 9.2977,19.5141L9.2976,15.2025L2.3051,6.5963C1.5876,5.7133 2.216,4.3931 3.3537,4.3931Z"
+        android:pathData="M3.3537,3.8926H20.6463C21.784,3.8926 22.4124,5.2128 21.6949,6.0958L14.7024,14.702L14.7024,21.0404C14.7024,21.5426 14.1739,21.8693 13.7247,21.6447L9.6712,19.6179C9.4423,19.5035 9.2977,19.2695 9.2977,19.0137L9.2976,14.702L2.3051,6.0958C1.5876,5.2128 2.216,3.8926 3.3537,3.8926Z"
         android:strokeWidth="3"
         android:fillColor="#00000000"
         android:strokeColor="@color/icon_norm"

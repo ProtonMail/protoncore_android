@@ -1,10 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M15.0097,22.4907C14.4521,23.0483 13.5481,23.0483 12.9906,22.4907L3.9182,13.4183C3.6504,13.1506 3.5,12.7874 3.5,12.4087V5.4278C3.5,4.6392 4.1392,4 4.9278,4H11.9087C12.2874,4 12.6505,4.1504 12.9183,4.4182L21.9907,13.4906C22.5483,14.0481 22.5483,14.9522 21.9907,15.5097L15.0097,22.4907ZM8.3924,10.0925C9.0967,10.0925 9.6677,9.5215 9.6677,8.8172C9.6677,8.1129 9.0967,7.542 8.3924,7.542C7.6881,7.542 7.1172,8.1129 7.1172,8.8172C7.1172,9.5215 7.6881,10.0925 8.3924,10.0925Z"
+      android:pathData="M15.0097,21.9907C14.4521,22.5483 13.5481,22.5483 12.9906,21.9907L3.9182,12.9183C3.6504,12.6506 3.5,12.2874 3.5,11.9087V4.9278C3.5,4.1392 4.1392,3.5 4.9278,3.5H11.9087C12.2874,3.5 12.6505,3.6504 12.9183,3.9182L21.9907,12.9906C22.5483,13.5481 22.5483,14.4522 21.9907,15.0097L15.0097,21.9907ZM8.3924,9.5925C9.0967,9.5925 9.6677,9.0215 9.6677,8.3172C9.6677,7.6129 9.0967,7.042 8.3924,7.042C7.6881,7.042 7.1172,7.6129 7.1172,8.3172C7.1172,9.0215 7.6881,9.5925 8.3924,9.5925Z"
       android:fillColor="@color/icon_norm"
       android:fillType="evenOdd"/>
 </vector>

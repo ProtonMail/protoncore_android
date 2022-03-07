@@ -1,10 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M19.2852,10.0759V11.0456C19.2852,12.1167 18.3258,12.985 17.1423,12.985C15.9588,12.985 14.9994,12.1167 14.9994,11.0456V10.0759C14.9994,9.0048 15.9588,8.1365 17.1423,8.1365C18.3258,8.1365 19.2852,9.0048 19.2852,10.0759ZM19.2852,10.0759V10.7414C19.2852,12.7988 18.3821,14.772 16.7746,16.2268L16.0709,16.8638M12.1423,10.0758V11.0455C12.1423,12.1166 11.1829,12.9848 9.9994,12.9848C8.816,12.9848 7.8566,12.1166 7.8566,11.0455V10.0758C7.8566,9.0047 8.816,8.1364 9.9994,8.1364C11.1829,8.1364 12.1423,9.0047 12.1423,10.0758ZM12.1423,10.0758V10.7413C12.1423,12.7987 11.2392,14.7719 9.6318,16.2267L8.928,16.8636M4.2852,20.5L4.2852,4.5"
+      android:pathData="M19.2852,9.5759V10.5456C19.2852,11.6167 18.3258,12.485 17.1423,12.485C15.9588,12.485 14.9994,11.6167 14.9994,10.5456V9.5759C14.9994,8.5048 15.9588,7.6365 17.1423,7.6365C18.3258,7.6365 19.2852,8.5048 19.2852,9.5759ZM19.2852,9.5759V10.2414C19.2852,12.2988 18.3821,14.272 16.7746,15.7268L16.0709,16.3638M12.1423,9.5758V10.5455C12.1423,11.6166 11.1829,12.4848 9.9994,12.4848C8.816,12.4848 7.8566,11.6166 7.8566,10.5455V9.5758C7.8566,8.5047 8.816,7.6364 9.9994,7.6364C11.1829,7.6364 12.1423,8.5047 12.1423,9.5758ZM12.1423,9.5758V10.2413C12.1423,12.2987 11.2392,14.2719 9.6318,15.7267L8.928,16.3636M4.2852,20L4.2852,4"
       android:strokeWidth="1.5"
       android:fillColor="#00000000"
       android:strokeColor="@color/icon_norm"

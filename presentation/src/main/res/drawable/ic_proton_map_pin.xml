@@ -1,10 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    android:height="25dp"
+    android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="25">
+    android:viewportHeight="24">
   <path
-      android:pathData="M5.3926,9.8041C5.3926,6.1844 8.3507,3.25 11.9997,3.25C15.6487,3.25 18.6069,6.1844 18.6069,9.8041C18.6069,11.5174 18.1215,13.1961 17.2062,14.649L13.3363,20.7911C13.1466,21.0921 13.0517,21.2427 12.9633,21.3362C12.4413,21.8879 11.5582,21.8879 11.0362,21.3362C10.9477,21.2427 10.8529,21.0922 10.6633,20.7912L6.7933,14.649C5.8779,13.1961 5.3926,11.5174 5.3926,9.8041ZM11.9997,12.4258C13.4593,12.4258 14.6426,11.252 14.6426,9.8041C14.6426,8.3562 13.4593,7.1825 11.9997,7.1825C10.5401,7.1825 9.3569,8.3562 9.3569,9.8041C9.3569,11.252 10.5401,12.4258 11.9997,12.4258Z"
+      android:pathData="M5.3926,9.3041C5.3926,5.6844 8.3507,2.75 11.9997,2.75C15.6487,2.75 18.6069,5.6844 18.6069,9.3041C18.6069,11.0174 18.1215,12.6961 17.2062,14.149L13.3363,20.2911C13.1466,20.5921 13.0517,20.7427 12.9633,20.8362C12.4413,21.3879 11.5582,21.3879 11.0362,20.8362C10.9477,20.7427 10.8529,20.5922 10.6633,20.2912L6.7933,14.149C5.8779,12.6961 5.3926,11.0174 5.3926,9.3041ZM11.9997,11.9258C13.4593,11.9258 14.6426,10.752 14.6426,9.3041C14.6426,7.8562 13.4593,6.6825 11.9997,6.6825C10.5401,6.6825 9.3569,7.8562 9.3569,9.3041C9.3569,10.752 10.5401,11.9258 11.9997,11.9258Z"
       android:strokeWidth="1.5"
       android:fillColor="#00000000"
       android:fillType="evenOdd"
