@@ -37,8 +37,7 @@ object PlansModule {
 
     @Provides
     @SupportedSignupPaidPlans
-    fun provideClientSupportedPaidPlanNames(): List<SupportedPlan> =
-        listOf(SupportedPlan("plus"))
+    fun provideClientSupportedPaidPlanNames(): List<SupportedPlan> = listOf(SupportedPlan("plus"))
 
     @Provides
     @Singleton

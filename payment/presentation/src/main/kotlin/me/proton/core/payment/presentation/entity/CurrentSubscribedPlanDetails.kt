@@ -16,34 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.entity
+package me.proton.core.payment.presentation.entity
 
-const val PLAN_PRODUCT = 1
-const val PLAN_ADDON = 0
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class Plan(
-    val id: String?,
-    val type: Int,
-    val cycle: Int?,
+@Parcelize
+data class CurrentSubscribedPlanDetails(
     val name: String,
-    val title: String,
-    val currency: String?,
-    val amount: Int,
-    val maxDomains: Int,
-    val maxAddresses: Int,
-    val maxCalendars: Int,
-    val maxSpace: Long,
-    val maxMembers: Int,
-    val maxVPN: Int,
     val services: Int?,
-    val features: Int,
-    val quantity: Int,
-    val maxTier: Int?,
-    val pricing: PlanPricing? = null
-)
-
-data class PlanPricing(
-    val monthly: Int,
-    val yearly: Int,
-    val twoYearly: Int? = null
-)
+    val type: Int
+) : Parcelable

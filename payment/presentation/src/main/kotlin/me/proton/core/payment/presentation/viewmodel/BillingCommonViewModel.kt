@@ -40,6 +40,10 @@ import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
+import me.proton.core.plan.domain.entity.PLAN_ADDON
+import me.proton.core.plan.domain.entity.PLAN_PRODUCT
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -251,4 +255,54 @@ class BillingCommonViewModel @Inject constructor(
                 paymentToken = token
             )
         }
+
+    companion object {
+        private const val MASK_MAIL = 1 // bitmap
+        private const val MASK_VPN = 4 // bitmap
+
+        fun List<Plan>.createSubscriptionPlansList(planName: String, services: Int, type: Int): List<String> {
+            return map {
+                CurrentSubscribedPlanDetails(it.name, it.services, it.type)
+            }.buildPlansList(planName, services, type)
+        }
+
+        fun List<CurrentSubscribedPlanDetails>.buildPlansList(
+            planName: String,
+            services: Int,
+            type: Int
+        ): List<String> {
+            val currentPlanHasProductPlan = any { it.type == PLAN_PRODUCT }
+            val currentPlanNames = map { it.name }
+
+            // there could be only single type 1 (product) in the list, except mail & vpn
+            return when {
+                currentPlanHasProductPlan && type == PLAN_PRODUCT -> {
+                    if (canAppendNewPlan(services)) currentPlanNames.plus(planName) else listOf(planName)
+                }
+                currentPlanHasProductPlan && type == PLAN_ADDON -> {
+                    currentPlanNames.plus(planName)
+                }
+                else -> currentPlanNames.plus(planName)
+            }.distinct()
+        }
+
+        private fun List<CurrentSubscribedPlanDetails>.canAppendNewPlan(services: Int): Boolean {
+            val hasCurrentVpnProductPlan = hasServiceFor(MASK_VPN)
+            val hasCurrentMailProductPlan = hasServiceFor(MASK_MAIL)
+
+            val newPlanIsVpnProductPlan = MASK_VPN.and(services) == MASK_VPN
+            val newPlanIsMailProductPlan = MASK_MAIL.and(services) == MASK_MAIL
+
+            return when {
+                newPlanIsMailProductPlan && hasCurrentMailProductPlan -> false
+                newPlanIsVpnProductPlan && hasCurrentVpnProductPlan -> false
+                else -> true
+            }
+        }
+
+        private fun List<CurrentSubscribedPlanDetails>.hasServiceFor(mask: Int): Boolean =
+            this.any { it.hasServiceFor(mask) }
+
+        private fun CurrentSubscribedPlanDetails.hasServiceFor(mask: Int): Boolean = mask.and(services ?: 0) == mask
+    }
 }

@@ -29,5 +29,7 @@ data class PlanShortDetails(
     val displayName: String,
     val subscriptionCycle: SubscriptionCycle,
     val amount: Long? = null,
-    val currency: Currency = Currency.EUR
+    val currency: Currency = Currency.EUR,
+    val services: Int,
+    val type: Int
 ) : Parcelable

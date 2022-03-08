@@ -107,7 +107,9 @@ sealed class PlanDetailsItem(
         val price: PlanPricing,
         val currency: PlanCurrency,
         val starred: Boolean,
-        val purchaseEnabled: Boolean = true
+        val purchaseEnabled: Boolean = true,
+        val services: Int,
+        val type: Int
     ) : PlanDetailsItem(
         name,
         displayName,

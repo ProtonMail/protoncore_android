@@ -34,6 +34,7 @@ import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityPaymentOptionsBinding
 import me.proton.core.payment.presentation.databinding.ItemPaymentMethodBinding
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
@@ -95,7 +96,17 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                 adapter = paymentOptionsAdapter
             }
             addCreditCardButton.onClick {
-                startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
+                startBilling(
+                    input.userId,
+                    viewModel.currentPlans.map {
+                        CurrentSubscribedPlanDetails(
+                            name = it.name,
+                            services = it.services,
+                            type = it.type
+                        )
+                    },
+                    input.plan.copy(amount = amountDue), input.codes
+                )
             }
             selectedPlanDetailsLayout.plan = input.plan
             payButton.apply {
@@ -105,6 +116,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                     viewModel.subscribe(
                         user,
                         input.plan.name,
+                        input.plan.services,
+                        input.plan.type,
                         input.codes,
                         input.plan.currency,
                         input.plan.subscriptionCycle,
@@ -134,7 +147,10 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                     amountDue = it.subscription.amountDue
                     with(binding) {
                         selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
-                        payButton.text = String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
+                        payButton.text = String.format(
+                            getString(R.string.payments_pay),
+                            selectedPlanDetailsLayout.userReadablePlanAmount
+                        )
                     }
                 }
                 is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
@@ -178,16 +194,42 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             return
         }
         viewModel.onThreeDSTokenApproved(
-            user, input.plan.name, input.codes, amount, input.plan.currency, input.plan.subscriptionCycle, token
+            user,
+            input.plan.name,
+            input.plan.services,
+            input.plan.type,
+            input.codes,
+            amount,
+            input.plan.currency,
+            input.plan.subscriptionCycle,
+            token
         )
     }
 
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
         if (availablePaymentMethods.isEmpty()) {
-            startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
+            startBilling(
+                input.userId,
+                viewModel.currentPlans.map {
+                    CurrentSubscribedPlanDetails(
+                        name = it.name,
+                        services = it.services,
+                        type = it.type
+                    )
+                },
+                input.plan.copy(amount = amountDue), input.codes
+            )
             return
         }
-        viewModel.validatePlan(user, input.plan.name, input.codes, input.plan.currency, input.plan.subscriptionCycle)
+        viewModel.validatePlan(
+            user,
+            input.plan.name,
+            input.plan.services,
+            input.plan.type,
+            input.codes,
+            input.plan.currency,
+            input.plan.subscriptionCycle
+        )
         paymentOptionsAdapter.submitList(availablePaymentMethods)
         binding.apply {
             payButton.isEnabled = true

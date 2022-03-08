@@ -131,7 +131,9 @@ internal abstract class BasePlansViewModel(
             domains = maxDomains,
             connections = maxVPN,
             currency = PlanCurrency.valueOf(currency!!), // paid plan has to have currency
-            starred = starred
+            starred = starred,
+            services = services ?: 0,
+            type = type
         )
 
     fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
@@ -151,7 +153,9 @@ internal abstract class BasePlansViewModel(
                     name = selectedPlan.planName,
                     displayName = selectedPlan.planDisplayName,
                     subscriptionCycle = cycle,
-                    currency = selectedPlan.currency.toSubscriptionCurrency()
+                    currency = selectedPlan.currency.toSubscriptionCurrency(),
+                    services = selectedPlan.services,
+                    type = selectedPlan.type
                 ),
                 codes = null
             )
