@@ -95,7 +95,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
                 is ViewModelResult.Error -> onValidationError(it.throwable?.getUserMessage(resources))
                 is ViewModelResult.Success -> onValidationSuccess()
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.verificationCodeResendState.onEach {
             when (it) {
@@ -107,7 +107,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
                     context?.showToast(getString(R.string.auth_signup_token_code_resent))
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         signupViewModel.userCreationState.onEach {
             // this fragment is only interested in HV and error states, all other are handled by the activity
@@ -119,7 +119,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
                 is SignupViewModel.State.Processing,
                 is SignupViewModel.State.Success -> Unit
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onValidationError(message: String?) {

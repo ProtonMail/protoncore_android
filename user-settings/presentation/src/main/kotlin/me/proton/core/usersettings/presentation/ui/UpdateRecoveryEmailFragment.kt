@@ -102,7 +102,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
                     finish(success = true)
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         findOutCurrentRecoveryAddress()
     }

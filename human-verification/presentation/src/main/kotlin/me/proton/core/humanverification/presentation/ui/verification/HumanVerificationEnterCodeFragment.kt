@@ -126,13 +126,13 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment(R.layout.fragmen
         viewModel.verificationCodeResendState
             .onSuccess { showCodeResent() }
             .onError { showError(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.validationState
             .onProcessing { showLoading() }
             .onSuccess { tokenCodeValidated(it) }
             .onError { showError(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun showLoading() {

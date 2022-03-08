@@ -113,11 +113,11 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         super.onViewCreated(view, savedInstanceState)
         viewModel.enabledMethods
             .onEach { setEnabledVerificationMethods(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.activeMethod
             .onEach { setActiveVerificationMethod(TokenType.fromString(it)) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         binding.toolbar.apply {
             val useBackArrow = arguments?.getBoolean(ARG_IS_PART_OF_FLOW) ?: false

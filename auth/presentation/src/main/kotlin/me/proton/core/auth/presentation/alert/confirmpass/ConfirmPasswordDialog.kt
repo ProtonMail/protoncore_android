@@ -118,7 +118,7 @@ class ConfirmPasswordDialog : DialogFragment() {
                     context.errorToast(getString(R.string.auth_account_not_found_error))
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         binding.enterButton.onClick {
             val password = binding.password.text.toString()

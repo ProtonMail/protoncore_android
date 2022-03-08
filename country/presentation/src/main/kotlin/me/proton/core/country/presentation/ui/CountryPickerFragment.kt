@@ -89,14 +89,14 @@ class CountryPickerFragment : ProtonDialogFragment(R.layout.fragment_country_pic
         })
         viewModel.countries.onEach {
             when (it) {
-                is CountryPickerViewModel.State.Idle ->  hideProgress()
+                is CountryPickerViewModel.State.Idle -> hideProgress()
                 is CountryPickerViewModel.State.Success -> onCountriesSuccess(it.countries)
                 is CountryPickerViewModel.State.Error -> {
                     countriesAdapter.submitList(mutableListOf())
                     hideProgress()
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun hideProgress() = with(binding) {

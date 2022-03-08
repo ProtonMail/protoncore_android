@@ -99,7 +99,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                     onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
                 is ChooseUsernameViewModel.State.ExternalAccountTokenSent -> onExternalAccountTokenSent(it.email)
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onAccountTypeSelection() {
@@ -128,7 +128,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                     }.exhaustive
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onNextClicked() {

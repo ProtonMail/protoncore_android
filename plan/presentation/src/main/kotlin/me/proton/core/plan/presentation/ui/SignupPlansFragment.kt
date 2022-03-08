@@ -92,7 +92,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                     }
                     is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
             signupPlansViewModel.getAllPlansForSignup()
         } else {
