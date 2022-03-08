@@ -331,7 +331,7 @@ class ProtonInput : LinearLayout {
     fun setOnActionListener(action: Int, block: () -> Unit) {
         imeOptions = action
         setOnEditorActionListener { v, actionId, event ->
-            if (actionId == action || event.keyCode == KeyEvent.KEYCODE_ENTER) {
+            if (actionId == action || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
                 block()
                 true
             } else false
