@@ -30,6 +30,7 @@ But, clients have still control tools on what they want to show. Mainly the tool
 - Add missing icons for Mail.
 - Update gopenpgp to v2.4.5
 - Added UserManager/UserAddressManager observeUser/observeAddresses (deprecated getUserFlow/getAddressesFlow).
+- Downgraded Material lib to 1.4.0 (user-data androidTest issues).
 
 ### Fixes
 - Use viewLifecycleOwner.lifeCycleScope for coroutines launched in Fragments.

@@ -41,7 +41,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `fragment version` =                        "1.3.6"         // Released: Sep 01, 2021
     `ktx version` =                             "1.7.0"
     `lifecycle version` =                       "2.4.0"
-    `material version` =                        "1.5.0"
+    `material version` =                        "1.4.0"
     `android-paging version` =                  "3.1.0"
     `android-work version` =                    "2.7.1"
     `android-room version` =                    "2.4.1"
