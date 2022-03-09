@@ -111,7 +111,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
                     binding.progress.visibility = View.GONE
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun loadWebView() {

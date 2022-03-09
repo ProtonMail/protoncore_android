@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+- Use viewLifecycleOwner.lifeCycle for coroutines launched in Fragments.
+
 ## [7.1.2]
 
 ### Changes

@@ -57,7 +57,7 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
                     binding.root.errorSnack(R.string.auth_signup_no_connectivity)
                 }
             }
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.watchNetwork()
     }
 

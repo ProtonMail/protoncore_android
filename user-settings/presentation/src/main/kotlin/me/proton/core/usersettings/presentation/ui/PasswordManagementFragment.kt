@@ -118,7 +118,7 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
                     showSuccess()
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun resetLoginPasswordInput() = with(binding) {

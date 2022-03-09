@@ -123,7 +123,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         }
                     }
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
             upgradePlanViewModel.availablePlansState.onEach {
                 @Suppress("IMPLICIT_CAST_TO_ANY")
@@ -160,7 +160,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, isUpsell)
                     }
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
             upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, isUpsell)
         } else {

@@ -116,7 +116,7 @@ internal class HumanVerificationSMSFragment : ProtonFragment(R.layout.fragment_h
 
         viewModel.validation
             .onError { onValidationError(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.countryCallingCode
             .onSuccess {
@@ -124,7 +124,7 @@ internal class HumanVerificationSMSFragment : ProtonFragment(R.layout.fragment_h
                     String.format(getString(R.string.human_verification_calling_code_template), it)
             }
             .onError { onError(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onValidationError(error: Throwable?) {

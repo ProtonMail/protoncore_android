@@ -93,7 +93,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
 
         viewModel.recoveryMethodUpdate
             .onEach { setActiveVerificationMethod(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.validationResult.onEach {
             when (it) {
@@ -110,7 +110,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                     }
                 }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         observeForHumanVerificationFailed()
     }
@@ -205,7 +205,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 is SignupViewModel.State.Success,
                 is SignupViewModel.State.Processing -> { showLoading(true) }
             }.exhaustive
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun setActiveVerificationMethod(methodType: RecoveryMethodType) {
