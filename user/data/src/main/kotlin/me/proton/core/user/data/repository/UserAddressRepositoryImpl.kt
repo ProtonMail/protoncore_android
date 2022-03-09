@@ -27,8 +27,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.data.arch.toDataResult
 import me.proton.core.data.arch.buildProtonStore
+import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -67,8 +67,6 @@ class UserAddressRepositoryImpl(
     private val addressKeyDao = db.addressKeyDao()
     private val addressWithKeysDao = db.addressWithKeysDao()
 
-    private var fetched = false
-
     private data class StoreKey(val userId: UserId, val addressId: AddressId? = null)
 
     private val store = StoreBuilder.from(
@@ -79,12 +77,17 @@ class UserAddressRepositoryImpl(
                 else
                     getAddresses().addresses
             }.valueOrThrow
-            fetched = true
             list.map { it.toAddress(key.userId) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> observeAddressesLocal(key.userId).map { it.takeIf { it.isNotEmpty() || fetched } } },
-            writer = { _, input -> insertOrUpdate(input) },
+            reader = { key ->
+                observeAddressesLocal(key.userId).map { addresses ->
+                    addresses.takeIf { it.isNotEmpty() }?.minus(key.getFetchedTagAddress())
+                }
+            },
+            writer = { key, addresses ->
+                insertOrUpdate(addresses.plus(key.getFetchedTagAddress()))
+            },
             delete = null, // Not used.
             deleteAll = null // Not used.
         )
@@ -162,6 +165,11 @@ class UserAddressRepositoryImpl(
     override suspend fun deleteAllAddresses(userId: UserId) =
         deleteAll(userId)
 
+    override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> =
+        store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh))
+            .map { it.dataOrNull().orEmpty() }
+            .distinctUntilChanged()
+
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
         store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh))
             .map { it.toDataResult() }
@@ -211,5 +219,24 @@ class UserAddressRepositoryImpl(
             updateOrder(UpdateOrderRequest(ids = addressIds.map { it.id }))
             getAddresses(sessionUserId, refresh = true)
         }.valueOrThrow
+    }
+
+    companion object {
+        // Fake Address tagging the repo the addresses have been fetched once.
+        private fun StoreKey.getFetchedTagAddress() = UserAddress(
+            userId = userId,
+            addressId = AddressId("fetched-$addressId"),
+            email = "fetched",
+            displayName = null,
+            signature = null,
+            domainId = null,
+            canSend = false,
+            canReceive = false,
+            enabled = false,
+            type = null,
+            order = 0,
+            keys = emptyList(),
+            signedKeyList = null
+        )
     }
 }

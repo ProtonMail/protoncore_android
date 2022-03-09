@@ -46,12 +46,14 @@ import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
 import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
+import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -84,7 +86,7 @@ class UserRepositoryImplTests {
     private lateinit var accountManager: AccountManager
 
     private lateinit var db: AccountManagerDatabase
-    private lateinit var userRepository: UserRepositoryImpl
+    private lateinit var userRepository: UserRepository
 
     private val testSrpProofs = SrpProofs(
         clientEphemeral = "test-client-ephemeral",
@@ -146,6 +148,25 @@ class UserRepositoryImplTests {
     }
 
     @Test
+    fun observeUser_locked() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+
+        // WHEN
+        val user = userRepository.observeUser(TestUsers.User1.id)
+            .filterNotNull()
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(user)
+        assertEquals(TestUsers.User1.id, user.userId)
+        assertEquals(TestUsers.User1.response.keys.size, user.keys.size)
+        assertTrue(user.keys.areAllInactive())
+    }
+
+    @Test
     fun getUser_locked_keys_assert_isActive_only_if_canUnlock() = runBlockingWithTimeout {
         // GIVEN
         val userId = TestUsers.User1.id
@@ -183,6 +204,33 @@ class UserRepositoryImplTests {
         val user = userRepository.getUserFlow(userId)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
+            .filterNot { it?.keys?.areAllInactive() ?: true }
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(user)
+        assertEquals(TestUsers.User1.id, user.userId)
+        assertEquals(TestUsers.User1.response.keys.size, user.keys.size)
+        assertFalse(user.keys.areAllInactive())
+        assertEquals(passphrase, userRepository.getPassphrase(userId))
+    }
+
+    @Test
+    fun observeUser_unlocked() = runBlockingWithTimeout {
+        // GIVEN
+        val userId = TestUsers.User1.id
+        val passphrase = TestUsers.User1.Key1.passphrase
+
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+
+        // Fetch User (add to cache/DB) and set passphrase -> unlock User.
+        userRepository.getUser(userId)
+        userRepository.setPassphrase(userId, passphrase)
+
+        // WHEN
+        val user = userRepository.observeUser(userId)
             .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 
@@ -416,7 +464,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun unlockUser_wrong_server_proof() = runBlockingWithTimeout {
+    fun unlockUser_wrong_server_proof(): Unit = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.unlockLockedScope(any()) } answers {
             SRPAuthenticationResponse(

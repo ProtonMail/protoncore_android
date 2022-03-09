@@ -65,8 +65,6 @@ class UserAddressKeySecretProvider(
         }
     }
 
-
-
     data class UserAddressKeySecret(
         val passphrase: EncryptedByteArray,
         val token: Armored? = null,

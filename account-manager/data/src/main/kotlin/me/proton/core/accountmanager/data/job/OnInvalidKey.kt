@@ -28,7 +28,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.data.AccountStateHandler
 import me.proton.core.accountmanager.data.LogTag
 import me.proton.core.accountmanager.domain.getAccounts
-import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.extension.hasMigratedKey
@@ -37,8 +36,8 @@ import me.proton.core.util.kotlin.CoreLogger
 fun AccountStateHandler.onInvalidUserKey(
     block: suspend (UserId) -> Unit
 ) = accountManager.getAccounts(AccountState.Ready)
-    .flatMapLatest { it.map { account -> userManager.getUserFlow(account.userId) }.merge() }
-    .mapSuccessValueOrNull().filterNotNull()
+    .flatMapLatest { it.map { account -> userManager.observeUser(account.userId) }.merge() }
+    .filterNotNull()
     .onEach { user ->
         if (user.keys.areAllInactive()) return@onEach
         val addresses = userManager.getAddresses(user.userId)
@@ -54,8 +53,8 @@ fun AccountStateHandler.onInvalidUserKey(
 fun AccountStateHandler.onInvalidUserAddressKey(
     block: suspend (UserId) -> Unit
 ) = accountManager.getAccounts(AccountState.Ready)
-    .flatMapLatest { it.map { account -> userManager.getAddressesFlow(account.userId) }.merge() }
-    .mapSuccessValueOrNull().filterNotNull()
+    .flatMapLatest { it.map { account -> userManager.observeAddresses(account.userId) }.merge() }
+    .filterNotNull()
     .onEach { addresses ->
         val hasMigratedKey = addresses.hasMigratedKey()
         val userId = addresses.firstOrNull()?.userId

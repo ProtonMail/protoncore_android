@@ -21,14 +21,13 @@ package me.proton.android.core.coreexample.viewmodel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.transformLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.extension.areAllInactive
@@ -36,7 +35,6 @@ import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.User
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -58,10 +56,9 @@ class UserKeyViewModel @Inject constructor(
     }
 
     fun getUserKeyState() = accountManager.getPrimaryAccount()
-        .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
-        .filterIsInstance<DataResult.Success<User>>()
-        .transformLatest { result ->
-            val user = result.value
+        .flatMapLatest { primary -> primary?.let { userManager.observeUser(it.userId) } ?: flowOf(null) }
+        .filterNotNull()
+        .transformLatest { user ->
             if (user.keys.areAllInactive()) {
                 emit(UserKeyState.Error.KeyLocked)
                 return@transformLatest

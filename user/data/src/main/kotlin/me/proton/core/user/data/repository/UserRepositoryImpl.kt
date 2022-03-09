@@ -113,6 +113,11 @@ class UserRepositoryImpl(
     override suspend fun updateUser(user: User) =
         insertOrUpdate(user)
 
+    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
+        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
+            .map { it.dataOrNull() }
+            .distinctUntilChanged()
+
     override fun getUserFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<User>> =
         store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
             .map { it.toDataResult() }

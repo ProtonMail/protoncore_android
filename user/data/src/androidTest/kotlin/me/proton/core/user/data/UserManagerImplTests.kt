@@ -53,6 +53,7 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.data.api.AddressApi
@@ -69,6 +70,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
+@Suppress("OptionalUnit")
 class UserManagerImplTests {
 
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
@@ -99,7 +101,7 @@ class UserManagerImplTests {
     private lateinit var privateKeyRepository: PrivateKeyRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
-    private lateinit var userManager: UserManagerImpl
+    private lateinit var userManager: UserManager
 
     @Before
     fun setup() {
@@ -177,9 +179,7 @@ class UserManagerImplTests {
         // THEN
         assertIs<UserManager.UnlockResult.Success>(result)
 
-        val user = userManager.getUserFlow(TestUsers.User1.id)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
+        val user = userManager.observeUser(TestUsers.User1.id)
             .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 
@@ -222,7 +222,36 @@ class UserManagerImplTests {
     }
 
     @Test
-    fun getUser_useKeys_locked() = runBlockingWithTimeout {
+    fun observeUser_useKeys_unlocked() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+
+        // Unlock UserKey.
+        userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
+
+        // WHEN
+        val user = userManager.observeUser(TestUsers.User1.id)
+            .filterNot { it?.keys?.areAllInactive() ?: true }
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(user)
+
+        user.useKeys(cryptoContext) {
+            val message = "message"
+
+            val encryptedText = encryptText(message)
+            val decryptedText = decryptText(encryptedText)
+
+            assertNotNull(decryptTextOrNull(encryptedText))
+            assertEquals(message, decryptedText)
+        }
+    }
+
+    @Test
+    fun getUser_useKeys_locked(): Unit = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -244,11 +273,33 @@ class UserManagerImplTests {
             // Cannot encrypt/decrypt as UserKey are inactive (cannot be unlocked).
             assertFailsWith(CryptoException::class) { encryptText(message) }
         }
-        Unit
     }
 
     @Test
-    fun getAddresses_useKeys_locked() = runBlockingWithTimeout {
+    fun observeUser_useKeys_locked(): Unit = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+
+        // WHEN
+        val user = userManager.observeUser(TestUsers.User1.id)
+            .filterNotNull()
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(user)
+
+        user.useKeys(cryptoContext) {
+            val message = "message"
+
+            // Cannot encrypt/decrypt as UserKey are inactive (cannot be unlocked).
+            assertFailsWith(CryptoException::class) { encryptText(message) }
+        }
+    }
+
+    @Test
+    fun getAddresses_useKeys_locked(): Unit = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -276,7 +327,34 @@ class UserManagerImplTests {
             // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
             assertFailsWith(CryptoException::class) { encryptText(message) }
         }
-        Unit
+    }
+
+    @Test
+    fun observeAddresses_useKeys_locked() : Unit = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(listOf(TestAddresses.User1.Address1.response))
+        }
+
+        // WHEN
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userManager.observeAddresses(TestUsers.User1.id, refresh = true)
+            .filter { it.isNotEmpty() }
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(addresses)
+        assertEquals(1, addresses.size)
+
+        addresses.primary()!!.useKeys(cryptoContext) {
+            val message = "message"
+
+            // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
+            assertFailsWith(CryptoException::class) { encryptText(message) }
+        }
     }
 
     @Test
@@ -317,7 +395,41 @@ class UserManagerImplTests {
     }
 
     @Test
-    fun getAddresses_useKeys_unlocked_token_signature() = runBlockingWithTimeout {
+    fun observeAddresses_useKeys_unlocked(): Unit = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(listOf(TestAddresses.User1.Address1.response))
+        }
+
+        // Unlock UserKey.
+        userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
+
+        // WHEN
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userManager.observeAddresses(TestUsers.User1.id, refresh = true)
+            .filter { it.isNotEmpty() }
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(addresses)
+        assertEquals(1, addresses.size)
+
+        addresses.primary()!!.useKeys(cryptoContext) {
+            val message = "message"
+
+            val encryptedText = encryptText(message)
+            val decryptedText = decryptText(encryptedText)
+
+            assertNotNull(decryptTextOrNull(encryptedText))
+            assertEquals(message, decryptedText)
+        }
+    }
+
+    @Test
+    fun getAddresses_useKeys_unlocked_token_signature() = runBlocking {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User2.response)
@@ -335,6 +447,40 @@ class UserManagerImplTests {
             .mapLatest { it?.value }
             .filter { it?.isNotEmpty() ?: false }
             .filterNotNull()
+            .firstOrNull()
+
+        // THEN
+        assertNotNull(addresses)
+        assertEquals(1, addresses.size)
+
+        // New format addressKey.
+        addresses.primary()!!.useKeys(cryptoContext) {
+            val message = "message"
+
+            val encryptedText = encryptText(message)
+            val decryptedText = decryptText(encryptedText)
+
+            assertNotNull(decryptTextOrNull(encryptedText))
+            assertEquals(message, decryptedText)
+        }
+    }
+
+    @Test
+    fun observeAddresses_useKeys_unlocked_token_signature() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User2.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(listOf(TestAddresses.User2.Address1.response))
+        }
+        // Unlock UserKey.
+        userManager.unlockWithPassphrase(TestUsers.User2.id, TestUsers.User2.Key1.passphrase)
+
+        // WHEN
+        val user = userRepository.getUser(TestUsers.User2.id, refresh = true)
+        val addresses = userManager.observeAddresses(TestUsers.User2.id, refresh = true)
+            .filter { it.isNotEmpty() }
             .firstOrNull()
 
         // THEN
