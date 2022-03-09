@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixes
-- Use viewLifecycleOwner.lifeCycle for coroutines launched in Fragments.
+- Use viewLifecycleOwner.lifeCycleScope for coroutines launched in Fragments.
+- Fix crash on `ProtonInput.setOnActionListener` when the `KeyEvent` param passed is null. 
 
 ## [7.1.2]
 
