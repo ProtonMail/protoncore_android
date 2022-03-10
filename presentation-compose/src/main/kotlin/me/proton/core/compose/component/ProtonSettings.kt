@@ -49,10 +49,13 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.LocalTypography
-import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 
+/**
+ * A full-size [LazyColumn] list styled with [ProtonTheme]
+ * which displays the given content
+ */
 @Composable
 fun ProtonSettingsList(
     modifier: Modifier = Modifier,
@@ -74,6 +77,11 @@ fun ProtonSettingsList(
     }
 }
 
+/**
+ * A [TopAppBar] styled with [ProtonTheme] to be used in settings screens
+ * By default, shows a back icon and the given title
+ * @param onBackClick callback to handle back icon click
+ */
 @Composable
 fun ProtonSettingsTopBar(
     modifier: Modifier = Modifier,
@@ -91,8 +99,8 @@ fun ProtonSettingsTopBar(
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
             },
-            backgroundColor = ProtonColors.Light.backgroundNorm,
-            contentColor = ProtonColors.Light.textNorm,
+            backgroundColor = ProtonTheme.colors.backgroundNorm,
+            contentColor = ProtonTheme.colors.textNorm,
             elevation = 0.dp
         )
     }
@@ -199,8 +207,14 @@ fun ProtonSettingsToggleItem(
 }
 
 @Preview(
-    name = "Proton settings top bar",
-    showBackground = true
+    name = "Proton settings top bar light mode",
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_NO
+)
+@Preview(
+    name = "Proton settings top bar dark mode",
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 fun previewSettingsTopBar() {

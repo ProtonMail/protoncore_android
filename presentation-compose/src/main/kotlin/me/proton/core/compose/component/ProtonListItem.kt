@@ -49,6 +49,14 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.compose.R
 
+/**
+ * A basic, highly customizable list item to be used in lists that requires particular layouts.
+ * By default, this list item is full-width, vertically centered and horizontally aligned at start.
+ * @param horizontalAlignment allows changing the horizontal alignment
+ *
+ * A sample use case where this was used is [ProtonSettingsToggleItem] where we
+ * used an horizontal "Space between" to layout a switch
+ */
 @Composable
 fun ProtonRawListItem(
     modifier: Modifier = Modifier,

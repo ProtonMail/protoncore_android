@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## New
+
+- `ProtonSettings` basic composables to build settings screens
+
 ## Fixed
 
 - Stop decoding the base64 when decrypting the HashKey (to keep compatibility with drive web & iOS).
