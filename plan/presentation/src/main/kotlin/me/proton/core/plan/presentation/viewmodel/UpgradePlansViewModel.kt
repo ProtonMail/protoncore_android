@@ -95,7 +95,8 @@ internal class UpgradePlansViewModel @Inject constructor(
             )
         }?.toMutableList() ?: mutableListOf()
 
-        if (subscribedPlans.isEmpty()) {
+        val isFree = subscribedPlans.isEmpty()
+        if (isFree) {
             subscribedPlans.add(
                 createCurrentPlan(
                     plan = getPlanDefault(userId),
@@ -107,9 +108,8 @@ internal class UpgradePlansViewModel @Inject constructor(
             )
         }
 
-
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
-        getAvailablePlansForUpgrade(userId, isUpsell)
+        getAvailablePlansForUpgrade(userId, isUpsell, isFree)
         emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans))
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
@@ -117,21 +117,24 @@ internal class UpgradePlansViewModel @Inject constructor(
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private fun getAvailablePlansForUpgrade(userId: UserId, isUpsell: Boolean) = flow {
+    private fun getAvailablePlansForUpgrade(userId: UserId, isUpsell: Boolean, isFreeUser: Boolean) = flow {
         emit(PlanState.Processing)
         val purchaseStatus = getPurchaseStatus()
 
         val availablePlans =
-            if (!isUpsell && !purchaseStatus) emptyList()
-            else getPlans(
-                supportedPaidPlans = supportedPaidPlanNames.map { it.name },
-                userId = userId
-            ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-                .map { plan ->
-                    plan.toPaidPlanDetailsItem(
-                        supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
-                    )
-                }
+            when {
+                !isUpsell && !purchaseStatus -> emptyList()
+                !isFreeUser -> emptyList()
+                else -> getPlans(
+                    supportedPaidPlans = supportedPaidPlanNames.map { it.name },
+                    userId = userId
+                ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
+                    .map { plan ->
+                        plan.toPaidPlanDetailsItem(
+                            supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
+                        )
+                    }
+            }
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = purchaseStatus))
     }.catch { error ->
