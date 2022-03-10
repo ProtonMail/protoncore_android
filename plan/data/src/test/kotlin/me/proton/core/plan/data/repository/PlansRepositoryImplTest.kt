@@ -95,6 +95,7 @@ class PlansRepositoryImplTest {
                 features = 1,
                 quantity = 1,
                 maxTier = 1,
+                state = true,
                 pricing = PlanPricing(
                     1, 10, 20
                 )
@@ -144,6 +145,7 @@ class PlansRepositoryImplTest {
                 features = 1,
                 quantity = 1,
                 maxTier = 1,
+                state = true,
                 pricing = PlanPricing(
                     1, 10, 20
                 )

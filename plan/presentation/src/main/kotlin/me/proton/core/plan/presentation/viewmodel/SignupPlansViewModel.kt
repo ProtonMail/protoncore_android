@@ -26,18 +26,17 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.plan.domain.SupportedSignupPaidPlans
+import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
-import me.proton.core.plan.presentation.entity.SupportedPlan
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SignupPlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
-    @SupportedSignupPaidPlans val supportedPaidPlanNames: List<SupportedPlan>,
+    @SupportSignupPaidPlans val supportPaidPlans: Boolean,
     purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
@@ -49,12 +48,8 @@ internal class SignupPlansViewModel @Inject constructor(
         if (purchaseStatus) {
             plans.apply {
                 addAll(
-                    getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it.name }, userId = null)
-                        .map { plan ->
-                            plan.toPaidPlanDetailsItem(
-                                supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
-                            )
-                        }
+                    getPlans(userId = null)
+                        .map { plan -> plan.toPaidPlanDetailsItem(false) }
                 )
                 add(createFreePlan(getPlanDefault(userId = null)))
             }

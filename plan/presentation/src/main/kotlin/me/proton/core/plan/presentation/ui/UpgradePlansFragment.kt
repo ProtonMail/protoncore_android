@@ -76,7 +76,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (upgradePlanViewModel.supportedPaidPlanNames.isNotEmpty()) {
+        if (upgradePlanViewModel.supportPaidPlans) {
             binding.apply {
                 toolbar.setNavigationOnClickListener {
                     setResult()

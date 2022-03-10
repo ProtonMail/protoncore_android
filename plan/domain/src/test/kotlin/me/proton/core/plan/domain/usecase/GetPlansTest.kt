@@ -36,7 +36,6 @@ class GetPlansTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testDefaultSupportedPlans = listOf("plan-name-1", "plan-name-2")
     private val testPlan = Plan(
         id = "plan-name-1",
         type = 1,
@@ -55,6 +54,7 @@ class GetPlansTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
+        state = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -73,7 +73,7 @@ class GetPlansTest {
         // GIVEN
         coEvery { repository.getPlans(testUserId) } returns listOf(testPlan)
         // WHEN
-        val result = useCase.invoke(testDefaultSupportedPlans, testUserId)
+        val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(1, result.size)
         assertEquals(testPlan, result[0])
@@ -81,23 +81,12 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans returns empty because of empty unsupported plans`() = runBlockingTest {
+    fun `get plans returns empty because of disabled plans`() = runBlockingTest {
         // GIVEN
         useCase = GetPlans(repository)
-        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan)
+        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(state = false))
         // WHEN
-        val result = useCase.invoke(emptyList(), testUserId)
-        // THEN
-        assertEquals(0, result.size)
-    }
-
-    @Test
-    fun `get plans returns empty because of unsupported plans`() = runBlockingTest {
-        // GIVEN
-        useCase = GetPlans(repository)
-        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan)
-        // WHEN
-        val result = useCase.invoke(listOf("test-plan-2", "test-plan-3"), testUserId)
+        val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(0, result.size)
     }
@@ -107,7 +96,7 @@ class GetPlansTest {
         // GIVEN
         coEvery { repository.getPlans(null) } returns listOf(testPlan)
         // WHEN
-        val result = useCase.invoke(testDefaultSupportedPlans, null)
+        val result = useCase.invoke(null)
         // THEN
         assertEquals(1, result.size)
         assertEquals(testPlan, result[0])

@@ -46,9 +46,6 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
     // endregion
 
     // region test data
-    private val testDefaultSupportedPlans = listOf(
-        SupportedPlan("plan-name-1"), SupportedPlan("plan-name-2")
-    )
     private val testPlan = Plan(
         id = "plan-name-1",
         type = 1,
@@ -67,6 +64,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
+        state = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -89,7 +87,8 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         services = 0,
         features = 0,
         quantity = 0,
-        maxTier = 0
+        maxTier = 0,
+        state = true
     )
     // endregion
 
@@ -104,7 +103,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             SignupPlansViewModel(
                 getPlansUseCase,
                 getPlanDefaultUseCase,
-                testDefaultSupportedPlans,
+                true,
                 purchaseEnabled,
                 paymentOrchestrator
             )
@@ -112,7 +111,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get plans for signup success handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans.map { it.name }, any()) } returns listOf(
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
             testPlan,
             testPlan.copy(id = "plan-name-2", name = "plan-name-2")
         )

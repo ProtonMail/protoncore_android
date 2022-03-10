@@ -31,12 +31,11 @@ import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.plan.domain.SupportedUpgradePaidPlans
+import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
-import me.proton.core.plan.presentation.entity.SupportedPlan
 import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.usersettings.domain.usecase.GetOrganization
 import java.util.Calendar
@@ -47,10 +46,10 @@ internal class UpgradePlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedUpgradePaidPlans val supportedPaidPlanNames: List<SupportedPlan>,
     private val getOrganization: GetOrganization,
     private val getUser: GetUser,
     private val getPaymentMethods: GetAvailablePaymentMethods,
+    @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
     purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
@@ -126,14 +125,9 @@ internal class UpgradePlansViewModel @Inject constructor(
                 !isUpsell && !purchaseStatus -> emptyList()
                 !isFreeUser -> emptyList()
                 else -> getPlans(
-                    supportedPaidPlans = supportedPaidPlanNames.map { it.name },
                     userId = userId
                 ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-                    .map { plan ->
-                        plan.toPaidPlanDetailsItem(
-                            supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
-                        )
-                    }
+                    .map { plan -> plan.toPaidPlanDetailsItem(false) }
             }
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = purchaseStatus))

@@ -59,7 +59,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testDefaultSupportedPlans = listOf(SupportedPlan("plan-name-1"), SupportedPlan("plan-name-2"))
     private val testSubscribedPlan = Plan(
         id = "subscribed-plan-name-1",
         type = 1,
@@ -78,6 +77,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
+        state = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -101,6 +101,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
+        state = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -123,6 +124,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         services = 0,
         features = 0,
         quantity = 0,
+        state = true,
         maxTier = 0
     )
 
@@ -197,7 +199,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getPaymentMethodsUseCase.invoke(any()) } returns emptyList()
         coEvery { purchaseEnabled.invoke() } returns true
 
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans.map { it.name }, testUserId) } returns listOf(
+        coEvery { getPlansUseCase.invoke(testUserId) } returns listOf(
             testPlan
         )
 
@@ -205,10 +207,10 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             getPlansUseCase,
             getPlanDefaultUseCase,
             getSubscriptionUseCase,
-            testDefaultSupportedPlans,
             getOrganizationUseCase,
             getUserUseCase,
             getPaymentMethodsUseCase,
+            true,
             purchaseEnabled,
             paymentOrchestrator,
         )

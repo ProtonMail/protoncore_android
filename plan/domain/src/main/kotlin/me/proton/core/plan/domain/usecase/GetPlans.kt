@@ -26,9 +26,10 @@ import javax.inject.Inject
 class GetPlans @Inject constructor(
     private val plansRepository: PlansRepository
 ) {
-    suspend operator fun invoke(supportedPaidPlans: List<String>, userId: UserId?): List<Plan> {
-        return plansRepository.getPlans(userId).filter {
-            supportedPaidPlans.contains(it.name)
-        }
+    suspend operator fun invoke(userId: UserId?): List<Plan> {
+        return plansRepository.getPlans(userId)
+            .filter {
+                it.state
+            }
     }
 }

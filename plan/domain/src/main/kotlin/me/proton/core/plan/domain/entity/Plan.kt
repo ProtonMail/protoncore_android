@@ -39,6 +39,7 @@ data class Plan(
     val features: Int,
     val quantity: Int,
     val maxTier: Int?,
+    val state: Boolean,
     val pricing: PlanPricing? = null
 )
 
