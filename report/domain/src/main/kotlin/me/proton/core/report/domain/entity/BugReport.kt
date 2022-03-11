@@ -19,6 +19,8 @@
 package me.proton.core.report.domain.entity
 
 import kotlinx.serialization.Serializable
+import me.proton.core.report.domain.entity.BugReport.Companion.validateDescription
+import me.proton.core.report.domain.entity.BugReport.Companion.validateTitle
 
 @Serializable
 public data class BugReport(
@@ -31,31 +33,36 @@ public data class BugReport(
         public const val DescriptionMinLength: Int = 10
         public const val DescriptionMaxLength: Int = 1000
         public const val SubjectMaxLength: Int = 100
+
+        public fun validateDescription(description: String): List<BugReportValidationError> = buildList {
+            when {
+                description.isBlank() -> add(BugReportValidationError.DescriptionMissing)
+                description.length < DescriptionMinLength -> add(BugReportValidationError.DescriptionTooShort)
+                description.length > DescriptionMaxLength -> add(BugReportValidationError.DescriptionTooLong)
+            }
+        }
+
+        public fun validateTitle(title: String): List<BugReportValidationError> = buildList {
+            if (title.isBlank()) {
+                add(BugReportValidationError.SubjectMissing)
+            } else if (title.length > SubjectMaxLength) {
+                add(BugReportValidationError.SubjectTooLong)
+            }
+        }
     }
 }
 
-public fun BugReport.validate(): List<BugReportValidationError>? {
-    val list = mutableListOf<BugReportValidationError>()
+public fun BugReport.validate(): List<BugReportValidationError> =
+    validateTitle(title) + validateDescription(description)
 
-    if (title.isBlank()) {
-        list.add(BugReportValidationError.SubjectMissing)
-    } else if (title.length > BugReport.SubjectMaxLength) {
-        list.add(BugReportValidationError.SubjectTooLong)
-    }
-
-    when {
-        description.isBlank() -> list.add(BugReportValidationError.DescriptionMissing)
-        description.length < BugReport.DescriptionMinLength -> list.add(BugReportValidationError.DescriptionTooShort)
-        description.length > BugReport.DescriptionMaxLength -> list.add(BugReportValidationError.DescriptionTooLong)
-    }
-
-    return if (list.isEmpty()) null else list
+public enum class BugReportField {
+    Subject, Description
 }
 
-public enum class BugReportValidationError {
-    SubjectMissing,
-    SubjectTooLong,
-    DescriptionMissing,
-    DescriptionTooLong,
-    DescriptionTooShort
+public enum class BugReportValidationError(public val field: BugReportField) {
+    SubjectMissing(BugReportField.Subject),
+    SubjectTooLong(BugReportField.Subject),
+    DescriptionMissing(BugReportField.Description),
+    DescriptionTooLong(BugReportField.Description),
+    DescriptionTooShort(BugReportField.Description)
 }

@@ -21,7 +21,6 @@ package me.proton.core.report.domain.entity
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 internal class BugReportValidationTest {
@@ -33,7 +32,7 @@ internal class BugReportValidationTest {
             username = "username",
             email = "test@user"
         ).validate()
-        assertNull(errors)
+        assertTrue(errors.isEmpty())
     }
 
     @Test

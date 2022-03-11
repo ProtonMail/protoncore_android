@@ -35,6 +35,8 @@ public final class me/proton/core/report/domain/entity/BugReport$$serializer : k
 
 public final class me/proton/core/report/domain/entity/BugReport$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public final fun validateDescription (Ljava/lang/String;)Ljava/util/List;
+	public final fun validateTitle (Ljava/lang/String;)Ljava/util/List;
 }
 
 public final class me/proton/core/report/domain/entity/BugReportExtra {
@@ -67,6 +69,13 @@ public final class me/proton/core/report/domain/entity/BugReportExtra$$serialize
 
 public final class me/proton/core/report/domain/entity/BugReportExtra$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportField : java/lang/Enum {
+	public static final field Description Lme/proton/core/report/domain/entity/BugReportField;
+	public static final field Subject Lme/proton/core/report/domain/entity/BugReportField;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportField;
+	public static fun values ()[Lme/proton/core/report/domain/entity/BugReportField;
 }
 
 public final class me/proton/core/report/domain/entity/BugReportKt {
@@ -117,6 +126,7 @@ public final class me/proton/core/report/domain/entity/BugReportValidationError 
 	public static final field DescriptionTooShort Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static final field SubjectMissing Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static final field SubjectTooLong Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public final fun getField ()Lme/proton/core/report/domain/entity/BugReportField;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static fun values ()[Lme/proton/core/report/domain/entity/BugReportValidationError;
 }

@@ -22,10 +22,10 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.report.presentation.ReportOrchestrator
@@ -40,19 +40,20 @@ class ReportsViewModel @Inject constructor(
     private val reportOrchestrator: ReportOrchestrator,
     private val userManager: UserManager
 ) : ViewModel() {
-    private val _bugReportSent = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    val bugReportSent: Flow<String> = _bugReportSent.asSharedFlow()
+    private val _bugReportSent = Channel<String>()
+    val bugReportSent: Flow<String> = _bugReportSent.receiveAsFlow()
 
     fun register(caller: ActivityResultCaller) {
         reportOrchestrator.register(caller) {
             if (it is BugReportOutput.SuccessfullySent) {
-                viewModelScope.launch { _bugReportSent.emit(it.successMessage) }
+                viewModelScope.launch { _bugReportSent.send(it.successMessage) }
             }
         }
     }
 
     override fun onCleared() {
         reportOrchestrator.unregister()
+        _bugReportSent.close()
         super.onCleared()
     }
 

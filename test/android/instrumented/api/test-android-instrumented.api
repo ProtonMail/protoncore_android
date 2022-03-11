@@ -1044,7 +1044,6 @@ public final class me/proton/core/test/android/robots/reports/BugReportRobot$Ver
 	public final fun bugReportFormIsEditable ()V
 	public final fun bugReportIsSending ()V
 	public final fun descriptionFieldHasError (II[Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun descriptionFieldHasError (I[Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun descriptionLength (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun subjectFieldHasError (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun subjectLength (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;

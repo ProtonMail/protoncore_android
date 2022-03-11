@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportExtra
+import me.proton.core.report.domain.entity.BugReportField
 import me.proton.core.report.domain.entity.validate
 import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.report.presentation.entity.BugReportFormState
@@ -48,6 +49,31 @@ internal class BugReportViewModel @Inject constructor(
     private val _exitSignal = MutableSharedFlow<ExitSignal>()
     val exitSignal: Flow<ExitSignal> = _exitSignal.asSharedFlow()
 
+    private val _hideKeyboardSignal = MutableSharedFlow<Unit>()
+    val hideKeyboardSignal: Flow<Unit> = _hideKeyboardSignal.asSharedFlow()
+
+    /** Re-validates the description, and preserves other errors (if any). */
+    suspend fun revalidateDescription(description: String) {
+        val errors = (_bugReportFormState.value as? BugReportFormState.FormError)?.errors.orEmpty()
+        val descriptionErrors = BugReport.validateDescription(description)
+        val otherErrors = errors.filter { it.field != BugReportField.Description }
+        _bugReportFormState.emit(BugReportFormState.FormError(descriptionErrors + otherErrors))
+    }
+
+    /** Re-validates the subject, and preserves other errors (if any). */
+    suspend fun revalidateSubject(subject: String) {
+        val errors = (_bugReportFormState.value as? BugReportFormState.FormError)?.errors.orEmpty()
+        val titleErrors = BugReport.validateTitle(subject)
+        val otherErrors = errors.filter { it.field != BugReportField.Subject }
+        _bugReportFormState.emit(BugReportFormState.FormError(titleErrors + otherErrors))
+    }
+
+    suspend fun clearFormErrors(forField: BugReportField) {
+        val errors = (_bugReportFormState.value as? BugReportFormState.FormError)?.errors.orEmpty()
+        val otherErrors = errors.filter { it.field != forField }
+        _bugReportFormState.emit(BugReportFormState.FormError(otherErrors))
+    }
+
     fun tryExit(data: ReportFormData? = null, force: Boolean = false) {
         val formState = _bugReportFormState.value
         val signal = if (formState is BugReportFormState.SendingResult && formState.result.isPending()) {
@@ -60,21 +86,28 @@ internal class BugReportViewModel @Inject constructor(
         viewModelScope.launch { _exitSignal.emit(signal) }
     }
 
-    fun trySendingBugReport(data: ReportFormData, email: String, username: String) = viewModelScope.launch {
+    fun trySendingBugReport(
+        data: ReportFormData,
+        email: String,
+        username: String,
+        country: String?,
+        isp: String?,
+    ) = viewModelScope.launch {
+        _hideKeyboardSignal.emit(Unit)
         _bugReportFormState.emit(BugReportFormState.Processing)
 
         val bugReport = makeBugReport(data, email = email, username = username)
-        bugReport.validate()?.let {
-            _bugReportFormState.emit(BugReportFormState.FormError(it))
-            return@launch
-        }
+        val formErrors = bugReport.validate()
 
-        val extra = if (data.country != null || data.isp != null) {
-            BugReportExtra(country = data.country, isp = data.isp)
-        } else null
-
-        sendBugReport(bugReport, extra).collect {
-            _bugReportFormState.emit(BugReportFormState.SendingResult(it))
+        if (formErrors.isEmpty()) {
+            val extra = if (country != null || isp != null) {
+                BugReportExtra(country = country, isp = isp)
+            } else null
+            sendBugReport(bugReport, extra).collect {
+                _bugReportFormState.emit(BugReportFormState.SendingResult(it))
+            }
+        } else {
+            _bugReportFormState.emit(BugReportFormState.FormError(formErrors))
         }
     }
 

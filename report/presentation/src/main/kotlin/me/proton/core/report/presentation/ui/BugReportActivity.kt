@@ -35,12 +35,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.showKeyboard
 import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportField
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.report.presentation.R
@@ -66,7 +68,69 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initToolbar()
+        initForm()
+        listenForViewModelFlows()
+        addOnBackPressedCallback { viewModel.tryExit(getReportFormData()) }
+        binding.bugReportSubject.requestFocus()
+    }
 
+    override fun onDestroy() {
+        exitDialog?.dismiss()
+        exitDialog = null
+        super.onDestroy()
+    }
+
+    private fun initForm() {
+        binding.bugReportDescription.filters = arrayOf(InputFilter.LengthFilter(BugReport.DescriptionMaxLength))
+        binding.bugReportSubject.filters = arrayOf(InputFilter.LengthFilter(BugReport.SubjectMaxLength))
+
+        binding.bugReportDescription.setOnFocusChangeListener { _, hasFocus ->
+            lifecycleScope.launch {
+                if (hasFocus) {
+                    viewModel.clearFormErrors(BugReportField.Description)
+                } else {
+                    viewModel.revalidateDescription(binding.bugReportDescription.text?.toString() ?: "")
+                }
+            }
+        }
+
+        binding.bugReportSubject.setOnFocusChangeListener { _, hasFocus ->
+            lifecycleScope.launch {
+                if (hasFocus) {
+                    viewModel.clearFormErrors(BugReportField.Subject)
+                } else {
+                    viewModel.revalidateSubject(binding.bugReportSubject.text?.toString() ?: "")
+                }
+            }
+        }
+
+        binding.spacer.setOnClickListener {
+            if (binding.bugReportDescription.hasFocus()) {
+                hideKeyboard(binding.bugReportDescription)
+            } else {
+                showKeyboard(binding.bugReportDescription)
+            }
+        }
+    }
+
+    private fun initToolbar() {
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.bug_report_send) {
+                viewModel.trySendingBugReport(
+                    getReportFormData(),
+                    email = input.email,
+                    username = input.username,
+                    country = input.country,
+                    isp = input.isp
+                )
+                true
+            } else false
+        }
+    }
+
+    private fun listenForViewModelFlows() {
         viewModel.bugReportFormState
             .flowWithLifecycle(lifecycle)
             .onEach(this::handleBugReportFormState)
@@ -77,40 +141,16 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
             .onEach(this::handleExitSignal)
             .launchIn(lifecycleScope)
 
-        addOnBackPressedCallback { viewModel.tryExit(getReportFormData()) }
-
-        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbar.setOnMenuItemClickListener {
-            if (it.itemId == R.id.bug_report_send) {
-                viewModel.trySendingBugReport(getReportFormData(), email = input.email, username = input.username)
-                true
-            } else false
-        }
-
-        binding.spacer.setOnClickListener {
-            if (binding.bugReportDescription.hasFocus()) {
-                hideKeyboard(binding.bugReportDescription)
-            } else {
-                showKeyboard(binding.bugReportDescription)
-            }
-        }
-        binding.bugReportDescription.filters = arrayOf(InputFilter.LengthFilter(BugReport.DescriptionMaxLength))
-        binding.bugReportSubject.filters = arrayOf(InputFilter.LengthFilter(BugReport.SubjectMaxLength))
-        binding.bugReportSubject.requestFocus()
-    }
-
-    override fun onDestroy() {
-        exitDialog?.dismiss()
-        exitDialog = null
-        super.onDestroy()
+        viewModel.hideKeyboardSignal
+            .flowWithLifecycle(lifecycle)
+            .onEach { hideKeyboard() }
+            .launchIn(lifecycleScope)
     }
 
     private fun getReportFormData(): ReportFormData {
         return ReportFormData(
             subject = binding.bugReportSubject.text.toString(),
             description = binding.bugReportDescription.text.toString(),
-            country = input.country,
-            isp = input.isp
         )
     }
 
@@ -215,8 +255,6 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
 
         binding.bugReportSubjectLayout.isEnabled = !isLoading
         binding.bugReportSubjectLayout.error = null
-
-        if (isLoading) hideKeyboard()
     }
 
     private fun showExitDialog() {

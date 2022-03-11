@@ -197,7 +197,6 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
         reportsViewModel.bugReportSent
             .flowWithLifecycle(lifecycle)
-            .distinctUntilChanged()
             .onEach {
                 binding.root.successSnack(it)
             }.launchIn(lifecycleScope)

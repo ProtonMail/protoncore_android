@@ -59,10 +59,6 @@ class BugReportRobot : CoreRobot() {
             .withId(R.id.bug_report_subject_layout)
             .withCustomMatcher(ViewMatchers.hasErrorText(stringFromResource(stringId)))
 
-        fun descriptionFieldHasError(@StringRes stringId: Int, vararg formatArgs: Any) = view
-            .withId(R.id.bug_report_description_layout)
-            .withCustomMatcher(ViewMatchers.hasErrorText(stringFromResource(stringId, *formatArgs)))
-
         fun descriptionFieldHasError(@PluralsRes pluralsId: Int, quantity: Int, vararg formatArgs: Any) = view
             .withId(R.id.bug_report_description_layout)
             .withCustomMatcher(ViewMatchers.hasErrorText(pluralStringFromResource(pluralsId, quantity, *formatArgs)))

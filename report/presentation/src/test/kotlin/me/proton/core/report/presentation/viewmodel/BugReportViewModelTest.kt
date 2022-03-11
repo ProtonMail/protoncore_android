@@ -44,8 +44,6 @@ internal class BugReportViewModelTest : CoroutinesTest {
     private val testReportFormData = ReportFormData(
         subject = "Subject",
         description = "Description",
-        country = "Switzerland",
-        isp = "InternetServiceProvider"
     )
     private val testEmail = "email@test"
     private val testUsername = "testUsername"
@@ -78,7 +76,13 @@ internal class BugReportViewModelTest : CoroutinesTest {
                 cancel()
             }
         }
-        tested.trySendingBugReport(testReportFormData, email = testEmail, username = testUsername)
+        tested.trySendingBugReport(
+            testReportFormData,
+            email = testEmail,
+            username = testUsername,
+            country = "Switzerland",
+            isp = "InternetServiceProvider"
+        )
         formStateJob.join()
     }
 
@@ -103,9 +107,11 @@ internal class BugReportViewModelTest : CoroutinesTest {
             }
         }
         tested.trySendingBugReport(
-            testReportFormData.copy(country = null, isp = null),
+            testReportFormData.copy(),
             email = testEmail,
-            username = testUsername
+            username = testUsername,
+            country = null,
+            isp = null
         )
         formStateJob.join()
     }
@@ -126,7 +132,13 @@ internal class BugReportViewModelTest : CoroutinesTest {
             }
         }
         val invalidFormData = testReportFormData.copy(description = "")
-        tested.trySendingBugReport(invalidFormData, email = testEmail, username = testUsername)
+        tested.trySendingBugReport(
+            invalidFormData,
+            email = testEmail,
+            username = testUsername,
+            country = null,
+            isp = null
+        )
         formStateJob.join()
     }
 
@@ -172,6 +184,70 @@ internal class BugReportViewModelTest : CoroutinesTest {
         }
         tested.tryExit(ReportFormData("", "Description"), force = true)
         exitSignalJob.join()
+    }
+
+    @Test
+    fun `revalidate subject`() = runBlockingTest {
+        val formStateJob = launch {
+            tested.bugReportFormState.test {
+                assertIs<BugReportFormState.Idle>(awaitItem())
+                assertIs<BugReportFormState.Processing>(awaitItem())
+                val formErrors = assertIs<BugReportFormState.FormError>(awaitItem())
+                assertContentEquals(
+                    listOf(BugReportValidationError.SubjectMissing, BugReportValidationError.DescriptionMissing),
+                    formErrors.errors
+                )
+                val errorsAfterRevalidation = assertIs<BugReportFormState.FormError>(awaitItem())
+                assertContentEquals(
+                    listOf(BugReportValidationError.DescriptionMissing),
+                    errorsAfterRevalidation.errors
+                )
+                expectNoEvents()
+                cancel()
+            }
+        }
+        val invalidFormData = ReportFormData(subject = "", description = "")
+        tested.trySendingBugReport(
+            invalidFormData,
+            email = testEmail,
+            username = testUsername,
+            country = null,
+            isp = null
+        )
+        tested.revalidateSubject("Test subject")
+        formStateJob.join()
+    }
+
+    @Test
+    fun `revalidate description`() = runBlockingTest {
+        val formStateJob = launch {
+            tested.bugReportFormState.test {
+                assertIs<BugReportFormState.Idle>(awaitItem())
+                assertIs<BugReportFormState.Processing>(awaitItem())
+                val formErrors = assertIs<BugReportFormState.FormError>(awaitItem())
+                assertContentEquals(
+                    listOf(BugReportValidationError.SubjectMissing, BugReportValidationError.DescriptionMissing),
+                    formErrors.errors
+                )
+                val errorsAfterRevalidation = assertIs<BugReportFormState.FormError>(awaitItem())
+                assertContentEquals(
+                    listOf(BugReportValidationError.SubjectMissing),
+                    errorsAfterRevalidation.errors
+                )
+                expectNoEvents()
+                cancel()
+            }
+        }
+        val invalidFormData = ReportFormData(subject = "", description = "")
+        tested.trySendingBugReport(
+            invalidFormData,
+            email = testEmail,
+            username = testUsername,
+            country = null,
+            isp = null
+        )
+        tested.revalidateDescription("Test description")
+        formStateJob.join()
     }
 
     private fun mockBugReportResults(vararg results: SendBugReport.Result): List<SendBugReport.Result> {
