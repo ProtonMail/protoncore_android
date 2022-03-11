@@ -41,11 +41,14 @@ import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
+import me.proton.core.plan.domain.entity.MASK_MAIL
+import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.PLAN_ADDON
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.hasFlag
 import javax.inject.Inject
 
 /**
@@ -257,9 +260,6 @@ class BillingCommonViewModel @Inject constructor(
         }
 
     companion object {
-        private const val MASK_MAIL = 1 // bitmap
-        private const val MASK_VPN = 4 // bitmap
-
         fun List<Plan>.createSubscriptionPlansList(planName: String, services: Int, type: Int): List<String> {
             return map {
                 CurrentSubscribedPlanDetails(it.name, it.services, it.type)
@@ -300,9 +300,8 @@ class BillingCommonViewModel @Inject constructor(
             }
         }
 
-        private fun List<CurrentSubscribedPlanDetails>.hasServiceFor(mask: Int): Boolean =
-            this.any { it.hasServiceFor(mask) }
+        private fun List<CurrentSubscribedPlanDetails>.hasServiceFor(mask: Int) = any { it.hasServiceFor(mask) }
 
-        private fun CurrentSubscribedPlanDetails.hasServiceFor(mask: Int): Boolean = mask.and(services ?: 0) == mask
+        private fun CurrentSubscribedPlanDetails.hasServiceFor(mask: Int): Boolean = (services ?: 0).hasFlag(mask)
     }
 }

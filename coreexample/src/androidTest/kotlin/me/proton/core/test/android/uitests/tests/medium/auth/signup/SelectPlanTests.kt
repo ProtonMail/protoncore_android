@@ -52,7 +52,7 @@ class SelectPlanTests : BaseTest() {
             .skip()
             .skipConfirm()
             .verify {
-                planDetailsDisplayed(Free)
+                planDetailsDisplayedInsideRecyclerView(Free)
                 canSelectPlan(Dev)
             }
     }
@@ -60,6 +60,7 @@ class SelectPlanTests : BaseTest() {
     @Test
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
+            .scrollToPlan(Free)
             .expandPlan(Free)
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {
@@ -69,7 +70,7 @@ class SelectPlanTests : BaseTest() {
         HumanVerificationRobot()
             .close<SelectPlanRobot>()
             .verify {
-                planDetailsDisplayed(Free)
+                planDetailsDisplayedInsideRecyclerView(Free)
                 errorSnackbarDisplayed("Human verification required")
             }
     }
@@ -85,6 +86,6 @@ class SelectPlanTests : BaseTest() {
         AddCreditCardRobot()
             .close<SelectPlanRobot>()
             .expandPlan(Free)
-            .verify { planDetailsDisplayed(Free) }
+            .verify { planDetailsDisplayedInsideRecyclerView(Free) }
     }
 }

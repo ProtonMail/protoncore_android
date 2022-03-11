@@ -6,10 +6,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+- Now instead of clients supplying supported plan names, the plans module relies completely on the
+API which will return the plans that are relevant to your app only.
+But, clients have still control tools on what they want to show. Mainly the tools are:
+
+```kotlin
+    // if you want to completely not support paid plans during signup process, set this one to false.
+    @Provides
+    @SupportSignupPaidPlans
+    fun provideSupportSignupPaidPlans() = true
+
+    // if you want to completely not support paid plans for upgrade, set this one to false.
+    @Provides
+    @SupportUpgradePaidPlans
+    fun provideSupportUpgradePaidPlans() = true
+
+    // this flag controls whether you want to support your product only plans exclusively, or you want to support plans that are a combo of your and other products.
+    @Provides
+    @ProductOnlyPaidPlans
+    fun provideProductOnlyPaidPlans() = false
+```
+
 ### Fixes
 - Use viewLifecycleOwner.lifeCycleScope for coroutines launched in Fragments.
 - Fix crash on `ProtonInput.setOnActionListener` when the `KeyEvent` param passed is null. 
 - Fix incorrect design of the alert dialog
+- Fix for VPN plans features showing unrelated items.
+- Fix bug where a user with VPN basic plan couldn't upgrade to higher plan.
 
 ## [7.1.2]
 

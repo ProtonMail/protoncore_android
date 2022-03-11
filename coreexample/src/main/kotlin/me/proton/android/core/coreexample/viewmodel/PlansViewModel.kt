@@ -31,7 +31,10 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.plan.domain.entity.MASK_MAIL
+import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.presentation.utils.showToast
@@ -106,7 +109,7 @@ class PlansViewModel @Inject constructor(
                     name = PLAN_PLUS_ID,
                     displayName = "Proton Plus",
                     subscriptionCycle = SubscriptionCycle.YEARLY,
-                    services = 1,
+                    services = MASK_MAIL,
                     type = PLAN_PRODUCT
                 )
             )
@@ -128,7 +131,7 @@ class PlansViewModel @Inject constructor(
                             name = PLAN_VISIONARY_ID,
                             displayName = "Proton Visionary",
                             subscriptionCycle = SubscriptionCycle.YEARLY,
-                            services = 5,
+                            services = MASK_MAIL + MASK_VPN,
                             type = PLAN_PRODUCT
                         ),
                         codes = null

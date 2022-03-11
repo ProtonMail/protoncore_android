@@ -1,3 +1,6 @@
+public abstract interface annotation class me/proton/core/plan/domain/ProductOnlyPaidPlans : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class me/proton/core/plan/domain/SupportSignupPaidPlans : java/lang/annotation/Annotation {
 }
 
@@ -32,6 +35,7 @@ public final class me/proton/core/plan/domain/entity/Plan {
 	public final fun getAmount ()I
 	public final fun getCurrency ()Ljava/lang/String;
 	public final fun getCycle ()Ljava/lang/Integer;
+	public final fun getEnabled ()Z
 	public final fun getFeatures ()I
 	public final fun getId ()Ljava/lang/String;
 	public final fun getMaxAddresses ()I
@@ -45,7 +49,6 @@ public final class me/proton/core/plan/domain/entity/Plan {
 	public final fun getPricing ()Lme/proton/core/plan/domain/entity/PlanPricing;
 	public final fun getQuantity ()I
 	public final fun getServices ()Ljava/lang/Integer;
-	public final fun getState ()Z
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun getType ()I
 	public fun hashCode ()I
@@ -53,6 +56,11 @@ public final class me/proton/core/plan/domain/entity/Plan {
 }
 
 public final class me/proton/core/plan/domain/entity/PlanKt {
+	public static final field MASK_CALENDAR I
+	public static final field MASK_DRIVE I
+	public static final field MASK_MAIL I
+	public static final field MASK_NONE I
+	public static final field MASK_VPN I
 	public static final field PLAN_ADDON I
 	public static final field PLAN_PRODUCT I
 }
@@ -84,7 +92,8 @@ public final class me/proton/core/plan/domain/usecase/GetPlanDefault {
 }
 
 public final class me/proton/core/plan/domain/usecase/GetPlans {
-	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;)V
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/Product;Z)V
+	public final fun getProductExclusivePlans ()Z
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

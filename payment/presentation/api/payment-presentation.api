@@ -143,7 +143,7 @@ public final class me/proton/core/payment/presentation/entity/BillingInput : and
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCodes ()Ljava/util/List;
-	public final fun getExistingPlanNames ()Ljava/util/List;
+	public final fun getExistingPlans ()Ljava/util/List;
 	public final fun getPaymentMethodId ()Ljava/lang/String;
 	public final fun getPlan ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
 	public final fun getUser ()Lme/proton/core/domain/entity/UserId;

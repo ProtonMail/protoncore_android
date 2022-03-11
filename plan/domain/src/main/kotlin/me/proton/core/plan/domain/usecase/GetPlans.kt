@@ -18,18 +18,40 @@
 
 package me.proton.core.plan.domain.usecase
 
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.plan.domain.ProductOnlyPaidPlans
+import me.proton.core.plan.domain.entity.MASK_CALENDAR
+import me.proton.core.plan.domain.entity.MASK_DRIVE
+import me.proton.core.plan.domain.entity.MASK_MAIL
+import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.hasFlag
+import me.proton.core.util.kotlin.matchesMask
 import javax.inject.Inject
 
 class GetPlans @Inject constructor(
-    private val plansRepository: PlansRepository
+    private val plansRepository: PlansRepository,
+    private val product: Product,
+    @ProductOnlyPaidPlans val productExclusivePlans: Boolean
 ) {
     suspend operator fun invoke(userId: UserId?): List<Plan> {
         return plansRepository.getPlans(userId)
+            .filter { it.enabled }
             .filter {
-                it.state
+                when (product) {
+                    Product.Calendar -> it.hasServiceFor(MASK_CALENDAR)
+                    Product.Drive -> it.hasServiceFor(MASK_DRIVE)
+                    Product.Mail -> it.hasServiceFor(MASK_MAIL)
+                    Product.Vpn -> it.hasServiceFor(MASK_VPN)
+                }.exhaustive
             }
     }
+
+    private fun Plan.hasServiceFor(mask: Int): Boolean =
+        if (productExclusivePlans) (services ?: 0).matchesMask(mask)
+        else
+            (services ?: 0).hasFlag(mask)
 }

@@ -27,6 +27,8 @@ import org.junit.Test
 
 class CurrentPlanTests : BaseTest() {
 
+    val user = quark.userCreate()
+
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
 
         login(user)
@@ -37,12 +39,11 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithFreePlan() {
-        val freeUser = users.getUser { !it.isPaid }
-        navigateUserToCurrentPlans(freeUser)
+        navigateUserToCurrentPlans(user)
             .scrollToPlan(Plan.Dev)
             .verify {
+                planDetailsDisplayedInsideRecyclerView(Plan.Dev)
                 canUpgradeToPlan(Plan.Dev)
-                planDetailsDisplayed(Plan.Dev)
             }
     }
 
@@ -50,6 +51,8 @@ class CurrentPlanTests : BaseTest() {
     fun userWithPaidPlan() {
         val paidUser = users.getUser { it.isPaid }
         navigateUserToCurrentPlans(paidUser)
-            .verify { planDetailsDisplayed(paidUser.plan) }
+            .verify {
+                planDetailsDisplayed(paidUser.plan)
+            }
     }
 }

@@ -45,7 +45,7 @@ internal class SignupPlansViewModel @Inject constructor(
         emit(PlanState.Processing)
         val plans: MutableList<PlanDetailsItem> = mutableListOf()
         val purchaseStatus = getPurchaseStatus()
-        if (purchaseStatus) {
+        if (purchaseStatus && supportPaidPlans) {
             plans.apply {
                 addAll(
                     getPlans(userId = null)

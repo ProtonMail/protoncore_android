@@ -33,3 +33,10 @@ annotation class SupportSignupPaidPlans
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class SupportUpgradePaidPlans
+
+/**
+ * Support paid product only paid plans. This means that plans which combine multiple products will not be supported.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ProductOnlyPaidPlans

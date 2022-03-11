@@ -21,7 +21,10 @@ package me.proton.core.plan.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.plan.domain.entity.MASK_MAIL
+import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.repository.PlansRepository
@@ -54,7 +57,7 @@ class GetPlansTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
-        state = true,
+        enabled = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -65,26 +68,63 @@ class GetPlansTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetPlans(repository)
+        useCase = GetPlans(plansRepository = repository, product = Product.Mail, productExclusivePlans = false)
     }
 
     @Test
-    fun `get plans returns success`() = runBlockingTest {
+    fun `get plans for Mail returns success`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan)
+        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(services = MASK_MAIL))
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(1, result.size)
-        assertEquals(testPlan, result[0])
         assertEquals("plan-name-1", result[0].id)
+    }
+
+    @Test
+    fun `get plans for Mail does not returns VPN plans`() = runBlockingTest {
+        // GIVEN
+        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(services = MASK_VPN))
+        // WHEN
+        val result = useCase.invoke(testUserId)
+        // THEN
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun `get plans for VPN does not return mail plans but returns combo`() = runBlockingTest {
+        // GIVEN
+        useCase = GetPlans(plansRepository = repository, product = Product.Vpn, productExclusivePlans = false)
+        coEvery { repository.getPlans(testUserId) } returns listOf(
+            testPlan.copy(services = MASK_MAIL),
+            testPlan.copy(id = "plan-name-combo", services = 5)
+        )
+        // WHEN
+        val result = useCase.invoke(testUserId)
+        // THEN
+        assertEquals(1, result.size)
+        assertEquals("plan-name-combo", result[0].id)
+    }
+
+    @Test
+    fun `get plans for VPN does not return mail plans nor combo when exclusive is true`() = runBlockingTest {
+        // GIVEN
+        useCase = GetPlans(plansRepository = repository, product = Product.Vpn, productExclusivePlans = true)
+        coEvery { repository.getPlans(testUserId) } returns listOf(
+            testPlan.copy(services = MASK_MAIL),
+            testPlan.copy(id = "plan-name-combo", services = 5)
+        )
+        // WHEN
+        val result = useCase.invoke(testUserId)
+        // THEN
+        assertEquals(0, result.size)
     }
 
     @Test
     fun `get plans returns empty because of disabled plans`() = runBlockingTest {
         // GIVEN
-        useCase = GetPlans(repository)
-        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(state = false))
+        coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(enabled = false))
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
@@ -94,12 +134,11 @@ class GetPlansTest {
     @Test
     fun `get plans returns success no user id`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getPlans(null) } returns listOf(testPlan)
+        coEvery { repository.getPlans(null) } returns listOf(testPlan.copy(services = MASK_MAIL))
         // WHEN
         val result = useCase.invoke(null)
         // THEN
         assertEquals(1, result.size)
-        assertEquals(testPlan, result[0])
         assertEquals("plan-name-1", result[0].id)
     }
 }

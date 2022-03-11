@@ -83,7 +83,7 @@ internal data class PlanResponse(
         features = features,
         quantity = quantity,
         maxTier = maxTier,
-        state = state?.toBoolean() ?: true,
+        enabled = state?.toBoolean() ?: true,
         pricing = pricing?.toPlanPricing()
     )
 }

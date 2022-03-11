@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
@@ -73,7 +74,7 @@ internal class UpgradePlansViewModel @Inject constructor(
         data class Error(val error: Throwable) : SubscribedPlansState()
     }
 
-    fun getCurrentSubscribedPlans(userId: UserId, isUpsell: Boolean) = flow {
+    fun getCurrentSubscribedPlans(userId: UserId) = flow {
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
         val organization = getOrganization(userId, true)
@@ -108,7 +109,7 @@ internal class UpgradePlansViewModel @Inject constructor(
         }
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
-        getAvailablePlansForUpgrade(userId, isUpsell, isFree)
+        getAvailablePlansForUpgrade(userId, isFree)
         emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans))
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
@@ -116,13 +117,14 @@ internal class UpgradePlansViewModel @Inject constructor(
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private fun getAvailablePlansForUpgrade(userId: UserId, isUpsell: Boolean, isFreeUser: Boolean) = flow {
+    private fun getAvailablePlansForUpgrade(userId: UserId, isFreeUser: Boolean) = flow {
         emit(PlanState.Processing)
         val purchaseStatus = getPurchaseStatus()
 
         val availablePlans =
             when {
-                !isUpsell && !purchaseStatus -> emptyList()
+                !supportPaidPlans -> emptyList()
+                !purchaseStatus -> emptyList()
                 !isFreeUser -> emptyList()
                 else -> getPlans(
                     userId = userId

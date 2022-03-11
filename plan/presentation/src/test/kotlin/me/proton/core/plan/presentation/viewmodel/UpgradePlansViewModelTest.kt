@@ -20,18 +20,21 @@ package me.proton.core.plan.presentation.viewmodel
 
 import app.cash.turbine.test
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
-import me.proton.core.plan.presentation.entity.SupportedPlan
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -77,7 +80,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
-        state = true,
+        enabled = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -101,7 +104,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
-        state = true,
+        enabled = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -124,11 +127,11 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         services = 0,
         features = 0,
         quantity = 0,
-        state = true,
+        enabled = true,
         maxTier = 0
     )
 
-    val testOrganization = Organization(
+    private val testOrganization = Organization(
         userId = testUserId,
         email = "test-email",
         name = "test-name",
@@ -221,7 +224,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
         viewModel.availablePlansState.test {
             // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId, false)
+            viewModel.getCurrentSubscribedPlans(testUserId)
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -234,11 +237,41 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `get plans for upgrade currently paid plan success handled correctly`() = coroutinesTest {
-        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
+    fun `get plans for upgrade currently free payments off handled`() = coroutinesTest {
+        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
+        coEvery { purchaseEnabled.invoke() } returns false
         viewModel.availablePlansState.test {
             // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId, false)
+            viewModel.getCurrentSubscribedPlans(testUserId)
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(0, plansStatus.plans.size)
+            coVerify(exactly = 1) { getPlanDefaultUseCase(any()) }
+        }
+    }
+
+    @Test
+    fun `get plans for upgrade currently free no active plans handled correctly`() = coroutinesTest {
+        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
+        val plansRepository = mockk<PlansRepository>(relaxed = true)
+        coEvery { plansRepository.getPlans(testUserId) } returns listOf(testPlan.copy(enabled = false))
+        viewModel = UpgradePlansViewModel(
+            GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
+            getPlanDefaultUseCase,
+            getSubscriptionUseCase,
+            getOrganizationUseCase,
+            getUserUseCase,
+            getPaymentMethodsUseCase,
+            true,
+            purchaseEnabled,
+            paymentOrchestrator,
+        )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getCurrentSubscribedPlans(testUserId)
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -249,11 +282,75 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
+    fun `get plans for upgrade currently free no active plans handled correctly for product and combo`() =
+        coroutinesTest {
+            coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
+            val plansRepository = mockk<PlansRepository>(relaxed = true)
+            coEvery { plansRepository.getPlans(testUserId) } returns listOf(
+                testPlan.copy(services = MASK_MAIL),
+                testPlan.copy(services = 5)
+            )
+            viewModel = UpgradePlansViewModel(
+                GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
+                getPlanDefaultUseCase,
+                getSubscriptionUseCase,
+                getOrganizationUseCase,
+                getUserUseCase,
+                getPaymentMethodsUseCase,
+                true,
+                purchaseEnabled,
+                paymentOrchestrator,
+            )
+            viewModel.availablePlansState.test {
+                // WHEN
+                viewModel.getCurrentSubscribedPlans(testUserId)
+                // THEN
+                assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+                assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+                val plansStatus = awaitItem()
+                assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+                assertEquals(2, plansStatus.plans.size)
+            }
+        }
+
+    @Test
+    fun `get plans for upgrade currently paid plan success handled correctly`() = coroutinesTest {
+        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getCurrentSubscribedPlans(testUserId)
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(0, plansStatus.plans.size)
+        }
+    }
+
+    @Test
+    fun `get plans for upgrade currently paid payments off`() = coroutinesTest {
+        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
+        coEvery { purchaseEnabled.invoke() } returns false
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getCurrentSubscribedPlans(testUserId)
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(0, plansStatus.plans.size)
+            coVerify(exactly = 0) { getPlanDefaultUseCase.invoke(any()) }
+        }
+    }
+
+    @Test
     fun `get plans for upgrade no active subscription handled correctly`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
         viewModel.availablePlansState.test {
             // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId, false)
+            viewModel.getCurrentSubscribedPlans(testUserId)
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -264,4 +361,38 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-name-1", planPaid.name)
         }
     }
+
+    @Test
+    fun `get plans for upgrade currently free no active plans handled correctly for product and NOT combo`() =
+        coroutinesTest {
+            coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
+            val plansRepository = mockk<PlansRepository>(relaxed = true)
+            coEvery { plansRepository.getPlans(testUserId) } returns listOf(
+                testPlan.copy(services = MASK_MAIL),
+                testPlan.copy(services = 5)
+            )
+            viewModel = UpgradePlansViewModel(
+                GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),
+                getPlanDefaultUseCase,
+                getSubscriptionUseCase,
+                getOrganizationUseCase,
+                getUserUseCase,
+                getPaymentMethodsUseCase,
+                true,
+                purchaseEnabled,
+                paymentOrchestrator,
+            )
+            viewModel.availablePlansState.test {
+                // WHEN
+                viewModel.getCurrentSubscribedPlans(testUserId)
+                // THEN
+                assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+                assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+                val plansStatus = awaitItem()
+                assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+                assertEquals(1, plansStatus.plans.size)
+                val planPaid = plansStatus.plans[0]
+                assertEquals("plan-name-1", planPaid.name)
+            }
+        }
 }

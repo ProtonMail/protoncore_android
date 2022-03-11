@@ -31,21 +31,21 @@ class UpgradePlanTests : BaseTest() {
 
     private val selectPlanRobot = SelectPlanRobot()
     private val coreExampleRobot = CoreexampleRobot()
-    private val freeUser = users.getUser { !it.isPaid }
+    private val freeUser = quark.userCreate()
     private val paidUser = users.getUser { it.isPaid }
 
     @Test
     @SmokeTest
     fun userWithFreePlan() {
-
+        quark.jailUnban()
         login(freeUser)
 
         coreExampleRobot
             .plansUpgrade()
             .scrollToPlan(Plan.Dev)
             .verify {
+                planDetailsDisplayedInsideRecyclerView(Plan.Dev)
                 canUpgradeToPlan(Plan.Dev)
-                planDetailsDisplayed(Plan.Dev)
             }
 
         selectPlanRobot
@@ -77,7 +77,9 @@ class UpgradePlanTests : BaseTest() {
             Currency.values().forEach { currency ->
                 selectPlanRobot
                     .changeCurrency(currency)
-                    .verify { billingCycleIs(Plan.Dev, cycle, currency) }
+                    .verify {
+                        billingCycleIs(Plan.Dev, cycle, currency)
+                    }
             }
         }
     }

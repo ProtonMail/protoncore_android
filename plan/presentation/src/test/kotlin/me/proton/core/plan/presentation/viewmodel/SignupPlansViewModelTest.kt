@@ -20,14 +20,18 @@ package me.proton.core.plan.presentation.viewmodel
 
 import app.cash.turbine.test
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.spyk
+import me.proton.core.domain.entity.Product
 import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
-import me.proton.core.plan.presentation.entity.SupportedPlan
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -40,7 +44,8 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val getPlansUseCase = mockk<GetPlans>()
-    private val getPlanDefaultUseCase = mockk<GetPlanDefault>(relaxed = true)
+    private lateinit var getPlanDefaultUseCaseSpy: GetPlanDefault
+    private val plansRepository = mockk<PlansRepository>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     private val purchaseEnabled = mockk<PurchaseEnabled>(relaxed = true)
     // endregion
@@ -64,7 +69,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         features = 1,
         quantity = 1,
         maxTier = 1,
-        state = true,
+        enabled = true,
         pricing = PlanPricing(
             1, 10, 20
         )
@@ -88,7 +93,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         features = 0,
         quantity = 0,
         maxTier = 0,
-        state = true
+        enabled = true
     )
     // endregion
 
@@ -96,16 +101,17 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        coEvery { getPlanDefaultUseCase.invoke(any()) } returns testDefaultPlan
+        coEvery { plansRepository.getPlansDefault(null) } returns testDefaultPlan
+        getPlanDefaultUseCaseSpy = spyk(GetPlanDefault(plansRepository))
         coEvery { purchaseEnabled.invoke() } returns true
 
         viewModel =
             SignupPlansViewModel(
-                getPlansUseCase,
-                getPlanDefaultUseCase,
-                true,
-                purchaseEnabled,
-                paymentOrchestrator
+                getPlans = getPlansUseCase,
+                getPlanDefault = getPlanDefaultUseCaseSpy,
+                supportPaidPlans = true,
+                purchaseEnabled = purchaseEnabled,
+                paymentsOrchestrator = paymentOrchestrator
             )
     }
 
@@ -127,9 +133,136 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             val planOne = plansStatus.plans[0]
             val planTwo = plansStatus.plans[1]
             val planThree = plansStatus.plans[2]
+            coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
             assertEquals("plan-default", planThree.name)
             assertEquals("plan-name-1", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
+        }
+    }
+
+    @Test
+    fun `get plans for signup payments off handled correctly`() = coroutinesTest {
+        coEvery { purchaseEnabled.invoke() } returns false
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
+            testPlan,
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2")
+        )
+        viewModel =
+            SignupPlansViewModel(
+                getPlansUseCase,
+                getPlanDefaultUseCaseSpy,
+                true,
+                purchaseEnabled,
+                paymentOrchestrator
+            )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(0, plansStatus.plans.size)
+            coVerify(exactly = 0) { getPlanDefaultUseCaseSpy.invoke(any()) }
+            coVerify(exactly = 0) { getPlansUseCase.invoke(any()) }
+        }
+    }
+
+    @Test
+    fun `get plans for signup only active and for Product shown`() = coroutinesTest {
+        val plansRepository = mockk<PlansRepository>(relaxed = true)
+        coEvery { plansRepository.getPlans(null) } returns listOf(
+            testPlan.copy(enabled = false),
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2", services = MASK_MAIL)
+        )
+        viewModel =
+            SignupPlansViewModel(
+                GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
+                getPlanDefaultUseCaseSpy,
+                true,
+                purchaseEnabled,
+                paymentOrchestrator
+            )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(2, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            assertEquals("plan-default", planTwo.name)
+            assertEquals("plan-name-2", planOne.name)
+        }
+    }
+
+    @Test
+    fun `get plans for signup only active, for Product and combo plans shown`() = coroutinesTest {
+        val plansRepository = mockk<PlansRepository>(relaxed = true)
+        coEvery { plansRepository.getPlans(null) } returns listOf(
+            testPlan.copy(enabled = false),
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2", services = MASK_MAIL),
+            testPlan.copy(id = "plan-name-3", name = "plan-name-3", services = 5)
+        )
+        viewModel =
+            SignupPlansViewModel(
+                GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
+                getPlanDefaultUseCaseSpy,
+                true,
+                purchaseEnabled,
+                paymentOrchestrator
+            )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(3, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            val planThree = plansStatus.plans[2]
+            assertEquals("plan-default", planThree.name) // default is always last
+            assertEquals("plan-name-2", planOne.name)
+            assertEquals("plan-name-3", planTwo.name)
+        }
+    }
+
+    @Test
+    fun `get plans for signup only active, for Product and combo plans NOT shown`() = coroutinesTest {
+        val plansRepository = mockk<PlansRepository>(relaxed = true)
+        coEvery { plansRepository.getPlans(null) } returns listOf(
+            testPlan.copy(enabled = false),
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2", services = MASK_MAIL),
+            testPlan.copy(id = "plan-name-3", name = "plan-name-3", services = 5)
+        )
+        viewModel =
+            SignupPlansViewModel(
+                GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),
+                getPlanDefaultUseCaseSpy,
+                true,
+                purchaseEnabled,
+                paymentOrchestrator
+            )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(2, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            assertEquals("plan-default", planTwo.name) // default is always last
+            assertEquals("plan-name-2", planOne.name)
         }
     }
 }

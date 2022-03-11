@@ -23,3 +23,8 @@ package me.proton.core.util.kotlin
  * representation of [flag].
  */
 fun Int.hasFlag(flag: Int): Boolean = flag and this == flag
+
+/**
+ * Determines using bitwise operator if the binary representation of this int matches the bitmask [mask].
+ */
+fun Int.matchesMask(mask: Int): Boolean = mask or this == mask

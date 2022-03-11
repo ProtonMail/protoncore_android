@@ -20,7 +20,9 @@ package me.proton.core.plan.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import me.proton.core.plan.domain.entity.MASK_NONE
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 
@@ -46,7 +48,7 @@ data class SelectedPlan(
                 currency = PlanCurrency.EUR,
                 amount = PRICE_ZERO,
                 type = PLAN_PRODUCT,
-                services = 0
+                services = MASK_NONE
             )
     }
 }
