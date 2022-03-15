@@ -19,7 +19,18 @@
 
     <style name="Proton.ThemeOverlay.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/Proton.MaterialAlertDialog</item>
+        <item name="buttonBarStyle">@style/Proton.ButtonBarStyle</item>
         <item name="colorControlHighlight">@color/ripple_norm_workaround</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Proton.Text.Default</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Proton.MaterialAlertDialog.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Proton.MaterialDialogButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Proton.MaterialDialogButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Proton.MaterialDialogButtonStyle</item>
+        <item name="materialAlertDialogTitlePanelStyle">@style/Proton.MaterialAlertDialog.Title.Panel</item>
+    </style>
+
+    <style name="Proton.ButtonBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
+        <item name="android:paddingTop">@dimen/gap_large_plus</item>
     </style>
 
     <style name="Proton.MaterialAlertDialog" parent="MaterialAlertDialog.MaterialComponents">
@@ -28,6 +39,20 @@
 
     <style name="Proton.ShapeAppearance.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="Proton.MaterialAlertDialog.Title.Panel" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
+        <item name="android:paddingBottom">@dimen/gap_medium</item>
+    </style>
+
+    <style name="Proton.MaterialAlertDialog.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textAppearance">@style/Proton.Text.Headline</item>
+    </style>
+
+    <style name="Proton.MaterialDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/Proton.Text.Default.Medium</item>
+        <item name="android:textColor">?attr/proton_text_accent</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>
