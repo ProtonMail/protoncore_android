@@ -38,6 +38,7 @@ plugins {
     alias(libs.plugins.kotlin.binaryCompatibilityValidator)
     alias(libs.plugins.kotlin.gradle)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.dependencyAnalysis)
 }
 
 buildscript {
@@ -107,6 +108,48 @@ protonCoverageMultiModuleOptions {
         "**/*Fragment.class",
         "**/*Fragment$*",
     )
+}
+
+dependencyAnalysis {
+    dependencies {
+        bundle("androidx-datastore") { includeGroup("androidx.datastore") }
+        bundle("androidx-room") {
+            includeGroup("androidx.room")
+            includeGroup("androidx.sqlite")
+        }
+        bundle("dagger") {
+            includeGroup("com.google.dagger")
+            includeGroup("javax.inject")
+        }
+        bundle("kotlinx-coroutines-core") { include("org.jetbrains.kotlinx:kotlinx-coroutines-core.*") }
+        bundle("kotlinx-serialization-core") { include("org.jetbrains.kotlinx:kotlinx-serialization-core.*") }
+        bundle("kotlinx-serialization-json") { include("org.jetbrains.kotlinx:kotlinx-serialization-json.*") }
+        bundle("mockk") { includeGroup("io.mockk") }
+        bundle("robolectric") { includeGroup("org.robolectric") }
+        bundle("squareup-networking") {
+            includeGroup("com.squareup.okhttp3")
+            includeGroup("com.squareup.okio")
+            includeGroup("com.squareup.retrofit2")
+        }
+        bundle("turbine") { includeGroup("app.cash.turbine") }
+    }
+    issues {
+        all {
+            ignoreKtx(true)
+            onAny {
+                exclude(
+                    "com.google.dagger:dagger-compiler",
+                    "com.google.dagger:hilt-android-compiler",
+
+                    // Dependencies that are automatically added by plugins:
+                    "androidx.hilt:hilt-common",
+                    "androidx.hilt:hilt-work",
+                    "org.jetbrains.kotlin:kotlin-android-extensions-runtime",
+                    "org.jetbrains.kotlin:kotlin-parcelize-runtime",
+                )
+            }
+        }
+    }
 }
 
 // Only evaluate binary api for to be published projects, see https://github.com/Kotlin/binary-compatibility-validator

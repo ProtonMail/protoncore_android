@@ -3,6 +3,7 @@ androidGradle = "7.0.4"
 arturboschDetektGradle = "1.19.0"
 benManesVersions = "0.41.0"
 daggerHiltAndroid = "2.40.5"
+dependencyAnalysis = "1.11.1"
 easyGradle = "2.8"
 gradleNexusPublish = "1.1.0"
 kotlin = "1.6.10"
@@ -13,6 +14,7 @@ vanniktechPublish = "0.18.0"
 
 [plugins]
 benManes-versions-gradle = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
+dependencyAnalysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependencyAnalysis" }
 easyGradle = { id = "studio.forface.easygradle", version.ref = "easyGradle" }
 kotlin-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBinaryCompatibilityValidator" }
 kotlin-gradle = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
