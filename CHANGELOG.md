@@ -27,6 +27,7 @@ But, clients have still control tools on what they want to show. Mainly the tool
     @ProductOnlyPaidPlans
     fun provideProductOnlyPaidPlans() = false
 ```
+- Add missing icons for Mail.
 
 ### Fixes
 - Use viewLifecycleOwner.lifeCycleScope for coroutines launched in Fragments.
