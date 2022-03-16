@@ -856,7 +856,10 @@ class GOpenPGPCrypto : PGPCrypto {
     }
 
     override fun generateNewHashKey(): HashKey {
-        return HashKey(generateNewToken(32), VerificationStatus.NotSigned)
+        val secret = Crypto.randomToken(32)
+        require(secret.size == 32)
+        val token = getBase64Encoded(secret).toByteArray(Charsets.UTF_8)
+        return HashKey(token, VerificationStatus.NotSigned)
     }
 
     override fun generateNewKeySalt(): String {
