@@ -142,6 +142,15 @@ class GOpenPGPCrypto : PGPCrypto {
         return publicKeyRing.encrypt(plainMessage, signKeyRing).armored
     }
 
+    private fun encryptMessageWithCompression(
+        plainMessage: PlainMessage,
+        publicKey: Armored,
+        signKeyRing: KeyRing? = null
+    ): EncryptedMessage {
+        val publicKeyRing = publicKey.keyRing()
+        return publicKeyRing.encryptWithCompression(plainMessage, signKeyRing).armored
+    }
+
     private fun encryptMessageSessionKey(
         plainMessage: PlainMessage,
         sessionKey: SessionKey,
@@ -199,6 +208,19 @@ class GOpenPGPCrypto : PGPCrypto {
             }
         }
     }
+
+    private fun encryptAndSignMessageWithCompression(
+        plainMessage: PlainMessage,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage {
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                return encryptMessageWithCompression(plainMessage, publicKey, keyRing.value)
+            }
+        }
+    }
+
 
     private fun encryptAndSignMessageSessionKey(
         plainMessage: PlainMessage,
@@ -491,6 +513,14 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptAndSignMessage(PlainMessage(plainText), publicKey, unlockedKey)
     }.getOrElse { throw CryptoException("PlainText cannot be encrypted or signed.", it) }
 
+    override fun encryptAndSignTextWithCompression(
+        plainText: String,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage = runCatching {
+        encryptAndSignMessageWithCompression(PlainMessage(plainText), publicKey, unlockedKey)
+    }.getOrElse { throw CryptoException("PlainText cannot be encrypted or signed.", it) }
+
     override fun encryptAndSignData(
         data: ByteArray,
         publicKey: Armored,
@@ -505,6 +535,14 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored
     ): DataPacket = runCatching {
         encryptAndSignMessageSessionKey(PlainMessage(data), sessionKey, unlockedKey)
+    }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
+
+    override fun encryptAndSignDataWithCompression(
+        data: ByteArray,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage = runCatching {
+        encryptAndSignMessageWithCompression(PlainMessage(data), publicKey, unlockedKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignFile(

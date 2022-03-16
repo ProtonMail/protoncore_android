@@ -96,6 +96,21 @@ interface PGPCrypto {
     fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
 
     /**
+     * Compress and encrypt [plainText] using [publicKey] and sign using [unlockedKey].
+     *
+     * @return [EncryptedMessage] with embedded signature.
+     *
+     * @throws [CryptoException] if [plainText] cannot be encrypted or signed.
+     *
+     * @see [decryptAndVerifyText].
+     */
+    fun encryptAndSignTextWithCompression(
+        plainText: String,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage
+
+    /**
      * Encrypt [data] using [publicKey] and sign using [unlockedKey].
      *
      * @return [EncryptedMessage] with embedded signature.
@@ -105,6 +120,21 @@ interface PGPCrypto {
      * @see [decryptAndVerifyData].
      */
     fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+
+    /**
+     * Compress and encrypt [data] using [publicKey] and sign using [unlockedKey].
+     *
+     * @return [EncryptedMessage] with embedded signature.
+     *
+     * @throws [CryptoException] if [data] cannot be encrypted or signed.
+     *
+     * @see [decryptAndVerifyData].
+     */
+    fun encryptAndSignDataWithCompression(
+        data: ByteArray,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage
 
     /**
      * Encrypt [data] using [sessionKey] and sign using [unlockedKey].
