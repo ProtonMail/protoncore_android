@@ -95,6 +95,7 @@ class PlansRepositoryImplTest {
                 features = 1,
                 quantity = 1,
                 maxTier = 1,
+                enabled = true,
                 pricing = PlanPricing(
                     1, 10, 20
                 )
@@ -144,6 +145,7 @@ class PlansRepositoryImplTest {
                 features = 1,
                 quantity = 1,
                 maxTier = 1,
+                enabled = true,
                 pricing = PlanPricing(
                     1, 10, 20
                 )
@@ -186,5 +188,39 @@ class PlansRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+    }
+
+    @Test
+    fun `plans default return data`() = runBlockingTest {
+        // GIVEN
+        val planDefault = Plan(
+                id = "plan-id-1",
+                type = 1,
+                cycle = 1,
+                name = "Plan 1",
+                title = "Plan Title 1",
+                currency = "CHF",
+                amount = 10,
+                maxDomains = 1,
+                maxAddresses = 1,
+                maxCalendars = 1,
+                maxSpace = 1,
+                maxMembers = 1,
+                maxVPN = 1,
+                services = 0,
+                features = 1,
+                quantity = 1,
+                maxTier = 1,
+                enabled = true,
+                pricing = PlanPricing(
+                    1, 10, 20
+                )
+            )
+        coEvery { apiManager.invoke<Plan>(any(), any()) } returns ApiResult.Success(planDefault)
+        // WHEN
+        val plansResponse = repository.getPlansDefault(sessionUserId = null)
+        // THEN
+        assertNotNull(plansResponse)
+        assertEquals("plan-id-1", plansResponse.id)
     }
 }

@@ -18,6 +18,15 @@
 
 package me.proton.core.plan.domain.entity
 
+const val PLAN_PRODUCT = 1
+const val PLAN_ADDON = 0
+
+const val MASK_NONE = 0 // bitmap
+const val MASK_MAIL = 1 // bitmap
+const val MASK_CALENDAR = MASK_MAIL // bitmap
+const val MASK_DRIVE = 2 // bitmap
+const val MASK_VPN = 4 // bitmap
+
 data class Plan(
     val id: String?,
     val type: Int,
@@ -36,6 +45,7 @@ data class Plan(
     val features: Int,
     val quantity: Int,
     val maxTier: Int?,
+    val enabled: Boolean,
     val pricing: PlanPricing? = null
 )
 
@@ -44,3 +54,5 @@ data class PlanPricing(
     val yearly: Int,
     val twoYearly: Int? = null
 )
+
+

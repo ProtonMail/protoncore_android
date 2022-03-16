@@ -44,6 +44,7 @@ class NewCreditCardTests : BaseTest() {
 
         CoreexampleRobot()
             .plansUpgrade()
+            .scrollForward()
             .changeCurrency(Currency.CHF)
             .upgradeToPlan<AddCreditCardRobot>(Plan.Dev)
             .verify { billingDetailsDisplayed(Plan.Dev, BillingCycle.Yearly, Currency.CHF.symbol) }
@@ -53,7 +54,7 @@ class NewCreditCardTests : BaseTest() {
     fun backToPlanSelection() {
         newCreditCardRobot
             .close<SelectPlanRobot>()
-            .verify { planDetailsDisplayed(Plan.Dev) }
+            .verify { planDetailsDisplayedInsideRecyclerView(Plan.Dev) }
     }
 
     @Test

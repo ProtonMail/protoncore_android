@@ -64,10 +64,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         input.user
     }
 
-    private val isUpsell: Boolean by lazy {
-        !input.showSubscription
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         upgradePlanViewModel.register(this)
@@ -76,7 +72,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (upgradePlanViewModel.supportedPaidPlanNames.isNotEmpty()) {
+        if (upgradePlanViewModel.supportPaidPlans) {
             binding.apply {
                 toolbar.setNavigationOnClickListener {
                     setResult()
@@ -157,12 +153,12 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
                         setResult(it.selectedPlan, it.billing)
                         // refresh
-                        upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, isUpsell)
+                        upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
                     }
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, isUpsell)
+            upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
             setResult(SelectedPlan.free(getString(R.string.plans_free_name)))

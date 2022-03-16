@@ -38,6 +38,7 @@ import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.getUserMessage
@@ -196,7 +197,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
 
         viewModel.subscribe(
             input.user,
-            input.existingPlanNames.plus(input.plan.name),
+            input.existingPlans.buildPlansList(input.plan.name, input.plan.services, input.plan.type),
             input.codes,
             input.plan.currency,
             input.plan.subscriptionCycle,

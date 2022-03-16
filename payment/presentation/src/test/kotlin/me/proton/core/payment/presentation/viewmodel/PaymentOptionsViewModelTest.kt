@@ -40,13 +40,11 @@ import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.plan.domain.entity.PLAN_ADDON
+import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
@@ -77,6 +75,26 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         brand = "visa", last4 = "1234", expirationMonth = "01",
         expirationYear = "2021", name = "Test", country = "Test Country", zip = "123"
     )
+    private val testPaymentMethodsList = listOf(
+        PaymentMethod(
+            "1",
+            PaymentMethodType.CARD,
+            Details.CardDetails(testReadOnlyCard)
+        ),
+        PaymentMethod(
+            "2",
+            PaymentMethodType.PAYPAL,
+            Details.PayPalDetails(
+                billingAgreementId = "3",
+                payer = "test payer"
+            )
+        )
+    )
+    private val testSubscribedPlan = Plan(
+        "test-subscribed-plan-id", 1, 12, "test-subscribed-plan-name", "test-plan", "EUR",
+        2, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, true
+    )
     private val testSubscription = Subscription(
         id = "test-subscription-id",
         invoiceId = "test-invoice-id",
@@ -86,19 +104,15 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         couponCode = null,
         currency = "EUR",
         amount = 5,
-        plans = listOf(
-            Plan(
-                "test-plan-id", 1, 12, "test-plan", "test-plan", "EUR",
-                2, 1, 1, 1, 1, 1, 1, 1,
-                1, 1, 1
-            )
-        )
+        plans = listOf(testSubscribedPlan)
     )
+
     // endregion
     private lateinit var viewModel: PaymentOptionsViewModel
     private val subscriptionStatus = SubscriptionStatus(
         1, 1, 1, 0, null, 0, Currency.EUR, SubscriptionCycle.MONTHLY, null
     )
+
     @Before
     fun beforeEveryTest() {
         coEvery { getCountryCode.invoke(any()) } returns Country(testCCCountry, "test-code-1")
@@ -119,21 +133,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns listOf(
-            PaymentMethod(
-                "1",
-                PaymentMethodType.CARD,
-                Details.CardDetails(testReadOnlyCard)
-            ),
-            PaymentMethod(
-                "2",
-                PaymentMethodType.PAYPAL,
-                Details.PayPalDetails(
-                    billingAgreementId = "3",
-                    payer = "test payer"
-                )
-            )
-        )
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
         viewModel.availablePaymentMethodsState.test {
             // WHEN
             viewModel.getAvailablePaymentMethods(testUserId)
@@ -192,16 +192,99 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     fun `on subscribe checks existing plans`() = coroutinesTest {
         // GIVEN
         val testPlanId = "test-plan-id"
+        val testPlanServices = 1
+        val testPlanType = PLAN_PRODUCT
         val paymentType = PaymentType.PaymentMethod("test-payment-method-id")
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
         val viewModelSpy = spyk(viewModel, recordPrivateCalls = true)
-        viewModelSpy.currentPlans = mutableListOf("current-plan-1")
         // WHEN
-        viewModelSpy.subscribe(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
+        viewModelSpy.getAvailablePaymentMethods(testUserId)
+        viewModelSpy.subscribe(
+            testUserId,
+            testPlanId,
+            testPlanServices,
+            testPlanType,
+            null,
+            testCurrency,
+            testSubscriptionCycle,
+            paymentType
+        )
         // THEN
         verify(exactly = 1) {
             billingViewModelHelper.subscribe(
                 testUserId,
-                listOf("current-plan-1", testPlanId),
+                listOf(testPlanId),
+                any(),
+                testCurrency,
+                testSubscriptionCycle,
+                paymentType
+            )
+        }
+    }
+
+    @Test
+    fun `on subscribe checks existing plans but different products`() = coroutinesTest {
+        // GIVEN
+        val testPlanId = "test-plan-id"
+        val testPlanServices = 1
+        val testPlanType = PLAN_PRODUCT
+        val paymentType = PaymentType.PaymentMethod("test-payment-method-id")
+        coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription.copy(
+            plans = listOf(testSubscribedPlan.copy(services = 4))
+        )
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
+        val viewModelSpy = spyk(viewModel, recordPrivateCalls = true)
+        // WHEN
+        viewModelSpy.getAvailablePaymentMethods(testUserId)
+        viewModelSpy.subscribe(
+            testUserId,
+            testPlanId,
+            testPlanServices,
+            testPlanType,
+            null,
+            testCurrency,
+            testSubscriptionCycle,
+            paymentType
+        )
+        // THEN
+        verify(exactly = 1) {
+            billingViewModelHelper.subscribe(
+                testUserId,
+                listOf("test-subscribed-plan-name", testPlanId),
+                any(),
+                testCurrency,
+                testSubscriptionCycle,
+                paymentType
+            )
+        }
+    }
+
+    @Test
+    fun `on subscribe checks existing plans add on`() = coroutinesTest {
+        // GIVEN
+        val testPlanId = "test-plan-id"
+        val testPlanServices = 1
+        val testPlanType = PLAN_ADDON
+        val paymentType = PaymentType.PaymentMethod("test-payment-method-id")
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
+        val viewModelSpy = spyk(viewModel, recordPrivateCalls = true)
+        // WHEN
+        viewModelSpy.getAvailablePaymentMethods(testUserId)
+        viewModelSpy.subscribe(
+            testUserId,
+            testPlanId,
+            testPlanServices,
+            testPlanType,
+            null,
+            testCurrency,
+            testSubscriptionCycle,
+            paymentType
+        )
+        // THEN
+        verify(exactly = 1) {
+            billingViewModelHelper.subscribe(
+                testUserId,
+                listOf("test-subscribed-plan-name", testPlanId),
                 any(),
                 testCurrency,
                 testSubscriptionCycle,
@@ -214,9 +297,20 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     fun `subscribe pass the call to billing subscribe`() = coroutinesTest {
         // GIVEN
         val testPlanId = "test-plan-id"
+        val testPlanServices = 1
+        val testPlanType = PLAN_PRODUCT
         val paymentType = PaymentType.PaymentMethod("test-payment-method-id")
         // WHEN
-        viewModel.subscribe(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
+        viewModel.subscribe(
+            testUserId,
+            testPlanId,
+            testPlanServices,
+            testPlanType,
+            null,
+            testCurrency,
+            testSubscriptionCycle,
+            paymentType
+        )
         // THEN
         verify(exactly = 1) {
             billingViewModelHelper.subscribe(
@@ -234,8 +328,18 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     fun `validate plan pass the call to billing validate plan`() = coroutinesTest {
         // GIVEN
         val testPlanId = "test-plan-id"
+        val testPlanServices = 1
+        val testPlanType = PLAN_PRODUCT
         // WHEN
-        viewModel.validatePlan(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle)
+        viewModel.validatePlan(
+            testUserId,
+            testPlanId,
+            testPlanServices,
+            testPlanType,
+            null,
+            testCurrency,
+            testSubscriptionCycle
+        )
         // THEN
         verify(exactly = 1) {
             billingViewModelHelper.validatePlan(
@@ -252,12 +356,16 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     fun `on3dsapproved pass the call to billing on3dsapproved`() = coroutinesTest {
         // GIVEN
         val testPlanId = "test-plan-id"
+        val testPlanServices = 1
+        val testPlanType = PLAN_PRODUCT
         val testAmount = 5L
         val testToken = "test-token"
         // WHEN
         viewModel.onThreeDSTokenApproved(
             testUserId,
             testPlanId,
+            testPlanServices,
+            testPlanType,
             null,
             testAmount,
             testCurrency,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,15 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.util.kotlin
+package me.proton.core.payment.presentation.entity
 
-/**
- * Determines using bitwise operator if the binary representation of this int contains all the bits of the binary
- * representation of [flag].
- */
-fun Int.hasFlag(flag: Int): Boolean = flag and this == flag
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-/**
- * Determines using bitwise operator if the binary representation of this int matches the bitmask [mask].
- */
-fun Int.matchesMask(mask: Int): Boolean = mask or this == mask
+@Parcelize
+data class CurrentSubscribedPlanDetails(
+    val name: String,
+    val services: Int?,
+    val type: Int
+) : Parcelable

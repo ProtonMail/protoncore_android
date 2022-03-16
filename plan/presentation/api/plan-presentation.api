@@ -300,13 +300,15 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$FreeP
 
 public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem : me/proton/core/plan/presentation/entity/PlanDetailsItem {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZ)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZII)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Lme/proton/core/plan/presentation/entity/PlanPricing;
 	public final fun component11 ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public final fun component12 ()Z
 	public final fun component13 ()Z
+	public final fun component14 ()I
+	public final fun component15 ()I
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J
 	public final fun component4 ()I
@@ -315,8 +317,8 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidP
 	public final fun component7 ()I
 	public final fun component8 ()I
 	public final fun component9 ()Lme/proton/core/plan/presentation/entity/PlanCycle;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZ)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZII)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanPricing;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZZIIILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAddresses ()I
@@ -330,8 +332,10 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidP
 	public fun getName ()Ljava/lang/String;
 	public final fun getPrice ()Lme/proton/core/plan/presentation/entity/PlanPricing;
 	public final fun getPurchaseEnabled ()Z
+	public final fun getServices ()I
 	public final fun getStarred ()Z
 	public fun getStorage ()J
+	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -404,15 +408,17 @@ public final class me/proton/core/plan/presentation/entity/PlanType : java/lang/
 public final class me/proton/core/plan/presentation/entity/SelectedPlan : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/plan/presentation/entity/SelectedPlan$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZLme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;D)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZLme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;DII)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Z
 	public final fun component4 ()Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public final fun component5 ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public final fun component6 ()D
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZLme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;D)Lme/proton/core/plan/presentation/entity/SelectedPlan;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/SelectedPlan;Ljava/lang/String;Ljava/lang/String;ZLme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;DILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/SelectedPlan;
+	public final fun component7 ()I
+	public final fun component8 ()I
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZLme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;DII)Lme/proton/core/plan/presentation/entity/SelectedPlan;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/SelectedPlan;Ljava/lang/String;Ljava/lang/String;ZLme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;DIIILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/SelectedPlan;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()D
@@ -421,6 +427,8 @@ public final class me/proton/core/plan/presentation/entity/SelectedPlan : androi
 	public final fun getFree ()Z
 	public final fun getPlanDisplayName ()Ljava/lang/String;
 	public final fun getPlanName ()Ljava/lang/String;
+	public final fun getServices ()I
+	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -607,11 +615,11 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getBillableAmount ()D
-	public final fun getPlanSelectionListener ()Lkotlin/jvm/functions/Function3;
+	public final fun getPlanSelectionListener ()Lkotlin/jvm/functions/Function5;
 	public final fun setBillableAmount (D)V
 	public final fun setData (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;Z)V
 	public static synthetic fun setData$default (Lme/proton/core/plan/presentation/view/PlanItemView;Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZILjava/lang/Object;)V
-	public final fun setPlanSelectionListener (Lkotlin/jvm/functions/Function3;)V
+	public final fun setPlanSelectionListener (Lkotlin/jvm/functions/Function5;)V
 }
 
 public final class me/proton/core/plan/presentation/view/PlanItemView$Companion {
@@ -626,7 +634,7 @@ public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewMod
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
-	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PurchaseEnabled;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
+	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/domain/usecase/PurchaseEnabled;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_HiltModules {
@@ -653,7 +661,7 @@ public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewMo
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
-	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Ljava/util/List;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/PurchaseEnabled;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
+	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/domain/usecase/PurchaseEnabled;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_HiltModules {

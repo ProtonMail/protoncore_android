@@ -21,6 +21,7 @@ package me.proton.core.payment.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
 internal data class PlanResponse(
@@ -57,7 +58,9 @@ internal data class PlanResponse(
     @SerialName("Quantity")
     val quantity: Int,
     @SerialName("MaxTier")
-    val maxTier: Int
+    val maxTier: Int,
+    @SerialName("State")
+    val state: Int? = null
 ) {
     fun toPlan(): Plan = Plan(
         id = id,
@@ -76,6 +79,7 @@ internal data class PlanResponse(
         services = services,
         features = features,
         quantity = quantity,
-        maxTier = maxTier
+        maxTier = maxTier,
+        enabled = state?.toBoolean() ?: true
     )
 }

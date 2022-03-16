@@ -27,6 +27,7 @@ import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.payment.presentation.entity.PaymentOptionsResult
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
@@ -80,7 +81,7 @@ abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
 
     protected fun startBilling(
         userId: String?,
-        currentPlans: List<String>,
+        currentPlans: List<CurrentSubscribedPlanDetails>,
         plan: PlanShortDetails,
         codes: List<String>?
     ) {

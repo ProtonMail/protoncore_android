@@ -1,12 +1,15 @@
-public abstract interface annotation class me/proton/core/plan/domain/SupportedSignupPaidPlans : java/lang/annotation/Annotation {
+public abstract interface annotation class me/proton/core/plan/domain/ProductOnlyPaidPlans : java/lang/annotation/Annotation {
 }
 
-public abstract interface annotation class me/proton/core/plan/domain/SupportedUpgradePaidPlans : java/lang/annotation/Annotation {
+public abstract interface annotation class me/proton/core/plan/domain/SupportSignupPaidPlans : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class me/proton/core/plan/domain/SupportUpgradePaidPlans : java/lang/annotation/Annotation {
 }
 
 public final class me/proton/core/plan/domain/entity/Plan {
-	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;Lme/proton/core/plan/domain/entity/PlanPricing;)V
-	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;Lme/proton/core/plan/domain/entity/PlanPricing;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;)V
+	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()I
 	public final fun component11 ()J
@@ -16,7 +19,8 @@ public final class me/proton/core/plan/domain/entity/Plan {
 	public final fun component15 ()I
 	public final fun component16 ()I
 	public final fun component17 ()Ljava/lang/Integer;
-	public final fun component18 ()Lme/proton/core/plan/domain/entity/PlanPricing;
+	public final fun component18 ()Z
+	public final fun component19 ()Lme/proton/core/plan/domain/entity/PlanPricing;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/Integer;
 	public final fun component4 ()Ljava/lang/String;
@@ -25,12 +29,13 @@ public final class me/proton/core/plan/domain/entity/Plan {
 	public final fun component7 ()I
 	public final fun component8 ()I
 	public final fun component9 ()I
-	public final fun copy (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;Lme/proton/core/plan/domain/entity/PlanPricing;)Lme/proton/core/plan/domain/entity/Plan;
-	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/Plan;Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;Lme/proton/core/plan/domain/entity/PlanPricing;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/Plan;
+	public final fun copy (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;)Lme/proton/core/plan/domain/entity/Plan;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/Plan;Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIIJIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/Plan;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()I
 	public final fun getCurrency ()Ljava/lang/String;
 	public final fun getCycle ()Ljava/lang/Integer;
+	public final fun getEnabled ()Z
 	public final fun getFeatures ()I
 	public final fun getId ()Ljava/lang/String;
 	public final fun getMaxAddresses ()I
@@ -48,6 +53,16 @@ public final class me/proton/core/plan/domain/entity/Plan {
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/PlanKt {
+	public static final field MASK_CALENDAR I
+	public static final field MASK_DRIVE I
+	public static final field MASK_MAIL I
+	public static final field MASK_NONE I
+	public static final field MASK_VPN I
+	public static final field PLAN_ADDON I
+	public static final field PLAN_PRODUCT I
 }
 
 public final class me/proton/core/plan/domain/entity/PlanPricing {
@@ -77,7 +92,8 @@ public final class me/proton/core/plan/domain/usecase/GetPlanDefault {
 }
 
 public final class me/proton/core/plan/domain/usecase/GetPlans {
-	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;)V
-	public final fun invoke (Ljava/util/List;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/Product;Z)V
+	public final fun getProductExclusivePlans ()Z
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

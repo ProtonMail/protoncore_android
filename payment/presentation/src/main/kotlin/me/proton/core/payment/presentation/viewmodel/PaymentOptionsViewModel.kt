@@ -38,6 +38,8 @@ import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.createSubscriptionPlansList
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -55,7 +57,7 @@ class PaymentOptionsViewModel @Inject constructor(
 ) : ProtonViewModel() {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
-    internal var currentPlans = mutableListOf<String>()
+    internal var currentPlans = mutableListOf<Plan>()
 
     private val _availablePaymentMethodsState = MutableStateFlow<State>(State.Idle)
     val availablePaymentMethodsState = _availablePaymentMethodsState.asStateFlow()
@@ -85,7 +87,7 @@ class PaymentOptionsViewModel @Inject constructor(
         val currentSubscription = getCurrentSubscription(userId)
         currentSubscription?.let {
             it.plans.forEach { plan ->
-                currentPlans.add(plan.name)
+                currentPlans.add(plan)
             }
         } ?: run {
             emit(State.Error.SubscriptionInRecoverableError)
@@ -128,36 +130,55 @@ class PaymentOptionsViewModel @Inject constructor(
 
     fun subscribe(
         userId: UserId?,
-        planName: String, // plan name
+        planName: String,
+        planServices: Int,
+        planType: Int,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType
     ) = billingCommonViewModel.subscribe(
-        userId, currentPlans.plus(planName), codes, currency, cycle, paymentType
+        userId,
+        currentPlans.createSubscriptionPlansList(planName, planServices, planType),
+        codes,
+        currency,
+        cycle,
+        paymentType
     )
 
     fun onThreeDSTokenApproved(
         userId: UserId?,
         planName: String,
+        planServices: Int,
+        planType: Int,
         codes: List<String>? = null,
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
         token: String
     ) = billingCommonViewModel.onThreeDSTokenApproved(
-        userId, currentPlans.plus(planName), codes, amount, currency, cycle, token
+        userId,
+        currentPlans.createSubscriptionPlansList(planName, planServices, planType),
+        codes,
+        amount,
+        currency,
+        cycle,
+        token
     )
 
     fun validatePlan(
         userId: UserId?,
         planName: String,
+        planServices: Int,
+        planType: Int,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
-    ) = billingCommonViewModel.validatePlan(userId, currentPlans.plus(planName).distinct(), codes, currency, cycle)
-
-    companion object {
-        const val NO_ACTIVE_SUBSCRIPTION = 22110
-    }
+    ) = billingCommonViewModel.validatePlan(
+        userId,
+        currentPlans.createSubscriptionPlansList(planName, planServices, planType),
+        codes,
+        currency,
+        cycle
+    )
 }

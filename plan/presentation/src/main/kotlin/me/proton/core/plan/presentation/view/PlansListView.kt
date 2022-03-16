@@ -50,9 +50,18 @@ internal class PlansListView @JvmOverloads constructor(
             planDetails.apply {
                 setData(plan = plan, cycle = selectedCycle, currency = selectedCurrency, collapsible = plansSize != 1)
 
-                planSelectionListener = { planId, planName, amount ->
+                planSelectionListener = { planId, planName, amount, services, type ->
                     selectPlanListener(
-                        SelectedPlan(planId, planName, amount == PRICE_ZERO, selectedCycle, selectedCurrency, amount)
+                        SelectedPlan(
+                            planId,
+                            planName,
+                            amount == PRICE_ZERO,
+                            selectedCycle,
+                            selectedCurrency,
+                            amount,
+                            services,
+                            type
+                        )
                     )
                 }
                 setBackgroundResource(R.drawable.background_plan_list_item)

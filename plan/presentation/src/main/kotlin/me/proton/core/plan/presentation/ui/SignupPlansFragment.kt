@@ -62,7 +62,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (signupPlansViewModel.supportedPaidPlanNames.isNotEmpty()) {
+        if (signupPlansViewModel.supportPaidPlans) {
             binding.toolbar.setNavigationOnClickListener {
                 setResult()
             }

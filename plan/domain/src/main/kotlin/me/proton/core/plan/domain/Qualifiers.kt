@@ -21,15 +21,22 @@ package me.proton.core.plan.domain
 import javax.inject.Qualifier
 
 /**
- * Plans supported in signup.
+ * Support paid plans during signup (signup and upgrade).
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class SupportedSignupPaidPlans
+annotation class SupportSignupPaidPlans
 
 /**
- * Plans supported in plan upgrade flow.
+ * Support paid plans for upgrade (signup and upgrade).
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class SupportedUpgradePaidPlans
+annotation class SupportUpgradePaidPlans
+
+/**
+ * Support paid product only paid plans. This means that plans which combine multiple products will not be supported.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ProductOnlyPaidPlans

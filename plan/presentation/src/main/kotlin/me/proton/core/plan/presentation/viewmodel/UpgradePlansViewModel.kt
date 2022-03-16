@@ -26,17 +26,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.plan.domain.SupportedUpgradePaidPlans
+import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
-import me.proton.core.plan.presentation.entity.SupportedPlan
 import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.usersettings.domain.usecase.GetOrganization
 import java.util.Calendar
@@ -47,10 +47,10 @@ internal class UpgradePlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedUpgradePaidPlans val supportedPaidPlanNames: List<SupportedPlan>,
     private val getOrganization: GetOrganization,
     private val getUser: GetUser,
     private val getPaymentMethods: GetAvailablePaymentMethods,
+    @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
     purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
@@ -74,7 +74,7 @@ internal class UpgradePlansViewModel @Inject constructor(
         data class Error(val error: Throwable) : SubscribedPlansState()
     }
 
-    fun getCurrentSubscribedPlans(userId: UserId, isUpsell: Boolean) = flow {
+    fun getCurrentSubscribedPlans(userId: UserId) = flow {
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
         val organization = getOrganization(userId, true)
@@ -95,7 +95,8 @@ internal class UpgradePlansViewModel @Inject constructor(
             )
         }?.toMutableList() ?: mutableListOf()
 
-        if (subscribedPlans.isEmpty()) {
+        val isFree = subscribedPlans.isEmpty()
+        if (isFree) {
             subscribedPlans.add(
                 createCurrentPlan(
                     plan = getPlanDefault(userId),
@@ -107,9 +108,8 @@ internal class UpgradePlansViewModel @Inject constructor(
             )
         }
 
-
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
-        getAvailablePlansForUpgrade(userId, isUpsell)
+        getAvailablePlansForUpgrade(userId, isFree)
         emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans))
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
@@ -117,21 +117,20 @@ internal class UpgradePlansViewModel @Inject constructor(
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private fun getAvailablePlansForUpgrade(userId: UserId, isUpsell: Boolean) = flow {
+    private fun getAvailablePlansForUpgrade(userId: UserId, isFreeUser: Boolean) = flow {
         emit(PlanState.Processing)
         val purchaseStatus = getPurchaseStatus()
 
         val availablePlans =
-            if (!isUpsell && !purchaseStatus) emptyList()
-            else getPlans(
-                supportedPaidPlans = supportedPaidPlanNames.map { it.name },
-                userId = userId
-            ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-                .map { plan ->
-                    plan.toPaidPlanDetailsItem(
-                        supportedPaidPlanNames.firstOrNull { it.name == plan.name }?.starred ?: false
-                    )
-                }
+            when {
+                !supportPaidPlans -> emptyList()
+                !purchaseStatus -> emptyList()
+                !isFreeUser -> emptyList()
+                else -> getPlans(
+                    userId = userId
+                ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
+                    .map { plan -> plan.toPaidPlanDetailsItem(false) }
+            }
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = purchaseStatus))
     }.catch { error ->

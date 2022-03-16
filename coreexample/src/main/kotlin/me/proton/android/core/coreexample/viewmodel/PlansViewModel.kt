@@ -31,6 +31,10 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.plan.domain.entity.MASK_MAIL
+import me.proton.core.plan.domain.entity.MASK_VPN
+import me.proton.core.plan.domain.entity.PLAN_PRODUCT
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.presentation.utils.showToast
@@ -102,9 +106,11 @@ class PlansViewModel @Inject constructor(
         viewModelScope.launch {
             paymentsOrchestrator.startBillingWorkFlow(
                 selectedPlan = PlanShortDetails(
-                    PLAN_PLUS_ID,
-                    "Proton Plus",
-                    SubscriptionCycle.YEARLY
+                    name = PLAN_PLUS_ID,
+                    displayName = "Proton Plus",
+                    subscriptionCycle = SubscriptionCycle.YEARLY,
+                    services = MASK_MAIL,
+                    type = PLAN_PRODUCT
                 )
             )
         }
@@ -122,9 +128,11 @@ class PlansViewModel @Inject constructor(
                     startBillingWorkFlow(
                         userId = account.userId,
                         selectedPlan = PlanShortDetails(
-                            me.proton.android.core.coreexample.PLAN_VISIONARY_ID,
-                            "Proton Visionary",
-                            me.proton.core.payment.domain.entity.SubscriptionCycle.YEARLY
+                            name = PLAN_VISIONARY_ID,
+                            displayName = "Proton Visionary",
+                            subscriptionCycle = SubscriptionCycle.YEARLY,
+                            services = MASK_MAIL + MASK_VPN,
+                            type = PLAN_PRODUCT
                         ),
                         codes = null
                     )

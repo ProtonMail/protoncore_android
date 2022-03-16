@@ -25,6 +25,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
 import me.proton.core.plan.presentation.entity.PlanCurrency
@@ -46,7 +47,7 @@ class PlanItemView @JvmOverloads constructor(
     internal val binding = PlanItemBinding.inflate(LayoutInflater.from(context), this, true)
     internal var collapsible: Boolean = true
 
-    var planSelectionListener: ((String, String, Double) -> Unit)? = null
+    var planSelectionListener: ((String, String, Double, Int, Int) -> Unit)? = null
     var billableAmount = PRICE_ZERO
 
     private lateinit var currency: PlanCurrency
@@ -76,9 +77,6 @@ class PlanItemView @JvmOverloads constructor(
         }
         planItemParent.onClick {
             rotate()
-        }
-        select.onClick {
-            planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount)
         }
     }
 
@@ -144,6 +142,9 @@ class PlanItemView @JvmOverloads constructor(
             binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
             it.recycle()
         }
+        select.onClick {
+            planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount, 0, PLAN_PRODUCT)
+        }
     }
 
     private fun bindPaidPlan(plan: PlanDetailsItem.PaidPlanDetailsItem) = with(binding) {
@@ -173,6 +174,9 @@ class PlanItemView @JvmOverloads constructor(
             select.visibility = GONE
             priceCycleLayout.visibility = GONE
             planPriceDescriptionText.visibility = GONE
+        }
+        select.onClick {
+            planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount, plan.services, plan.type)
         }
     }
 
