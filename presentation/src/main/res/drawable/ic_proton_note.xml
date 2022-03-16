@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M14.1136,19.75L14.1136,15.5227C14.1136,14.7445 14.7445,14.1136 15.5227,14.1136H19.75M13.6509,19.75L6.3636,19.75C5.1963,19.75 4.25,18.8037 4.25,17.6364L4.25,6.3636C4.25,5.1963 5.1963,4.25 6.3636,4.25L17.6364,4.25C18.8037,4.25 19.75,5.1963 19.75,6.3636L19.75,13.6509C19.75,14.3983 19.4531,15.1151 18.9246,15.6436L15.6436,18.9246C15.1151,19.4531 14.3983,19.75 13.6509,19.75Z"
+      android:strokeWidth="1.5"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/icon_norm"/>
+</vector>

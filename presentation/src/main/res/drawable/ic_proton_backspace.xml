@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:autoMirrored="true">
+  <path
+      android:pathData="M16.9,9.1818L14.1,12M14.1,12L11.3,14.8182M14.1,12L16.9,14.8182M14.1,12L11.3,9.1818M1.5,12L6.2614,18.5894C6.7883,19.3186 7.63,19.75 8.5258,19.75H21.1975C21.9169,19.75 22.5,19.1669 22.5,18.4475V5.5525C22.5,4.8331 21.9169,4.25 21.1976,4.25H8.5258C7.63,4.25 6.7883,4.6814 6.2614,5.4106L1.5,12Z"
+      android:strokeLineJoin="round"
+      android:strokeWidth="1.49782"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/icon_norm"
+      android:strokeLineCap="round"/>
+</vector>
