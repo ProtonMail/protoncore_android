@@ -46,6 +46,8 @@ public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static final fun encryptAndSignData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/key/domain/entity/key/PublicKeyRing;)Ljava/lang/String;
 	public static final fun encryptAndSignData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B[B)[B
 	public static synthetic fun encryptAndSignData$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/key/domain/entity/key/PublicKeyRing;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun encryptAndSignDataWithCompression (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/key/domain/entity/key/PublicKeyRing;)Ljava/lang/String;
+	public static synthetic fun encryptAndSignDataWithCompression$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/key/domain/entity/key/PublicKeyRing;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun encryptAndSignFile (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;)Ljava/io/File;
 	public static final fun encryptAndSignFile (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/io/File;Ljava/io/File;[B)Ljava/io/File;
 	public static final fun encryptAndSignHashKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lme/proton/core/crypto/common/pgp/HashKey;Lme/proton/core/key/domain/entity/key/PublicKeyRing;)Ljava/lang/String;
@@ -54,6 +56,8 @@ public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static synthetic fun encryptAndSignNestedKey$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lme/proton/core/key/domain/entity/key/NestedPrivateKey;Lme/proton/core/key/domain/entity/key/PublicKeyRing;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
 	public static final fun encryptAndSignText (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;)Ljava/lang/String;
 	public static synthetic fun encryptAndSignText$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun encryptAndSignTextWithCompression (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;)Ljava/lang/String;
+	public static synthetic fun encryptAndSignTextWithCompression$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun encryptData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B)Ljava/lang/String;
 	public static final fun encryptData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/crypto/common/pgp/SessionKey;)[B
 	public static final fun encryptData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B[B)[B
