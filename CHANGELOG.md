@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## New
+  - Added functions to encrypt with compression to the crypto module and to the KeyHolder's context:
+    `encryptAndSignTextWithCompression` and `encryptAndSignDataWithCompression`
+
 ### Changes
 - Now instead of clients supplying supported plan names, the plans module relies completely on the
 API which will return the plans that are relevant to your app only.
