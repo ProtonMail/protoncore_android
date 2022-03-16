@@ -21,12 +21,17 @@
     <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
     <string name="welcome_title_mail">Protect your privacy with ProtonMail</string>
     <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
+    <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
     <string name="welcome_title_drive">Protect your privacy with Proton Drive</string>
     <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+    <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
     <string name="welcome_title_calendar">Protect your privacy with Proton Calendar</string>
     <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
+    <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
     <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
     <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
+    <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+    <string name="welcome_privacy_by_default">Privacy by default</string>
     <string name="auth_password_label">Password</string>
     <string name="auth_password_help">Password must contain at least 8 characters</string>
     <string name="auth_current_login_password">Current login password</string>
