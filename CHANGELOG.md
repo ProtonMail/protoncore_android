@@ -28,6 +28,7 @@ But, clients have still control tools on what they want to show. Mainly the tool
     fun provideProductOnlyPaidPlans() = false
 ```
 - Add missing icons for Mail.
+- Update gopenpgp to v2.4.5
 
 ### Fixes
 - Use viewLifecycleOwner.lifeCycleScope for coroutines launched in Fragments.
