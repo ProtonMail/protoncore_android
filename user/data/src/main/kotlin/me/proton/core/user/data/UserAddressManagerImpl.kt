@@ -42,6 +42,11 @@ class UserAddressManagerImpl(
     private val cryptoContext: CryptoContext
 ) : UserAddressManager {
 
+    override fun observeAddresses(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<List<UserAddress>> = userAddressRepository.observeAddresses(sessionUserId, refresh = refresh)
+
     override fun getAddressesFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean

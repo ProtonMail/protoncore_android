@@ -27,10 +27,24 @@ import me.proton.core.user.domain.entity.UserAddressKey
 
 interface UserAddressManager {
     /**
+     * Observe all [UserAddress], using [sessionUserId].
+     *
+     * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
+     */
+    fun observeAddresses(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): Flow<List<UserAddress>>
+
+    /**
      * Get all [UserAddress], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
+    @Deprecated(
+        "Use observeAddresses() instead, DataResult is not needed for this object.",
+        ReplaceWith("observeAddresses(sessionUserId, refresh)")
+    )
     fun getAddressesFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false

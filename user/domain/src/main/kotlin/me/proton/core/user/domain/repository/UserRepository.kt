@@ -54,10 +54,24 @@ interface UserRepository : PassphraseRepository {
     )
 
     /**
+     * Observe [User], using [sessionUserId].
+     *
+     * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
+     */
+    fun observeUser(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): Flow<User?>
+
+    /**
      * Get [User], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
+    @Deprecated(
+        "Use observeUser() instead, DataResult is not needed for this object.",
+        ReplaceWith("observeUser(sessionUserId, refresh)")
+    )
     fun getUserFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false

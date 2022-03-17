@@ -22,71 +22,68 @@ import me.proton.core.crypto.common.pgp.Armored
 
 object TestKeys {
     object Key1 {
-        val passphrase = "7NgO4d0h72zt4XuFLOUbg352vhrn.tu".toByteArray()
+        val passphrase = "bb4eacacb1773f4dd258d4c9d708a6dfed1a24b6e78862454738a405c51f41ab".toByteArray()
         val privateKey: Armored =
             """
             -----BEGIN PGP PRIVATE KEY BLOCK-----
-            Version: ProtonMail
+            Version: GopenPGP 2.4.5
+            Comment: https://gopenpgp.org
             
-            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
-            dlEt7f8XNvX3HxQw9w==
-            =FW0u
+            xcMGBF1BfxUBCADUpiiG3AhQK08E2nBmQ50XeztOWArmknINQV41pqGFW5VQkfbQ
+            3FYsANhLGqbDBQ0XxmocjKL7W7W8Y4xmHCGgkCUy6gAqGbi+sXY9Sl8xqQNHuZDh
+            WVdqT8+Rtv+DRxp/XrGkzC1U8CBYUmmKS92ldy0/zZIvgQXT6t5Q+v+BeUSv4jCs
+            nY3BE0UBOljtrTXlOcXRZHQxORWG+kon0qgcJERdwwzhxY6eT8jEfAfJY0hzQaYg
+            +6bj6ZR0zkMtY2Psq2M05kzEw4On/dezZETAu1e9fSqfk1mp+H6BeLJ9RUyrFK/P
+            qIO48+pU8CmAvTdx5eIihyOM16CFg/3GgV85ABEBAAH+CQMI2DkTnNoxr15gw7n3
+            XFPYLOW9QmYe3QVnCQhhYF6kG80xSEYnVKoR12txqnpKeHXVcXaMBOtuT4Y8lUfB
+            luV0QTgkSRAo6Exr8tkSjOsr7Cf8jmkFMbLCkgnGMhgjJxHxnj/gp7VTZcIUK5qa
+            jM0Jy9VcGexeT3ADPCX6NAe4kMGdgZkIKOoMXHtlzyViAm7AgY3W1iS3MRosXQDr
+            ogH1/TqekxDSJGUrgs0/OytDLGHZrhRsbbbL+Hgdd6EWZ+Q2pc2Hb3vtR0cLfFhU
+            ItVWdoeJ5WYh2NLVENYExZVPikDiLVVLyXGRHjj8SGvVGldRDymBmlbULCPNvfeo
+            y7+HgI+JRdC4HbB1nBxVrWeU7Bq8P/BtqIgI4mtzrvF9ZiGxIDGnd06Rp3LzB6vc
+            rdtgCVScvFAM+Lm6hhriIwlLJBvmhkIFeLu4EbLamSWiA0wsrqWwQB/A35SAUYza
+            n9tFTJ0cKpex89IzKx4+CbUHgEs3jX74gx1uLGlK2o6SSD8eBttAwVF9QqpmQunj
+            pxJb0Sic8OT+Pn0oL3p/RDkwGdsQQx0drnZBkP47iU4E/khzO03PHlNvd7xgQC3v
+            HlqEePTIkF/nyMrKPkgEgWgWJgvgXCAbpA0SNgD7CXqo4ttkpnmoWKrnojvkF4RK
+            8LALmvhagz+Hdp3lXgXWUFpIDfpapdtEhnq+oMq44FKmHOs3SkqSvFchxomhT5kH
+            m6Y9BVam7mGexGSwASDgUzlGdbMedhvN6C3jlrMDOG4+M+F2KYaTYBtePgfQ2tPT
+            20S5rzwrZez+6BYaOydcIMBmwkpYn2qj8gg62ckOJaKqGaKXNdZVjMUWhxihR0mb
+            yxrIy5tXgn5E/uqU6VesCQodWK8t9GKnUlVToSbV68Zye8E9LVZaAKm4PLH0mZzR
+            yZR84tNqncI8zTFhZGFtdHN0QHByb3Rvbm1haWwuYmx1ZSA8YWRhbXRzdEBwcm90
+            b25tYWlsLmJsdWU+wsBoBBMBCAAcBQJdQX8VCRARwx6OXgf00AIbAwIZAQILCQIV
+            CAAAx6IIAAg2A2ZMkzGV+vZPbqAMoAEO+dpG+dq9C93Ui4HvoVHpcSTolVM522r8
+            1Yc48xdhbnFz9HLDkicoBzXo40utgQ7bF4iKD4lQztfh6+9l+IBNu+1XmdW+laMy
+            bygtPh+H4YPxLZA9O6FYRyUcTjlZYFFxipz9pc9qI58tDHIILzfjZPCC6reiJpbx
+            JOgp07PV3ZnJqLDIkFPlPkxyqymfuWHnPOJM5RxvHnu04ptsp/Z/xbgUra2JEyVL
+            A7gC/yznxfQ58087pCupKqQwepA3zHmECS6vk7uuNp++D9JajjtFsu4piP4cTNVv
+            MqnDXWn0uzwrhhw/fZnnHSllXmBwgmPHwwYEXUF/FQEIAMgCI+srSwdQlIpz+n+m
+            lSpS0jPXvRYoL9QgMOdzR3kAW5sM1OW2Z7ROlBEZ7ycurpe4Sa/SaKfjtf4wOs2h
+            mpxecL9JxL0x3KGEaSeEIiYIkMb4TnSLR9vfowVdReOMTs5RpxMxQL+xmz3nChwL
+            EIF/amAo/ucnXLbUNvYFkOpzdtxtN0dy2ykUvR9rsNUiGBoIn/BYCqSXpsCY7kom
+            8lYl039yQvGVLWG6vryF6gExRbW61B3yjACpR6NLi2Bqta0SDRkeg5obumxoWaJ7
+            ltJ2uPuVofOpIPXP2CO40iCLKUUZB/r+/kVx+dYfEW3Nk4r+uKsu3CCSB9AZNJRQ
+            GiEAEQEAAf4JAwjhK97PoUb9/mDJEZ4dapy5RO5zOz/eVreOL2hoEQuuvHBAQyjK
+            bN97yYk+32ip8ADfznfFDX7fwsp/Yuc7AWpPJM3/iC4q+Xe+45lXOxeqv7hvA7xE
+            Mq+ptOwZKq0uWtfPbjzBTF1lhEwvEiSfCCPO/+wP8+ge8aC8DWSJQku6h8evOX7J
+            7vYbdXX5DiQ4gEQjU7nk1ym2kn29Uh/9d8wJgsyMvjbSUicNpV4PVcikCvS/XTGb
+            pSy/+5zTlFZ2Sx6yCY/kDbrzKxiyEKlfLccreojqZebtodfp9Dq7lZePWYEirVNy
+            hi3H4oJtPtrbJZpMc0peAkUyZ3lDqFEan2R4roVchCeTubZPrCQoeCDoij8TWFoo
+            JJ9bwm/S6OvUguVqip9bcx7EVBMXr2Mv/g8YAqWkSHYydhHM+THtvlidK14U4JXY
+            1j2pM2ZvRwam6f5bdwgiNmFW7zFOxDrLolRcJTfzlJJi1CbWGhhOi8GbnywuK+jJ
+            Kh644hbmcQ/PXsIw2RICnB8gk+IBxGvAQYa53hBzJeFP0qe1Ba/ONCZ0Ge65cI+r
+            cJfhgsz8wDqf87RClaS751hvoX6Sad9Yjvd7unyH1ZFB+edyztNmYfhaOFZyLONC
+            j+jq02oy0Et94asLDaYZ2+5yasBvo3UPzEZOdYmg/TdRbuJuZXixnwuKaJYELKny
+            E2b14XyM9noKBBDMoCLk1Y6hG3U2iN9whQwS9hZQmq1YmIU43U/gKlQTmiBm4Zki
+            8Z+tYxvQjCK51X9+pQkADHUvp5Sr01xOuBYHXtfxEm509pdV/vpcc6+oukHtS9uA
+            c84WZcvTHB+HoxMaIORa1g4ab8m38CGOAIQs6zad15Rl7vCX3pbCft6FNzWwxPWW
+            ym81NOhdUKsHsVJqpnUIfra+NfpMGeSFEQPVySVmknLCwF8EGAEIABMFAl1BfxUJ
+            EBHDHo5eB/TQAhsMAACC8AgAbItodhOOJcb85EggCB1CEoFg6jOs5LgRw4810xI8
+            HBPo/4Gk1L8YPfenMA1Uoz0x+3z42d49QU5HZ/hAmtDVW9KP2Sjw/axfsgB7v6sb
+            rXgtB/OMblHXoqVJU4wVbQrYvxnG6YN1iX83QGGC1mYHWWDXFjZM8egN63Ocyccb
+            ywvq7q/KEaXlrqpxbaDW6uUXRUX8ISqDWXAAqEUcgWI1H5fqMKODQolr0yMBbqgg
+            I7GhfSOnX3mZaLHqy5ElJZUrXi6J5Pq4vnJgLm1kzP632uztjEKQfEVFPUflksdQ
+            P+v3eWKpb6nNTH5tV3Pmo0xvRmicdlEt7f8XNvX3HxQw9w==
+            =YQAi
             -----END PGP PRIVATE KEY BLOCK-----
             """.trimIndent()
 
@@ -129,18 +126,19 @@ object TestKeys {
         val passphraseEncryptedWithKey2 =
             """
             -----BEGIN PGP MESSAGE-----
-            Version: GopenPGP 2.1.3
+            Version: GopenPGP 2.4.5
             Comment: https://gopenpgp.org
             
-            wcBMA7M4YhTWmh7GAQf+JyvV/Dn5CAzcdi5w5J96Fm5kVYexBMsobd+bBMld+dvg
-            Ljfv1X0U39YCZ2uVdc+dH8QL6IClhVElt9+K+FYmO2AoxvcUrSH0li1YfiaAsJg5
-            8BJmXAqgAYAyNr91qKxBPFJDwOrkbz5Gk24DKVNGRB66sEqjGRdZ/DiH1Ef/70AL
-            ZFYH8NwxMIR4gWKs92eBrLzdOvbb+sIlUlvcW+szkfLyipftOV/FzCN6mn2ErDYB
-            QZ3dGWbDIqLUi2yaAbWqxnJ0Sa4StrMLEulM4b44E1bdgN7RBMpvNhFyeqpag1U3
-            +vnRujPvveki91gFbps3lP9JzhkZbmz6PxT74O+VcdJQAfacFpoB9LF5mrj3kEZH
-            v03stV4B4dBxcPNcdy1qVi2+9n/i5JAyzx4aAt36Rkdf4aAYIJw29MnSmYals1qa
-            QQQUAbUDcPWHAdtMp9lDdDU=
-            =6Fdt
+            wcBMA7M4YhTWmh7GAQgAkw5RU6GNwyzjVrXTHZ7CKELe6SNjGEBJAehVHCuQ7pOX
+            gx4uR7+zb6tSCQmGTsk+ahBkHMmog2YjHh11R+LVPhBk8U7gVcOW9rfylxftfMJd
+            pUFBQbTDe0f3xQ5XMwCppLVFKQv/uIiuuwAlJR7ehgNb95+IdLShuTkPm8uZA3RT
+            muFrXtllSjqM4KZ3jFCx6qk/qvN5CIfhvZgT0lilZGJrTxidDEGOYIs/OamNMouE
+            1xDeWAhLCGqR2LTp3B4YKIUEb2DwC2u9vDY5+z6Fm+tPsgKtZqHLA3zbw6UGQgdV
+            gAR0/DURbyf1mffaubF7hU85hlMqULyJf0tiohT2odJxAcKUJ/HxXrig//tK64Nh
+            3XgAGJPJMqbr+QxkN95NssQVeRHITlSuAiNPEj07+2oUrCu9D7ENdSD4DX/kFnT+
+            WyBwO0x/Zd6RGVbeWb6Rr01Rc3iV4dq8dgO9N6axf9PsPPm8sq0pZiLiTP7Vjwfi
+            8dA=
+            =3Fo5
             -----END PGP MESSAGE-----
             """.trimIndent()
 
@@ -148,17 +146,17 @@ object TestKeys {
         val passphraseSignedWithKey2 =
             """
             -----BEGIN PGP SIGNATURE-----
-            Version: GopenPGP 2.1.3
+            Version: GopenPGP 2.4.5
             Comment: https://gopenpgp.org
             
-            wsBzBAABCgAnBQJgAcieCRBVuMlaYnXZgRYhBGsmjTWLB/efSDOGEVW4yVpiddmB
-            AAC3fgf7B0FoVxnu2O5UYbk2dSSMWMwVIGjPo3mZXcJwNAKOFz3qHOErhI0H78hx
-            +Of4jrV0J6Ga5sTGnN8SVB0ujZFjbYavVZmk59asKOCbfshEoO7fQIz4lSn8ceKl
-            S5+xCMoMltkJXwLYSAa3ncrxeF5k0oC1zCF8PTqJQlLXjlkh+DeNdc740eS2+KY1
-            AHL3jeYge6rzgZUf+z2sVRauA6IUCFIewjik+77lPFl93Czg0SMKy0tiw3RfPv3w
-            dEcobHtXryt56sIstnC6rG2yl+cw3G/nsa8+H96lbxaOD/3ifYq/xhQVuezFAe4/
-            xkXNc5ABbX5G0k7eP1Us4fi3h/4KXg==
-            =vKnn
+            wsBzBAABCgAnBQJiKdZ7CZBVuMlaYnXZgRYhBGsmjTWLB/efSDOGEVW4yVpiddmB
+            AADVBwf+KYc/7e8LBBJQmMPI9FBZuW2W7cJ5Ppa4tUmSYWbqhoAwhOWOgPVrW+ue
+            eq4gx216kTa4pl1aaGOMTyXiTEGcKKlb6LgMXvEpIcdiyIxoCSz5pwiyBvif18Uk
+            xE61mXntecXvPw55/KZxEXmwpeZTxOyEwlCPBBPm5IT/vMkOL6tqlD0QcMe7ofDB
+            AkE9z7JvRdqhtJE4ifBzdraQisDqLYKSvb5GnSVVuyldxzq0p/7hSU5qKLbhgJSC
+            K/kz8Ehw4/EbF7Y/o/ChI8/Ei6DXxXEqoxmab5Q/+CrvvXLXqa2x+kkuqFtySqPT
+            sdvI4v+C5/17vT5blM427Q9Cb5nyUg==
+            =VXz7
             -----END PGP SIGNATURE-----
             """.trimIndent()
     }

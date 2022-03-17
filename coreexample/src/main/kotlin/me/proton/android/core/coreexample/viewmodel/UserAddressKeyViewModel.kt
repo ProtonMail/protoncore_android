@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.transformLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.extension.areAllInactive
@@ -59,13 +58,12 @@ class UserAddressKeyViewModel @Inject constructor(
     }
 
     fun getUserAddressKeyState() = accountManager.getPrimaryAccount()
-        .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
-        .transformLatest { result ->
-            if (result == null || result !is DataResult.Success || result.value == null) {
+        .flatMapLatest { primary -> primary?.let { userManager.observeUser(it.userId) } ?: flowOf(null) }
+        .transformLatest { user ->
+            if (user == null) {
                 emit(UserAddressKeyState.Error.NoPrimaryAccount)
                 return@transformLatest
             }
-            val user = result.value!!
             if (user.keys.areAllInactive()) {
                 emit(UserAddressKeyState.Error.KeyLocked)
                 return@transformLatest

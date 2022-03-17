@@ -47,6 +47,7 @@ import me.proton.core.key.domain.verifyText
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
@@ -59,6 +60,8 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -93,8 +96,8 @@ class UserAddressRepositoryImplTests {
     private lateinit var accountManager: AccountManager
 
     private lateinit var db: AccountManagerDatabase
-    private lateinit var userRepository: UserRepositoryImpl
-    private lateinit var userAddressRepository: UserAddressRepositoryImpl
+    private lateinit var userRepository: UserRepository
+    private lateinit var userAddressRepository: UserAddressRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
     @Before
@@ -165,6 +168,32 @@ class UserAddressRepositoryImplTests {
             val success = awaitItem()
             assertIs<DataResult.Success<List<UserAddress>>>(success)
             assertEquals(1, success.value.size)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun observeAddresses() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(listOf(TestAddresses.User1.Address1.response))
+        }
+
+        // First we need the User in DB.
+        userRepository.getUser(TestUsers.User1.id, refresh = true)
+
+        // WHEN
+        userAddressRepository.observeAddresses(TestUsers.User1.id, refresh = true).test {
+            // THEN
+            val empty = awaitItem()
+            assertEquals(0, empty.size)
+
+            val data = awaitItem()
+            assertEquals(1, data.size)
 
             cancelAndIgnoreRemainingEvents()
         }

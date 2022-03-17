@@ -74,5 +74,7 @@ dependencies {
         project(Module.userSettings),
         project(Module.contact),
         project(Module.eventManager),
+        project(Module.label),
+        project(Module.featureFlag),
     )
 }

@@ -43,7 +43,6 @@ import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.entity.AccountItem
 import me.proton.core.accountmanager.presentation.entity.AccountListItem
 import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -90,8 +89,7 @@ class AccountSwitcherViewModel @Inject constructor(
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
     private fun Account.getAccountItem(): Flow<AccountItem> =
-        userManager.getUserFlow(userId)
-            .mapSuccessValueOrNull()
+        userManager.observeUser(userId)
             .mapLatest { user -> getAccountItem(user) }
 
     private fun Account.getAccountItem(user: User?): AccountItem {

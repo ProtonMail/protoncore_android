@@ -68,6 +68,11 @@ class UserManagerImpl(
         userAddressRepository.addAddresses(addresses)
     }
 
+    override fun observeUser(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<User?> = userRepository.observeUser(sessionUserId, refresh = refresh)
+
     override fun getUserFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
@@ -77,6 +82,11 @@ class UserManagerImpl(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): User = userRepository.getUser(sessionUserId, refresh = refresh)
+
+    override fun observeAddresses(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<List<UserAddress>> = userAddressRepository.observeAddresses(sessionUserId, refresh = refresh)
 
     override fun getAddressesFlow(
         sessionUserId: SessionUserId,
