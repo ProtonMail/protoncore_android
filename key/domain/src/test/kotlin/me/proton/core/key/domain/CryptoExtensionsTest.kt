@@ -142,6 +142,18 @@ class CryptoExtensionsTest {
     }
 
     @Test
+    fun useKeys_encryptAndSignWithCompression_decryptAndVerify_String() {
+        keyHolder1.useKeys(context) {
+            val encryptedAndSignedMessage = encryptAndSignTextWithCompression(message)
+            val decryptedSignedText = decryptAndVerifyTextOrNull(encryptedAndSignedMessage)
+
+            assertNotNull(decryptedSignedText)
+            assertEquals(VerificationStatus.Success, decryptedSignedText.status)
+            assertEquals(message, decryptedSignedText.text)
+        }
+    }
+
+    @Test
     fun useKeys_encryptAndSign_decryptAndVerify_ByteArray() {
         val data = message.toByteArray()
 
@@ -150,6 +162,19 @@ class CryptoExtensionsTest {
             val decryptedSignedData = decryptAndVerifyData(encryptedAndSignedData)
 
             assertNotNull(decryptAndVerifyDataOrNull(encryptedAndSignedData))
+            assertEquals(VerificationStatus.Success, decryptedSignedData.status)
+            assertTrue(data.contentEquals(decryptedSignedData.data))
+        }
+    }
+
+    @Test
+    fun useKeys_encryptAndSignWithCompression_decryptAndVerify_ByteArray() {
+        val data = message.toByteArray()
+        keyHolder1.useKeys(context) {
+            val encryptedAndSignedMessage = encryptAndSignDataWithCompression(data)
+            val decryptedSignedData = decryptAndVerifyDataOrNull(encryptedAndSignedMessage)
+
+            assertNotNull(decryptedSignedData)
             assertEquals(VerificationStatus.Success, decryptedSignedData.status)
             assertTrue(data.contentEquals(decryptedSignedData.data))
         }
@@ -297,7 +322,7 @@ class CryptoExtensionsTest {
     }
 
     @Test
-    fun useKeys_generate_and_verify_encrypted_signature_for_ByteArray_corrupted () {
+    fun useKeys_generate_and_verify_encrypted_signature_for_ByteArray_corrupted() {
         val data = message.toByteArray()
         // Key holder 1 signs the message and encrypts the signature for Key Holder 2
         val encryptedSignature = keyHolder1.useKeys(context) {
@@ -305,10 +330,11 @@ class CryptoExtensionsTest {
         }
         // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
         val verified = keyHolder2.useKeys(context) {
-            verifyDataEncrypted(data+"corrupted".toByteArray(), encryptedSignature, keyHolder1.publicKeyRing(context))
+            verifyDataEncrypted(data + "corrupted".toByteArray(), encryptedSignature, keyHolder1.publicKeyRing(context))
         }
         assertFalse(verified)
     }
+
     @Test
     fun useKeys_generate_and_verify_encrypted_signature_for_File() {
         val data = message.toByteArray()
@@ -324,6 +350,7 @@ class CryptoExtensionsTest {
         assertTrue(verified)
         file.delete()
     }
+
     @Test
     fun useKeys_generate_and_verify_encrypted_signature_for_File_corrupted() {
         val data = message.toByteArray() + "corrupted".toByteArray()

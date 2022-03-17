@@ -371,6 +371,61 @@ internal class GOpenPGPCryptoTest {
     }
 
     @Test
+    fun encryptAndSignWithCompressionDecryptAndVerifyAString() {
+        // GIVEN
+        val message = "message\nnewline"
+
+        val publicKey = crypto.getPublicKey(TestKey.privateKey)
+
+        crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            // WHEN
+            val encryptedAndSigned = crypto.encryptAndSignTextWithCompression(message, publicKey, unlockedKey.value)
+
+            // THEN
+            val decryptedText = crypto.decryptAndVerifyText(
+                message = encryptedAndSigned,
+                publicKeys = listOf(publicKey),
+                unlockedKeys = listOf(unlockedKey.value)
+            )
+
+            assertEquals(
+                expected = VerificationStatus.Success,
+                actual = decryptedText.status
+            )
+            assertEquals(
+                expected = message,
+                actual = decryptedText.text
+            )
+        }
+    }
+
+    @Test
+    fun encryptAndSignWithCompressionDecryptAndVerifyBytes() {
+        // GIVEN
+        val message = "message\nnewline".toByteArray()
+
+        val publicKey = crypto.getPublicKey(TestKey.privateKey)
+
+        crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            // WHEN
+            val encryptedAndSigned = crypto.encryptAndSignDataWithCompression(message, publicKey, unlockedKey.value)
+
+            // THEN
+            val decryptedData = crypto.decryptAndVerifyData(
+                message = encryptedAndSigned,
+                publicKeys = listOf(publicKey),
+                unlockedKeys = listOf(unlockedKey.value)
+            )
+
+            assertEquals(
+                expected = VerificationStatus.Success,
+                actual = decryptedData.status
+            )
+            assertTrue(message.contentEquals(decryptedData.data))
+        }
+    }
+
+    @Test
     fun encryptAndSignDecryptAndVerifyProvidedTime() {
         // GIVEN
         val message = "message\nnewline"

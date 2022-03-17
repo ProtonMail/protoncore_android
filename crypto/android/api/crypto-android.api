@@ -55,8 +55,10 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun decryptText (Ljava/lang/String;[B)Ljava/lang/String;
 	public fun encryptAndSignData ([BLjava/lang/String;[B)Ljava/lang/String;
 	public fun encryptAndSignData ([BLme/proton/core/crypto/common/pgp/SessionKey;[B)[B
+	public fun encryptAndSignDataWithCompression ([BLjava/lang/String;[B)Ljava/lang/String;
 	public fun encryptAndSignFile (Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;[B)Ljava/io/File;
 	public fun encryptAndSignText (Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
+	public fun encryptAndSignTextWithCompression (Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
 	public fun encryptData ([BLjava/lang/String;)Ljava/lang/String;
 	public fun encryptData ([BLme/proton/core/crypto/common/pgp/SessionKey;)[B
 	public fun encryptFile (Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;)Ljava/io/File;

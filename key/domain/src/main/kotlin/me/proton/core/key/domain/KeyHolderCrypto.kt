@@ -608,6 +608,27 @@ fun KeyHolderContext.encryptAndSignText(
     )
 
 /**
+ * Compress and encrypt [text] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ *
+ * @return [EncryptedMessage] with embedded signature.
+ *
+ * @throws [CryptoException] if [text] cannot be encrypted or signed.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyText].
+ */
+fun KeyHolderContext.encryptAndSignTextWithCompression(
+    text: String,
+    encryptKeyRing: PublicKeyRing = publicKeyRing
+): EncryptedMessage =
+    context.pgpCrypto.encryptAndSignTextWithCompression(
+        text,
+        encryptKeyRing.primaryKey.key,
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+    )
+
+/**
  * Encrypt [data] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
@@ -623,6 +644,27 @@ fun KeyHolderContext.encryptAndSignData(
     encryptKeyRing: PublicKeyRing = publicKeyRing
 ): EncryptedMessage =
     context.pgpCrypto.encryptAndSignData(
+        data,
+        encryptKeyRing.primaryKey.key,
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+    )
+
+/**
+ * Compress and encrypt [data] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ *
+ * @return [EncryptedMessage] with embedded signature.
+ *
+ * @throws [CryptoException] if [data] cannot be encrypted or signed.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyData].
+ */
+fun KeyHolderContext.encryptAndSignDataWithCompression(
+    data: ByteArray,
+    encryptKeyRing: PublicKeyRing = publicKeyRing
+): EncryptedMessage =
+    context.pgpCrypto.encryptAndSignDataWithCompression(
         data,
         encryptKeyRing.primaryKey.key,
         privateKeyRing.unlockedPrimaryKey.unlockedKey.value

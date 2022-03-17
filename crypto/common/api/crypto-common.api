@@ -162,8 +162,10 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun decryptText (Ljava/lang/String;[B)Ljava/lang/String;
 	public abstract fun encryptAndSignData ([BLjava/lang/String;[B)Ljava/lang/String;
 	public abstract fun encryptAndSignData ([BLme/proton/core/crypto/common/pgp/SessionKey;[B)[B
+	public abstract fun encryptAndSignDataWithCompression ([BLjava/lang/String;[B)Ljava/lang/String;
 	public abstract fun encryptAndSignFile (Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;[B)Ljava/io/File;
 	public abstract fun encryptAndSignText (Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
+	public abstract fun encryptAndSignTextWithCompression (Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
 	public abstract fun encryptData ([BLjava/lang/String;)Ljava/lang/String;
 	public abstract fun encryptData ([BLme/proton/core/crypto/common/pgp/SessionKey;)[B
 	public abstract fun encryptFile (Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;)Ljava/io/File;
@@ -239,7 +241,9 @@ public final class me/proton/core/crypto/common/pgp/PGPCryptoOrNullKt {
 	public static final fun decryptTextOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B)Ljava/lang/String;
 	public static final fun encryptAndSignDataOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;[B)Ljava/lang/String;
 	public static final fun encryptAndSignDataOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLme/proton/core/crypto/common/pgp/SessionKey;[B)[B
+	public static final fun encryptAndSignDataWithCompressionOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;[B)Ljava/lang/String;
 	public static final fun encryptAndSignTextOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
+	public static final fun encryptAndSignTextWithCompressionOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
 	public static final fun encryptDataOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;)Ljava/lang/String;
 	public static final fun encryptFileOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;)Ljava/io/File;
 	public static final fun encryptTextOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;

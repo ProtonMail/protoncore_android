@@ -263,6 +263,12 @@ class TestCryptoContext : CryptoContext {
             "TEXT([$plainText]+$publicKey+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
+        override fun encryptAndSignTextWithCompression(
+            plainText: String,
+            publicKey: Armored,
+            unlockedKey: Unarmored
+        ): EncryptedMessage = encryptAndSignText(plainText, publicKey, unlockedKey)
+
         override fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage =
             "BINARY([${data.fromByteArray()}]+$publicKey+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
@@ -270,6 +276,12 @@ class TestCryptoContext : CryptoContext {
         override fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey,  unlockedKey: Unarmored): DataPacket =
             "BINARY([${data.fromByteArray()}]+${sessionKey.key}+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey).toByteArray()
+
+        override fun encryptAndSignDataWithCompression(
+            data: ByteArray,
+            publicKey: Armored,
+            unlockedKey: Unarmored
+        ): EncryptedMessage = encryptAndSignData(data, publicKey, unlockedKey)
 
         override fun encryptAndSignFile(
             source: File,

@@ -175,6 +175,28 @@ fun PGPCrypto.encryptAndSignDataOrNull(
 ): EncryptedMessage? = runCatching { encryptAndSignData(data, publicKey, unlockedKey) }.getOrNull()
 
 /**
+ * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted and signed.
+ *
+ * @see [PGPCrypto.encryptAndSignText]
+ */
+fun PGPCrypto.encryptAndSignTextWithCompressionOrNull(
+    plainText: String,
+    publicKey: Armored,
+    unlockedKey: Unarmored
+): EncryptedMessage? = runCatching { encryptAndSignTextWithCompression(plainText, publicKey, unlockedKey) }.getOrNull()
+
+/**
+ * @return [EncryptedMessage], or `null` if [data] cannot be encrypted and signed.
+ *
+ * @see [PGPCrypto.encryptAndSignData]
+ */
+fun PGPCrypto.encryptAndSignDataWithCompressionOrNull(
+    data: ByteArray,
+    publicKey: Armored,
+    unlockedKey: Unarmored
+): EncryptedMessage? = runCatching { encryptAndSignDataWithCompression(data, publicKey, unlockedKey) }.getOrNull()
+
+/**
  * @return [DataPacket], or `null` if [data] cannot be encrypted and signed.
  *
  * @see [PGPCrypto.encryptAndSignData]
