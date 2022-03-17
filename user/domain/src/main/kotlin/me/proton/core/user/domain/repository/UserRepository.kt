@@ -92,7 +92,8 @@ interface UserRepository : PassphraseRepository {
      * Create new [User], remotely. Used during signup.
      */
     suspend fun createUser(
-        frames: List<ChallengeFrameDetails>,
+        firstFrame: ChallengeFrameDetails?,
+        secondFrame: ChallengeFrameDetails?,
         username: String,
         password: EncryptedString,
         recoveryEmail: String?,

@@ -16,16 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.domain
+package me.proton.core.user.data.api.request
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class ChallengeManagerConfig {
-
-    @Serializable
-    object SignUp : ChallengeManagerConfig()
-
-    @Serializable
-    object Login : ChallengeManagerConfig()
-}
+data class ChallengeFrameType(
+    @SerialName("name")
+    val name: String
+)

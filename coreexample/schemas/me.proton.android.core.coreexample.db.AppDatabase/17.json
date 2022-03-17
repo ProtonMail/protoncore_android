@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 17,
-    "identityHash": "a7f87d190351e55345696c3f607aa8fc",
+    "identityHash": "2bf25d9852d0cf52d7becc0f36add111",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -2207,7 +2207,7 @@
       },
       {
         "tableName": "ChallengeFrameEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `challengeType` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `challengeFrame` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `flow` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeFrame`))",
         "fields": [
           {
             "fieldPath": "clientId",
@@ -2216,14 +2216,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "challengeType",
-            "columnName": "challengeType",
+            "fieldPath": "challengeFrame",
+            "columnName": "challengeFrame",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "clientIdType",
             "columnName": "clientIdType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "flow",
+            "columnName": "flow",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -2261,7 +2267,7 @@
         "primaryKey": {
           "columnNames": [
             "clientId",
-            "challengeType"
+            "challengeFrame"
           ],
           "autoGenerate": false
         },
@@ -2272,7 +2278,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a7f87d190351e55345696c3f607aa8fc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2bf25d9852d0cf52d7becc0f36add111')"
     ]
   }
 }

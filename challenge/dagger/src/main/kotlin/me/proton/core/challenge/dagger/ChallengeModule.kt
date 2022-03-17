@@ -22,13 +22,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.challenge.data.ChallengeManagerFactory
-import me.proton.core.challenge.data.ChallengeManagerProviderImpl
+import me.proton.core.challenge.data.ChallengeManagerImpl
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.repository.ChallengeRepositoryImpl
-import me.proton.core.challenge.domain.ChallengeManagerProvider
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.repository.ChallengeRepository
-import me.proton.core.network.domain.client.ClientIdProvider
 import javax.inject.Singleton
 
 @Module
@@ -43,9 +41,7 @@ object ChallengeModule {
 
     @Provides
     @Singleton
-    fun provideChallengeManagerProvider(
-        challengeManagerFactory: ChallengeManagerFactory,
-        clientIdProvider: ClientIdProvider
-    ): ChallengeManagerProvider =
-        ChallengeManagerProviderImpl(clientIdProvider, challengeManagerFactory)
+    fun provideChallengeManager(
+        challengeRepository: ChallengeRepository
+    ): ChallengeManager = ChallengeManagerImpl(challengeRepository)
 }

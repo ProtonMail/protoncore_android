@@ -16,11 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.domain
+package me.proton.core.auth.domain.usecase.signup
 
-interface ChallengeManagerProvider {
-    /**
-     * Get an [ChallengeManager] associated with the given [config].
-     */
-    suspend fun get(config: ChallengeManagerConfig): ChallengeManager
+import me.proton.core.challenge.domain.ChallengeConfig
+
+class SignupChallengeConfig : ChallengeConfig {
+
+    override val flowName: String
+        get() = "signup"
+    override val flowFramesCount: Int
+        get() = 2
+    override val flowFrames: List<String>
+        get() = listOf(SIGN_UP_FRAME_USERNAME, SIGN_UP_FRAME_RECOVERY)
+
+    companion object {
+        const val SIGN_UP_FRAME_USERNAME = "username"
+        const val SIGN_UP_FRAME_RECOVERY = "recovery"
+    }
 }

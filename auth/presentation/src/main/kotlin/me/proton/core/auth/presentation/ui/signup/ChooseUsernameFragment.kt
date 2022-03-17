@@ -62,7 +62,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
     }
 
     override fun onBackPressed() {
-        viewModel.onFinish()
+        signupViewModel.onFinish()
         activity?.finish()
     }
 

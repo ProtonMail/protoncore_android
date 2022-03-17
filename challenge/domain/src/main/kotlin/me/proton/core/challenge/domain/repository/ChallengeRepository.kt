@@ -29,6 +29,16 @@ interface ChallengeRepository {
     suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>?
 
     /**
+     * Get a [ChallengeFrameDetails] if exist, by clientId and frame name.
+     */
+    suspend fun getFramesByClientIdAndFrame(clientId: ClientId, frame: String): ChallengeFrameDetails?
+
+    /**
+     * Get a [ChallengeFrameDetails] if exist, by clientId and frame name.
+     */
+    suspend fun getFramesByClientIdAndFlow(clientId: ClientId, flow: String): List<ChallengeFrameDetails>?
+
+    /**
      * Insert new [ChallengeFrameDetails].
      */
     suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails)
@@ -36,7 +46,7 @@ interface ChallengeRepository {
     /**
      * Delete all [ChallengeFrameDetails] by clientId and challengeId.
      */
-    suspend fun deleteFrames(clientId: ClientId)
+    suspend fun deleteFrames(clientId: ClientId, flow: String)
 
     /**
      * Delete all [ChallengeFrameDetails].

@@ -41,6 +41,7 @@ dependencies {
 
         // Features
         project(Module.challengeDomain),
+        project(Module.networkDomain),
 
         // Android
         `android-ktx`,

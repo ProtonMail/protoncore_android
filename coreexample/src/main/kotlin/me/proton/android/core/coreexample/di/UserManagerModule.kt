@@ -26,8 +26,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.Constants
-import me.proton.core.challenge.domain.ChallengeManager
-import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase

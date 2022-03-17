@@ -18,27 +18,27 @@
 
 package me.proton.core.challenge.data
 
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import me.proton.core.challenge.domain.ChallengeFrameType
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
 import me.proton.core.network.domain.client.ClientId
 
-@AssistedFactory
-interface ChallengeManagerFactory {
-    fun create(clientId: ClientId): ChallengeManagerImpl
-}
-
 class ChallengeManagerImpl @AssistedInject constructor(
-    private val challengeRepository: ChallengeRepository,
-    @Assisted val clientId: ClientId
+    private val challengeRepository: ChallengeRepository
 ) : ChallengeManager {
+    override suspend fun startNewFlow(clientId: ClientId, flow: String) {
+        challengeRepository.deleteFrames(clientId, flow)
+    }
 
-    override suspend fun addOrUpdateFrame(
-        challengeType: ChallengeFrameType,
+    override suspend fun finishFlow(clientId: ClientId, flow: String) {
+        challengeRepository.deleteFrames(clientId, flow)
+    }
+
+    override suspend fun addOrUpdateFrameToFlow(
+        clientId: ClientId,
+        flow: String,
+        challenge: String,
         focusTime: Long,
         clicks: Int,
         copies: List<String>,
@@ -46,8 +46,9 @@ class ChallengeManagerImpl @AssistedInject constructor(
         keys: List<Char>
     ) {
         val frame = ChallengeFrameDetails(
+            flow = flow,
             clientId = clientId,
-            challengeTypeChallenge = challengeType,
+            challengeFrame = challenge,
             focusTime = focusTime,
             clicks = clicks,
             copy = copies,
@@ -57,8 +58,9 @@ class ChallengeManagerImpl @AssistedInject constructor(
         challengeRepository.insertFrameDetails(frame)
     }
 
-    override suspend fun removeFrames() = challengeRepository.deleteFrames(clientId)
+    override suspend fun getFramesByFlowName(clientId: ClientId, flow: String): List<ChallengeFrameDetails> =
+        challengeRepository.getFramesByClientIdAndFlow(clientId, flow) ?: emptyList()
 
-    override suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails> =
-        challengeRepository.getFramesByClientId(clientId) ?: emptyList()
+    override suspend fun getFrameByFrameName(clientId: ClientId, frame: String): ChallengeFrameDetails? =
+        challengeRepository.getFramesByClientIdAndFrame(clientId, frame)
 }

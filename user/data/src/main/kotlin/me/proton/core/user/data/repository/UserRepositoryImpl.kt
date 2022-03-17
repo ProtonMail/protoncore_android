@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.extension.requireValidProof
-import me.proton.core.challenge.data.api.Payload
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -47,8 +46,11 @@ import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
+import me.proton.core.user.data.api.request.ChallengePayload
+import me.proton.core.user.data.api.request.ChallengeRecoveryFrame
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
+import me.proton.core.user.data.api.request.ChallengeUsernameFrame
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -58,7 +60,6 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
-import java.lang.RuntimeException
 import javax.inject.Singleton
 
 @Singleton
@@ -140,7 +141,8 @@ class UserRepositoryImpl(
      * Create new [User]. Used during signup.
      */
     override suspend fun createUser(
-        frames: List<ChallengeFrameDetails>,
+        firstFrame: ChallengeFrameDetails?,
+        secondFrame: ChallengeFrameDetails?,
         username: String,
         password: EncryptedString,
         recoveryEmail: String?,
@@ -156,7 +158,10 @@ class UserRepositoryImpl(
             referrer,
             type.value,
             AuthRequest.from(auth),
-            Payload.createFromFrames(context = context, frames = frames)
+            ChallengePayload(
+                ChallengeUsernameFrame.from(context, firstFrame),
+                ChallengeRecoveryFrame.from(context, secondFrame)
+            )
         )
         createUser(request).user.toUser()
     }.valueOrThrow

@@ -34,17 +34,23 @@ class ChallengeRepositoryImpl(
     override suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>? =
         challengeDao.getByClientId(clientId.id)?.map { it.toFrameDetails() }
 
+    override suspend fun getFramesByClientIdAndFrame(clientId: ClientId, frame: String): ChallengeFrameDetails? =
+        challengeDao.getByClientIdAndFrame(clientId.id, frame)?.toFrameDetails()
+
+    override suspend fun getFramesByClientIdAndFlow(clientId: ClientId, flow: String): List<ChallengeFrameDetails>? =
+        challengeDao.getByClientIdAndFlow(clientId.id, flow)?.map { it.toFrameDetails() }
+
     override suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails) {
         val clientId = challengeFrameDetails.clientId
-        val challengeType = challengeFrameDetails.challengeTypeChallenge.name
         db.inTransaction {
-            val savedFrame = challengeDao.getByClientIdAndType(clientId.id, challengeType)
+            val savedFrame = challengeDao.getByClientIdAndFrame(clientId.id, challengeFrameDetails.challengeFrame)
             val currentFocus = savedFrame?.focusTime ?: 0
             challengeDao.insertOrUpdate(
                 ChallengeFrameEntity(
                     clientId = clientId.id,
                     clientIdType = clientId.getType(),
-                    challengeType = challengeType,
+                    challengeFrame = challengeFrameDetails.challengeFrame,
+                    flow = challengeFrameDetails.flow,
                     focusTime = currentFocus + challengeFrameDetails.focusTime,
                     clicks = challengeFrameDetails.clicks,
                     copy = challengeFrameDetails.copy,
@@ -55,8 +61,8 @@ class ChallengeRepositoryImpl(
         }
     }
 
-    override suspend fun deleteFrames(clientId: ClientId) =
-        challengeDao.deleteByClientId(clientId.id)
+    override suspend fun deleteFrames(clientId: ClientId, flow: String) =
+        challengeDao.deleteByClientIdAndFlow(clientId.id, flow)
 
     override suspend fun deleteFrames() {
         challengeDao.deleteAll()

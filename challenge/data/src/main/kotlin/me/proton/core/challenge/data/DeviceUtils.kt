@@ -42,6 +42,8 @@ fun appLanguage(): String = Locale.getDefault().language
 
 fun deviceTimezone(): String = TimeZone.getDefault().id
 
+fun deviceTimezoneOffset(): Int = 1 // TODO
+
 fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
     resources.configuration.locales[0].country
 } else {

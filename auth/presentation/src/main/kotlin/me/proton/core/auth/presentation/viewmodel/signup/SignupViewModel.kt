@@ -36,14 +36,13 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.auth.domain.usecase.userAlreadyExists
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
-import me.proton.core.challenge.domain.ChallengeFrameType
-import me.proton.core.challenge.domain.ChallengeManagerConfig
-import me.proton.core.challenge.domain.ChallengeManagerProvider
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -73,6 +72,8 @@ internal class SignupViewModel @Inject constructor(
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
     private val performLogin: PerformLogin,
+    private val challengeManager: ChallengeManager,
+    private val challengeConfig: SignupChallengeConfig,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
     savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -234,6 +235,12 @@ internal class SignupViewModel @Inject constructor(
         paymentsOrchestrator.register(context)
     }
 
+    fun onFinish() {
+        viewModelScope.launch {
+            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+            challengeManager.finishFlow(clientId, challengeConfig.flowName)
+        }
+    }
     // endregion
 
     // region private functions
@@ -294,6 +301,5 @@ internal class SignupViewModel @Inject constructor(
             startCreateUserWorkflow()
         }
     }
-
     // endregion
 }

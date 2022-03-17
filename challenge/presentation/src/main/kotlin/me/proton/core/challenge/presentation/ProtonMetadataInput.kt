@@ -28,11 +28,21 @@ import android.widget.TextView
 import androidx.core.content.withStyledAttributes
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding
-import me.proton.core.presentation.R
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.presentation.ui.view.ProtonInput
+import javax.inject.Inject
 
-open class ProtonMetadataInput : ProtonInput {
+@AndroidEntryPoint
+class ProtonMetadataInput : ProtonInput {
+
+    @Inject
+    lateinit var challengeManager: ChallengeManager
+
+    @Inject
+    lateinit var clientIdProvider: ClientIdProvider
 
     private var inputMetadataBinding: ViewBinding? = null
 
@@ -57,21 +67,19 @@ open class ProtonMetadataInput : ProtonInput {
     private var focusOff: Long = 0
     private var focused: Boolean = false
 
-    private var metricsEnabled: Boolean = false
-        set(value) {
-            field = value
-            if (value) enableMetrics()
-        }
+    private lateinit var flow: String
 
-    protected var clicksCounter: Int = 0
+    private lateinit var frame: String
 
-    protected val copies: List<String>
+    private var clicksCounter: Int = 0
+
+    private val copies: List<String>
         get() = input.copyList
 
-    protected val pastes: List<String>
+    private val pastes: List<String>
         get() = input.pasteList
 
-    protected val keys: MutableList<Char> = mutableListOf()
+    private val keys: MutableList<Char> = mutableListOf()
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -86,10 +94,12 @@ open class ProtonMetadataInput : ProtonInput {
     }
 
     private fun init(context: Context, attrs: AttributeSet? = null) {
-        context.withStyledAttributes(attrs, R.styleable.ProtonInputMetadata) {
-            metricsEnabled = getBoolean(R.styleable.ProtonInputMetadata_metricsEnabled, false)
+        context.withStyledAttributes(attrs, R.styleable.ChallengeInput) {
+            flow = getString(R.styleable.ChallengeInput_challengeFlow) ?: ""
+            frame = getString(R.styleable.ChallengeInput_challengeFrame) ?: ""
         }
 
+        enableMetrics()
         input.setOnKeyListener { _, _, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 keys.add(event.unicodeChar.toChar())
@@ -98,7 +108,7 @@ open class ProtonMetadataInput : ProtonInput {
         }
     }
 
-    protected fun calculateFocus(focusLost: Boolean = true): Long {
+    private fun calculateFocus(focusLost: Boolean = true): Long {
         return when {
             focusLost && focusOn != 0L -> {
                 focusOff = System.currentTimeMillis()
@@ -134,6 +144,19 @@ open class ProtonMetadataInput : ProtonInput {
             }
             super.onTouchEvent(event)
         }
+    }
+
+    suspend fun flush() {
+        challengeManager.addOrUpdateFrameToFlow(
+            clientId = clientIdProvider.getClientId(null)!!,
+            flow = flow,
+            challenge = frame,
+            focusTime = calculateFocus(),
+            clicks = clicksCounter,
+            copies = copies,
+            pastes = pastes,
+            keys = keys
+        )
     }
 
     companion object {

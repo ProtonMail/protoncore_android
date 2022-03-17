@@ -16,19 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.data.api
+package me.proton.core.user.data.api.request
 
 import android.content.Context
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.challenge.data.api.Frame
+import me.proton.core.challenge.data.appLanguage
 import me.proton.core.challenge.data.deviceFontSize
+import me.proton.core.challenge.data.deviceModelName
+import me.proton.core.challenge.data.deviceRegion
 import me.proton.core.challenge.data.deviceStorage
+import me.proton.core.challenge.data.deviceTimezone
+import me.proton.core.challenge.data.deviceTimezoneOffset
+import me.proton.core.challenge.data.deviceUID
 import me.proton.core.challenge.data.isDeviceRooted
 import me.proton.core.challenge.data.nightMode
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 
 @Serializable
-data class RecoveryFrame(
+data class ChallengeRecoveryFrame(
     @SerialName("appLang")
     override val appLanguage: String,
     @SerialName("timezone")
@@ -60,32 +67,32 @@ data class RecoveryFrame(
     @SerialName("pasteRecovery")
     val pasteField: List<String>,
     @SerialName("frame")
-    val frame: FrameType,
+    val frame: ChallengeFrameType,
     @SerialName("keydownRecovery")
     override val keyDownField: List<Char>
 ) : Frame {
     companion object {
-        fun from(context: Context, frame: ChallengeFrameDetails?): RecoveryFrame? =
+        fun from(context: Context, frame: ChallengeFrameDetails?): ChallengeRecoveryFrame? =
             if (frame == null) {
                 null
             } else
-                RecoveryFrame(
-                    appLanguage = "en",
-                    timezone = "timezone",
-                    deviceName = "device-name",
-                    uid = "device-uid",
-                    regionCode = "device-region",
-                    timezoneOffset = 1,
+                ChallengeRecoveryFrame(
+                    appLanguage = appLanguage(),
+                    timezone = deviceTimezone(),
+                    deviceName = deviceModelName(),
+                    uid = deviceUID(),
+                    regionCode = context.deviceRegion(),
+                    timezoneOffset = deviceTimezoneOffset(),
                     rooted = isDeviceRooted(),
                     fontSize = context.deviceFontSize().toString(),
-                    storage = context.deviceStorage(), // todo
+                    storage = context.deviceStorage(),
                     darkMode = context.nightMode(),
-                    timeOnField = listOf(frame.focusTime), // todo
+                    timeOnField = listOf(frame.focusTime),
                     clickOnField = frame.clicks,
                     copyField = frame.copy,
                     pasteField = frame.paste,
                     version = CHALLENGE_VERSION,
-                    frame = FrameType("recovery"),
+                    frame = ChallengeFrameType(frame.challengeFrame),
                     keyDownField = frame.keys
                 )
     }

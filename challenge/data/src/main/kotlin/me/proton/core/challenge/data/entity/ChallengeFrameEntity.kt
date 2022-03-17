@@ -19,7 +19,6 @@
 package me.proton.core.challenge.data.entity
 
 import androidx.room.Entity
-import me.proton.core.challenge.domain.ChallengeFrameType
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
@@ -27,12 +26,13 @@ import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(
-    primaryKeys = ["clientId", "challengeType"]
+    primaryKeys = ["clientId", "challengeFrame"]
 )
 data class ChallengeFrameEntity(
     val clientId: String,
-    val challengeType: String,
+    val challengeFrame: String,
     val clientIdType: ClientIdType,
+    val flow: String,
     val focusTime: Long,
     val clicks: Int,
     val copy: List<String>,
@@ -40,11 +40,12 @@ data class ChallengeFrameEntity(
     val keys: List<Char>
 ) {
     fun toFrameDetails() = ChallengeFrameDetails(
+        flow = flow,
         clientId = when (clientIdType) {
             ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
             ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
         },
-        challengeTypeChallenge = ChallengeFrameType.valueOf(challengeType),
+        challengeFrame = challengeFrame,
         focusTime = focusTime,
         clicks = clicks,
         copy = copy,

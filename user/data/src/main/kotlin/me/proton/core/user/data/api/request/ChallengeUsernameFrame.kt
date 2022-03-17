@@ -16,24 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.data.api
+package me.proton.core.user.data.api.request
 
 import android.content.Context
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.challenge.data.api.Frame
 import me.proton.core.challenge.data.appLanguage
 import me.proton.core.challenge.data.deviceFontSize
 import me.proton.core.challenge.data.deviceModelName
 import me.proton.core.challenge.data.deviceRegion
 import me.proton.core.challenge.data.deviceStorage
 import me.proton.core.challenge.data.deviceTimezone
+import me.proton.core.challenge.data.deviceTimezoneOffset
 import me.proton.core.challenge.data.deviceUID
 import me.proton.core.challenge.data.isDeviceRooted
 import me.proton.core.challenge.data.nightMode
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 
 @Serializable
-data class UsernameFrame(
+data class ChallengeUsernameFrame(
     @SerialName("appLang")
     override val appLanguage: String,
     @SerialName("timezone")
@@ -65,32 +67,32 @@ data class UsernameFrame(
     @SerialName("pasteUsername")
     val pasteField: List<String>,
     @SerialName("frame")
-    val frame: FrameType,
+    val frame: ChallengeFrameType,
     @SerialName("keydownUsername")
     override val keyDownField: List<Char>
 ) : Frame {
     companion object {
-        fun from(context: Context, frame: ChallengeFrameDetails?): UsernameFrame? =
+        fun from(context: Context, frame: ChallengeFrameDetails?): ChallengeUsernameFrame? =
             if (frame == null) {
                 null
             } else
-                UsernameFrame(
+                ChallengeUsernameFrame(
                     appLanguage = appLanguage(),
                     timezone = deviceTimezone(),
                     deviceName = deviceModelName(),
                     uid = deviceUID(),
                     regionCode = context.deviceRegion(),
-                    timezoneOffset = 1,
+                    timezoneOffset = deviceTimezoneOffset(),
                     rooted = isDeviceRooted(),
                     fontSize = context.deviceFontSize().toString(),
                     storage = context.deviceStorage(),
                     darkMode = context.nightMode(),
-                    timeOnField = listOf(frame.focusTime), // todo
+                    timeOnField = listOf(frame.focusTime),
                     clickOnField = frame.clicks,
                     copyField = frame.copy,
                     pasteField = frame.paste,
                     version = CHALLENGE_VERSION,
-                    frame = FrameType("username"),
+                    frame = ChallengeFrameType(frame.challengeFrame),
                     keyDownField = frame.keys
                 )
     }

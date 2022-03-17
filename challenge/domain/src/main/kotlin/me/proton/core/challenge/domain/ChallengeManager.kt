@@ -23,8 +23,20 @@ import me.proton.core.network.domain.client.ClientId
 
 interface ChallengeManager {
 
-    suspend fun addOrUpdateFrame(
-        challengeType: ChallengeFrameType,
+    suspend fun startNewFlow(
+        clientId: ClientId,
+        flow: String
+    )
+
+    suspend fun finishFlow(
+        clientId: ClientId,
+        flow: String
+    )
+
+    suspend fun addOrUpdateFrameToFlow(
+        clientId: ClientId,
+        flow: String,
+        challenge: String,
         focusTime: Long, // in ms
         clicks: Int,
         copies: List<String>,
@@ -32,7 +44,7 @@ interface ChallengeManager {
         keys: List<Char>
     )
 
-    suspend fun removeFrames()
+    suspend fun getFramesByFlowName(clientId: ClientId, flow: String): List<ChallengeFrameDetails>
 
-    suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>
+    suspend fun getFrameByFrameName(clientId: ClientId, frame: String): ChallengeFrameDetails?
 }

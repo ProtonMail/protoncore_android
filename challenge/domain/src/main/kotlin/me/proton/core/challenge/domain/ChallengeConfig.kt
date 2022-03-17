@@ -18,7 +18,11 @@
 
 package me.proton.core.challenge.domain
 
-enum class ChallengeFrameType {
-    Username,
-    Recovery
+interface ChallengeConfig {
+
+    val flowName: String
+
+    val flowFramesCount: Int
+
+    val flowFrames: List<String>
 }

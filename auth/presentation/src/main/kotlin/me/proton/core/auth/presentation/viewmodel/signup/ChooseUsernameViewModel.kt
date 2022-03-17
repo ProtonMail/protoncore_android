@@ -31,10 +31,10 @@ import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
-import me.proton.core.challenge.domain.ChallengeFrameType
-import me.proton.core.challenge.domain.ChallengeManagerConfig
-import me.proton.core.challenge.domain.ChallengeManagerProvider
+import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
@@ -44,7 +44,9 @@ import javax.inject.Inject
 internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination,
-    private val challengeManagerProvider: ChallengeManagerProvider
+    private val challengeManager: ChallengeManager,
+    private val clientIdProvider: ClientIdProvider,
+    private val challengeConfig: SignupChallengeConfig
 ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
@@ -87,6 +89,10 @@ internal class ChooseUsernameViewModel @Inject constructor(
     }
 
     private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
+        viewModelScope.launch {
+            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+            challengeManager.startNewFlow(clientId, challengeConfig.flowName)
+        }
         return when (requireCurrentAccountType()) {
             AccountType.Username,
             AccountType.Internal -> {
@@ -172,14 +178,6 @@ internal class ChooseUsernameViewModel @Inject constructor(
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
-
-    fun onFinish() {
-        viewModelScope.launch {
-            val config = ChallengeManagerConfig.SignUp
-            val challengeManager = challengeManagerProvider.get(config)
-            challengeManager.removeFrames()
-        }
-    }
 }
 
 /**

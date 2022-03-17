@@ -33,14 +33,20 @@ abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
     @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId")
     abstract suspend fun getByClientId(clientId: String): List<ChallengeFrameEntity>?
 
-    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND challengeType = :challengeType")
-    abstract suspend fun getByClientIdAndType(clientId: String, challengeType: String): ChallengeFrameEntity?
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND challengeFrame = :challengeFrame")
+    abstract suspend fun getByClientIdAndFrame(clientId: String, challengeFrame: String): ChallengeFrameEntity?
+
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND flow = :flow")
+    abstract suspend fun getByClientIdAndFlow(clientId: String, flow: String): List<ChallengeFrameEntity>?
 
     @Query("DELETE FROM ChallengeFrameEntity")
     abstract suspend fun deleteAll()
 
     @Query("DELETE FROM ChallengeFrameEntity WHERE clientId = :clientId")
     abstract suspend fun deleteByClientId(clientId: String)
+
+    @Query("DELETE FROM ChallengeFrameEntity WHERE clientId = :clientId AND flow = :flow")
+    abstract suspend fun deleteByClientIdAndFlow(clientId: String, flow: String)
 
     @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste WHERE clientId = :clientId")
     abstract suspend fun updateFrame(

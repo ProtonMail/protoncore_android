@@ -19,8 +19,7 @@
 package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.challenge.domain.ChallengeManagerConfig
-import me.proton.core.challenge.domain.ChallengeManagerProvider
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
@@ -37,7 +36,8 @@ class PerformCreateUser @Inject constructor(
     private val userRepository: UserRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val challengeManagerProvider: ChallengeManagerProvider
+    private val challengeManager: ChallengeManager,
+    private val challengeConfig: SignupChallengeConfig
 ) {
 
     suspend operator fun invoke(
@@ -64,12 +64,13 @@ class PerformCreateUser @Inject constructor(
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
-            val config = ChallengeManagerConfig.SignUp
-            val challengeManager = challengeManagerProvider.get(config)
-            val frames = challengeManager.getFramesByClientId(clientId)
+
+            val firstFrame = challengeManager.getFrameByFrameName(clientId, challengeConfig.flowFrames[0])
+            val secondFrame = challengeManager.getFrameByFrameName(clientId, challengeConfig.flowFrames[1])
 
             val createUserResult = userRepository.createUser(
-                frames = frames,
+                firstFrame = firstFrame,
+                secondFrame = secondFrame,
                 username = username,
                 password = password,
                 recoveryEmail = recoveryEmail,
@@ -79,7 +80,7 @@ class PerformCreateUser @Inject constructor(
                 auth = auth
             ).userId
 
-            challengeManager.removeFrames()
+            challengeManager.finishFlow(clientId, challengeConfig.flowName)
 
             return createUserResult
         }
