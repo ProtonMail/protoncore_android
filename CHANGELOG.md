@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.3]
+
 ## New
   - Added functions to encrypt with compression to the crypto module and to the KeyHolder's context:
     `encryptAndSignTextWithCompression` and `encryptAndSignDataWithCompression`
