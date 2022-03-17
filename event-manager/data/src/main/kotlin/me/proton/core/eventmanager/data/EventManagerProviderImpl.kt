@@ -18,15 +18,18 @@
 
 package me.proton.core.eventmanager.data
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManager
 import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerConfigProvider
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import javax.inject.Singleton
 
 @Singleton
 class EventManagerProviderImpl(
     private val eventManagerFactory: EventManagerFactory,
+    private val eventManagerConfigProvider: EventManagerConfigProvider,
     @JvmSuppressWildcards
     private val eventListeners: Set<EventListener<*, *>>
 ) : EventManagerProvider {
@@ -51,7 +54,6 @@ class EventManagerProviderImpl(
         }
     }
 
-    override fun getAll(): List<EventManager> {
-        return managers.values.toList()
-    }
+    override suspend fun getAll(userId: UserId): List<EventManager> =
+        eventManagerConfigProvider.getAll(userId).map { get(it) }
 }

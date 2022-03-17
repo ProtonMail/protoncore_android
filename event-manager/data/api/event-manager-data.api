@@ -29,6 +29,12 @@ public abstract interface class me/proton/core/eventmanager/data/EventDeserializ
 	public abstract fun getEndpoint ()Ljava/lang/String;
 }
 
+public final class me/proton/core/eventmanager/data/EventManagerConfigProviderImpl : me/proton/core/eventmanager/domain/EventManagerConfigProvider {
+	public fun <init> (Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)V
+	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface annotation class me/proton/core/eventmanager/data/EventManagerCoroutineScope : java/lang/annotation/Annotation {
 }
 
@@ -71,9 +77,9 @@ public final class me/proton/core/eventmanager/data/EventManagerImpl_Factory {
 }
 
 public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : me/proton/core/eventmanager/domain/EventManagerProvider {
-	public fun <init> (Lme/proton/core/eventmanager/data/EventManagerFactory;Ljava/util/Set;)V
+	public fun <init> (Lme/proton/core/eventmanager/data/EventManagerFactory;Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;Ljava/util/Set;)V
 	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lme/proton/core/eventmanager/domain/EventManager;
-	public fun getAll ()Ljava/util/List;
+	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/eventmanager/data/LogTag {
@@ -297,6 +303,7 @@ public abstract class me/proton/core/eventmanager/data/db/dao/EventMetadataDao :
 	public abstract fun deleteAll (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -349,6 +356,7 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun deleteAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEvents (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLatestEventId (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;

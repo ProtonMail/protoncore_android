@@ -39,6 +39,7 @@ import me.proton.core.eventmanager.data.listener.UserEventListener
 import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManager
 import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerConfigProvider
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.entity.EventId
 import me.proton.core.eventmanager.domain.entity.EventIdResponse
@@ -60,6 +61,7 @@ class EventManagerImplTest {
     private val coroutineScope = TestCoroutineScope()
 
     private lateinit var eventManagerFactor: EventManagerFactory
+    private lateinit var eventManagerConfigProvider: EventManagerConfigProvider
     private lateinit var eventManagerProvider: EventManagerProvider
 
     private lateinit var appLifecycleProvider: AppLifecycleProvider
@@ -137,7 +139,8 @@ class EventManagerImplTest {
             }
         }
 
-        eventManagerProvider = EventManagerProviderImpl(eventManagerFactor, listeners)
+        eventManagerConfigProvider = EventManagerConfigProviderImpl(eventMetadataRepository)
+        eventManagerProvider = EventManagerProviderImpl(eventManagerFactor, eventManagerConfigProvider, listeners)
         user1Manager = eventManagerProvider.get(user1Config)
         user2Manager = eventManagerProvider.get(user2Config)
         calendarManager = eventManagerProvider.get(calendarConfig)

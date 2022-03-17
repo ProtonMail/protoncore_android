@@ -36,6 +36,9 @@ abstract class EventMetadataDao : BaseDao<EventMetadataEntity>() {
     @Query("SELECT * FROM EventMetadataEntity WHERE config = :config AND userId = :userId AND eventId = :eventId")
     abstract fun observe(userId: UserId, config: EventManagerConfig, eventId: String): Flow<EventMetadataEntity?>
 
+    @Query("SELECT * FROM EventMetadataEntity WHERE userId = :userId ORDER BY createdAt")
+    abstract suspend fun getAll(userId: UserId): List<EventMetadataEntity>
+
     @Query("SELECT * FROM EventMetadataEntity WHERE config = :config AND userId = :userId ORDER BY createdAt")
     abstract suspend fun get(userId: UserId, config: EventManagerConfig): List<EventMetadataEntity>
 
