@@ -206,8 +206,8 @@ fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): SessionKey =
 fun KeyHolderContext.decryptAndVerifyHashKey(
     hashKey: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing
-): HashKey = decryptAndVerifyText(hashKey, verifyKeyRing).let {
-    HashKey(getBase64Decoded(it.text), it.status)
+): HashKey = decryptAndVerifyData(hashKey, verifyKeyRing).let {
+    HashKey(it.data, it.status)
 }
 
 /**
@@ -753,7 +753,7 @@ fun KeyHolderContext.encryptSessionKey(sessionKey: SessionKey): KeyPacket =
 fun KeyHolderContext.encryptAndSignHashKey(
     hashKey: HashKey,
     encryptKeyRing: PublicKeyRing = publicKeyRing
-): EncryptedMessage = encryptAndSignText(getBase64Encoded(hashKey.key), encryptKeyRing)
+): EncryptedMessage = encryptAndSignData(hashKey.key, encryptKeyRing)
 
 /**
  * Decrypt [message] as [String] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].

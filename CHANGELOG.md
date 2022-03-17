@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Fixed
+
+- Stop decoding the base64 when decrypting the HashKey (to keep compatibility with drive web & iOS).
+- Encode the random bytes in base64 when generating the hash key.
+
 ## [7.1.3]
 
 ## New
