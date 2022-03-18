@@ -55,15 +55,6 @@ class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished)
                 onBackPressed()
             }
         }
-        binding.congratsView.setImageResource(
-            when (product) {
-                Product.Calendar -> R.drawable.ic_congratulations_calendar
-                Product.Drive,
-                Product.Mail,
-                Product.Vpn,
-                null -> R.drawable.ic_congratulations_mail
-            }.exhaustive
-        )
     }
 
     override fun onBackPressed() {

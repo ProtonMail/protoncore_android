@@ -27,7 +27,7 @@
         style="@style/ProtonTextView.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_medium"
+        android:layout_marginTop="@dimen/gap_huge"
         android:gravity="center"
         android:text="@string/auth_signup_congratulations"
         android:textStyle="bold"
@@ -40,19 +40,22 @@
         android:id="@+id/congratsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gap_huge"
         app:layout_constraintBottom_toTopOf="@id/titleText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_congratulations" />
 
     <TextView
         android:id="@+id/subtitleText"
-        style="@style/ProtonTextView.Subtitle"
+        style="@style/ProtonTextView.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gap_huge"
         android:layout_marginTop="@dimen/gap_large_plus"
+        android:layout_marginEnd="@dimen/gap_huge"
         android:gravity="center"
         android:text="@string/auth_signup_congratulations_subtitle"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleText" />
