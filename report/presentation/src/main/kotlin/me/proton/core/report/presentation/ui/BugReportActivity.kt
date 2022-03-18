@@ -28,9 +28,11 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
@@ -66,10 +68,12 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
         super.onCreate(savedInstanceState)
 
         viewModel.bugReportFormState
+            .flowWithLifecycle(lifecycle)
             .onEach(this::handleBugReportFormState)
             .launchIn(lifecycleScope)
 
         viewModel.exitSignal
+            .flowWithLifecycle(lifecycle)
             .onEach(this::handleExitSignal)
             .launchIn(lifecycleScope)
 

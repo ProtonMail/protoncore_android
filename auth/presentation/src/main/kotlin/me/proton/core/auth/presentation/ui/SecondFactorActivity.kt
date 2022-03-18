@@ -22,8 +22,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -84,16 +87,19 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             }
         }
 
-        viewModel.state.onEach {
-            when (it) {
-                is SecondFactorViewModel.State.Idle -> showLoading(false)
-                is SecondFactorViewModel.State.Processing -> showLoading(true)
-                is SecondFactorViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                is SecondFactorViewModel.State.Error.Message ->
-                    onError(false, it.error.getUserMessage(resources))
-                is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        viewModel.state
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is SecondFactorViewModel.State.Idle -> showLoading(false)
+                    is SecondFactorViewModel.State.Processing -> showLoading(true)
+                    is SecondFactorViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
+                    is SecondFactorViewModel.State.Error.Message ->
+                        onError(false, it.error.getUserMessage(resources))
+                    is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {

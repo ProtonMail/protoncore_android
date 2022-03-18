@@ -23,8 +23,10 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
@@ -88,14 +90,17 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
             }
         }
 
-        viewModel.validationState.onEach {
-            when (it) {
-                is ViewModelResult.None -> Unit
-                is ViewModelResult.Processing -> showLoading()
-                is ViewModelResult.Error -> onValidationError(it.throwable?.getUserMessage(resources))
-                is ViewModelResult.Success -> onValidationSuccess()
-            }.exhaustive
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.validationState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is ViewModelResult.None -> Unit
+                    is ViewModelResult.Processing -> showLoading()
+                    is ViewModelResult.Error -> onValidationError(it.throwable?.getUserMessage(resources))
+                    is ViewModelResult.Success -> onValidationSuccess()
+                }.exhaustive
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.verificationCodeResendState.onEach {
             when (it) {

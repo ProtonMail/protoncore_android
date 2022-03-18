@@ -23,9 +23,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -144,15 +146,18 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             setupFeatureFlagButton()
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
-            accountSwitcherViewModel.onAction().onEach {
-                when (it) {
-                    is AccountSwitcherViewModel.Action.Add -> accountViewModel.signIn()
-                    is AccountSwitcherViewModel.Action.SignIn -> accountViewModel.signIn(it.account.username)
-                    is AccountSwitcherViewModel.Action.SignOut -> accountViewModel.signOut(it.account.userId)
-                    is AccountSwitcherViewModel.Action.Remove -> accountViewModel.remove(it.account.userId)
-                    is AccountSwitcherViewModel.Action.SetPrimary -> accountViewModel.setAsPrimary(it.account.userId)
-                }
-            }.launchIn(lifecycleScope)
+            accountSwitcherViewModel.onAction()
+                .flowWithLifecycle(lifecycle)
+                .distinctUntilChanged()
+                .onEach {
+                    when (it) {
+                        is AccountSwitcherViewModel.Action.Add -> accountViewModel.signIn()
+                        is AccountSwitcherViewModel.Action.SignIn -> accountViewModel.signIn(it.account.username)
+                        is AccountSwitcherViewModel.Action.SignOut -> accountViewModel.signOut(it.account.userId)
+                        is AccountSwitcherViewModel.Action.Remove -> accountViewModel.remove(it.account.userId)
+                        is AccountSwitcherViewModel.Action.SetPrimary -> accountViewModel.setAsPrimary(it.account.userId)
+                    }
+                }.launchIn(lifecycleScope)
 
             bugReport.onClick { reportsViewModel.reportBugs(waitForServer = false) }
             bugReportWaiting.onClick { reportsViewModel.reportBugs(waitForServer = true) }
@@ -160,57 +165,82 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             labels.onClick { startActivity(Intent(this@MainActivity, LabelsActivity::class.java)) }
         }
 
-        accountViewModel.state.onEach { state ->
-            when (state) {
-                is AccountViewModel.State.Processing -> Unit
-                is AccountViewModel.State.LoginNeeded -> accountViewModel.add()
-                is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        accountViewModel.state
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach { state ->
+                when (state) {
+                    is AccountViewModel.State.Processing -> Unit
+                    is AccountViewModel.State.LoginNeeded -> accountViewModel.add()
+                    is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
 
-        reportsViewModel.bugReportSent.onEach {
-            binding.root.successSnack(it)
-        }.launchIn(lifecycleScope)
+        reportsViewModel.bugReportSent
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                binding.root.successSnack(it)
+            }.launchIn(lifecycleScope)
 
-        mailMessageViewModel.getState().onEach { showToast("MailMessage: $it") }.launchIn(lifecycleScope)
+        mailMessageViewModel.getState()
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach { showToast("MailMessage: $it") }
+            .launchIn(lifecycleScope)
 
-        mailSettingsViewModel.getMailSettingsState().onEach {
-            if (it is MailSettingsViewModel.MailSettingsState.Error) {
-                showToast("MailSettings: $it")
-            }
-        }.launchIn(lifecycleScope)
+        mailSettingsViewModel.getMailSettingsState()
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                if (it is MailSettingsViewModel.MailSettingsState.Error) {
+                    showToast("MailSettings: $it")
+                }
+            }.launchIn(lifecycleScope)
 
-        userKeyViewModel.getUserKeyState().onEach {
-            if (it is UserKeyViewModel.UserKeyState.Error) {
-                showToast("UserKey: $it")
-            }
-        }.launchIn(lifecycleScope)
+        userKeyViewModel.getUserKeyState()
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                if (it is UserKeyViewModel.UserKeyState.Error) {
+                    showToast("UserKey: $it")
+                }
+            }.launchIn(lifecycleScope)
 
-        userAddressKeyViewModel.getUserAddressKeyState().onEach {
-            if (it is UserAddressKeyViewModel.UserAddressKeyState.Error) {
-                showToast("UserAddressKey: $it")
-            }
-        }.launchIn(lifecycleScope)
+        userAddressKeyViewModel.getUserAddressKeyState()
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                if (it is UserAddressKeyViewModel.UserAddressKeyState.Error) {
+                    showToast("UserAddressKey: $it")
+                }
+            }.launchIn(lifecycleScope)
 
-        publicAddressViewModel.getPublicAddressState().onEach {
-            if (it is PublicAddressViewModel.PublicAddressState.Error) {
-                showToast("PublicAddress: $it")
-            }
-        }.launchIn(lifecycleScope)
+        publicAddressViewModel.getPublicAddressState()
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                if (it is PublicAddressViewModel.PublicAddressState.Error) {
+                    showToast("PublicAddress: $it")
+                }
+            }.launchIn(lifecycleScope)
     }
 
     private fun ActivityMainBinding.setupFeatureFlagButton() = featureFlag.onClick {
         val androidThreading = ClientFeatureFlags.AndroidThreading
-        featureFlagViewModel.state.onEach { result ->
-            when (result) {
-                is ViewModelResult.Success -> {
-                    showToast("Feature flag ${androidThreading.name} is ${result.value.value}")
+        featureFlagViewModel.state
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach { result ->
+                when (result) {
+                    is ViewModelResult.Success -> {
+                        showToast("Feature flag ${androidThreading.name} is ${result.value.value}")
+                    }
+                    is ViewModelResult.Error -> showToast("Failed getting feature flag ${result.throwable}")
+                    ViewModelResult.None -> Unit
+                    ViewModelResult.Processing -> Unit
                 }
-                is ViewModelResult.Error -> showToast("Failed getting feature flag ${result.throwable}")
-                ViewModelResult.None -> Unit
-                ViewModelResult.Processing -> Unit
-            }
-        }.launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
         featureFlagViewModel.isFeatureEnabled(androidThreading.id)
     }
 

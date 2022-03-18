@@ -23,6 +23,7 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -46,18 +47,20 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
             dismissAllowingStateLoss()
         }
 
-        viewModel.networkConnectionState.onEach {
-            it?.let { networkState ->
-                if (networkState) {
-                    binding.termsConditionsWebView.apply {
-                        webChromeClient = CaptchaWebChromeClient()
-                        loadUrl(TERMS_CONDITIONS_URL)
+        viewModel.networkConnectionState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                it?.let { networkState ->
+                    if (networkState) {
+                        binding.termsConditionsWebView.apply {
+                            webChromeClient = CaptchaWebChromeClient()
+                            loadUrl(TERMS_CONDITIONS_URL)
+                        }
+                    } else {
+                        binding.root.errorSnack(R.string.auth_signup_no_connectivity)
                     }
-                } else {
-                    binding.root.errorSnack(R.string.auth_signup_no_connectivity)
                 }
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.watchNetwork()
     }
 

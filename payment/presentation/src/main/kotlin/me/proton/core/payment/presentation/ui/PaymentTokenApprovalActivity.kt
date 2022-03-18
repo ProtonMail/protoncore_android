@@ -28,8 +28,10 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
@@ -87,26 +89,32 @@ class PaymentTokenApprovalActivity :
             onError()
         }
         viewModel.watchNetwork()
-        viewModel.networkConnectionState.onEach {
-            it?.let { networkState ->
-                if (networkState) {
-                    webView.loadUrl(input.approvalUrl)
-                    binding.progress.visibility = View.GONE
-                } else {
-                    binding.root.errorSnack(R.string.payments_no_connectivity)
+        viewModel.networkConnectionState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                it?.let { networkState ->
+                    if (networkState) {
+                        webView.loadUrl(input.approvalUrl)
+                        binding.progress.visibility = View.GONE
+                    } else {
+                        binding.root.errorSnack(R.string.payments_no_connectivity)
+                    }
                 }
-            }
-        }.launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
-        viewModel.approvalState.onEach {
-            when (it) {
-                is PaymentTokenApprovalViewModel.State.Idle -> showLoading(false)
-                is PaymentTokenApprovalViewModel.State.Processing -> showLoading(true)
-                is PaymentTokenApprovalViewModel.State.Success -> onSuccess(it.paymentTokenStatus)
-                is PaymentTokenApprovalViewModel.State.Error ->
-                    showError(it.error.getUserMessage(resources))
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        viewModel.approvalState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is PaymentTokenApprovalViewModel.State.Idle -> showLoading(false)
+                    is PaymentTokenApprovalViewModel.State.Processing -> showLoading(true)
+                    is PaymentTokenApprovalViewModel.State.Success -> onSuccess(it.paymentTokenStatus)
+                    is PaymentTokenApprovalViewModel.State.Error ->
+                        showError(it.error.getUserMessage(resources))
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     override fun onError(message: String?) {

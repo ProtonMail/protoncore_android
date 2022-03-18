@@ -22,9 +22,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
@@ -132,55 +134,64 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
     }
 
     private fun observe() {
-        viewModel.availablePaymentMethodsState.onEach {
-            when (it) {
-                is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
-                is PaymentOptionsViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
-                else -> {
-                }
-            }.exhaustive
-        }.launchIn(lifecycleScope)
-
-        viewModel.billingCommonViewModel.plansValidationState.onEach {
-            when (it) {
-                is BillingCommonViewModel.PlansValidationState.Success -> {
-                    amountDue = it.subscription.amountDue
-                    with(binding) {
-                        selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
-                        payButton.text = String.format(
-                            getString(R.string.payments_pay),
-                            selectedPlanDetailsLayout.userReadablePlanAmount
-                        )
+        viewModel.availablePaymentMethodsState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
+                    is PaymentOptionsViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
+                    else -> {
                     }
-                }
-                is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
-                else -> {
-                }
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
 
-        viewModel.billingCommonViewModel.subscriptionResult.onEach {
-            when (it) {
-                is BillingCommonViewModel.State.Processing -> showLoading(true)
-                is BillingCommonViewModel.State.Success.SubscriptionCreated -> onPaymentResult(
-                    BillingResult(
-                        paySuccess = true,
-                        token = it.paymentToken,
-                        subscriptionCreated = true,
-                        amount = it.amount,
-                        currency = it.currency,
-                        cycle = it.cycle
+        viewModel.billingCommonViewModel.plansValidationState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is BillingCommonViewModel.PlansValidationState.Success -> {
+                        amountDue = it.subscription.amountDue
+                        with(binding) {
+                            selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
+                            payButton.text = String.format(
+                                getString(R.string.payments_pay),
+                                selectedPlanDetailsLayout.userReadablePlanAmount
+                            )
+                        }
+                    }
+                    is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
+                    else -> {
+                    }
+                }.exhaustive
+            }.launchIn(lifecycleScope)
+
+        viewModel.billingCommonViewModel.subscriptionResult
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is BillingCommonViewModel.State.Processing -> showLoading(true)
+                    is BillingCommonViewModel.State.Success.SubscriptionCreated -> onPaymentResult(
+                        BillingResult(
+                            paySuccess = true,
+                            token = it.paymentToken,
+                            subscriptionCreated = true,
+                            amount = it.amount,
+                            currency = it.currency,
+                            cycle = it.cycle
+                        )
                     )
-                )
-                is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
-                    onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
-                is BillingCommonViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
-                is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
-                    showError(getString(R.string.payments_error_signup_paymentmethod))
-                else -> {
-                }
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+                    is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
+                        onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
+                    is BillingCommonViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
+                    is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
+                        showError(getString(R.string.payments_error_signup_paymentmethod))
+                    else -> {
+                    }
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     private fun onPaymentMethodClicked(paymentMethod: PaymentOptionUIModel) {

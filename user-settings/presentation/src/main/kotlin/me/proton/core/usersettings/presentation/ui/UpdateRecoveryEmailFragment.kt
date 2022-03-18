@@ -22,8 +22,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
@@ -85,24 +87,27 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
         binding.saveButton.onClick {
             onSaveClicked()
         }
-        viewModel.state.onEach {
-            when (it) {
-                is UpdateRecoveryEmailViewModel.State.Error -> showError(it.error.getUserMessage(resources))
-                is UpdateRecoveryEmailViewModel.State.Idle -> Unit
-                is UpdateRecoveryEmailViewModel.State.LoadingCurrent -> showLoading(true)
-                is UpdateRecoveryEmailViewModel.State.UpdatingCurrent -> showLoading(true)
-                is UpdateRecoveryEmailViewModel.State.LoadingSuccess -> {
-                    showLoading(false)
-                    setCurrentRecoveryEmail(it.recoveryEmail)
-                }
-                is UpdateRecoveryEmailViewModel.State.UpdatingSuccess -> {
-                    binding.newEmailInput.text = ""
-                    binding.confirmNewEmailInput.text = ""
-                    findOutCurrentRecoveryAddress()
-                    finish(success = true)
-                }
-            }.exhaustive
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.state
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is UpdateRecoveryEmailViewModel.State.Error -> showError(it.error.getUserMessage(resources))
+                    is UpdateRecoveryEmailViewModel.State.Idle -> Unit
+                    is UpdateRecoveryEmailViewModel.State.LoadingCurrent -> showLoading(true)
+                    is UpdateRecoveryEmailViewModel.State.UpdatingCurrent -> showLoading(true)
+                    is UpdateRecoveryEmailViewModel.State.LoadingSuccess -> {
+                        showLoading(false)
+                        setCurrentRecoveryEmail(it.recoveryEmail)
+                    }
+                    is UpdateRecoveryEmailViewModel.State.UpdatingSuccess -> {
+                        binding.newEmailInput.text = ""
+                        binding.confirmNewEmailInput.text = ""
+                        findOutCurrentRecoveryAddress()
+                        finish(success = true)
+                    }
+                }.exhaustive
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         findOutCurrentRecoveryAddress()
     }

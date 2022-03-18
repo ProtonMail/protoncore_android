@@ -22,14 +22,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
@@ -106,14 +105,17 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
         }
 
-        viewModel.state.onEach {
-            when (it) {
-                is LoginViewModel.State.Idle -> showLoading(false)
-                is LoginViewModel.State.Processing -> showLoading(true)
-                is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                is LoginViewModel.State.Error -> onError(true, it.error.getUserMessage(resources), it.isPotentialBlocking)
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        viewModel.state
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is LoginViewModel.State.Idle -> showLoading(false)
+                    is LoginViewModel.State.Processing -> showLoading(true)
+                    is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
+                    is LoginViewModel.State.Error -> onError(true, it.error.getUserMessage(resources), it.isPotentialBlocking)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {

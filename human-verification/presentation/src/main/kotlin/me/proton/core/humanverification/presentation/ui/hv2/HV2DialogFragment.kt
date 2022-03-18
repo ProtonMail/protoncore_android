@@ -134,18 +134,21 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             }
         }
 
-        binding.verificationOptions.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        binding.verificationOptions.apply {
+            restoreTabSelection(this)
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    val type = tab.tag as TokenType
-                    viewModel.defineActiveVerificationMethod(type)
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        val type = tab.tag as TokenType
+                        viewModel.defineActiveVerificationMethod(type)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     override fun onBackPressed() {
@@ -154,6 +157,17 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
                 popBackStack()
             } else {
                 setResultAndDismiss(token = null)
+            }
+        }
+    }
+
+    private fun restoreTabSelection(tabLayout: TabLayout) = with(tabLayout) {
+        // Restore tab selection on config change
+        for (i in 0 until tabCount) {
+            val tab = getTabAt(i) ?: continue
+            if ((tab.tag as? TokenType)?.value == viewModel.activeMethod.value) {
+                selectTab(tab)
+                return
             }
         }
     }

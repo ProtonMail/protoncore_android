@@ -22,8 +22,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
@@ -88,37 +90,40 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
             }
         }
 
-        viewModel.state.onEach {
-            when (it) {
-                is PasswordManagementViewModel.State.Idle -> Unit
-                is PasswordManagementViewModel.State.Mode -> {
-                    with(binding) {
-                        progress.visibility = View.GONE
-                        loginPasswordGroup.visibility = View.VISIBLE
-                        mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
+        viewModel.state
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is PasswordManagementViewModel.State.Idle -> Unit
+                    is PasswordManagementViewModel.State.Mode -> {
+                        with(binding) {
+                            progress.visibility = View.GONE
+                            loginPasswordGroup.visibility = View.VISIBLE
+                            mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
+                        }
                     }
-                }
-                is PasswordManagementViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
-                is PasswordManagementViewModel.State.Error.UpdatingSinglePassModePassword,
-                is PasswordManagementViewModel.State.Error.UpdatingMailboxPassword ->
-                    showError(getString(R.string.settings_change_password_error))
-                is PasswordManagementViewModel.State.UpdatingLoginPassword ->
-                    binding.saveLoginPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.UpdatingMailboxPassword ->
-                    binding.saveMailboxPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.UpdatingSinglePassModePassword ->
-                    binding.saveLoginPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword,
-                is PasswordManagementViewModel.State.Success.UpdatingLoginPassword -> {
-                    resetLoginPasswordInput()
-                    showSuccess()
-                }
-                is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword -> {
-                    resetMailboxPasswordInput()
-                    showSuccess()
-                }
-            }.exhaustive
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+                    is PasswordManagementViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
+                    is PasswordManagementViewModel.State.Error.UpdatingSinglePassModePassword,
+                    is PasswordManagementViewModel.State.Error.UpdatingMailboxPassword ->
+                        showError(getString(R.string.settings_change_password_error))
+                    is PasswordManagementViewModel.State.UpdatingLoginPassword ->
+                        binding.saveLoginPasswordButton.showLoading(true)
+                    is PasswordManagementViewModel.State.UpdatingMailboxPassword ->
+                        binding.saveMailboxPasswordButton.showLoading(true)
+                    is PasswordManagementViewModel.State.UpdatingSinglePassModePassword ->
+                        binding.saveLoginPasswordButton.showLoading(true)
+                    is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword,
+                    is PasswordManagementViewModel.State.Success.UpdatingLoginPassword -> {
+                        resetLoginPasswordInput()
+                        showSuccess()
+                    }
+                    is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword -> {
+                        resetMailboxPasswordInput()
+                        showSuccess()
+                    }
+                }.exhaustive
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun resetLoginPasswordInput() = with(binding) {

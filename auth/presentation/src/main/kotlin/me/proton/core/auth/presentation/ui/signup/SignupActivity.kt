@@ -24,9 +24,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.entity.BillingDetails
@@ -75,46 +77,55 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         signUpViewModel.register(this)
         supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
 
-        signUpViewModel.inputState.onEach {
-            when (it) {
-                is SignupViewModel.InputState.Ready -> {
-                    supportFragmentManager.showPlansSignup(planInput = PlanInput())
-                    supportFragmentManager.setFragmentResultListener(
-                        KEY_PLAN_SELECTED, this
-                    ) { _, bundle ->
-                        val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
-                        val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
-                        if (plan != null) {
-                            supportFragmentManager.showCreatingUser()
-                            onPlanSelected(plan, billing)
-                        } else {
-                            supportFragmentManager.removePlansSignup()
-                            signUpViewModel.onPlanChooserCancel()
+        signUpViewModel.inputState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is SignupViewModel.InputState.Ready -> {
+                        supportFragmentManager.showPlansSignup(planInput = PlanInput())
+                        supportFragmentManager.setFragmentResultListener(
+                            KEY_PLAN_SELECTED, this
+                        ) { _, bundle ->
+                            val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
+                            val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
+                            if (plan != null) {
+                                supportFragmentManager.showCreatingUser()
+                                onPlanSelected(plan, billing)
+                            } else {
+                                supportFragmentManager.removePlansSignup()
+                                signUpViewModel.onPlanChooserCancel()
+                            }
                         }
                     }
-                }
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
 
-        signUpViewModel.userCreationState.onEach {
-            when (it) {
-                is SignupViewModel.State.Idle -> Unit
-                is SignupViewModel.State.Processing -> showLoading(true)
-                is SignupViewModel.State.Error.HumanVerification -> Unit
-                is SignupViewModel.State.Error.Message -> showError(it.message)
-                is SignupViewModel.State.Error.PlanChooserCancel -> Unit
-                is SignupViewModel.State.Success -> onSignUpSuccess(it.loginUsername, it.password)
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        signUpViewModel.userCreationState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is SignupViewModel.State.Idle -> Unit
+                    is SignupViewModel.State.Processing -> showLoading(true)
+                    is SignupViewModel.State.Error.HumanVerification -> Unit
+                    is SignupViewModel.State.Error.Message -> showError(it.message)
+                    is SignupViewModel.State.Error.PlanChooserCancel -> Unit
+                    is SignupViewModel.State.Success -> onSignUpSuccess(it.loginUsername, it.password)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
 
-        loginViewModel.state.onEach {
-            when (it) {
-                is LoginViewModel.State.Idle -> showLoading(false)
-                is LoginViewModel.State.Processing -> showLoading(true)
-                is LoginViewModel.State.Error -> onLoginError(it.error.getUserMessage(resources))
-                is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        loginViewModel.state
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is LoginViewModel.State.Idle -> showLoading(false)
+                    is LoginViewModel.State.Processing -> showLoading(true)
+                    is LoginViewModel.State.Error -> onLoginError(it.error.getUserMessage(resources))
+                    is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     private fun onPostLoginAccountSetup(result: PostLoginAccountSetup.Result) {

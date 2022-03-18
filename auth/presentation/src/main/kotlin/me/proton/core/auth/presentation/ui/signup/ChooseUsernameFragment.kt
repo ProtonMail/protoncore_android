@@ -23,8 +23,10 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
@@ -34,7 +36,6 @@ import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.canSwitchToExternal
-import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -86,20 +87,23 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             }
         }
 
-        viewModel.state.onEach {
-            when (it) {
-                is ChooseUsernameViewModel.State.Idle -> showLoading(false)
-                is ChooseUsernameViewModel.State.Processing -> showLoading(true)
-                is ChooseUsernameViewModel.State.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
-                is ChooseUsernameViewModel.State.AvailableDomains -> onDomains(it.domains, it.currentAccountType)
-                is ChooseUsernameViewModel.State.Error.Message -> onError(it.error.getUserMessage(resources))
-                is ChooseUsernameViewModel.State.Error.DomainsNotAvailable ->
-                    onError(getString(R.string.auth_create_address_error_no_available_domain))
-                is ChooseUsernameViewModel.State.Error.UsernameNotAvailable ->
-                    onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
-                is ChooseUsernameViewModel.State.ExternalAccountTokenSent -> onExternalAccountTokenSent(it.email)
-            }.exhaustive
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.state
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is ChooseUsernameViewModel.State.Idle -> showLoading(false)
+                    is ChooseUsernameViewModel.State.Processing -> showLoading(true)
+                    is ChooseUsernameViewModel.State.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
+                    is ChooseUsernameViewModel.State.AvailableDomains -> onDomains(it.domains, it.currentAccountType)
+                    is ChooseUsernameViewModel.State.Error.Message -> onError(it.error.getUserMessage(resources))
+                    is ChooseUsernameViewModel.State.Error.DomainsNotAvailable ->
+                        onError(getString(R.string.auth_create_address_error_no_available_domain))
+                    is ChooseUsernameViewModel.State.Error.UsernameNotAvailable ->
+                        onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
+                    is ChooseUsernameViewModel.State.ExternalAccountTokenSent -> onExternalAccountTokenSent(it.email)
+                }.exhaustive
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onAccountTypeSelection() {

@@ -52,6 +52,7 @@ dependencies {
         // Android
         `android-ktx`,
         appcompat,
+        `lifecycle-runtime`,
         `lifecycle-viewModel`,
         material
     )

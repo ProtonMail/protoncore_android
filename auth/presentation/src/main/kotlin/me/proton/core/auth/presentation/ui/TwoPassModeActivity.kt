@@ -22,8 +22,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
@@ -80,15 +83,18 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
             }
         }
 
-        viewModel.state.onEach {
-            when (it) {
-                is TwoPassModeViewModel.State.Idle -> showLoading(false)
-                is TwoPassModeViewModel.State.Processing -> showLoading(true)
-                is TwoPassModeViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                is TwoPassModeViewModel.State.Error ->
-                    onError(false, it.error.getUserMessage(resources))
-            }.exhaustive
-        }.launchIn(lifecycleScope)
+        viewModel.state
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is TwoPassModeViewModel.State.Idle -> showLoading(false)
+                    is TwoPassModeViewModel.State.Processing -> showLoading(true)
+                    is TwoPassModeViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
+                    is TwoPassModeViewModel.State.Error ->
+                        onError(false, it.error.getUserMessage(resources))
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
