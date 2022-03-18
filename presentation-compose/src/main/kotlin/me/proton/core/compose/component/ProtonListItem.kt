@@ -21,6 +21,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Horizontal
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
@@ -47,6 +49,28 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.compose.R
 
+/**
+ * A basic, highly customizable list item to be used in lists that requires particular layouts.
+ * By default, this list item is full-width, vertically centered and horizontally aligned at start.
+ * @param horizontalAlignment allows changing the horizontal alignment
+ *
+ * A sample use case where this was used is [ProtonSettingsToggleItem] where we
+ * used an horizontal "Space between" to layout a switch
+ */
+@Composable
+fun ProtonRawListItem(
+    modifier: Modifier = Modifier,
+    horizontalArrangement: Horizontal = Arrangement.Start,
+    content: @Composable (RowScope.() -> Unit),
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content,
+        horizontalArrangement = horizontalArrangement
+    )
+}
+
 @Composable
 fun ProtonListItem(
     modifier: Modifier = Modifier,
@@ -55,14 +79,13 @@ fun ProtonListItem(
     onClick: () -> Unit = {},
     content: (@Composable @ExtensionFunctionType RowScope.() -> Unit),
 ) {
-    Row(
+    ProtonRawListItem(
         modifier = modifier
             .fillMaxWidth()
             .background(color = if (isSelected) ProtonTheme.colors.interactionPressed else Color.Transparent)
             .height(height = ProtonDimens.ListItemHeight)
             .clickable(enabled = isClickable, onClick = onClick)
             .padding(horizontal = ProtonDimens.DefaultSpacing),
-        verticalAlignment = Alignment.CenterVertically,
         content = content
     )
 }

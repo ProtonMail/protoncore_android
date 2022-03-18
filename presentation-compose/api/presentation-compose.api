@@ -43,6 +43,17 @@ public final class me/proton/core/compose/component/ComposableSingletons$ProtonL
 	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class me/proton/core/compose/component/ComposableSingletons$ProtonSettingsKt {
+	public static final field INSTANCE Lme/proton/core/compose/component/ComposableSingletons$ProtonSettingsKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function3;
+	public static field lambda-3 Lkotlin/jvm/functions/Function3;
+	public fun <init> ()V
+	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-3$presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+}
+
 public final class me/proton/core/compose/component/ComposableSingletons$ProtonSidebarKt {
 	public static final field INSTANCE Lme/proton/core/compose/component/ComposableSingletons$ProtonSidebarKt;
 	public static field lambda-1 Lkotlin/jvm/functions/Function3;
@@ -158,6 +169,7 @@ public final class me/proton/core/compose/component/ProtonListItemKt {
 	public static final fun ProtonListItem (Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/ui/Modifier;ZZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonListItem-dNgdfXs (IILandroidx/compose/ui/Modifier;ZZJJLjava/lang/Integer;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonListItem-dNgdfXs (Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZZJJLjava/lang/Integer;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonRawListItem (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/compose/component/ProtonListSectionTitleKt {
@@ -171,6 +183,20 @@ public final class me/proton/core/compose/component/ProtonModalBottomSheetLayout
 
 public final class me/proton/core/compose/component/ProtonOutlinedTextFieldKt {
 	public static final fun protonOutlineTextFieldColors (Landroidx/compose/material/TextFieldDefaults;Landroidx/compose/runtime/Composer;I)Landroidx/compose/material/TextFieldColors;
+}
+
+public final class me/proton/core/compose/component/ProtonSettingsKt {
+	public static final fun ProtonSettingsHeader (Landroidx/compose/ui/Modifier;ILandroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSettingsHeader (Landroidx/compose/ui/Modifier;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSettingsItem (Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSettingsList (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSettingsToggleItem (Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSettingsTopBar (Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun previewSettings (Landroidx/compose/runtime/Composer;I)V
+	public static final fun previewSettingsItem (Landroidx/compose/runtime/Composer;I)V
+	public static final fun previewSettingsItemWithNameOnly (Landroidx/compose/runtime/Composer;I)V
+	public static final fun previewSettingsToggleableItem (Landroidx/compose/runtime/Composer;I)V
+	public static final fun previewSettingsTopBar (Landroidx/compose/runtime/Composer;I)V
 }
 
 public final class me/proton/core/compose/component/ProtonSidebarKt {
