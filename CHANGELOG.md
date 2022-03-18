@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Stop decoding the base64 when decrypting the HashKey (to keep compatibility with drive web & iOS).
 - Encode the random bytes in base64 when generating the hash key.
+- Revert cookie saving behavior to fix DoH issue.
 
 ## [7.1.3]
 

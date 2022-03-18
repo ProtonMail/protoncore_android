@@ -51,7 +51,13 @@ class DoHCookieInterceptor(
         )
 
         // Save any cookies received from the alternative base url
-        val responseCookies = Cookie.parseAll(baseHttpUrl, response.headers)
+        val dohDomain = baseHttpUrl.host
+        // With DoH, the Domain value in the Set-Cookie headers won't match the url of the requests
+        // and the cookies with this value will be discarded, so we're manually replacing it.
+        val setCookieHeaders = response.headers.filter { it.first.lowercase() == "set-cookie" }
+            .map { it.second }
+            .map { header -> header.replace(Regex("[dD]omain=(.+?);"), "Domain=${dohDomain};") }
+        val responseCookies = setCookieHeaders.mapNotNull { Cookie.parse(baseHttpUrl, it) }
         cookieStore.saveFromResponse(baseHttpUrl, responseCookies)
 
         return response
