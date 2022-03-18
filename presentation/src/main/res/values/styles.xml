@@ -359,6 +359,23 @@
     </style>
     <!-- endregion -->
 
+    <!-- BottomSheet -->
+    <style name="ProtonBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ProtonBottomSheet</item>
+        <item name="backgroundColor">@color/background_norm</item>
+    </style>
+
+    <style name="ProtonBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/ProtonBottomSheetShapeOverlay</item>
+    </style>
+
+    <style name="ProtonBottomSheetShapeOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/default_corner_radius</item>
+        <item name="cornerSizeTopLeft">@dimen/default_corner_radius</item>
+    </style>
+    <!-- endregion -->
+
     <!-- region Dialog -->
     <style name="ProtonDialog.Picker" parent="ProtonTheme">
         <item name="android:windowNoTitle">true</item>
