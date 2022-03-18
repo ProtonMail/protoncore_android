@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## New
 
 - `ProtonSettings` basic composables to build settings screens
+- Enable clients to pass additional filtering function for the plans, according to their needs.
 
 ## Fixed
 
