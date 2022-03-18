@@ -73,6 +73,44 @@ fun PublicKey.verifyFile(
 ): Boolean = isActive && canVerify && context.pgpCrypto.verifyFile(file, signature, key, time)
 
 /**
+ * Verify [signature] of [text] is correctly signed using this [PublicKey], and
+ * return the timestamp if it is, null otherwise.
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @see [PrivateKeyRing.signText]
+ */
+fun PublicKey.getVerifiedTimestampOfText(
+    context: CryptoContext,
+    text: String,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = if (isActive && canVerify) {
+    context.pgpCrypto.getVerifiedTimestampOfText(text, signature, key, time)
+} else {
+    null
+}
+
+/**
+ * Verify [signature] of [data] is correctly signed using this [PublicKey], and
+ * return the timestamp if it is, null otherwise.
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @see [PrivateKeyRing.signText]
+ */
+fun PublicKey.getVerifiedTimestampOfData(
+    context: CryptoContext,
+    data: ByteArray,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = if (isActive && canVerify) {
+    context.pgpCrypto.getVerifiedTimestampOfData(data, signature, key, time)
+} else {
+    null
+}
+
+/**
  * Encrypt [text] using this [PublicKey].
  *
  * @throws [CryptoException] if [text] cannot be encrypted.

@@ -64,6 +64,38 @@ fun PublicAddress.verifyData(
 ): Boolean = publicKeyRing().verifyData(context, data, signature, time)
 
 /**
+ * Verify [signature] of [text] is correctly signed using this [PublicAddress.publicKeyRing].
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
+ *
+ * @see [PrivateKeyRing.signText]
+ */
+fun PublicAddress.getVerifiedTimestampOfText(
+    context: CryptoContext,
+    text: String,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = publicKeyRing().getVerifiedTimestampOfText(context, text, signature, time)
+
+/**
+ * Verify [signature] of [data] is correctly signed using this [PublicAddress.publicKeyRing].
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
+ *
+ * @see [PrivateKeyRing.signData]
+ */
+fun PublicAddress.getVerifiedTimestampOfData(
+    context: CryptoContext,
+    data: ByteArray,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = publicKeyRing().getVerifiedTimestampOfData(context, data, signature, time)
+
+/**
  * Encrypt [text] using this [PublicAddress.primaryKey].
  *
  * @throws [CryptoException] if [text] cannot be encrypted.

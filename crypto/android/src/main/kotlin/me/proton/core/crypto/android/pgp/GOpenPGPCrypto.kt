@@ -401,6 +401,17 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
     }.isSuccess
 
+    private fun getVerifiedTimestampMessageDetached(
+        plainMessage: PlainMessage,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Long? = runCatching {
+        val pgpSignature = PGPSignature(signature)
+        val publicKeyRing = publicKey.keyRing()
+        publicKeyRing.getVerifiedSignatureTimestamp(plainMessage, pgpSignature, validAtUtc)
+    }.getOrNull()
+
     private fun verifyMessageDetachedEncrypted(
         plainMessage: PlainMessage,
         encryptedSignature: EncryptedSignature,
@@ -747,6 +758,20 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKey: Armored,
         time: VerificationTime,
     ): Boolean = verifyFileDetached(file.file, signature, publicKey, time.toUtcSeconds())
+
+    override fun getVerifiedTimestampOfText(
+        plainText: String,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime
+    ): Long? = getVerifiedTimestampMessageDetached(PlainMessage(plainText), signature, publicKey, time.toUtcSeconds())
+
+    override fun getVerifiedTimestampOfData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime
+    ): Long? = getVerifiedTimestampMessageDetached(PlainMessage(data), signature, publicKey, time.toUtcSeconds())
 
     override fun verifyTextEncrypted(
         plainText: String,

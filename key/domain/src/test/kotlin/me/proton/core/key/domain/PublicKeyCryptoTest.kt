@@ -24,6 +24,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class PublicKeyCryptoTest {
@@ -79,5 +80,19 @@ class PublicKeyCryptoTest {
         val signature = context.pgpCrypto.signText(message, unlockedKey.value)
         val verified = publicKey2.verifyText(context, message, signature)
         assertFalse(verified)
+    }
+
+    @Test
+    fun publicKey_getVerifiedTimestamp() {
+        val signature = context.pgpCrypto.signText(message, unlockedKey.value)
+        val timestamp = publicKey.getVerifiedTimestampOfText(context, message, signature)
+        assertNotNull(timestamp)
+    }
+
+    @Test
+    fun publicKey_getVerifiedTimestamp_canVerify_false() {
+        val signature = context.pgpCrypto.signText(message, unlockedKey.value)
+        val timestamp = publicKey2.getVerifiedTimestampOfText(context, message, signature)
+        assertNull(timestamp)
     }
 }
