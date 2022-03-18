@@ -88,7 +88,7 @@ fun ProtonSidebarSettingsItem(
 ) {
     ProtonSidebarItem(
         text = R.string.presentation_menu_item_title_settings,
-        icon = R.drawable.ic_cog_wheel,
+        icon = R.drawable.ic_proton_cog_wheel,
         modifier = modifier,
         onClick = onClick,
         isClickable = isClickable,
@@ -104,7 +104,7 @@ fun ProtonSidebarSubscriptionItem(
 ) {
     ProtonSidebarItem(
         text = R.string.presentation_menu_item_title_subscription,
-        icon = R.drawable.ic_pencil,
+        icon = R.drawable.ic_proton_pencil,
         modifier = modifier,
         onClick = onClick,
         isClickable = isClickable,
@@ -120,7 +120,7 @@ fun ProtonSidebarReportBugItem(
 ) {
     ProtonSidebarItem(
         text = R.string.presentation_menu_item_title_report_a_bug,
-        icon = R.drawable.ic_bug,
+        icon = R.drawable.ic_proton_bug,
         modifier = modifier,
         onClick = onClick,
         isClickable = isClickable,
@@ -136,7 +136,7 @@ fun ProtonSidebarSignOutItem(
 ) {
     ProtonSidebarItem(
         text = R.string.presentation_menu_item_title_sign_out,
-        icon = R.drawable.ic_sign_out,
+        icon = R.drawable.ic_proton_arrow_out_from_rectangle,
         modifier = modifier,
         onClick = onClick,
         isClickable = isClickable,

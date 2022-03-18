@@ -92,7 +92,7 @@
                     android:hint="@string/payments_card_number_hint"
                     android:inputType="number|textNoSuggestions"
                     app:actionMode="custom_icon"
-                    app:endIconDrawable="@drawable/ic_credit_card"
+                    app:endIconDrawable="@drawable/ic_proton_credit_card"
                     app:label="@string/payments_card_number" />
 
                 <LinearLayout

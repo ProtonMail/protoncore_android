@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_lightbulp" />
+        app:srcCompat="@drawable/ic_proton_lightbulb" />
 
     <TextView
         android:id="@+id/websiteVerificationTitle"
@@ -51,9 +51,8 @@
         style="@style/ProtonTextView.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/human_verification_help_item_description_start_margin"
         android:text="@string/human_verification_help_website"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/websiteVerificationTitle"
         app:layout_constraintTop_toBottomOf="@id/websiteVerificationTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

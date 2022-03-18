@@ -192,7 +192,7 @@ fun ProtonListItem(
 @Composable
 fun PreviewProtonListItem() {
     ProtonListItem(
-        icon = R.drawable.ic_sign_out,
+        icon = R.drawable.ic_proton_arrow_out_from_rectangle,
         text = R.string.presentation_menu_item_title_sign_out,
     )
 }
@@ -215,7 +215,7 @@ fun PreviewProtonListItemDark() {
 @Composable
 fun PreviewProtonListItemSelected() {
     ProtonListItem(
-        icon = R.drawable.ic_sign_out,
+        icon = R.drawable.ic_proton_arrow_out_from_rectangle,
         text = R.string.presentation_menu_item_title_sign_out,
         isSelected = true
     )
@@ -228,7 +228,7 @@ fun PreviewProtonListItemSelected() {
 @Composable
 fun PreviewProtonListItemCount() {
     ProtonListItem(
-        icon = R.drawable.ic_sign_out,
+        icon = R.drawable.ic_proton_arrow_out_from_rectangle,
         text = R.string.presentation_menu_item_title_sign_out,
         count = 1
     )

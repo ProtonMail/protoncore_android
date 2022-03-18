@@ -80,7 +80,7 @@
         style="@style/ProtonImage.ImageButton"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert"
+        app:srcCompat="@drawable/ic_proton_three_dots_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"

@@ -91,7 +91,7 @@
                 android:gravity="start|center_vertical"
                 android:text="@string/payments_add_credit_debit_card"
                 android:textColor="@color/text_norm_selector"
-                app:icon="@drawable/ic_plus"
+                app:icon="@drawable/ic_proton_plus"
                 app:iconGravity="start"
                 app:iconPadding="@dimen/double_top_margin"
                 app:iconTint="@color/icon_norm" />

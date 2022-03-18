@@ -71,7 +71,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             val drawable = when (paymentOptionType) {
                 PaymentMethodType.CARD -> ContextCompat.getDrawable(
                     this@PaymentOptionsActivity,
-                    R.drawable.ic_credit_card
+                    R.drawable.ic_proton_credit_card
                 )
                 PaymentMethodType.PAYPAL -> ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_paypal)
             }.exhaustive

@@ -53,7 +53,7 @@ sealed class AccountListItem(
     sealed class Action(@StringRes val textResId: Int, @DrawableRes val iconResId: Int) : AccountListItem(Type.Action) {
         object AddAccount : Action(
             textResId = R.string.account_switcher_action_add_account,
-            iconResId = R.drawable.ic_person_add,
+            iconResId = R.drawable.ic_proton_user_plus,
         )
     }
 

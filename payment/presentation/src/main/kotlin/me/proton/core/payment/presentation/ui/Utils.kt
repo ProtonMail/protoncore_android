@@ -83,7 +83,7 @@ fun InputValidationResult.setCardIcon(context: Context, block: (Drawable?) -> Un
         CardType.MASTERCARD -> R.drawable.ic_card_master
         CardType.AMEX -> R.drawable.ic_card_amex
         CardType.DISCOVER -> R.drawable.ic_card_discover
-        else -> R.drawable.ic_credit_card
+        else -> R.drawable.ic_proton_credit_card
     }.exhaustive
     block(ContextCompat.getDrawable(context, drawable))
 }

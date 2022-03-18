@@ -79,7 +79,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
 
             cardNumberInput.apply {
                 endIconMode = ProtonInput.EndIconMode.CUSTOM_ICON
-                endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_credit_card)
+                endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_proton_credit_card)
                 onTextChange(afterTextChangeListener = CardNumberWatcher().watcher)
             }
 

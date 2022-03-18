@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="@id/planNameText"
         app:layout_constraintStart_toEndOf="@id/planNameText"
         app:layout_constraintTop_toTopOf="@id/planNameText"
-        app:srcCompat="@drawable/ic_star_filled" />
+        app:srcCompat="@drawable/ic_proton_star_filled" />
 
     <LinearLayout
         android:id="@+id/priceCycleLayout"
@@ -117,7 +117,7 @@
         android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/priceCycleLayout"
-        app:srcCompat="@drawable/ic_chevron_down"
+        app:srcCompat="@drawable/ic_proton_chevron_down"
         app:tint="?attr/brand_norm" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

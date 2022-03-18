@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/text_norm_selector"
-        tools:src="@drawable/ic_person_add" />
+        tools:src="@drawable/ic_proton_user_plus" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/account_action_textview"

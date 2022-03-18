@@ -19,11 +19,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/account_menu_sign_in"
-        android:icon="@drawable/ic_sign_in"
+        android:icon="@drawable/ic_proton_arrow_in_to_rectangle"
         android:title="@string/account_switcher_action_sign_in" />
     <item
         android:id="@+id/account_menu_sign_out"
-        android:icon="@drawable/ic_sign_out"
+        android:icon="@drawable/ic_proton_arrow_out_from_rectangle"
         android:title="@string/account_switcher_action_sign_out" />
     <item
         android:id="@+id/account_menu_remove"
