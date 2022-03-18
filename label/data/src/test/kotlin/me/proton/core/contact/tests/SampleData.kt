@@ -65,7 +65,7 @@ fun UserId.accountEntity() = AccountEntity(
 
 fun UserId.labelEntity(labelId: LabelId, type: LabelType) = LabelEntity(
     userId = this,
-    labelId = labelId.id,
+    labelId = labelId,
     parentId = null,
     name = labelId.id,
     type = type.value,

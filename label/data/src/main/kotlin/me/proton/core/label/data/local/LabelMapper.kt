@@ -24,7 +24,7 @@ import me.proton.core.label.domain.entity.LabelType
 
 fun Label.toEntity() = LabelEntity(
     userId = userId,
-    labelId = labelId.id,
+    labelId = labelId,
     parentId = parentId?.id,
     name = name,
     type = type.value,
@@ -38,7 +38,7 @@ fun Label.toEntity() = LabelEntity(
 
 fun LabelEntity.toLabel() = Label(
     userId = userId,
-    labelId = LabelId(labelId),
+    labelId = labelId,
     parentId = parentId?.let { LabelId(it) },
     name = name,
     type = requireNotNull(LabelType.map[type]),

@@ -102,6 +102,12 @@ public final class me/proton/core/label/data/LabelsEvents$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/label/data/local/LabelConverters {
+	public fun <init> ()V
+	public final fun fromLabelIdToString (Lme/proton/core/label/domain/entity/LabelId;)Ljava/lang/String;
+	public final fun fromStringToLabelId (Ljava/lang/String;)Lme/proton/core/label/domain/entity/LabelId;
+}
+
 public abstract class me/proton/core/label/data/local/LabelDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 	public abstract fun delete (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -120,11 +126,11 @@ public final class me/proton/core/label/data/local/LabelDatabase$Companion {
 }
 
 public final class me/proton/core/label/data/local/LabelEntity {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component10 ()Ljava/lang/Boolean;
 	public final fun component11 ()Ljava/lang/Boolean;
-	public final fun component2 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/label/domain/entity/LabelId;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()I
@@ -132,11 +138,11 @@ public final class me/proton/core/label/data/local/LabelEntity {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()I
 	public final fun component9 ()Ljava/lang/Boolean;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/label/data/local/LabelEntity;
-	public static synthetic fun copy$default (Lme/proton/core/label/data/local/LabelEntity;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/label/data/local/LabelEntity;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/label/data/local/LabelEntity;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/local/LabelEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/label/data/local/LabelEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Ljava/lang/String;
-	public final fun getLabelId ()Ljava/lang/String;
+	public final fun getLabelId ()Lme/proton/core/label/domain/entity/LabelId;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOrder ()I
 	public final fun getParentId ()Ljava/lang/String;

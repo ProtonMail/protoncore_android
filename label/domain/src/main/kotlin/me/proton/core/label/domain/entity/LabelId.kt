@@ -18,4 +18,7 @@
 
 package me.proton.core.label.domain.entity
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LabelId(val id: String)

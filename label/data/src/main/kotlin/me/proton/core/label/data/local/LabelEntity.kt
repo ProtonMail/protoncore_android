@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
+import me.proton.core.label.domain.entity.LabelId
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
@@ -44,7 +45,7 @@ import me.proton.core.user.data.entity.UserEntity
 )
 data class LabelEntity(
     val userId: UserId,
-    val labelId: String,
+    val labelId: LabelId,
     val parentId: String?,
     val name: String,
     val type: Int,
