@@ -20,6 +20,7 @@ package me.proton.core.plan.domain.usecase
 
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.plan.domain.ClientPlanFilter
 import me.proton.core.plan.domain.ProductOnlyPaidPlans
 import me.proton.core.plan.domain.entity.MASK_CALENDAR
 import me.proton.core.plan.domain.entity.MASK_DRIVE
@@ -35,7 +36,8 @@ import javax.inject.Inject
 class GetPlans @Inject constructor(
     private val plansRepository: PlansRepository,
     private val product: Product,
-    @ProductOnlyPaidPlans val productExclusivePlans: Boolean
+    @ProductOnlyPaidPlans val productExclusivePlans: Boolean,
+    private val clientPlanFilter: ClientPlanFilter? = null
 ) {
     suspend operator fun invoke(userId: UserId?): List<Plan> {
         return plansRepository.getPlans(userId)
@@ -47,7 +49,7 @@ class GetPlans @Inject constructor(
                     Product.Mail -> it.hasServiceFor(MASK_MAIL)
                     Product.Vpn -> it.hasServiceFor(MASK_VPN)
                 }.exhaustive
-            }
+            }.filter(clientPlanFilter?.filter() ?: { true })
     }
 
     private fun Plan.hasServiceFor(mask: Int): Boolean =
