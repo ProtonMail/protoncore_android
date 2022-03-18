@@ -22,8 +22,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
@@ -66,33 +68,36 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
             binding.toolbar.setNavigationOnClickListener {
                 setResult()
             }
-            signupPlansViewModel.availablePlansState.onEach {
-                when (it) {
-                    is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
-                    is BasePlansViewModel.PlanState.Idle -> Unit
-                    is BasePlansViewModel.PlanState.Processing -> showLoading(true)
-                    is BasePlansViewModel.PlanState.Success.Plans -> {
-                        showLoading(false)
-                        with(binding) {
-                            plansView.selectPlanListener = { selectedPlan ->
-                                if (selectedPlan.free) {
-                                    // proceed with result return
-                                    setResult(selectedPlan)
+            signupPlansViewModel.availablePlansState
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .distinctUntilChanged()
+                .onEach {
+                    when (it) {
+                        is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
+                        is BasePlansViewModel.PlanState.Idle -> Unit
+                        is BasePlansViewModel.PlanState.Processing -> showLoading(true)
+                        is BasePlansViewModel.PlanState.Success.Plans -> {
+                            showLoading(false)
+                            with(binding) {
+                                plansView.selectPlanListener = { selectedPlan ->
+                                    if (selectedPlan.free) {
+                                        // proceed with result return
+                                        setResult(selectedPlan)
+                                    } else {
+                                        val cycle = selectedPlan.cycle.toSubscriptionCycle()
+                                        signupPlansViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                    }
+                                }
+                                if (it.plans.isNotEmpty()) {
+                                    plansView.plans = it.plans
                                 } else {
-                                    val cycle = selectedPlan.cycle.toSubscriptionCycle()
-                                    signupPlansViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                    onFreeSelected()
                                 }
                             }
-                            if (it.plans.isNotEmpty()) {
-                                plansView.plans = it.plans
-                            } else {
-                                onFreeSelected()
-                            }
                         }
-                    }
-                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
-                }.exhaustive
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+                        is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
+                    }.exhaustive
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
 
             signupPlansViewModel.getAllPlansForSignup()
         } else {

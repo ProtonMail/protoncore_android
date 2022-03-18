@@ -51,6 +51,7 @@ dependencies {
         `appcompat`,
         `constraint-layout`,
         `fragment`,
+        `lifecycle-runtime`,
         `lifecycle-viewModel`,
         `material`
     )

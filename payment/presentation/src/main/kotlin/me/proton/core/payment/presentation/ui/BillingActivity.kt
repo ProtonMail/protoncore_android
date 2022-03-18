@@ -22,8 +22,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.entity.CountryUIModel
@@ -99,47 +101,53 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
     }
 
     private fun observeViewModel() {
-        viewModel.plansValidationState.onEach {
-            when (it) {
-                is BillingCommonViewModel.PlansValidationState.Success -> {
-                    val amountDue = it.subscription.amountDue
-                    with(binding) {
-                        selectedPlanDetailsLayout.plan = input.plan.copy(amount = amountDue)
-                        payButton.text = String.format(
-                            getString(R.string.payments_pay),
-                            selectedPlanDetailsLayout.userReadablePlanAmount
-                        )
+        viewModel.plansValidationState
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is BillingCommonViewModel.PlansValidationState.Success -> {
+                        val amountDue = it.subscription.amountDue
+                        with(binding) {
+                            selectedPlanDetailsLayout.plan = input.plan.copy(amount = amountDue)
+                            payButton.text = String.format(
+                                getString(R.string.payments_pay),
+                                selectedPlanDetailsLayout.userReadablePlanAmount
+                            )
+                        }
+                    }
+                    is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
+                    else -> Unit
+                }.exhaustive
+            }.launchIn(lifecycleScope)
+
+        viewModel.subscriptionResult
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is BillingCommonViewModel.State.Processing -> showLoading(true)
+                    is BillingCommonViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(
+                        it.paymentToken,
+                        it.amount,
+                        it.currency,
+                        it.cycle
+                    )
+                    is BillingCommonViewModel.State.Success.SubscriptionCreated -> onBillingSuccess(
+                        amount = it.amount,
+                        currency = it.currency,
+                        cycle = it.cycle
+                    )
+                    is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
+                        onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
+                    is BillingCommonViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
+                    is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
+                        showError(getString(R.string.payments_error_signup_paymentmethod))
+                    else -> {
+                        // no operation, not interested in other events
                     }
                 }
-                is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
-                else -> Unit
-            }.exhaustive
-        }.launchIn(lifecycleScope)
-
-        viewModel.subscriptionResult.onEach {
-            when (it) {
-                is BillingCommonViewModel.State.Processing -> showLoading(true)
-                is BillingCommonViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(
-                    it.paymentToken,
-                    it.amount,
-                    it.currency,
-                    it.cycle
-                )
-                is BillingCommonViewModel.State.Success.SubscriptionCreated -> onBillingSuccess(
-                    amount = it.amount,
-                    currency = it.currency,
-                    cycle = it.cycle
-                )
-                is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
-                    onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
-                is BillingCommonViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
-                is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
-                    showError(getString(R.string.payments_error_signup_paymentmethod))
-                else -> {
-                    // no operation, not interested in other events
-                }
-            }
-        }.launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
     }
 
     private fun onBillingSuccess(token: String? = null, amount: Long, currency: Currency, cycle: SubscriptionCycle) {

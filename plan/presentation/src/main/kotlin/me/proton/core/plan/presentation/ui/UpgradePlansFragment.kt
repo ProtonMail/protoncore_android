@@ -27,8 +27,10 @@ import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.Product
@@ -121,42 +123,45 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            upgradePlanViewModel.availablePlansState.onEach {
-                @Suppress("IMPLICIT_CAST_TO_ANY")
-                when (it) {
-                    is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
-                    is BasePlansViewModel.PlanState.Idle -> Unit
-                    is BasePlansViewModel.PlanState.Processing -> showLoading(true)
-                    is BasePlansViewModel.PlanState.Success.Plans -> {
-                        showLoading(false)
-                        with(binding) {
-                            with(plansView) {
-                                selectPlanListener = { selectedPlan ->
-                                    if (selectedPlan.free) {
-                                        // proceed with result return
-                                        setResult(selectedPlan)
-                                    } else {
-                                        val cycle = selectedPlan.cycle.toSubscriptionCycle()
-                                        upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+            upgradePlanViewModel.availablePlansState
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .distinctUntilChanged()
+                .onEach {
+                    @Suppress("IMPLICIT_CAST_TO_ANY")
+                    when (it) {
+                        is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
+                        is BasePlansViewModel.PlanState.Idle -> Unit
+                        is BasePlansViewModel.PlanState.Processing -> showLoading(true)
+                        is BasePlansViewModel.PlanState.Success.Plans -> {
+                            showLoading(false)
+                            with(binding) {
+                                with(plansView) {
+                                    selectPlanListener = { selectedPlan ->
+                                        if (selectedPlan.free) {
+                                            // proceed with result return
+                                            setResult(selectedPlan)
+                                        } else {
+                                            val cycle = selectedPlan.cycle.toSubscriptionCycle()
+                                            upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                        }
                                     }
+                                    visibility = if (it.plans.isEmpty()) GONE else VISIBLE
+                                    purchaseEnabled = it.purchaseEnabled
+                                    plans = it.plans
                                 }
-                                visibility = if (it.plans.isEmpty()) GONE else VISIBLE
-                                purchaseEnabled = it.purchaseEnabled
-                                plans = it.plans
+                                if (!it.purchaseEnabled) {
+                                    manageSubscriptionText.setText(R.string.plans_can_not_upgrade_from_mobile)
+                                }
+                                plansTitle.visibility = if (it.plans.isNotEmpty()) VISIBLE else GONE
                             }
-                            if (!it.purchaseEnabled) {
-                                manageSubscriptionText.setText(R.string.plans_can_not_upgrade_from_mobile)
-                            }
-                            plansTitle.visibility = if (it.plans.isNotEmpty()) VISIBLE else GONE
                         }
-                    }
-                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
-                        setResult(it.selectedPlan, it.billing)
-                        // refresh
-                        upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
-                    }
-                }.exhaustive
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+                        is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
+                            setResult(it.selectedPlan, it.billing)
+                            // refresh
+                            upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
+                        }
+                    }.exhaustive
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
 
             upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
         } else {

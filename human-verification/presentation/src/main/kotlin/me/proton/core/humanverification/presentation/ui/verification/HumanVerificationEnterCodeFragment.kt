@@ -24,8 +24,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
@@ -129,6 +131,8 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment(R.layout.fragmen
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.validationState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
             .onProcessing { showLoading() }
             .onSuccess { tokenCodeValidated(it) }
             .onError { showError(it) }

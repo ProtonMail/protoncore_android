@@ -21,7 +21,9 @@ package me.proton.core.humanverification.presentation.ui.hv2.verification
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -56,20 +58,23 @@ internal class HumanVerificationMethodCommon(
         loadable: Loadable? = null,
         onVerificationCodeError: (Throwable?) -> Unit
     ) {
-        viewModel.verificationCodeStatus.onEach {
-            when (it) {
-                is ViewModelResult.None,
-                is ViewModelResult.Processing -> Unit
-                is ViewModelResult.Error -> {
-                    loadable?.loadingComplete()
-                    onVerificationCodeError(it.throwable)
-                }
-                is ViewModelResult.Success -> {
-                    loadable?.loadingComplete()
-                    onGetCodeClicked(it.value, parentFragmentManager)
-                }
-            }.exhaustive
-        }.launchIn(owner.lifecycleScope)
+        viewModel.verificationCodeStatus
+            .flowWithLifecycle(owner.lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is ViewModelResult.None,
+                    is ViewModelResult.Processing -> Unit
+                    is ViewModelResult.Error -> {
+                        loadable?.loadingComplete()
+                        onVerificationCodeError(it.throwable)
+                    }
+                    is ViewModelResult.Success -> {
+                        loadable?.loadingComplete()
+                        onGetCodeClicked(it.value, parentFragmentManager)
+                    }
+                }.exhaustive
+            }.launchIn(owner.lifecycleScope)
     }
 
     /**

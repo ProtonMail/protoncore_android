@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.alert.confirmpass
 
-
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -29,9 +28,11 @@ import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
@@ -97,28 +98,30 @@ class ConfirmPasswordDialog : DialogFragment() {
             .setView(binding.root)
         val alertDialog = builder.create()
 
-        viewModel.state.onEach {
-            when (it) {
-                is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(it.state)
-                is ConfirmPasswordDialogViewModel.State.ProcessingObtainScope ->
-                    binding.enterButton.setLoading()
-                is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> {
-                    // noop
-                }
-                is ConfirmPasswordDialogViewModel.State.Error.Unknown,
-                is ConfirmPasswordDialogViewModel.State.Error.General -> {
-                    setResultAndDismiss(MissingScopeState.ScopeObtainFailed)
-                    binding.enterButton.setIdle()
-                }
-                is ConfirmPasswordDialogViewModel.State.Idle -> Unit
-                is ConfirmPasswordDialogViewModel.State.SecondFactorResult -> {
-                    binding.twoFA.visibility = if (it.needed) VISIBLE else GONE
-                }
-                is ConfirmPasswordDialogViewModel.State.Error.InvalidAccount -> {
-                    context.errorToast(getString(R.string.auth_account_not_found_error))
-                }
-            }.exhaustive
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.state
+            .flowWithLifecycle(lifecycle)
+            .onEach {
+                when (it) {
+                    is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(it.state)
+                    is ConfirmPasswordDialogViewModel.State.ProcessingObtainScope ->
+                        binding.enterButton.setLoading()
+                    is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> {
+                        // noop
+                    }
+                    is ConfirmPasswordDialogViewModel.State.Error.Unknown,
+                    is ConfirmPasswordDialogViewModel.State.Error.General -> {
+                        setResultAndDismiss(MissingScopeState.ScopeObtainFailed)
+                        binding.enterButton.setIdle()
+                    }
+                    is ConfirmPasswordDialogViewModel.State.Idle -> Unit
+                    is ConfirmPasswordDialogViewModel.State.SecondFactorResult -> {
+                        binding.twoFA.visibility = if (it.needed) VISIBLE else GONE
+                    }
+                    is ConfirmPasswordDialogViewModel.State.Error.InvalidAccount -> {
+                        context.errorToast(getString(R.string.auth_account_not_found_error))
+                    }
+                }.exhaustive
+            }.launchIn(lifecycleScope)
 
         binding.enterButton.onClick {
             val password = binding.password.text.toString()
