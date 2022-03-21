@@ -38,7 +38,8 @@ data class ChallengeFrameEntity(
     val focusTime: Long,
     val clicks: Int,
     val copy: List<String>,
-    val paste: List<String>
+    val paste: List<String>,
+    val keys: List<Char>
 ) {
     fun toFrameDetails() = ChallengeFrameDetails(
         clientId = when (clientIdType) {
@@ -50,6 +51,7 @@ data class ChallengeFrameEntity(
         focusTime = focusTime,
         clicks = clicks,
         copy = copy,
-        paste = paste
+        paste = paste,
+        keys = keys
     )
 }

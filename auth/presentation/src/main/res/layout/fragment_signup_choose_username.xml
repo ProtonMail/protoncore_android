@@ -76,6 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_large_plus"
                 app:metricsEnabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:label="@string/auth_signup_username" />
 

@@ -19,12 +19,15 @@
 package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManagerConfig
+import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -33,10 +36,12 @@ class PerformCreateUser @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val srpCrypto: SrpCrypto,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val challengeManagerProvider: ChallengeManagerProvider
 ) {
 
     suspend operator fun invoke(
+        clientId: ClientId,
         username: String,
         password: EncryptedString,
         recoveryEmail: String?,
@@ -59,7 +64,12 @@ class PerformCreateUser @Inject constructor(
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
-            return userRepository.createUser(
+            val config = ChallengeManagerConfig.SignUp
+            val challengeManager = challengeManagerProvider.get(config)
+            val frames = challengeManager.getFramesByClientId(clientId)
+
+            val createUserResult = userRepository.createUser(
+                frames = frames,
                 username = username,
                 password = password,
                 recoveryEmail = recoveryEmail,
@@ -68,6 +78,10 @@ class PerformCreateUser @Inject constructor(
                 type = type,
                 auth = auth
             ).userId
+
+            challengeManager.removeFrames()
+
+            return createUserResult
         }
     }
 }

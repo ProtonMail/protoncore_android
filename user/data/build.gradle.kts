@@ -43,6 +43,8 @@ dependencies {
         project(Module.cryptoCommon),
         project(Module.authData),
         project(Module.authDomain),
+        project(Module.challengeData),
+        project(Module.challengeDomain),
 
         // Features
         project(Module.key),

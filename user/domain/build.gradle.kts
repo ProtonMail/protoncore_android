@@ -36,6 +36,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.accountDomain),
+        project(Module.challengeDomain),
 
         // Feature
         project(Module.keyDomain),

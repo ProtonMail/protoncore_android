@@ -270,19 +270,21 @@ public final class me/proton/core/user/data/api/request/CreateExternalUserReques
 
 public final class me/proton/core/user/data/api/request/CreateUserRequest {
 	public static final field Companion Lme/proton/core/user/data/api/request/CreateUserRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/challenge/data/api/Payload;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/challenge/data/api/Payload;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()I
 	public final fun component6 ()Lme/proton/core/key/data/api/request/AuthRequest;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)Lme/proton/core/user/data/api/request/CreateUserRequest;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateUserRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public final fun component7 ()Lme/proton/core/challenge/data/api/Payload;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/challenge/data/api/Payload;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateUserRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/challenge/data/api/Payload;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateUserRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAuth ()Lme/proton/core/key/data/api/request/AuthRequest;
 	public final fun getEmail ()Ljava/lang/String;
+	public final fun getPayload ()Lme/proton/core/challenge/data/api/Payload;
 	public final fun getPhone ()Ljava/lang/String;
 	public final fun getReferrer ()Ljava/lang/String;
 	public final fun getType ()I
@@ -786,12 +788,12 @@ public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/proton/core/user/domain/repository/UserRepository {
-	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;)V
 	public fun addOnPassphraseChangedListener (Lme/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener;)V
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun createUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createUser (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;

@@ -22,14 +22,31 @@ import android.app.usage.StorageStatsManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
+import android.os.Environment
+import android.os.StatFs
 import android.os.storage.StorageManager
 import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.util.Locale
+import java.util.TimeZone
 import java.util.UUID
+
+fun deviceModelName(): String = Build.MODEL
+
+fun deviceUID(): String = Settings.Secure.ANDROID_ID
+
+fun appLanguage(): String = Locale.getDefault().language
+
+fun deviceTimezone(): String = TimeZone.getDefault().id
+
+fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    resources.configuration.locales[0].country
+} else {
+    resources.configuration.locale.country
+}
 
 fun isDeviceRooted() = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
 
@@ -48,18 +65,24 @@ fun Context.deviceInputMethods(): List<String> {
 fun Context.nightMode(): Boolean =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun Context.deviceStorage(): Double {
-    val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
-    val storageStatsManager = getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
-    val storageVolumes = storageManager.storageVolumes
-    var totalStorage = 0.0
-    for (storageVolume in storageVolumes) {
-        val uuidStr = storageVolume.uuid
-        val uuid: UUID = if (uuidStr == null) StorageManager.UUID_DEFAULT else UUID.fromString(uuidStr)
-        totalStorage += storageStatsManager.getTotalBytes(uuid)
+    val totalBytes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
+        val storageStatsManager = getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
+        val storageVolumes = storageManager.storageVolumes
+        var totalStorage = 0.0
+        for (storageVolume in storageVolumes) {
+            val uuidStr = storageVolume.uuid
+            val uuid: UUID = if (uuidStr == null) StorageManager.UUID_DEFAULT else UUID.fromString(uuidStr)
+            totalStorage += storageStatsManager.getTotalBytes(uuid)
+        }
+        totalStorage
+    } else {
+        val iPath: File = Environment.getDataDirectory()
+        val iStat = StatFs(iPath.path)
+        (iStat.blockCountLong * iStat.blockSizeLong).toDouble()
     }
-    return totalStorage
+    return totalBytes / (1024 * 1024 * 1024) // in GB
 }
 
 private fun checkRootMethod1(): Boolean {

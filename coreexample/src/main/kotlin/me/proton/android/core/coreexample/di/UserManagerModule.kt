@@ -18,12 +18,16 @@
 
 package me.proton.android.core.coreexample.di
 
+import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.Constants
+import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
@@ -65,8 +69,9 @@ object UserManagerModule {
     fun provideUserRepositoryImpl(
         db: UserDatabase,
         provider: ApiProvider,
-        context: CryptoContext
-    ): UserRepositoryImpl = UserRepositoryImpl(db, provider, context)
+        @ApplicationContext context: Context,
+        cryptoContext: CryptoContext
+    ): UserRepositoryImpl = UserRepositoryImpl(db, provider, context, cryptoContext)
 
     @Provides
     @Singleton

@@ -20,6 +20,7 @@ package me.proton.core.user.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.challenge.data.api.Payload
 import me.proton.core.key.data.api.request.AuthRequest
 
 @Serializable
@@ -35,5 +36,7 @@ data class CreateUserRequest(
     @SerialName("Type")
     val type: Int,
     @SerialName("Auth")
-    val auth: AuthRequest
+    val auth: AuthRequest,
+    @SerialName("Payload")
+    val payload: Payload
 )

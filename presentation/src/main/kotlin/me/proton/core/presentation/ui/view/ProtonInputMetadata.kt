@@ -23,6 +23,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.TextView
@@ -55,32 +56,23 @@ class ProtonInputMetadata : ProtonInput {
 
     private var focusOn: Long = 0
     private var focusOff: Long = 0
+    private var focused: Boolean = false
 
-    var metricsEnabled: Boolean = false
+    private var metricsEnabled: Boolean = false
         set(value) {
             field = value
-            if (value) metrics()
+            if (value) enableMetrics()
         }
 
     var clicksCounter: Int = 0
 
-    var cumulativeFocus: Long = 0
-        get() {
-            if (focusOn != 0L && field == 0L) {
-                field = System.currentTimeMillis() - focusOn
-            }
-            return field
-        }
-
     val copies: List<String>
-        get() {
-            return input.copyList
-        }
+        get() = input.copyList
 
     val pastes: List<String>
-        get() {
-            return input.pasteList
-        }
+        get() = input.pasteList
+
+    val keys: MutableList<Char> = mutableListOf()
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -98,29 +90,54 @@ class ProtonInputMetadata : ProtonInput {
         context.withStyledAttributes(attrs, R.styleable.ProtonInputMetadata) {
             metricsEnabled = getBoolean(R.styleable.ProtonInputMetadata_metricsEnabled, false)
         }
+
+        input.setOnKeyListener { _, _, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                keys.add(event.unicodeChar.toChar())
+            }
+            false
+        }
+    }
+
+    fun calculateFocus(focusLost: Boolean = true): Long {
+        return when {
+            focusLost && focusOn != 0L -> {
+                focusOff = System.currentTimeMillis()
+                val focusTime = focusOff - focusOn
+                resetFocusValues()
+                focusTime
+            }
+            focused -> System.currentTimeMillis() - focusOn
+            else -> 0
+        }
+    }
+
+    private fun resetFocusValues() {
+        focusOn = 0
+        focusOff = 0
+        focused = input.hasFocus()
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun metrics() {
+    private fun enableMetrics() {
         input.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                performClick()
                 clicksCounter++
                 Handler(Looper.getMainLooper()).postDelayed(
                     {
-                        if (input.isFocused) {
-                            if (focusOn == 0L) {
-                                focusOn = System.currentTimeMillis()
-                            } else {
-                                focusOff = System.currentTimeMillis()
-                                cumulativeFocus += focusOff - focusOn
-                            }
+                        focused = input.hasFocus()
+                        if (focused) {
+                            focusOn = System.currentTimeMillis()
                         }
                     },
-                    500
+                    focusCheckDelay
                 )
             }
             super.onTouchEvent(event)
         }
+    }
+
+    companion object {
+        private const val focusCheckDelay = 500L
     }
 }

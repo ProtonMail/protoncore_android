@@ -58,7 +58,6 @@ internal class LoginViewModel @Inject constructor(
     private val createLoginSession: CreateLoginSession,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val postLoginAccountSetup: PostLoginAccountSetup,
-    private val challengeManagerProvider: ChallengeManagerProvider,
     humanVerificationManager: HumanVerificationManager,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -102,16 +101,6 @@ internal class LoginViewModel @Inject constructor(
         billingDetails: BillingDetails? = null
     ) = flow {
         emit(State.Processing)
-
-        val config = ChallengeManagerConfig.Login
-        val challengeManager = challengeManagerProvider.get(config)
-        challengeManager.addOrUpdateFrame(
-            challengeType = ChallengeFrameType.Username,
-            focusTime = 2350,
-            clicks = 1,
-            copies = emptyList(),
-            pastes = listOf("test", "test1")
-        )
 
         val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType)
 

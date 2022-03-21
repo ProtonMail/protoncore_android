@@ -50,6 +50,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -156,11 +157,15 @@ internal class SignupViewModel @Inject constructor(
         humanVerificationObserver?.cancelAllObservers()
     }
 
-    fun skipRecoveryMethod() = setRecoveryMethod(null, 4, 1000, emptyList(), emptyList())
+    fun skipRecoveryMethod() = setRecoveryMethod(null)
 
     fun setRecoveryMethod(
         recoveryMethod: RecoveryMethod?,
-        clicks: Int, focusTime: Long, copies: List<String>, pastes: List<String>
+        clicks: Int = 0,
+        focusTime: Long = 0,
+        copies: List<String> = emptyList(),
+        pastes: List<String> = emptyList(),
+        keys: List<Char> = emptyList()
     ) {
         viewModelScope.launch {
             val config = ChallengeManagerConfig.SignUp
@@ -171,7 +176,8 @@ internal class SignupViewModel @Inject constructor(
                 focusTime = focusTime,
                 clicks = clicks,
                 copies = copies,
-                pastes = pastes
+                pastes = pastes,
+                keys = keys
             )
         }
 
@@ -196,13 +202,14 @@ internal class SignupViewModel @Inject constructor(
     fun startCreateUserWorkflow() {
         _userCreationState.tryEmit(State.Idle)
 
+        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         val password by lazy { requireNotNull(_password) { "Password is not set (initialized)." } }
 
         when (currentAccountType) {
             AccountType.Username,
             AccountType.Internal -> {
                 val username = requireNotNull(username) { "Username is not set." }
-                createUser(username, password)
+                createUser(clientId, username, password)
             }
             AccountType.External -> {
                 val email = requireNotNull(externalEmail) { "External email is not set." }
@@ -247,7 +254,7 @@ internal class SignupViewModel @Inject constructor(
     // endregion
 
     // region private functions
-    private fun createUser(username: String, encryptedPassword: EncryptedString) {
+    private fun createUser(clientId: ClientId, username: String, encryptedPassword: EncryptedString) {
         flow {
             emit(State.Processing)
 
@@ -264,8 +271,9 @@ internal class SignupViewModel @Inject constructor(
             }
 
             val result = performCreateUser(
-                username = username, password = encryptedPassword, recoveryEmail = verification.first,
-                recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
+                clientId = clientId, username = username, password = encryptedPassword,
+                recoveryEmail = verification.first, recoveryPhone = verification.second,
+                referrer = null, type = currentAccountType.createUserType()
             )
             emit(State.Success(result.id, username, encryptedPassword))
         }.catchWhen(Throwable::userAlreadyExists) {

@@ -47,6 +47,7 @@ dependencies {
         project(Module.userDomain),
         project(Module.keyDomain),
         project(Module.paymentDomain),
+        project(Module.challengeDomain),
 
         // Kotlin
         `coroutines-core`,

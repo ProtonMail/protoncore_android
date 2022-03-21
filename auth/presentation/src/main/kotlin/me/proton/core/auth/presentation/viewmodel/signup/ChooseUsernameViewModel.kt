@@ -39,7 +39,6 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 internal class ChooseUsernameViewModel @Inject constructor(
@@ -174,7 +173,13 @@ internal class ChooseUsernameViewModel @Inject constructor(
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun showPasswordChooser(clicks: Int, focusTime: Long, copies: List<String>, pastes: List<String>) {
+    fun showPasswordChooser(
+        clicks: Int,
+        focusTime: Long,
+        copies: List<String>,
+        pastes: List<String>,
+        keys: List<Char>
+    ) {
         viewModelScope.launch {
             val config = ChallengeManagerConfig.SignUp
             val challengeManager = challengeManagerProvider.get(config)
@@ -183,7 +188,8 @@ internal class ChooseUsernameViewModel @Inject constructor(
                 focusTime = focusTime,
                 clicks = clicks,
                 copies = copies,
-                pastes = pastes
+                pastes = pastes,
+                keys = keys
             )
         }
     }

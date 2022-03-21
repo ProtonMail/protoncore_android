@@ -31,12 +31,11 @@ interface ChallengeManager {
         focusTime: Long, // milliseconds
         clicks: Int,
         copies: List<String>,
-        pastes: List<String>
+        pastes: List<String>,
+        keys: List<Char>
     )
 
     suspend fun removeFrames()
-
-    suspend fun clearAllFrames()
 
     suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>
 

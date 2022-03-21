@@ -23,6 +23,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.data.room.db.BaseDao
+import me.proton.core.network.domain.client.ClientIdType
 
 @Dao
 abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
@@ -38,6 +39,9 @@ abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
 
     @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND challengeId = :challengeId")
     abstract suspend fun getByClientAndChallengeId(clientId: String, challengeId: String): List<ChallengeFrameEntity>?
+
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND challengeId = :challengeId AND challengeType = :challengeType")
+    abstract suspend fun getByClientAndChallengeId(clientId: String, challengeId: String, challengeType: String): ChallengeFrameEntity?
 
     @Query("DELETE FROM ChallengeFrameEntity")
     abstract suspend fun deleteAll()

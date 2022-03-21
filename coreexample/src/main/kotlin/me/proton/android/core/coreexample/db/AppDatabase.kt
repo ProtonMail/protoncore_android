@@ -27,6 +27,7 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.challenge.data.db.ChallengeConverters
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.contact.data.local.db.ContactConverters
@@ -122,6 +123,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     ContactConverters::class,
     EventManagerConverters::class,
     LabelConverters::class,
+    ChallengeConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),

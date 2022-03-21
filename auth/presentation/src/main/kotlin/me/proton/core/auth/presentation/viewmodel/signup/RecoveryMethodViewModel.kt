@@ -30,6 +30,7 @@ import me.proton.core.auth.domain.usecase.signup.ValidateEmail
 import me.proton.core.auth.domain.usecase.signup.ValidatePhone
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
@@ -57,11 +58,21 @@ internal class RecoveryMethodViewModel @Inject constructor(
         _validationResult.tryEmit(ViewModelResult.Success(false))
     }
 
+    lateinit var challengeHolder: ChallengeHolder
+
     /**
      * Sets the currently active verification method that the user chose.
      * If the user changes the verification method tab, the destination is being reset.
      */
-    fun setActiveRecoveryMethod(userSelectedMethodType: RecoveryMethodType, destination: String = "") {
+    fun setActiveRecoveryMethod(
+        clicks: Int = 0,
+        focusTime: Long = 0,
+        copies: List<String> = emptyList(),
+        pastes: List<String> = emptyList(),
+        keys: List<Char> = emptyList(),
+        userSelectedMethodType: RecoveryMethodType,
+        destination: String = "") {
+        challengeHolder = ChallengeHolder(clicks, focusTime, copies, pastes, keys)
         _currentActiveRecoveryMethod = RecoveryMethod(userSelectedMethodType, destination)
         _recoveryMethodUpdate.tryEmit(userSelectedMethodType)
     }
@@ -94,4 +105,12 @@ internal class RecoveryMethodViewModel @Inject constructor(
      */
     private suspend fun validateRecoveryPhone() =
         ViewModelResult.Success(validatePhone(_currentActiveRecoveryMethod.destination))
+
+    data class ChallengeHolder(
+        val clicks: Int = 0,
+        val focusTime: Long = 0,
+        val copies: List<String> = emptyList(),
+        val pastes: List<String> = emptyList(),
+        val keys: List<Char> = emptyList()
+    )
 }

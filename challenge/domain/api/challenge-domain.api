@@ -1,0 +1,76 @@
+public final class me/proton/core/challenge/domain/ChallengeFrameType : java/lang/Enum {
+	public static final field Recovery Lme/proton/core/challenge/domain/ChallengeFrameType;
+	public static final field Username Lme/proton/core/challenge/domain/ChallengeFrameType;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/challenge/domain/ChallengeFrameType;
+	public static fun values ()[Lme/proton/core/challenge/domain/ChallengeFrameType;
+}
+
+public abstract interface class me/proton/core/challenge/domain/ChallengeManager {
+	public abstract fun addOrUpdateFrame (Lme/proton/core/challenge/domain/ChallengeFrameType;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFramesByChallengeId (Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFramesByClientId (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFramesByClientIdAndChallengeId (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun removeFrames (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/challenge/domain/ChallengeManagerConfig {
+	public abstract fun getChallengeUseCase ()Lme/proton/core/challenge/domain/ChallengeUseCase;
+}
+
+public final class me/proton/core/challenge/domain/ChallengeManagerConfig$Login : me/proton/core/challenge/domain/ChallengeManagerConfig {
+	public static final field INSTANCE Lme/proton/core/challenge/domain/ChallengeManagerConfig$Login;
+	public fun getChallengeUseCase ()Lme/proton/core/challenge/domain/ChallengeUseCase;
+}
+
+public final class me/proton/core/challenge/domain/ChallengeManagerConfig$SignUp : me/proton/core/challenge/domain/ChallengeManagerConfig {
+	public static final field INSTANCE Lme/proton/core/challenge/domain/ChallengeManagerConfig$SignUp;
+	public fun getChallengeUseCase ()Lme/proton/core/challenge/domain/ChallengeUseCase;
+}
+
+public abstract interface class me/proton/core/challenge/domain/ChallengeManagerProvider {
+	public abstract fun get (Lme/proton/core/challenge/domain/ChallengeManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAll ()Ljava/util/List;
+}
+
+public final class me/proton/core/challenge/domain/ChallengeUseCase : java/lang/Enum {
+	public static final field Login Lme/proton/core/challenge/domain/ChallengeUseCase;
+	public static final field SignUp Lme/proton/core/challenge/domain/ChallengeUseCase;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/challenge/domain/ChallengeUseCase;
+	public static fun values ()[Lme/proton/core/challenge/domain/ChallengeUseCase;
+}
+
+public final class me/proton/core/challenge/domain/entity/ChallengeFrameDetails {
+	public fun <init> (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lme/proton/core/challenge/domain/ChallengeFrameType;JILjava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/network/domain/client/ClientId;
+	public final fun component2 ()Ljava/util/UUID;
+	public final fun component3 ()Lme/proton/core/challenge/domain/ChallengeFrameType;
+	public final fun component4 ()J
+	public final fun component5 ()I
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/util/List;
+	public final fun component8 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lme/proton/core/challenge/domain/ChallengeFrameType;JILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lme/proton/core/challenge/domain/ChallengeFrameType;JILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChallengeId ()Ljava/util/UUID;
+	public final fun getChallengeTypeChallenge ()Lme/proton/core/challenge/domain/ChallengeFrameType;
+	public final fun getClicks ()I
+	public final fun getClientId ()Lme/proton/core/network/domain/client/ClientId;
+	public final fun getCopy ()Ljava/util/List;
+	public final fun getFocusTime ()J
+	public final fun getKeys ()Ljava/util/List;
+	public final fun getPaste ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/challenge/domain/repository/ChallengeRepository {
+	public abstract fun deleteFrames (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteFrames (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFramesByChallengeId (Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFramesByClientAndChallengeId (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFramesByClientId (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun insertFrameDetails (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateFrame (Lme/proton/core/network/domain/client/ClientId;Ljava/util/UUID;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

@@ -58,14 +58,21 @@ class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
                 childFragmentManager.showCountryPicker()
             }
 
-            smsEditText.onTextChange(
-                afterTextChangeListener = { editable ->
-                    recoveryMethodViewModel.setActiveRecoveryMethod(
-                        RecoveryMethodType.SMS,
-                        "${callingCodeText.text}${editable}"
-                    )
-                }
-            )
+            with (smsEditText) {
+                onTextChange(
+                    afterTextChangeListener = { editable ->
+                        recoveryMethodViewModel.setActiveRecoveryMethod(
+                            clicks = clicksCounter,
+                            focusTime = calculateFocus(),
+                            copies = copies,
+                            pastes = pastes,
+                            keys = keys,
+                            userSelectedMethodType = RecoveryMethodType.SMS,
+                            destination = "${callingCodeText.text}${editable}"
+                        )
+                    }
+                )
+            }
         }
 
         viewModel.countryCallingCode.onSuccess {

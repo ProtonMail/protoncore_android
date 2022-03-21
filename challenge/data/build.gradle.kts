@@ -39,12 +39,11 @@ dependencies {
         project(Module.domain),
 
         // Features
-        project(Module.data),
         project(Module.dataRoom),
-        project(Module.crypto),
 
         // Kotlin
         `coroutines-core`,
+        `serialization-json`,
 
         // Other
         `hilt-android`,

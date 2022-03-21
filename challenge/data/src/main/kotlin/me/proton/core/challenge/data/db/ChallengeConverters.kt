@@ -16,19 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.domain.entity
+package me.proton.core.challenge.data.db
 
-import me.proton.core.challenge.domain.ChallengeFrameType
-import me.proton.core.network.domain.client.ClientId
-import java.util.UUID
+import androidx.room.TypeConverter
+import me.proton.core.data.room.db.CommonConverters
 
-data class ChallengeFrameDetails(
-    val clientId: ClientId,
-    val challengeId: UUID,
-    val challengeTypeChallenge: ChallengeFrameType,
-    val focusTime: Long,
-    val clicks: Int,
-    val copy: List<String>,
-    val paste: List<String>,
-    val keys: List<Char>
-)
+class ChallengeConverters {
+    @TypeConverter
+    fun fromListOfCharToString(value: List<Char>?): String? =
+        CommonConverters.fromListOfStringToString(value?.map { it.toString() })
+
+    @TypeConverter
+    fun fromStringToListOfChars(value: String?): List<Char>? =
+        CommonConverters.fromStringToListOfString(value)?.map { it.single() }
+}

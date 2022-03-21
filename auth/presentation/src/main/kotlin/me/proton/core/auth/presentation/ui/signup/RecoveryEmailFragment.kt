@@ -37,10 +37,19 @@ class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.emailEditText.onTextChange(
-            afterTextChangeListener = { editable ->
-                recoveryMethodViewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, editable.toString())
-            }
-        )
+        with (binding.emailEditText) {
+            onTextChange(
+                afterTextChangeListener = { editable ->
+                    recoveryMethodViewModel.setActiveRecoveryMethod(
+                        clicks = clicksCounter,
+                        focusTime = calculateFocus(),
+                        copies = copies,
+                        pastes = pastes,
+                        keys = keys,
+                        userSelectedMethodType = RecoveryMethodType.EMAIL,
+                        destination = editable.toString())
+                }
+            )
+        }
     }
 }

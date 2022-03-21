@@ -44,7 +44,8 @@ class ChallengeManagerImpl @AssistedInject constructor(
         focusTime: Long,
         clicks: Int,
         copies: List<String>,
-        pastes: List<String>
+        pastes: List<String>,
+        keys: List<Char>
     ) {
         val frame = ChallengeFrameDetails(
             clientId = clientId,
@@ -53,16 +54,13 @@ class ChallengeManagerImpl @AssistedInject constructor(
             focusTime = focusTime,
             clicks = clicks,
             copy = copies,
-            paste = pastes
+            paste = pastes,
+            keys = keys
         )
         challengeRepository.insertFrameDetails(frame)
     }
 
     override suspend fun removeFrames() = challengeRepository.deleteFrames(clientId)
-
-    override suspend fun clearAllFrames() {
-        challengeRepository.deleteFrames()
-    }
 
     override suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails> =
         challengeRepository.getFramesByClientId(clientId) ?: emptyList()

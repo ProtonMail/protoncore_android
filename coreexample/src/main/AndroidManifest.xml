@@ -114,7 +114,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="me.proton.core.auth.presentation.ui.TwoPassModeActivity"
             android:windowSoftInputMode="adjustResize" />
