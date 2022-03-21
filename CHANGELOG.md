@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.4]
+
 ## New
 
-- `ProtonSettings` basic composables to build settings screens
+- `ProtonSettings` basic composables to build settings screens.
 - Enable clients to pass additional filtering function for the plans, according to their needs.
-- Added Room LabelConverters. Please add LabelConverters to your TypeConverters.
+- Added Room LabelConverters. Please add `LabelConverters` to your `TypeConverters`.
 
 ## Fixed
 
