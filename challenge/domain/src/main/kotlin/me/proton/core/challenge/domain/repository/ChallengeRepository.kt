@@ -18,7 +18,6 @@
 
 package me.proton.core.challenge.domain.repository
 
-import me.proton.core.challenge.domain.ChallengeId
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.network.domain.client.ClientId
 
@@ -28,19 +27,6 @@ interface ChallengeRepository {
      * Get a list of [ChallengeFrameDetails] if exist, by clientId.
      */
     suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>?
-
-    /**
-     * Get a list of [ChallengeFrameDetails] if exist, by challengeId.
-     */
-    suspend fun getFramesByChallengeId(challengeId: ChallengeId): List<ChallengeFrameDetails>?
-
-    /**
-     * Get a list of [ChallengeFrameDetails] if exist, by clientId and challengeId.
-     */
-    suspend fun getFramesByClientAndChallengeId(
-        clientId: ClientId,
-        challengeId: ChallengeId
-    ): List<ChallengeFrameDetails>?
 
     /**
      * Insert new [ChallengeFrameDetails].
@@ -62,7 +48,6 @@ interface ChallengeRepository {
      */
     suspend fun updateFrame(
         clientId: ClientId,
-        challengeId: ChallengeId,
         challengeFrameDetails: ChallengeFrameDetails
     )
 }

@@ -25,14 +25,12 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.session.SessionId
-import java.util.UUID
 
 @Entity(
-    primaryKeys = ["clientId", "challengeId", "challengeType"]
+    primaryKeys = ["clientId", "challengeType"]
 )
 data class ChallengeFrameEntity(
     val clientId: String,
-    val challengeId: String,
     val challengeType: String,
     val clientIdType: ClientIdType,
     val focusTime: Long,
@@ -46,7 +44,6 @@ data class ChallengeFrameEntity(
             ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
             ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
         },
-        challengeId = UUID.fromString(challengeId),
         challengeTypeChallenge = ChallengeFrameType.valueOf(challengeType),
         focusTime = focusTime,
         clicks = clicks,

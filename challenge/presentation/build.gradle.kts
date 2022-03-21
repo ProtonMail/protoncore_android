@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import studio.forface.easygradle.dsl.android.*
 plugins {
     protonAndroidUiLibrary
     protonDagger
-    kotlin("plugin.serialization")
     id("kotlin-parcelize")
 }
 
@@ -35,34 +34,23 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     implementation(
-
+        // Core
+        project(Module.presentation),
         project(Module.kotlinUtil),
         project(Module.domain),
-        project(Module.network),
-        project(Module.challengeDomain),
 
-        // Kotlin
-        `kotlin-reflect`,
-        `coroutines-android`,
+        // Features
+        project(Module.challengeDomain),
 
         // Android
         `android-ktx`,
-        `activity`,
         `appcompat`,
         `constraint-layout`,
         `fragment`,
-        `lifecycle-common`,
-        `lifecycle-process`,
+        `lifecycle-viewModel`,
         `material`
     )
 
-    // Android
-    compileOnly(`android-annotation`)
-
-    // Test
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))
-
-    // Lint - off temporary
-    // lintChecks(project(Module.lint))
 }

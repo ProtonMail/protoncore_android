@@ -23,7 +23,6 @@ import me.proton.core.challenge.domain.ChallengeManagerConfig
 import me.proton.core.challenge.domain.ChallengeManagerProvider
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.util.kotlin.exhaustive
-import java.util.UUID
 import javax.inject.Singleton
 
 @Singleton
@@ -41,7 +40,7 @@ class ChallengeManagerProviderImpl(
                 is ChallengeManagerConfig.SignUp -> clientIdProvider.getClientId(sessionId = null)
             }.exhaustive
 
-            val challengeManager = challengeManagerFactory.create(UUID.randomUUID(), clientId!!)
+            val challengeManager = challengeManagerFactory.create(clientId!!)
             challengeManager.removeFrames()
             challengeManager
         }

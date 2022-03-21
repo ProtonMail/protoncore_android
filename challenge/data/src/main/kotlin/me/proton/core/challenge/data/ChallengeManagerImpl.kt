@@ -22,7 +22,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import me.proton.core.challenge.domain.ChallengeFrameType
-import me.proton.core.challenge.domain.ChallengeId
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
@@ -30,12 +29,11 @@ import me.proton.core.network.domain.client.ClientId
 
 @AssistedFactory
 interface ChallengeManagerFactory {
-    fun create(id: ChallengeId, clientId: ClientId): ChallengeManagerImpl
+    fun create(clientId: ClientId): ChallengeManagerImpl
 }
 
 class ChallengeManagerImpl @AssistedInject constructor(
     private val challengeRepository: ChallengeRepository,
-    @Assisted val id: ChallengeId,
     @Assisted val clientId: ClientId
 ) : ChallengeManager {
 
@@ -49,7 +47,6 @@ class ChallengeManagerImpl @AssistedInject constructor(
     ) {
         val frame = ChallengeFrameDetails(
             clientId = clientId,
-            challengeId = id,
             challengeTypeChallenge = challengeType,
             focusTime = focusTime,
             clicks = clicks,
@@ -64,13 +61,4 @@ class ChallengeManagerImpl @AssistedInject constructor(
 
     override suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails> =
         challengeRepository.getFramesByClientId(clientId) ?: emptyList()
-
-    override suspend fun getFramesByChallengeId(challengeId: ChallengeId): List<ChallengeFrameDetails> =
-        challengeRepository.getFramesByChallengeId(challengeId) ?: emptyList()
-
-    override suspend fun getFramesByClientIdAndChallengeId(
-        clientId: ClientId,
-        challengeId: ChallengeId
-    ): List<ChallengeFrameDetails> =
-        challengeRepository.getFramesByClientAndChallengeId(clientId, challengeId) ?: emptyList()
 }

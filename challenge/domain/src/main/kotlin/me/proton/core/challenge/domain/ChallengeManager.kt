@@ -20,15 +20,12 @@ package me.proton.core.challenge.domain
 
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.network.domain.client.ClientId
-import java.util.UUID
-
-typealias ChallengeId = UUID
 
 interface ChallengeManager {
 
     suspend fun addOrUpdateFrame(
         challengeType: ChallengeFrameType,
-        focusTime: Long, // milliseconds
+        focusTime: Long, // in ms
         clicks: Int,
         copies: List<String>,
         pastes: List<String>,
@@ -38,11 +35,4 @@ interface ChallengeManager {
     suspend fun removeFrames()
 
     suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>
-
-    suspend fun getFramesByChallengeId(challengeId: ChallengeId): List<ChallengeFrameDetails>
-
-    suspend fun getFramesByClientIdAndChallengeId(
-        clientId: ClientId,
-        challengeId: ChallengeId
-    ): List<ChallengeFrameDetails>
 }

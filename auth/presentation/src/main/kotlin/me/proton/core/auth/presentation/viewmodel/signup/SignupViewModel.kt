@@ -73,7 +73,6 @@ internal class SignupViewModel @Inject constructor(
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
     private val performLogin: PerformLogin,
-    private val challengeManagerProvider: ChallengeManagerProvider,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
     savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -160,27 +159,8 @@ internal class SignupViewModel @Inject constructor(
     fun skipRecoveryMethod() = setRecoveryMethod(null)
 
     fun setRecoveryMethod(
-        recoveryMethod: RecoveryMethod?,
-        clicks: Int = 0,
-        focusTime: Long = 0,
-        copies: List<String> = emptyList(),
-        pastes: List<String> = emptyList(),
-        keys: List<Char> = emptyList()
+        recoveryMethod: RecoveryMethod?
     ) {
-        viewModelScope.launch {
-            val config = ChallengeManagerConfig.SignUp
-            val challengeManager = challengeManagerProvider.get(config)
-
-            challengeManager.addOrUpdateFrame(
-                challengeType = ChallengeFrameType.Recovery,
-                focusTime = focusTime,
-                clicks = clicks,
-                copies = copies,
-                pastes = pastes,
-                keys = keys
-            )
-        }
-
         _recoveryMethod = recoveryMethod
         _inputState.tryEmit(InputState.Ready)
     }

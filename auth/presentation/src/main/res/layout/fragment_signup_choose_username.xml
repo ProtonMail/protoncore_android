@@ -70,7 +70,7 @@
                 android:gravity="center"
                 android:text="@string/auth_one_account_all_services" />
 
-            <me.proton.core.presentation.ui.view.ProtonInputMetadata
+            <me.proton.core.challenge.presentation.UsernameInput
                 android:id="@+id/usernameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

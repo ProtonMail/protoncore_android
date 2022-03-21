@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 17,
-    "identityHash": "68f3501a004bfee1d886603ef8fc1c6b",
+    "identityHash": "a7f87d190351e55345696c3f607aa8fc",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -2207,17 +2207,11 @@
       },
       {
         "tableName": "ChallengeFrameEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `challengeId` TEXT NOT NULL, `challengeType` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeId`, `challengeType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `challengeType` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeType`))",
         "fields": [
           {
             "fieldPath": "clientId",
             "columnName": "clientId",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "challengeId",
-            "columnName": "challengeId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -2267,7 +2261,6 @@
         "primaryKey": {
           "columnNames": [
             "clientId",
-            "challengeId",
             "challengeType"
           ],
           "autoGenerate": false
@@ -2279,7 +2272,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '68f3501a004bfee1d886603ef8fc1c6b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a7f87d190351e55345696c3f607aa8fc')"
     ]
   }
 }

@@ -21,7 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <me.proton.core.presentation.ui.view.ProtonInputMetadata
+    <me.proton.core.challenge.presentation.RecoveryEmailInput
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

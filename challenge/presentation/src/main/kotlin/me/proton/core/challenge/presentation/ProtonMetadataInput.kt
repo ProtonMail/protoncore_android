@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.presentation.ui.view
+package me.proton.core.challenge.presentation
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -28,29 +28,30 @@ import android.widget.TextView
 import androidx.core.content.withStyledAttributes
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
+import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding
 import me.proton.core.presentation.R
-import me.proton.core.presentation.databinding.ProtonInputMetadataBinding
+import me.proton.core.presentation.ui.view.ProtonInput
 
-class ProtonInputMetadata : ProtonInput {
+open class ProtonMetadataInput : ProtonInput {
 
     private var inputMetadataBinding: ViewBinding? = null
 
     override val binding: ViewBinding
         get() {
             if (inputMetadataBinding == null) {
-                inputMetadataBinding = ProtonInputMetadataBinding.inflate(LayoutInflater.from(context), this)
+                inputMetadataBinding = ProtonMetadataInputBinding.inflate(LayoutInflater.from(context), this)
             }
             return inputMetadataBinding!!
         }
 
     override val input: ProtonCopyPasteEditText
-        get() = (binding as ProtonInputMetadataBinding).input
+        get() = (binding as ProtonMetadataInputBinding).input
 
     override val inputLayout: TextInputLayout
-        get() = (binding as ProtonInputMetadataBinding).inputLayout
+        get() = (binding as ProtonMetadataInputBinding).inputLayout
 
     override val label: TextView
-        get() = (binding as ProtonInputMetadataBinding).label
+        get() = (binding as ProtonMetadataInputBinding).label
 
     private var focusOn: Long = 0
     private var focusOff: Long = 0
@@ -62,15 +63,15 @@ class ProtonInputMetadata : ProtonInput {
             if (value) enableMetrics()
         }
 
-    var clicksCounter: Int = 0
+    protected var clicksCounter: Int = 0
 
-    val copies: List<String>
+    protected val copies: List<String>
         get() = input.copyList
 
-    val pastes: List<String>
+    protected val pastes: List<String>
         get() = input.pasteList
 
-    val keys: MutableList<Char> = mutableListOf()
+    protected val keys: MutableList<Char> = mutableListOf()
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -97,7 +98,7 @@ class ProtonInputMetadata : ProtonInput {
         }
     }
 
-    fun calculateFocus(focusLost: Boolean = true): Long {
+    protected fun calculateFocus(focusLost: Boolean = true): Long {
         return when {
             focusLost && focusOn != 0L -> {
                 focusOff = System.currentTimeMillis()

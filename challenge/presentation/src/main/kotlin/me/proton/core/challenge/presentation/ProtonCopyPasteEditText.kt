@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.presentation.ui.view
+package me.proton.core.challenge.presentation
 
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager

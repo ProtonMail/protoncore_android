@@ -20,11 +20,9 @@ package me.proton.core.challenge.domain.entity
 
 import me.proton.core.challenge.domain.ChallengeFrameType
 import me.proton.core.network.domain.client.ClientId
-import java.util.UUID
 
 data class ChallengeFrameDetails(
     val clientId: ClientId,
-    val challengeId: UUID,
     val challengeTypeChallenge: ChallengeFrameType,
     val focusTime: Long,
     val clicks: Int,

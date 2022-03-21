@@ -181,5 +181,6 @@ public object Module {
     public const val challengeDagger: String = ":challenge:challenge-dagger"
     public const val challengeDomain: String = ":challenge:challenge-domain"
     public const val challengeData: String = ":challenge:challenge-data"
+    public const val challengePresentation: String = ":challenge:challenge-presentation"
     // endregion
 }

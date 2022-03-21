@@ -40,21 +40,21 @@
         style="@style/ProtonInput.TextInputLayout.Border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
         android:focusable="true"
+        app:errorEnabled="true"
         app:hintEnabled="false"
         app:suffixTextColor="@color/text_weak"
         tools:endIconMode="clear_text"
         tools:helperText="Optional help text"
         tools:suffixText="\@protonmail.com">
 
-        <me.proton.core.presentation.ui.view.ProtonCopyPasteEditText
+        <me.proton.core.challenge.presentation.ProtonCopyPasteEditText
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:gravity="top"
             android:focusable="true"
+            android:gravity="top"
+            android:inputType="text"
             tools:text="firstname.lastname" />
 
     </com.google.android.material.textfield.TextInputLayout>

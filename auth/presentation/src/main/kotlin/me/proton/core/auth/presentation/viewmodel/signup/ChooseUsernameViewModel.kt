@@ -173,27 +173,6 @@ internal class ChooseUsernameViewModel @Inject constructor(
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun onBeforePasswordChooser(
-        clicks: Int,
-        focusTime: Long,
-        copies: List<String>,
-        pastes: List<String>,
-        keys: List<Char>
-    ) {
-        viewModelScope.launch {
-            val config = ChallengeManagerConfig.SignUp
-            val challengeManager = challengeManagerProvider.get(config)
-            challengeManager.addOrUpdateFrame(
-                challengeType = ChallengeFrameType.Username,
-                focusTime = focusTime,
-                clicks = clicks,
-                copies = copies,
-                pastes = pastes,
-                keys = keys
-            )
-        }
-    }
-
     fun onFinish() {
         viewModelScope.launch {
             val config = ChallengeManagerConfig.SignUp
