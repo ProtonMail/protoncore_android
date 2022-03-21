@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/proton_loading" />
+        app:lottie_rawRes="@raw/create_account_animation" />
 
     <TextView
         android:id="@+id/lottieTitleText"
