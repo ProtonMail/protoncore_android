@@ -148,7 +148,6 @@ class ProtonMetadataInput : ProtonInput {
 
     suspend fun flush() {
         challengeManager.addOrUpdateFrameToFlow(
-            clientId = clientIdProvider.getClientId(null)!!,
             flow = flow,
             challenge = frame,
             focusTime = calculateFocus(),

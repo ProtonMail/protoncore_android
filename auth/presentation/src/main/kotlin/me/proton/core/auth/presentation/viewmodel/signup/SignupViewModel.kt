@@ -49,7 +49,6 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -190,8 +189,7 @@ internal class SignupViewModel @Inject constructor(
                 val username = requireNotNull(username) { "Username is not set." }
                 val password = requireNotNull(_password) { "Password is not set (initialized)." }
                 viewModelScope.launch {
-                    val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-                    createUser(clientId, username, password)
+                    createUser(username, password)
                 }
             }
             AccountType.External -> {
@@ -237,14 +235,13 @@ internal class SignupViewModel @Inject constructor(
 
     fun onFinish() {
         viewModelScope.launch {
-            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-            challengeManager.finishFlow(clientId, challengeConfig.flowName)
+            challengeManager.finishFlow(challengeConfig.flowName)
         }
     }
     // endregion
 
     // region private functions
-    private fun createUser(clientId: ClientId, username: String, encryptedPassword: EncryptedString) {
+    private fun createUser(username: String, encryptedPassword: EncryptedString) {
         flow {
             emit(State.Processing)
 
@@ -261,7 +258,7 @@ internal class SignupViewModel @Inject constructor(
             }
 
             val result = performCreateUser(
-                clientId = clientId, username = username, password = encryptedPassword,
+                username = username, password = encryptedPassword,
                 recoveryEmail = verification.first, recoveryPhone = verification.second,
                 referrer = null, type = currentAccountType.createUserType()
             )

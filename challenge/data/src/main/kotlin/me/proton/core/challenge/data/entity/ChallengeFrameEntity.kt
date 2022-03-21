@@ -26,12 +26,10 @@ import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(
-    primaryKeys = ["clientId", "challengeFrame"]
+    primaryKeys = ["challengeFrame"]
 )
 data class ChallengeFrameEntity(
-    val clientId: String,
     val challengeFrame: String,
-    val clientIdType: ClientIdType,
     val flow: String,
     val focusTime: Long,
     val clicks: Int,
@@ -41,10 +39,6 @@ data class ChallengeFrameEntity(
 ) {
     fun toFrameDetails() = ChallengeFrameDetails(
         flow = flow,
-        clientId = when (clientIdType) {
-            ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
-            ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
-        },
         challengeFrame = challengeFrame,
         focusTime = focusTime,
         clicks = clicks,

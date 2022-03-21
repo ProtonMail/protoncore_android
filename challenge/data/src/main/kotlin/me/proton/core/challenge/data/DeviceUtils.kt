@@ -31,8 +31,11 @@ import androidx.annotation.RequiresApi
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+
+private const val MILLIS_IN_MINUTE = 60_1000
 
 fun deviceModelName(): String = Build.MODEL
 
@@ -42,7 +45,13 @@ fun appLanguage(): String = Locale.getDefault().language
 
 fun deviceTimezone(): String = TimeZone.getDefault().id
 
-fun deviceTimezoneOffset(): Int = 1 // TODO
+/**
+ * Returns the offset, measured in minutes.
+ */
+fun deviceTimezoneOffset(): Int {
+    val calendar = Calendar.getInstance(Locale.getDefault())
+    return -(calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET)) / MILLIS_IN_MINUTE
+}
 
 fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
     resources.configuration.locales[0].country

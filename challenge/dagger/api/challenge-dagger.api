@@ -11,16 +11,16 @@ public final class me/proton/core/challenge/dagger/BuildConfig {
 
 public final class me/proton/core/challenge/dagger/ChallengeModule {
 	public static final field INSTANCE Lme/proton/core/challenge/dagger/ChallengeModule;
-	public final fun provideChallengeManagerProvider (Lme/proton/core/challenge/data/ChallengeManagerFactory;Lme/proton/core/network/domain/client/ClientIdProvider;)Lme/proton/core/challenge/domain/ChallengeManagerProvider;
+	public final fun provideChallengeManager (Lme/proton/core/challenge/domain/repository/ChallengeRepository;)Lme/proton/core/challenge/domain/ChallengeManager;
 	public final fun provideChallengeRepository (Lme/proton/core/challenge/data/db/ChallengeDatabase;)Lme/proton/core/challenge/domain/repository/ChallengeRepository;
 }
 
-public final class me/proton/core/challenge/dagger/ChallengeModule_ProvideChallengeManagerProviderFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/challenge/dagger/ChallengeModule_ProvideChallengeManagerProviderFactory;
+public final class me/proton/core/challenge/dagger/ChallengeModule_ProvideChallengeManagerFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/challenge/dagger/ChallengeModule_ProvideChallengeManagerFactory;
 	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/challenge/domain/ChallengeManagerProvider;
-	public static fun provideChallengeManagerProvider (Lme/proton/core/challenge/data/ChallengeManagerFactory;Lme/proton/core/network/domain/client/ClientIdProvider;)Lme/proton/core/challenge/domain/ChallengeManagerProvider;
+	public fun get ()Lme/proton/core/challenge/domain/ChallengeManager;
+	public static fun provideChallengeManager (Lme/proton/core/challenge/domain/repository/ChallengeRepository;)Lme/proton/core/challenge/domain/ChallengeManager;
 }
 
 public final class me/proton/core/challenge/dagger/ChallengeModule_ProvideChallengeRepositoryFactory : dagger/internal/Factory {

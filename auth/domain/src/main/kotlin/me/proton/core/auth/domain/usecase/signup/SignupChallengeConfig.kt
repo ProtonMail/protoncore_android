@@ -24,8 +24,7 @@ class SignupChallengeConfig : ChallengeConfig {
 
     override val flowName: String
         get() = "signup"
-    override val flowFramesCount: Int
-        get() = 2
+
     override val flowFrames: List<String>
         get() = listOf(SIGN_UP_FRAME_USERNAME, SIGN_UP_FRAME_RECOVERY)
 

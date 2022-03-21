@@ -24,19 +24,14 @@ import me.proton.core.network.domain.client.ClientId
 interface ChallengeRepository {
 
     /**
-     * Get a list of [ChallengeFrameDetails] if exist, by clientId.
+     * Get a [ChallengeFrameDetails] list if exist, by flow name.
      */
-    suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>?
+    suspend fun getFramesByFlow(flow: String): List<ChallengeFrameDetails>?
 
     /**
-     * Get a [ChallengeFrameDetails] if exist, by clientId and frame name.
+     * Get a [ChallengeFrameDetails] if exist, by flow and frame name.
      */
-    suspend fun getFramesByClientIdAndFrame(clientId: ClientId, frame: String): ChallengeFrameDetails?
-
-    /**
-     * Get a [ChallengeFrameDetails] if exist, by clientId and frame name.
-     */
-    suspend fun getFramesByClientIdAndFlow(clientId: ClientId, flow: String): List<ChallengeFrameDetails>?
+    suspend fun getFramesByFlowAndFrame(flow: String, frame: String): ChallengeFrameDetails?
 
     /**
      * Insert new [ChallengeFrameDetails].
@@ -44,20 +39,20 @@ interface ChallengeRepository {
     suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails)
 
     /**
-     * Delete all [ChallengeFrameDetails] by clientId and challengeId.
+     * Update existing [ChallengeFrameDetails] by flow name.
      */
-    suspend fun deleteFrames(clientId: ClientId, flow: String)
+    suspend fun updateFrame(
+        flow: String,
+        challengeFrameDetails: ChallengeFrameDetails
+    )
+
+    /**
+     * Delete all [ChallengeFrameDetails] by flow name.
+     */
+    suspend fun deleteFrames(flow: String)
 
     /**
      * Delete all [ChallengeFrameDetails].
      */
     suspend fun deleteFrames()
-
-    /**
-     * Update existing [ChallengeFrameDetails] by clientId and challengeId.
-     */
-    suspend fun updateFrame(
-        clientId: ClientId,
-        challengeFrameDetails: ChallengeFrameDetails
-    )
 }

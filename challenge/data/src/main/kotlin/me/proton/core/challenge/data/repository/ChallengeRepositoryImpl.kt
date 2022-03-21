@@ -22,8 +22,6 @@ import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
-import me.proton.core.network.domain.client.ClientId
-import me.proton.core.network.domain.client.getType
 
 class ChallengeRepositoryImpl(
     private val db: ChallengeDatabase
@@ -31,24 +29,21 @@ class ChallengeRepositoryImpl(
 
     private val challengeDao = db.challengeFramesDao()
 
-    override suspend fun getFramesByClientId(clientId: ClientId): List<ChallengeFrameDetails>? =
-        challengeDao.getByClientId(clientId.id)?.map { it.toFrameDetails() }
+    override suspend fun getFramesByFlow(flow: String): List<ChallengeFrameDetails>? =
+        challengeDao.getByFlow(flow)?.map { it.toFrameDetails() }
 
-    override suspend fun getFramesByClientIdAndFrame(clientId: ClientId, frame: String): ChallengeFrameDetails? =
-        challengeDao.getByClientIdAndFrame(clientId.id, frame)?.toFrameDetails()
-
-    override suspend fun getFramesByClientIdAndFlow(clientId: ClientId, flow: String): List<ChallengeFrameDetails>? =
-        challengeDao.getByClientIdAndFlow(clientId.id, flow)?.map { it.toFrameDetails() }
+    override suspend fun getFramesByFlowAndFrame(flow: String, frame: String): ChallengeFrameDetails? =
+        challengeDao.getByFlowAndFrame(flow = flow, frame = frame)?.toFrameDetails()
 
     override suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails) {
-        val clientId = challengeFrameDetails.clientId
         db.inTransaction {
-            val savedFrame = challengeDao.getByClientIdAndFrame(clientId.id, challengeFrameDetails.challengeFrame)
+            val savedFrame = challengeDao.getByFlowAndFrame(
+                flow = challengeFrameDetails.flow,
+                frame = challengeFrameDetails.challengeFrame
+            )
             val currentFocus = savedFrame?.focusTime ?: 0
             challengeDao.insertOrUpdate(
                 ChallengeFrameEntity(
-                    clientId = clientId.id,
-                    clientIdType = clientId.getType(),
                     challengeFrame = challengeFrameDetails.challengeFrame,
                     flow = challengeFrameDetails.flow,
                     focusTime = currentFocus + challengeFrameDetails.focusTime,
@@ -61,25 +56,19 @@ class ChallengeRepositoryImpl(
         }
     }
 
-    override suspend fun deleteFrames(clientId: ClientId, flow: String) =
-        challengeDao.deleteByClientIdAndFlow(clientId.id, flow)
-
-    override suspend fun deleteFrames() {
-        challengeDao.deleteAll()
-    }
-
-    override suspend fun updateFrame(
-        clientId: ClientId,
-        challengeFrameDetails: ChallengeFrameDetails
-    ) {
+    override suspend fun updateFrame(flow: String, challengeFrameDetails: ChallengeFrameDetails) {
         db.inTransaction {
             challengeDao.updateFrame(
-                clientId.id,
-                challengeFrameDetails.focusTime,
-                challengeFrameDetails.clicks,
-                challengeFrameDetails.copy,
-                challengeFrameDetails.paste
+                flow = flow,
+                focusTime = challengeFrameDetails.focusTime,
+                clicks = challengeFrameDetails.clicks,
+                copy = challengeFrameDetails.copy,
+                paste = challengeFrameDetails.paste
             )
         }
     }
+
+    override suspend fun deleteFrames(flow: String) = challengeDao.deleteByFlow(flow)
+
+    override suspend fun deleteFrames() = challengeDao.deleteAll()
 }

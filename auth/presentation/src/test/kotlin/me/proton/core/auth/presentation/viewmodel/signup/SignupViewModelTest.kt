@@ -27,8 +27,11 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.challenge.domain.ChallengeConfig
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
@@ -64,6 +67,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     private val performLogin = mockk<PerformLogin>()
+    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
     // endregion
 
 
@@ -102,6 +106,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             )
         )
 
+    private val signupChallengeConfig = SignupChallengeConfig()
     // endregion
 
     private lateinit var viewModel: SignupViewModel
@@ -117,6 +122,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             clientIdProvider,
             humanVerificationManager,
             performLogin,
+            challengeManager,
+            signupChallengeConfig,
             humanVerificationOrchestrator,
             mockk(relaxed = true)
         )
@@ -126,7 +133,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
         coEvery {
             performCreateUser.invoke(
-                clientId = testClientId,
                 username = testUsername,
                 password = any(),
                 recoveryEmail = any(),
@@ -154,7 +160,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 0) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = any(),
                     password = any(),
                     recoveryEmail = any(),
@@ -178,7 +183,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 0) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = any(),
                     password = any(),
                     recoveryEmail = any(),
@@ -201,7 +205,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 0) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = any(),
                     password = any(),
                     recoveryEmail = any(),
@@ -230,7 +233,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = testUsername,
                     password = "encrypted-$testPassword",
                     recoveryEmail = null,
@@ -262,7 +264,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = testUsername,
                     password = "encrypted-$testPassword",
                     recoveryEmail = testEmail,
@@ -293,7 +294,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = testUsername,
                     password = "encrypted-$testPassword",
                     recoveryEmail = null,
@@ -310,7 +310,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         coEvery {
             performCreateUser.invoke(
-                clientId = testClientId,
                 username = testUsername,
                 password = any(),
                 recoveryEmail = any(),
@@ -342,7 +341,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = testUsername,
                     password = "encrypted-$testPassword",
                     recoveryEmail = null,
@@ -486,7 +484,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     fun `tries login if internal username taken`() = coroutinesTest {
         coEvery {
             performCreateUser.invoke(
-                clientId = testClientId,
                 username = testUsername,
                 password = any(),
                 recoveryEmail = any(),
@@ -516,7 +513,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performCreateUser(
-                    clientId = testClientId,
                     username = testUsername,
                     password = "encrypted-$testPassword",
                     recoveryEmail = null,

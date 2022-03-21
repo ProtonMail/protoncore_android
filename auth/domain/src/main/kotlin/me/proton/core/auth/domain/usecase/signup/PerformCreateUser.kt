@@ -26,7 +26,6 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.client.ClientId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -41,7 +40,6 @@ class PerformCreateUser @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        clientId: ClientId,
         username: String,
         password: EncryptedString,
         recoveryEmail: String?,
@@ -65,8 +63,10 @@ class PerformCreateUser @Inject constructor(
                 modulus = modulus.modulus
             )
 
-            val firstFrame = challengeManager.getFrameByFrameName(clientId, challengeConfig.flowFrames[0])
-            val secondFrame = challengeManager.getFrameByFrameName(clientId, challengeConfig.flowFrames[1])
+            val firstFrame =
+                challengeManager.getFrameByFlowAndFrameName(challengeConfig.flowName, challengeConfig.flowFrames[0])
+            val secondFrame =
+                challengeManager.getFrameByFlowAndFrameName(challengeConfig.flowName, challengeConfig.flowFrames[1])
 
             val createUserResult = userRepository.createUser(
                 firstFrame = firstFrame,
@@ -80,7 +80,7 @@ class PerformCreateUser @Inject constructor(
                 auth = auth
             ).userId
 
-            challengeManager.finishFlow(clientId, challengeConfig.flowName)
+            challengeManager.finishFlow(challengeConfig.flowName)
 
             return createUserResult
         }

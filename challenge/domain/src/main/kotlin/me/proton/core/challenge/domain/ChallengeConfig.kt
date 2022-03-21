@@ -19,10 +19,6 @@
 package me.proton.core.challenge.domain
 
 interface ChallengeConfig {
-
     val flowName: String
-
-    val flowFramesCount: Int
-
     val flowFrames: List<String>
 }

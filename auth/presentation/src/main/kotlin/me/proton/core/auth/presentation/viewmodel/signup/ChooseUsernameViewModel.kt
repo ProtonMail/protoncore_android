@@ -34,7 +34,6 @@ import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
-import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
@@ -45,7 +44,6 @@ internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination,
     private val challengeManager: ChallengeManager,
-    private val clientIdProvider: ClientIdProvider,
     private val challengeConfig: SignupChallengeConfig
 ) : ProtonViewModel() {
 
@@ -90,8 +88,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
 
     private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
         viewModelScope.launch {
-            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-            challengeManager.startNewFlow(clientId, challengeConfig.flowName)
+            challengeManager.startNewFlow(challengeConfig.flowName)
         }
         return when (requireCurrentAccountType()) {
             AccountType.Username,

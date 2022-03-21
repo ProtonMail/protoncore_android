@@ -30,27 +30,21 @@ abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
     @Query("SELECT * FROM ChallengeFrameEntity")
     abstract fun getAll(): Flow<List<ChallengeFrameEntity>>
 
-    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId")
-    abstract suspend fun getByClientId(clientId: String): List<ChallengeFrameEntity>?
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE flow = :flow")
+    abstract suspend fun getByFlow(flow: String): List<ChallengeFrameEntity>?
 
-    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND challengeFrame = :challengeFrame")
-    abstract suspend fun getByClientIdAndFrame(clientId: String, challengeFrame: String): ChallengeFrameEntity?
-
-    @Query("SELECT * FROM ChallengeFrameEntity WHERE clientId = :clientId AND flow = :flow")
-    abstract suspend fun getByClientIdAndFlow(clientId: String, flow: String): List<ChallengeFrameEntity>?
+    @Query("SELECT * FROM ChallengeFrameEntity WHERE flow = :flow AND challengeFrame = :frame")
+    abstract suspend fun getByFlowAndFrame(flow: String, frame: String): ChallengeFrameEntity?
 
     @Query("DELETE FROM ChallengeFrameEntity")
     abstract suspend fun deleteAll()
 
-    @Query("DELETE FROM ChallengeFrameEntity WHERE clientId = :clientId")
-    abstract suspend fun deleteByClientId(clientId: String)
+    @Query("DELETE FROM ChallengeFrameEntity WHERE flow = :flow")
+    abstract suspend fun deleteByFlow(flow: String)
 
-    @Query("DELETE FROM ChallengeFrameEntity WHERE clientId = :clientId AND flow = :flow")
-    abstract suspend fun deleteByClientIdAndFlow(clientId: String, flow: String)
-
-    @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste WHERE clientId = :clientId")
+    @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste WHERE flow = :flow")
     abstract suspend fun updateFrame(
-        clientId: String,
+        flow: String,
         focusTime: Long,
         clicks: Int,
         copy: List<String>,

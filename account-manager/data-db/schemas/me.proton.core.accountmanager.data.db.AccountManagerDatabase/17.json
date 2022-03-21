@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 17,
-    "identityHash": "a7f87d190351e55345696c3f607aa8fc",
+    "identityHash": "7575a152cffc6a797c6e72d5cfb725f3",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -2207,23 +2207,17 @@
       },
       {
         "tableName": "ChallengeFrameEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `challengeType` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))",
         "fields": [
           {
-            "fieldPath": "clientId",
-            "columnName": "clientId",
+            "fieldPath": "challengeFrame",
+            "columnName": "challengeFrame",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "challengeType",
-            "columnName": "challengeType",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "clientIdType",
-            "columnName": "clientIdType",
+            "fieldPath": "flow",
+            "columnName": "flow",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -2260,8 +2254,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "clientId",
-            "challengeType"
+            "challengeFrame"
           ],
           "autoGenerate": false
         },
@@ -2272,7 +2265,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a7f87d190351e55345696c3f607aa8fc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7575a152cffc6a797c6e72d5cfb725f3')"
     ]
   }
 }

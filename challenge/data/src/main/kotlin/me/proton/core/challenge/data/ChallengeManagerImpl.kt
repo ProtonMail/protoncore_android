@@ -27,16 +27,15 @@ import me.proton.core.network.domain.client.ClientId
 class ChallengeManagerImpl @AssistedInject constructor(
     private val challengeRepository: ChallengeRepository
 ) : ChallengeManager {
-    override suspend fun startNewFlow(clientId: ClientId, flow: String) {
-        challengeRepository.deleteFrames(clientId, flow)
+    override suspend fun startNewFlow(flow: String) {
+        challengeRepository.deleteFrames(flow)
     }
 
-    override suspend fun finishFlow(clientId: ClientId, flow: String) {
-        challengeRepository.deleteFrames(clientId, flow)
+    override suspend fun finishFlow(flow: String) {
+        challengeRepository.deleteFrames(flow)
     }
 
     override suspend fun addOrUpdateFrameToFlow(
-        clientId: ClientId,
         flow: String,
         challenge: String,
         focusTime: Long,
@@ -47,7 +46,6 @@ class ChallengeManagerImpl @AssistedInject constructor(
     ) {
         val frame = ChallengeFrameDetails(
             flow = flow,
-            clientId = clientId,
             challengeFrame = challenge,
             focusTime = focusTime,
             clicks = clicks,
@@ -58,9 +56,9 @@ class ChallengeManagerImpl @AssistedInject constructor(
         challengeRepository.insertFrameDetails(frame)
     }
 
-    override suspend fun getFramesByFlowName(clientId: ClientId, flow: String): List<ChallengeFrameDetails> =
-        challengeRepository.getFramesByClientIdAndFlow(clientId, flow) ?: emptyList()
+    override suspend fun getFramesByFlowName(flow: String): List<ChallengeFrameDetails> =
+        challengeRepository.getFramesByFlow(flow) ?: emptyList()
 
-    override suspend fun getFrameByFrameName(clientId: ClientId, frame: String): ChallengeFrameDetails? =
-        challengeRepository.getFramesByClientIdAndFrame(clientId, frame)
+    override suspend fun getFrameByFlowAndFrameName(flow: String, frame: String): ChallengeFrameDetails? =
+        challengeRepository.getFramesByFlowAndFrame(flow, frame)
 }

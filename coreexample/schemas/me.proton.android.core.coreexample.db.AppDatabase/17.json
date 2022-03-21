@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 17,
-    "identityHash": "2bf25d9852d0cf52d7becc0f36add111",
+    "identityHash": "7575a152cffc6a797c6e72d5cfb725f3",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -2207,23 +2207,11 @@
       },
       {
         "tableName": "ChallengeFrameEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `challengeFrame` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `flow` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`clientId`, `challengeFrame`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))",
         "fields": [
-          {
-            "fieldPath": "clientId",
-            "columnName": "clientId",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "challengeFrame",
             "columnName": "challengeFrame",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "clientIdType",
-            "columnName": "clientIdType",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -2266,7 +2254,6 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "clientId",
             "challengeFrame"
           ],
           "autoGenerate": false
@@ -2278,7 +2265,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2bf25d9852d0cf52d7becc0f36add111')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7575a152cffc6a797c6e72d5cfb725f3')"
     ]
   }
 }

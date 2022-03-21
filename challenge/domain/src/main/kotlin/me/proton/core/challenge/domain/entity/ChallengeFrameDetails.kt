@@ -18,11 +18,8 @@
 
 package me.proton.core.challenge.domain.entity
 
-import me.proton.core.network.domain.client.ClientId
-
 data class ChallengeFrameDetails(
     val flow: String,
-    val clientId: ClientId,
     val challengeFrame: String,
     val focusTime: Long,
     val clicks: Int,
