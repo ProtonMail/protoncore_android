@@ -20,8 +20,8 @@ package me.proton.core.crypto.android.srp
 
 import android.util.Base64
 import com.proton.gopenpgp.srp.Srp
-import me.proton.core.test.kotlin.assertEquals
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 internal class GOpenPGPSrpCryptoTest {
@@ -71,10 +71,10 @@ internal class GOpenPGPSrpCryptoTest {
             modulus = testModulusClearSign,
         )
         // THEN
-        assertEquals(testModulusId, auth.modulusId) { "Modulus id doesn't match" }
-        assertEquals(testSalt, auth.salt) { "Salt doesn't match" }
-        assertEquals(testVerifier, auth.verifier) { "Verifier doesn't match" }
-        assertEquals(expectedVersion, auth.version) { "Version doesn't match" }
+        assertEquals(testModulusId, auth.modulusId, "Modulus id doesn't match")
+        assertEquals(testSalt, auth.salt, "Salt doesn't match")
+        assertEquals(testVerifier, auth.verifier, "Verifier doesn't match")
+        assertEquals(expectedVersion, auth.version, "Version doesn't match")
     }
 
     @Test
@@ -103,7 +103,8 @@ internal class GOpenPGPSrpCryptoTest {
         }
         assertEquals(
             serverProof.encodeBase64(),
-            proofs.expectedServerProof
-        ) { "server proof didn't match" }
+            proofs.expectedServerProof,
+            "server proof didn't match"
+        )
     }
 }

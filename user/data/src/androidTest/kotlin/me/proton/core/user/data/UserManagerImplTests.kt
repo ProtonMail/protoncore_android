@@ -57,7 +57,6 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.test.kotlin.TestDispatcherProvider
-import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
@@ -70,6 +69,7 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 @Suppress("OptionalUnit")

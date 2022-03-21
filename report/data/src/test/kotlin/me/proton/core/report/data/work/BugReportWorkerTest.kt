@@ -41,8 +41,6 @@ import me.proton.core.report.data.testBugReportExtra
 import me.proton.core.report.data.testBugReportMeta
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.repository.ReportRepository
-import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -50,7 +48,9 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import javax.inject.Inject
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
 
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
@@ -77,13 +77,13 @@ internal class BugReportWorkerTest {
     @Test
     fun reportsSuccessfullySent() {
         val result = mockAndRun { returns(Unit) }
-        assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Success()))
+        assertIs<ListenableWorker.Result.Success>(result)
     }
 
     @Test
     fun reportsWithNoExtraSuccessfullySent() {
         val result = mockAndRun(extra = null) { returns(Unit) }
-        assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Success()))
+        assertIs<ListenableWorker.Result.Success>(result)
     }
 
     @Test
@@ -101,7 +101,7 @@ internal class BugReportWorkerTest {
     fun reportsWithRecoverableError() {
         val apiException = ApiException(ApiResult.Error.Http(500, "Server error"))
         val result = mockAndRun { throws(apiException) }
-        assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Retry()))
+        assertIs<ListenableWorker.Result.Retry>(result)
     }
 
     @Test
@@ -110,14 +110,14 @@ internal class BugReportWorkerTest {
         val apiException = ApiException(ApiResult.Error.Http(400, "Bad request", protonData))
         val result = mockAndRun { throws(apiException) }
         val outputData = workDataOf(BugReportWorker.OUTPUT_ERROR_MESSAGE to "Invalid request")
-        assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Failure(outputData)))
+        assertEquals(ListenableWorker.Result.Failure(outputData), result)
     }
 
     @Test
     fun reportsWithGenericError() {
         val result = mockAndRun { throws(Throwable("Error")) }
         val expectedOutputData = workDataOf(BugReportWorker.OUTPUT_ERROR_MESSAGE to "Error")
-        assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Failure(expectedOutputData)))
+        assertEquals(ListenableWorker.Result.Failure(expectedOutputData), result)
     }
 
     private fun mockAndRun(

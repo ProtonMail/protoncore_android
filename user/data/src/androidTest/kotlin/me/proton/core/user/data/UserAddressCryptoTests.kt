@@ -30,13 +30,13 @@ import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
-import me.proton.core.test.kotlin.assertEquals
-import me.proton.core.test.kotlin.assertTrue
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.signKeyList
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class UserAddressCryptoTests {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
@@ -92,7 +92,7 @@ class UserAddressCryptoTests {
         // WHEN
         val signedKeyList = userAddress.signKeyList(cryptoContext)
         // THEN
-        assertEquals(expectedKeyListData, signedKeyList.data) { "Signed key list data didn't match" }
+        assertEquals(expectedKeyListData, signedKeyList.data, "Signed key list data didn't match")
         val verified = userAddress.useKeys(cryptoContext) {
             verifyText(
                 text = requireNotNull(signedKeyList.data),
@@ -100,6 +100,6 @@ class UserAddressCryptoTests {
                 time = VerificationTime.Ignore
             )
         }
-        assertTrue(verified) { "Couldn't verify the key list signature"}
+        assertTrue(verified, "Couldn't verify the key list signature")
     }
 }

@@ -22,7 +22,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import me.proton.core.test.kotlin.assertTrue
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
