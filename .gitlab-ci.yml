@@ -159,7 +159,7 @@ unit-tests-and-coverage-report:
         - ./build/reports/cobertura-coverage.xml
 
 start-review:
-  image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
+  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   needs:
     - assemble
   before_script:
@@ -214,7 +214,7 @@ mail-v6-integration-tests:
 .firebase-tests-common:
   stage: firebase
   when: always
-  image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
+  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   variables:
     RESULTS_DIR: "${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
   tags:

@@ -4,7 +4,7 @@ include:
 .gradle-job:
   before_script:
     - source /load-env.sh
-  image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
+  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   variables:
     GRADLE_USER_HOME: '$CI_PROJECT_DIR/.gradle'
   tags:
@@ -26,7 +26,7 @@ include:
     - bundle install
 
 .script-job:
-  image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
+  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   cache: []
   tags:
     - xlarge-k8s
