@@ -22,22 +22,16 @@ import dagger.assisted.AssistedInject
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
-import me.proton.core.network.domain.client.ClientId
 
 class ChallengeManagerImpl @AssistedInject constructor(
     private val challengeRepository: ChallengeRepository
 ) : ChallengeManager {
-    override suspend fun startNewFlow(flow: String) {
-        challengeRepository.deleteFrames(flow)
-    }
 
-    override suspend fun finishFlow(flow: String) {
-        challengeRepository.deleteFrames(flow)
-    }
+    override suspend fun resetFlow(flow: String) = challengeRepository.deleteFrames(flow)
 
     override suspend fun addOrUpdateFrameToFlow(
         flow: String,
-        challenge: String,
+        challengeFrame: String,
         focusTime: Long,
         clicks: Int,
         copies: List<String>,
@@ -46,7 +40,7 @@ class ChallengeManagerImpl @AssistedInject constructor(
     ) {
         val frame = ChallengeFrameDetails(
             flow = flow,
-            challengeFrame = challenge,
+            challengeFrame = challengeFrame,
             focusTime = focusTime,
             clicks = clicks,
             copy = copies,

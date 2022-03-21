@@ -20,10 +20,6 @@ package me.proton.core.challenge.data.entity
 
 import androidx.room.Entity
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
-import me.proton.core.network.domain.client.ClientId
-import me.proton.core.network.domain.client.ClientIdType
-import me.proton.core.network.domain.client.CookieSessionId
-import me.proton.core.network.domain.session.SessionId
 
 @Entity(
     primaryKeys = ["challengeFrame"]

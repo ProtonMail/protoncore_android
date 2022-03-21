@@ -121,8 +121,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     UserSettingsConverters::class,
     ContactConverters::class,
     EventManagerConverters::class,
-    ChallengeConverters::class,
-    LabelConverters::class
+    LabelConverters::class,
+    ChallengeConverters::class
 )
 abstract class AccountManagerDatabase :
     BaseDatabase(),

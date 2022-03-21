@@ -8,10 +8,9 @@ public final class me/proton/core/challenge/data/BuildConfig {
 public final class me/proton/core/challenge/data/ChallengeManagerImpl : me/proton/core/challenge/domain/ChallengeManager {
 	public fun <init> (Lme/proton/core/challenge/domain/repository/ChallengeRepository;)V
 	public fun addOrUpdateFrameToFlow (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun finishFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFrameByFlowAndFrameName (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFramesByFlowName (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun startNewFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun resetFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/challenge/data/DeviceUtilsKt {
@@ -67,7 +66,7 @@ public abstract class me/proton/core/challenge/data/db/ChallengeFramesDao : me/p
 	public abstract fun getAll ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getByFlowAndFrame (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun updateFrame (Ljava/lang/String;JILjava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateFrame (Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/challenge/data/entity/ChallengeFrameEntity {
@@ -101,6 +100,5 @@ public final class me/proton/core/challenge/data/repository/ChallengeRepositoryI
 	public fun getFramesByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFramesByFlowAndFrame (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertFrameDetails (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateFrame (Ljava/lang/String;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

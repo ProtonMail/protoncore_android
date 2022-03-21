@@ -80,7 +80,7 @@ class PerformCreateUser @Inject constructor(
                 auth = auth
             ).userId
 
-            challengeManager.finishFlow(challengeConfig.flowName)
+            challengeManager.resetFlow(challengeConfig.flowName)
 
             return createUserResult
         }

@@ -42,12 +42,13 @@ abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
     @Query("DELETE FROM ChallengeFrameEntity WHERE flow = :flow")
     abstract suspend fun deleteByFlow(flow: String)
 
-    @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste WHERE flow = :flow")
+    @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste, keys = :keys WHERE flow = :flow")
     abstract suspend fun updateFrame(
         flow: String,
         focusTime: Long,
         clicks: Int,
         copy: List<String>,
-        paste: List<String>
+        paste: List<String>,
+        keys: List<Char>
     )
 }

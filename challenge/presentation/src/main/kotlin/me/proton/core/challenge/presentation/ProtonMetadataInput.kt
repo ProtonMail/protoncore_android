@@ -149,7 +149,7 @@ class ProtonMetadataInput : ProtonInput {
     suspend fun flush() {
         challengeManager.addOrUpdateFrameToFlow(
             flow = flow,
-            challenge = frame,
+            challengeFrame = frame,
             focusTime = calculateFocus(),
             clicks = clicksCounter,
             copies = copies,

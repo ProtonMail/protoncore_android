@@ -19,17 +19,14 @@
 package me.proton.core.challenge.domain
 
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
-import me.proton.core.network.domain.client.ClientId
 
 interface ChallengeManager {
 
-    suspend fun startNewFlow(flow: String)
-
-    suspend fun finishFlow(flow: String)
+    suspend fun resetFlow(flow: String)
 
     suspend fun addOrUpdateFrameToFlow(
         flow: String,
-        challenge: String,
+        challengeFrame: String,
         focusTime: Long,
         clicks: Int,
         copies: List<String>,

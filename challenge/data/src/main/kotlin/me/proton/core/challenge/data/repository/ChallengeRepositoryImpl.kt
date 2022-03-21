@@ -41,30 +41,27 @@ class ChallengeRepositoryImpl(
                 flow = challengeFrameDetails.flow,
                 frame = challengeFrameDetails.challengeFrame
             )
-            val currentFocus = savedFrame?.focusTime ?: 0
-            challengeDao.insertOrUpdate(
+            val frameDetails = savedFrame?.let {
                 ChallengeFrameEntity(
                     challengeFrame = challengeFrameDetails.challengeFrame,
                     flow = challengeFrameDetails.flow,
-                    focusTime = currentFocus + challengeFrameDetails.focusTime,
-                    clicks = challengeFrameDetails.clicks,
-                    copy = challengeFrameDetails.copy,
-                    paste = challengeFrameDetails.paste,
-                    keys = challengeFrameDetails.keys
+                    focusTime = it.focusTime + challengeFrameDetails.focusTime,
+                    clicks = it.clicks + challengeFrameDetails.clicks,
+                    copy = it.copy + challengeFrameDetails.copy,
+                    paste = it.paste + challengeFrameDetails.paste,
+                    keys = it.keys + challengeFrameDetails.keys
                 )
-            )
-        }
-    }
-
-    override suspend fun updateFrame(flow: String, challengeFrameDetails: ChallengeFrameDetails) {
-        db.inTransaction {
-            challengeDao.updateFrame(
-                flow = flow,
+            } ?: ChallengeFrameEntity(
+                challengeFrame = challengeFrameDetails.challengeFrame,
+                flow = challengeFrameDetails.flow,
                 focusTime = challengeFrameDetails.focusTime,
                 clicks = challengeFrameDetails.clicks,
                 copy = challengeFrameDetails.copy,
-                paste = challengeFrameDetails.paste
+                paste = challengeFrameDetails.paste,
+                keys = challengeFrameDetails.keys
             )
+
+            challengeDao.insertOrUpdate(frameDetails)
         }
     }
 

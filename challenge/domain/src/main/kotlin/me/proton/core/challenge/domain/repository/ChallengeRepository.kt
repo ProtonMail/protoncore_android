@@ -19,7 +19,6 @@
 package me.proton.core.challenge.domain.repository
 
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
-import me.proton.core.network.domain.client.ClientId
 
 interface ChallengeRepository {
 
@@ -37,14 +36,6 @@ interface ChallengeRepository {
      * Insert new [ChallengeFrameDetails].
      */
     suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails)
-
-    /**
-     * Update existing [ChallengeFrameDetails] by flow name.
-     */
-    suspend fun updateFrame(
-        flow: String,
-        challengeFrameDetails: ChallengeFrameDetails
-    )
 
     /**
      * Delete all [ChallengeFrameDetails] by flow name.

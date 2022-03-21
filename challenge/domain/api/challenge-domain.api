@@ -5,10 +5,9 @@ public abstract interface class me/proton/core/challenge/domain/ChallengeConfig 
 
 public abstract interface class me/proton/core/challenge/domain/ChallengeManager {
 	public abstract fun addOrUpdateFrameToFlow (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun finishFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getFrameByFlowAndFrameName (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getFramesByFlowName (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun startNewFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun resetFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/challenge/domain/entity/ChallengeFrameDetails {
@@ -40,6 +39,5 @@ public abstract interface class me/proton/core/challenge/domain/repository/Chall
 	public abstract fun getFramesByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getFramesByFlowAndFrame (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun insertFrameDetails (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun updateFrame (Ljava/lang/String;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

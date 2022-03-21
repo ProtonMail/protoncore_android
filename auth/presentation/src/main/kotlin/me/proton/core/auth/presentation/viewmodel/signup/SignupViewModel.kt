@@ -235,7 +235,7 @@ internal class SignupViewModel @Inject constructor(
 
     fun onFinish() {
         viewModelScope.launch {
-            challengeManager.finishFlow(challengeConfig.flowName)
+            challengeManager.resetFlow(challengeConfig.flowName)
         }
     }
     // endregion
