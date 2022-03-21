@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonKotlinLibrary
+    kotlin("plugin.serialization")
 }
 
 proton {
@@ -39,6 +40,7 @@ dependencies {
         project(Module.eventManagerDomain),
 
         // Kotlin
+        `serialization-json`,
         `coroutines-core`,
         `ez-vcard`,
         `javax-inject`

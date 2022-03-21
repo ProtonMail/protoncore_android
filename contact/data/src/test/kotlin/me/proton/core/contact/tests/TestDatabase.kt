@@ -35,6 +35,7 @@ import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
 import me.proton.core.data.room.db.CommonConverters
+import me.proton.core.label.data.local.LabelConverters
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.entity.UserEntity
@@ -60,6 +61,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
     AccountConverters::class,
     UserConverters::class,
     CryptoConverters::class,
-    ContactConverters::class
+    ContactConverters::class,
+    LabelConverters::class,
 )
 abstract class TestDatabase : BaseDatabase(), UserDatabase, AccountDatabase, ContactDatabase

@@ -32,15 +32,20 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.userDomain),
+        project(Module.labelDomain),
+        project(Module.contactDomain),
+        project(Module.eventManagerDomain),
+    )
     implementation(
         project(Module.kotlinUtil),
         project(Module.network),
         project(Module.data),
         project(Module.dataRoom),
         project(Module.domain),
-        project(Module.contactDomain),
         project(Module.userData),
-        project(Module.eventManagerDomain),
+        project(Module.labelData),
 
         // Kotlin
         `serialization-json`,
