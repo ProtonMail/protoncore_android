@@ -36,70 +36,84 @@ enum class SnackType(@DrawableRes val background: Int) {
 /**
  * Shows normal snack bar.
  */
-fun View.normSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, type = SnackType.Norm)
-}
+fun View.normSnack(
+    @StringRes messageRes: Int,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) =
+    snack(messageRes = messageRes, type = SnackType.Norm, length = length, configBlock = configBlock)
 
 /**
  * Shows normal snack bar.
  */
-fun View.normSnack(message: String) {
-    snack(message = message, type = SnackType.Norm)
-}
+fun View.normSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null) =
+    snack(message = message, type = SnackType.Norm, length = length, configBlock = configBlock)
 
 /**
  * Shows warning snack bar.
  */
-fun View.warningSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, type = SnackType.Warning)
-}
+fun View.warningSnack(
+    @StringRes messageRes: Int,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) =
+    snack(messageRes = messageRes, type = SnackType.Warning, length = length, configBlock = configBlock)
 
 /**
  * Shows warning snack bar.
  */
-fun View.warningSnack(message: String) {
-    snack(message = message, type = SnackType.Warning)
-}
+fun View.warningSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null,) =
+    snack(message = message, type = SnackType.Warning, length = length, configBlock = configBlock)
 
 /**
  * Shows red error snack bar.
  */
-fun View.errorSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, type = SnackType.Error)
-}
+fun View.errorSnack(
+    @StringRes messageRes: Int,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) =
+    snack(messageRes = messageRes, type = SnackType.Error, length = length, configBlock = configBlock)
 
 /**
  * Shows red error snack bar.
  */
-fun View.errorSnack(message: String) {
-    snack(message = message, type = SnackType.Error)
-}
+fun View.errorSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null) =
+    snack(message = message, type = SnackType.Error, length = length, configBlock = configBlock)
 
 /**
  * Shows red error snack bar.
  */
-fun View.errorSnack(message: String, action: String?, actionOnClick: (() -> Unit)?) {
-    snack(
-        message = message,
-        type = SnackType.Error,
-        action = action,
-        actionOnClick = actionOnClick
-    )
-}
+fun View.errorSnack(
+    message: String,
+    action: String?,
+    actionOnClick: (() -> Unit)?,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) = snack(
+    message = message,
+    type = SnackType.Error,
+    action = action,
+    actionOnClick = actionOnClick,
+    length = length,
+    configBlock = configBlock,
+)
 
 /**
  * Shows green success snack bar.
  */
-fun View.successSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, type = SnackType.Success)
-}
+fun View.successSnack(
+    @StringRes messageRes: Int,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) =
+    snack(messageRes = messageRes, type = SnackType.Success, length = length, configBlock = configBlock)
 
 /**
  * Shows green success snack bar.
  */
-fun View.successSnack(message: String) {
-    snack(message = message, type = SnackType.Success)
-}
+fun View.successSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null) =
+    snack(message = message, type = SnackType.Success, length = length, configBlock = configBlock)
 
 /**
  * General snack bar util function which takes message and type as config.
@@ -109,10 +123,10 @@ fun View.successSnack(message: String) {
  */
 fun View.snack(
     @StringRes messageRes: Int,
-    type: SnackType
-) {
-    snack(message = resources.getString(messageRes), type = type)
-}
+    type: SnackType,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) = snack(message = resources.getString(messageRes), type = type, length = length, configBlock = configBlock)
 
 /**
  * General snack bar util function which takes message and color as config.
@@ -124,10 +138,9 @@ fun View.snack(
 @Suppress("deprecation")
 fun View.snack(
     @StringRes messageRes: Int,
-    @DrawableRes color: Int?
-) {
-    snack(message = resources.getString(messageRes), color = color)
-}
+    @DrawableRes color: Int?,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) = snack(message = resources.getString(messageRes), color = color, configBlock = configBlock)
 
 /**
  * General snack bar util function which takes message, color and length as config.
@@ -138,11 +151,11 @@ fun View.snack(
     type: SnackType,
     action: String? = null,
     actionOnClick: (() -> Unit)? = null,
-    length: Int = Snackbar.LENGTH_LONG
-) {
-    snack(message, type, length) {
-        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
-    }
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) = snack(message, type, length) {
+    if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
+    configBlock?.invoke(this)
 }
 
 @Deprecated(
@@ -155,11 +168,11 @@ fun View.snack(
     @DrawableRes color: Int?,
     action: String? = null,
     actionOnClick: (() -> Unit)? = null,
-    length: Int = Snackbar.LENGTH_LONG
-) {
-    snack(message, color, length) {
-        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
-    }
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null,
+) = snack(message, color, length) {
+    if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
+    configBlock?.invoke(this)
 }
 
 /**
@@ -171,10 +184,8 @@ fun View.snack(
     message: String,
     type: SnackType,
     length: Int = Snackbar.LENGTH_LONG,
-    configBlock: (Snackbar.() -> Unit)? = null
-) {
-    snack(message, type.background, length, configBlock)
-}
+    configBlock: (Snackbar.() -> Unit)? = null,
+) = snack(message, type.background, length, configBlock)
 
 @Deprecated(
     "Use snack() with type instead of color",
@@ -184,11 +195,11 @@ fun View.snack(
     message: String,
     @DrawableRes color: Int?,
     length: Int = Snackbar.LENGTH_LONG,
-    configBlock: (Snackbar.() -> Unit)? = null
-) {
-    Snackbar.make(this, message, length).apply {
+    configBlock: (Snackbar.() -> Unit)? = null,
+): Snackbar {
+    return Snackbar.make(this, message, length).apply {
         color?.let { view.background = ResourcesCompat.getDrawable(context.resources, it, null) }
         view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply { maxLines = 5 }
         configBlock?.invoke(this)
-    }.show()
+    }.also { it.show() }
 }

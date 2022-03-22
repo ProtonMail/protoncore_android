@@ -27,7 +27,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -47,7 +46,6 @@ import me.proton.core.humanverification.presentation.ui.webview.HumanVerificatio
 import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
-import me.proton.core.presentation.utils.SnackType
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -108,13 +106,8 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
                 extraHeaderProvider.headers,
                 viewModel.activeAltUrlForDoH,
                 networkRequestOverrider,
-                onResourceLoadingError = {
-                    handleError()
-                },
-                onWebLocationChanged = {
-                    retrySnackBar?.dismiss()
-                    retrySnackBar = null
-                }
+                onResourceLoadingError = ::handleError,
+                onWebLocationChanged = {}
             )
             webChromeClient = CaptchaWebChromeClient()
         }
@@ -137,6 +130,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
     override fun onDestroyView() {
         super.onDestroyView()
 
+        retrySnackBar?.dismiss()
         retrySnackBar = null
     }
 
@@ -150,14 +144,10 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
     }
 
     private fun handleError() {
-        val resources = requireContext().resources
+        if (retrySnackBar != null) return
         val message = R.string.human_verification_method_loading_failed
-        retrySnackBar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).apply {
-            view.background = ResourcesCompat.getDrawable(
-                resources,
-                SnackType.Error.background,
-                requireContext().theme
-            )
+        retrySnackBar = requireView().errorSnack(message, Snackbar.LENGTH_INDEFINITE) {
+            // The text might be longer when translated
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).let {
                 it.isSingleLine = false
             }
@@ -165,7 +155,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
                 retrySnackBar = null
                 binding.captchaWebView.reload()
             }
-        }.also { it.show() }
+        }
     }
 
     private fun verificationDone(token: String) {
