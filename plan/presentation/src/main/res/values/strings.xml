@@ -91,69 +91,18 @@
         <item quantity="other">%d of #proton_users# users</item>
     </plurals>
     <!-- endregion -->
-
-    <!-- region current plan -->
-    <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>#proton_users#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_calendars#</item>
-        <item>#proton_vpn#</item>
-    </string-array>
-    <integer-array name="plan_current">
-        <item>@plurals/item_users_current</item>
-        <item>@plurals/item_address_current</item>
-        <item>@plurals/item_calendar_current</item>
-        <item>@plurals/item_connections</item>
-    </integer-array>
-    <!-- endregion -->
-    <!-- endregion -->
     <!-- region plan free -->
     <string name="plan_id_free_header">The basic for private and secure communications.</string>
-    <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>#proton_storage#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_calendars#</item>
-        <item>#proton_vpn#</item>
-    </string-array>
-    <integer-array name="plan_id_free">
-        <item>@string/plan_id_free_header</item>
-        <item>@plurals/item_storage</item>
-        <item>@plurals/item_address</item>
-        <item>@plurals/item_calendar</item>
-        <item>@plurals/item_connections</item>
-    </integer-array>
     <!-- endregion -->
 
     <!-- region plan plus. Note: the order array is affected by the change in the -->
     <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
-    <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>#proton_storage#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_domains#</item>
-    </string-array>
-    <integer-array name="plan_id_plus">
-        <item>@string/plan_id_plus_header</item>
-        <item>@plurals/item_storage</item>
-        <item>@plurals/item_address</item>
-        <item>@plurals/item_domain</item>
-    </integer-array>
     <!-- endregion -->
 
     <!-- region vpn basic -->
     <string name="plan_id_vpnbasic_header">VPN Basic</string>
     <string name="plan_id_vpnbasic_countries">63 countries</string>
     <string name="plan_id_vpnbasic_high_speed">High speed</string>
-    <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>string</item>
-        <item>#proton_vpn#</item>
-        <item>string</item>
-    </string-array>
-    <integer-array name="plan_id_vpnbasic">
-        <item>@string/plan_id_vpnbasic_header</item>
-        <item>@string/plan_id_vpnbasic_countries</item>
-        <item>@plurals/item_connections</item>
-        <item>@string/plan_id_vpnbasic_high_speed</item>
-    </integer-array>
     <!-- endregion -->
     <!-- region plan vpn plus -->
     <string name="plan_id_vpnplus_header">VPN Plus</string>
@@ -161,58 +110,13 @@
     <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
     <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
     <string name="plan_id_vpnplus_streaming">Streaming service support</string>
-    <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>string</item>
-        <item>#proton_vpn#</item>
-        <item>string</item>
-        <item>string</item>
-        <item>string</item>
-    </string-array>
-    <integer-array name="plan_id_vpnplus">
-        <item>@string/plan_id_vpnplus_header</item>
-        <item>@string/plan_id_vpnplus_countries</item>
-        <item>@plurals/item_connections</item>
-        <item>@string/plan_id_vpnplus_highest_speed</item>
-        <item>@string/plan_id_vpnplus_adblock</item>
-        <item>@string/plan_id_vpnplus_streaming</item>
-    </integer-array>
     <!-- endregion -->
     <!-- region plan professional -->
     <string name="plan_id_professional_header">Professional</string>
     <string name="plan_id_professional_multiuser">Multi-user support</string>
-    <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>#proton_storage#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_domains#</item>
-        <item>string</item>
-    </string-array>
-    <integer-array name="plan_id_professional">
-        <item>@string/plan_id_professional_header</item>
-        <item>@plurals/item_storage_multiuser</item>
-        <item>@plurals/item_address_multiuser</item>
-        <item>@plurals/item_domain</item>
-        <item>@string/plan_id_professional_multiuser</item>
-    </integer-array>
     <!-- endregion -->
     <!-- region plan visionary -->
     <string name="plan_id_visionary_header">Visionary</string>
-    <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-        <item>#proton_storage#</item>
-        <item>#proton_addresses#</item>
-        <item>#proton_calendars#</item>
-        <item>#proton_vpn#</item>
-        <item>#proton_domains#</item>
-        <item>#proton_users#</item>
-    </string-array>
-    <integer-array name="plan_id_visionary">
-        <item>@string/plan_id_visionary_header</item>
-        <item>@plurals/item_storage</item>
-        <item>@plurals/item_address</item>
-        <item>@plurals/item_calendar</item>
-        <item>@plurals/item_connections_highspeed</item>
-        <item>@plurals/item_domain</item>
-        <item>@plurals/item_users</item>
-    </integer-array>
     <!-- endregion -->
 
     <!-- supported plans -->

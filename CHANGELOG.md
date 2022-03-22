@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 
 - Removed Label dependency from Contact modules.
+- Fix invalid strings resources for Plans
 
 ## [7.1.4]
 

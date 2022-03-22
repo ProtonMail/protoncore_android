@@ -90,74 +90,26 @@
     <item quantity="other">%d av #proton_users# användare</item>
   </plurals>
   <!-- endregion -->
-  <!-- region current plan -->
-  <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_users#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_calendars#</item>
-    <item>#proton_vpn#</item>
-  </string-array>
-  <!-- endregion -->
-  <!-- endregion -->
   <!-- region plan free -->
   <string name="plan_id_free_header">Det grundläggande för privat och säker kommunikation.</string>
-  <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_storage#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_calendars#</item>
-    <item>#proton_vpn#</item>
-  </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Fullfjädrad brevlåda med avancerat skydd.</string>
-  <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_storage#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_domains#</item>
-  </string-array>
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_high_speed">Hög hastighet</string>
-  <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_vpn#</item>
-    <item>sträng</item>
-    <item>#proton_storage#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_calendars#</item>
-  </string-array>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_highest_speed">Högsta hastighet</string>
-  <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_vpn#</item>
-    <item>sträng</item>
-    <item>#proton_storage#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_calendars#</item>
-  </string-array>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Stöd för flera användare</string>
-  <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_storage#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_domains#</item>
-    <item>sträng</item>
-  </string-array>
   <!-- endregion -->
   <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
-  <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
-    <item>#proton_storage#</item>
-    <item>#proton_addresses#</item>
-    <item>#proton_calendars#</item>
-    <item>#proton_vpn#</item>
-    <item>#proton_domains#</item>
-    <item>#proton_users#</item>
-  </string-array>
   <!-- endregion -->
   <!-- supported plans -->
   <string-array name="supported_currencies">
