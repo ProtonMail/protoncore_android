@@ -34,7 +34,6 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     api(
         project(Module.userDomain),
-        project(Module.labelDomain),
         project(Module.contactDomain),
         project(Module.eventManagerDomain),
     )
@@ -45,7 +44,6 @@ dependencies {
         project(Module.dataRoom),
         project(Module.domain),
         project(Module.userData),
-        project(Module.labelData),
 
         // Kotlin
         `serialization-json`,
