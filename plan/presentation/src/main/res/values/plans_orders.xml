@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- region current plan -->
+    <string-array name="plan_current_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_users#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_calendars#</item>
+        <item>#proton_vpn#</item>
+    </string-array>
+    <integer-array name="plan_current">
+        <item>@plurals/item_users_current</item>
+        <item>@plurals/item_address_current</item>
+        <item>@plurals/item_calendar_current</item>
+        <item>@plurals/item_connections</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region plan free -->
+    <string-array name="plan_id_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_calendars#</item>
+        <item>#proton_vpn#</item>
+    </string-array>
+    <integer-array name="plan_id_free">
+        <item>@string/plan_id_free_header</item>
+        <item>@plurals/item_storage</item>
+        <item>@plurals/item_address</item>
+        <item>@plurals/item_calendar</item>
+        <item>@plurals/item_connections</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region plan plus. Note: the order array is affected by the change in the -->
+    <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_domains#</item>
+    </string-array>
+    <integer-array name="plan_id_plus">
+        <item>@string/plan_id_plus_header</item>
+        <item>@plurals/item_storage</item>
+        <item>@plurals/item_address</item>
+        <item>@plurals/item_domain</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region vpn basic -->
+    <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
+        <item>#proton_vpn#</item>
+        <item>string</item>
+    </string-array>
+    <integer-array name="plan_id_vpnbasic">
+        <item>@string/plan_id_vpnbasic_header</item>
+        <item>@string/plan_id_vpnbasic_countries</item>
+        <item>@plurals/item_connections</item>
+        <item>@string/plan_id_vpnbasic_high_speed</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region plan vpn plus -->
+    <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
+        <item>#proton_vpn#</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+    </string-array>
+    <integer-array name="plan_id_vpnplus">
+        <item>@string/plan_id_vpnplus_header</item>
+        <item>@string/plan_id_vpnplus_countries</item>
+        <item>@plurals/item_connections</item>
+        <item>@string/plan_id_vpnplus_highest_speed</item>
+        <item>@string/plan_id_vpnplus_adblock</item>
+        <item>@string/plan_id_vpnplus_streaming</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region plan professional -->
+    <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_domains#</item>
+        <item>string</item>
+    </string-array>
+    <integer-array name="plan_id_professional">
+        <item>@string/plan_id_professional_header</item>
+        <item>@plurals/item_storage_multiuser</item>
+        <item>@plurals/item_address_multiuser</item>
+        <item>@plurals/item_domain</item>
+        <item>@string/plan_id_professional_multiuser</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region plan visionary -->
+    <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_calendars#</item>
+        <item>#proton_vpn#</item>
+        <item>#proton_domains#</item>
+        <item>#proton_users#</item>
+    </string-array>
+    <integer-array name="plan_id_visionary">
+        <item>@string/plan_id_visionary_header</item>
+        <item>@plurals/item_storage</item>
+        <item>@plurals/item_address</item>
+        <item>@plurals/item_calendar</item>
+        <item>@plurals/item_connections_highspeed</item>
+        <item>@plurals/item_domain</item>
+        <item>@plurals/item_users</item>
+    </integer-array>
+    <!-- endregion -->
+</resources>
