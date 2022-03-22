@@ -395,15 +395,15 @@ public abstract interface class me/proton/core/humanverification/presentation/ui
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Companion;
 	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
-	public field humanVerificationApiHost Ljava/lang/String;
+	public field humanVerificationBaseUrl Ljava/lang/String;
 	public field networkRequestOverrider Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
 	public fun <init> ()V
 	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
-	public final fun getHumanVerificationApiHost ()Ljava/lang/String;
+	public final fun getHumanVerificationBaseUrl ()Ljava/lang/String;
 	public final fun getNetworkRequestOverrider ()Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
-	public final fun setHumanVerificationApiHost (Ljava/lang/String;)V
+	public final fun setHumanVerificationBaseUrl (Ljava/lang/String;)V
 	public final fun setNetworkRequestOverrider (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
 }
 
@@ -450,7 +450,7 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Dialo
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
 	public static fun injectExtraHeaderProvider (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
-	public static fun injectHumanVerificationApiHost (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Ljava/lang/String;)V
+	public static fun injectHumanVerificationBaseUrl (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Ljava/lang/String;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;)V
 	public static fun injectNetworkRequestOverrider (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
@@ -610,7 +610,8 @@ public abstract interface class me/proton/core/humanverification/presentation/ui
 public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient : android/webkit/WebViewClient {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion;
 	public static final field TAG Ljava/lang/String;
-	public fun <init> (Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function0;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
 	public fun onReceivedError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceError;)V
 	public fun onReceivedHttpError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceResponse;)V
 	public fun onReceivedSslError (Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V

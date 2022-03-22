@@ -20,19 +20,24 @@ package me.proton.core.humanverification.presentation.ui.hv2.verification
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
+import me.proton.core.humanverification.presentation.BuildConfig
 import me.proton.core.humanverification.presentation.CaptchaApiHost
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
@@ -42,6 +47,7 @@ import me.proton.core.humanverification.presentation.ui.webview.HumanVerificatio
 import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.SnackType
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -71,6 +77,8 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
         requireArguments().getString(ARG_CAPTCHA_URL) ?: "https://$captchaApiHost/core/v4/captcha"
     }
 
+    private var retrySnackBar: Snackbar? = null
+
     private val humanVerificationBase by lazy {
         HumanVerificationMethodCommon(
             viewModel = viewModel,
@@ -82,19 +90,31 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val baseUrl = viewModel.activeAltUrlForDoH ?: captchaUrl
+
         humanVerificationBase.onViewCreated(viewLifecycleOwner, parentFragmentManager) {
             binding.root.errorSnack(R.string.human_verification_sending_failed)
         }
 
         binding.captchaWebView.apply {
+            WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
             setBackgroundColor(Color.TRANSPARENT)
             settings.javaScriptEnabled = true // this is fine, required to load captcha
+            settings.domStorageEnabled = true
             addJavascriptInterface(WebAppInterface(), "AndroidInterface")
             webViewClient = HumanVerificationWebViewClient(
+                Uri.parse(baseUrl).host!!,
                 extraHeaderProvider.headers,
                 viewModel.activeAltUrlForDoH,
                 networkRequestOverrider,
-                onResourceLoadingError = {}
+                onResourceLoadingError = {
+                    handleError()
+                },
+                onWebLocationChanged = {
+                    retrySnackBar?.dismiss()
+                    retrySnackBar = null
+                }
             )
             webChromeClient = CaptchaWebChromeClient()
         }
@@ -107,21 +127,45 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
                     binding.root.errorSnack(R.string.human_verification_captcha_no_connectivity)
                 }
                 is ViewModelResult.Success -> {
-                    loadWebView()
+                    loadWebView(baseUrl)
                     binding.progress.visibility = View.GONE
                 }
             }.exhaustive
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun loadWebView() {
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        retrySnackBar = null
+    }
+
+    private fun loadWebView(url: String) {
         binding.run {
             // At the moment, this is enough to properly load the Captcha with the extra headers.
             // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
             val extraHeaders = extraHeaderProvider.headers.associate { it }
-            val url = viewModel.activeAltUrlForDoH ?: captchaUrl
             captchaWebView.loadUrl("$url?Token=${humanVerificationBase.urlToken}", extraHeaders)
         }
+    }
+
+    private fun handleError() {
+        val resources = requireContext().resources
+        val message = R.string.human_verification_method_loading_failed
+        retrySnackBar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).apply {
+            view.background = ResourcesCompat.getDrawable(
+                resources,
+                SnackType.Error.background,
+                requireContext().theme
+            )
+            view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).let {
+                it.isSingleLine = false
+            }
+            setAction(R.string.human_verification_action_retry) {
+                retrySnackBar = null
+                binding.captchaWebView.reload()
+            }
+        }.also { it.show() }
     }
 
     private fun verificationDone(token: String) {
