@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Fixed
+
+- Removed Label dependency from Contact modules.
+
 ## [7.1.4]
 
 ## New
