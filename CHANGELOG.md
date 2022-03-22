@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed Label dependency from Contact modules.
 - Fix invalid strings resources for Plans
+- Catch potential EventManager internal enqueue exception edge cases (e.g. userId doesn't exist anymore).
 
 ## [7.1.4]
 

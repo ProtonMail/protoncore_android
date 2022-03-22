@@ -245,7 +245,7 @@ class EventManagerImpl @AssistedInject constructor(
         }
     }
 
-    private suspend fun enqueue(eventId: EventId?, immediately: Boolean) {
+    private suspend fun enqueue(eventId: EventId?, immediately: Boolean) = runCatching {
         val metadata = eventId?.let { eventMetadataRepository.get(config, it) }
         eventMetadataRepository.update(
             metadata?.takeUnless { metadata.eventId == metadata.nextEventId }?.copy(
