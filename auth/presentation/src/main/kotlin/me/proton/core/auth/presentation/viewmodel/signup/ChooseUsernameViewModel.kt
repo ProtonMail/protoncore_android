@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -51,7 +52,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
     var domains: List<Domain>? = null
         private set
 
-    val state = _state.onSubscription { fetchDomains() }
+    val state = _state.onSubscription { emitAll(fetchDomains()) }
     val selectedAccountTypeState = _selectedAccountTypeState.asSharedFlow()
 
     sealed class AccountTypeState {
@@ -107,12 +108,14 @@ internal class ChooseUsernameViewModel @Inject constructor(
         return currentAccountType
     }
 
-    private suspend fun fetchDomains() = runCatching {
-        _state.tryEmit(State.Processing)
-        domains = usernameDomainAvailability.getDomains()
-        _state.tryEmit(State.AvailableDomains(domains!!, requireCurrentAccountType()))
-    }.onFailure { error ->
-        _state.tryEmit(State.Error.Message(error))
+    private fun fetchDomains() = flow {
+        if (domains.isNullOrEmpty()) {
+            emit(State.Processing)
+            domains = usernameDomainAvailability.getDomains()
+        }
+        emit(State.AvailableDomains(domains!!, requireCurrentAccountType()))
+    }.catch { error ->
+        emit(State.Error.Message(error))
     }
 
     /**
@@ -157,6 +160,8 @@ internal class ChooseUsernameViewModel @Inject constructor(
     fun checkUsername(username: String, domain: String? = null) = flow {
         emit(State.Processing)
         emit(checkUsernameForAccountType(username, domain))
+        // Needed to not re-emit the navigation state on fragment recreation
+        emit(State.Idle)
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {
