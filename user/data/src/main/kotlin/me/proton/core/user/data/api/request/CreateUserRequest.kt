@@ -36,6 +36,8 @@ data class CreateUserRequest(
     val type: Int,
     @SerialName("Auth")
     val auth: AuthRequest,
+    @SerialName("Domain")
+    val domain: String?,
     @SerialName("Payload")
     val payload: ChallengePayload
 )

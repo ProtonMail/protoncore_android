@@ -478,7 +478,7 @@ public final class me/proton/core/auth/domain/usecase/signup/PerformCreateExtern
 
 public final class me/proton/core/auth/domain/usecase/signup/PerformCreateUser {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;)V
-	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/signup/SignupChallengeConfig : me/proton/core/challenge/domain/ChallengeConfig {

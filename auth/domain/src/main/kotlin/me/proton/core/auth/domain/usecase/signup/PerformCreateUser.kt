@@ -41,11 +41,12 @@ class PerformCreateUser @Inject constructor(
 
     suspend operator fun invoke(
         username: String,
+        domain: String?,
         password: EncryptedString,
         recoveryEmail: String?,
         recoveryPhone: String?,
         referrer: String?,
-        type: CreateUserType
+        type: CreateUserType,
     ): UserId {
         require(
             recoveryEmail == null && recoveryPhone == null ||
@@ -72,12 +73,13 @@ class PerformCreateUser @Inject constructor(
                 firstFrame = firstFrame,
                 secondFrame = secondFrame,
                 username = username,
+                domain = domain,
                 password = password,
                 recoveryEmail = recoveryEmail,
                 recoveryPhone = recoveryPhone,
                 referrer = referrer,
                 type = type,
-                auth = auth
+                auth = auth,
             ).userId
 
             challengeManager.resetFlow(challengeConfig.flowName)

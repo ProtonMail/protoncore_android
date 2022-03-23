@@ -134,11 +134,12 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             performCreateUser.invoke(
                 username = testUsername,
+                domain = any(),
                 password = any(),
                 recoveryEmail = any(),
                 recoveryPhone = any(),
                 referrer = null,
-                type = any()
+                type = any(),
             )
         } returns testUser.userId
 
@@ -165,7 +166,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = any(),
                     recoveryPhone = any(),
                     referrer = any(),
-                    type = any()
+                    type = any(),
+                    domain = any(),
                 )
             }
         }
@@ -188,7 +190,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = any(),
                     recoveryPhone = any(),
                     referrer = any(),
-                    type = any()
+                    type = any(),
+                    domain = any(),
                 )
             }
         }
@@ -210,7 +213,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = any(),
                     recoveryPhone = any(),
                     referrer = any(),
-                    type = any()
+                    type = any(),
+                    domain = any(),
                 )
             }
         }
@@ -238,7 +242,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = null,
                     referrer = null,
-                    type = CreateUserType.Normal
+                    type = CreateUserType.Normal,
+                    domain = any(),
                 )
             }
         }
@@ -269,7 +274,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = testEmail,
                     recoveryPhone = null,
                     referrer = null,
-                    type = CreateUserType.Normal
+                    type = CreateUserType.Normal,
+                    domain = any(),
                 )
             }
         }
@@ -299,7 +305,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = testPhone,
                     referrer = null,
-                    type = CreateUserType.Normal
+                    type = CreateUserType.Normal,
+                    domain = any(),
                 )
             }
         }
@@ -311,11 +318,12 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             performCreateUser.invoke(
                 username = testUsername,
+                domain = any(),
                 password = any(),
                 recoveryEmail = any(),
                 recoveryPhone = any(),
                 referrer = null,
-                type = any()
+                type = any(),
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -346,7 +354,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = null,
                     referrer = null,
-                    type = CreateUserType.Normal
+                    type = CreateUserType.Normal,
+                    domain = any(),
                 )
             }
         }
@@ -485,11 +494,12 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             performCreateUser.invoke(
                 username = testUsername,
+                domain = any(),
                 password = any(),
                 recoveryEmail = any(),
                 recoveryPhone = any(),
                 referrer = null,
-                type = any()
+                type = any(),
             )
         } throws usernameTakenError
 
@@ -518,7 +528,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = null,
                     referrer = null,
-                    type = CreateUserType.Normal
+                    type = CreateUserType.Normal,
+                    domain = any(),
                 )
             }
 

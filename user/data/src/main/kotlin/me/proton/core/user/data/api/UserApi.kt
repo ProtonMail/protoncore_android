@@ -38,7 +38,10 @@ interface UserApi : BaseRetrofitApi {
     suspend fun getUsers(): UsersResponse
 
     @GET("users/available")
-    suspend fun usernameAvailable(@Query("Name") username: String): GenericResponse
+    suspend fun usernameAvailable(
+        @Query("Name") email: String,
+        @Query("ParseDomain") parseDomain: Int = 1
+    ): GenericResponse
 
     @POST("v4/users")
     suspend fun createUser(@Body userRequest: CreateUserRequest): UsersResponse

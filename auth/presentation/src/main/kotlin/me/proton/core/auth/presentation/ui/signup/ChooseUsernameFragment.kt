@@ -20,7 +20,9 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -78,7 +80,6 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                         .onFailure { setInputError() }
                         .onSuccess { clearInputError() }
                 }
-                setOnDoneActionListener { onNextClicked() }
             }
 
             nextButton.onClick(::onNextClicked)
@@ -97,7 +98,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                     is ChooseUsernameViewModel.State.Idle -> showLoading(false)
                     is ChooseUsernameViewModel.State.Processing -> showLoading(true)
                     is ChooseUsernameViewModel.State.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
-                    is ChooseUsernameViewModel.State.AvailableDomains -> onDomains(it.domains, it.currentAccountType)
+                    is ChooseUsernameViewModel.State.AvailableDomains -> onDomains(it.domains)
                     is ChooseUsernameViewModel.State.Error.Message -> onError(it.error.getUserMessage(resources))
                     is ChooseUsernameViewModel.State.Error.DomainsNotAvailable ->
                         onError(getString(R.string.auth_create_address_error_no_available_domain))
@@ -120,7 +121,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                                 suffixText = null
                             }
                             viewModel.domains?.let {
-                                onDomains(it, state.type)
+                                onDomains(it)
                                 useCurrentEmailButton.text = getString(R.string.auth_signup_current_email)
                             }
                         }
@@ -142,9 +143,10 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             hideKeyboard()
             validateUsername()
                 .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
-                .onSuccess {
+                .onSuccess { username ->
                     signupViewModel.currentAccountType = viewModel.currentAccountType
-                    viewModel.checkUsername(it, suffixText?.toString()?.replace("@", ""))
+                    val domain = binding.domainInput.text?.toString()?.replace("@", "")
+                    viewModel.checkUsername(username, domain)
                 }
         }
     }
@@ -175,15 +177,26 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         parentFragmentManager.showPasswordChooser()
     }
 
-    private fun onDomains(domains: List<Domain>, accountType: AccountType) {
+    private fun onDomains(domains: List<Domain>) {
         showLoading(false)
         with(binding) {
             nextButton.isEnabled = true
             useCurrentEmailButton.isEnabled = true
-            if (accountType == AccountType.Internal || accountType == AccountType.Username) {
-                usernameInput.suffixText = "@${domains.first()}"
+
+            if (viewModel.currentAccountType == AccountType.Internal) {
+                if (viewModel.domains?.count() == 1) {
+                    usernameInput.suffixText = "@${domains.first()}"
+                    usernameInput.setOnDoneActionListener { onNextClicked() }
+                } else {
+                    domainInput.isVisible = true
+                }
             }
-            usernameInput.isSuffixTextVisible = accountType == AccountType.Internal
+
+            domainInput.apply {
+                val items = domains.map { "@$it" }
+                text = items.firstOrNull()
+                setAdapter(ArrayAdapter(context, R.layout.list_item_domain, R.id.title, items))
+            }
         }
     }
 

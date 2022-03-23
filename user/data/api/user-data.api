@@ -196,7 +196,11 @@ public abstract interface class me/proton/core/user/data/api/UserApi : me/proton
 	public abstract fun lockPasswordAndLockedScopes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun unlockLockedScope (Lme/proton/core/user/data/api/request/UnlockRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun unlockPasswordScope (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun usernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun usernameAvailable (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/api/UserApi$DefaultImpls {
+	public static synthetic fun usernameAvailable$default (Lme/proton/core/user/data/api/UserApi;Ljava/lang/String;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/user/data/api/request/ChallengeFrameType {
@@ -462,19 +466,21 @@ public final class me/proton/core/user/data/api/request/CreateExternalUserReques
 
 public final class me/proton/core/user/data/api/request/CreateUserRequest {
 	public static final field Companion Lme/proton/core/user/data/api/request/CreateUserRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/user/data/api/request/ChallengePayload;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/user/data/api/request/ChallengePayload;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/lang/String;Lme/proton/core/user/data/api/request/ChallengePayload;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/lang/String;Lme/proton/core/user/data/api/request/ChallengePayload;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()I
 	public final fun component6 ()Lme/proton/core/key/data/api/request/AuthRequest;
-	public final fun component7 ()Lme/proton/core/user/data/api/request/ChallengePayload;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/user/data/api/request/ChallengePayload;)Lme/proton/core/user/data/api/request/CreateUserRequest;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateUserRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lme/proton/core/user/data/api/request/ChallengePayload;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Lme/proton/core/user/data/api/request/ChallengePayload;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/lang/String;Lme/proton/core/user/data/api/request/ChallengePayload;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateUserRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/lang/String;Lme/proton/core/user/data/api/request/ChallengePayload;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateUserRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAuth ()Lme/proton/core/key/data/api/request/AuthRequest;
+	public final fun getDomain ()Ljava/lang/String;
 	public final fun getEmail ()Ljava/lang/String;
 	public final fun getPayload ()Lme/proton/core/user/data/api/request/ChallengePayload;
 	public final fun getPhone ()Ljava/lang/String;
@@ -985,7 +991,7 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun createUser (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createUser (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;

@@ -82,6 +82,16 @@
                 app:challengeFrame="username"
                 app:label="@string/auth_signup_username" />
 
+            <me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
+                android:id="@+id/domainInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large"
+                android:inputType="none"
+                android:focusable="false"
+                android:visibility="gone"
+                app:label="@string/auth_signup_domain" />
+
             <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/useCurrentEmailButton"
                 style="@style/ProtonButton.Borderless.Text"

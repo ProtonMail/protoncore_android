@@ -91,7 +91,7 @@ class PerformCreateUserTest {
 
         coEvery { authRepository.randomModulus() } returns testModulus
         coEvery {
-            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any(), any())
         } returns mockk(relaxed = true)
     }
 
@@ -101,11 +101,12 @@ class PerformCreateUserTest {
         coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "recovery") } returns null
         useCase.invoke(
             testUsername,
+            domain = "proton.me",
             keyStoreCrypto.encrypt(testPassword),
             recoveryEmail = null,
             recoveryPhone = null,
             referrer = null,
-            type = CreateUserType.Normal
+            type = CreateUserType.Normal,
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus() }
@@ -126,12 +127,13 @@ class PerformCreateUserTest {
                 firstFrame = null,
                 secondFrame = null,
                 capture(usernameSlot),
+                any(),
                 capture(passwordSlot),
                 null,
                 null,
                 null,
                 capture(typeSlot),
-                any()
+                any(),
             )
         }
         assertEquals(testUsername, usernameSlot.captured)
@@ -145,11 +147,12 @@ class PerformCreateUserTest {
         coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "recovery") } returns null
         useCase.invoke(
             testUsername,
+            domain = "proton.me",
             keyStoreCrypto.encrypt(testPassword),
             recoveryEmail = testEmail,
             recoveryPhone = null,
             referrer = null,
-            type = CreateUserType.Normal
+            type = CreateUserType.Normal,
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus() }
@@ -170,12 +173,13 @@ class PerformCreateUserTest {
                 firstFrame = null,
                 secondFrame = null,
                 capture(usernameSlot),
+                any(),
                 capture(passwordSlot),
                 capture(emailSlot),
                 null,
                 null,
                 capture(typeSlot),
-                any()
+                any(),
             )
         }
         assertEquals(testUsername, usernameSlot.captured)
@@ -190,11 +194,12 @@ class PerformCreateUserTest {
         coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "recovery") } returns null
         useCase.invoke(
             testUsername,
+            domain = "proton.me",
             keyStoreCrypto.encrypt(testPassword),
             recoveryEmail = null,
             recoveryPhone = testPhone,
             referrer = null,
-            type = CreateUserType.Normal
+            type = CreateUserType.Normal,
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus() }
@@ -215,12 +220,13 @@ class PerformCreateUserTest {
                 firstFrame = null,
                 secondFrame = null,
                 capture(usernameSlot),
+                any(),
                 capture(passwordSlot),
                 null,
                 capture(phoneSlot),
                 null,
                 capture(typeSlot),
-                any()
+                any(),
             )
         }
         assertEquals(testUsername, usernameSlot.captured)
@@ -234,11 +240,12 @@ class PerformCreateUserTest {
         val throwable = assertFailsWith<IllegalArgumentException> {
             useCase.invoke(
                 testUsername,
+                domain = "proton.me",
                 keyStoreCrypto.encrypt(testPassword),
                 recoveryEmail = testEmail,
                 recoveryPhone = testPhone,
                 referrer = null,
-                type = CreateUserType.Normal
+                type = CreateUserType.Normal,
             )
         }
         assertNotNull(throwable)
@@ -253,17 +260,18 @@ class PerformCreateUserTest {
         val apiException = mockk<ApiException>()
 
         coEvery {
-            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any(), any())
         } throws apiException
 
         val result = assertFailsWith(ApiException::class) {
             useCase.invoke(
                 testEmail,
+                domain = "proton.me",
                 keyStoreCrypto.encrypt(testPassword),
                 recoveryEmail = null,
                 recoveryPhone = null,
                 referrer = null,
-                type = CreateUserType.Normal
+                type = CreateUserType.Normal,
             )
         }
         assertSame(apiException, result)

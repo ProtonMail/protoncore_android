@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 - Added validation for Client Version header (x-pm-appversion).
 - Refactored DoH and added support for unblocking the alternatives.
+- Users can now select from different domains in Internal account sign up.
 
 ### New Injection
 - ApiManagerFactory now needs an extra `ClientVersionValidator` dependency, which is already included in the Network dagger module.

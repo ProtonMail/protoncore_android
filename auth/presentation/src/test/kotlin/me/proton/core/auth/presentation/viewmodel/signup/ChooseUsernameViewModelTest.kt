@@ -220,7 +220,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         val testDomain = "test-domain"
-        coEvery { usernameDomainAvailability.isUsernameAvailable(testUsername) } returns true
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns true
         viewModel.state.test {
             // WHEN
             viewModel.checkUsername(testUsername, testDomain)
@@ -240,7 +241,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         val testDomain = "test-domain"
-        coEvery { usernameDomainAvailability.isUsernameAvailable(testUsername) } returns true
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns true
         // WHEN
         viewModel.setClientAppRequiredAccountType(AccountType.Internal)
         viewModel.state.test {
@@ -261,7 +263,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         val testDomain = "test-domain"
-        coEvery { usernameDomainAvailability.isUsernameAvailable(testUsername) } returns false
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns false
         // WHEN
         viewModel.setClientAppRequiredAccountType(AccountType.Internal)
         viewModel.state.test {
@@ -280,7 +283,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         val testDomain = "test-domain"
-        coEvery { usernameDomainAvailability.isUsernameAvailable(testUsername) } throws ApiException(
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
