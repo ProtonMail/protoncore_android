@@ -20,6 +20,7 @@ package me.proton.core.contact.data.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import me.proton.core.contact.data.local.db.entity.ContactCardEntity
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.data.room.db.BaseDao
@@ -27,5 +28,12 @@ import me.proton.core.data.room.db.BaseDao
 @Dao
 abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
     @Query("DELETE FROM ContactCardEntity WHERE contactId IN (:contactIds)")
-    abstract suspend fun deleteAllContactCards(vararg contactIds: ContactId)
+    protected abstract suspend fun deleteAllContactCardsSingleBatch(vararg contactIds: ContactId)
+
+    @Transaction
+    open suspend fun deleteAllContactCards(vararg contactIds: ContactId) {
+        contactIds.toList().chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            deleteAllContactCardsSingleBatch(*it.toTypedArray())
+        }
+    }
 }

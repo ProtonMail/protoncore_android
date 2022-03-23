@@ -40,11 +40,25 @@ abstract class ContactDao : BaseDao<ContactEntity>() {
     abstract fun observeAllContacts(userId: UserId): Flow<List<ContactWithMailsRelation>>
 
     @Query("DELETE FROM ContactEntity WHERE contactId IN (:contactIds)")
-    abstract suspend fun deleteContacts(vararg contactIds: ContactId)
+    protected abstract suspend fun deleteContactsSingleBatch(vararg contactIds: ContactId)
+
+    @Transaction
+    open suspend fun deleteContacts(vararg contactIds: ContactId) {
+        contactIds.toList().chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            deleteContactsSingleBatch(*it.toTypedArray())
+        }
+    }
 
     @Query("DELETE FROM ContactEntity")
     abstract suspend fun deleteAllContacts()
 
     @Query("DELETE FROM ContactEntity WHERE userId IN (:userIds)")
-    abstract suspend fun deleteAllContacts(vararg userIds: UserId)
+    protected abstract suspend fun deleteAllContactsSingleBatch(vararg userIds: UserId)
+
+    @Transaction
+    open suspend fun deleteAllContacts(vararg userIds: UserId) {
+        userIds.toList().chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            deleteAllContactsSingleBatch(*it.toTypedArray())
+        }
+    }
 }

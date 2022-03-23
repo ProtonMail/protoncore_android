@@ -22,13 +22,16 @@ import android.database.sqlite.SQLiteConstraintException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
+import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmailId
+import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class TransactionTests: ContactDatabaseTests() {
+class TransactionTests : ContactDatabaseTests() {
 
     @Test
     fun `delete contact delete contact and emails`() = runBlocking {
@@ -104,5 +107,40 @@ class TransactionTests: ContactDatabaseTests() {
         givenUser0InDb()
         localDataSource.upsertContacts(User0.Contact0.contact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == User0.Contact0.contact)
+    }
+
+    @Test
+    fun `delete many contacts`() = runBlocking {
+        givenUser0InDb()
+        val contactIds = (1..LARGE_N).map { ContactId("id_$it") }
+        localDataSource.deleteContacts(*contactIds.toTypedArray())
+    }
+
+    @Test
+    fun `merge many contacts`() = runBlocking {
+        givenUser0InDb()
+        val contacts = (1..LARGE_N).map { makeContact(it, User0.userId) }
+        localDataSource.mergeContacts(*contacts.toTypedArray())
+    }
+
+    companion object {
+        private const val LARGE_N = 2000
+
+        private fun makeContact(index: Int, userId: UserId): Contact {
+            val contactId = ContactId("id_$index")
+            return Contact(
+                userId = userId,
+                id = contactId,
+                "name_$index",
+                listOf(
+                    contactEmail(
+                        userId,
+                        contactId,
+                        ContactEmailId("ce_id_$index"),
+                        listOf("label0")
+                    )
+                )
+            )
+        }
     }
 }
