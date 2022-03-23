@@ -27,18 +27,18 @@ import com.google.android.material.textfield.TextInputEditText
 /**
  * TextInputEditText that notifies the copy and paste events for anti abuse purposes.
  */
-class ProtonCopyPasteEditText : TextInputEditText {
+public class ProtonCopyPasteEditText : TextInputEditText {
 
     private val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     internal val copyList: MutableList<String> = mutableListOf()
     internal val pasteList: MutableList<String> = mutableListOf()
 
-    constructor(context: Context) : super(context)
+    public constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    public constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+    public constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     override fun onTextContextMenuItem(id: Int): Boolean {
         val consumed = super.onTextContextMenuItem(id)

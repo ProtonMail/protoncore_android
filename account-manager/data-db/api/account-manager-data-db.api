@@ -155,11 +155,11 @@ public final class me/proton/core/challenge/data/db/ChallengeFramesDao_Impl : me
 	public fun <init> (Landroidx/room/RoomDatabase;)V
 	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete ([Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun deleteByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getAll ()Lkotlinx/coroutines/flow/Flow;
-	public fun getByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getByFlowAndFrame (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll$challenge_data_release (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByFlow$challenge_data_release (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll$challenge_data_release ()Lkotlinx/coroutines/flow/Flow;
+	public fun getByFlow$challenge_data_release (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByFlowAndFrame$challenge_data_release (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getRequiredConverters ()Ljava/util/List;
 	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertOrIgnore ([Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -167,7 +167,7 @@ public final class me/proton/core/challenge/data/db/ChallengeFramesDao_Impl : me
 	public fun insertOrUpdate ([Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateFrame (Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateFrame$challenge_data_release (Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/contact/data/local/db/dao/ContactCardDao_Impl : me/proton/core/contact/data/local/db/dao/ContactCardDao {

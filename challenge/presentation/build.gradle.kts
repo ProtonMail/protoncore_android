@@ -25,10 +25,6 @@ plugins {
     id("kotlin-parcelize")
 }
 
-proton {
-    apiModeDisabled()
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {

@@ -18,7 +18,7 @@
 
 package me.proton.core.challenge.domain
 
-interface ChallengeConfig {
-    val flowName: String
-    val flowFrames: List<String>
+public interface ChallengeConfig {
+    public val flowName: String
+    public val flowFrames: List<String>
 }

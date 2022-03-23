@@ -20,30 +20,30 @@ package me.proton.core.challenge.domain.repository
 
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 
-interface ChallengeRepository {
+public interface ChallengeRepository {
 
     /**
      * Get a [ChallengeFrameDetails] list if exist, by flow name.
      */
-    suspend fun getFramesByFlow(flow: String): List<ChallengeFrameDetails>?
+    public suspend fun getFramesByFlow(flow: String): List<ChallengeFrameDetails>?
 
     /**
      * Get a [ChallengeFrameDetails] if exist, by flow and frame name.
      */
-    suspend fun getFramesByFlowAndFrame(flow: String, frame: String): ChallengeFrameDetails?
+    public suspend fun getFramesByFlowAndFrame(flow: String, frame: String): ChallengeFrameDetails?
 
     /**
      * Insert new [ChallengeFrameDetails].
      */
-    suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails)
+    public suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails)
 
     /**
      * Delete all [ChallengeFrameDetails] by flow name.
      */
-    suspend fun deleteFrames(flow: String)
+    public suspend fun deleteFrames(flow: String)
 
     /**
      * Delete all [ChallengeFrameDetails].
      */
-    suspend fun deleteFrames()
+    public suspend fun deleteFrames()
 }

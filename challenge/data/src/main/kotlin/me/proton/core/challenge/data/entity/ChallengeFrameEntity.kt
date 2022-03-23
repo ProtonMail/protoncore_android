@@ -24,7 +24,7 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 @Entity(
     primaryKeys = ["challengeFrame"]
 )
-data class ChallengeFrameEntity(
+public data class ChallengeFrameEntity(
     val challengeFrame: String,
     val flow: String,
     val focusTime: Long,
@@ -33,7 +33,7 @@ data class ChallengeFrameEntity(
     val paste: List<String>,
     val keys: List<Char>
 ) {
-    fun toFrameDetails() = ChallengeFrameDetails(
+    internal fun toFrameDetails() = ChallengeFrameDetails(
         flow = flow,
         challengeFrame = challengeFrame,
         focusTime = focusTime,

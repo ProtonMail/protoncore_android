@@ -20,11 +20,11 @@ package me.proton.core.challenge.domain
 
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 
-interface ChallengeManager {
+public interface ChallengeManager {
 
-    suspend fun resetFlow(flow: String)
+    public suspend fun resetFlow(flow: String)
 
-    suspend fun addOrUpdateFrameToFlow(
+    public suspend fun addOrUpdateFrameToFlow(
         flow: String,
         challengeFrame: String,
         focusTime: Long,
@@ -34,7 +34,7 @@ interface ChallengeManager {
         keys: List<Char>
     )
 
-    suspend fun getFramesByFlowName(flow: String): List<ChallengeFrameDetails>
+    public suspend fun getFramesByFlowName(flow: String): List<ChallengeFrameDetails>
 
-    suspend fun getFrameByFlowAndFrameName(flow: String, frame: String): ChallengeFrameDetails?
+    public suspend fun getFrameByFlowAndFrameName(flow: String, frame: String): ChallengeFrameDetails?
 }

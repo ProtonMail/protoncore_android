@@ -25,25 +25,25 @@ import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.data.room.db.BaseDao
 
 @Dao
-abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
+public abstract class ChallengeFramesDao : BaseDao<ChallengeFrameEntity>() {
 
     @Query("SELECT * FROM ChallengeFrameEntity")
-    abstract fun getAll(): Flow<List<ChallengeFrameEntity>>
+    internal abstract fun getAll(): Flow<List<ChallengeFrameEntity>>
 
     @Query("SELECT * FROM ChallengeFrameEntity WHERE flow = :flow")
-    abstract suspend fun getByFlow(flow: String): List<ChallengeFrameEntity>?
+    internal abstract suspend fun getByFlow(flow: String): List<ChallengeFrameEntity>?
 
     @Query("SELECT * FROM ChallengeFrameEntity WHERE flow = :flow AND challengeFrame = :frame")
-    abstract suspend fun getByFlowAndFrame(flow: String, frame: String): ChallengeFrameEntity?
+    internal abstract suspend fun getByFlowAndFrame(flow: String, frame: String): ChallengeFrameEntity?
 
     @Query("DELETE FROM ChallengeFrameEntity")
-    abstract suspend fun deleteAll()
+    internal abstract suspend fun deleteAll()
 
     @Query("DELETE FROM ChallengeFrameEntity WHERE flow = :flow")
-    abstract suspend fun deleteByFlow(flow: String)
+    internal abstract suspend fun deleteByFlow(flow: String)
 
     @Query("UPDATE ChallengeFrameEntity SET focusTime = :focusTime, clicks = :clicks, copy = :copy, paste = :paste, keys = :keys WHERE flow = :flow")
-    abstract suspend fun updateFrame(
+    internal abstract suspend fun updateFrame(
         flow: String,
         focusTime: Long,
         clicks: Int,

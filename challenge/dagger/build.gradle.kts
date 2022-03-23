@@ -44,10 +44,6 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
-proton {
-    apiModeDisabled()
-}
-
 dependencies {
     androidTestImplementation(
         `android-test-core`,

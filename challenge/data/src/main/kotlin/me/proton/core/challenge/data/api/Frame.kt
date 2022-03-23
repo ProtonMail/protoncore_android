@@ -18,17 +18,17 @@
 
 package me.proton.core.challenge.data.api
 
-interface Frame {
-    val appLanguage: String
-    val timezone: String
-    val deviceName: String
-    val uid: String
-    val regionCode: String
-    val timezoneOffset: Int
-    val rooted: Boolean
-    val fontSize: String
-    val storage: Double
-    val darkMode: Boolean
-    val version: String
-    val keyDownField: List<Char>
+public interface Frame {
+    public val appLanguage: String
+    public val timezone: String
+    public val deviceName: String
+    public val uid: String
+    public val regionCode: String
+    public val timezoneOffset: Int
+    public val rooted: Boolean
+    public val fontSize: String
+    public val storage: Double
+    public val darkMode: Boolean
+    public val version: String
+    public val keyDownField: List<Char>
 }

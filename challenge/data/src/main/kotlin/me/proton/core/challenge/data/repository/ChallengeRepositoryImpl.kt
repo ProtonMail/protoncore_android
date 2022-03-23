@@ -23,7 +23,7 @@ import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
 
-class ChallengeRepositoryImpl(
+public class ChallengeRepositoryImpl(
     private val db: ChallengeDatabase
 ) : ChallengeRepository {
 
@@ -65,7 +65,11 @@ class ChallengeRepositoryImpl(
         }
     }
 
-    override suspend fun deleteFrames(flow: String) = challengeDao.deleteByFlow(flow)
+    override suspend fun deleteFrames(flow: String) {
+        challengeDao.deleteByFlow(flow)
+    }
 
-    override suspend fun deleteFrames() = challengeDao.deleteAll()
+    override suspend fun deleteFrames() {
+        challengeDao.deleteAll()
+    }
 }

@@ -23,11 +23,13 @@ import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
 
-class ChallengeManagerImpl @AssistedInject constructor(
+public class ChallengeManagerImpl @AssistedInject constructor(
     private val challengeRepository: ChallengeRepository
 ) : ChallengeManager {
 
-    override suspend fun resetFlow(flow: String) = challengeRepository.deleteFrames(flow)
+    override suspend fun resetFlow(flow: String) {
+        challengeRepository.deleteFrames(flow)
+    }
 
     override suspend fun addOrUpdateFrameToFlow(
         flow: String,

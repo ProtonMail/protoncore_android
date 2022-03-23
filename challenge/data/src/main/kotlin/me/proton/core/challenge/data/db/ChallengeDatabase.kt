@@ -22,14 +22,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
-interface ChallengeDatabase : Database {
-    fun challengeFramesDao(): ChallengeFramesDao
+public interface ChallengeDatabase : Database {
+    public fun challengeFramesDao(): ChallengeFramesDao
 
-    companion object {
+    public companion object {
         /**
          * - Added Table FrameEntity.
          */
-        val MIGRATION_0 = object : DatabaseMigration {
+        public val MIGRATION_0: DatabaseMigration = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Added Table FrameEntity.
                 database.execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))")

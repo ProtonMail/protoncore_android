@@ -18,7 +18,7 @@
 
 package me.proton.core.challenge.domain.entity
 
-data class ChallengeFrameDetails(
+public data class ChallengeFrameDetails(
     val flow: String,
     val challengeFrame: String,
     val focusTime: Long,

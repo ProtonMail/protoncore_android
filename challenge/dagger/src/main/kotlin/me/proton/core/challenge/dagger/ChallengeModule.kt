@@ -31,17 +31,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ChallengeModule {
+public object ChallengeModule {
 
     @Provides
     @Singleton
-    fun provideChallengeRepository(
+    public fun provideChallengeRepository(
         db: ChallengeDatabase
     ): ChallengeRepository = ChallengeRepositoryImpl(db)
 
     @Provides
     @Singleton
-    fun provideChallengeManager(
+    public fun provideChallengeManager(
         challengeRepository: ChallengeRepository
     ): ChallengeManager = ChallengeManagerImpl(challengeRepository)
 }

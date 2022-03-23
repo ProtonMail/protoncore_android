@@ -25,21 +25,14 @@ public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText
 }
 
 public final class me/proton/core/challenge/presentation/ProtonMetadataInput : me/proton/core/presentation/ui/view/ProtonInput {
-	public static final field Companion Lme/proton/core/challenge/presentation/ProtonMetadataInput$Companion;
 	public field challengeManager Lme/proton/core/challenge/domain/ChallengeManager;
-	public field clientIdProvider Lme/proton/core/network/domain/client/ClientIdProvider;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChallengeManager ()Lme/proton/core/challenge/domain/ChallengeManager;
-	public final fun getClientIdProvider ()Lme/proton/core/network/domain/client/ClientIdProvider;
 	public synthetic fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
 	public final fun setChallengeManager (Lme/proton/core/challenge/domain/ChallengeManager;)V
-	public final fun setClientIdProvider (Lme/proton/core/network/domain/client/ClientIdProvider;)V
-}
-
-public final class me/proton/core/challenge/presentation/ProtonMetadataInput$Companion {
 }
 
 public abstract interface class me/proton/core/challenge/presentation/ProtonMetadataInput_GeneratedInjector {
@@ -47,10 +40,9 @@ public abstract interface class me/proton/core/challenge/presentation/ProtonMeta
 }
 
 public final class me/proton/core/challenge/presentation/ProtonMetadataInput_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
 	public static fun injectChallengeManager (Lme/proton/core/challenge/presentation/ProtonMetadataInput;Lme/proton/core/challenge/domain/ChallengeManager;)V
-	public static fun injectClientIdProvider (Lme/proton/core/challenge/presentation/ProtonMetadataInput;Lme/proton/core/network/domain/client/ClientIdProvider;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/challenge/presentation/ProtonMetadataInput;)V
 }

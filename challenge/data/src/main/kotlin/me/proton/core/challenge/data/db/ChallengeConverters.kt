@@ -21,12 +21,12 @@ package me.proton.core.challenge.data.db
 import androidx.room.TypeConverter
 import me.proton.core.data.room.db.CommonConverters
 
-class ChallengeConverters {
+public class ChallengeConverters {
     @TypeConverter
-    fun fromListOfCharToString(value: List<Char>?): String? =
+    public fun fromListOfCharToString(value: List<Char>?): String? =
         CommonConverters.fromListOfStringToString(value?.map { it.toString() })
 
     @TypeConverter
-    fun fromStringToListOfChars(value: String?): List<Char>? =
+    public fun fromStringToListOfChars(value: String?): List<Char>? =
         CommonConverters.fromStringToListOfString(value)?.map { it.single() }
 }

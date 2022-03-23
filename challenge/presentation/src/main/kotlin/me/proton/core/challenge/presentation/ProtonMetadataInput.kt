@@ -36,13 +36,10 @@ import me.proton.core.presentation.ui.view.ProtonInput
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProtonMetadataInput : ProtonInput {
+public class ProtonMetadataInput : ProtonInput {
 
     @Inject
-    lateinit var challengeManager: ChallengeManager
-
-    @Inject
-    lateinit var clientIdProvider: ClientIdProvider
+    public lateinit var challengeManager: ChallengeManager
 
     private var inputMetadataBinding: ViewBinding? = null
 
@@ -81,15 +78,15 @@ class ProtonMetadataInput : ProtonInput {
 
     private val keys: MutableList<Char> = mutableListOf()
 
-    constructor(context: Context) : super(context) {
+    public constructor(context: Context) : super(context) {
         init(context)
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    public constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    public constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
         init(context, attrs)
     }
 
@@ -146,7 +143,7 @@ class ProtonMetadataInput : ProtonInput {
         }
     }
 
-    suspend fun flush() {
+    public suspend fun flush() {
         challengeManager.addOrUpdateFrameToFlow(
             flow = flow,
             challengeFrame = frame,
@@ -158,7 +155,7 @@ class ProtonMetadataInput : ProtonInput {
         )
     }
 
-    companion object {
+    private companion object {
         private const val focusCheckDelay = 500L
     }
 }

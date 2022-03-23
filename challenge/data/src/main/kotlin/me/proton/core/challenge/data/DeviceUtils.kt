@@ -28,6 +28,7 @@ import android.os.storage.StorageManager
 import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.core.os.LocaleListCompat
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -35,48 +36,48 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-private const val MILLIS_IN_MINUTE = 60_1000
+private const val MILLIS_IN_MINUTE = 60_000
 
-fun deviceModelName(): String = Build.MODEL
+public fun deviceModelName(): String = Build.MODEL
 
-fun deviceUID(): String = Settings.Secure.ANDROID_ID
+public fun deviceUID(): String = Settings.Secure.ANDROID_ID
 
-fun appLanguage(): String = Locale.getDefault().language
+public fun appLanguage(): String = LocaleListCompat.getDefault()[0].language
 
-fun deviceTimezone(): String = TimeZone.getDefault().id
+public fun deviceTimezone(): String = TimeZone.getDefault().id
 
 /**
  * Returns the offset, measured in minutes.
  */
-fun deviceTimezoneOffset(): Int {
+public fun deviceTimezoneOffset(): Int {
     val calendar = Calendar.getInstance(Locale.getDefault())
     return -(calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET)) / MILLIS_IN_MINUTE
 }
 
-fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+public fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
     resources.configuration.locales[0].country
 } else {
     resources.configuration.locale.country
 }
 
-fun isDeviceRooted() = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
+public fun isDeviceRooted(): Boolean = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
 
-fun Context.deviceFontSize() = resources.configuration.fontScale
+public fun Context.deviceFontSize(): Float = resources.configuration.fontScale
 
-fun Context.defaultDeviceInputMethod() =
+public fun Context.defaultDeviceInputMethod(): String =
     Settings.Secure.getString(contentResolver, Settings.Secure.DEFAULT_INPUT_METHOD)
 
-fun Context.deviceInputMethods(): List<String> {
+public fun Context.deviceInputMethods(): List<String> {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     val inputMethodProperties = imm.enabledInputMethodList
 
     return inputMethodProperties.map { it.id }
 }
 
-fun Context.nightMode(): Boolean =
+public fun Context.nightMode(): Boolean =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
-fun Context.deviceStorage(): Double {
+public fun Context.deviceStorage(): Double {
     val totalBytes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         deviceVolumesStorage()
     } else {
@@ -87,7 +88,7 @@ fun Context.deviceStorage(): Double {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun Context.deviceVolumesStorage(): Double {
+public fun Context.deviceVolumesStorage(): Double {
     val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
     val extDirs = getExternalFilesDirs(null)
     var totalStorage = 0.0

@@ -61,12 +61,6 @@ public final class me/proton/core/challenge/data/db/ChallengeDatabase$Companion 
 
 public abstract class me/proton/core/challenge/data/db/ChallengeFramesDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
-	public abstract fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun deleteByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getAll ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getByFlowAndFrame (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun updateFrame (Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/challenge/data/entity/ChallengeFrameEntity {
@@ -89,7 +83,6 @@ public final class me/proton/core/challenge/data/entity/ChallengeFrameEntity {
 	public final fun getKeys ()Ljava/util/List;
 	public final fun getPaste ()Ljava/util/List;
 	public fun hashCode ()I
-	public final fun toFrameDetails ()Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
 	public fun toString ()Ljava/lang/String;
 }
 
