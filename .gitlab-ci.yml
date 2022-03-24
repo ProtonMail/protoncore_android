@@ -133,12 +133,21 @@ assemble:
     - job: prepare-environment
       artifacts: true
   interruptible: true
+  variables:
+    # Build the base apk
+    CORE_APP: :coreexample:assembleLocalPropertiesDebug
+    # Build UI tests for CoreExample
+    CORE_APP_TESTS: :coreexample:assembleLocalPropertiesDebugAndroidTest
+    # Build androidTest apks for several projects
+    CORE_LIBS_TESTS: :user:user-data:assembleDebugAndroidTest :key:key-data:assembleDebugAndroidTest :crypto:crypto-android:assembleDebugAndroidTest
   script:
-    - ./gradlew :coreexample:assembleLocalPropertiesDebug
-    - ./gradlew :coreexample:assembleLocalPropertiesDebugAndroidTest
+    - ./gradlew $CORE_APP $CORE_APP_TESTS $CORE_LIBS_TESTS
   artifacts:
     paths:
       - coreexample/build/outputs/
+      - user/data/build/outputs/apk/
+      - key/data/build/outputs/apk/
+      - crypto/android/build/outputs/apk/
 
 ## test stage ######################################################################################
 unit-tests-and-coverage-report:
@@ -223,6 +232,7 @@ vpn-integration-tests:
   when: always
   image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   variables:
+    TEST_APK: "coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk"
     RESULTS_DIR: "${CI_COMMIT_REF_SLUG}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
   tags:
     - medium
@@ -232,7 +242,7 @@ vpn-integration-tests:
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
     - gcloud firebase test android run
       --app coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk
-      --test coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk
+      --test ${TEST_APK}
       --device model=Pixel2,version=28
       --test-targets "$TEST_TARGET"
       --timeout 25m
@@ -284,6 +294,29 @@ uitest:plans:
 uitest:usersettings:
   variables:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.usersettings"
+  extends: .firebase-tests-common
+
+androidTest:user-data:
+  variables:
+    TEST_APK: "user/data/build/outputs/apk/androidTest/debug/user-data-debug-androidTest.apk"
+    TEST_TARGET: "package me.proton.core.user.data"
+  extends: .firebase-tests-common
+
+androidTest:key-data:
+  variables:
+    TEST_APK: "key/data/build/outputs/apk/androidTest/debug/key-data-debug-androidTest.apk"
+    TEST_TARGET: "package me.proton.core.key.domain" # Domain entities are Android Tested in data
+  extends: .firebase-tests-common
+
+androidTest:crypto-android:
+  variables:
+    TEST_APK: "crypto/android/build/outputs/apk/androidTest/debug/crypto-android-debug-androidTest.apk"
+    TEST_TARGET: "package me.proton.core.crypto.android"
+  extends: .firebase-tests-common
+
+androidTest:coreexample-migration:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.dbtests"
   extends: .firebase-tests-common
 
 ## publish stage ###################################################################################

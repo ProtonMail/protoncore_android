@@ -18,6 +18,7 @@
 
 package me.proton.core.user.data.repository
 
+import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
@@ -102,6 +103,8 @@ class UserAddressRepositoryImplTests {
 
     @Before
     fun setup() {
+        val context = InstrumentationRegistry.getInstrumentation().context
+
         // Build a new fresh in memory Database, for each test.
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
@@ -111,7 +114,7 @@ class UserAddressRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, cryptoContext)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext)
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             userRepository,

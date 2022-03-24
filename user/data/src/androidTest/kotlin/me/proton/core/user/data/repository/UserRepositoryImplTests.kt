@@ -18,6 +18,7 @@
 
 package me.proton.core.user.data.repository
 
+import androidx.test.platform.app.InstrumentationRegistry
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -96,6 +97,8 @@ class UserRepositoryImplTests {
 
     @Before
     fun setup() {
+        val context = InstrumentationRegistry.getInstrumentation().context
+
         // Build a new fresh in memory Database, for each test.
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
@@ -104,7 +107,7 @@ class UserRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, cryptoContext)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext)
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
