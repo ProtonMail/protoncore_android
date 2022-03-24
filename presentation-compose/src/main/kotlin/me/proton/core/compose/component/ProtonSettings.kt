@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -51,6 +52,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
+
+private const val TOGGLE_ITEM_HINT_NEGATIVE_MARGIN = -10
 
 /**
  * A full-size [LazyColumn] list styled with [ProtonTheme]
@@ -181,6 +184,7 @@ fun ProtonSettingsItem(
 fun ProtonSettingsToggleItem(
     modifier: Modifier = Modifier,
     name: String,
+    hint: String? = null,
     value: Boolean,
     onToggle: (Boolean) -> Unit = {}
 ) {
@@ -188,21 +192,37 @@ fun ProtonSettingsToggleItem(
         modifier = modifier
             .clickable(onClick = { onToggle(!value) })
             .padding(
+                vertical = ProtonDimens.ListItemTextStartPadding,
                 horizontal = ProtonDimens.DefaultSpacing
-            ),
-        horizontalArrangement = Arrangement.SpaceBetween
+            )
     ) {
-        Text(
-            modifier = Modifier,
-            text = name,
-            color = ProtonTheme.colors.textNorm,
-            style = LocalTypography.current.body1Regular
-        )
-        Switch(
-            modifier = Modifier,
-            checked = value,
-            onCheckedChange = onToggle
-        )
+        Column(
+            modifier = Modifier
+                .semantics(mergeDescendants = true) {
+                    contentDescription = name
+                    heading()
+                }
+        ) {
+            ProtonRawListItem(horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(
+                    text = name,
+                    color = ProtonTheme.colors.textNorm,
+                    style = LocalTypography.current.body1Regular
+                )
+                Switch(
+                    checked = value,
+                    onCheckedChange = onToggle
+                )
+            }
+            hint?.let {
+                Text(
+                    modifier = Modifier.offset(y = TOGGLE_ITEM_HINT_NEGATIVE_MARGIN.dp),
+                    text = hint,
+                    color = ProtonTheme.colors.textHint,
+                    style = LocalTypography.current.body2Regular
+                )
+            }
+        }
     }
 }
 
@@ -227,7 +247,7 @@ fun previewSettingsTopBar() {
 )
 @Composable
 fun previewSettingsItem() {
-    ProtonSettingsItem(name = "Setting name", hint = "This settings does nothing") { }
+    ProtonSettingsItem(name = "Setting name", hint = "This settings does nothing")
 }
 
 @Preview(
@@ -236,7 +256,20 @@ fun previewSettingsItem() {
 )
 @Composable
 fun previewSettingsToggleableItem() {
-    ProtonSettingsToggleItem(name = "Setting toggle", value = true) { }
+    ProtonSettingsToggleItem(name = "Setting toggle", value = true)
+}
+
+@Preview(
+    name = "Proton settings toggleable item with hint",
+    showBackground = true
+)
+@Composable
+fun previewSettingsToggleableItemWithHint() {
+    ProtonSettingsToggleItem(
+        name = "Setting toggle",
+        value = true,
+        hint = "Use this space to provide an explanation of what toggling this setting does"
+    )
 }
 
 @Preview(
@@ -245,7 +278,7 @@ fun previewSettingsToggleableItem() {
 )
 @Composable
 fun previewSettingsItemWithNameOnly() {
-    ProtonSettingsItem(name = "Setting name") { }
+    ProtonSettingsItem(name = "Setting name")
 }
 
 @Preview(
