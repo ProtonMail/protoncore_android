@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
+        android:focusable="true"
         app:hintEnabled="false"
         app:suffixTextColor="@color/text_weak"
         tools:endIconMode="clear_text"
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:gravity="top"
+            android:focusable="true"
             tools:text="firstname.lastname" />
 
     </com.google.android.material.textfield.TextInputLayout>

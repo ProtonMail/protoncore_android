@@ -1,0 +1,97 @@
+public final class me/proton/core/challenge/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/challenge/data/ChallengeManagerImpl : me/proton/core/challenge/domain/ChallengeManager {
+	public fun <init> (Lme/proton/core/challenge/domain/repository/ChallengeRepository;)V
+	public fun addOrUpdateFrameToFlow (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getFrameByFlowAndFrameName (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getFramesByFlowName (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun resetFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/challenge/data/DeviceUtilsKt {
+	public static final fun appLanguage ()Ljava/lang/String;
+	public static final fun defaultDeviceInputMethod (Landroid/content/Context;)Ljava/lang/String;
+	public static final fun deviceFontSize (Landroid/content/Context;)F
+	public static final fun deviceInputMethods (Landroid/content/Context;)Ljava/util/List;
+	public static final fun deviceModelName ()Ljava/lang/String;
+	public static final fun deviceRegion (Landroid/content/Context;)Ljava/lang/String;
+	public static final fun deviceStorage (Landroid/content/Context;)D
+	public static final fun deviceTimezone ()Ljava/lang/String;
+	public static final fun deviceTimezoneOffset ()I
+	public static final fun deviceUID ()Ljava/lang/String;
+	public static final fun deviceVolumesStorage (Landroid/content/Context;)D
+	public static final fun isDeviceRooted ()Z
+	public static final fun nightMode (Landroid/content/Context;)Z
+}
+
+public abstract interface class me/proton/core/challenge/data/api/Frame {
+	public abstract fun getAppLanguage ()Ljava/lang/String;
+	public abstract fun getDarkMode ()Z
+	public abstract fun getDeviceName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getKeyDownField ()Ljava/util/List;
+	public abstract fun getRegionCode ()Ljava/lang/String;
+	public abstract fun getRooted ()Z
+	public abstract fun getStorage ()D
+	public abstract fun getTimezone ()Ljava/lang/String;
+	public abstract fun getTimezoneOffset ()I
+	public abstract fun getUid ()Ljava/lang/String;
+	public abstract fun getVersion ()Ljava/lang/String;
+}
+
+public final class me/proton/core/challenge/data/db/ChallengeConverters {
+	public fun <init> ()V
+	public final fun fromListOfCharToString (Ljava/util/List;)Ljava/lang/String;
+	public final fun fromStringToListOfChars (Ljava/lang/String;)Ljava/util/List;
+}
+
+public abstract interface class me/proton/core/challenge/data/db/ChallengeDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/challenge/data/db/ChallengeDatabase$Companion;
+	public abstract fun challengeFramesDao ()Lme/proton/core/challenge/data/db/ChallengeFramesDao;
+}
+
+public final class me/proton/core/challenge/data/db/ChallengeDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract class me/proton/core/challenge/data/db/ChallengeFramesDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/challenge/data/entity/ChallengeFrameEntity {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()J
+	public final fun component4 ()I
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/data/entity/ChallengeFrameEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChallengeFrame ()Ljava/lang/String;
+	public final fun getClicks ()I
+	public final fun getCopy ()Ljava/util/List;
+	public final fun getFlow ()Ljava/lang/String;
+	public final fun getFocusTime ()J
+	public final fun getKeys ()Ljava/util/List;
+	public final fun getPaste ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/challenge/data/repository/ChallengeRepositoryImpl : me/proton/core/challenge/domain/repository/ChallengeRepository {
+	public fun <init> (Lme/proton/core/challenge/data/db/ChallengeDatabase;)V
+	public fun deleteFrames (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteFrames (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getFramesByFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getFramesByFlowAndFrame (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertFrameDetails (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

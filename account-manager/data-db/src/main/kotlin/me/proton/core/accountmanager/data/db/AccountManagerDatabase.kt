@@ -27,6 +27,9 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.challenge.data.db.ChallengeConverters
+import me.proton.core.challenge.data.db.ChallengeDatabase
+import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.contact.data.local.db.ContactConverters
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.entity.ContactCardEntity
@@ -102,7 +105,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         EventMetadataEntity::class,
         // label
         LabelEntity::class,
-        FeatureFlagEntity::class
+        FeatureFlagEntity::class,
+        // challenge
+        ChallengeFrameEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -117,6 +122,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     ContactConverters::class,
     EventManagerConverters::class,
     LabelConverters::class,
+    ChallengeConverters::class
 )
 abstract class AccountManagerDatabase :
     BaseDatabase(),
@@ -132,11 +138,12 @@ abstract class AccountManagerDatabase :
     ContactDatabase,
     EventMetadataDatabase,
     LabelDatabase,
-    FeatureFlagDatabase {
+    FeatureFlagDatabase,
+    ChallengeDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 16
+        const val version = 17
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -154,6 +161,7 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_13_14,
             AccountManagerDatabaseMigrations.MIGRATION_14_15,
             AccountManagerDatabaseMigrations.MIGRATION_15_16,
+            AccountManagerDatabaseMigrations.MIGRATION_16_17
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

@@ -28,8 +28,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
@@ -39,7 +42,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
-    private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
+    private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination,
+    private val challengeManager: ChallengeManager,
+    private val challengeConfig: SignupChallengeConfig
 ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
@@ -82,6 +87,9 @@ internal class ChooseUsernameViewModel @Inject constructor(
     }
 
     private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
+        viewModelScope.launch {
+            challengeManager.resetFlow(challengeConfig.flowName)
+        }
         return when (requireCurrentAccountType()) {
             AccountType.Username,
             AccountType.Internal -> {

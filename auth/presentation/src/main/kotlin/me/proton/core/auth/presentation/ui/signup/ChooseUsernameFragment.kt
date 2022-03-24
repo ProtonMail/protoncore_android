@@ -62,6 +62,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
     }
 
     override fun onBackPressed() {
+        signupViewModel.onFinish()
         activity?.finish()
     }
 
@@ -168,6 +169,9 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
 
         signupViewModel.username = username
         signupViewModel.domain = domain
+        lifecycleScope.launch {
+            binding.usernameInput.flush()
+        }
         parentFragmentManager.showPasswordChooser()
     }
 

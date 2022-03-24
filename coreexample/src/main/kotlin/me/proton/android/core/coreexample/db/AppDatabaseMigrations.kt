@@ -21,6 +21,7 @@ package me.proton.android.core.coreexample.db
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.account.data.db.AccountDatabase
+import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
@@ -132,6 +133,12 @@ object AppDatabaseMigrations {
     val MIGRATION_15_16 = object : Migration(15, 16) {
         override fun migrate(database: SupportSQLiteDatabase) {
             FeatureFlagDatabase.MIGRATION_1.migrate(database)
+        }
+    }
+
+    val MIGRATION_16_17 = object : Migration(16, 17) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            ChallengeDatabase.MIGRATION_0.migrate(database)
         }
     }
 }

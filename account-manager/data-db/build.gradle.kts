@@ -74,6 +74,7 @@ dependencies {
         project(Module.eventManagerData),
         project(Module.eventManagerDomain),
         project(Module.featureFlagData),
+        project(Module.challengeData),
 
         // Kotlin
         `coroutines-core`,

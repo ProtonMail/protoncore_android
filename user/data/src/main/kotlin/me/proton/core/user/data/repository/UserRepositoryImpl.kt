@@ -18,6 +18,7 @@
 
 package me.proton.core.user.data.repository
 
+import android.content.Context
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.extension.requireValidProof
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -44,8 +46,11 @@ import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
+import me.proton.core.user.data.api.request.ChallengePayload
+import me.proton.core.user.data.api.request.ChallengeRecoveryFrame
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
+import me.proton.core.user.data.api.request.ChallengeUsernameFrame
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -61,7 +66,8 @@ import javax.inject.Singleton
 class UserRepositoryImpl(
     private val db: UserDatabase,
     private val provider: ApiProvider,
-    private val context: CryptoContext
+    private val context: Context,
+    private val cryptoContext: CryptoContext
 ) : UserRepository {
 
     private val onPassphraseChangedListeners = mutableSetOf<PassphraseRepository.OnPassphraseChangedListener>()
@@ -88,7 +94,7 @@ class UserRepositoryImpl(
         store.clear(userId)
 
     private fun List<UserKey>.updateIsActive(passphrase: EncryptedByteArray?): List<UserKey> =
-        map { key -> key.copy(privateKey = key.privateKey.updateIsActive(context, passphrase)) }
+        map { key -> key.copy(privateKey = key.privateKey.updateIsActive(cryptoContext, passphrase)) }
 
     private suspend fun getUserLocal(userId: UserId): User? =
         userWithKeysDao.getByUserId(userId)?.toUser()
@@ -135,6 +141,8 @@ class UserRepositoryImpl(
      * Create new [User]. Used during signup.
      */
     override suspend fun createUser(
+        firstFrame: ChallengeFrameDetails?,
+        secondFrame: ChallengeFrameDetails?,
         username: String,
         password: EncryptedString,
         recoveryEmail: String?,
@@ -149,7 +157,11 @@ class UserRepositoryImpl(
             recoveryPhone,
             referrer,
             type.value,
-            AuthRequest.from(auth)
+            AuthRequest.from(auth),
+            ChallengePayload(
+                ChallengeUsernameFrame.from(context, firstFrame),
+                ChallengeRecoveryFrame.from(context, secondFrame)
+            )
         )
         createUser(request).user.toUser()
     }.valueOrThrow

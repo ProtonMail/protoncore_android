@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidUiLibrary
+    protonDagger
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
 }
@@ -38,6 +39,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.network),
+        project(Module.challengeDomain),
 
         // Kotlin
         `kotlin-reflect`,

@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header" />
 
-    <me.proton.core.presentation.ui.view.ProtonInput
+    <me.proton.core.challenge.presentation.ProtonMetadataInput
         android:id="@+id/smsEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -51,6 +51,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/callingCodeText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/callingCodeText"
-        app:layout_constraintTop_toTopOf="@+id/callingCodeText" />
+        app:layout_constraintTop_toTopOf="@+id/callingCodeText"
+        app:challengeFlow="signup"
+        app:challengeFrame="recovery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,11 @@ import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
+import me.proton.core.challenge.data.defaultDeviceInputMethod
+import me.proton.core.challenge.data.deviceFontSize
+import me.proton.core.challenge.data.deviceInputMethods
+import me.proton.core.challenge.data.deviceStorage
+import me.proton.core.challenge.data.isDeviceRooted
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
@@ -91,6 +96,20 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         plansViewModel.register(this)
         settingsViewModel.register(this)
         featureFlagViewModel.prefetch()
+
+        if (isDeviceRooted()) {
+            showToast("Rooted font size: ${deviceFontSize()}")
+        } else {
+            showToast("NOT Rooted font size: ${deviceFontSize()}")
+        }
+
+        showToast("Device storage ${deviceStorage()}")
+
+        showToast("Device input methods ${
+            deviceInputMethods().joinToString { it }
+        }")
+
+        showToast("Default device input ${defaultDeviceInputMethod()}")
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }

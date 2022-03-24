@@ -27,8 +27,11 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.challenge.domain.ChallengeConfig
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
@@ -37,7 +40,9 @@ import me.proton.core.humanverification.presentation.HumanVerificationOrchestrat
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.test.android.ArchTest
@@ -62,11 +67,14 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     private val performLogin = mockk<PerformLogin>()
+    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
     // endregion
 
 
     // region test data
     private val testUsername = "test-username"
+    private val testClientIdString = "test-clientId"
+    private val testClientId = ClientId.CookieSession(CookieSessionId(testClientIdString))
     private val testPassword = "test-password"
     private val testEmail = "test-email"
     private val testPhone = "test-phone"
@@ -98,6 +106,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             )
         )
 
+    private val signupChallengeConfig = SignupChallengeConfig()
     // endregion
 
     private lateinit var viewModel: SignupViewModel
@@ -113,9 +122,12 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             clientIdProvider,
             humanVerificationManager,
             performLogin,
+            challengeManager,
+            signupChallengeConfig,
             humanVerificationOrchestrator,
             mockk(relaxed = true)
         )
+        coEvery { clientIdProvider.getClientId(any()) } returns testClientId
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
 

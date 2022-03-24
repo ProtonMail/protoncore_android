@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentRecoverySmsBinding
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
@@ -35,6 +36,7 @@ import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.presentation.viewmodel.onSuccess
 
 @AndroidEntryPoint
@@ -58,19 +60,28 @@ class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
                 childFragmentManager.showCountryPicker()
             }
 
-            smsEditText.onTextChange(
-                afterTextChangeListener = { editable ->
-                    recoveryMethodViewModel.setActiveRecoveryMethod(
-                        RecoveryMethodType.SMS,
-                        "${callingCodeText.text}${editable}"
-                    )
-                }
-            )
+            with(smsEditText) {
+                onTextChange(
+                    afterTextChangeListener = { editable ->
+                        recoveryMethodViewModel.setActiveRecoveryMethod(
+                            userSelectedMethodType = RecoveryMethodType.SMS,
+                            destination = "${callingCodeText.text}${editable}"
+                        )
+                    }
+                )
+            }
         }
 
         viewModel.countryCallingCode.onSuccess {
             binding.callingCodeText.text =
                 String.format(getString(R.string.presentation_phone_calling_code_template), it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        recoveryMethodViewModel.validationResult.onEach {
+            if (it is ViewModelResult.Success && it.value) {
+                // if recovery destination is valid
+                binding.smsEditText.flush()
+            }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 }

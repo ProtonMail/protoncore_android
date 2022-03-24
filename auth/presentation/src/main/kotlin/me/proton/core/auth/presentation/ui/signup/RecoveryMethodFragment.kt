@@ -103,8 +103,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 is ViewModelResult.Success -> {
                     if (it.value) {
                         // if recovery destination is valid
-                        val recoveryMethod = viewModel.recoveryMethod
-                        signupViewModel.setRecoveryMethod(recoveryMethod)
+                        signupViewModel.setRecoveryMethod(viewModel.recoveryMethod)
                     } else {
                         showError(getString(R.string.auth_signup_error_validation_recovery_destination))
                     }
@@ -160,7 +159,9 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     tab?.let {
                         val recoveryMethod = tab.tag as RecoveryMethodType
-                        viewModel.setActiveRecoveryMethod(recoveryMethod)
+                        viewModel.setActiveRecoveryMethod(
+                            userSelectedMethodType = recoveryMethod
+                        )
                     }
                 }
             })
@@ -203,7 +204,9 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                     showLoading(false)
                 }
                 is SignupViewModel.State.Success,
-                is SignupViewModel.State.Processing -> { showLoading(true) }
+                is SignupViewModel.State.Processing -> {
+                    showLoading(true)
+                }
             }.exhaustive
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

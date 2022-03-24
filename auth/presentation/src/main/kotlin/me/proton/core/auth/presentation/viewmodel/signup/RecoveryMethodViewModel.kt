@@ -61,7 +61,10 @@ internal class RecoveryMethodViewModel @Inject constructor(
      * Sets the currently active verification method that the user chose.
      * If the user changes the verification method tab, the destination is being reset.
      */
-    fun setActiveRecoveryMethod(userSelectedMethodType: RecoveryMethodType, destination: String = "") {
+    fun setActiveRecoveryMethod(
+        userSelectedMethodType: RecoveryMethodType,
+        destination: String = ""
+    ) {
         _currentActiveRecoveryMethod = RecoveryMethod(userSelectedMethodType, destination)
         _recoveryMethodUpdate.tryEmit(userSelectedMethodType)
     }

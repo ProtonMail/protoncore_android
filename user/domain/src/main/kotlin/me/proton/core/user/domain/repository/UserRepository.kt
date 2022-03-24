@@ -19,6 +19,7 @@
 package me.proton.core.user.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -91,6 +92,8 @@ interface UserRepository : PassphraseRepository {
      * Create new [User], remotely. Used during signup.
      */
     suspend fun createUser(
+        firstFrame: ChallengeFrameDetails?,
+        secondFrame: ChallengeFrameDetails?,
         username: String,
         password: EncryptedString,
         recoveryEmail: String?,

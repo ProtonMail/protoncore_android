@@ -318,7 +318,7 @@ public class me/proton/core/presentation/ui/view/ProtonCheckbox : com/google/and
 	protected fun verifyDrawable (Landroid/graphics/drawable/Drawable;)Z
 }
 
-public final class me/proton/core/presentation/ui/view/ProtonInput : android/widget/LinearLayout {
+public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/LinearLayout {
 	public static final field Companion Lme/proton/core/presentation/ui/view/ProtonInput$Companion;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
@@ -327,6 +327,9 @@ public final class me/proton/core/presentation/ui/view/ProtonInput : android/wid
 	public final fun addTextChangedListener (Landroid/text/TextWatcher;)V
 	public final fun clearInputError ()V
 	public final fun clearTextAndOverwriteMemory ()V
+	protected fun dispatchRestoreInstanceState (Landroid/util/SparseArray;)V
+	protected fun dispatchSaveInstanceState (Landroid/util/SparseArray;)V
+	protected fun getBinding ()Landroidx/viewbinding/ViewBinding;
 	public final fun getEditTextAlignment ()I
 	public final fun getEditTextDirection ()I
 	public final fun getEndIconDrawable ()Landroid/graphics/drawable/Drawable;
@@ -335,8 +338,11 @@ public final class me/proton/core/presentation/ui/view/ProtonInput : android/wid
 	public final fun getHelpText ()Ljava/lang/CharSequence;
 	public final fun getHintText ()Ljava/lang/CharSequence;
 	public final fun getImeOptions ()I
+	protected fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
+	protected fun getInputLayout ()Lcom/google/android/material/textfield/TextInputLayout;
 	public final fun getInputType ()I
 	public final fun getKeyListener ()Landroid/text/method/KeyListener;
+	protected fun getLabel ()Landroid/widget/TextView;
 	public final fun getLabelText ()Ljava/lang/CharSequence;
 	public final fun getMinLines ()I
 	public final fun getPrefixText ()Ljava/lang/CharSequence;
@@ -345,6 +351,9 @@ public final class me/proton/core/presentation/ui/view/ProtonInput : android/wid
 	public fun isEnabled ()Z
 	public final fun isPasswordInput ()Z
 	public final fun isSuffixTextVisible ()Z
+	protected fun onAttachedToWindow ()V
+	protected fun onRestoreInstanceState (Landroid/os/Parcelable;)V
+	protected fun onSaveInstanceState ()Landroid/os/Parcelable;
 	public final fun setEditTextAlignment (I)V
 	public final fun setEditTextDirection (I)V
 	public fun setEnabled (Z)V

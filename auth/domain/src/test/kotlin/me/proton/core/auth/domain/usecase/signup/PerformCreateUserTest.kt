@@ -27,11 +27,14 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
@@ -47,7 +50,7 @@ class PerformCreateUserTest {
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-
+    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -66,12 +69,20 @@ class PerformCreateUserTest {
 
     // endregion
 
+    private val signupChallengeConfig = SignupChallengeConfig()
     private lateinit var useCase: PerformCreateUser
 
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformCreateUser(authRepository, userRepository, srpCrypto, keyStoreCrypto)
+        useCase = PerformCreateUser(
+            authRepository,
+            userRepository,
+            srpCrypto,
+            keyStoreCrypto,
+            challengeManager,
+            signupChallengeConfig
+        )
         every {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())
         } returns testAuth
@@ -80,12 +91,14 @@ class PerformCreateUserTest {
 
         coEvery { authRepository.randomModulus() } returns testModulus
         coEvery {
-            userRepository.createUser(any(), any(), any(), any(), any(), any(), any())
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
         } returns mockk(relaxed = true)
     }
 
     @Test
     fun `create user no recovery success`() = runBlockingTest {
+        coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "username") } returns null
+        coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "recovery") } returns null
         useCase.invoke(
             testUsername,
             keyStoreCrypto.encrypt(testPassword),
@@ -110,6 +123,8 @@ class PerformCreateUserTest {
 
         coVerify(exactly = 1) {
             userRepository.createUser(
+                firstFrame = null,
+                secondFrame = null,
                 capture(usernameSlot),
                 capture(passwordSlot),
                 null,
@@ -126,6 +141,8 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user email recovery success`() = runBlockingTest {
+        coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "username") } returns null
+        coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "recovery") } returns null
         useCase.invoke(
             testUsername,
             keyStoreCrypto.encrypt(testPassword),
@@ -150,6 +167,8 @@ class PerformCreateUserTest {
         val emailSlot = slot<String>()
         coVerify(exactly = 1) {
             userRepository.createUser(
+                firstFrame = null,
+                secondFrame = null,
                 capture(usernameSlot),
                 capture(passwordSlot),
                 capture(emailSlot),
@@ -167,6 +186,8 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user phone recovery success`() = runBlockingTest {
+        coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "username") } returns null
+        coEvery { challengeManager.getFrameByFlowAndFrameName("signup", "recovery") } returns null
         useCase.invoke(
             testUsername,
             keyStoreCrypto.encrypt(testPassword),
@@ -191,6 +212,8 @@ class PerformCreateUserTest {
         val phoneSlot = slot<String>()
         coVerify(exactly = 1) {
             userRepository.createUser(
+                firstFrame = null,
+                secondFrame = null,
                 capture(usernameSlot),
                 capture(passwordSlot),
                 null,
@@ -230,7 +253,7 @@ class PerformCreateUserTest {
         val apiException = mockk<ApiException>()
 
         coEvery {
-            userRepository.createUser(any(), any(), any(), any(), any(), any(), any())
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
         } throws apiException
 
         val result = assertFailsWith(ApiException::class) {

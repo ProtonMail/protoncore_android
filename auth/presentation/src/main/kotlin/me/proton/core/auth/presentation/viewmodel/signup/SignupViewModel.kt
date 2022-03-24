@@ -24,7 +24,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.parcelize.Parcelize
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -32,15 +31,18 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.auth.domain.usecase.userAlreadyExists
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -69,6 +71,8 @@ internal class SignupViewModel @Inject constructor(
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
     private val performLogin: PerformLogin,
+    private val challengeManager: ChallengeManager,
+    private val challengeConfig: SignupChallengeConfig,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
     savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -154,7 +158,9 @@ internal class SignupViewModel @Inject constructor(
 
     fun skipRecoveryMethod() = setRecoveryMethod(null)
 
-    fun setRecoveryMethod(recoveryMethod: RecoveryMethod?) {
+    fun setRecoveryMethod(
+        recoveryMethod: RecoveryMethod?
+    ) {
         _recoveryMethod = recoveryMethod
         _inputState.tryEmit(InputState.Ready)
     }
@@ -173,19 +179,22 @@ internal class SignupViewModel @Inject constructor(
      * previously set [AccountType].
      * @see currentAccountType public property
      */
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     fun startCreateUserWorkflow() {
         _userCreationState.tryEmit(State.Idle)
-
-        val password by lazy { requireNotNull(_password) { "Password is not set (initialized)." } }
 
         when (currentAccountType) {
             AccountType.Username,
             AccountType.Internal -> {
                 val username = requireNotNull(username) { "Username is not set." }
-                createUser(username, password)
+                val password = requireNotNull(_password) { "Password is not set (initialized)." }
+                viewModelScope.launch {
+                    createUser(username, password)
+                }
             }
             AccountType.External -> {
                 val email = requireNotNull(externalEmail) { "External email is not set." }
+                val password = requireNotNull(_password) { "Password is not set (initialized)." }
                 createExternalUser(email, password)
             }
         }.exhaustive
@@ -224,6 +233,11 @@ internal class SignupViewModel @Inject constructor(
         paymentsOrchestrator.register(context)
     }
 
+    fun onFinish() {
+        viewModelScope.launch {
+            challengeManager.resetFlow(challengeConfig.flowName)
+        }
+    }
     // endregion
 
     // region private functions
@@ -244,8 +258,9 @@ internal class SignupViewModel @Inject constructor(
             }
 
             val result = performCreateUser(
-                username = username, password = encryptedPassword, recoveryEmail = verification.first,
-                recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
+                username = username, password = encryptedPassword,
+                recoveryEmail = verification.first, recoveryPhone = verification.second,
+                referrer = null, type = currentAccountType.createUserType()
             )
             emit(State.Success(result.id, username, encryptedPassword))
         }.catchWhen(Throwable::userAlreadyExists) {
@@ -283,6 +298,5 @@ internal class SignupViewModel @Inject constructor(
             startCreateUserWorkflow()
         }
     }
-
     // endregion
 }

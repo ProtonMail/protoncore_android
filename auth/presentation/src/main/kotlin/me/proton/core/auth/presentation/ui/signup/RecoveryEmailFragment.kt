@@ -21,6 +21,9 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentRecoveryEmailBinding
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
@@ -28,6 +31,7 @@ import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.presentation.viewmodel.ViewModelResult
 
 class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
 
@@ -37,10 +41,21 @@ class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.emailEditText.onTextChange(
-            afterTextChangeListener = { editable ->
-                recoveryMethodViewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, editable.toString())
+        with(binding.emailEditText) {
+            onTextChange(
+                afterTextChangeListener = { editable ->
+                    recoveryMethodViewModel.setActiveRecoveryMethod(
+                        userSelectedMethodType = RecoveryMethodType.EMAIL,
+                        destination = editable.toString()
+                    )
+                }
+            )
+        }
+
+        recoveryMethodViewModel.validationResult.onEach {
+            if (it is ViewModelResult.Success && it.value) {
+                binding.emailEditText.flush()
             }
-        )
+        }.launchIn(lifecycleScope)
     }
 }
