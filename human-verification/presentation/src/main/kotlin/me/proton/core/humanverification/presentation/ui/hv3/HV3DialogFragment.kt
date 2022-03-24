@@ -22,6 +22,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
@@ -88,7 +89,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
     @Inject
     @HumanVerificationApiHost
-    lateinit var humanVerificationApiHost: String
+    lateinit var humanVerificationBaseUrl: String
 
     @Inject
     lateinit var extraHeaderProvider: ExtraHeaderProvider
@@ -135,13 +136,19 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             javaScriptEnabled = true
             domStorageEnabled = true
         }
+
+        val overriddenUrl = viewModel.activeAltUrlForDoH ?: parsedArgs.baseUrl
+        val baseUrl = overriddenUrl ?: humanVerificationBaseUrl
+
         webView.webViewClient = HumanVerificationWebViewClient(
+            Uri.parse(baseUrl).host!!,
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
             onResourceLoadingError = {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { setLoading(false) }
-            }
+            },
+            onWebLocationChanged = {}
         )
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
         // Workaround to get transparent webview background
@@ -149,17 +156,15 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
         lifecycleScope.launch {
             val verificationParams = viewModel.getHumanVerificationExtraParams()
-            loadWebView(webView, verificationParams)
+            loadWebView(webView, baseUrl, verificationParams)
         }
     }
 
-    private fun loadWebView(webView: WebView, params: HV3ExtraParams?) {
+    private fun loadWebView(webView: WebView, baseUrl: String, params: HV3ExtraParams?) {
         // At the moment, this is enough to properly load the Captcha with the extra headers.
         // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
         val extraHeaders = extraHeaderProvider.headers.toMap().toMutableMap()
-        val overriddenUrl = viewModel.activeAltUrlForDoH ?: parsedArgs.baseUrl
-        val baseUrl = overriddenUrl ?: humanVerificationApiHost
         val darkMode = context?.resources?.configuration?.isUsingDarkMode() ?: false
         val url = buildUrl(
             baseUrl,

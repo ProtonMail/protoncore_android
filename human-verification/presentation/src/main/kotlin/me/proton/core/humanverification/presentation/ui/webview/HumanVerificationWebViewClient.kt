@@ -31,20 +31,27 @@ import me.proton.core.util.kotlin.CoreLogger
 
 /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
 class HumanVerificationWebViewClient(
+    private val apiHost: String,
     private val extraHeaders: List<Pair<String, String>>,
     private val alternativeUrl: String?,
     private val networkRequestOverrider: NetworkRequestOverrider,
     private val onResourceLoadingError: () -> Unit,
+    private val onWebLocationChanged: (String) -> Unit,
 ) : WebViewClient() {
 
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        val needsExtraHeaderForCaptcha = extraHeaders.isNotEmpty() && request.url.isLoadCaptchaUrl()
+        val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.host == apiHost
         val usesDoH = alternativeUrl != null && request.url.isAlternativeUrl()
         return when {
             usesDoH -> overrideForDoH(request, extraHeaders)
-            needsExtraHeaderForCaptcha -> overrideWithExtraHeaders(request, extraHeaders)
+            needsExtraHeaderForAPI -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
         }
+    }
+
+    override fun onPageFinished(view: WebView, url: String) {
+        super.onPageFinished(view, url)
+        onWebLocationChanged(url)
     }
 
     override fun onReceivedHttpError(
@@ -53,6 +60,8 @@ class HumanVerificationWebViewClient(
         errorResponse: WebResourceResponse?
     ) {
         super.onReceivedHttpError(view, request, errorResponse)
+        // favicon is failing to load in HV2 and triggers the error callback
+        if (request?.url?.lastPathSegment == "favicon.ico") return
         onResourceLoadingError()
     }
 

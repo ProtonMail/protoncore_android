@@ -613,25 +613,36 @@ public final class me/proton/core/presentation/utils/SnackType : java/lang/Enum 
 }
 
 public final class me/proton/core/presentation/utils/SnackbarKt {
-	public static final fun errorSnack (Landroid/view/View;I)V
-	public static final fun errorSnack (Landroid/view/View;Ljava/lang/String;)V
-	public static final fun errorSnack (Landroid/view/View;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-	public static final fun normSnack (Landroid/view/View;I)V
-	public static final fun normSnack (Landroid/view/View;Ljava/lang/String;)V
-	public static final fun snack (Landroid/view/View;ILjava/lang/Integer;)V
-	public static final fun snack (Landroid/view/View;ILme/proton/core/presentation/utils/SnackType;)V
-	public static final fun snack (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/functions/Function1;)V
-	public static final fun snack (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function0;I)V
-	public static final fun snack (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;)V
-	public static final fun snack (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;I)V
-	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function0;IILjava/lang/Object;)V
-	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;IILjava/lang/Object;)V
-	public static final fun successSnack (Landroid/view/View;I)V
-	public static final fun successSnack (Landroid/view/View;Ljava/lang/String;)V
-	public static final fun warningSnack (Landroid/view/View;I)V
-	public static final fun warningSnack (Landroid/view/View;Ljava/lang/String;)V
+	public static final fun errorSnack (Landroid/view/View;IILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun errorSnack (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun errorSnack (Landroid/view/View;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun errorSnack$default (Landroid/view/View;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun errorSnack$default (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun errorSnack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun normSnack (Landroid/view/View;IILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun normSnack (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun normSnack$default (Landroid/view/View;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun normSnack$default (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun snack (Landroid/view/View;ILjava/lang/Integer;Lkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun snack (Landroid/view/View;ILme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun snack$default (Landroid/view/View;ILjava/lang/Integer;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun snack$default (Landroid/view/View;ILme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun successSnack (Landroid/view/View;IILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun successSnack (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun successSnack$default (Landroid/view/View;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun successSnack$default (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun warningSnack (Landroid/view/View;IILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static final fun warningSnack (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun warningSnack$default (Landroid/view/View;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
+	public static synthetic fun warningSnack$default (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
 }
 
 public final class me/proton/core/presentation/utils/TextUtils {
