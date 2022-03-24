@@ -98,7 +98,7 @@ public final class me/proton/core/accountmanager/presentation/databinding/Accoun
 
 public final class me/proton/core/accountmanager/presentation/databinding/AccountPrimaryViewBinding : androidx/viewbinding/ViewBinding {
 	public final field accountEmailTextview Landroid/widget/TextView;
-	public final field accountExpandImageview Landroid/widget/ImageView;
+	public final field accountExpandImageview Landroidx/appcompat/widget/AppCompatImageView;
 	public final field accountInitialsTextview Landroid/widget/TextView;
 	public final field accountNameTextview Landroid/widget/TextView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountPrimaryViewBinding;
@@ -120,7 +120,7 @@ public final class me/proton/core/accountmanager/presentation/databinding/Accoun
 public final class me/proton/core/accountmanager/presentation/databinding/AccountViewBinding : androidx/viewbinding/ViewBinding {
 	public final field accountEmailTextview Landroid/widget/TextView;
 	public final field accountInitialsTextview Landroid/widget/TextView;
-	public final field accountMoreButton Landroid/widget/ImageButton;
+	public final field accountMoreButton Landroidx/appcompat/widget/AppCompatImageButton;
 	public final field accountNameTextview Landroid/widget/TextView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountViewBinding;
 	public synthetic fun getRoot ()Landroid/view/View;

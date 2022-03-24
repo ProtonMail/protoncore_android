@@ -75,7 +75,7 @@
         tools:text="user@protonmail.com"
         tools:visibility="visible" />
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/account_more_button"
         style="@style/ProtonImage.ImageButton"
         android:layout_width="@dimen/icon_button_size"

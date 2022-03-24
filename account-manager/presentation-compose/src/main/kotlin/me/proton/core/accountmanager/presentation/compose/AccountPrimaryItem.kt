@@ -23,7 +23,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.presentation.view.AccountPrimaryView
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.domain.entity.UserId
@@ -39,7 +40,7 @@ fun AccountPrimaryItem(
     viewModel: AccountSwitcherViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(viewModel) {
-        viewModel.onAction().collect {
+        viewModel.onAction().onEach {
             when (it) {
                 is AccountSwitcherViewModel.Action.Add -> onSignIn(null)
                 is AccountSwitcherViewModel.Action.SignIn -> onSignIn(it.account.userId)
@@ -47,7 +48,7 @@ fun AccountPrimaryItem(
                 is AccountSwitcherViewModel.Action.Remove -> onRemove(it.account.userId)
                 is AccountSwitcherViewModel.Action.SetPrimary -> onSwitch(it.account.userId)
             }
-        }
+        }.launchIn(this)
     }
 
     AndroidView(
