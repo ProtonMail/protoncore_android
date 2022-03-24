@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 
 - Fix progress indicator not appearing on username screen while loading domains.
+- IOExceptions are no longer logged with error level for EventManager code to avoid exception collection in logs.
 
 ## [7.1.5]
 
