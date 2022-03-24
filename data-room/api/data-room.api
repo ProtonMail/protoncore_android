@@ -6,11 +6,16 @@ public final class me/proton/core/data/room/BuildConfig {
 }
 
 public abstract class me/proton/core/data/room/db/BaseDao {
+	public static final field Companion Lme/proton/core/data/room/db/BaseDao$Companion;
 	public fun <init> ()V
 	public abstract fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected static final fun getSQLITE_MAX_VARIABLE_NUMBER ()I
 	public abstract fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/data/room/db/BaseDao$Companion {
 }
 
 public abstract class me/proton/core/data/room/db/BaseDatabase : androidx/room/RoomDatabase, me/proton/core/data/room/db/Database {

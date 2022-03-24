@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix progress indicator not appearing on username screen while loading domains.
 - IOExceptions are no longer logged with error level for EventManager code to avoid exception collection in logs.
 - Display error and add retry button if captcha loading fails.
+- If the user has more than 999 contacts, it was not possible to fetch user's contacts
 
 ## [7.1.5]
 

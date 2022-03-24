@@ -27,11 +27,18 @@ import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.data.room.db.BaseDao
 
 @Dao
-abstract class ContactEmailLabelDao: BaseDao<ContactEmailLabelEntity>() {
+abstract class ContactEmailLabelDao : BaseDao<ContactEmailLabelEntity>() {
     @Transaction
     @Query("SELECT labelId FROM ContactEmailLabelEntity WHERE contactEmailId = :contactEmailId")
     abstract fun observeAllLabels(contactEmailId: ContactEmailId): Flow<List<String>>
 
     @Query("DELETE FROM ContactEmailLabelEntity WHERE contactEmailId IN (:contactEmailIds)")
-    abstract suspend fun deleteAllLabels(vararg contactEmailIds: ContactEmailId)
+    protected abstract suspend fun deleteAllLabelsSingleBatch(vararg contactEmailIds: ContactEmailId)
+
+    @Transaction
+    open suspend fun deleteAllLabels(vararg contactEmailIds: ContactEmailId) {
+        contactEmailIds.toList().chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            deleteAllLabelsSingleBatch(*it.toTypedArray())
+        }
+    }
 }

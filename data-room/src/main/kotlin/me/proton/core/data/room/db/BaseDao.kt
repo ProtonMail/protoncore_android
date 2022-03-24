@@ -40,4 +40,12 @@ abstract class BaseDao<in T> {
 
     @Delete
     abstract suspend fun delete(vararg entities: T)
+
+    companion object {
+        /** Maximum Number Of Host Parameters In A Single SQL Statement
+         * https://www.sqlite.org/limits.html
+         **/
+        @JvmStatic
+        protected val SQLITE_MAX_VARIABLE_NUMBER = 999
+    }
 }

@@ -779,14 +779,17 @@ public final class me/proton/core/contact/data/local/db/ContactLocalDataSourceIm
 
 public abstract class me/proton/core/contact/data/local/db/dao/ContactCardDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
-	public abstract fun deleteAllContactCards ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContactCards ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected abstract fun deleteAllContactCardsSingleBatch ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/contact/data/local/db/dao/ContactDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 	public abstract fun deleteAllContacts (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun deleteAllContacts ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun deleteContacts ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContacts ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected abstract fun deleteAllContactsSingleBatch ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContacts ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected abstract fun deleteContactsSingleBatch ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeAllContacts (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun observeContact (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
 }
@@ -795,15 +798,18 @@ public abstract class me/proton/core/contact/data/local/db/dao/ContactEmailDao :
 	public fun <init> ()V
 	public abstract fun deleteAllContactsEmails (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteAllContactsEmails (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun deleteAllContactsEmails ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun deleteContactsEmails ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContactsEmails ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected abstract fun deleteAllContactsEmailsSingleBatch ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContactsEmails ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected abstract fun deleteContactsEmailsSingleBatch ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeAllContactsEmails (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun observeAllContactsEmails (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public abstract class me/proton/core/contact/data/local/db/dao/ContactEmailLabelDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
-	public abstract fun deleteAllLabels ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllLabels ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected abstract fun deleteAllLabelsSingleBatch ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeAllLabels (Lme/proton/core/contact/domain/entity/ContactEmailId;)Lkotlinx/coroutines/flow/Flow;
 }
 

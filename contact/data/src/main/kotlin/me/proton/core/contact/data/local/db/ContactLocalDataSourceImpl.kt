@@ -105,7 +105,8 @@ class ContactLocalDataSourceImpl @Inject constructor(
 
     override suspend fun mergeContacts(vararg contacts: Contact) {
         contactDatabase.inTransaction {
-            contactDatabase.contactDao().deleteAllContacts(*contacts.map { it.userId }.toTypedArray())
+            val userIds = contacts.map { it.userId }.toSet().toTypedArray()
+            contactDatabase.contactDao().deleteAllContacts(*userIds)
             upsertContacts(*contacts)
         }
     }
