@@ -20,7 +20,7 @@ include:
   - local: '/ci/templates/base-job.gitlab-ci.yml'
 
   - project: 'proton/devops/atlas-deploy'
-    ref: 'main'
+    ref: main
     file: '/scenarios/pipeline-env.yml'
 
 workflow:
@@ -60,11 +60,11 @@ prepare-environment:
   image: $CI_REGISTRY/proton/devops/atlas-cli
   variables:
     NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
-    REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_NAME} --data tag=${CI_COMMIT_REF_SLUG}"
+    REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_SLUG} --data tag=${CI_COMMIT_REF_SLUG}"
   script:
     - |
       if [ $CI_PIPELINE_SOURCE == "merge_request_event" ]; then
-        get_name.py -v -o deploy.env -d "$ATLAS_BASE_DOMAIN" --release "$ATLAS_RELEASE_SUFFIX" "${ENV_TAG:-$CI_COMMIT_REF_SLUG}" "$CI_PROJECT_PATH" "$CI_COMMIT_REF_NAME"
+        get_name.py -v -o deploy.env -d "$ATLAS_BASE_DOMAIN" --release "$ATLAS_RELEASE_SUFFIX" "${ENV_TAG:-$CI_COMMIT_REF_SLUG}" "$CI_PROJECT_PATH" "$CI_COMMIT_REF_SLUG"
         export $(cat deploy.env)
         echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
         echo HOST="$DYNAMIC_DOMAIN" >> local.properties
@@ -216,7 +216,7 @@ mail-v6-integration-tests:
   when: always
   image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   variables:
-    RESULTS_DIR: "${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
+    RESULTS_DIR: "${CI_COMMIT_REF_SLUG}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
   tags:
     - medium
   allow_failure: true
