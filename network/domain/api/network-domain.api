@@ -329,6 +329,10 @@ public final class me/proton/core/network/domain/client/ClientIdType$Companion {
 	public final fun getMap ()Ljava/util/Map;
 }
 
+public abstract interface class me/proton/core/network/domain/client/ClientVersionValidator {
+	public abstract fun validate (Ljava/lang/String;)Z
+}
+
 public final class me/proton/core/network/domain/client/CookieSessionId {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;

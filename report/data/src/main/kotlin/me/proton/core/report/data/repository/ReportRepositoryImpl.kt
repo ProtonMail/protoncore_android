@@ -30,7 +30,9 @@ import me.proton.core.report.domain.entity.BugReportMeta
 import me.proton.core.report.domain.repository.ReportRepository
 import javax.inject.Inject
 
-public class ReportRepositoryImpl @Inject constructor(private val apiProvider: ApiProvider) : ReportRepository {
+public class ReportRepositoryImpl @Inject constructor(
+    private val apiProvider: ApiProvider,
+) : ReportRepository {
     override suspend fun sendReport(
         bugReport: BugReport,
         meta: BugReportMeta,

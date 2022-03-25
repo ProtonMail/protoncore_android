@@ -37,12 +37,14 @@ import me.proton.core.network.data.util.MockSessionListener
 import me.proton.core.network.data.util.TestRetrofitApi
 import me.proton.core.network.data.util.TestTLSHelper
 import me.proton.core.network.data.util.prepareResponse
+import me.proton.core.network.data.util.takeRequestWithDefaultTimeout
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
@@ -126,6 +128,9 @@ internal class HumanVerificationTests {
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
+    private val clientVersionValidator = mockk<ClientVersionValidator> {
+        every { validate(any()) } returns true
+    }
 
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
@@ -169,7 +174,8 @@ internal class HumanVerificationTests {
                 cookieJar,
                 scope,
                 cache = { null },
-                apiConnectionListener = null
+                apiConnectionListener = null,
+                clientVersionValidator = clientVersionValidator,
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 
@@ -200,7 +206,7 @@ internal class HumanVerificationTests {
             pinningInit,
             ::javaWallClockMs,
             prefs,
-            cookieJar
+            cookieJar,
         )
 
     @After
@@ -321,15 +327,15 @@ internal class HumanVerificationTests {
         coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
 
         backend(ApiManager.Call(0) { test() })
-        val headers = webServer.takeRequest().headers
+        val headers = webServer.takeRequestWithDefaultTimeout()?.headers
         verify(exactly = 1) {
             humanVerificationDetails.tokenCode
         }
         verify(exactly = 1) {
             humanVerificationDetails.tokenType
         }
-        assertTrue(headers.contains(Pair("x-pm-human-verification-token-type", "captcha")))
-        assertTrue(headers.contains(Pair("x-pm-human-verification-token", "captcha token")))
+        assertTrue(headers?.contains(Pair("x-pm-human-verification-token-type", "captcha")) ?: false)
+        assertTrue(headers?.contains(Pair("x-pm-human-verification-token", "captcha token")) ?: false)
     }
 
     @Test
@@ -360,15 +366,15 @@ internal class HumanVerificationTests {
         coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
 
         backend(ApiManager.Call(0) { test() })
-        val headers = webServer.takeRequest().headers
+        val headers = webServer.takeRequestWithDefaultTimeout()?.headers
         verify(exactly = 1) {
             humanVerificationDetails.tokenCode
         }
         verify(exactly = 1) {
             humanVerificationDetails.tokenType
         }
-        assertTrue(headers.contains(Pair("x-pm-human-verification-token-type", "captcha")))
-        assertTrue(headers.contains(Pair("x-pm-human-verification-token", "captcha token")))
+        assertTrue(headers?.contains(Pair("x-pm-human-verification-token-type", "captcha")) ?: false)
+        assertTrue(headers?.contains(Pair("x-pm-human-verification-token", "captcha token")) ?: false)
     }
 
     private fun javaWallClockMs(): Long = System.currentTimeMillis()

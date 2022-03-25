@@ -24,6 +24,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import java.io.File
 import java.security.KeyStore
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -36,6 +37,8 @@ fun MockWebServer.prepareResponse(code: Int, body: String = "") {
         .setBody(body)
     enqueue(response)
 }
+
+fun MockWebServer.takeRequestWithDefaultTimeout() = takeRequest(10, TimeUnit.MILLISECONDS)
 
 class TestTLSHelper {
 

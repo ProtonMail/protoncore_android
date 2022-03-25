@@ -16,18 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+package me.proton.core.network.domain.client
 
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    implementation(
-        project(Module.networkDomain)
-    )
-    api(
-        project(Module.networkData)
-    )
+interface ClientVersionValidator {
+    fun validate(versionName: String?): Boolean
 }

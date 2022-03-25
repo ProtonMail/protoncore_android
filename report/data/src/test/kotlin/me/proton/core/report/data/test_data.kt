@@ -30,7 +30,7 @@ internal val testBugReport = BugReport(
     email = "test@email"
 )
 internal val testBugReportMeta = BugReportMeta(
-    appVersionName = "1.2.3",
+    appVersionName = "android-mail@1.2.3",
     clientName = "TestApp",
     osName = "Android",
     osVersion = "100",

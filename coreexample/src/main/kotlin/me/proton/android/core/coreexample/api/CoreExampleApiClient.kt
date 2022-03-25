@@ -38,7 +38,7 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
      * Client's value for 'x-pm-appversion' header.
      */
     override val appVersionHeader: String
-        get() = "Android_1.14.0"
+        get() = "android-mail@$VERSION_NAME"
 
     /**
      * Client's value for 'User-Agent' header.

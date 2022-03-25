@@ -16,18 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+package me.proton.core.network.data.client
 
-publishOption.shouldBePublishedAsLib = true
+import me.proton.core.network.domain.client.ClientVersionValidator
 
-dependencies {
-    implementation(
-        project(Module.networkDomain)
-    )
-    api(
-        project(Module.networkData)
-    )
+class ClientVersionValidatorImpl : ClientVersionValidator {
+
+    override fun validate(versionName: String?): Boolean {
+        val components = versionName?.split("@").orEmpty()
+        if (components.count() != 2) return false
+        val (name, version) = components
+        return isValidName(name) && isValidVersion(version)
+    }
+
+    private fun isValidName(name: String) =
+        Regex("^[a-z_]+-[a-z_]+(?:-[a-z_]+)?\$").matches(name)
+
+    private fun isValidVersion(version: String) =
+        Regex("^\\d+?\\.\\d+?\\.\\d+?(-((stable|RC|beta|alpha)(\\.\\d+)?|dev)|)?(\\+[0-9A-Za-z\\-]+)?\$")
+            .matches(version)
+
 }
