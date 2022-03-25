@@ -39,6 +39,7 @@
         <!-- Text colors -->
         <item name="android:textColor">@color/text_norm</item>
         <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:textColorLink">?attr/proton_text_accent</item>
         <item name="android:textColorPrimary">@color/text_norm</item>
         <item name="android:textColorPrimaryInverse">@color/text_inverted</item>
         <item name="android:textColorSecondary">@color/text_weak</item>
