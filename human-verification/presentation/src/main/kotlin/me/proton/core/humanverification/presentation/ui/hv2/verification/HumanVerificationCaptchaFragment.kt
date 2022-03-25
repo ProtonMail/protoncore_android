@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -43,6 +44,7 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
 import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
+import me.proton.core.humanverification.presentation.ui.webview.WebResponseError
 import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
@@ -143,7 +145,10 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
         }
     }
 
-    private fun handleError() {
+    private fun handleError(request: WebResourceRequest?, responseError: WebResponseError?) {
+        // A missing favicon is not important enough to show this error message.
+        if (request?.url?.lastPathSegment == "favicon.ico") return
+        // Don't show a snackbar if it's alreday shown.
         if (retrySnackBar != null) return
         val message = R.string.human_verification_method_loading_failed
         retrySnackBar = requireView().errorSnack(message, Snackbar.LENGTH_INDEFINITE) {

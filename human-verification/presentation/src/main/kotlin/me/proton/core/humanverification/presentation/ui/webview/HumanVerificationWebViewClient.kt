@@ -35,7 +35,7 @@ class HumanVerificationWebViewClient(
     private val extraHeaders: List<Pair<String, String>>,
     private val alternativeUrl: String?,
     private val networkRequestOverrider: NetworkRequestOverrider,
-    private val onResourceLoadingError: () -> Unit,
+    private val onResourceLoadingError: (request: WebResourceRequest?, response: WebResponseError?) -> Unit,
     private val onWebLocationChanged: (String) -> Unit,
 ) : WebViewClient() {
 
@@ -60,19 +60,17 @@ class HumanVerificationWebViewClient(
         errorResponse: WebResourceResponse?
     ) {
         super.onReceivedHttpError(view, request, errorResponse)
-        // favicon is failing to load in HV2 and triggers the error callback
-        if (request?.url?.lastPathSegment == "favicon.ico") return
-        onResourceLoadingError()
+        onResourceLoadingError(request, errorResponse?.let { WebResponseError.Http(it) })
     }
 
     override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
         super.onReceivedSslError(view, handler, error)
-        onResourceLoadingError()
+        onResourceLoadingError(null, error?.let { WebResponseError.Ssl(it) })
     }
 
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
-        onResourceLoadingError()
+        onResourceLoadingError(request, error?.let { WebResponseError.Resource(it) })
     }
 
     private fun overrideWithExtraHeaders(
@@ -108,7 +106,7 @@ class HumanVerificationWebViewClient(
             acceptSelfSignedCertificates = true,
         ).also {
             if (it?.statusCode !in 200 until 400) {
-                onResourceLoadingError()
+                onResourceLoadingError(request, it?.let { WebResponseError.Http(it) })
             }
         }
     }
@@ -120,7 +118,14 @@ class HumanVerificationWebViewClient(
         acceptSelfSignedCertificates: Boolean
     ): WebResourceResponse? = runCatching {
         val response = networkRequestOverrider.overrideRequest(url, method, headers, acceptSelfSignedCertificates)
-        WebResourceResponse(response.mimeType, response.encoding, response.contents)
+        WebResourceResponse(
+            response.mimeType,
+            response.encoding,
+            response.httpStatusCode,
+            response.reasonPhrase,
+            response.responseHeaders,
+            response.contents
+        )
     }.onFailure {
         CoreLogger.e(TAG, it)
     }.getOrNull()
@@ -131,4 +136,10 @@ class HumanVerificationWebViewClient(
     companion object {
         const val TAG = "HumanVerificationWebViewClient"
     }
+}
+
+sealed class WebResponseError {
+    data class Http(val response: WebResourceResponse): WebResponseError()
+    data class Ssl(val error: SslError): WebResponseError()
+    data class Resource(val error: WebResourceError): WebResponseError()
 }

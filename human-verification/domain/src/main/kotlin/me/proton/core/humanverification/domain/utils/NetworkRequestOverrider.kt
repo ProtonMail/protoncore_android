@@ -34,7 +34,7 @@ interface NetworkRequestOverrider {
         val mimeType: String?,
         val encoding: String?,
         val contents: InputStream?,
-        val httpStatusCode: Int?,
+        val httpStatusCode: Int,
         val reasonPhrase: String,
         val responseHeaders: Map<String, String>,
     )

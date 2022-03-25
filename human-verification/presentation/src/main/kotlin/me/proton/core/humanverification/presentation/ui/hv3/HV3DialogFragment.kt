@@ -145,7 +145,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
-            onResourceLoadingError = {
+            onResourceLoadingError = { _, _ ->
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { setLoading(false) }
             },
             onWebLocationChanged = {}
