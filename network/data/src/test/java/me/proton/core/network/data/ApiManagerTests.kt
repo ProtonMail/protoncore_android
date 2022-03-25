@@ -48,6 +48,7 @@ import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -105,6 +106,9 @@ internal class ApiManagerTests {
     @MockK
     private lateinit var dohService: DohService
 
+    @MockK
+    private lateinit var clientVersionValidator: ClientVersionValidator
+
     private var time = 0L
     private var wallTime = 0L
 
@@ -144,7 +148,8 @@ internal class ApiManagerTests {
                 mockk(),
                 scope,
                 cache = { null },
-                apiConnectionListener = null
+                apiConnectionListener = null,
+                clientVersionValidator = clientVersionValidator,
             )
 
         coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)

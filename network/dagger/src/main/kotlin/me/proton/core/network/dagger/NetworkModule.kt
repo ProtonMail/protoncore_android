@@ -24,9 +24,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.cookie.DiskCookieStorage
 import me.proton.core.network.data.cookie.MemoryCookieStorage
-import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.domain.client.ClientVersionValidator
 import javax.inject.Singleton
 
 @Module
@@ -38,4 +40,7 @@ internal class NetworkModule {
         persistentStorage = DiskCookieStorage(context, ProtonCookieStore.DISK_COOKIE_STORAGE_NAME),
         sessionStorage = MemoryCookieStorage()
     )
+
+    @Provides
+    fun provideClientVersionValidator(): ClientVersionValidator = ClientVersionValidatorImpl()
 }

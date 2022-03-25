@@ -6,7 +6,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## Fixed
+### Changes
+- Added validation for Client Version header (x-pm-appversion).
+
+### New Injection
+- ApiManagerFactory now needs an extra `ClientVersionValidator` dependency, which is already included in the Network dagger module.
+
+```kotlin
+@Provides
+@Singleton
+fun provideApiFactory(
+    ...,
+    clientVersionValidator: ClientVersionValidator,
+    apiConnectionListener: ApiConnectionListener? = null,
+): ApiManagerFactory {
+    return ApiManagerFactory(
+        ...,
+        clientVersionValidator = clientVersionValidator,
+        apiConnectionListener = apiConnectionListener,
+    )
+}
+
+```
+
+### Fixed
 
 - Links, outlined buttons and borderless buttons use text-accent color.
 
@@ -21,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.5]
 
-## Fixed
+### Fixed
 
 - Removed Label dependency from Contact modules.
 - Fix invalid strings resources for Plans.
@@ -29,13 +52,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.4]
 
-## New
+### New
 
 - `ProtonSettings` basic composables to build settings screens.
 - Enable clients to pass additional filtering function for the plans, according to their needs.
 - Added Room LabelConverters. Please add `LabelConverters` to your `TypeConverters`.
 
-## Fixed
+### Fixed
 
 - Stop decoding the base64 when decrypting the HashKey (to keep compatibility with drive web & iOS).
 - Encode the random bytes in base64 when generating the hash key.
@@ -44,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.3]
 
-## New
+### New
   - Added functions to encrypt with compression to the crypto module and to the KeyHolder's context:
     `encryptAndSignTextWithCompression` and `encryptAndSignDataWithCompression`
 

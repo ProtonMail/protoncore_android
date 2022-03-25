@@ -66,7 +66,7 @@ class MockApiClient : ApiClient {
     var forceUpdated = false
 
     override var shouldUseDoh = true
-    override val appVersionHeader = "TestApp_1.0"
+    override val appVersionHeader = "android-mail@1.2.3"
     override val userAgent = "Test/1.0 (Android 10; brand model)"
 
     override val enableDebugLogging: Boolean = true

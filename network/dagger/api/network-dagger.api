@@ -9,6 +9,14 @@ public final class me/proton/core/network/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/network/dagger/NetworkModule_ProvideClientVersionValidatorFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;)V
+	public static fun create (Lme/proton/core/network/dagger/NetworkModule;)Lme/proton/core/network/dagger/NetworkModule_ProvideClientVersionValidatorFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/client/ClientVersionValidator;
+	public static fun provideClientVersionValidator (Lme/proton/core/network/dagger/NetworkModule;)Lme/proton/core/network/domain/client/ClientVersionValidator;
+}
+
 public final class me/proton/core/network/dagger/NetworkModule_ProvideCookieJarFactory : dagger/internal/Factory {
 	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)V
 	public static fun create (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/NetworkModule_ProvideCookieJarFactory;

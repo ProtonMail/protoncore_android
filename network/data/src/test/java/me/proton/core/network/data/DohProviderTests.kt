@@ -24,6 +24,7 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.takeRequestWithDefaultTimeout
 import me.proton.core.network.domain.NetworkManager
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -93,6 +94,7 @@ internal class DohProviderTests {
 
         val result = dohProvider.getAlternativeBaseUrls("https://$domain/")!!
         assertEquals(listOf("https://proxy.com/"), result)
-        assertEquals("application/dns-message", webServer.takeRequest().headers["Accept"])
+        val acceptHeader = webServer.takeRequestWithDefaultTimeout()?.headers?.get("Accept")
+        assertEquals("application/dns-message", acceptHeader)
     }
 }

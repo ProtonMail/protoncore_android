@@ -36,6 +36,7 @@ import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.handlers.ApiConnectionHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
@@ -84,7 +85,8 @@ class ApiManagerFactory(
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
     private val cache: () -> Cache? = { null },
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
-    private val apiConnectionListener: ApiConnectionListener?
+    private val apiConnectionListener: ApiConnectionListener?,
+    private val clientVersionValidator: ClientVersionValidator,
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -102,6 +104,9 @@ class ApiManagerFactory(
     val baseOkHttpClient by lazy {
         require(apiClient.timeoutSeconds >= ApiClient.MIN_TIMEOUT_SECONDS) {
             "Minimum timeout for ApiClient is ${ApiClient.MIN_TIMEOUT_SECONDS} seconds."
+        }
+        require(clientVersionValidator.validate(apiClient.appVersionHeader)) {
+            "Invalid app version code: ${apiClient.appVersionHeader}."
         }
         OkHttpClient.Builder()
             .cache(cache())

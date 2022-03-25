@@ -53,7 +53,7 @@ internal class ReportRepositoryImplTest {
         email = "email@test"
     )
     private val testBugReportMeta = BugReportMeta(
-        appVersionName = "1.2.3",
+        appVersionName = "android-mail@1.2.3",
         clientName = "TestApp",
         osName = "Android",
         osVersion = "12",

@@ -45,6 +45,7 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -112,7 +113,8 @@ class NetworkModule {
         humanVerificationListener: HumanVerificationListener,
         missingScopeListener: MissingScopeListener,
         extraHeaderProvider: ExtraHeaderProvider,
-        apiConnectionListener: ApiConnectionListener? = null
+        clientVersionValidator: ClientVersionValidator,
+        apiConnectionListener: ApiConnectionListener? = null,
     ): ApiManagerFactory {
         val certificatePins = if (BuildConfig.USE_DEFAULT_PINS) {
             NetWorkDataConstants.DEFAULT_SPKI_PINS
@@ -147,7 +149,8 @@ class NetworkModule {
                 )
             },
             extraHeaderProvider = extraHeaderProvider,
-            apiConnectionListener = apiConnectionListener
+            apiConnectionListener = apiConnectionListener,
+            clientVersionValidator = clientVersionValidator,
         )
     }
 
