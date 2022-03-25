@@ -209,7 +209,7 @@ mail-v6-integration-tests:
   extends: .client-integration-tests
   trigger:
     project: android/mail/proton-mail
-    branch: feat/core_ci_integration # TODO change to master branch
+    branch: master
 
 vpn-integration-tests:
   extends: .client-integration-tests
