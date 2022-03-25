@@ -32,6 +32,7 @@ fun provideApiFactory(
 ### Fixed
 
 - Links, outlined buttons and borderless buttons use text-accent color.
+- Fix Http status code not being parsed in HV with DoH.
 
 ## [7.1.6]
 

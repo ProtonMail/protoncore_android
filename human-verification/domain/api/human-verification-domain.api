@@ -81,19 +81,19 @@ public final class me/proton/core/humanverification/domain/utils/NetworkRequestO
 }
 
 public final class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/Integer;Ljava/lang/String;Ljava/util/Map;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;ILjava/lang/String;Ljava/util/Map;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/io/InputStream;
-	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component4 ()I
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/Integer;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
-	public static synthetic fun copy$default (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/Integer;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;ILjava/lang/String;Ljava/util/Map;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;ILjava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getContents ()Ljava/io/InputStream;
 	public final fun getEncoding ()Ljava/lang/String;
-	public final fun getHttpStatusCode ()Ljava/lang/Integer;
+	public final fun getHttpStatusCode ()I
 	public final fun getMimeType ()Ljava/lang/String;
 	public final fun getReasonPhrase ()Ljava/lang/String;
 	public final fun getResponseHeaders ()Ljava/util/Map;

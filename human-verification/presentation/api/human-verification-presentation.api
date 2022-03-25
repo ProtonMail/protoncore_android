@@ -610,7 +610,7 @@ public abstract interface class me/proton/core/humanverification/presentation/ui
 public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient : android/webkit/WebViewClient {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion;
 	public static final field TAG Ljava/lang/String;
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;)V
 	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
 	public fun onReceivedError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceError;)V
 	public fun onReceivedHttpError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceResponse;)V
@@ -619,6 +619,42 @@ public final class me/proton/core/humanverification/presentation/ui/webview/Huma
 }
 
 public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion {
+}
+
+public abstract class me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
+}
+
+public final class me/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http : me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
+	public fun <init> (Landroid/webkit/WebResourceResponse;)V
+	public final fun component1 ()Landroid/webkit/WebResourceResponse;
+	public final fun copy (Landroid/webkit/WebResourceResponse;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http;Landroid/webkit/WebResourceResponse;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResponse ()Landroid/webkit/WebResourceResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource : me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
+	public fun <init> (Landroid/webkit/WebResourceError;)V
+	public final fun component1 ()Landroid/webkit/WebResourceError;
+	public final fun copy (Landroid/webkit/WebResourceError;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource;Landroid/webkit/WebResourceError;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Landroid/webkit/WebResourceError;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl : me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
+	public fun <init> (Landroid/net/http/SslError;)V
+	public final fun component1 ()Landroid/net/http/SslError;
+	public final fun copy (Landroid/net/http/SslError;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl;Landroid/net/http/SslError;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Landroid/net/http/SslError;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/humanverification/presentation/utils/HumanVerificationVersion : java/lang/Enum {
