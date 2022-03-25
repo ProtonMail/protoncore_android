@@ -49,11 +49,9 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-
-private const val TOGGLE_ITEM_HINT_NEGATIVE_MARGIN = -10
+import me.proton.core.compose.theme.textNorm
 
 /**
  * A full-size [LazyColumn] list styled with [ProtonTheme]
@@ -133,7 +131,7 @@ fun ProtonSettingsHeader(
             modifier = Modifier.align(Alignment.Bottom),
             text = title,
             color = ProtonTheme.colors.brandNorm,
-            style = LocalTypography.current.body1Medium
+            style = ProtonTheme.typography.body1Medium
         )
     }
 }
@@ -166,14 +164,14 @@ fun ProtonSettingsItem(
                 modifier = Modifier,
                 text = name,
                 color = ProtonTheme.colors.textNorm,
-                style = LocalTypography.current.body1Regular
+                style = ProtonTheme.typography.body1Regular
             )
             hint?.let {
                 Text(
                     modifier = Modifier,
                     text = hint,
                     color = ProtonTheme.colors.textHint,
-                    style = LocalTypography.current.body2Regular
+                    style = ProtonTheme.typography.body2Regular
                 )
             }
         }
@@ -185,12 +183,14 @@ fun ProtonSettingsToggleItem(
     modifier: Modifier = Modifier,
     name: String,
     hint: String? = null,
-    value: Boolean,
+    value: Boolean?,
     onToggle: (Boolean) -> Unit = {}
 ) {
+    val isSwitchChecked = value ?: false
+    val isViewEnabled = value != null
     ProtonRawListItem(
         modifier = modifier
-            .clickable(onClick = { onToggle(!value) })
+            .clickable(enabled = isViewEnabled, onClick = { onToggle(!isSwitchChecked) })
             .padding(
                 vertical = ProtonDimens.ListItemTextStartPadding,
                 horizontal = ProtonDimens.DefaultSpacing
@@ -206,20 +206,21 @@ fun ProtonSettingsToggleItem(
             ProtonRawListItem(horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
                     text = name,
-                    color = ProtonTheme.colors.textNorm,
-                    style = LocalTypography.current.body1Regular
+                    color = ProtonTheme.colors.textNorm(isViewEnabled),
+                    style = ProtonTheme.typography.body1Regular
                 )
                 Switch(
-                    checked = value,
-                    onCheckedChange = onToggle
+                    checked = isSwitchChecked,
+                    onCheckedChange = onToggle,
+                    enabled = isViewEnabled
                 )
             }
             hint?.let {
                 Text(
-                    modifier = Modifier.offset(y = TOGGLE_ITEM_HINT_NEGATIVE_MARGIN.dp),
+                    modifier = Modifier.offset(y = toggleItemNegativeOffset),
                     text = hint,
                     color = ProtonTheme.colors.textHint,
-                    style = LocalTypography.current.body2Regular
+                    style = ProtonTheme.typography.body2Regular
                 )
             }
         }
@@ -260,6 +261,15 @@ fun previewSettingsToggleableItem() {
 }
 
 @Preview(
+    name = "Proton settings toggleable item disabled",
+    showBackground = true
+)
+@Composable
+fun previewDisabledSettingsToggleableItem() {
+    ProtonSettingsToggleItem(name = "Setting toggle", value = null)
+}
+
+@Preview(
     name = "Proton settings toggleable item with hint",
     showBackground = true
 )
@@ -267,8 +277,8 @@ fun previewSettingsToggleableItem() {
 fun previewSettingsToggleableItemWithHint() {
     ProtonSettingsToggleItem(
         name = "Setting toggle",
-        value = true,
-        hint = "Use this space to provide an explanation of what toggling this setting does"
+        hint = "Use this space to provide an explanation of what toggling this setting does",
+        value = true
     )
 }
 
@@ -298,3 +308,5 @@ fun previewSettings() {
         item { ProtonSettingsItem(name = "Test user", hint = "testuser@proton.ch") {} }
     }
 }
+
+private val toggleItemNegativeOffset = -10.dp

@@ -16,8 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+import studio.forface.easygradle.dsl.android.`android-annotation`
+import studio.forface.easygradle.dsl.android.`lifecycle-runtime`
+import studio.forface.easygradle.dsl.android.androidTestImplementation
+import studio.forface.easygradle.dsl.compileOnly
+import studio.forface.easygradle.dsl.implementation
+import studio.forface.easygradle.dsl.testImplementation
 
 plugins {
     protonComposeUiLibrary
@@ -60,5 +64,8 @@ dependencies {
         project(Module.androidInstrumentedTest),
         `compose-ui-test`,
         `compose-ui-test-junit`
+    )
+    debugImplementation(
+        `compose-ui-test-manifest`,
     )
 }
