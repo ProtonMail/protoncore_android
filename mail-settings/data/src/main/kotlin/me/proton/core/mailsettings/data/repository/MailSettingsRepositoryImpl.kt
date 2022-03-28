@@ -27,34 +27,15 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.entity.UserId
+import me.proton.core.domain.type.IntEnum
+import me.proton.core.domain.type.StringEnum
 import me.proton.core.mailsettings.data.api.MailSettingsApi
-import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
-import me.proton.core.mailsettings.data.api.request.UpdateAutoSaveContactsRequest
-import me.proton.core.mailsettings.data.api.request.UpdateComposerModeRequest
-import me.proton.core.mailsettings.data.api.request.UpdateConfirmLinkRequest
-import me.proton.core.mailsettings.data.api.request.UpdateDisplayNameRequest
-import me.proton.core.mailsettings.data.api.request.UpdateEnableFolderColorRequest
-import me.proton.core.mailsettings.data.api.request.UpdateInheritFolderColorRequest
-import me.proton.core.mailsettings.data.api.request.UpdateMessageButtonsRequest
-import me.proton.core.mailsettings.data.api.request.UpdateMimeTypeRequest
-import me.proton.core.mailsettings.data.api.request.UpdatePGPSchemeRequest
-import me.proton.core.mailsettings.data.api.request.UpdatePMSignatureRequest
-import me.proton.core.mailsettings.data.api.request.UpdatePromptPinRequest
-import me.proton.core.mailsettings.data.api.request.UpdateRightToLeftRequest
-import me.proton.core.mailsettings.data.api.request.UpdateShowImagesRequest
-import me.proton.core.mailsettings.data.api.request.UpdateShowMovedRequest
-import me.proton.core.mailsettings.data.api.request.UpdateSignRequest
-import me.proton.core.mailsettings.data.api.request.UpdateSignatureRequest
-import me.proton.core.mailsettings.data.api.request.UpdateStickyLabelsRequest
-import me.proton.core.mailsettings.data.api.request.UpdateSwipeLeftRequest
-import me.proton.core.mailsettings.data.api.request.UpdateSwipeRightRequest
-import me.proton.core.mailsettings.data.api.request.UpdateViewLayoutRequest
-import me.proton.core.mailsettings.data.api.request.UpdateViewModeRequest
-import me.proton.core.mailsettings.data.api.response.SingleMailSettingsResponse
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.extension.fromEntity
 import me.proton.core.mailsettings.data.extension.fromResponse
 import me.proton.core.mailsettings.data.extension.toEntity
+import me.proton.core.mailsettings.data.worker.SettingsProperty
+import me.proton.core.mailsettings.data.worker.UpdateSettingsWorker
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -73,7 +54,8 @@ import me.proton.core.util.kotlin.toInt
 @Suppress("TooManyFunctions", "ComplexInterface")
 class MailSettingsRepositoryImpl(
     db: MailSettingsDatabase,
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val settingsWorker: UpdateSettingsWorker.Enqueuer
 ) : MailSettingsRepository {
 
     private val mailSettingsDao = db.mailSettingsDao()
@@ -102,16 +84,16 @@ class MailSettingsRepositoryImpl(
 
     private suspend fun deleteAll() = mailSettingsDao.deleteAll()
 
-    private suspend fun updateProperty(
+    private suspend fun updateSettingsProperty(
         userId: UserId,
-        updateApiCall: suspend MailSettingsApi.() -> SingleMailSettingsResponse
+        settingsProperty: SettingsProperty,
+        updateProperty: suspend (MailSettings) -> MailSettings
     ): MailSettings {
-        return apiProvider.get<MailSettingsApi>(userId).invoke {
-            val response = updateApiCall(this)
-            val updatedMailSettings = response.mailSettings.fromResponse(userId)
-            insertOrUpdate(updatedMailSettings)
-            getMailSettings(userId)
-        }.valueOrThrow
+        val mailSettings = getMailSettings(userId)
+        val updatedMailSettings = updateProperty(mailSettings)
+        insertOrUpdate(updatedMailSettings)
+        settingsWorker.enqueue(userId, settingsProperty)
+        return updatedMailSettings
     }
 
     override fun getMailSettingsFlow(userId: UserId, refresh: Boolean) =
@@ -125,121 +107,125 @@ class MailSettingsRepositoryImpl(
     }
 
     override suspend fun updateDisplayName(userId: UserId, displayName: String) =
-        updateProperty(userId) {
-            updateDisplayName(UpdateDisplayNameRequest(displayName))
+        updateSettingsProperty(userId, SettingsProperty.DisplayName(displayName)) {
+            it.copy(displayName = displayName)
         }
 
     override suspend fun updateSignature(userId: UserId, signature: String) =
-        updateProperty(userId) {
-            updateSignature(UpdateSignatureRequest(signature))
+        updateSettingsProperty(userId, SettingsProperty.Signature(signature)) {
+            it.copy(signature = signature)
         }
 
     override suspend fun updateAutoSaveContacts(userId: UserId, autoSaveContacts: Boolean) =
-        updateProperty(userId) {
-            updateAutoSaveContacts(UpdateAutoSaveContactsRequest(autoSaveContacts.toInt()))
+        updateSettingsProperty(
+            userId,
+            SettingsProperty.AutoSaveContacts(autoSaveContacts.toInt())
+        ) {
+            it.copy(autoSaveContacts = autoSaveContacts)
         }
 
     override suspend fun updateComposerMode(userId: UserId, composerMode: ComposerMode) =
-        updateProperty(userId) {
-            updateComposerMode(UpdateComposerModeRequest(composerMode.value))
+        updateSettingsProperty(userId, SettingsProperty.ComposerMode(composerMode.value)) {
+            it.copy(composerMode = IntEnum(composerMode.value, composerMode))
         }
 
     override suspend fun updateMessageButtons(userId: UserId, messageButtons: MessageButtons) =
-        updateProperty(userId) {
-            updateMessageButtons(UpdateMessageButtonsRequest(messageButtons.value))
+        updateSettingsProperty(userId, SettingsProperty.MessageButtons(messageButtons.value)) {
+            it.copy(messageButtons = IntEnum(messageButtons.value, messageButtons))
         }
 
     override suspend fun updateShowImages(userId: UserId, showImage: ShowImage) =
-        updateProperty(userId) {
-            updateShowImages(UpdateShowImagesRequest(showImage.value))
+        updateSettingsProperty(userId, SettingsProperty.ShowImages(showImage.value)) {
+            it.copy(showImages = IntEnum(showImage.value, showImage))
         }
 
     override suspend fun updateShowMoved(userId: UserId, showMoved: ShowMoved) =
-        updateProperty(userId) {
-            updateShowMoved(UpdateShowMovedRequest(showMoved.value))
+        updateSettingsProperty(userId, SettingsProperty.ShowMoved(showMoved.value)) {
+            it.copy(showMoved = IntEnum(showMoved.value, showMoved))
         }
 
     override suspend fun updateViewMode(userId: UserId, viewMode: ViewMode) =
-        updateProperty(userId) {
-            updateViewMode(UpdateViewModeRequest(viewMode.value))
+        updateSettingsProperty(userId, SettingsProperty.ViewMode(viewMode.value)) {
+            it.copy(viewMode = IntEnum(viewMode.value, viewMode))
         }
 
     override suspend fun updateViewLayout(userId: UserId, viewLayout: ViewLayout) =
-        updateProperty(userId) {
-            updateViewLayout(UpdateViewLayoutRequest(viewLayout.value))
+        updateSettingsProperty(userId, SettingsProperty.ViewLayout(viewLayout.value)) {
+            it.copy(viewLayout = IntEnum(viewLayout.value, viewLayout))
         }
 
     override suspend fun updateSwipeLeft(userId: UserId, swipeAction: SwipeAction) =
-        updateProperty(userId) {
-            updateSwipeLeft(UpdateSwipeLeftRequest(swipeAction.value))
+        updateSettingsProperty(userId, SettingsProperty.SwipeLeft(swipeAction.value)) {
+            it.copy(swipeLeft = IntEnum(swipeAction.value, swipeAction))
         }
 
     override suspend fun updateSwipeRight(userId: UserId, swipeAction: SwipeAction) =
-        updateProperty(userId) {
-            updateSwipeRight(UpdateSwipeRightRequest(swipeAction.value))
+        updateSettingsProperty(userId, SettingsProperty.SwipeRight(swipeAction.value)) {
+            it.copy(swipeRight = IntEnum(swipeAction.value, swipeAction))
         }
 
     override suspend fun updatePMSignature(userId: UserId, pmSignature: PMSignature) =
-        updateProperty(userId) {
-            updatePMSignature(UpdatePMSignatureRequest(pmSignature.value))
+        updateSettingsProperty(userId, SettingsProperty.PmSignature(pmSignature.value)) {
+            it.copy(pmSignature = IntEnum(pmSignature.value, pmSignature))
         }
 
     override suspend fun updateDraftMimeType(userId: UserId, mimeType: MimeType) =
-        updateProperty(userId) {
-            updateDraftMimeType(UpdateMimeTypeRequest(mimeType.value))
+        updateSettingsProperty(userId, SettingsProperty.DraftMimeType(mimeType.value)) {
+            it.copy(draftMimeType = StringEnum(mimeType.value, mimeType))
         }
 
     override suspend fun updateReceiveMimeType(userId: UserId, mimeType: MimeType) =
-        updateProperty(userId) {
-            updateReceiveMimeType(UpdateMimeTypeRequest(mimeType.value))
+        updateSettingsProperty(userId, SettingsProperty.ReceiveMimeType(mimeType.value)) {
+            it.copy(receiveMimeType = StringEnum(mimeType.value, mimeType))
         }
 
     override suspend fun updateShowMimeType(userId: UserId, mimeType: MimeType) =
-        updateProperty(userId) {
-            updateShowMimeType(UpdateMimeTypeRequest(mimeType.value))
+        updateSettingsProperty(userId, SettingsProperty.ShowMimeType(mimeType.value)) {
+            it.copy(showMimeType = StringEnum(mimeType.value, mimeType))
         }
 
     override suspend fun updateRightToLeft(userId: UserId, rightToLeft: Boolean) =
-        updateProperty(userId) {
-            updateRightToLeft(UpdateRightToLeftRequest(rightToLeft.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.RightToLeft(rightToLeft.toInt())) {
+            it.copy(rightToLeft = rightToLeft)
         }
 
     override suspend fun updateAttachPublicKey(userId: UserId, attachPublicKey: Boolean) =
-        updateProperty(userId) {
-            updateAttachPublicKey(UpdateAttachPublicKeyRequest(attachPublicKey.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.AttachPublicKey(attachPublicKey.toInt())) {
+            it.copy(attachPublicKey = attachPublicKey)
         }
 
-    override suspend fun updateSign(userId: UserId, sign: Boolean) = updateProperty(userId) {
-        updateSign(UpdateSignRequest(sign.toInt()))
-    }
+    override suspend fun updateSign(userId: UserId, sign: Boolean) =
+        updateSettingsProperty(userId, SettingsProperty.Sign(sign.toInt())) {
+            it.copy(sign = sign)
+        }
 
     override suspend fun updatePGPScheme(userId: UserId, packageType: PackageType) =
-        updateProperty(userId) {
-            updatePGPScheme(UpdatePGPSchemeRequest(packageType.type))
+        updateSettingsProperty(userId, SettingsProperty.PgpScheme(packageType.type)) {
+            it.copy(pgpScheme = IntEnum(packageType.type, packageType))
         }
 
     override suspend fun updatePromptPin(userId: UserId, promptPin: Boolean) =
-        updateProperty(userId) {
-            updatePromptPin(UpdatePromptPinRequest(promptPin.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.PromptPin(promptPin.toInt())) {
+            it.copy(promptPin = promptPin)
         }
 
     override suspend fun updateStickyLabels(userId: UserId, stickyLabels: Boolean) =
-        updateProperty(userId) {
-            updateStickyLabels(UpdateStickyLabelsRequest(stickyLabels.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.StickyLabels(stickyLabels.toInt())) {
+            it.copy(stickyLabels = stickyLabels)
         }
 
     override suspend fun updateConfirmLink(userId: UserId, confirmLinks: Boolean) =
-        updateProperty(userId) {
-            updateConfirmLink(UpdateConfirmLinkRequest(confirmLinks.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.ConfirmLink(confirmLinks.toInt())) {
+            it.copy(confirmLink = confirmLinks)
         }
 
     override suspend fun updateInheritFolderColor(userId: UserId, inherit: Boolean) =
-        updateProperty(userId) {
-            updateInheritFolderColor(UpdateInheritFolderColorRequest(inherit.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.InheritFolderColor(inherit.toInt())) {
+            it.copy(inheritParentFolderColor = inherit)
         }
 
     override suspend fun updateEnableFolderColor(userId: UserId, enable: Boolean) =
-        updateProperty(userId) {
-            updateEnableFolderColor(UpdateEnableFolderColorRequest(enable.toInt()))
+        updateSettingsProperty(userId, SettingsProperty.EnableFolderColor(enable.toInt())) {
+            it.copy(enableFolderColor = enable)
         }
 }
