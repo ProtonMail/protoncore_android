@@ -27,11 +27,14 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.verify
+import junit.framework.Assert.assertNotSame
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.test.TestCoroutineScope
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationManagerObserver
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -54,6 +57,8 @@ class AuthViewModelTest : ArchTest, CoroutinesTest {
         val coroutineScope = mockk<LifecycleCoroutineScope>() {
             every { coroutineContext } returns TestCoroutineScope().coroutineContext
         }
+        // `HumanVerificationManager.observe` is an extension fun, we have to manually mock it
+        mockkStatic(HumanVerificationManager::observe)
         // Mock extension functions of Lifecycle (for lifecycle.coroutineScope)
         mockkStatic("androidx.lifecycle.LifecycleKt")
         every { lifecycle.coroutineScope } returns coroutineScope
@@ -70,26 +75,31 @@ class AuthViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `handleHumanVerificationState creates a new observer if none exists`() = coroutinesTest {
+    fun `handleHumanVerificationState always creates a new observer`() = coroutinesTest {
         // GIVEN
         assertNull(viewModel.humanVerificationObserver)
         // WHEN
         viewModel.handleHumanVerificationState(lifecycle)
+        val firstObserver = viewModel.humanVerificationObserver
+        viewModel.handleHumanVerificationState(lifecycle)
+        val secondObserver = viewModel.humanVerificationObserver
         // THEN
         assertNotNull(viewModel.humanVerificationObserver)
+        assertNotSame(firstObserver, secondObserver)
     }
 
     @Test
-    fun `handleHumanVerificationState reuses an observer if it exists`() = coroutinesTest {
+    fun `handleHumanVerificationState cancels previous observer if it exists`() = coroutinesTest {
         // GIVEN
         val observer = mockk<HumanVerificationManagerObserver> {
             coEvery { onHumanVerificationNeeded(any(), any()) } returns this
+            every { cancelAllObservers() } returns Unit
         }
         viewModel.humanVerificationObserver = observer
         // WHEN
         viewModel.handleHumanVerificationState(lifecycle)
         // THEN
-        assertTrue(viewModel.humanVerificationObserver === observer)
+        verify { observer.cancelAllObservers() }
     }
 
     @Test
@@ -98,7 +108,7 @@ class AuthViewModelTest : ArchTest, CoroutinesTest {
         val observer = mockk<HumanVerificationManagerObserver> {
             coEvery { onHumanVerificationNeeded(any(), any()) } returns this
         }
-        viewModel.humanVerificationObserver = observer
+        every { humanVerificationManager.observe(any(), any()) } returns observer
         // WHEN
         viewModel.handleHumanVerificationState(lifecycle)
         // THEN

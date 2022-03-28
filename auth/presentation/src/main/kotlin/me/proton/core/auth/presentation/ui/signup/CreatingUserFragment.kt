@@ -26,7 +26,7 @@ import me.proton.core.auth.presentation.ui.removeCreatingUser
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.humanverification.presentation.HumanVerificationManagerObserver
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.humanverification.presentation.utils.hasHumanVerificationFragment
 
 class CreatingUserFragment : SignupFragment(R.layout.fragment_creating_user) {
 
@@ -36,20 +36,17 @@ class CreatingUserFragment : SignupFragment(R.layout.fragment_creating_user) {
         super.onViewCreated(view, savedInstanceState)
 
         val humanVerificationObserver = signupViewModel.observeHumanVerification(requireActivity().lifecycle)
-        observeHumanVerificationNeeded(humanVerificationObserver)
-    }
-
-    private fun observeHumanVerificationNeeded(observer: HumanVerificationManagerObserver) {
-        // We only register the verification failed observer after the verification needed one because if a HV check is
-        // needed we'd receive a verification failed response first and we'd incorrectly assume that the HV check failed
-        observer.onHumanVerificationNeeded { observeHumanVerificationFailed(observer) }
+        observeHumanVerificationFailed(humanVerificationObserver)
     }
 
     private fun observeHumanVerificationFailed(observer: HumanVerificationManagerObserver) {
-        observer.onHumanVerificationFailed {
-            parentFragmentManager.removeCreatingUser()
-            // Stop observing to avoid duplicate callback calls
-            signupViewModel.stopObservingHumanVerification(true)
+        // If we receive a HV failed state and HV screen is shown it means the user canceled it so we need to remove it.
+        observer.onHumanVerificationFailed(initialState = false) {
+            if (parentFragmentManager.hasHumanVerificationFragment()) {
+                parentFragmentManager.removeCreatingUser()
+                // Stop observing to avoid duplicate callback calls
+                signupViewModel.stopObservingHumanVerification(true)
+            }
         }
     }
 
