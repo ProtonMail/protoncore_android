@@ -23,6 +23,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -40,7 +41,6 @@ import me.proton.core.network.data.util.TestRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiManagerImpl
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkPrefs
@@ -48,12 +48,14 @@ import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.handlers.DohApiHandler
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -109,6 +111,12 @@ internal class ApiManagerTests {
     @MockK
     private lateinit var clientVersionValidator: ClientVersionValidator
 
+    @MockK
+    private lateinit var dohAlternativesListener: DohAlternativesListener
+
+    @MockK
+    private lateinit var protonDohService: DohService
+
     private var time = 0L
     private var wallTime = 0L
 
@@ -127,6 +135,7 @@ internal class ApiManagerTests {
         coEvery { clientIdProvider.getClientId(any()) } returns clientId
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
+
 
         networkManager = MockNetworkManager()
         networkManager.networkStatus = NetworkStatus.Unmetered
@@ -148,12 +157,22 @@ internal class ApiManagerTests {
                 mockk(),
                 scope,
                 cache = { null },
-                apiConnectionListener = null,
                 clientVersionValidator = clientVersionValidator,
+                dohAlternativesListener = null
             )
 
-        coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)
-        val dohProvider = DohProvider(baseUrl, apiClient, listOf(dohService), scope, prefs, ::time)
+        coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns listOf(proxy1url)
+        val dohProvider = DohProvider(
+            baseUrl,
+            apiClient,
+            listOf(dohService),
+            protonDohService,
+            scope,
+            prefs,
+            ::time,
+            null,
+            dohAlternativesListener
+        )
         dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime, ::time) {
             altBackend1
         }
@@ -442,6 +461,7 @@ internal class ApiManagerTests {
 
     @Test
     fun `test doh proxy refresh throttling`() = runBlockingTest {
+        coEvery { dohAlternativesListener.onAlternativesUnblock(any()) } returns Unit
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
         coEvery { backend.isPotentiallyBlocked() } returns true
         coEvery { altBackend1.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
@@ -457,7 +477,51 @@ internal class ApiManagerTests {
         assertTrue(result3 is ApiResult.Error.Connection)
 
         coVerify(exactly = 2) {
-            dohService.getAlternativeBaseUrls(any())
+            dohService.getAlternativeBaseUrls(any(), any())
+        }
+    }
+
+    @Test
+    fun `test doh alternatives failed but client supports gh`() = runBlockingTest {
+        val scope = CoroutineScope(TestCoroutineDispatcher())
+        val dohProvider = DohProvider(
+            baseUrl,
+            apiClient,
+            listOf(dohService),
+            protonDohService,
+            scope,
+            prefs,
+            ::time,
+            null,
+            dohAlternativesListener
+        )
+        dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime, ::time) {
+            altBackend1
+        }
+        apiManager = ApiManagerImpl(
+            apiClient, backend,
+            apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time, dohApiHandler), ::time
+        )
+
+        val lambda = slot<suspend () -> Unit>()
+        coEvery { dohAlternativesListener.onAlternativesUnblock(capture(lambda)) } coAnswers {
+            lambda.captured.invoke()
+        }
+        coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns null
+        coEvery { protonDohService.getAlternativeBaseUrls(any(), any()) } returns listOf(proxy1url)
+        coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
+        coEvery { backend.isPotentiallyBlocked() } returns true
+        coEvery { altBackend1.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
+
+        val result = apiManager.invoke { test() }
+        assertTrue(result is ApiResult.Error.Connection)
+
+        coVerify {
+            dohService.getAlternativeBaseUrls(any(), any())
+        }
+
+        coVerify {
+            protonDohService.getAlternativeBaseUrls(any(), any())
         }
     }
 }

@@ -92,7 +92,7 @@ internal class DohProviderTests {
             .setBody(Buffer().write(dnsMessage.toArray()))
         webServer.enqueue(response)
 
-        val result = dohProvider.getAlternativeBaseUrls("https://$domain/")!!
+        val result = dohProvider.getAlternativeBaseUrls(null, "https://$domain/")!!
         assertEquals(listOf("https://proxy.com/"), result)
         val acceptHeader = webServer.takeRequestWithDefaultTimeout()?.headers?.get("Accept")
         assertEquals("application/dns-message", acceptHeader)

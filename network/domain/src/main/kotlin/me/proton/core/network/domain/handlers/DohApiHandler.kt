@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-package me.proton.core.network.domain
+package me.proton.core.network.domain.handlers
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
+import me.proton.core.network.domain.ApiBackend
+import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.ApiErrorHandler
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.DohProvider
+import me.proton.core.network.domain.NetworkPrefs
 
 /**
  * Responsible for making an API call according to DoH feature logic: when our API seems blocked
@@ -59,35 +66,38 @@ class DohApiHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        return if (!apiClient.shouldUseDoh || !error.isPotentialBlocking) {
-            error
-        } else {
-            coroutineScope {
-                // Ping primary backend (to make sure failure wasn't a random network error rather than
-                // an actual block) parallel with refreshing proxy list
-                val isPotentiallyBlockedAsync = async {
-                    primaryBackend.isPotentiallyBlocked()
-                }
-                val dohRefresh = async {
-                    withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
-                        dohProvider.refreshAlternatives()
+        return when {
+            !apiClient.shouldUseDoh -> error
+            !error.isPotentialBlocking -> error
+            error !is ApiResult.Error.Connection -> error
+            else -> {
+                coroutineScope {
+                    // Ping primary backend (to make sure failure wasn't a random network error rather than
+                    // an actual block) parallel with refreshing proxy list
+                    val isPotentiallyBlockedAsync = async {
+                        primaryBackend.isPotentiallyBlocked()
                     }
-                }
-                // If ping on primary api succeeded don't fallback to proxy
-                val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
-                if (isPotentiallyBlocked) {
-                    dohRefresh.await()
+                    val dohRefresh = async {
+                        withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
+                            dohProvider.refreshAlternatives()
+                        }
+                    }
+                    // If ping on primary api succeeded don't fallback to proxy
+                    val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
+                    if (isPotentiallyBlocked) {
+                        dohRefresh.await()
 
-                    if (activeAltBackend == null)
-                        prefs.lastPrimaryApiFail = wallClockMs()
-                    else
+                        if (activeAltBackend == null)
+                            prefs.lastPrimaryApiFail = wallClockMs()
+                        else
+                            activeAltBackend = null
+
+                        callWithAlternatives(call) ?: error
+                    } else {
+                        dohRefresh.cancel()
                         activeAltBackend = null
-
-                    callWithAlternatives(call) ?: error
-                } else {
-                    dohRefresh.cancel()
-                    activeAltBackend = null
-                    error
+                        error
+                    }
                 }
             }
         }

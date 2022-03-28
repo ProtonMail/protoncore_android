@@ -141,8 +141,8 @@ internal class ProtonApiBackendTests {
             cookieJar,
             scope,
             cache = { null },
-            apiConnectionListener = null,
             clientVersionValidator = clientVersionValidator,
+            dohAlternativesListener = null
         )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable

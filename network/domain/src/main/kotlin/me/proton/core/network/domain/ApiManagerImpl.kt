@@ -18,6 +18,7 @@
 package me.proton.core.network.domain
 
 import kotlinx.coroutines.delay
+import me.proton.core.network.domain.handlers.DohApiHandler
 import kotlin.math.pow
 import kotlin.random.Random
 
