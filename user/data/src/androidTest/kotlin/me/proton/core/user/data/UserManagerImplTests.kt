@@ -18,6 +18,7 @@
 
 package me.proton.core.user.data
 
+import androidx.test.platform.app.InstrumentationRegistry
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -105,6 +106,8 @@ class UserManagerImplTests {
 
     @Before
     fun setup() {
+        val context = InstrumentationRegistry.getInstrumentation().context
+
         // Build a new fresh in memory Database, for each test.
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
@@ -118,7 +121,7 @@ class UserManagerImplTests {
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)
 
         // UserRepositoryImpl implements PassphraseRepository.
-        userRepository = UserRepositoryImpl(db, apiProvider, cryptoContext)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext)
         passphraseRepository = userRepository
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
