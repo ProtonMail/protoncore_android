@@ -36,6 +36,36 @@ fun provideApiFactory(
 
 ## [7.1.6]
 
+## New
+- Added support for challenge library. It is used for anti abuse purposes, and basically besides the initial
+integration, clients are not needed to interact with it. To integrate, client DB version should be increased and
+challenge DB integrated:
+
+1.
+```kotlin
+@Binds
+abstract fun provideChallengeDatabase(appDatabase: AppDatabase): ChallengeDatabase
+```
+
+2. Along with a db migration:
+```kotlin
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        ChallengeDatabase.MIGRATION_0.migrate(database)
+    }
+}
+```
+
+3. Add ChallengeFrameEntity::class to the DB entities list.
+
+
+4. And in AuthModule.kt add the dependency:
+```kotlin
+@Provides
+@Singleton
+fun provideChallengeConfig(): SignupChallengeConfig = SignupChallengeConfig()
+```
+
 ## Fixed
 
 - Fix progress indicator not appearing on username screen while loading domains.
