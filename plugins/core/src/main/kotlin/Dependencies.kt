@@ -19,17 +19,8 @@
 @file:Suppress("TopLevelPropertyNaming", "ObjectPropertyName")
 
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import studio.forface.easygradle.dsl.android.`activity version`
-import studio.forface.easygradle.dsl.android.`android-test version`
-import studio.forface.easygradle.dsl.android.`espresso version`
-import studio.forface.easygradle.dsl.android.`lifecycle version`
-import studio.forface.easygradle.dsl.android.`retrofit version`
-import studio.forface.easygradle.dsl.android.androidx
-import studio.forface.easygradle.dsl.android.androidxLifecycle
-import studio.forface.easygradle.dsl.dependency
-import studio.forface.easygradle.dsl.google
-import studio.forface.easygradle.dsl.squareup
-import studio.forface.easygradle.dsl.version
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 // region AndroidX
 public val DependencyHandler.`core-splashscreen`: Any
@@ -43,8 +34,8 @@ public val DependencyHandler.`navigation-compose`: Any
     get() = androidx("navigation", moduleSuffix = "compose") version `navigation version`
 public val DependencyHandler.`hilt-navigation-compose`: Any
     get() = androidx("hilt", moduleSuffix = "navigation-compose") version `hilt-navigation-compose version`
-public val DependencyHandler.`lifecycle-compose`: Any
-    get() = androidx("lifecycle", moduleSuffix = "compose") version `hilt-navigation-compose version`
+public val DependencyHandler.`lifecycle-viewModel-compose`: Any
+    get() = androidx("lifecycle", moduleSuffix = "viewmodel-compose") version `lifecycle version`
 
 public fun DependencyHandler.compose(
     module: String,
@@ -54,6 +45,8 @@ public fun DependencyHandler.compose(
 
 public val DependencyHandler.`compose-animation`: Any
     get() = compose("animation")
+public val DependencyHandler.`compose-animation-core`: Any
+    get() = compose("animation", moduleSuffix = "core")
 public val DependencyHandler.`compose-compiler`: Any
     get() = compose("compiler")
 public val DependencyHandler.`compose-foundation`: Any
@@ -64,24 +57,33 @@ public val DependencyHandler.`compose-material`: Any
     get() = compose("material")
 public val DependencyHandler.`compose-material3`: Any
     get() = compose("material3", version = `material3 version`)
+public val DependencyHandler.`compose-material-icons-core`: Any
+    get() = compose("material", moduleSuffix="icons-core")
 public val DependencyHandler.`compose-runtime`: Any
     get() = compose("runtime")
 public val DependencyHandler.`compose-ui`: Any
     get() = compose("ui")
+public val DependencyHandler.`compose-ui-graphics`: Any
+    get() = compose("ui", moduleSuffix = "graphics")
 public val DependencyHandler.`compose-ui-tooling`: Any
     get() = compose("ui", "tooling")
+public val DependencyHandler.`compose-ui-tooling-preview`: Any
+    get() = compose("ui", "tooling-preview")
 public val DependencyHandler.`compose-ui-test`: Any
     get() = compose("ui", "test")
+public val DependencyHandler.`compose-ui-text`: Any
+    get() = compose("ui", "text")
 public val DependencyHandler.`compose-ui-test-junit`: Any
     get() = compose("ui", "test-junit4")
 public val DependencyHandler.`compose-ui-test-manifest`: Any
     get() = compose("ui", "test-manifest")
-
+public val DependencyHandler.`compose-ui-unit`: Any
+    get() = compose("ui", "unit")
 // endregion
 
 // Network
 public val DependencyHandler.miniDns: Any
-    get() = dependency("org.minidns", module = "minidns-hla") version `miniDns version`
+    get() = dependency("org.minidns", module = "minidns-core") version `miniDns version`
 public val DependencyHandler.`retrofit-scalars-converter`: Any
     get() = squareup("retrofit2", "converter-scalars") version `retrofit version`
 public val DependencyHandler.okhttp: Any
@@ -92,16 +94,28 @@ public val DependencyHandler.trustKit: Any
     get() = dependency("com.datatheorem.android.trustkit", module = "trustkit") version `trustKit version`
 
 // Other
+public val DependencyHandler.`activity-noktx`: Any
+    get() = androidx("activity") version `activity version`
+public val DependencyHandler.`androidx-collection`: Any
+    get() = androidx("collection") version `androidx-collection version`
+public val DependencyHandler.`androidx-navigation-common`: Any
+    get() = androidx("navigation", moduleSuffix = "common") version `navigation version`
 public val DependencyHandler.`apacheCommon-codec`: Any
     get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
+public val DependencyHandler.`appcompat-resources`: Any
+    get() = androidx("appcompat", moduleSuffix = "resources") version `appcompat version`
 public val DependencyHandler.bcrypt: Any
     get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
+public val DependencyHandler.coordinatorlayout: Any
+    get() = dependency("androidx.coordinatorlayout", module = "coordinatorlayout") version `coordinatorlayout version`
 public val DependencyHandler.datastore: Any
     get() = dependency("androidx.datastore", module = "datastore") version `datastore version`
 public val DependencyHandler.googlePlayBilling: Any
     get() = dependency("com.android.billingclient", module = "billing") version `googlePlayBilling version`
 public val DependencyHandler.googleTink: Any
     get() = google("crypto.tink", module = "tink-android") version `googleTink version`
+public val DependencyHandler.guavaListenableFuture: Any
+    get() = dependency("com.google.guava", module = "listenablefuture") version `guavaListenableFuture version`
 public val DependencyHandler.`lint-core`: Any
     get() = lint()
 public val DependencyHandler.`lint-api`: Any
@@ -118,33 +132,49 @@ public val DependencyHandler.`lifecycle-common`: Any
     get() = androidxLifecycle("common") version `lifecycle version`
 public val DependencyHandler.`lifecycle-extensions`: Any
     get() = androidxLifecycle("extensions") version `lifecycle-extensions version`
+public val DependencyHandler.`lifecycle-livedata-core`: Any
+    get() = androidxLifecycle("livedata-core") version `lifecycle version`
 public val DependencyHandler.`lifecycle-process`: Any
     get() = androidxLifecycle("process") version `lifecycle version`
+public val DependencyHandler.`lifecycle-savedState`: Any
+    get() = androidxLifecycle("viewmodel-savedstate") version `lifecycle version`
 public val DependencyHandler.lottie: Any
     get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
 public val DependencyHandler.`javax-inject`: Any
     get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
 public val DependencyHandler.`ez-vcard`: Any
     get() = dependency("com.googlecode.ez-vcard", module = "ez-vcard") version `ez-vcard_version`
+public val DependencyHandler.recyclerview: Any
+    get() = androidx("recyclerview") version `recyclerview version`
 public val DependencyHandler.`startup-runtime`: Any
     get() = androidx("startup", moduleSuffix = "runtime") version `startup-runtime version`
+public val DependencyHandler.`serialization-core`: Any
+    get() = serialization("core")
 
 // region accessors
-public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
+public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`): Any =
     dependency("android.tools.lint", "lint", moduleSuffix, version)
 // endregion
 
 // region tests
 public val DependencyHandler.`android-test-core-ktx`: Any
     get() = dependency("androidx.test", module = "core-ktx") version `android-test version`
+public val DependencyHandler.`androidx-test-monitor`: Any
+    get() = androidx("test", module = "monitor") version `androidx-test-monitor version`
 public val DependencyHandler.`espresso-contrib`: Any
     get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
+public val DependencyHandler.`espresso-idling-resource`: Any
+    get() = androidx("test.espresso", module = "espresso-idling-resource") version `espresso version`
 public val DependencyHandler.`espresso-intents`: Any
     get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
 public val DependencyHandler.`espresso-web`: Any
     get() = androidx("test.espresso", module = "espresso-web") version `espresso version`
+public val DependencyHandler.hamcrest: Any
+    get() = dependency("org.hamcrest", module = "hamcrest") version `hamcrest version`
 public val DependencyHandler.jsonsimple: Any
     get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
+public val DependencyHandler.junit: Any
+    get() = dependency("junit", module = "junit") version `junit version`
 public val DependencyHandler.`junit-ktx`: Any
     get() = dependency("androidx.test.ext", module = "junit-ktx") version `junit-ktx version`
 public val DependencyHandler.orchestrator: Any
