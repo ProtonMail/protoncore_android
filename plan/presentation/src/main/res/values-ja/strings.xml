@@ -86,11 +86,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 countries</string>
   <string name="plan_id_vpnbasic_high_speed">High speed</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 countries</string>
   <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Streaming service support</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>

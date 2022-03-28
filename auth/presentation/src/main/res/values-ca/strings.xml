@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">El xifratge manté privades les vostres dades. Les vostres dades us pertanyen.</string>
   <string name="welcome_title_mail">Protegiu la vostra privadesa amb ProtonMail</string>
   <string name="welcome_subtitle_mail">El correu electrònic xifrat manté en privat les vostres converses. La vostra safata d\'entrada us pertany.</string>
+  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">Protegiu la vostra privadesa amb ProtonDrive</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
   <string name="welcome_title_calendar">Protegiu la vostra privadesa amb ProtonCalendar</string>
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
+  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Protegiu la vostra privadesa amb ProtonVPN</string>
   <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat xifrant la vostra connexió a Internet.</string>
+  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Contrasenya</string>
   <string name="auth_password_help">La contrasenya ha de tenir com a mínim 8 caràcters</string>
   <string name="auth_current_login_password">Current login password</string>

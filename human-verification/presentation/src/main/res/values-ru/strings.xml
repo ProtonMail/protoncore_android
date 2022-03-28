@@ -54,4 +54,6 @@
   <string name="human_verification_captcha_failed">Проверка CAPTCHA не удалась. Пожалуйста, попробуйте еще раз или выберите другой способ проверки.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Нет соединения. Невозможно загрузить CAPTCHA.</string>
+  <string name="human_verification_action_retry">Повторить</string>
+  <string name="human_verification_method_loading_failed">Не удалось загрузить текущий метод проверки. Если проблема не исчезла, попробуйте использовать другие методы, если они доступны, или обратитесь к экрану справки.</string>
 </resources>

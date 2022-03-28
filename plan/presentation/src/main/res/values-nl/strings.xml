@@ -39,7 +39,7 @@
   <string name="plans_manage_your_subscription">Beheer uw abonnement op <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s van %s</string>
   <string name="plans_manage_your_subscription_vpn">Beheer uw abonnement op <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
-  <string name="plans_can_not_upgrade_from_mobile">U can niet upgraden vanuit de mobiele app.</string>
+  <string name="plans_can_not_upgrade_from_mobile">U kan niet upgraden vanuit de mobiele app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# opslagruimte</item>
@@ -98,11 +98,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basis</string>
+  <string name="plan_id_vpnbasic_countries">63 landen</string>
   <string name="plan_id_vpnbasic_high_speed">Hoge snelheid</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 landen</string>
   <string name="plan_id_vpnplus_highest_speed">Hoogste snelheid</string>
+  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Streamingdienst ondersteuning</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>

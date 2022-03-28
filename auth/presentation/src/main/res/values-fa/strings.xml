@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">رمزگذاری داده‌های شما را خصوصی نگاه می‌دارد. داده‌های شما حقیقتاً متعلق به شما هستند.</string>
   <string name="welcome_title_mail">از حریم خصوصی خود با ProtonMail حفاظت کنید</string>
   <string name="welcome_subtitle_mail">ایمیل رمزگذاری شده که گفتگوهای شما را خصوصی نگه می‌دارد. صندوق دریافت شما حقیقتاً متعلق به شماست.</string>
+  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">با Proton Drive از حریم خصوصی خود حفاظت کنید</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
   <string name="welcome_title_calendar">از حریم خصوصی خود با Proton Calendar حفاظت کنید</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
+  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
+  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">گذرواژه</string>
   <string name="auth_password_help">Password must contain at least 8 characters</string>
   <string name="auth_current_login_password">Current login password</string>

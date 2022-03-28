@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Η κρυπτογράφηση διατηρεί τα δεδομένα σας απόρρητα. Τα δεδομένα σας ανήκουν πραγματικά σε εσάς.</string>
   <string name="welcome_title_mail">Προστατέψτε την ιδιοτικότητά σας με το ProtonMail</string>
   <string name="welcome_subtitle_mail">Το κρυπτογραφημένο email διατηρεί τις συνομιλίες σας απόρρητες. Τα εισερχόμενά σας ανήκουν πραγματικά σε εσάς.</string>
+  <string name="welcome_subtitle_mail_alt">Ιδιωτικότητα. Διασφάλιση. Ευκολία. Κρυπτογραφημένο ταχυδρομείο που σας δίνει πλήρη έλεγχο των προσωπικών σας δεδομένων.</string>
   <string name="welcome_title_drive">Προστατέψτε την ιδιοτικότητά σας με το Proton Drive</string>
   <string name="welcome_subtitle_drive">Η άνεση της αποθήκευσης στο νέφος και η διασφάλιση της τεχνολογίας κρυπτογράφησης. Επιτέλους μια αξιόπιστη λύση αποθήκευσης στο νέφος.</string>
+  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
   <string name="welcome_title_calendar">Προστατέψτε την ιδιοτικότητά σας με το Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Κρυπτογραφημένο ημερολόγιο που κρατά τις εκδηλώσεις σας ιδιωτικές, ασφαλείς και διασφαλισμένες.</string>
+  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει το απόρρητό σας κρυπτογραφώντας τη σύνδεσή σας στο διαδίκτυο.</string>
+  <string name="welcome_subtitle_vpn_alt">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει την ιδιωτικότητά σας. Μέγιστη διασφάλιση, 1600+ διακομιστές, και χωρίς περιορισμούς.</string>
+  <string name="welcome_privacy_by_default">Ιδιωτικότητα από προεπιλογή</string>
   <string name="auth_password_label">Κωδικός</string>
   <string name="auth_password_help">Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες</string>
   <string name="auth_current_login_password">Τρέχων κωδικός εισόδου</string>

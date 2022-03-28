@@ -41,6 +41,6 @@
   <string name="presentation_skip">Ignorer</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Impossible de se connecter au serveur.</string>
-  <string name="presentation_check_your_connection">Check your connection</string>
-  <string name="presentation_connectivity_issues">Connectivity issues</string>
+  <string name="presentation_check_your_connection">Vérifiez votre connexion</string>
+  <string name="presentation_connectivity_issues">Problèmes de connectivité</string>
 </resources>

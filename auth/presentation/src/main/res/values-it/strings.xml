@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">La crittografia mantiene privati ​​i tuoi dati. I tuoi dati ti appartengono davvero.</string>
   <string name="welcome_title_mail">Proteggi la tua privacy con ProtonMail</string>
   <string name="welcome_subtitle_mail">Email crittografata che mantiene private le tue conversazioni. La tua casella di posta ti appartiene davvero.</string>
+  <string name="welcome_subtitle_mail_alt">Privacy. Sicurezza. Convenienza. Email crittografata che ti dà il pieno controllo dei tuoi dati personali.</string>
   <string name="welcome_title_drive">Proteggi la tua privacy con Proton Drive</string>
   <string name="welcome_subtitle_drive">La comodità del cloud storage e la sicurezza della tecnologia di crittografia. Finalmente una soluzione di archiviazione cloud di cui ti puoi fidare.</string>
+  <string name="welcome_subtitle_drive_alt">Il modo più sicuro per archiviare i tuoi file. Carica, sincronizza e condividi con la crittografia più potente disponibile.</string>
   <string name="welcome_title_calendar">Proteggi la tua privacy con Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene i tuoi eventi della vita privati, protetti e protetti.</string>
+  <string name="welcome_subtitle_calendar_alt">Il nostro calendario crittografato end-to-end ti aiuta a rimanere organizzato, in pista e sotto controllo.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">VPN svizzera ad alta velocità che salvaguarda la tua privacy crittografando la tua connessione Internet.</string>
+  <string name="welcome_subtitle_vpn_alt">VPN svizzera ad alta velocità che protegge la tua privacy. Massima sicurezza, oltre 1.600 server e nessuna restrizione.</string>
+  <string name="welcome_privacy_by_default">Privacy per default</string>
   <string name="auth_password_label">Password</string>
   <string name="auth_password_help">La password deve contenere almeno 8 caratteri</string>
   <string name="auth_current_login_password">Password d\'accesso attuale</string>

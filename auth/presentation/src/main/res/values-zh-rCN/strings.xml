@@ -21,15 +21,20 @@
   <string name="welcome_subtitle">我们依靠加密机制保护个人隐私，让您的数据真正归您所有。</string>
   <string name="welcome_title_mail">使用 ProtonMail 来保护您的隐私</string>
   <string name="welcome_subtitle_mail">加密邮件保护您的通讯隐私，打造您的专属收件箱。</string>
+  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">使用 Proton Drive 来保护您的隐私</string>
-  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+  <string name="welcome_subtitle_drive">便捷的云端存储与安全的加密技术完美结合，众望所归的可信云存储服务。</string>
+  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
   <string name="welcome_title_calendar">使用 Proton Calendar 来保护您的隐私</string>
   <string name="welcome_subtitle_calendar">加密日历让您的生活大小事保持隐私、安全和可靠。</string>
+  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">通过加密网络连接来保护您隐私的瑞士高速VPN。</string>
+  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">密码</string>
   <string name="auth_password_help">密码必须至少包含 8 个字符</string>
-  <string name="auth_current_login_password">Current login password</string>
+  <string name="auth_current_login_password">当前登录密码</string>
   <string name="auth_enter_six_digit_code">请输入 6 位验证码</string>
   <string name="auth_second_factor_code">双重验证码</string>
   <string name="auth_email_username">邮箱或用户名</string>
@@ -70,7 +75,7 @@
   <string name="auth_create_address_result_recovery_title">您的密保邮箱：</string>
   <string name="auth_create_address_create">创建地址</string>
   <string name="auth_create_address_creating">正在创建地址</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">点击创建地址即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">服务条款</a>。</string>
   <string name="auth_create_address_error_credentials">账号和密码不应为空。</string>
   <string name="auth_create_address_error_no_available_domain">没有可用的域名。</string>
   <string name="auth_create_address_error_private_key">生成私钥失败。</string>
@@ -101,7 +106,7 @@
   <string name="auth_signup_recovery_method_title">设置恢复方法（非必需）</string>
   <string name="auth_signup_recovery_method_title_mandatory">Set recovery method</string>
   <string name="auth_signup_recovery_method_subtitle">假如以后您忘记用户名或密码无法登录，我们将通过这个邮箱或电话号码帮助您恢复账户。</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">假如以后您忘记用户名或密码无法登录，我们将通过这个邮箱帮助您恢复账户。</string>
   <string name="auth_signup_recovery_method_email">电子邮箱</string>
   <string name="auth_signup_recovery_method_phone">电话号码</string>
   <string name="auth_signup_recovery_method_email_hint">密保邮箱</string>

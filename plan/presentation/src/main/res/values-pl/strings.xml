@@ -122,11 +122,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 kraje</string>
   <string name="plan_id_vpnbasic_high_speed">Wysoka prędkość</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 kraje</string>
   <string name="plan_id_vpnplus_highest_speed">Najwyższa prędkość</string>
+  <string name="plan_id_vpnplus_adblock">Blokada reklam (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Wsparcie usług streamingu</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>

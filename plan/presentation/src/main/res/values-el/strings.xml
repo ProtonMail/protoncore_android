@@ -98,11 +98,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 χώρες</string>
   <string name="plan_id_vpnbasic_high_speed">Υψηλή ταχύτητα</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 χώρες</string>
   <string name="plan_id_vpnplus_highest_speed">Ύψιστη ταχύτητα</string>
+  <string name="plan_id_vpnplus_adblock">Φραγή Διαφημίσεων (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Υποστήριξη υπηρεσίας μετάδοσης</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>

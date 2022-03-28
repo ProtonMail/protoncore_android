@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">加密讓您的資料保持私密。您的資料真正屬於您。</string>
   <string name="welcome_title_mail">使用 ProtonMail 保護您的隱私</string>
   <string name="welcome_subtitle_mail">維持您郵件隱密的加密電子郵件。您的收件匣真正屬於您。</string>
+  <string name="welcome_subtitle_mail_alt">隱私。安全。方便。讓您可完全控制自己的個人資料的加密電子郵件。</string>
   <string name="welcome_title_drive">使用 Proton Drive 保護您的隱私</string>
-  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+  <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。最後成為了您可信賴的雲端儲存解決方案。</string>
+  <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。使用最強大的加密方式上傳、同步並分享。</string>
   <string name="welcome_title_calendar">使用 Proton Calendar 保護您的隱私</string>
   <string name="welcome_subtitle_calendar">讓您的生活大事維持隱密、安全且可靠的加密行事曆。</string>
+  <string name="welcome_subtitle_calendar_alt">我們的端到端加密行事曆可協助您井然有序地步入正軌，一切都在掌控之中。</string>
   <string name="welcome_title_vpn">使用 Proton VPN 保護您的隱私</string>
   <string name="welcome_subtitle_vpn">高速瑞士 VPN，透過加密您的網際網路連線來保護您的隱私。</string>
+  <string name="welcome_subtitle_vpn_alt">高速的瑞士 VPN 保護您的隱私。最強的安全性，超過 1600 台伺服器，而且沒有限制。</string>
+  <string name="welcome_privacy_by_default">預設即隱私</string>
   <string name="auth_password_label">密碼</string>
   <string name="auth_password_help">密碼必須包含至少 8 個字元</string>
   <string name="auth_current_login_password">目前的登入密碼</string>
@@ -70,7 +75,7 @@
   <string name="auth_create_address_result_recovery_title">您的備援電子郵件地址為：</string>
   <string name="auth_create_address_create">建立電子郵件地址</string>
   <string name="auth_create_address_creating">正在建立電子郵件地址</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">點擊建立電子郵件地址，即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">條款與細則</a>。</string>
   <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>

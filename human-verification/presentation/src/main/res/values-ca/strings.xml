@@ -54,4 +54,6 @@
   <string name="human_verification_captcha_failed">Ha fallat la verificació CAPTCHA. Torneu-ho a provar o trieu una altra opció de verificació.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">No hi ha connexió. No s\'ha pogut carregar el CAPTCHA.</string>
+  <string name="human_verification_action_retry">Retry</string>
+  <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
 </resources>

@@ -34,7 +34,7 @@
   <string name="plans_billing_yearly">Por 1 ano</string>
   <string name="plans_billing_two_years">Por 2 anos</string>
   <string name="plans_upgrade_your_plan">Faça upgrade de seu plano</string>
-  <string name="plans_proton_for_free">Get Proton for free</string>
+  <string name="plans_proton_for_free">Obter Proton grátis</string>
   <string name="plans_get_proton">Obter %s</string>
   <string name="plans_manage_your_subscription">Gerenciar a sua assinatura em <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
@@ -58,8 +58,8 @@
     <item quantity="other">#proton_addresses# endereços / usuário</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_addresses# address</item>
-    <item quantity="other">%d of #proton_addresses# addresses</item>
+    <item quantity="one">%d de #proton_addresses# endereço</item>
+    <item quantity="other">%d de #proton_addresses# endereços</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">#proton_domains# domínio personalizado</item>
@@ -70,8 +70,8 @@
     <item quantity="other">#proton_calendars# calendários</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_calendars# calendar</item>
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="one">%d de #proton_calendars# calendário</item>
+    <item quantity="other">%d de #proton_calendars# calendários</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# conexão VPN</item>
@@ -86,8 +86,8 @@
     <item quantity="other">#proton_users# usuários</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_users# user</item>
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="one">%d de #proton_users# usuário</item>
+    <item quantity="other">%d de #proton_users# usuários</item>
   </plurals>
   <!-- endregion -->
   <!-- region plan free -->
@@ -98,11 +98,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN básica</string>
+  <string name="plan_id_vpnbasic_countries">63 países</string>
   <string name="plan_id_vpnbasic_high_speed">Alta velocidade</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 países</string>
   <string name="plan_id_vpnplus_highest_speed">Velocidade máxima</string>
+  <string name="plan_id_vpnplus_adblock">Bloqueador de anúncios (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Suporte a serviços de streaming</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Profissional</string>

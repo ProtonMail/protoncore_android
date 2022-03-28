@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Kryptering holder dine data private. Dine data tilhører virkelig dig.</string>
   <string name="welcome_title_mail">Beskyt dit privatliv med ProtonMail</string>
   <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke tilhører virkelig dig.</string>
+  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">Beskyt dit privatliv med Proton Drive</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
   <string name="welcome_title_calendar">Beskyt dit privatliv med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypteret kalender, der holder dine livsbegivenheder private, sikre og trygge.</string>
+  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.</string>
+  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Adgangskode</string>
   <string name="auth_password_help">Adgangskode skal indeholde mindst 8 tegn</string>
   <string name="auth_current_login_password">Nuværende login-adgangskode</string>
