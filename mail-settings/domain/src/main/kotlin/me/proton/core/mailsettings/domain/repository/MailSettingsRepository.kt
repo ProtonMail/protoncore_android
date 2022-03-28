@@ -33,6 +33,7 @@ import me.proton.core.mailsettings.domain.entity.SwipeAction
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface MailSettingsRepository {
 
     /**

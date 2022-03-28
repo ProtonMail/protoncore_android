@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.MailSettingsApi
 import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
@@ -71,6 +70,7 @@ import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toInt
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 class MailSettingsRepositoryImpl(
     db: MailSettingsDatabase,
     private val apiProvider: ApiProvider
@@ -98,23 +98,9 @@ class MailSettingsRepositoryImpl(
     private suspend fun insertOrUpdate(settings: MailSettings) =
         mailSettingsDao.insertOrUpdate(settings.toEntity())
 
-    private suspend fun delete(userId: UserId) =
-        mailSettingsDao.delete(userId)
+    private suspend fun delete(userId: UserId) = mailSettingsDao.delete(userId)
 
-    private suspend fun deleteAll() =
-        mailSettingsDao.deleteAll()
-
-    override fun getMailSettingsFlow(userId: UserId, refresh: Boolean): Flow<DataResult<MailSettings>> {
-        return store.stream(StoreRequest.cached(userId, refresh = refresh)).map { it.toDataResult() }
-    }
-
-    override suspend fun getMailSettings(userId: UserId, refresh: Boolean): MailSettings {
-        return if (refresh) store.fresh(userId) else store.get(userId)
-    }
-
-    override suspend fun updateMailSettings(mailSettings: MailSettings) {
-        insertOrUpdate(mailSettings)
-    }
+    private suspend fun deleteAll() = mailSettingsDao.deleteAll()
 
     private suspend fun updateProperty(
         userId: UserId,
@@ -128,99 +114,132 @@ class MailSettingsRepositoryImpl(
         }.valueOrThrow
     }
 
-    override suspend fun updateDisplayName(userId: UserId, displayName: String) = updateProperty(userId) {
-        updateDisplayName(UpdateDisplayNameRequest(displayName))
+    override fun getMailSettingsFlow(userId: UserId, refresh: Boolean) =
+        store.stream(StoreRequest.cached(userId, refresh = refresh)).map { it.toDataResult() }
+
+    override suspend fun getMailSettings(userId: UserId, refresh: Boolean) =
+        if (refresh) store.fresh(userId) else store.get(userId)
+
+    override suspend fun updateMailSettings(mailSettings: MailSettings) {
+        insertOrUpdate(mailSettings)
     }
 
-    override suspend fun updateSignature(userId: UserId, signature: String) = updateProperty(userId) {
-        updateSignature(UpdateSignatureRequest(signature))
-    }
+    override suspend fun updateDisplayName(userId: UserId, displayName: String) =
+        updateProperty(userId) {
+            updateDisplayName(UpdateDisplayNameRequest(displayName))
+        }
 
-    override suspend fun updateAutoSaveContacts(userId: UserId, autoSaveContacts: Boolean) = updateProperty(userId) {
-        updateAutoSaveContacts(UpdateAutoSaveContactsRequest(autoSaveContacts.toInt()))
-    }
+    override suspend fun updateSignature(userId: UserId, signature: String) =
+        updateProperty(userId) {
+            updateSignature(UpdateSignatureRequest(signature))
+        }
 
-    override suspend fun updateComposerMode(userId: UserId, composerMode: ComposerMode) = updateProperty(userId) {
-        updateComposerMode(UpdateComposerModeRequest(composerMode.value))
-    }
+    override suspend fun updateAutoSaveContacts(userId: UserId, autoSaveContacts: Boolean) =
+        updateProperty(userId) {
+            updateAutoSaveContacts(UpdateAutoSaveContactsRequest(autoSaveContacts.toInt()))
+        }
 
-    override suspend fun updateMessageButtons(userId: UserId, messageButtons: MessageButtons) = updateProperty(userId) {
-        updateMessageButtons(UpdateMessageButtonsRequest(messageButtons.value))
-    }
+    override suspend fun updateComposerMode(userId: UserId, composerMode: ComposerMode) =
+        updateProperty(userId) {
+            updateComposerMode(UpdateComposerModeRequest(composerMode.value))
+        }
 
-    override suspend fun updateShowImages(userId: UserId, showImage: ShowImage) = updateProperty(userId) {
-        updateShowImages(UpdateShowImagesRequest(showImage.value))
-    }
+    override suspend fun updateMessageButtons(userId: UserId, messageButtons: MessageButtons) =
+        updateProperty(userId) {
+            updateMessageButtons(UpdateMessageButtonsRequest(messageButtons.value))
+        }
 
-    override suspend fun updateShowMoved(userId: UserId, showMoved: ShowMoved) = updateProperty(userId) {
-        updateShowMoved(UpdateShowMovedRequest(showMoved.value))
-    }
+    override suspend fun updateShowImages(userId: UserId, showImage: ShowImage) =
+        updateProperty(userId) {
+            updateShowImages(UpdateShowImagesRequest(showImage.value))
+        }
 
-    override suspend fun updateViewMode(userId: UserId, viewMode: ViewMode) = updateProperty(userId) {
-        updateViewMode(UpdateViewModeRequest(viewMode.value))
-    }
+    override suspend fun updateShowMoved(userId: UserId, showMoved: ShowMoved) =
+        updateProperty(userId) {
+            updateShowMoved(UpdateShowMovedRequest(showMoved.value))
+        }
 
-    override suspend fun updateViewLayout(userId: UserId, viewLayout: ViewLayout) = updateProperty(userId) {
-        updateViewLayout(UpdateViewLayoutRequest(viewLayout.value))
-    }
+    override suspend fun updateViewMode(userId: UserId, viewMode: ViewMode) =
+        updateProperty(userId) {
+            updateViewMode(UpdateViewModeRequest(viewMode.value))
+        }
 
-    override suspend fun updateSwipeLeft(userId: UserId, swipeAction: SwipeAction) = updateProperty(userId) {
-        updateSwipeLeft(UpdateSwipeLeftRequest(swipeAction.value))
-    }
+    override suspend fun updateViewLayout(userId: UserId, viewLayout: ViewLayout) =
+        updateProperty(userId) {
+            updateViewLayout(UpdateViewLayoutRequest(viewLayout.value))
+        }
 
-    override suspend fun updateSwipeRight(userId: UserId, swipeAction: SwipeAction) = updateProperty(userId) {
-        updateSwipeRight(UpdateSwipeRightRequest(swipeAction.value))
-    }
+    override suspend fun updateSwipeLeft(userId: UserId, swipeAction: SwipeAction) =
+        updateProperty(userId) {
+            updateSwipeLeft(UpdateSwipeLeftRequest(swipeAction.value))
+        }
 
-    override suspend fun updatePMSignature(userId: UserId, pmSignature: PMSignature) = updateProperty(userId) {
-        updatePMSignature(UpdatePMSignatureRequest(pmSignature.value))
-    }
+    override suspend fun updateSwipeRight(userId: UserId, swipeAction: SwipeAction) =
+        updateProperty(userId) {
+            updateSwipeRight(UpdateSwipeRightRequest(swipeAction.value))
+        }
 
-    override suspend fun updateDraftMimeType(userId: UserId, mimeType: MimeType) = updateProperty(userId) {
-        updateDraftMimeType(UpdateMimeTypeRequest(mimeType.value))
-    }
+    override suspend fun updatePMSignature(userId: UserId, pmSignature: PMSignature) =
+        updateProperty(userId) {
+            updatePMSignature(UpdatePMSignatureRequest(pmSignature.value))
+        }
 
-    override suspend fun updateReceiveMimeType(userId: UserId, mimeType: MimeType) = updateProperty(userId) {
-        updateReceiveMimeType(UpdateMimeTypeRequest(mimeType.value))
-    }
+    override suspend fun updateDraftMimeType(userId: UserId, mimeType: MimeType) =
+        updateProperty(userId) {
+            updateDraftMimeType(UpdateMimeTypeRequest(mimeType.value))
+        }
 
-    override suspend fun updateShowMimeType(userId: UserId, mimeType: MimeType) = updateProperty(userId) {
-        updateShowMimeType(UpdateMimeTypeRequest(mimeType.value))
-    }
+    override suspend fun updateReceiveMimeType(userId: UserId, mimeType: MimeType) =
+        updateProperty(userId) {
+            updateReceiveMimeType(UpdateMimeTypeRequest(mimeType.value))
+        }
 
-    override suspend fun updateRightToLeft(userId: UserId, rightToLeft: Boolean) = updateProperty(userId) {
-        updateRightToLeft(UpdateRightToLeftRequest(rightToLeft.toInt()))
-    }
+    override suspend fun updateShowMimeType(userId: UserId, mimeType: MimeType) =
+        updateProperty(userId) {
+            updateShowMimeType(UpdateMimeTypeRequest(mimeType.value))
+        }
 
-    override suspend fun updateAttachPublicKey(userId: UserId, attachPublicKey: Boolean) = updateProperty(userId) {
-        updateAttachPublicKey(UpdateAttachPublicKeyRequest(attachPublicKey.toInt()))
-    }
+    override suspend fun updateRightToLeft(userId: UserId, rightToLeft: Boolean) =
+        updateProperty(userId) {
+            updateRightToLeft(UpdateRightToLeftRequest(rightToLeft.toInt()))
+        }
+
+    override suspend fun updateAttachPublicKey(userId: UserId, attachPublicKey: Boolean) =
+        updateProperty(userId) {
+            updateAttachPublicKey(UpdateAttachPublicKeyRequest(attachPublicKey.toInt()))
+        }
 
     override suspend fun updateSign(userId: UserId, sign: Boolean) = updateProperty(userId) {
         updateSign(UpdateSignRequest(sign.toInt()))
     }
 
-    override suspend fun updatePGPScheme(userId: UserId, packageType: PackageType) = updateProperty(userId) {
-        updatePGPScheme(UpdatePGPSchemeRequest(packageType.type))
-    }
+    override suspend fun updatePGPScheme(userId: UserId, packageType: PackageType) =
+        updateProperty(userId) {
+            updatePGPScheme(UpdatePGPSchemeRequest(packageType.type))
+        }
 
-    override suspend fun updatePromptPin(userId: UserId, promptPin: Boolean) = updateProperty(userId) {
-        updatePromptPin(UpdatePromptPinRequest(promptPin.toInt()))
-    }
+    override suspend fun updatePromptPin(userId: UserId, promptPin: Boolean) =
+        updateProperty(userId) {
+            updatePromptPin(UpdatePromptPinRequest(promptPin.toInt()))
+        }
 
-    override suspend fun updateStickyLabels(userId: UserId, stickyLabels: Boolean) = updateProperty(userId) {
-        updateStickyLabels(UpdateStickyLabelsRequest(stickyLabels.toInt()))
-    }
+    override suspend fun updateStickyLabels(userId: UserId, stickyLabels: Boolean) =
+        updateProperty(userId) {
+            updateStickyLabels(UpdateStickyLabelsRequest(stickyLabels.toInt()))
+        }
 
-    override suspend fun updateConfirmLink(userId: UserId, confirmLinks: Boolean) = updateProperty(userId) {
-        updateConfirmLink(UpdateConfirmLinkRequest(confirmLinks.toInt()))
-    }
+    override suspend fun updateConfirmLink(userId: UserId, confirmLinks: Boolean) =
+        updateProperty(userId) {
+            updateConfirmLink(UpdateConfirmLinkRequest(confirmLinks.toInt()))
+        }
 
-    override suspend fun updateInheritFolderColor(userId: UserId, inherit: Boolean) = updateProperty(userId) {
-        updateInheritFolderColor(UpdateInheritFolderColorRequest(inherit.toInt()))
-    }
+    override suspend fun updateInheritFolderColor(userId: UserId, inherit: Boolean) =
+        updateProperty(userId) {
+            updateInheritFolderColor(UpdateInheritFolderColorRequest(inherit.toInt()))
+        }
 
-    override suspend fun updateEnableFolderColor(userId: UserId, enable: Boolean) = updateProperty(userId) {
-        updateEnableFolderColor(UpdateEnableFolderColorRequest(enable.toInt()))
-    }
+    override suspend fun updateEnableFolderColor(userId: UserId, enable: Boolean) =
+        updateProperty(userId) {
+            updateEnableFolderColor(UpdateEnableFolderColorRequest(enable.toInt()))
+        }
 }

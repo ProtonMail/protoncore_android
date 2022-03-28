@@ -48,11 +48,19 @@ class MailSettingsRepositoryTests {
 
     private val mailSettingsApi = mockk<MailSettingsApi>(relaxed = true)
 
-    private val db = mockk<MailSettingsDatabase>()
     private val mailSettingsDao = mockk<MailSettingsDao>(relaxed = true)
+    private val db = mockk<MailSettingsDatabase>(relaxed = true) {
+        every { this@mockk.mailSettingsDao() } returns mailSettingsDao
+    }
 
-    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
+    private val sessionProvider = mockk<SessionProvider> {
+        coEvery { this@mockk.getSessionId(any()) } returns sessionId
+    }
+    private val apiManagerFactory = mockk<ApiManagerFactory> {
+        every {
+            this@mockk.create(any(), interfaceClass = MailSettingsApi::class)
+        } returns TestApiManager(mailSettingsApi)
+    }
 
     private val sessionId = SessionId("sessionId")
     private val userId = UserId("userId")
@@ -87,19 +95,21 @@ class MailSettingsRepositoryTests {
 
     @Before
     fun beforeEveryTest() {
-        every { db.mailSettingsDao() } returns mailSettingsDao
-        coEvery { sessionProvider.getSessionId(any()) } returns sessionId
-        every { apiManagerFactory.create(any(), interfaceClass = MailSettingsApi::class) } returns TestApiManager(
-            mailSettingsApi
+        mailSettingsRepository = MailSettingsRepositoryImpl(
+            db,
+            ApiProvider(apiManagerFactory, sessionProvider)
         )
-        mailSettingsRepository = MailSettingsRepositoryImpl(db, ApiProvider(apiManagerFactory, sessionProvider))
     }
 
     @Test
     fun `mailSettingsRepository updateProperty`() = runBlockingTest {
         // GIVEN
-        coEvery { mailSettingsApi.updateComposerMode(any()) } returns SingleMailSettingsResponse(response)
-        every { mailSettingsDao.observeByUserId(any()) } returns flowOf(response.fromResponse(userId).toEntity())
+        coEvery { mailSettingsApi.updateComposerMode(any()) } returns SingleMailSettingsResponse(
+            response
+        )
+        every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
+            response.fromResponse(userId).toEntity()
+        )
         // WHEN
         mailSettingsRepository.updateComposerMode(userId, ComposerMode.Maximized)
         // THEN
