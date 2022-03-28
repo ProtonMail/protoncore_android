@@ -419,6 +419,36 @@ interface PGPCrypto {
     ): Boolean
 
     /**
+     * Verify [signature] of [plainText] is correctly signed using [publicKey].
+     * Returns the timestamp of the signature, or null if the signature is invalid
+     *
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     *
+     * @see [signText]
+     */
+    fun getVerifiedTimestampOfText(
+        plainText: String,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime = VerificationTime.Now
+    ): Long?
+
+    /**
+     * Verify [signature] of [data] is correctly signed using [publicKey].
+     * Returns the timestamp of the signature, or null if the signature is invalid
+     *
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     *
+     * @see [signData]
+     */
+    fun getVerifiedTimestampOfData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime = VerificationTime.Now
+    ): Long?
+
+    /**
      * Decrypt [encryptedSignature] with [privateKey]
      * and then verify it is a valid signature of [plainText] using [publicKeys].
      *

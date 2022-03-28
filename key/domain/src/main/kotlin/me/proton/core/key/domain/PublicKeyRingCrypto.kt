@@ -107,3 +107,41 @@ fun PublicKeyRing.verifyFile(
     signature: Signature,
     time: VerificationTime = VerificationTime.Now
 ): Boolean = keys.any { it.verifyFile(context, file, signature, time) }
+
+/**
+ * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
+ *
+ * @see [PrivateKeyRing.signText]
+ */
+fun PublicKeyRing.getVerifiedTimestampOfText(
+    context: CryptoContext,
+    text: String,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = keys
+    .asSequence()
+    .mapNotNull { key -> key.getVerifiedTimestampOfText(context, text, signature, time) }
+    .firstOrNull()
+
+/**
+ * Verify [signature] of [data] is correctly signed using this [PublicKeyRing].
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
+ *
+ * @see [PrivateKeyRing.signData]
+ */
+fun PublicKeyRing.getVerifiedTimestampOfData(
+    context: CryptoContext,
+    data: ByteArray,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = keys
+    .asSequence()
+    .mapNotNull { key -> key.getVerifiedTimestampOfData(context, data, signature, time) }
+    .firstOrNull()

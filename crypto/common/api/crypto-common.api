@@ -186,6 +186,8 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun getPassphrase ([BLjava/lang/String;)[B
 	public abstract fun getPublicKey (Ljava/lang/String;)Ljava/lang/String;
 	public abstract fun getUnarmored (Ljava/lang/String;)[B
+	public abstract fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
+	public abstract fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
 	public abstract fun lock ([B[B)Ljava/lang/String;
 	public abstract fun signData ([B[B)Ljava/lang/String;
 	public abstract fun signDataEncrypted ([B[BLjava/util/List;)Ljava/lang/String;
@@ -210,6 +212,8 @@ public final class me/proton/core/crypto/common/pgp/PGPCrypto$DefaultImpls {
 	public static synthetic fun decryptAndVerifyFile$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Lme/proton/core/crypto/common/pgp/DecryptedFile;
 	public static synthetic fun decryptAndVerifyText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Lme/proton/core/crypto/common/pgp/DecryptedText;
 	public static synthetic fun generateNewToken$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;JILjava/lang/Object;)[B
+	public static synthetic fun getVerifiedTimestampOfData$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Ljava/lang/Long;
+	public static synthetic fun getVerifiedTimestampOfText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Ljava/lang/Long;
 	public static synthetic fun verifyData$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
 	public static synthetic fun verifyDataEncrypted$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
 	public static synthetic fun verifyFile$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Lme/proton/core/crypto/common/pgp/DecryptedFile;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z

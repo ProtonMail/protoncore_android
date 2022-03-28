@@ -432,6 +432,32 @@ class KeyHolderTest {
     }
 
     @Test
+    fun useKeys_sign__close__get_timestamp() {
+        keyHolder1.useKeys(context) {
+            val signedText = signText(message)
+            message to signedText
+        }.also { (message, signature) ->
+            keyHolder1.useKeys(context) {
+                val timestamp = getVerifiedTimestampOfText(message, signature)
+                assertNotNull(timestamp)
+            }
+        }
+    }
+
+    @Test
+    fun useKeys_encrypt_sign_data__close__decrypt_verify() {
+        keyHolder1.useKeys(context) {
+            val signature = signData(message.toByteArray())
+            message to signature
+        }.also { (message, signature) ->
+            keyHolder1.useKeys(context) {
+                val timestamp = getVerifiedTimestampOfData(message.toByteArray(), signature)
+                assertNotNull(timestamp)
+            }
+        }
+    }
+
+    @Test
     fun useKeys_useWrongKeyHolder() {
         keyHolder1.useKeys(context) {
             encryptText(message)

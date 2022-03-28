@@ -53,6 +53,8 @@ class TestCryptoContext : CryptoContext {
     // Default key for SimpleCrypto.
     private val defaultKey = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
 
+    private val timestamp = 0L
+
     // Use the defaultKey to encrypt/decrypt.
     override val keyStoreCrypto: KeyStoreCrypto = object : KeyStoreCrypto {
 
@@ -166,6 +168,32 @@ class TestCryptoContext : CryptoContext {
             val decryptedSignature = signature.decryptMessage(publicKey)
             val data = file.file.readBytes()
             return data.fromByteArray() == decryptedSignature.extractMessage()
+        }
+
+        override fun getVerifiedTimestampOfText(
+            plainText: String,
+            signature: Armored,
+            publicKey: Armored,
+            time: VerificationTime
+        ): Long? {
+            val decryptedSignature = signature.decryptMessage(publicKey)
+            if (plainText == decryptedSignature.extractMessage()) {
+                return timestamp
+            }
+            return null
+        }
+
+        override fun getVerifiedTimestampOfData(
+            data: ByteArray,
+            signature: Armored,
+            publicKey: Armored,
+            time: VerificationTime
+        ): Long? {
+            val decryptedSignature = signature.decryptMessage(publicKey)
+            if (data.fromByteArray() == decryptedSignature.extractMessage()) {
+                return timestamp
+            }
+            return null
         }
 
         override fun verifyTextEncrypted(

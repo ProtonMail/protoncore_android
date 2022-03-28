@@ -487,6 +487,38 @@ fun KeyHolderContext.verifyFile(
 ): Boolean =
     publicKeyRing.verifyFile(context, file, signature, time)
 
+
+/**
+ * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return the timestamp if at least one [PublicKey] verify [signature], null otherwise
+ *
+ * @see [KeyHolderContext.signText]
+ */
+fun KeyHolderContext.getVerifiedTimestampOfText(
+    text: String,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? = publicKeyRing.getVerifiedTimestampOfText(context, text, signature, time)
+
+/**
+ * Verify [signature] of [data] is correctly signed using [PublicKeyRing].
+ *
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return the timestamp if at least one [PublicKey] verify [signature], null otherwise
+ *
+ * @see [KeyHolderContext.signData]
+ */
+fun KeyHolderContext.getVerifiedTimestampOfData(
+    data: ByteArray,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Long? =
+    publicKeyRing.getVerifiedTimestampOfData(context, data, signature, time)
+
 /**
  * Encrypt [text] using [PublicKeyRing].
  *

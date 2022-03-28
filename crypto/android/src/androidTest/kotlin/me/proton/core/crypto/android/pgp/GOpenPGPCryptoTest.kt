@@ -28,6 +28,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 internal class GOpenPGPCryptoTest {
@@ -697,5 +698,100 @@ internal class GOpenPGPCryptoTest {
         }
         // THEN
         assertFalse(verified)
+    }
+
+    @Test
+    fun getVerifiedTimestampText() {
+        // GIVEN
+        val text = "hello"
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.4.5
+            Comment: https://gopenpgp.org
+            
+            wsBzBAABCgAnBQJiNHUJCZARwx6OXgf00BYhBCDPNjtY7JnnIuU+xBHDHo5eB/TQ
+            AAC8Xwf9GO8HkMAcjOvluCerN/dJyZBmMlArPLW3kMiV3b44GBNxdH0Glt/tx2E5
+            V9nQxZrDMCmfv2ujmaMVPmkIQZqR8chKRIADw3BggS60+OAklxAXQCwJ5QKueoeN
+            C8d+IScr58oe7VValWc+D2j70yZryLbJQh+u8CT0M7Sl87IZvXMihadTEI1ZPIFU
+            K7XIo2mNfVUatz3DK62iU+iYNzFpa637w1Xgn5oW4Pt/t9iyPjbA7SwztW212rw9
+            jsHpVVfFZT1IN8ElBr/N/VKrA1L/A2/ybRujzGLpoxFFl6/viDbCOOS20rLEzIH+
+            PMdP42XvnZGN8bVpl1u9vNzKt0dt2g==
+            =yuJ3
+            -----END PGP SIGNATURE-----    
+        """.trimIndent()
+        val expectedTimestamp = 1647605001L
+        // WHEN
+        val verifiedTimestamp = crypto.getVerifiedTimestampOfText(
+            text,
+            signature,
+            verificationKey,
+            VerificationTime.Ignore
+        )
+        // THEN
+        assertEquals(expectedTimestamp, verifiedTimestamp)
+    }
+
+    @Test
+    fun getVerifiedTimestampMaliciousText() {
+        // GIVEN
+        val text = "hello world"
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.4.5
+            Comment: https://gopenpgp.org
+            
+            wsBzBAABCgAnBQJiNHUJCZARwx6OXgf00BYhBCDPNjtY7JnnIuU+xBHDHo5eB/TQ
+            AAC8Xwf9GO8HkMAcjOvluCerN/dJyZBmMlArPLW3kMiV3b44GBNxdH0Glt/tx2E5
+            V9nQxZrDMCmfv2ujmaMVPmkIQZqR8chKRIADw3BggS60+OAklxAXQCwJ5QKueoeN
+            C8d+IScr58oe7VValWc+D2j70yZryLbJQh+u8CT0M7Sl87IZvXMihadTEI1ZPIFU
+            K7XIo2mNfVUatz3DK62iU+iYNzFpa637w1Xgn5oW4Pt/t9iyPjbA7SwztW212rw9
+            jsHpVVfFZT1IN8ElBr/N/VKrA1L/A2/ybRujzGLpoxFFl6/viDbCOOS20rLEzIH+
+            PMdP42XvnZGN8bVpl1u9vNzKt0dt2g==
+            =yuJ3
+            -----END PGP SIGNATURE-----    
+        """.trimIndent()
+        // WHEN
+        val verifiedTimestamp = crypto.getVerifiedTimestampOfText(
+            text,
+            signature,
+            verificationKey,
+            VerificationTime.Ignore
+        )
+        // THEN
+        assertNull(verifiedTimestamp)
+    }
+
+    @Test
+    fun getVerifiedTimestampData() {
+        // GIVEN
+        val data = "hello".toByteArray()
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.4.5
+            Comment: https://gopenpgp.org
+            
+            wsBzBAABCgAnBQJiNHUJCZARwx6OXgf00BYhBCDPNjtY7JnnIuU+xBHDHo5eB/TQ
+            AAC8Xwf9GO8HkMAcjOvluCerN/dJyZBmMlArPLW3kMiV3b44GBNxdH0Glt/tx2E5
+            V9nQxZrDMCmfv2ujmaMVPmkIQZqR8chKRIADw3BggS60+OAklxAXQCwJ5QKueoeN
+            C8d+IScr58oe7VValWc+D2j70yZryLbJQh+u8CT0M7Sl87IZvXMihadTEI1ZPIFU
+            K7XIo2mNfVUatz3DK62iU+iYNzFpa637w1Xgn5oW4Pt/t9iyPjbA7SwztW212rw9
+            jsHpVVfFZT1IN8ElBr/N/VKrA1L/A2/ybRujzGLpoxFFl6/viDbCOOS20rLEzIH+
+            PMdP42XvnZGN8bVpl1u9vNzKt0dt2g==
+            =yuJ3
+            -----END PGP SIGNATURE-----    
+        """.trimIndent()
+        val expectedTimestamp = 1647605001L
+        // WHEN
+        val verifiedTimestamp = crypto.getVerifiedTimestampOfData(
+            data,
+            signature,
+            verificationKey,
+            VerificationTime.Ignore
+        )
+        // THEN
+        assertEquals(expectedTimestamp, verifiedTimestamp)
     }
 }
