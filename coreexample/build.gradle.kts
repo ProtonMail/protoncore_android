@@ -94,7 +94,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
                 }
             }
             val proxyToken: String? = localProperties.getProperty(buildConfigFieldKeys.PROXY_TOKEN)
-            val host: String = localProperties.getProperty(buildConfigFieldKeys.HOST) ?: "proton.black"
+            val host: String = localProperties.getProperty(buildConfigFieldKeys.HOST) ?: "protonmail.ch"
             val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
 
             buildConfigField(

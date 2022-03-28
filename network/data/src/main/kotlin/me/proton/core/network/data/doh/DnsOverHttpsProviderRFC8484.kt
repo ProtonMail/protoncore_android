@@ -24,6 +24,7 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.session.SessionId
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
@@ -79,10 +80,11 @@ class DnsOverHttpsProviderRFC8484(
             .create(DnsOverHttpsRetrofitApi::class.java)
     }
 
-    override suspend fun getAlternativeBaseUrls(primaryBaseUrl: String): List<String>? {
+    override suspend fun getAlternativeBaseUrls(sessionId: SessionId?, primaryBaseUrl: String): List<String>? {
         val primaryURI = URI(primaryBaseUrl)
         val base32domain = Base32().encodeAsString(primaryURI.host.toByteArray()).trim('=')
-        val question = Question("d$base32domain.protonpro.xyz", Record.TYPE.TXT)
+        val sessionPrefix = sessionId?.let { "${sessionId.id}." } ?: ""
+        val question = Question("${sessionPrefix}d$base32domain.protonpro.xyz", Record.TYPE.TXT)
         val queryMessage = DnsMessage.builder()
             .setRecursionDesired(true)
             .setQuestion(question)

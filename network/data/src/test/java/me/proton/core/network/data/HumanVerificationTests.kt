@@ -174,8 +174,8 @@ internal class HumanVerificationTests {
                 cookieJar,
                 scope,
                 cache = { null },
-                apiConnectionListener = null,
                 clientVersionValidator = clientVersionValidator,
+                dohAlternativesListener = null
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 

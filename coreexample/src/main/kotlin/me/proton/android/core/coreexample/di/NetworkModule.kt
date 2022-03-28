@@ -51,7 +51,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
-import me.proton.core.network.domain.serverconnection.ApiConnectionListener
+import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.takeIfNotBlank
@@ -114,7 +114,7 @@ class NetworkModule {
         missingScopeListener: MissingScopeListener,
         extraHeaderProvider: ExtraHeaderProvider,
         clientVersionValidator: ClientVersionValidator,
-        apiConnectionListener: ApiConnectionListener? = null,
+        dohAlternativesListener: DohAlternativesListener? = null
     ): ApiManagerFactory {
         val certificatePins = if (BuildConfig.USE_DEFAULT_PINS) {
             NetWorkDataConstants.DEFAULT_SPKI_PINS
@@ -149,8 +149,8 @@ class NetworkModule {
                 )
             },
             extraHeaderProvider = extraHeaderProvider,
-            apiConnectionListener = apiConnectionListener,
             clientVersionValidator = clientVersionValidator,
+            dohAlternativesListener = dohAlternativesListener
         )
     }
 
@@ -161,7 +161,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiConnectionListener(): ApiConnectionListener? = null
+    fun provideDohAlternativesListener(): DohAlternativesListener? = null
 }
 
 @Module

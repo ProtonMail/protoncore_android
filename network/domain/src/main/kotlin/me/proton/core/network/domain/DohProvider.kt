@@ -23,13 +23,15 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import me.proton.core.network.domain.serverconnection.DohAlternativesListener
+import me.proton.core.network.domain.session.SessionId
 import java.util.concurrent.TimeUnit
 
 /**
  * Gets the list of alternative baseUrls for Proton API.
  */
 interface DohService {
-    suspend fun getAlternativeBaseUrls(primaryBaseUrl: String): List<String>?
+    suspend fun getAlternativeBaseUrls(sessionId: SessionId?, primaryBaseUrl: String): List<String>?
 }
 
 /**
@@ -41,9 +43,12 @@ class DohProvider(
     private val baseUrl: String,
     private val apiClient: ApiClient,
     private val dohServices: List<DohService>,
+    private val protonDohService: DohService,
     private val networkMainScope: CoroutineScope,
     private val prefs: NetworkPrefs,
-    private val monoClockMs: () -> Long
+    private val monoClockMs: () -> Long,
+    private val sessionId: SessionId?,
+    private val dohAlternativesListener: DohAlternativesListener?
 ) {
     private var ongoingRefresh: Deferred<Unit>? = null
     private var lastRefresh = Long.MIN_VALUE
@@ -51,21 +56,45 @@ class DohProvider(
     suspend fun refreshAlternatives() = withContext(networkMainScope.coroutineContext) {
         if (monoClockMs() >= lastRefresh + MIN_REFRESH_INTERVAL_MS) {
             ongoingRefresh = ongoingRefresh ?: async(start = CoroutineStart.LAZY) {
-                for (service in dohServices) {
-                    val success = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
-                        val result = service.getAlternativeBaseUrls(baseUrl)
-                        if (result != null)
-                            prefs.alternativeBaseUrls = result
-                        result != null
-                    }
-                    if (success == true)
-                        break
-                }
+                val allServicesFailed = tryDohServices()
                 lastRefresh = monoClockMs()
                 ongoingRefresh = null
+
+                if (allServicesFailed && dohAlternativesListener != null) {
+                    dohAlternativesListener.onAlternativesUnblock {
+                        tryProtonDohService()
+                    }
+                }
             }
             ongoingRefresh!!.join()
         }
+    }
+
+    private suspend fun tryProtonDohService(): Boolean {
+        val success = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
+            val result = protonDohService.getAlternativeBaseUrls(sessionId, baseUrl)
+            if (result != null)
+                prefs.alternativeBaseUrls = result
+            result != null
+        }
+        return success ?: false
+    }
+
+    private suspend fun tryDohServices(): Boolean {
+        var allServicesFailed = true
+        for (service in dohServices) {
+            val success = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
+                val result = service.getAlternativeBaseUrls(sessionId, baseUrl)
+                if (result != null)
+                    prefs.alternativeBaseUrls = result
+                result != null
+            } ?: false
+            if (success) {
+                allServicesFailed = false
+                break
+            }
+        }
+        return allServicesFailed
     }
 
     companion object {

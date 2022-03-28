@@ -31,14 +31,13 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiManagerImpl
-import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.network.domain.handlers.ApiConnectionHandler
+import me.proton.core.network.domain.handlers.DohApiHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.MissingScopeHandler
@@ -48,7 +47,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
-import me.proton.core.network.domain.serverconnection.ApiConnectionListener
+import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -85,8 +84,8 @@ class ApiManagerFactory(
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
     private val cache: () -> Cache? = { null },
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
-    private val apiConnectionListener: ApiConnectionListener?,
     private val clientVersionValidator: ClientVersionValidator,
+    private val dohAlternativesListener: DohAlternativesListener?
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -117,11 +116,14 @@ class ApiManagerFactory(
             .build()
     }
 
-    private val dohProvider by lazy {
-        val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
+    private val dohServices by lazy {
+        Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
             DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, serviceUrl, apiClient, networkManager)
         }
-        DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
+    }
+
+    private val protonDohService by lazy {
+        DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, "${baseUrl}dns-query/", apiClient, networkManager)
     }
 
     private fun javaMonoClockMs(): Long = TimeUnit.NANOSECONDS.toMillis(System.nanoTime())
@@ -136,14 +138,12 @@ class ApiManagerFactory(
         val missingScopeHandler =
             MissingScopeHandler<Api>(sessionId, sessionProvider, missingScopeListener)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
-        val serverConnectionHandler = ApiConnectionHandler<Api>(apiConnectionListener)
         val humanVerificationNeededHandler =
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
         return listOf(
             dohApiHandler,
-            serverConnectionHandler,
             missingScopeHandler,
             refreshTokenHandler,
             forceUpdateHandler,
@@ -196,13 +196,24 @@ class ApiManagerFactory(
             initSPKIleafPinning(builder, alternativeApiPins)
         }
 
-        val dohApiHandler = DohApiHandler(
+        val dohProvider = DohProvider(
+            baseUrl,
             apiClient,
-            primaryBackend,
-            dohProvider,
+            dohServices,
+            protonDohService,
+            mainScope,
             prefs,
-            ::javaWallClockMs,
-            ::javaMonoClockMs
+            ::javaMonoClockMs,
+            sessionId,
+            dohAlternativesListener
+        )
+        val dohApiHandler = DohApiHandler(
+            apiClient = apiClient,
+            primaryBackend = primaryBackend,
+            dohProvider = dohProvider,
+            prefs = prefs,
+            wallClockMs = ::javaWallClockMs,
+            monoClockMs = ::javaMonoClockMs,
         ) { baseUrl ->
             ProtonApiBackend(
                 baseUrl,

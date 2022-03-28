@@ -18,13 +18,7 @@
 
 package me.proton.core.network.domain.serverconnection
 
-import me.proton.core.network.domain.ApiResult
+interface DohAlternativesListener {
 
-interface ApiConnectionListener {
-
-    suspend fun <T> onPotentiallyBlocked(
-        path: String?,
-        query: String?,
-        backendCall: suspend () -> ApiResult<T>
-    ): ApiResult<T>?
+    suspend fun onAlternativesUnblock(alternativesBlockCall: suspend () -> Unit)
 }
