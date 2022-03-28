@@ -20,30 +20,18 @@
 
 package me.proton.core.gradle.convention.android
 
-import Module
 import `compose version`
-import `compose-runtime`
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import me.proton.core.gradle.convention.BuildConvention
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.findByType
-import org.gradle.kotlin.dsl.project
-import studio.forface.easygradle.dsl.*
 
 internal class ComposeUiConvention : BuildConvention<Unit> {
     override fun apply(target: Project, settings: Unit) {
         target.extensions.findByType<LibraryExtension>()?.applyConvention()
         target.extensions.findByType<ApplicationExtension>()?.applyConvention()
-
-        target.dependencies {
-            implementation(`compose-runtime`)
-            if (target.path != Module.presentationCompose) {
-                implementation(project(Module.presentationCompose))
-            }
-        }
     }
 }
 
