@@ -189,7 +189,7 @@ internal class SignupViewModel @Inject constructor(
                 val username = requireNotNull(username) { "Username is not set." }
                 val password = requireNotNull(_password) { "Password is not set (initialized)." }
                 viewModelScope.launch {
-                    createUser(username, password)
+                    createUser(username, password, domain)
                 }
             }
             AccountType.External -> {
@@ -241,7 +241,7 @@ internal class SignupViewModel @Inject constructor(
     // endregion
 
     // region private functions
-    private fun createUser(username: String, encryptedPassword: EncryptedString) {
+    private fun createUser(username: String, encryptedPassword: EncryptedString, domain: String?) {
         flow {
             emit(State.Processing)
 
@@ -260,7 +260,7 @@ internal class SignupViewModel @Inject constructor(
             val result = performCreateUser(
                 username = username, password = encryptedPassword,
                 recoveryEmail = verification.first, recoveryPhone = verification.second,
-                referrer = null, type = currentAccountType.createUserType()
+                referrer = null, type = currentAccountType.createUserType(), domain = domain
             )
             emit(State.Success(result.id, username, encryptedPassword))
         }.catchWhen(Throwable::userAlreadyExists) {

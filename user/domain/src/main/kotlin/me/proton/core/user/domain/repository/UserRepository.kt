@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
 
 interface UserRepository : PassphraseRepository {
@@ -95,12 +96,13 @@ interface UserRepository : PassphraseRepository {
         firstFrame: ChallengeFrameDetails?,
         secondFrame: ChallengeFrameDetails?,
         username: String,
+        domain: Domain?,
         password: EncryptedString,
         recoveryEmail: String?,
         recoveryPhone: String?,
         referrer: String?,
         type: CreateUserType,
-        auth: Auth
+        auth: Auth,
     ): User
 
     /**

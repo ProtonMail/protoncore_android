@@ -144,12 +144,13 @@ class UserRepositoryImpl(
         firstFrame: ChallengeFrameDetails?,
         secondFrame: ChallengeFrameDetails?,
         username: String,
+        domain: String?,
         password: EncryptedString,
         recoveryEmail: String?,
         recoveryPhone: String?,
         referrer: String?,
         type: CreateUserType,
-        auth: Auth
+        auth: Auth,
     ): User = provider.get<UserApi>().invoke {
         val request = CreateUserRequest(
             username,
@@ -158,6 +159,7 @@ class UserRepositoryImpl(
             referrer,
             type.value,
             AuthRequest.from(auth),
+            domain,
             ChallengePayload(
                 ChallengeUsernameFrame.from(context, firstFrame),
                 ChallengeRecoveryFrame.from(context, secondFrame)

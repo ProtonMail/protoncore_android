@@ -515,6 +515,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupCh
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupChooseUsernameBinding : androidx/viewbinding/ViewBinding {
+	public final field domainInput Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
 	public final field subtitleText Landroid/widget/TextView;
@@ -580,6 +581,15 @@ public final class me/proton/core/auth/presentation/databinding/FragmentTermsCon
 	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentTermsConditionsBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentTermsConditionsBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/ListItemDomainBinding : androidx/viewbinding/ViewBinding {
+	public final field title Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ListItemDomainBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/TextView;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/ListItemDomainBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ListItemDomainBinding;
 }
 
 public final class me/proton/core/auth/presentation/entity/AddAccountInput : android/os/Parcelable {

@@ -94,7 +94,8 @@ internal class ChooseUsernameViewModel @Inject constructor(
             AccountType.Username,
             AccountType.Internal -> {
                 requireNotNull(domain) { "For AccountType Internal a domain must be supplied." }
-                if (usernameDomainAvailability.isUsernameAvailable(username)) {
+                val email = "$username@$domain"
+                if (usernameDomainAvailability.isUsernameAvailable(email)) {
                     // if selected Internal account, domain must be set along with username
                     State.UsernameAvailable(username, domain)
                 } else {
