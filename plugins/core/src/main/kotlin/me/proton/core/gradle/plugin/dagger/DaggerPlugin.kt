@@ -27,13 +27,13 @@ import org.gradle.api.Project
 
 public class DaggerPlugin : BuildConventionPlugin() {
 
-    override fun apply(target: Project) {
-        super.apply(target)
-        val ext = target.createProtonExt<DaggerExtension>("protonDagger")
-
+    override fun onApplyPlugins(target: Project) {
         target.pluginManager.apply(PluginIds.kapt)
         target.pluginManager.apply(PluginIds.hilt)
+    }
 
+    override fun onPluginsApplied(target: Project) {
+        val ext = target.createProtonExt<DaggerExtension>("protonDagger")
         target.applyDaggerConvention(ext)
     }
 }

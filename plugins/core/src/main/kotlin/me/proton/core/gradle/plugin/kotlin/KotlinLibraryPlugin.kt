@@ -27,15 +27,13 @@ import me.proton.core.gradle.plugin.createProtonExt
 import org.gradle.api.Project
 
 public class KotlinLibraryPlugin : BuildConventionPlugin() {
-    private lateinit var ext: KotlinLibraryExtension
-
-    override fun apply(target: Project) {
-        super.apply(target)
-        ext = target.createProtonExt()
-
+    override fun onApplyPlugins(target: Project) {
         target.pluginManager.apply(PluginIds.javaLibrary)
         target.pluginManager.apply(PluginIds.kotlinJvm)
+    }
 
+    override fun onPluginsApplied(target: Project) {
+        val ext = target.createProtonExt<KotlinLibraryExtension>()
         target.applyJavaConvention()
         target.applyKotlinConvention(ext)
     }

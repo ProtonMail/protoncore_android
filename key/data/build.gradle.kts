@@ -49,8 +49,6 @@ dependencies {
         project(Module.data),
         project(Module.authDomain),
         `coroutines-core`,
-        appcompat, // TODO
-        material, // TODO
         `room-ktx`,
         store4
     )

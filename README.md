@@ -88,6 +88,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:contact-data|
 |me.proton.core:contact-domain|
 |me.proton.core:contact-dagger|
+|me.proton.core:core-platform|
 |me.proton.core:country|
 |me.proton.core:country-dagger|
 |me.proton.core:country-data|

@@ -31,13 +31,13 @@ public abstract class BaseAndroidPlugin<E> : BuildConventionPlugin() where E : K
     protected abstract fun createConventionSettings(): AndroidConventionSettings
     protected abstract fun createPluginExtension(target: Project): E
 
-    override fun apply(target: Project) {
-        super.apply(target)
-        val ext = createPluginExtension(target)
-
+    override fun onApplyPlugins(target: Project) {
         target.pluginManager.apply(androidPluginId)
         target.pluginManager.apply(PluginIds.kotlinAndroid)
+    }
 
+    override fun onPluginsApplied(target: Project) {
+        val ext = createPluginExtension(target)
         target.applyAndroidConvention(createConventionSettings())
         target.applyKotlinConvention(ext)
     }

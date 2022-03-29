@@ -60,8 +60,6 @@ dependencies {
         `coroutines-core`,
 
         // Other
-        appcompat, // TODO appcompat..
-        material, // TODO ..and material libraries are only needed, so that libraries are compatible with the ones in androidTest; otherwise, the `implementation` would use old versions of those
         `room-ktx`,
         store4
     )

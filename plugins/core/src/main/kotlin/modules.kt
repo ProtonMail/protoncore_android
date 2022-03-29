@@ -37,6 +37,7 @@ public object Module {
     // endregion
 
     // region Shared
+    public const val corePlatform: String = ":core-platform"
     public const val domain: String = ":domain"
     public const val presentation: String = ":presentation"
     public const val presentationCompose: String = ":presentation-compose"

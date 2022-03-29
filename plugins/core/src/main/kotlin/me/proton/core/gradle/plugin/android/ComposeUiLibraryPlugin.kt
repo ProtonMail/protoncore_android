@@ -36,8 +36,8 @@ public class ComposeUiLibraryPlugin : BaseAndroidPlugin<ComposeUiLibraryExtensio
 
     override fun createPluginExtension(target: Project): ComposeUiLibraryExtension = target.createProtonExt()
 
-    override fun apply(target: Project) {
-        super.apply(target)
+    override fun onPluginsApplied(target: Project) {
+        super.onPluginsApplied(target)
         target.applyComposeUiConvention()
     }
 }
