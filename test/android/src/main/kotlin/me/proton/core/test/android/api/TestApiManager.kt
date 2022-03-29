@@ -26,5 +26,10 @@ class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<A
     override suspend fun <T> invoke(
         forceNoRetryOnConnectionErrors: Boolean,
         block: suspend Api.() -> T
-    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
+    ): ApiResult<T> = try {
+        val result = block.invoke(api)
+        ApiResult.Success(result)
+    } catch (throwable: Throwable) {
+        ApiResult.Error.Parse(throwable)
+    }
 }

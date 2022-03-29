@@ -19,6 +19,7 @@
 package me.proton.core.mailsettings.data.testdata
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.mailsettings.data.api.response.MailSettingsResponse
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -61,4 +62,34 @@ object MailSettingsTestData {
         stickyLabels = 1,
         confirmLink = 1
     )
+
+    val apiResponse = MailSettingsResponse(
+        displayName = null,
+        signature = null,
+        autoSaveContacts = 1,
+        composerMode = 1,
+        messageButtons = 1,
+        showImages = 1,
+        showMoved = 1,
+        viewMode = 1,
+        viewLayout = 1,
+        swipeLeft = 1,
+        swipeRight = 1,
+        shortcuts = 1,
+        pmSignature = 1,
+        numMessagePerPage = 1,
+        draftMimeType = "text/plain",
+        receiveMimeType = "text/plain",
+        showMimeType = "text/plain",
+        enableFolderColor = 1,
+        inheritParentFolderColor = 1,
+        rightToLeft = 1,
+        attachPublicKey = 1,
+        sign = 1,
+        pgpScheme = 1,
+        promptPin = 1,
+        stickyLabels = 1,
+        confirmLink = 1
+    )
+
 }

@@ -20,29 +20,46 @@ package me.proton.core.mailsettings.data.worker
 
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
+import androidx.work.ListenableWorker.Result.Failure
+import androidx.work.ListenableWorker.Result.Retry
+import androidx.work.ListenableWorker.Result.Success
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.mailsettings.data.api.MailSettingsApi
+import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
+import me.proton.core.mailsettings.data.api.request.UpdateDisplayNameRequest
+import me.proton.core.mailsettings.data.api.response.SingleMailSettingsResponse
+import me.proton.core.mailsettings.data.testdata.MailSettingsTestData
 import me.proton.core.mailsettings.data.worker.SettingsProperty.DisplayName
+import me.proton.core.network.data.ApiManagerFactory
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.serialize
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class UpdateSettingsWorkerTest {
 
-    private val context = mockk<Context>()
+    private val sessionId = SessionId("sessionId")
+    private val apiResponse = SingleMailSettingsResponse(MailSettingsTestData.apiResponse)
 
+    private val context = mockk<Context>()
     private val parameters = mockk<WorkerParameters> {
         every { this@mockk.taskExecutor } returns mockk(relaxed = true)
     }
-
     private val workManager = mockk<WorkManager> {
         coEvery {
             this@mockk.enqueueUniqueWork(
@@ -54,13 +71,24 @@ class UpdateSettingsWorkerTest {
         every { this@mockk.getWorkInfoById(any()) } returns mockk()
     }
 
+    private val mailSettingsApi = mockk<MailSettingsApi>()
+    private val sessionProvider = mockk<SessionProvider> {
+        coEvery { this@mockk.getSessionId(any()) } returns sessionId
+    }
+    private val apiManagerFactory = mockk<ApiManagerFactory> {
+        every {
+            this@mockk.create(any(), interfaceClass = MailSettingsApi::class)
+        } returns TestApiManager(mailSettingsApi)
+    }
+
     private val worker = UpdateSettingsWorker(
         context,
-        parameters
+        parameters,
+        ApiProvider(apiManagerFactory, sessionProvider)
     )
 
     @Test
-    fun workerEnqueuerCreatesOneTimeRequestWorkerWhichIsUniqueByUserAndSettingProperty() {
+    fun `worker enqueuer creates one time request worker which is unique by user and setting property`() {
         // WHEN
         val userId = UserId("userId")
         UpdateSettingsWorker.Enqueuer(workManager).enqueue(userId, DisplayName("Updated name"))
@@ -82,5 +110,96 @@ class UpdateSettingsWorkerTest {
         assertEquals(NetworkType.CONNECTED, workSpec.constraints.requiredNetworkType)
         assertEquals("userId", actualUserId)
         assertEquals(DisplayName("Updated name"), actualSettingsProperty)
+    }
+
+    @Test
+    fun `worker executes updateDisplayName API call when given settingsProperty is DisplayName`() =
+        runBlockingTest {
+            // GIVEN
+            userIdInputIs("userId")
+            settingPropertyInputIs(DisplayName("updated name"))
+            coEvery { mailSettingsApi.updateDisplayName(any()) } returns apiResponse
+
+            // WHEN
+            worker.doWork()
+
+            // THEN
+            val expectedRequest = UpdateDisplayNameRequest("updated name")
+            coVerify { mailSettingsApi.updateDisplayName(expectedRequest) }
+        }
+
+    @Test
+    fun `worker executes updateAttachPublicKey API call when given settingsProperty is AttachPublicKey`() =
+        runBlockingTest {
+            // GIVEN
+            userIdInputIs("userId")
+            settingPropertyInputIs(SettingsProperty.AttachPublicKey(0))
+            coEvery { mailSettingsApi.updateAttachPublicKey(any()) } returns apiResponse
+
+            // WHEN
+            worker.doWork()
+
+            // THEN
+            val expectedRequest = UpdateAttachPublicKeyRequest(0)
+            coVerify { mailSettingsApi.updateAttachPublicKey(expectedRequest) }
+        }
+
+    @Test
+    fun `worker returns Success when API call succeeds`() = runBlockingTest {
+        // GIVEN
+        userIdInputIs("userId")
+        settingPropertyInputIs(SettingsProperty.PromptPin(0))
+        coEvery { mailSettingsApi.updatePromptPin(any()) } returns apiResponse
+
+        // WHEN
+        val result = worker.doWork()
+
+        // THEN
+        assertEquals(Success.success(), result)
+    }
+
+    @Test
+    fun `worker returns Failure when API call fails and maxRetries were reached`() =
+        runBlockingTest {
+            // GIVEN
+            userIdInputIs("userId")
+            settingPropertyInputIs(SettingsProperty.ShowImages(3))
+            coEvery { mailSettingsApi.updateShowImages(any()) } throws Exception("Failed.")
+            every { parameters.runAttemptCount } returns 2
+
+            // WHEN
+            val result = worker.doWork()
+
+            // THEN
+            assertEquals(Failure.failure(), result)
+        }
+
+    @Test
+    fun `worker returns Retry when API call failed but maxRetries were not reached`() =
+        runBlockingTest {
+            // GIVEN
+            userIdInputIs("userId")
+            settingPropertyInputIs(SettingsProperty.DraftMimeType("text/plain"))
+            coEvery { mailSettingsApi.updateDraftMimeType(any()) } throws Exception("Failed.")
+            every { parameters.runAttemptCount } returns 1
+
+            // WHEN
+            val result = worker.doWork()
+
+            // THEN
+            assertEquals(Retry.retry(), result)
+        }
+
+    private fun settingPropertyInputIs(displayNameProperty: SettingsProperty) {
+        // When serializing polymorphic class hierarchies you must ensure that the compile-time type
+        // of the serialized object is a polymorphic one, not a concrete one.
+        // (https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/polymorphism.md#sealed-classes)
+        every {
+            parameters.inputData.getString("keySettingsPropertySerialized")
+        } returns displayNameProperty.serialize()
+    }
+
+    private fun userIdInputIs(rawUserId: String) {
+        every { parameters.inputData.getString("keyUserId") } returns rawUserId
     }
 }

@@ -26,6 +26,7 @@ import me.proton.core.mailmessage.data.repository.EmailMessageRepositoryImpl
 import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.repository.MailSettingsRepositoryImpl
+import me.proton.core.mailsettings.data.worker.UpdateSettingsWorker
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
@@ -44,6 +45,7 @@ object MailModule {
     @Singleton
     fun provideMailSettingsRepositoryImpl(
         db: MailSettingsDatabase,
-        provider: ApiProvider
-    ): MailSettingsRepository = MailSettingsRepositoryImpl(db, provider)
+        provider: ApiProvider,
+        settingsWorker: UpdateSettingsWorker.Enqueuer
+    ): MailSettingsRepository = MailSettingsRepositoryImpl(db, provider, settingsWorker)
 }
