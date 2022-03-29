@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.7]
+
 ## New
 - Added functions to get a timestamp from a verified signature, to the crypto module and to the KeyHolder's context:
     `getVerifiedTimestampOfText` and `getVerifiedTimestampOfData`
