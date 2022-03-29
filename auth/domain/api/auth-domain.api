@@ -219,7 +219,7 @@ public abstract interface class me/proton/core/auth/domain/repository/AuthReposi
 	public abstract fun getAuthInfo (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLoginInfo (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun performLogin (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun performLogin (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun randomModulus (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun revokeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -240,8 +240,19 @@ public final class me/proton/core/auth/domain/usecase/CreateLoginSession {
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/domain/usecase/LoginChallengeConfig : me/proton/core/challenge/domain/ChallengeConfig {
+	public static final field Companion Lme/proton/core/auth/domain/usecase/LoginChallengeConfig$Companion;
+	public static final field LOGIN_FRAME_USERNAME Ljava/lang/String;
+	public fun <init> ()V
+	public fun getFlowFrames ()Ljava/util/List;
+	public fun getFlowName ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/domain/usecase/LoginChallengeConfig$Companion {
+}
+
 public final class me/proton/core/auth/domain/usecase/PerformLogin {
-	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Ljava/lang/String;)V
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Ljava/lang/String;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

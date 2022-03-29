@@ -69,7 +69,7 @@ data class ChallengeRecoveryFrame(
     @SerialName("frame")
     val frame: ChallengeFrameType,
     @SerialName("keydownRecovery")
-    override val keyDownField: List<Char>
+    override val keyDownField: List<String>
 ) : Frame {
     companion object {
         fun from(context: Context, frame: ChallengeFrameDetails?): ChallengeRecoveryFrame? =

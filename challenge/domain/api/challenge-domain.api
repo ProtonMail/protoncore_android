@@ -10,6 +10,10 @@ public abstract interface class me/proton/core/challenge/domain/ChallengeManager
 	public abstract fun resetFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/challenge/domain/ChallengeManagerKt {
+	public static final fun useFlow (Lme/proton/core/challenge/domain/ChallengeManager;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/challenge/domain/entity/ChallengeFrameDetails {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;

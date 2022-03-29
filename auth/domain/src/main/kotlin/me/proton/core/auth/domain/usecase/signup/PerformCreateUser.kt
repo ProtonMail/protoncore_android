@@ -20,6 +20,7 @@ package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.domain.useFlow
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
@@ -64,27 +65,19 @@ class PerformCreateUser @Inject constructor(
                 modulus = modulus.modulus
             )
 
-            val firstFrame =
-                challengeManager.getFrameByFlowAndFrameName(challengeConfig.flowName, challengeConfig.flowFrames[0])
-            val secondFrame =
-                challengeManager.getFrameByFlowAndFrameName(challengeConfig.flowName, challengeConfig.flowFrames[1])
-
-            val createUserResult = userRepository.createUser(
-                firstFrame = firstFrame,
-                secondFrame = secondFrame,
-                username = username,
-                domain = domain,
-                password = password,
-                recoveryEmail = recoveryEmail,
-                recoveryPhone = recoveryPhone,
-                referrer = referrer,
-                type = type,
-                auth = auth,
-            ).userId
-
-            challengeManager.resetFlow(challengeConfig.flowName)
-
-            return createUserResult
+            return challengeManager.useFlow(challengeConfig.flowName) { frames ->
+                userRepository.createUser(
+                    username = username,
+                    domain = domain,
+                    password = password,
+                    recoveryEmail = recoveryEmail,
+                    recoveryPhone = recoveryPhone,
+                    referrer = referrer,
+                    type = type,
+                    auth = auth,
+                    frames
+                ).userId
+            }
         }
     }
 }

@@ -31,7 +31,6 @@ import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding
-import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.presentation.ui.view.ProtonInput
 import javax.inject.Inject
 
@@ -76,7 +75,7 @@ public class ProtonMetadataInput : ProtonInput {
     private val pastes: List<String>
         get() = input.pasteList
 
-    private val keys: MutableList<Char> = mutableListOf()
+    private val keys: MutableList<String> = mutableListOf()
 
     public constructor(context: Context) : super(context) {
         init(context)
@@ -97,9 +96,23 @@ public class ProtonMetadataInput : ProtonInput {
         }
 
         enableMetrics()
-        input.setOnKeyListener { _, _, event ->
+        input.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
-                keys.add(event.unicodeChar.toChar())
+                val char = when (keyCode) {
+                    KeyEvent.KEYCODE_DEL -> BACKSPACE
+                    KeyEvent.KEYCODE_TAB -> TAB
+                    KeyEvent.KEYCODE_SHIFT_LEFT,
+                    KeyEvent.KEYCODE_SHIFT_RIGHT -> SHIFT
+                    KeyEvent.KEYCODE_CAPS_LOCK -> CAPS
+                    KeyEvent.KEYCODE_DPAD_LEFT -> ARROW_LEFT
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> ARROW_RIGHT
+                    KeyEvent.KEYCODE_DPAD_UP -> ARROW_UP
+                    KeyEvent.KEYCODE_DPAD_DOWN -> ARROW_DOWN
+                    KeyEvent.KEYCODE_COPY -> COPY
+                    KeyEvent.KEYCODE_PASTE -> PASTE
+                    else -> event.unicodeChar.toChar().toString()
+                }
+                keys.add(char)
             }
             false
         }
@@ -157,5 +170,15 @@ public class ProtonMetadataInput : ProtonInput {
 
     private companion object {
         private const val focusCheckDelay = 500L
+        private const val BACKSPACE = "Backspace"
+        private const val COPY = "Copy"
+        private const val PASTE = "Paste"
+        private const val TAB = "Tab"
+        private const val CAPS = "Caps"
+        private const val SHIFT = "Shift"
+        private const val ARROW_LEFT = "ArrowLeft"
+        private const val ARROW_RIGHT = "ArrowRight"
+        private const val ARROW_UP = "ArrowUp"
+        private const val ARROW_DOWN = "ArrowDOWN"
     }
 }

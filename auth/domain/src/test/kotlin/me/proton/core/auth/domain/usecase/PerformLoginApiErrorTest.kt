@@ -28,6 +28,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.network.domain.ApiException
@@ -46,6 +47,7 @@ class PerformLoginApiErrorTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
+    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
 
     // endregion
     // region test data
@@ -74,13 +76,14 @@ class PerformLoginApiErrorTest {
         srpSession = testSrpSession
     )
 
+    private val loginChallengeConfig = LoginChallengeConfig()
     private lateinit var useCase: PerformLogin
     // endregion
 
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret, challengeManager, loginChallengeConfig)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
@@ -91,7 +94,7 @@ class PerformLoginApiErrorTest {
                 proton = ApiResult.Error.ProtonData(1234, "error")
             )
         )
-        coEvery { authRepository.performLogin(any(), any(), any(), any()) } throws ApiException(
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 401,
                 message = "auth-info error",
@@ -120,7 +123,8 @@ class PerformLoginApiErrorTest {
                 testUsername,
                 testClientSecret,
                 testSrpProofs,
-                testSrpSession
+                testSrpSession,
+                frames = null
             ) wasNot called
         }
     }
@@ -148,7 +152,8 @@ class PerformLoginApiErrorTest {
                 testUsername,
                 testClientSecret,
                 testSrpProofs,
-                testSrpSession
+                testSrpSession,
+                frames = null
             )
         }
         verify(exactly = 1) {

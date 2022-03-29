@@ -16,17 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api.request
+package me.proton.core.auth.domain.usecase
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.challenge.domain.ChallengeConfig
 
-const val CHALLENGE_VERSION = "2.0.1"
+class LoginChallengeConfig : ChallengeConfig {
 
-@Serializable
-data class ChallengePayload(
-    @SerialName("android-challenge-0")
-    val usernameFrame: ChallengeUsernameFrame?,
-    @SerialName("android-challenge-1")
-    val recoveryFrame: ChallengeRecoveryFrame?
-)
+    override val flowName: String
+        get() = "login"
+
+    override val flowFrames: List<String>
+        get() = listOf(LOGIN_FRAME_USERNAME)
+
+    companion object {
+        const val LOGIN_FRAME_USERNAME = "username"
+    }
+}

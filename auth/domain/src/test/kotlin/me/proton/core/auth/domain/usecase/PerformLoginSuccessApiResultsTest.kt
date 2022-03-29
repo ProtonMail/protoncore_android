@@ -28,6 +28,7 @@ import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -46,6 +47,7 @@ class PerformLoginSuccessApiResultsTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
+    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
 
     // endregion
     // region test data
@@ -76,6 +78,7 @@ class PerformLoginSuccessApiResultsTest {
         temporaryPassword = false,
     )
 
+    private val loginChallengeConfig = LoginChallengeConfig()
     private lateinit var useCase: PerformLogin
 
     // endregion
@@ -83,18 +86,19 @@ class PerformLoginSuccessApiResultsTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret, challengeManager, loginChallengeConfig)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
-        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult
     }
 
     @Test
     fun `login happy path invocations works correctly`() = runBlockingTest {
+        coEvery { challengeManager.getFramesByFlowName(loginChallengeConfig.flowName) } returns emptyList()
         useCase.invoke(testUsername, testPassword)
 
         coVerify { authRepository.getLoginInfo(testUsername, testClientSecret) }
@@ -103,7 +107,8 @@ class PerformLoginSuccessApiResultsTest {
                 testUsername,
                 testClientSecret,
                 testSrpProofs,
-                testSrpSession
+                testSrpSession,
+                frames = emptyList()
             )
         }
         verify(exactly = 1) {
@@ -126,7 +131,7 @@ class PerformLoginSuccessApiResultsTest {
 
     @Test
     fun `correct handling single password account second factor returned`() = runBlockingTest {
-        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
             secondFactor = SecondFactor.Enabled(emptySet())
         )
 
@@ -136,7 +141,7 @@ class PerformLoginSuccessApiResultsTest {
 
     @Test
     fun `correct handling two password account second factor returned`() = runBlockingTest {
-        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
             passwordMode = 2,
             secondFactor = SecondFactor.Enabled(emptySet())
         )

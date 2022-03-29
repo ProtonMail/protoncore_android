@@ -378,7 +378,7 @@ public final class me/proton/core/auth/presentation/databinding/ActivityLoginBin
 	public final field subtitleText Landroid/widget/TextView;
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
-	public final field usernameInput Lme/proton/core/presentation/ui/view/ProtonInput;
+	public final field usernameInput Lme/proton/core/challenge/presentation/ProtonMetadataInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ActivityLoginBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;

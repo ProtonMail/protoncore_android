@@ -31,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
@@ -177,6 +178,9 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         with(binding) {
             hideKeyboard()
             blockingHelpButton.isVisible = false
+            lifecycleScope.launch {
+                binding.usernameInput.flush()
+            }
             usernameInput.validateUsername()
                 .onFailure { usernameInput.setInputError(getString(R.string.auth_login_assistive_text)) }
                 .onSuccess(::onUsernameValidationSuccess)

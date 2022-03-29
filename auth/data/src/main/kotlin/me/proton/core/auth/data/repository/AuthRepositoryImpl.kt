@@ -18,7 +18,10 @@
 
 package me.proton.core.auth.data.repository
 
+import android.content.Context
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.request.ChallengePayload
+import me.proton.core.auth.data.api.request.ChallengeUsernameFrame
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
@@ -33,6 +36,7 @@ import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
@@ -45,7 +49,8 @@ import me.proton.core.network.domain.session.SessionId
  * Provides implementation of the all auth related API routes.
  */
 class AuthRepositoryImpl(
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    private val context: Context
 ) : AuthRepository {
 
     /**
@@ -98,7 +103,8 @@ class AuthRepositoryImpl(
         username: String,
         clientSecret: String,
         srpProofs: SrpProofs,
-        srpSession: String
+        srpSession: String,
+        frames: List<ChallengeFrameDetails>?
     ): SessionInfo =
         provider.get<AuthenticationApi>().invoke {
             val request = LoginRequest(
@@ -106,7 +112,10 @@ class AuthRepositoryImpl(
                 clientSecret,
                 srpProofs.clientEphemeral,
                 srpProofs.clientProof,
-                srpSession
+                srpSession,
+                ChallengePayload(
+                    ChallengeUsernameFrame.from(context, frames?.getOrNull(0))
+                )
             )
             val response = performLogin(request)
             response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "login failed" }

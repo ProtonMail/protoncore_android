@@ -38,7 +38,7 @@ public class ChallengeManagerImpl @AssistedInject constructor(
         clicks: Int,
         copies: List<String>,
         pastes: List<String>,
-        keys: List<Char>
+        keys: List<String>
     ) {
         val frame = ChallengeFrameDetails(
             flow = flow,

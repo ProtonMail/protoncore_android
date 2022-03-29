@@ -31,7 +31,7 @@ public data class ChallengeFrameEntity(
     val clicks: Int,
     val copy: List<String>,
     val paste: List<String>,
-    val keys: List<Char>
+    val keys: List<String>
 ) {
     internal fun toFrameDetails() = ChallengeFrameDetails(
         flow = flow,

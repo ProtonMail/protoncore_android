@@ -21,6 +21,8 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.domain.useFlow
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
@@ -36,7 +38,9 @@ class PerformLogin @Inject constructor(
     private val authRepository: AuthRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
-    @ClientSecret private val clientSecret: String
+    @ClientSecret private val clientSecret: String,
+    private val challengeManager: ChallengeManager,
+    private val challengeConfig: LoginChallengeConfig
 ) {
     suspend operator fun invoke(
         username: String,
@@ -55,12 +59,15 @@ class PerformLogin @Inject constructor(
                 modulus = loginInfo.modulus,
                 serverEphemeral = loginInfo.serverEphemeral
             )
-            return authRepository.performLogin(
-                username = username,
-                clientSecret = clientSecret,
-                srpProofs = srpProofs,
-                srpSession = loginInfo.srpSession
-            )
+            return challengeManager.useFlow(challengeConfig.flowName) { frames ->
+                authRepository.performLogin(
+                    frames = frames,
+                    username = username,
+                    clientSecret = clientSecret,
+                    srpProofs = srpProofs,
+                    srpSession = loginInfo.srpSession
+                )
+            }
         }
     }
 }

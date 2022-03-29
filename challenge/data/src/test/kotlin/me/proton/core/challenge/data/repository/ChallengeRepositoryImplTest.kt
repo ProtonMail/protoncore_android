@@ -38,7 +38,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class ChallengeRepositoryImplTest {
+public class ChallengeRepositoryImplTest {
 
     private val dao = mockk<ChallengeFramesDao>(relaxed = true)
     private val db = mockk<ChallengeDatabase>(relaxed = true)
@@ -46,7 +46,7 @@ class ChallengeRepositoryImplTest {
     private lateinit var repository: ChallengeRepository
 
     @Before
-    fun beforeEveryTest() {
+    public fun beforeEveryTest() {
         every { db.challengeFramesDao() } returns dao
         repository = ChallengeRepositoryImpl(db)
 
@@ -58,12 +58,12 @@ class ChallengeRepositoryImplTest {
     }
 
     @After
-    fun afterEveryTest() {
+    public fun afterEveryTest() {
         unmockkStatic("androidx.room.RoomDatabaseKt")
     }
 
     @Test
-    fun `insert new frame details works correctly`() = runBlockingTest {
+    public fun `insert new frame details works correctly`(): Unit = runBlockingTest {
         // Given
         val flow = "test-flow"
         val frame = "test-frame"
@@ -81,21 +81,21 @@ class ChallengeRepositoryImplTest {
     }
 
     @Test
-    fun `update frame details works correctly`() = runBlockingTest {
+    public fun `update frame details works correctly`(): Unit = runBlockingTest {
         // Given
         val flow = "test-flow"
         val frame = "test-frame"
         val frameDetails = ChallengeFrameDetails(
-            flow, frame, 2, 2, listOf("new copy"), listOf("new paste"), listOf("h".single())
+            flow, frame, 2, 2, listOf("new copy"), listOf("new paste"), listOf("h")
         )
         coEvery { dao.getByFlowAndFrame(flow, frame) } returns ChallengeFrameEntity(
-            frame, flow, 1, 1, listOf("copy"), listOf("paste"), listOf("c".single())
+            frame, flow, 1, 1, listOf("copy"), listOf("paste"), listOf("c")
         )
         // When
         repository.insertFrameDetails(frameDetails)
         // Then
         val entity = ChallengeFrameEntity(
-            frame, flow, 3, 3, listOf("copy", "new copy"), listOf("paste", "new paste"), listOf("c".single(), "h".single())
+            frame, flow, 3, 3, listOf("copy", "new copy"), listOf("paste", "new paste"), listOf("c", "h")
         )
         coVerify { dao.insertOrUpdate(entity) }
     }

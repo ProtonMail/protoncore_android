@@ -24,6 +24,7 @@ import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.session.SessionId
@@ -53,7 +54,8 @@ interface AuthRepository {
         username: String,
         clientSecret: String,
         srpProofs: SrpProofs,
-        srpSession: String
+        srpSession: String,
+        frames: List<ChallengeFrameDetails>?
     ): SessionInfo
 
     /**
