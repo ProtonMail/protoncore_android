@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_mailsettings_data_worker_UpdateSettingsWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/mailsettings/data/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -13,6 +17,14 @@ public class me/proton/core/mailsettings/data/MailSettingsEventListener : me/pro
 	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/mailsettings/data/MailSettingsEventListener_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/mailsettings/data/MailSettingsEventListener_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/mailsettings/data/MailSettingsEventListener;
+	public static fun newInstance (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/mailsettings/domain/repository/MailSettingsRepository;)Lme/proton/core/mailsettings/data/MailSettingsEventListener;
 }
 
 public final class me/proton/core/mailsettings/data/MailSettingsEvents {
@@ -928,7 +940,7 @@ public final class me/proton/core/mailsettings/data/extension/MailSettingsMapper
 }
 
 public final class me/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl : me/proton/core/mailsettings/domain/repository/MailSettingsRepository {
-	public fun <init> (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;)V
 	public fun getMailSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMailSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun updateAttachPublicKey (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -956,5 +968,774 @@ public final class me/proton/core/mailsettings/data/repository/MailSettingsRepos
 	public fun updateSwipeRight (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/SwipeAction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateViewLayout (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ViewLayout;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateViewMode (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ViewMode;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$Companion;
+	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Sign : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Sign$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Sign$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Signature : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Signature$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Signature$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode : me/proton/core/mailsettings/data/worker/SettingsProperty {
+	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode$Companion;
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;IILjava/lang/Object;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker : androidx/work/CoroutineWorker {
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/network/data/ApiProvider;)V
+	public fun doWork (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getContext ()Landroid/content/Context;
+}
+
+public final class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer {
+	public fun <init> (Landroidx/work/WorkManager;)V
+	public final fun enqueue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/data/worker/SettingsProperty;)Lcom/google/common/util/concurrent/ListenableFuture;
+}
+
+public abstract interface class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker_AssistedFactory_Impl : me/proton/core/mailsettings/data/worker/UpdateSettingsWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker;
+	public static fun create (Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker_Enqueuer_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker_Enqueuer_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;
+	public static fun newInstance (Landroidx/work/WorkManager;)Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;
+}
+
+public final class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker;
+}
+
+public abstract interface class me/proton/core/mailsettings/data/worker/UpdateSettingsWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 
