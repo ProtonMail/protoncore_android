@@ -16,24 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.mailsettings.dagger
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.mailmessage.data.repository.EmailMessageRepositoryImpl
-import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
+import me.proton.core.mailsettings.data.db.MailSettingsDatabase
+import me.proton.core.mailsettings.data.repository.MailSettingsRepositoryImpl
+import me.proton.core.mailsettings.data.worker.UpdateSettingsWorker
+import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MailModule {
+public object MailSettingsModule {
 
     @Provides
     @Singleton
-    fun provideEmailMessageRepositoryImpl(
-        provider: ApiProvider
-    ): EmailMessageRepository = EmailMessageRepositoryImpl(provider)
+    public fun provideMailSettingsRepositoryImpl(
+        db: MailSettingsDatabase,
+        provider: ApiProvider,
+        settingsWorker: UpdateSettingsWorker.Enqueuer
+    ): MailSettingsRepository = MailSettingsRepositoryImpl(db, provider, settingsWorker)
 }

@@ -150,6 +150,7 @@ public object Module {
     public const val mailSettingsDomain: String = "$mailSettings:mail-settings-domain"
     public const val mailSettingsPresentation: String = "$mailSettings:mail-settings-presentation"
     public const val mailSettingsData: String = "$mailSettings:mail-settings-data"
+    public const val mailSettingsDagger: String = "$mailSettings:mail-settings-dagger"
 
     // Plan
     public const val plan: String = ":plan"
