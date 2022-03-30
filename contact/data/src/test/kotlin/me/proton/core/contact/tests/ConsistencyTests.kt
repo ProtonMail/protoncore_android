@@ -26,7 +26,8 @@ class ConsistencyTests {
     @Test
     fun `contact card type is consistent`() {
         assert(ContactCardType.ClearText.value == 0)
+        assert(ContactCardType.Encrypted.value == 1)
         assert(ContactCardType.Signed.value == 2)
-        assert(ContactCardType.Encrypted.value == 3)
+        assert(ContactCardType.EncryptedAndSigned.value == 3)
     }
 }

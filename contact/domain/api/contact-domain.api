@@ -65,6 +65,7 @@ public final class me/proton/core/contact/domain/entity/ContactCardType : java/l
 	public static final field ClearText Lme/proton/core/contact/domain/entity/ContactCardType;
 	public static final field Companion Lme/proton/core/contact/domain/entity/ContactCardType$Companion;
 	public static final field Encrypted Lme/proton/core/contact/domain/entity/ContactCardType;
+	public static final field EncryptedAndSigned Lme/proton/core/contact/domain/entity/ContactCardType;
 	public static final field Signed Lme/proton/core/contact/domain/entity/ContactCardType;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/contact/domain/entity/ContactCardType;

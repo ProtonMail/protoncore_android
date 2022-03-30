@@ -36,8 +36,9 @@ data class ContactCardResource(
 fun ContactCardResource.toContactCard(): ContactCard {
     return when (ContactCardType.enumOf(type)?.enum) {
         ContactCardType.ClearText -> ContactCard.ClearText(data)
-        ContactCardType.Signed -> ContactCard.Signed(data, signature!!)
-        ContactCardType.Encrypted -> ContactCard.Encrypted(data, signature!!)
+        ContactCardType.Encrypted -> ContactCard.Encrypted(data, null)
+        ContactCardType.Signed -> ContactCard.Signed(data, requireNotNull(signature))
+        ContactCardType.EncryptedAndSigned -> ContactCard.Encrypted(data, requireNotNull(signature))
         null -> throw IllegalArgumentException("Unknown contact card type $this")
     }
 }
@@ -45,7 +46,12 @@ fun ContactCardResource.toContactCard(): ContactCard {
 fun ContactCard.toContactCardResource(): ContactCardResource {
     return when (this) {
         is ContactCard.ClearText -> ContactCardResource(ContactCardType.ClearText.value, data, null)
-        is ContactCard.Encrypted -> ContactCardResource(ContactCardType.Encrypted.value, data, signature)
+        is ContactCard.Encrypted -> {
+            if (signature != null)
+                ContactCardResource(ContactCardType.EncryptedAndSigned.value, data, signature)
+            else
+                ContactCardResource(ContactCardType.Encrypted.value, data, null)
+        }
         is ContactCard.Signed -> ContactCardResource(ContactCardType.Signed.value, data, signature)
     }
 }

@@ -52,7 +52,12 @@ data class ContactCardEntity(
 fun ContactCard.toContactCardEntity(contactId: ContactId): ContactCardEntity {
     return when (this) {
         is ContactCard.ClearText -> ContactCardEntity(contactId, ContactCardType.ClearText.value, data, null)
-        is ContactCard.Encrypted -> ContactCardEntity(contactId, ContactCardType.Encrypted.value, data, signature)
+        is ContactCard.Encrypted -> {
+            if (signature != null)
+                ContactCardEntity(contactId, ContactCardType.EncryptedAndSigned.value, data, signature)
+            else
+                ContactCardEntity(contactId, ContactCardType.Encrypted.value, data, null)
+        }
         is ContactCard.Signed -> ContactCardEntity(contactId, ContactCardType.Signed.value, data, signature)
     }
 }
@@ -61,7 +66,8 @@ fun ContactCardEntity.toContactCard(): ContactCard {
     return when (ContactCardType.enumOf(type)?.enum) {
         ContactCardType.ClearText -> ContactCard.ClearText(data)
         ContactCardType.Signed -> ContactCard.Signed(data, requireNotNull(signature))
-        ContactCardType.Encrypted -> ContactCard.Encrypted(data, requireNotNull(signature))
+        ContactCardType.Encrypted -> ContactCard.Encrypted(data, null)
+        ContactCardType.EncryptedAndSigned -> ContactCard.Encrypted(data, requireNotNull(signature))
         else -> throw IllegalStateException("Unsupported contact type $type")
     }
 }
