@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixes
 - Remove creating account screen when there is an error in the sign up flow.
+- Signup UI tests failing because of the changes in the domain selection.
 
 ## [7.1.8]
 

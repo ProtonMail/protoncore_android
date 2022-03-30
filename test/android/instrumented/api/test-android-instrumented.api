@@ -820,8 +820,10 @@ public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot$V
 	public fun <init> ()V
 	public final fun accountTypeSwitchNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun chooseUsernameElementsDisplayed ()V
+	public final fun domainInputDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun domainInputNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun suffixFilledButNotDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun suffixNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
