@@ -128,4 +128,10 @@ class ClientVersionValidatorTests {
         assertTrue { validator.validate(version) }
     }
 
+    @Test
+    fun `Version code accepts 4 numeric values`() {
+        val version = "android-mail@1.2.3.4"
+        assertTrue { validator.validate(version) }
+    }
+
 }

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixes
 - Several fixes for sign up related to lifecycle misusage.
 - Fixed EventManager incorrect isStarted value (now rely on Job.isActive).
+- App versioning now accepts 4 numeric values (1.2.3.4).
 
 ## [7.1.7]
 
