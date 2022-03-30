@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+- Updated gopenpgp to v2.4.6
+
 ## [7.1.9]
 
 ### Changes
