@@ -33,7 +33,7 @@ class ClientVersionValidatorImpl : ClientVersionValidator {
         Regex("^[a-z_]+-[a-z_]+(?:-[a-z_]+)?\$").matches(name)
 
     private fun isValidVersion(version: String) =
-        Regex("^\\d+?\\.\\d+?\\.\\d+?(-((stable|RC|beta|alpha)(\\.\\d+)?|dev)|)?(\\+[0-9A-Za-z\\-]+)?\$")
+        Regex("^\\d+?\\.\\d+?\\.\\d+?(\\.\\d+?)?(-((stable|RC|beta|alpha)(\\.\\d+)?|dev)|)?(\\+[0-9A-Za-z\\-]+)?\$")
             .matches(version)
 
 }
