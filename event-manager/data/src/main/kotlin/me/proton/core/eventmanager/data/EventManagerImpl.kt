@@ -23,11 +23,12 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.SerializationException
@@ -70,8 +71,7 @@ class EventManagerImpl @AssistedInject constructor(
 
     private val lock = Mutex()
 
-    private var observeAccountJob: Job? = null
-    private var observeAppStateJob: Job? = null
+    private var observeJob: Job? = null
 
     internal val eventListenersByOrder = sortedMapOf<Int, MutableSet<EventListener<*, *>>>()
 
@@ -86,7 +86,7 @@ class EventManagerImpl @AssistedInject constructor(
     private suspend fun processFirstFromConfig() {
         val metadata = eventMetadataRepository.get(config).firstOrNull()
         when {
-            metadata == null -> cancel()
+            metadata == null -> stop()
             metadata.retry > retriesBeforeReset -> {
                 reportFailure(metadata)
                 reset()
@@ -262,46 +262,46 @@ class EventManagerImpl @AssistedInject constructor(
         eventWorkerManager.enqueue(config, immediately)
     }
 
-    private suspend fun enqueueOrCancel(account: Account?) {
+    private suspend fun enqueueOrStop(account: Account?) {
         when {
-            account == null || account.userId != config.userId -> cancel()
-            account.state != AccountState.Ready -> cancel()
+            account == null || account.userId != config.userId -> stop()
+            account.state != AccountState.Ready -> stop()
             eventMetadataRepository.get(config).isEmpty() -> enqueue(eventId = null, immediately = true)
             else -> eventWorkerManager.enqueue(config, immediately = true)
         }
     }
 
-    private suspend fun cancel() {
-        observeAccountJob?.cancel()
-        observeAppStateJob?.cancel()
-        eventWorkerManager.cancel(config)
-        eventMetadataRepository.updateState(config, State.Cancelled)
+    // Observe any Account changes.
+    private suspend fun collectAccountChanges() {
+        accountManager.getAccount(config.userId)
+            .distinctUntilChangedBy { it?.state }
+            .onEach { account -> enqueueOrStop(account) }
+            .collect()
+    }
+
+    // Observe any Foreground App State changes.
+    private suspend fun collectAppStateChanges() {
+        appLifecycleProvider.state
+            .filter { it == AppLifecycleProvider.State.Foreground }
+            .onEach { enqueueOrStop(accountManager.getAccount(config.userId).firstOrNull()) }
+            .collect()
     }
 
     private suspend fun internalStart() {
         if (isStarted) return
-
-        // Observe any Account changes.
-        observeAccountJob = accountManager.getAccount(config.userId)
-            .distinctUntilChangedBy { it?.state }
-            .onEach { account -> enqueueOrCancel(account) }
-            .launchIn(coroutineScope)
-
-        // Observe any Foreground App State changes.
-        observeAppStateJob = appLifecycleProvider.state
-            .filter { it == AppLifecycleProvider.State.Foreground }
-            .onEach { enqueueOrCancel(accountManager.getAccount(config.userId).firstOrNull()) }
-            .launchIn(coroutineScope)
-
-        isStarted = true
+        observeJob = coroutineScope.launch {
+            launch { collectAccountChanges() }
+            launch { collectAppStateChanges() }
+        }
+        // Now isStarted == true -> observeJob.isActive.
     }
 
     private suspend fun internalStop() {
         if (!isStarted) return
-
-        cancel()
-
-        isStarted = false
+        eventWorkerManager.cancel(config)
+        eventMetadataRepository.updateState(config, State.Cancelled)
+        observeJob?.cancel()
+        // Now isStarted == false -> !observeJob.isActive.
     }
 
     private suspend fun <R> internalSuspend(block: suspend () -> R): R {
@@ -318,7 +318,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     override val config: EventManagerConfig = deserializer.config
-    override var isStarted: Boolean = false
+    override var isStarted: Boolean = observeJob?.isActive ?: false
 
     override suspend fun start() {
         lock.withLock { internalStart() }
