@@ -671,6 +671,7 @@ public final class me/proton/core/humanverification/presentation/utils/RequestCo
 public final class me/proton/core/humanverification/presentation/utils/UiUtilsKt {
 	public static final field TAG_HUMAN_VERIFICATION_HELP Ljava/lang/String;
 	public static final field TOKEN_DEFAULT Ljava/lang/String;
+	public static final fun hasHumanVerificationFragment (Landroidx/fragment/app/FragmentManager;)Z
 	public static final fun showHumanVerification (Landroidx/fragment/app/FragmentManager;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZZ)V
 	public static synthetic fun showHumanVerification$default (Landroidx/fragment/app/FragmentManager;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZZILjava/lang/Object;)V
 	public static final fun showRequestNewCodeDialog (Landroidx/fragment/app/FragmentManager;Landroid/content/Context;Ljava/lang/String;Z)V

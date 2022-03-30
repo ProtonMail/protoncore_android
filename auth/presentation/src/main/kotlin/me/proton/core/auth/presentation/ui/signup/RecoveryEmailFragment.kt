@@ -56,6 +56,6 @@ class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
             if (it is ViewModelResult.Success && it.value) {
                 binding.emailEditText.flush()
             }
-        }.launchIn(lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 }

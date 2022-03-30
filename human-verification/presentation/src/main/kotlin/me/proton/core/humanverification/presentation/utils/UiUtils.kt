@@ -90,6 +90,9 @@ fun FragmentManager.showHumanVerification(
     }
 }
 
+fun FragmentManager.hasHumanVerificationFragment(): Boolean =
+    findFragmentByTag(TAG_HUMAN_VERIFICATION_DIALOG) != null
+
 /**
  * Client should supply the host. Originally it should be a simple operation extracted from the
  * working domain (host = URL(Constants.ENDPOINT_URI).host) or from the current active proxy URL

@@ -151,7 +151,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
         // Don't show a snackbar if it's alreday shown.
         if (retrySnackBar != null) return
         val message = R.string.human_verification_method_loading_failed
-        retrySnackBar = requireView().errorSnack(message, Snackbar.LENGTH_INDEFINITE) {
+        retrySnackBar = view?.errorSnack(message, Snackbar.LENGTH_INDEFINITE) {
             // The text might be longer when translated
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).let {
                 it.isSingleLine = false

@@ -38,6 +38,8 @@ fun FragmentManager.showPlansSignup(
     plansFragment
 }
 
+fun FragmentManager.hasPlanSignupFragment() = findFragmentByTag(TAG_PLANS) != null
+
 fun FragmentManager.removePlansSignup() = findFragmentByTag(TAG_PLANS)?.let { plans ->
     inTransaction {
         setCustomAnimations(0, 0)

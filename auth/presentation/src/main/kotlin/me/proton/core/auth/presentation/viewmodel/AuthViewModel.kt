@@ -40,12 +40,13 @@ internal abstract class AuthViewModel(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal fun handleHumanVerificationState(lifecycle: Lifecycle): HumanVerificationManagerObserver {
-        val observer = humanVerificationObserver ?: humanVerificationManager.observe(
+        humanVerificationObserver?.cancelAllObservers()
+        val observer = humanVerificationManager.observe(
             lifecycle,
-            minActiveState = Lifecycle.State.CREATED
+            minActiveState = Lifecycle.State.STARTED
         ).also { humanVerificationObserver = it }
 
-        return observer.onHumanVerificationNeeded {
+        return observer.onHumanVerificationNeeded(initialState = true) {
             humanVerificationOrchestrator.startHumanVerificationWorkflow(
                 details = it,
                 recoveryEmailAddress = recoveryEmailAddress,

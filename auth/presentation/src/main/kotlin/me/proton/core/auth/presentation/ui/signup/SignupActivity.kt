@@ -51,6 +51,7 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_BILLING_DETAILS
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_PLAN
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.KEY_PLAN_SELECTED
+import me.proton.core.plan.presentation.ui.hasPlanSignupFragment
 import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.presentation.utils.getUserMessage
@@ -79,24 +80,13 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
 
         signUpViewModel.inputState
             .flowWithLifecycle(lifecycle)
-            .distinctUntilChanged()
             .onEach {
                 when (it) {
                     is SignupViewModel.InputState.Ready -> {
-                        supportFragmentManager.showPlansSignup(planInput = PlanInput())
-                        supportFragmentManager.setFragmentResultListener(
-                            KEY_PLAN_SELECTED, this
-                        ) { _, bundle ->
-                            val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
-                            val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
-                            if (plan != null) {
-                                supportFragmentManager.showCreatingUser()
-                                onPlanSelected(plan, billing)
-                            } else {
-                                supportFragmentManager.removePlansSignup()
-                                signUpViewModel.onPlanChooserCancel()
-                            }
+                        if (!supportFragmentManager.hasPlanSignupFragment()) {
+                            supportFragmentManager.showPlansSignup(planInput = PlanInput())
                         }
+                        Unit
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
@@ -126,6 +116,20 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
                 }.exhaustive
             }.launchIn(lifecycleScope)
+
+        supportFragmentManager.setFragmentResultListener(
+            KEY_PLAN_SELECTED, this
+        ) { _, bundle ->
+            val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
+            val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
+            if (plan != null) {
+                supportFragmentManager.showCreatingUser()
+                onPlanSelected(plan, billing)
+            } else {
+                supportFragmentManager.removePlansSignup()
+                signUpViewModel.onPlanChooserCancel()
+            }
+        }
     }
 
     private fun onPostLoginAccountSetup(result: PostLoginAccountSetup.Result) {

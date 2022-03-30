@@ -486,6 +486,7 @@ public final class me/proton/core/plan/presentation/ui/BasePlansFragment$Compani
 }
 
 public final class me/proton/core/plan/presentation/ui/FragmentOrchestratorKt {
+	public static final fun hasPlanSignupFragment (Landroidx/fragment/app/FragmentManager;)Z
 	public static final fun removePlansForUpgrade (Landroidx/fragment/app/FragmentManager;)Lkotlin/Unit;
 	public static final fun removePlansSignup (Landroidx/fragment/app/FragmentManager;)Lkotlin/Unit;
 	public static final fun showPlansForUpgrade (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;)Landroidx/fragment/app/Fragment;
