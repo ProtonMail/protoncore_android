@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.8]
+
 ## New
 - Added fingerprinting to the login flow. Clients should update their AuthModule.kt dependencies:
 
