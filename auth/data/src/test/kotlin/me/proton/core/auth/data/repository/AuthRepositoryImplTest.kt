@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.data.repository
 
+import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -51,6 +52,8 @@ class AuthRepositoryImplTest {
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
+    private val context = mockk<Context>(relaxed = true)
+
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: AuthRepositoryImpl
     // endregion
@@ -96,7 +99,7 @@ class AuthRepositoryImplTest {
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
-        repository = AuthRepositoryImpl(apiProvider)
+        repository = AuthRepositoryImpl(apiProvider, context)
     }
 
     @Test
@@ -139,7 +142,8 @@ class AuthRepositoryImplTest {
             testUsername,
             testClientSecret,
             testSrpProofs,
-            testSrpSession
+            testSrpSession,
+            null
         )
         // THEN
         assertNotNull(sessionInfoResponse)
@@ -159,7 +163,8 @@ class AuthRepositoryImplTest {
                 testUsername,
                 testClientSecret,
                 testSrpProofs,
-                testSrpSession
+                testSrpSession,
+                null
             )
         }
         // THEN
@@ -188,7 +193,8 @@ class AuthRepositoryImplTest {
                 testUsername,
                 testClientSecret,
                 testSrpProofs,
-                testSrpSession
+                testSrpSession,
+                null
             )
         }
     }

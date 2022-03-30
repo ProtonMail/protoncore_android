@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api.request
+package me.proton.core.auth.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -26,7 +26,5 @@ const val CHALLENGE_VERSION = "2.0.1"
 @Serializable
 data class ChallengePayload(
     @SerialName("android-challenge-0")
-    val usernameFrame: ChallengeUsernameFrame?,
-    @SerialName("android-challenge-1")
-    val recoveryFrame: ChallengeRecoveryFrame?
+    val usernameFrame: ChallengeUsernameFrame?
 )

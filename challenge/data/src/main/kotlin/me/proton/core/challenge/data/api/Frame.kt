@@ -30,5 +30,5 @@ public interface Frame {
     public val storage: Double
     public val darkMode: Boolean
     public val version: String
-    public val keyDownField: List<Char>
+    public val keyDownField: List<String>
 }

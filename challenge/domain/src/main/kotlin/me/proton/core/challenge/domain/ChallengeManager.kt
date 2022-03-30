@@ -31,10 +31,21 @@ public interface ChallengeManager {
         clicks: Int,
         copies: List<String>,
         pastes: List<String>,
-        keys: List<Char>
+        keys: List<String>
     )
 
     public suspend fun getFramesByFlowName(flow: String): List<ChallengeFrameDetails>
 
     public suspend fun getFrameByFlowAndFrameName(flow: String, frame: String): ChallengeFrameDetails?
 }
+
+public suspend inline fun <R> ChallengeManager.useFlow(
+    flowName: String,
+    block: (List<ChallengeFrameDetails>) -> R,
+): R {
+    val frames = getFramesByFlowName(flowName)
+    val result = block(frames)
+    resetFlow(flowName)
+    return result
+}
+

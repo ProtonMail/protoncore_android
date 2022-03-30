@@ -70,12 +70,16 @@
                 android:gravity="center"
                 android:text="@string/auth_account_details" />
 
-            <me.proton.core.presentation.ui.view.ProtonInput
+            <me.proton.core.challenge.presentation.ProtonMetadataInput
                 android:id="@+id/usernameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_large_plus"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:inputType="text|textEmailAddress|textNoSuggestions"
+                app:challengeFlow="login"
+                app:challengeFrame="username"
                 app:label="@string/auth_email_username" />
 
             <me.proton.core.presentation.ui.view.ProtonInput

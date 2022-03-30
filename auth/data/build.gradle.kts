@@ -38,6 +38,8 @@ dependencies {
         project(Module.network),
         project(Module.authDomain),
         project(Module.cryptoCommon),
+        project(Module.challengeDomain),
+        project(Module.challengeData),
 
         // Kotlin
         `serialization-json`,

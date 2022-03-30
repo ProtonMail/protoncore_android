@@ -32,5 +32,7 @@ data class LoginRequest(
     @SerialName("ClientProof")
     val clientProof: String,
     @SerialName("SRPSession")
-    val srpSession: String
+    val srpSession: String,
+    @SerialName("Payload")
+    val payload: ChallengePayload
 )

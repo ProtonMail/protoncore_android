@@ -6,6 +6,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## New
+- Added fingerprinting to the login flow. Clients should update their AuthModule.kt dependencies:
+
+AuthRepository now requires application context. This is due to requirement some of the data in the
+fingerprint collection require context to read it:
+```kotlin
+@Provides
+@Singleton
+fun provideAuthRepository(
+    apiProvider: ApiProvider,
+    @ApplicationContext context: Context
+): AuthRepository = AuthRepositoryImpl(apiProvider, context)
+```
+
+Also, provide the LoginChallengeConfig in the same file:
+```kotlin
+@Provides
+@Singleton
+fun provideLoginChallengeConfig(): LoginChallengeConfig = LoginChallengeConfig()
+```
+
 ### Fixes
 - Several fixes for sign up related to lifecycle misusage.
 - Fixed EventManager incorrect isStarted value (now rely on Job.isActive).

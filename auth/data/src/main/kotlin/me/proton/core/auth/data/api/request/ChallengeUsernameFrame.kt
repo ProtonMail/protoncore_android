@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api.request
+package me.proton.core.auth.data.api.request
 
 import android.content.Context
 import kotlinx.serialization.SerialName

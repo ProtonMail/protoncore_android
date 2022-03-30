@@ -141,8 +141,6 @@ class UserRepositoryImpl(
      * Create new [User]. Used during signup.
      */
     override suspend fun createUser(
-        firstFrame: ChallengeFrameDetails?,
-        secondFrame: ChallengeFrameDetails?,
         username: String,
         domain: String?,
         password: EncryptedString,
@@ -151,7 +149,11 @@ class UserRepositoryImpl(
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
+        frames: List<ChallengeFrameDetails>?,
     ): User = provider.get<UserApi>().invoke {
+        val usernameFrame = frames?.getOrNull(0)
+        val recoveryFrame = frames?.getOrNull(1)
+
         val request = CreateUserRequest(
             username,
             recoveryEmail,
@@ -161,8 +163,8 @@ class UserRepositoryImpl(
             AuthRequest.from(auth),
             domain,
             ChallengePayload(
-                ChallengeUsernameFrame.from(context, firstFrame),
-                ChallengeRecoveryFrame.from(context, secondFrame)
+                ChallengeUsernameFrame.from(context, usernameFrame),
+                ChallengeRecoveryFrame.from(context, recoveryFrame)
             )
         )
         createUser(request).user.toUser()
