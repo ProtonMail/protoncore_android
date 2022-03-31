@@ -50,6 +50,7 @@ import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.net.SocketTimeoutException
 
 class UpdateSettingsWorkerTest {
 
@@ -175,12 +176,28 @@ class UpdateSettingsWorkerTest {
         }
 
     @Test
-    fun `worker returns Retry when API call failed but maxRetries were not reached`() =
+    fun `worker returns Failure when API call fails and result is not retryable`() =
+        runBlockingTest {
+            // GIVEN
+            userIdInputIs("userId")
+            settingPropertyInputIs(SettingsProperty.ShowImages(3))
+            coEvery { mailSettingsApi.updateShowImages(any()) } throws Exception("Non retryable error")
+            every { parameters.runAttemptCount } returns 0
+
+            // WHEN
+            val result = worker.doWork()
+
+            // THEN
+            assertEquals(Failure.failure(), result)
+        }
+
+    @Test
+    fun `worker returns Retry when API call failed and maxRetries were not reached and result is retryable`() =
         runBlockingTest {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.DraftMimeType("text/plain"))
-            coEvery { mailSettingsApi.updateDraftMimeType(any()) } throws Exception("Failed.")
+            coEvery { mailSettingsApi.updateDraftMimeType(any()) } throws SocketTimeoutException("Retryable error")
             every { parameters.runAttemptCount } returns 1
 
             // WHEN

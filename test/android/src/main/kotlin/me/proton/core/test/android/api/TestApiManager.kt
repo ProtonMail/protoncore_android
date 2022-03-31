@@ -21,6 +21,7 @@ package me.proton.core.test.android.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import java.net.SocketTimeoutException
 
 class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
     override suspend fun <T> invoke(
@@ -30,6 +31,9 @@ class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<A
         val result = block.invoke(api)
         ApiResult.Success(result)
     } catch (throwable: Throwable) {
-        ApiResult.Error.Parse(throwable)
+        when (throwable) {
+            is SocketTimeoutException -> ApiResult.Error.Timeout(false, throwable)
+            else -> ApiResult.Error.Parse(throwable)
+        }
     }
 }

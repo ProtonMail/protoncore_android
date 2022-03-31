@@ -87,6 +87,7 @@ import me.proton.core.mailsettings.data.worker.SettingsProperty.ViewLayout
 import me.proton.core.mailsettings.data.worker.SettingsProperty.ViewMode
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.isRetryable
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.serialize
@@ -95,7 +96,7 @@ import javax.inject.Inject
 
 private const val KEY_INPUT_RAW_USER_ID = "keyUserId"
 private const val KEY_INPUT_SETTINGS_PROPERTY_SERIALIZED = "keySettingsPropertySerialized"
-private const val UPDATE_SETTING_MAX_RETRIES = 2
+private const val UPDATE_SETTING_MAX_RETRIES = 5
 
 @HiltWorker
 class UpdateSettingsWorker @AssistedInject constructor(
@@ -117,15 +118,16 @@ class UpdateSettingsWorker @AssistedInject constructor(
 
         return when (apiResult) {
             is ApiResult.Success -> Success.success()
-            is ApiResult.Error -> retryOrFail()
+            is ApiResult.Error -> retryOrFail(apiResult)
         }
     }
 
-    private fun retryOrFail() = if (runAttemptCount < UPDATE_SETTING_MAX_RETRIES) {
-        Retry.retry()
-    } else {
-        Failure.failure()
-    }
+    private fun retryOrFail(apiResult: ApiResult<Any>) =
+        if (apiResult.isRetryable() && runAttemptCount < UPDATE_SETTING_MAX_RETRIES) {
+            Retry.retry()
+        } else {
+            Failure.failure()
+        }
 
     @Suppress("ComplexMethod")
     private suspend fun MailSettingsApi.updateRemoteProperty(
