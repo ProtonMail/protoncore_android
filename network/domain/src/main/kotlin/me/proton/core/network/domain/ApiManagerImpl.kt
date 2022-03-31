@@ -46,8 +46,11 @@ class ApiManagerImpl<Api>(
         block: suspend (Api) -> T
     ): ApiResult<T> {
         val call = ApiManager.Call(monoClockMs(), block)
-        return if (forceNoRetryOnConnectionErrors) handledCall(primaryBackend, call)
-            else callWithBackoff(call)
+        return if (forceNoRetryOnConnectionErrors) {
+            handledCall(primaryBackend, call)
+        } else {
+            callWithBackoff(call)
+        }
     }
 
     private suspend fun <T> callWithBackoff(call: ApiManager.Call<Api, T>): ApiResult<T> {

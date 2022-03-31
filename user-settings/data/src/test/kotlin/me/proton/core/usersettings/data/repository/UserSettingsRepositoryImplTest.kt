@@ -25,12 +25,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
@@ -149,7 +149,7 @@ class UserSettingsRepositoryImplTest {
         setUpRecoveryEmailUpdateTest(testSrpProofs.expectedServerProof + "corrupted")
 
         // WHEN & THEN
-        assertFailsWith<InvalidServerAuthenticationException> {
+        val exception = assertFailsWith<ApiException> {
             repository.updateRecoveryEmail(
                 sessionUserId = UserId(testUserId),
                 email = "test-email2",
@@ -158,6 +158,10 @@ class UserSettingsRepositoryImplTest {
                 secondFactorCode = ""
             )
         }
+        assertEquals(
+            "Server returned invalid srp proof, recovery email update failed",
+            exception.message
+        )
     }
 
     private fun setUpRecoveryEmailUpdateTest(srpServerProof: String) {
@@ -215,7 +219,7 @@ class UserSettingsRepositoryImplTest {
         val testAuth = setUpUpdatePasswordTest(testSrpProofs.expectedServerProof + "corrupted")
 
         // WHEN & THEN
-        assertFailsWith<InvalidServerAuthenticationException> {
+        val exception = assertFailsWith<ApiException> {
             repository.updateLoginPassword(
                 sessionUserId = UserId(testUserId),
                 srpProofs = testSrpProofs,
@@ -224,6 +228,10 @@ class UserSettingsRepositoryImplTest {
                 auth = testAuth
             )
         }
+        assertEquals(
+            "Server returned invalid srp proof, password change failed",
+            exception.message
+        )
     }
 
     private fun setUpUpdatePasswordTest(srpServerProof: String): Auth {
