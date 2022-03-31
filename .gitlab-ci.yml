@@ -184,8 +184,6 @@ binary-compatibility-check:
   stage: test
   needs:
     - assemble
-  tags:
-    - xlarge-k8s
   script:
     - ./gradlew apiCheck
 
@@ -194,7 +192,7 @@ trigger-client-integration-tests:
   stage: test
   when: manual
   tags:
-    - xlarge-k8s
+    - medium
   cache: []
   before_script:
     - source /load-env.sh
@@ -335,7 +333,7 @@ androidTest:coreexample-migration:
 release-publish-github:
   stage: publish
   tags:
-    - xlarge-k8s
+    - small
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
     RELEASE_SYNC_TO_BRANCH: 'main'
