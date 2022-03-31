@@ -216,21 +216,27 @@ trigger-client-integration-tests:
 
 mail-v6-integration-tests:
   extends: .client-integration-tests
+  variables:
+    MAIL_V6_INTEGRATION_REF: master
   trigger:
     project: android/mail/proton-mail
-    branch: master
+    branch: $MAIL_V6_INTEGRATION_REF
 
 mail-integration-tests:
   extends: .client-integration-tests
+  variables:
+    MAIL_INTEGRATION_REF: feat/cp-3695-core_ci_integration # TODO change back to `develop` branch
   trigger:
     project: android/mail/proton-mail-android
-    branch: feat/cp-3695-core_ci_integration # TODO change back to `develop` branch
+    branch: $MAIL_INTEGRATION_REF
 
 vpn-integration-tests:
   extends: .client-integration-tests
+  variables:
+    VPN_INTEGRATION_REF: development
   trigger:
     project: ProtonVPN/android/android-app-new
-    branch: development
+    branch: $VPN_INTEGRATION_REF
 
 ## firebase stage ##################################################################################
 .firebase-tests-common:
