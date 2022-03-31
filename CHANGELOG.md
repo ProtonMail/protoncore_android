@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 - MailSettingsRepository now supports offline changes
 
+### Fixes
+- Remove creating account screen when there is an error in the sign up flow.
+
 ## [7.1.8]
 
 ## New

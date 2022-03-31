@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.ui.removeCreatingUser
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.humanverification.presentation.HumanVerificationManagerObserver
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
@@ -40,10 +39,9 @@ class CreatingUserFragment : SignupFragment(R.layout.fragment_creating_user) {
     }
 
     private fun observeHumanVerificationFailed(observer: HumanVerificationManagerObserver) {
-        // If we receive a HV failed state and HV screen is shown it means the user canceled it so we need to remove it.
+        // If we receive a HV failed state and HV screen is shown it means the user canceled it.
         observer.onHumanVerificationFailed(initialState = false) {
             if (parentFragmentManager.hasHumanVerificationFragment()) {
-                parentFragmentManager.removeCreatingUser()
                 // Stop observing to avoid duplicate callback calls
                 signupViewModel.stopObservingHumanVerification(true)
             }
