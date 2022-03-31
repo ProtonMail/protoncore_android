@@ -38,6 +38,7 @@ import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.AuthActivity
+import me.proton.core.auth.presentation.ui.removeCreatingUser
 import me.proton.core.auth.presentation.ui.showCongrats
 import me.proton.core.auth.presentation.ui.showCreatingUser
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
@@ -99,7 +100,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is SignupViewModel.State.Idle -> Unit
                     is SignupViewModel.State.Processing -> showLoading(true)
                     is SignupViewModel.State.Error.HumanVerification -> Unit
-                    is SignupViewModel.State.Error.Message -> showError(it.message)
+                    is SignupViewModel.State.Error.Message -> onSignupError(it.message)
                     is SignupViewModel.State.Error.PlanChooserCancel -> Unit
                     is SignupViewModel.State.Success -> onSignUpSuccess(it.loginUsername, it.password)
                 }.exhaustive
@@ -179,6 +180,11 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             signUpViewModel.currentAccountType,
             billingDetails
         )
+    }
+
+    private fun onSignupError(message: String?) {
+        supportFragmentManager.removeCreatingUser()
+        showError(message)
     }
 
     private fun onLoginError(message: String? = null) {
