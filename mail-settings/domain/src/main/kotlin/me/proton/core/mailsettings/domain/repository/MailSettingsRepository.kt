@@ -33,6 +33,7 @@ import me.proton.core.mailsettings.domain.entity.SwipeAction
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface MailSettingsRepository {
 
     /**
@@ -57,122 +58,122 @@ interface MailSettingsRepository {
     suspend fun updateMailSettings(mailSettings: MailSettings)
 
     /**
-     * Update [displayName] for [userId], remotely.
+     * Update [displayName] for [userId]
      */
     suspend fun updateDisplayName(userId: UserId, displayName: String): MailSettings
 
     /**
-     * Update [signature] for [userId], remotely.
+     * Update [signature] for [userId]
      */
     suspend fun updateSignature(userId: UserId, signature: String): MailSettings
 
     /**
-     * Update [autoSaveContacts] for [userId], remotely.
+     * Update [autoSaveContacts] for [userId]
      */
     suspend fun updateAutoSaveContacts(userId: UserId, autoSaveContacts: Boolean): MailSettings
 
     /**
-     * Update [composerMode] for [userId], remotely.
+     * Update [composerMode] for [userId]
      */
     suspend fun updateComposerMode(userId: UserId, composerMode: ComposerMode): MailSettings
 
     /**
-     * Update [messageButtons] for [userId], remotely.
+     * Update [messageButtons] for [userId]
      */
     suspend fun updateMessageButtons(userId: UserId, messageButtons: MessageButtons): MailSettings
 
     /**
-     * Update [showImage] for [userId], remotely.
+     * Update [showImage] for [userId]
      */
     suspend fun updateShowImages(userId: UserId, showImage: ShowImage): MailSettings
 
     /**
-     * Update [showMoved] for [userId], remotely.
+     * Update [showMoved] for [userId]
      */
     suspend fun updateShowMoved(userId: UserId, showMoved: ShowMoved): MailSettings
 
     /**
-     * Update [viewMode] for [userId], remotely.
+     * Update [viewMode] for [userId]
      */
     suspend fun updateViewMode(userId: UserId, viewMode: ViewMode): MailSettings
 
     /**
-     * Update [viewLayout] for [userId], remotely.
+     * Update [viewLayout] for [userId]
      */
     suspend fun updateViewLayout(userId: UserId, viewLayout: ViewLayout): MailSettings
 
     /**
-     * Update [swipeAction] for [userId], remotely.
+     * Update [swipeAction] for [userId]
      */
     suspend fun updateSwipeLeft(userId: UserId, swipeAction: SwipeAction): MailSettings
 
     /**
-     * Update [swipeAction] for [userId], remotely.
+     * Update [swipeAction] for [userId]
      */
     suspend fun updateSwipeRight(userId: UserId, swipeAction: SwipeAction): MailSettings
 
     /**
-     * Update [pmSignature] for [userId], remotely.
+     * Update [pmSignature] for [userId]
      */
     suspend fun updatePMSignature(userId: UserId, pmSignature: PMSignature): MailSettings
 
     /**
-     * Update [mimeType] for [userId], remotely.
+     * Update [mimeType] for [userId]
      */
     suspend fun updateDraftMimeType(userId: UserId, mimeType: MimeType): MailSettings
 
     /**
-     * Update [mimeType] for [userId], remotely.
+     * Update [mimeType] for [userId]
      */
     suspend fun updateReceiveMimeType(userId: UserId, mimeType: MimeType): MailSettings
 
     /**
-     * Update [mimeType] for [userId], remotely.
+     * Update [mimeType] for [userId]
      */
     suspend fun updateShowMimeType(userId: UserId, mimeType: MimeType): MailSettings
 
     /**
-     * Update [rightToLeft] for [userId], remotely.
+     * Update [rightToLeft] for [userId]
      */
     suspend fun updateRightToLeft(userId: UserId, rightToLeft: Boolean): MailSettings
 
     /**
-     * Update [attachPublicKey] for [userId], remotely.
+     * Update [attachPublicKey] for [userId]
      */
     suspend fun updateAttachPublicKey(userId: UserId, attachPublicKey: Boolean): MailSettings
 
     /**
-     * Update [sign] for [userId], remotely.
+     * Update [sign] for [userId]
      */
     suspend fun updateSign(userId: UserId, sign: Boolean): MailSettings
 
     /**
-     * Update [packageType] for [userId], remotely.
+     * Update [packageType] for [userId]
      */
     suspend fun updatePGPScheme(userId: UserId, packageType: PackageType): MailSettings
 
     /**
-     * Update [promptPin] for [userId], remotely.
+     * Update [promptPin] for [userId]
      */
     suspend fun updatePromptPin(userId: UserId, promptPin: Boolean): MailSettings
 
     /**
-     * Update [stickyLabels] for [userId], remotely.
+     * Update [stickyLabels] for [userId]
      */
     suspend fun updateStickyLabels(userId: UserId, stickyLabels: Boolean): MailSettings
 
     /**
-     * Update [confirmLinks] for [userId], remotely.
+     * Update [confirmLinks] for [userId]
      */
     suspend fun updateConfirmLink(userId: UserId, confirmLinks: Boolean): MailSettings
 
     /**
-     * Update [inherit] for [userId], remotely.
+     * Update [inherit] for [userId]
      */
     suspend fun updateInheritFolderColor(userId: UserId, inherit: Boolean): MailSettings
 
     /**
-     * Update [enable] for [userId], remotely.
+     * Update [enable] for [userId]
      */
     suspend fun updateEnableFolderColor(userId: UserId, enable: Boolean): MailSettings
 }

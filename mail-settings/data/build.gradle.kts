@@ -15,16 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+import studio.forface.easygradle.dsl.`coroutines-core`
+import studio.forface.easygradle.dsl.`serialization-json`
+import studio.forface.easygradle.dsl.android.`android-work-runtime`
+import studio.forface.easygradle.dsl.android.`retrofit-kotlin-serialization`
+import studio.forface.easygradle.dsl.android.`room-ktx`
+import studio.forface.easygradle.dsl.android.androidTestImplementation
+import studio.forface.easygradle.dsl.android.retrofit
+import studio.forface.easygradle.dsl.implementation
+import studio.forface.easygradle.dsl.testImplementation
 
 plugins {
     protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
 }
 
 proton {
     apiModeDisabled()
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -46,6 +58,7 @@ dependencies {
         `coroutines-core`,
 
         // Other
+        `android-work-runtime`,
         `javax-inject`,
         `okHttp-logging`,
         `retrofit`,

@@ -20,15 +20,15 @@ import studio.forface.easygradle.dsl.api
 
 plugins {
     protonAndroidLibrary
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        // project(Module.mailSettingsPresentation),
-        project(Module.mailSettingsDomain),
         project(Module.mailSettingsData),
-        project(Module.mailSettingsDagger)
+        project(Module.mailSettingsDomain)
     )
+    implementation(project(Module.network))
 }
