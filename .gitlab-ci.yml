@@ -220,6 +220,12 @@ mail-v6-integration-tests:
     project: android/mail/proton-mail
     branch: master
 
+mail-integration-tests:
+  extends: .client-integration-tests
+  trigger:
+    project: android/mail/proton-mail-android
+    branch: feat/cp-3695-core_ci_integration # TODO change back to `develop` branch
+
 vpn-integration-tests:
   extends: .client-integration-tests
   trigger:
