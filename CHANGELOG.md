@@ -70,6 +70,13 @@ fun provideApiFactory(
 
 ```
 
+All clients except VPN should also provide null for DohAlternativesListener.
+```kotlin
+@Provides
+    @Singleton
+    fun provideDohAlternativesListener(): DohAlternativesListener? = null
+```
+
 ### Fixed
 
 - Links, outlined buttons and borderless buttons use text-accent color.
