@@ -37,15 +37,10 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [SelectPlanRobot]
      */
     fun scrollToPlan(plan: Plan): SelectPlanRobot {
-        // Only one paid plan is currently implemented
-        val position = when (plan) {
-            Plan.Dev -> 2
-            Plan.Free -> 3
-            else -> 0
-        }
-
-        recyclerView.withId(R.id.planListRecyclerView)
-            .onItemAtPosition(position).scrollTo()
+        recyclerView
+            .withId(R.id.planListRecyclerView)
+            .onItemChildView(view.hasDescendant(view.withText(plan.text)))
+            .scrollTo()
         return this
     }
 
@@ -53,10 +48,9 @@ class SelectPlanRobot : CoreRobot() {
      * Clicks on the chevron button on a provided [plan]
      */
     fun expandPlan(plan: Plan): SelectPlanRobot {
-        view.withId(R.id.collapse)
-            .hasSibling(
-                view.withText(plan.text)
-            ).scrollToNestedScrollView()
+        view
+            .withChild(view.withId(R.id.planNameText).withText(plan.text))
+            .scrollToNestedScrollView()
             .click()
         return this
     }
