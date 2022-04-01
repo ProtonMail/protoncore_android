@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Changes
 - MailSettingsRepository now supports offline changes.
 - Added ContactCard type 1 (Encrypted, but not signed).
+- Updated Icons set.
 
 ### Fixes
 - Remove creating account screen when there is an error in the sign up flow.
