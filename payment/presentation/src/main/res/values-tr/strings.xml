@@ -26,7 +26,7 @@
   <string name="payments_error_cvc">Lütfen geçerli güvenlik kodunu yazın.</string>
   <string name="payments_error_session">Çevrimiçi kullanıcı abone olurken geçerli oturum kimliği gereklidir.</string>
   <string name="payments_error_signup_paymentmethod">Var olan ödeme yöntemiyle hesap açılamadı.</string>
-  <string name="payments_error_invalid_session">Oturum geçresiz.</string>
+  <string name="payments_error_invalid_session">Oturum geçersiz.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Ödeme yönteminizi seçin</string>

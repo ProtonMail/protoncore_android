@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Le chiffrement assure la confidentialité de vos données. Vos données vous appartiennent vraiment.</string>
   <string name="welcome_title_mail">Protégez votre vie privée avec ProtonMail</string>
   <string name="welcome_subtitle_mail">E-mails chiffrés qui préservent la confidentialité de vos conversations. Votre boîte de réception vous appartient vraiment.</string>
+  <string name="welcome_subtitle_mail_alt">Vie privée. Sécurité. Commodité. E-mail chiffré qui vous donne le contrôle total de vos données personnelles.</string>
   <string name="welcome_title_drive">Protégez votre vie privée avec Proton Drive</string>
   <string name="welcome_subtitle_drive">La commodité du stockage sur le cloud et la sécurité de la technologie de chiffrement. Enfin une solution de stockage sur le cloud en laquelle vous pouvez avoir confiance.</string>
+  <string name="welcome_subtitle_drive_alt">Le moyen le plus sûr de stocker vos fichiers. Téléchargez, synchronisez et partagez avec le chiffrement le plus fort disponible.</string>
   <string name="welcome_title_calendar">Protégez votre vie privée avec Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendrier chiffré qui préserve la confidentialité et la sécurité des événements de votre vie.</string>
+  <string name="welcome_subtitle_calendar_alt">Notre calendrier chiffré de bout en bout vous aide à rester organisé, sur la bonne voie et en contrôle.</string>
   <string name="welcome_title_vpn">Protégez votre vie privée avec ProtonVPN</string>
   <string name="welcome_subtitle_vpn">VPN suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion Internet.</string>
+  <string name="welcome_subtitle_vpn_alt">VPN suisse à haut débit qui protège votre vie privée. Sécurité maximale, plus de 1 600 serveurs et aucune restriction.</string>
+  <string name="welcome_privacy_by_default">Confidentialité par défaut</string>
   <string name="auth_password_label">Mot de passe</string>
   <string name="auth_password_help">Le mot de passe doit contenir au moins 8 caractères</string>
   <string name="auth_current_login_password">Mot de passe de connexion actuel</string>

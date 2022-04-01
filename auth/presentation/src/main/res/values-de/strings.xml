@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Das Verschlüsseln hält Ihre Daten privat. Ihre Daten gehören ausschließlich Ihnen.</string>
   <string name="welcome_title_mail">Schützen Sie Ihre Privatsphäre mit ProtonMail</string>
   <string name="welcome_subtitle_mail">Verschlüsselte E-Mails halten Ihre Konversationen privat. Ihr Posteingang gehört ausschließlich Ihnen.</string>
+  <string name="welcome_subtitle_mail_alt">Privatsphäre. Sicherheit. Komfort. Verschlüsselte E-Mail, mit der du die volle Kontrolle über deine persönlichen Daten hast.</string>
   <string name="welcome_title_drive">Schützen Sie Ihre Privatsphäre mit Proton Drive</string>
   <string name="welcome_subtitle_drive">Der Komfort von Cloud-Speicher und die Sicherheit der Verschlüsselungstechnologie. Endlich eine Cloud-Speicherlösung, der Sie vertrauen können.</string>
+  <string name="welcome_subtitle_drive_alt">Die sicherste Art, deine Dateien zu speichern. Hochladen, Synchronisieren und Teilen mit der stärksten verfügbaren Verschlüsselung.</string>
   <string name="welcome_title_calendar">Schützen Sie Ihre Privatsphäre mit Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Verschlüsselter Kalender, der deine Lebensereignisse privat, sicher und geschützt hält.</string>
+  <string name="welcome_subtitle_calendar_alt">Unser Kalender mit Ende-zu-Ende-Verschlüsselung hilft dir dabei, organisiert zu bleiben, den Überblick und die Kontrolle zu behalten.</string>
   <string name="welcome_title_vpn">Schützen Sie Ihre Privatsphäre mit Proton VPN</string>
   <string name="welcome_subtitle_vpn">Schweizer Hochgeschwindigkeits-VPN, das Ihre Privatsphäre schützt, indem es Ihre Internetverbindung verschlüsselt.</string>
+  <string name="welcome_subtitle_vpn_alt">Schweizer Hochgeschwindigkeits-VPN, das deine Privatsphäre schützt. Maximale Sicherheit, über 1.600 Server und keine Einschränkungen.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Passwort</string>
   <string name="auth_password_help">Das Passwort muss mindestens 8 Zeichen enthalten</string>
   <string name="auth_current_login_password">Aktuelles Anmeldepasswort</string>
@@ -70,7 +75,7 @@
   <string name="auth_create_address_result_recovery_title">Ihre Wiederherstellungs-E-Mail-Adresse lautet:</string>
   <string name="auth_create_address_create">Neue E-Mail-Adresse</string>
   <string name="auth_create_address_creating">Neue E-Mail-Adresse</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Indem du auf Adresse erstellen klickst, erklärst du dich mit den <a href="https://protonmail.com/terms-and-conditions">Nutzungsbedingungen</a> von Proton einverstanden.</string>
   <string name="auth_create_address_error_credentials">Anmeldeinformationen müssen eingegeben werden.</string>
   <string name="auth_create_address_error_no_available_domain">Keine verfügbare Domain.</string>
   <string name="auth_create_address_error_private_key">Das Erzeugen des privaten Schlüssels ist fehlgeschlagen.</string>
@@ -129,8 +134,8 @@
   <string name="auth_signup_congratulations">Herzlichen Glückwunsch!</string>
   <string name="auth_signup_start_using_proton">Beginne Proton zu nutzen</string>
   <string name="auth_signup_start_using_calendar">Beginne Proton Calendar zu nutzen</string>
-  <string name="auth_signup_start_using_mail">Start using Proton Mail</string>
-  <string name="auth_signup_start_using_drive">Start using Proton Drive</string>
-  <string name="auth_signup_start_using_vpn">Start using Proton VPN</string>
+  <string name="auth_signup_start_using_mail">Beginne Proton Mail zu nutzen</string>
+  <string name="auth_signup_start_using_drive">Beginne Proton Drive zu nutzen</string>
+  <string name="auth_signup_start_using_vpn">Beginne Proton VPN zu nutzen</string>
   <string name="auth_signup_error_validation_recovery_destination">Ungültiges Wiederherstellungsziel.</string>
 </resources>

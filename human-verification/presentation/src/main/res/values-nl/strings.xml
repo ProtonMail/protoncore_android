@@ -54,4 +54,6 @@
   <string name="human_verification_captcha_failed">CAPTCHA verificatie mislukt. Probeer het nog een keer of kies een andere verificatie optie.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Geen connectiviteit. CAPTCHA kon niet geladen worden.</string>
+  <string name="human_verification_action_retry">Opnieuw proberen</string>
+  <string name="human_verification_method_loading_failed">Kon de huidige verificatiemethode niet laden. Als het probleem aanhoudt, probeer dan één van de andere methodes als ze beschikbaar zijn of controleer het Help-scherm.</string>
 </resources>

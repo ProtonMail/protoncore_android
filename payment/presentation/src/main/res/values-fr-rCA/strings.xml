@@ -31,10 +31,10 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choisissez un mode de paiement</string>
   <string name="payments_add_credit_debit_card">Ajouter une nouvelle carte de crédit/débit</string>
-  <string name="payments_billing_monthly">For 1 month</string>
-  <string name="payments_billing_yearly">For 1 year</string>
-  <string name="payments_billing_two_years">For 2 years</string>
-  <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
+  <string name="payments_billing_monthly">Pour 1 mois</string>
+  <string name="payments_billing_yearly">Pour 1 an</string>
+  <string name="payments_billing_two_years">Pour 2 ans</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Payer %s</string>
   <string name="payments_method_icon">Icône de mode de paiement.</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -43,13 +43,13 @@
   <string name="payments_card_number">Numéro de carte</string>
   <string name="payments_expiration_date">Date d’expiration</string>
   <string name="payments_security_code">Code de sécurité</string>
-  <string name="payments_postal_code">ZIP code</string>
+  <string name="payments_postal_code">Code postal</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">00/00</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Pays</string>
   <string name="payments_paying_in_process">Paiement en cours</string>
-  <string name="payments_choose_country">Select country</string>
+  <string name="payments_choose_country">Sélectionnez un pays</string>
   <string name="payments_info_not_available">n/a</string>
   <string name="payment_cc_list_item">%1$s - %2$s (exp. %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>

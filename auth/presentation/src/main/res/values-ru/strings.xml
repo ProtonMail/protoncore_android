@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Шифрование позволяет сохранить ваши данные в тайне. Ваши данные по-настоящему ваши.</string>
   <string name="welcome_title_mail">Обеспечьте конфиденциальность ваших данных с ProtonMail</string>
   <string name="welcome_subtitle_mail">Шифрование почты позволяет сохранить вашу переписку в тайне. Ваша почта по-настоящему ваша.</string>
+  <string name="welcome_subtitle_mail_alt">Конфиденциальность. Безопасность. Удобство. Зашифрованная электронная почта, которая дает вам полный контроль над вашими личными данными.</string>
   <string name="welcome_title_drive">Обеспечьте конфиденциальность ваших данных с Proton Drive</string>
   <string name="welcome_subtitle_drive">Удобство облачного хранилища и безопасность технологии шифрования. Наконец-то появилось облачное хранилище, которому можно доверять.</string>
+  <string name="welcome_subtitle_drive_alt">Самый безопасный способ хранения файлов. Загружайте, синхронизируйте и делитесь файлами с помощью самого надежного шифрования.</string>
   <string name="welcome_title_calendar">Обеспечьте конфиденциальность ваших данных с Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Шифрование календаря позволяет сохранить ваши события вне досягаемости и безопасности.</string>
+  <string name="welcome_subtitle_calendar_alt">Наш календарь со сквозным шифрованием поможет вам оставаться организованным, идти в ногу со временем и контролировать ситуацию.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">Быстрый Швейцарский VPN, который охраняет конфиденциальность ваших данных шифруя ваше интернет-соединение.</string>
+  <string name="welcome_subtitle_vpn_alt">Высокоскоростная швейцарская VPN, которая защищает вашу конфиденциальность. Максимальная безопасность, 1 600+ серверов и никаких ограничений.</string>
+  <string name="welcome_privacy_by_default">Конфиденциальность по умолчанию</string>
   <string name="auth_password_label">Пароль</string>
   <string name="auth_password_help">Пароль должен содержать хотя бы 8 символов</string>
   <string name="auth_current_login_password">Текущий пароль для входа</string>

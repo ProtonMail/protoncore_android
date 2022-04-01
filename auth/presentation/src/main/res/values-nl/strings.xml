@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Encryptie houdt uw gegevens privé. Uw gegevens zijn echt van u.</string>
   <string name="welcome_title_mail">Bescherm uw privacy met ProtonMail</string>
   <string name="welcome_subtitle_mail">Versleutelde e-mail die uw gesprekken privé houdt. Uw inbox is echt van u.</string>
+  <string name="welcome_subtitle_mail_alt">Privacy. Veiligheid. Gebruiksgemak. Versleutelde e-mail dat u volledige controle biedt over uw persoonlijke gegevens.</string>
   <string name="welcome_title_drive">Bescherm uw privacy met Proton Drive</string>
   <string name="welcome_subtitle_drive">Het gemak van cloudopslag en de beveiliging van encryptietechnologie. Eindelijk een cloudopslagdienst die u kunt vertrouwen.</string>
+  <string name="welcome_subtitle_drive_alt">De veiligste manier om uw bestanden op te slaan. Upload, synchroniseer en deel met de sterkst beschikbare versleuteling.</string>
   <string name="welcome_title_calendar">Bescherm uw privacy met Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Gecodeerde agenda die uw levensgebeurtenissen privé, veilig en beveiligd houdt.</string>
+  <string name="welcome_subtitle_calendar_alt">Onze end-to-end versleutelde agenda helpt u om georganiseerd, op schema en in controle te blijven.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
   <string name="welcome_subtitle_vpn">Snelle Zwitserse VPN die uw privacy waarborgt door uw internetverbinding te versleutelen.</string>
+  <string name="welcome_subtitle_vpn_alt">Hogesnelheid Zwitserse VPN die uw privacy beschermt. Maximale beveiliging, 1600 servers en geen beperkingen.</string>
+  <string name="welcome_privacy_by_default">Privacy als standaard</string>
   <string name="auth_password_label">Wachtwoord</string>
   <string name="auth_password_help">Wachtwoord moet ten minste 8 tekens bevatten</string>
   <string name="auth_current_login_password">Huidig loginwachtwoord</string>

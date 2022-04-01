@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Šifrování udržuje Vaše data v soukromí. Vaše data skutečně patří Vám.</string>
   <string name="welcome_title_mail">Chraňte své soukromí pomocí ProtonMail</string>
   <string name="welcome_subtitle_mail">Šifrovaný e-mail, který udržuje Vaše konverzace soukromé. Vaše doručená pošta skutečně patří Vám.</string>
+  <string name="welcome_subtitle_mail_alt">Soukromí. Bezpečnostní. Pohodlí. Šifrovaný e-mail, který vám dává plnou kontrolu nad vašimi osobními údaji.</string>
   <string name="welcome_title_drive">Chraňte své soukromí pomocí Proton Drive</string>
   <string name="welcome_subtitle_drive">Pohodlí cloudového úložiště a bezpečnost šifrovací technologie. Konečně cloudové úložiště, kterému můžete důvěřovat.</string>
+  <string name="welcome_subtitle_drive_alt">Nejbezpečnější způsob ukládání souborů. Nahrávejte, synchronizujte a sdílejte pomocí nejsilnějšího dostupného šifrování.</string>
   <string name="welcome_title_calendar">Chraňte své soukromí pomocí Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Šifrovaný kalendář, který udržuje Vaše životní události v soukromí, v bezpečí a chráněné.</string>
+  <string name="welcome_subtitle_calendar_alt">Náš end-to-end šifrovaný kalendář vám pomůže udržet si pořádek, přehled a kontrolu.</string>
   <string name="welcome_title_vpn">Chraňte své soukromí pomocí Proton VPN</string>
   <string name="welcome_subtitle_vpn">Vysokorychlostní švýcarská VPN, která chrání Vaše soukromí šifrováním internetového připojení.</string>
+  <string name="welcome_subtitle_vpn_alt">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí. Maximální zabezpečení, více než 1 600 serverů a žádná omezení.</string>
+  <string name="welcome_privacy_by_default">Soukromí především</string>
   <string name="auth_password_label">Heslo</string>
   <string name="auth_password_help">Heslo musí obsahovat alespoň 8 znaků</string>
   <string name="auth_current_login_password">Aktuální přihlašovací heslo</string>

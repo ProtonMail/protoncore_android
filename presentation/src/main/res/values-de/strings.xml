@@ -41,6 +41,6 @@
   <string name="presentation_skip">Überspringen</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Verbindung zum Server konnte nicht hergestellt werden.</string>
-  <string name="presentation_check_your_connection">Check your connection</string>
-  <string name="presentation_connectivity_issues">Connectivity issues</string>
+  <string name="presentation_check_your_connection">Prüfe deine Verbindung</string>
+  <string name="presentation_connectivity_issues">Verbindungsprobleme</string>
 </resources>

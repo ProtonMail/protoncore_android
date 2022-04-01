@@ -21,12 +21,17 @@
   <string name="welcome_subtitle">Şifreleme, verilerinizi gizli tutar. Verileriniz tamamıyla size aittir.</string>
   <string name="welcome_title_mail">ProtonMail ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_mail">Görüşmelerinizi gizli tutan şifrelenmiş e-posta. Gelen kutunuz tamamıyla size ait.</string>
+  <string name="welcome_subtitle_mail_alt">Kişisel gizlilik. Güvenlik. Kolaylık. Kişisel verileriniz üzerinde tam kontrol sağlayan şifrelenmiş e-posta.</string>
   <string name="welcome_title_drive">Proton Drive ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_drive">Bulut depolamanın rahatlığı ve şifreleme teknolojisinin güvenliği. Sonunda güvenebileceğiniz bir bulut depolama çözümü var.</string>
+  <string name="welcome_subtitle_drive_alt">Dosyalarınızı saklamanın en güvenli yolu. Güncel en güçlü şifreleme ile dosyalarınızı yükleyin, eşitleyin ve paylaşın.</string>
   <string name="welcome_title_calendar">Proton Calendar ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
+  <string name="welcome_subtitle_calendar_alt">Uçtan uca şifrelenmiş takvimimiz, kontrolü size bırakarak planlarınızı uygulamanıza yardımcı olur.</string>
   <string name="welcome_title_vpn">ProtonVPN ile kişisel gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
+  <string name="welcome_subtitle_vpn_alt">Kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN. En yüksek güvenlik, 1.600 üzerinde sunucu ve sınırlamasız.</string>
+  <string name="welcome_privacy_by_default">Kişisel gizliliğe odaklanmış</string>
   <string name="auth_password_label">Parola</string>
   <string name="auth_password_help">Parola en az 8 karakter uzunluğunda olmalıdır</string>
   <string name="auth_current_login_password">Geçerli oturum açma parolası</string>
@@ -57,7 +62,7 @@
   <string name="auth_mailbox_password_label">Posta kutusu parolası</string>
   <string name="auth_mailbox_unlock_action">Kilidi aç</string>
   <string name="auth_forgot_password">Parolamı unuttum</string>
-  <string name="auth_login_general_error">Bir hata oluştu.</string>
+  <string name="auth_login_general_error">Bir sorun çıktı.</string>
   <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_title">Bir ProtonMail adresi oluştur</string>

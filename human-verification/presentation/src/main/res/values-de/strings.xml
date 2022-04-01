@@ -54,4 +54,6 @@
   <string name="human_verification_captcha_failed">Captcha-Überprüfung fehlgeschlagen. Bitte versuchen Sie es noch einmal oder wählen Sie eine andere Bestätigungsoption.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Keine Internetverbindung. Captcha konnte nicht geladen werden.</string>
+  <string name="human_verification_action_retry">Wiederholen</string>
+  <string name="human_verification_method_loading_failed">Die aktuelle Überprüfungsmethode konnte nicht geladen werden. Wenn das Problem weiterhin besteht, versuche bitte eine der anderen Methoden, falls diese verfügbar sind, oder schaue in der Hilfe nach.</string>
 </resources>

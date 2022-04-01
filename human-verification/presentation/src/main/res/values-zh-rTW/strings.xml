@@ -54,4 +54,6 @@
   <string name="human_verification_captcha_failed">CAPTCHA 驗證失敗。請再試一次或選擇其他驗證選項。</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">無連線。無法載入 CAPTCHA。</string>
+  <string name="human_verification_action_retry">重試</string>
+  <string name="human_verification_method_loading_failed">無法載入目前的驗證方式。若問題仍然持續，請嘗試其他的其中一種方法（若它們可以使用的話）或是看看說明畫面。</string>
 </resources>

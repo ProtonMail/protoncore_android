@@ -39,7 +39,7 @@
   <string name="plans_manage_your_subscription">Kelola langganan Anda di <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s dari %s</string>
   <string name="plans_manage_your_subscription_vpn">Kelola langganan Anda di <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
-  <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan dari aplikasi seluler.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# storage</item>
@@ -86,11 +86,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 negara</string>
   <string name="plan_id_vpnbasic_high_speed">Berkecepatan tinggi</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 negara</string>
   <string name="plan_id_vpnplus_highest_speed">Kecepatan tertinggi</string>
+  <string name="plan_id_vpnplus_adblock">Pemblokir iklan (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Dukungan layanan streaming</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
