@@ -67,9 +67,14 @@ private fun KeyHolderContext.decryptContactCardSigned(contactCard: ContactCard.S
 
 private fun KeyHolderContext.decryptContactCardEncrypted(contactCard: ContactCard.Encrypted): DecryptedVCard {
     val decryptedText = decryptText(contactCard.data)
-    val verified = verifyText(decryptedText, contactCard.signature)
+    val signature = contactCard.signature
+    val status = when {
+        signature == null -> VerificationStatus.NotSigned
+        verifyText(decryptedText, signature) -> VerificationStatus.Success
+        else -> VerificationStatus.Failure
+    }
     return DecryptedVCard(
         card = Ezvcard.parse(decryptedText).first(),
-        status = VerificationStatus.Success.takeIf { verified } ?: VerificationStatus.Failure
+        status = status
     )
 }

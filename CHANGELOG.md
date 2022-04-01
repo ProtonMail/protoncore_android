@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changes
-- MailSettingsRepository now supports offline changes
+- MailSettingsRepository now supports offline changes.
+- Added ContactCard type 1 (Encrypted, but not signed).
 
 ### Fixes
 - Remove creating account screen when there is an error in the sign up flow.

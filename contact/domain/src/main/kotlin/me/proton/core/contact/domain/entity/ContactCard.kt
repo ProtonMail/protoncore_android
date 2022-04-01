@@ -25,13 +25,14 @@ import me.proton.core.domain.type.IntEnum
 sealed class ContactCard {
     data class ClearText(val data: String): ContactCard()
     data class Signed(val data: String, val signature: Signature): ContactCard()
-    data class Encrypted(val data: Armored, val signature: Signature): ContactCard()
+    data class Encrypted(val data: Armored, val signature: Signature?): ContactCard()
 }
 
 enum class ContactCardType(val value: Int) {
     ClearText(0),
+    Encrypted(1),
     Signed(2),
-    Encrypted(3);
+    EncryptedAndSigned(3);
 
     companion object {
         val map = values().associateBy { it.value }
