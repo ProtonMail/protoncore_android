@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixes
 - Remove creating account screen when there is an error in the sign up flow.
 - Signup UI tests failing because of the changes in the domain selection.
+- Do not log throwable objects, if the original log record doesn't include a throwable (for logs that come via `java.util.logging.Logger`).
 
 ## [7.1.8]
 

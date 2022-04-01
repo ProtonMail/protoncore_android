@@ -40,11 +40,22 @@ internal class LoggingHandler(
         val tag: String = record.loggerName ?: record.sourceName() ?: "LoggingHandler"
         val logLevel = record.level.intValue()
         val message: String = record.message ?: ""
-        val thrown = Throwable("LoggingHandler: $message", record.thrown)
+        val thrown: Throwable? = record.thrown
         when {
-            logLevel >= Level.SEVERE.intValue() -> logger.e(tag, thrown, message)
-            logLevel >= Level.CONFIG.intValue() -> logger.d(tag, thrown, message)
-            else -> logger.v(tag, thrown, message)
+            logLevel >= Level.SEVERE.intValue() -> {
+                val throwable = thrown ?: Throwable("LoggingHandler: $message")
+                logger.e(tag, throwable, message)
+            }
+            logLevel >= Level.CONFIG.intValue() -> if (thrown != null) {
+                logger.d(tag, thrown, message)
+            } else {
+                logger.d(tag, message)
+            }
+            else -> if (thrown != null) {
+                logger.v(tag, thrown, message)
+            } else {
+                logger.v(tag, message)
+            }
         }
     }
 
