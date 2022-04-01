@@ -59,7 +59,6 @@ public final class me/proton/core/eventmanager/data/EventManagerImpl : me/proton
 	public fun getLatestEventId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun isStarted ()Z
 	public fun process (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun setStarted (Z)V
 	public fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun subscribe (Lme/proton/core/eventmanager/domain/EventListener;)V

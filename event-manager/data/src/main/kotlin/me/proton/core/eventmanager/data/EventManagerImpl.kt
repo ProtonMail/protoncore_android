@@ -318,7 +318,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     override val config: EventManagerConfig = deserializer.config
-    override var isStarted: Boolean = observeJob?.isActive ?: false
+    override val isStarted: Boolean get() = observeJob?.isActive ?: false
 
     override suspend fun start() {
         lock.withLock { internalStart() }
