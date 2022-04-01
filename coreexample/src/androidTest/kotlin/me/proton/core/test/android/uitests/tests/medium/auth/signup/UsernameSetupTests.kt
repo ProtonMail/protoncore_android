@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
@@ -41,7 +40,7 @@ class UsernameSetupTests : BaseTest() {
             .signupUsername()
             .verify {
                 chooseUsernameElementsDisplayed()
-                suffixFilledButNotDisplayed(BuildConfig.HOST)
+                suffixNotDisplayed()
             }
     }
 

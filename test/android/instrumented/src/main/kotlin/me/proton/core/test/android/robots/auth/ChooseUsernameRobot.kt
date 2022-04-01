@@ -69,10 +69,20 @@ class ChooseUsernameRobot : CoreRobot() {
             view.withText(R.string.auth_signup_create_account).checkDisplayed()
 
         fun suffixDisplayed(suffix: String) =
-            view.withText("@$suffix").checkDisplayed()
+            view.withAncestor(view.withId(R.id.usernameInput))
+                .withId(com.google.android.material.R.id.textinput_suffix_text)
+                .withText("@$suffix").checkDisplayed()
 
-        fun suffixFilledButNotDisplayed(suffix: String) =
-            view.withText("@$suffix").checkNotDisplayed()
+        fun suffixNotDisplayed() =
+            view.withAncestor(view.withId(R.id.usernameInput))
+                .withId(com.google.android.material.R.id.textinput_suffix_text)
+                .checkNotDisplayed()
+
+        fun domainInputDisplayed() =
+            view.withId(R.id.domainInput).checkDisplayed()
+
+        fun domainInputNotDisplayed() =
+            view.withId(R.id.domainInput).checkNotDisplayed()
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
