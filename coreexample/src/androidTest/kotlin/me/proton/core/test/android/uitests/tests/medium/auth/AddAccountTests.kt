@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth
 
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -46,7 +45,7 @@ class AddAccountTests : BaseTest() {
             .createAccount()
             .verify {
                 chooseUsernameElementsDisplayed()
-                suffixDisplayed(BuildConfig.HOST)
+                domainInputDisplayed()
             }
     }
 }
