@@ -27,14 +27,16 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
-        project(Module.authData),
-        project(Module.authDomain),
-        project(Module.authPresentation),
         project(Module.cryptoAndroid),
         project(Module.cryptoCommon),
         project(Module.challengeDomain),
         project(Module.domain),
         project(Module.networkData),
         project(Module.networkDomain),
+    )
+    api(
+        project(Module.authData),
+        project(Module.authDomain),
+        project(Module.authPresentation),
     )
 }

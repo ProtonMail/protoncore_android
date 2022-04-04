@@ -27,7 +27,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import me.proton.core.crypto.validator.R
+import me.proton.core.crypto.validator.presentation.R
 import me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.rules.RetryRule

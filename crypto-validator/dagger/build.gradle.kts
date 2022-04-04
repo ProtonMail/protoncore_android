@@ -29,14 +29,10 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     implementation(
-
         project(Module.kotlinUtil),
         project(Module.crypto),
 
         // Features
-        project(Module.cryptoValidatorData),
-        project(Module.cryptoValidatorDomain),
-        project(Module.cryptoValidatorPresentation),
         project(Module.user),
         project(Module.key),
         project(Module.presentation),
@@ -49,5 +45,10 @@ dependencies {
         `lifecycle-extensions`,
         `lifecycle-runtime`,
         `room-runtime`,
+    )
+    api(
+        project(Module.cryptoValidatorData),
+        project(Module.cryptoValidatorDomain),
+        project(Module.cryptoValidatorPresentation),
     )
 }

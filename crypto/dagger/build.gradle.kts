@@ -27,8 +27,7 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
+    api(
         project(Module.cryptoAndroid),
         project(Module.cryptoCommon),
     )

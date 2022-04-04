@@ -27,8 +27,10 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
+        project(Module.networkData),
+    )
+    api(
         project(Module.mailMessageData),
         project(Module.mailMessageDomain),
-        project(Module.networkData),
     )
 }

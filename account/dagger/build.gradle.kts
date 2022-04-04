@@ -29,8 +29,12 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     implementation(
-        project(Module.account),
         project(Module.cryptoCommon),
         project(Module.domain),
+    )
+
+    api(
+        project(Module.accountDomain),
+        project(Module.accountData),
     )
 }

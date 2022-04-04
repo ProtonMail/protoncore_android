@@ -28,12 +28,15 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
-        project(Module.humanVerificationDomain),
         project(Module.networkDomain),
         project(Module.cryptoCommon),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation),
         project(Module.networkData),
         `room-ktx`,
+    )
+
+    api(
+        project(Module.humanVerificationDomain),
+        project(Module.humanVerificationData),
+        project(Module.humanVerificationPresentation),
     )
 }

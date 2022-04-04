@@ -32,6 +32,8 @@ dependencies {
         project(Module.keyData),
         project(Module.keyDomain),
         project(Module.networkData),
+    )
+    api(
         project(Module.userData),
         project(Module.userDomain),
     )

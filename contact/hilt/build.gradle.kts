@@ -31,5 +31,5 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(project(Module.contact))
+    api(project(Module.contact))
 }

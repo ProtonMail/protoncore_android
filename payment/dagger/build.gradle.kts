@@ -28,6 +28,8 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     implementation(
         project(Module.networkData),
+    )
+    api(
         project(Module.paymentData),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),

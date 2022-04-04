@@ -33,7 +33,7 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     implementation(
-
+        project(Module.account),
         project(Module.kotlinUtil),
         project(Module.network),
         project(Module.crypto),
@@ -42,10 +42,6 @@ dependencies {
         project(Module.dataRoom),
 
         // Features
-        project(Module.account),
-        project(Module.accountManagerData),
-        project(Module.accountManagerDomain),
-        project(Module.accountManagerPresentation),
         project(Module.authDomain),
         project(Module.user),
         project(Module.key),
@@ -58,5 +54,11 @@ dependencies {
         // Android
         `android-ktx`,
         `room-runtime`
+    )
+
+    api(
+        project(Module.accountManagerData),
+        project(Module.accountManagerDomain),
+        project(Module.accountManagerPresentation),
     )
 }
