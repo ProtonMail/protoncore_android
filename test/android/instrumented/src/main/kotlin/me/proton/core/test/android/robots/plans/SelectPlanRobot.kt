@@ -21,6 +21,7 @@ package me.proton.core.test.android.robots.plans
 import androidx.core.widget.NestedScrollView
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.plan.presentation.R
+import me.proton.core.plan.presentation.view.PlanItemView
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
@@ -35,17 +36,17 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [SelectPlanRobot]
      */
     fun scrollToPlan(plan: Plan): SelectPlanRobot {
-        recyclerView
-            .withId(R.id.planListRecyclerView)
-            .onItemChildView(view.hasDescendant(view.withText(plan.text)))
+        view.instanceOf(PlanItemView::class.java)
+            .hasDescendant(view.withId(R.id.planNameText).withText(plan.text))
             .scrollTo()
         return this
     }
 
     /**
-     * Clicks on the chevron button on a provided [plan]
+     * Clicks on a provided [plan] to expand/collapse it.
+     * Note: We don't use the chevron button, because it's not displayed if there's only one plan.
      */
-    fun expandPlan(plan: Plan): SelectPlanRobot {
+    fun toggleExpandPlan(plan: Plan): SelectPlanRobot {
         view
             .withChild(view.withId(R.id.planNameText).withText(plan.text))
             .scrollToNestedScrollView()
@@ -68,7 +69,7 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [T]
      */
     inline fun <reified T> upgradeToPlan(plan: Plan): T =
-            expandPlan(plan)
+            toggleExpandPlan(plan)
             .scrollToPlan(plan)
             .clickPlanButtonWithText(plan)
 
@@ -117,7 +118,6 @@ class SelectPlanRobot : CoreRobot() {
         }
 
         fun planDetailsDisplayedInsideRecyclerView(plan: Plan) {
-            expandPlan(plan)
             scrollToPlan(plan)
             view.withText(plan.text).checkDisplayed()
         }
@@ -127,7 +127,6 @@ class SelectPlanRobot : CoreRobot() {
         }
 
         fun canSelectPlan(plan: Plan) {
-            expandPlan(plan)
             scrollToPlan(plan)
 
             view.withId(R.id.select)
@@ -148,7 +147,7 @@ class SelectPlanRobot : CoreRobot() {
         }
 
         fun billingCycleIs(plan: Plan, billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
-            expandPlan(plan)
+            toggleExpandPlan(plan)
             view.withId(R.id.planPriceText).withText("${currency.symbol}${billingCycle.monthlyPrice}")
             val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
             val billedAsString =

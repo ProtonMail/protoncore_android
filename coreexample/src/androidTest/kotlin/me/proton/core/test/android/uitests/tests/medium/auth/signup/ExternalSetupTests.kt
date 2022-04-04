@@ -76,6 +76,7 @@ class ExternalSetupTests : BaseTest() {
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)
             .setCode(defaultCode)
             .verifyCode<SelectPlanRobot>()
+            .toggleExpandPlan(Dev)
             .verify { canSelectPlan(Dev) }
     }
 }

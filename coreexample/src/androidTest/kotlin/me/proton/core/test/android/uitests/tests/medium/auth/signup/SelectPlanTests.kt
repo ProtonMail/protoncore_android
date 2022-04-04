@@ -50,17 +50,23 @@ class SelectPlanTests : BaseTest() {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
             .skipConfirm()
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Free)
-                canSelectPlan(Dev)
-            }
+    }
+
+    @Test
+    fun verifyInitialState() {
+        selectPlanRobot
+            .toggleExpandPlan(Free)
+            .verify { planDetailsDisplayedInsideRecyclerView(Free) }
+        selectPlanRobot
+            .toggleExpandPlan(Dev)
+            .verify { canSelectPlan(Dev) }
     }
 
     @Test
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .scrollToPlan(Free)
-            .expandPlan(Free)
+            .toggleExpandPlan(Free)
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {
                 hvElementsDisplayed()
@@ -78,13 +84,13 @@ class SelectPlanTests : BaseTest() {
     @SmokeTest
     fun selectPlusAndCancelPayment() {
         selectPlanRobot
-            .expandPlan(Dev)
+            .toggleExpandPlan(Dev)
             .selectPlan<AddCreditCardRobot>(Dev)
             .verify { addCreditCardElementsDisplayed() }
 
         AddCreditCardRobot()
             .close<SelectPlanRobot>()
-            .expandPlan(Free)
+            .toggleExpandPlan(Free)
             .verify { planDetailsDisplayedInsideRecyclerView(Free) }
     }
 }

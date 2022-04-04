@@ -72,6 +72,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
         recoveryMethodsRobot
             .skip()
             .skipConfirm()
+            .toggleExpandPlan(Dev)
             .verify {
                 planDetailsDisplayedInsideRecyclerView(Dev)
                 canSelectPlan(Dev)
@@ -83,6 +84,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
         recoveryMethodsRobot
             .next<RecoveryMethodsRobot.SkipRecoveryRobot>()
             .skipConfirm()
+            .toggleExpandPlan(Dev)
             .verify {
                 planDetailsDisplayedInsideRecyclerView(Dev)
                 canSelectPlan(Dev)
