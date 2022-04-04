@@ -19,7 +19,9 @@
 package me.proton.core.test.android.uitests
 
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ScrollView
+import androidx.annotation.IdRes
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountState.Ready
@@ -43,14 +45,13 @@ import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 open class CoreexampleRobot : CoreRobot() {
     fun bugReport(waitForServer: Boolean = false): BugReportRobot {
         val buttonId = if (waitForServer) R.id.bugReportWaiting else R.id.bugReport
-        view.withId(buttonId).scrollTo()
-        return clickElement(buttonId)
+        return scrollToAndClick(buttonId)
     }
 
-    fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
-    fun signup(): ChooseUsernameRobot = clickElement(R.id.signup)
-    fun signupExternal(): ChooseUsernameRobot = clickElement(R.id.signupExternal)
-    fun signupUsername(): ChooseUsernameRobot = clickElement(R.id.signupUsername)
+    fun humanVerification(): HumanVerificationRobot = scrollToAndClick(R.id.trigger_human_ver)
+    fun signup(): ChooseUsernameRobot = scrollToAndClick(R.id.signup)
+    fun signupExternal(): ChooseUsernameRobot = scrollToAndClick(R.id.signupExternal)
+    fun signupUsername(): ChooseUsernameRobot = scrollToAndClick(R.id.signupUsername)
     inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
     inline fun <reified T> clickUserButton(
         user: User,
@@ -58,22 +59,18 @@ open class CoreexampleRobot : CoreRobot() {
         sessionState: SessionState = Authenticated
     ): T = clickElement(getUserState(user, accountState, sessionState))
 
-    fun plansUpgrade(): SelectPlanRobot = clickElement(R.id.plansUpgrade)
-    fun plansCurrent(): SelectPlanRobot = clickElement(R.id.plansCurrent)
-    fun settingsRecoveryEmail(): RecoveryEmailRobot = clickElement(R.id.settingsRecovery)
-    fun settingsPasswordManagement(): PasswordManagementRobot = clickElement(R.id.settingsPassword)
-    fun confirmPasswordLocked(): ConfirmPasswordRobot = swipeUp().clickElement(R.id.trigger_confirm_password_locked)
-    fun confirmPasswordPassword(): ConfirmPasswordRobot = swipeUp().clickElement(R.id.trigger_confirm_password_pass)
-    fun lockScopes(): ConfirmPasswordRobot = swipeUp().clickElement(R.id.lock_scope)
-    fun accountSwitcher(): AccountSwitcherRobot =
-        swipeDown().clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
+    fun plansUpgrade(): SelectPlanRobot = scrollToAndClick(R.id.plansUpgrade)
+    fun plansCurrent(): SelectPlanRobot = scrollToAndClick(R.id.plansCurrent)
+    fun settingsRecoveryEmail(): RecoveryEmailRobot = scrollToAndClick(R.id.settingsRecovery)
+    fun settingsPasswordManagement(): PasswordManagementRobot = scrollToAndClick(R.id.settingsPassword)
+    fun confirmPasswordLocked(): ConfirmPasswordRobot = scrollToAndClick(R.id.trigger_confirm_password_locked)
+    fun confirmPasswordPassword(): ConfirmPasswordRobot = scrollToAndClick(R.id.trigger_confirm_password_pass)
+    fun lockScopes(): ConfirmPasswordRobot = scrollToAndClick(R.id.lock_scope)
+    fun accountSwitcher(): AccountSwitcherRobot = scrollToAndClick(R.id.accountPrimaryView, ViewGroup::class.java)
 
-    private fun swipeDown() = apply {
-        view.instanceOf(ScrollView::class.java).swipeDown()
-    }
-
-    private fun swipeUp() = apply {
-        view.instanceOf(ScrollView::class.java).swipeUp()
+    private inline fun <reified T> scrollToAndClick(@IdRes id: Int, clazz: Class<*> = Button::class.java): T {
+        view.withId(id).scrollTo()
+        return clickElement(id, clazz)
     }
 
     class Verify : CoreVerify() {
