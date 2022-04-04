@@ -19,8 +19,17 @@
 @file:Suppress("TopLevelPropertyNaming", "ObjectPropertyName")
 
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+import studio.forface.easygradle.dsl.android.`activity version`
+import studio.forface.easygradle.dsl.android.`android-test version`
+import studio.forface.easygradle.dsl.android.`espresso version`
+import studio.forface.easygradle.dsl.android.`lifecycle version`
+import studio.forface.easygradle.dsl.android.`retrofit version`
+import studio.forface.easygradle.dsl.android.androidx
+import studio.forface.easygradle.dsl.android.androidxLifecycle
+import studio.forface.easygradle.dsl.dependency
+import studio.forface.easygradle.dsl.google
+import studio.forface.easygradle.dsl.squareup
+import studio.forface.easygradle.dsl.version
 
 // region Compose
 public val DependencyHandler.`activity-compose`: Any
@@ -60,6 +69,9 @@ public val DependencyHandler.`compose-ui-test`: Any
     get() = compose("ui", "test")
 public val DependencyHandler.`compose-ui-test-junit`: Any
     get() = compose("ui", "test-junit4")
+public val DependencyHandler.`compose-ui-test-manifest`: Any
+    get() = compose("ui", "test-manifest")
+
 // endregion
 
 // Network

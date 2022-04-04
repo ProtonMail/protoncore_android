@@ -190,12 +190,14 @@ public final class me/proton/core/compose/component/ProtonSettingsKt {
 	public static final fun ProtonSettingsHeader (Landroidx/compose/ui/Modifier;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonSettingsItem (Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonSettingsList (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
-	public static final fun ProtonSettingsToggleItem (Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSettingsToggleItem (Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonSettingsTopBar (Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun previewDisabledSettingsToggleableItem (Landroidx/compose/runtime/Composer;I)V
 	public static final fun previewSettings (Landroidx/compose/runtime/Composer;I)V
 	public static final fun previewSettingsItem (Landroidx/compose/runtime/Composer;I)V
 	public static final fun previewSettingsItemWithNameOnly (Landroidx/compose/runtime/Composer;I)V
 	public static final fun previewSettingsToggleableItem (Landroidx/compose/runtime/Composer;I)V
+	public static final fun previewSettingsToggleableItemWithHint (Landroidx/compose/runtime/Composer;I)V
 	public static final fun previewSettingsTopBar (Landroidx/compose/runtime/Composer;I)V
 }
 
