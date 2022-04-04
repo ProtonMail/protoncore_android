@@ -54,6 +54,6 @@
   <string name="human_verification_captcha_failed">Weryfikacja CAPTCHA nie powiodła się. Spróbuj ponownie lub wybierz inną metodę weryfikacji.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Brak połączenia z Internetem. Nie można załadować weryfikacji CAPTCHA.</string>
-  <string name="human_verification_action_retry">Retry</string>
-  <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
+  <string name="human_verification_action_retry">Spróbuj ponownie</string>
+  <string name="human_verification_method_loading_failed">Nie można załadować obecnej metody weryfikacji. Jeśli ten problem będzie się powtarzał, spróbuj użyć innej dostępnej metody lub sprawdź okno pomocy.</string>
 </resources>
