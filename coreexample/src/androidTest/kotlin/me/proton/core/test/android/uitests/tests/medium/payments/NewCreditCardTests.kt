@@ -44,9 +44,11 @@ class NewCreditCardTests : BaseTest() {
 
         CoreexampleRobot()
             .plansUpgrade()
-            .scrollForward()
             .changeCurrency(Currency.CHF)
             .upgradeToPlan<AddCreditCardRobot>(Plan.Dev)
+            .apply {
+                view.withId(R.id.selectedPlanDetailsLayout).withAncestor(view.withId(R.id.scrollContent)).scrollTo()
+            }
             .verify { billingDetailsDisplayed(Plan.Dev, BillingCycle.Yearly, Currency.CHF.symbol) }
     }
 
@@ -62,9 +64,9 @@ class NewCreditCardTests : BaseTest() {
         newCreditCardRobot
             .pay<AddCreditCardRobot>()
             .verify {
-                inputErrorDisplayed(R.string.payments_error_card_name)
-                inputErrorDisplayed(R.string.payments_error_card_number)
-                inputErrorDisplayed(R.string.payments_error_cvc)
+                inputErrorDisplayed(R.string.payments_error_card_name, scroll = true)
+                inputErrorDisplayed(R.string.payments_error_card_number, scroll = true)
+                inputErrorDisplayed(R.string.payments_error_cvc, scroll = true)
             }
     }
 

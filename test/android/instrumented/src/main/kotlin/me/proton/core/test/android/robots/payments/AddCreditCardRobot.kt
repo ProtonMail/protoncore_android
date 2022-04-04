@@ -18,8 +18,8 @@
 
 package me.proton.core.test.android.robots.payments
 
-import android.widget.EditText
 import me.proton.core.payment.presentation.R
+import me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.robots.other.CountryRobot
@@ -77,7 +77,7 @@ class AddCreditCardRobot : PaymentRobot() {
      * @return [CountryRobot]
      */
     fun country(): CountryRobot {
-        view.withId(R.id.scrollContent).swipeUp()
-        return clickElement(R.id.countriesText, EditText::class.java)
+        view.withId(R.id.countriesText).scrollTo()
+        return clickElement(R.id.countriesText, ProtonAutoCompleteInput::class.java)
     }
 }

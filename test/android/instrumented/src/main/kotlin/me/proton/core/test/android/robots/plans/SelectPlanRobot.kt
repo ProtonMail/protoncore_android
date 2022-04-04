@@ -18,10 +18,8 @@
 
 package me.proton.core.test.android.robots.plans
 
-import androidx.annotation.StringRes
 import androidx.core.widget.NestedScrollView
-import androidx.test.uiautomator.UiScrollable
-import androidx.test.uiautomator.UiSelector
+import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.plan.presentation.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.plugins.data.BillingCycle
@@ -62,7 +60,7 @@ class SelectPlanRobot : CoreRobot() {
      */
     inline fun <reified T> selectPlan(plan: Plan): T =
         scrollToPlan(plan)
-            .clickPlanButtonWithText(plan, R.string.plans_get_proton)
+            .clickPlanButtonWithText(plan)
 
     /**
      * Clicks 'Upgrade' button on a provided [plan]
@@ -72,14 +70,14 @@ class SelectPlanRobot : CoreRobot() {
     inline fun <reified T> upgradeToPlan(plan: Plan): T =
             expandPlan(plan)
             .scrollToPlan(plan)
-            .clickPlanButtonWithText(plan, R.string.plans_upgrade_plan)
+            .clickPlanButtonWithText(plan)
 
     /**
-     * Clicks button with [textId] resource on a provided [plan]
+     * Clicks button with corresponding to a provided [plan]
      * @param T next Robot in flow
      * @return an instance of [T]
      */
-    inline fun <reified T> clickPlanButtonWithText(plan: Plan, @StringRes textId: Int): T {
+    inline fun <reified T> clickPlanButtonWithText(plan: Plan): T {
         view.withId(R.id.select)
             .isDescendantOf(
                 view.withId(R.id.planGroup).hasSibling(
@@ -99,19 +97,15 @@ class SelectPlanRobot : CoreRobot() {
         return this
     }
 
-    fun scrollForward(): SelectPlanRobot {
-        UiScrollable(
-            UiSelector().scrollable(true)
-        ).scrollForward()
-        return this
-    }
-
     /**
      * Changes currency to provided [currency]
      */
     fun changeCurrency(currency: Currency): SelectPlanRobot {
-        view.instanceOf(NestedScrollView::class.java).swipeUp()
-        view.withId(R.id.currencySpinner).click()
+        view.withId(R.id.currencySpinner)
+            .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
+            .scrollTo()
+            .click()
+
         view.withText(currency.code).click()
         return this
     }
