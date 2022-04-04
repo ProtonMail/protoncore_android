@@ -20,8 +20,7 @@ package me.proton.core.auth.data.repository
 
 import android.content.Context
 import me.proton.core.auth.data.api.AuthenticationApi
-import me.proton.core.auth.data.api.request.ChallengePayload
-import me.proton.core.auth.data.api.request.ChallengeUsernameFrame
+import me.proton.core.auth.data.api.request.AuthChallengeFrame
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
@@ -37,7 +36,9 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
+import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
@@ -50,7 +51,8 @@ import me.proton.core.network.domain.session.SessionId
  */
 class AuthRepositoryImpl(
     private val provider: ApiProvider,
-    private val context: Context
+    private val context: Context,
+    private val product: Product
 ) : AuthRepository {
 
     /**
@@ -105,22 +107,24 @@ class AuthRepositoryImpl(
         srpProofs: SrpProofs,
         srpSession: String,
         frames: List<ChallengeFrameDetails>?
-    ): SessionInfo =
-        provider.get<AuthenticationApi>().invoke {
+    ): SessionInfo {
+        val frameMap = HashMap<String, AuthChallengeFrame?>(1)
+        frameMap["${product.framePrefix()}-0"] =
+            AuthChallengeFrame.AuthChallengeUsernameFrame.from(context, frames?.getOrNull(0))
+        return provider.get<AuthenticationApi>().invoke {
             val request = LoginRequest(
                 username,
                 clientSecret,
                 srpProofs.clientEphemeral,
                 srpProofs.clientProof,
                 srpSession,
-                ChallengePayload(
-                    ChallengeUsernameFrame.from(context, frames?.getOrNull(0))
-                )
+                frameMap
             )
             val response = performLogin(request)
             response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "login failed" }
             response.toSessionInfo(username)
         }.valueOrThrow
+    }
 
     /**
      * Performs the second factor request for the Accounts that have second factor enabled.

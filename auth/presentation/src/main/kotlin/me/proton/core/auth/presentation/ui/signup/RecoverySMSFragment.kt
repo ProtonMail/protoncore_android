@@ -78,9 +78,12 @@ class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         recoveryMethodViewModel.validationResult.onEach {
-            if (it is ViewModelResult.Success && it.value) {
-                // if recovery destination is valid
-                binding.smsEditText.flush()
+            when (it) {
+                is RecoveryMethodViewModel.ValidationState.Success,
+                is RecoveryMethodViewModel.ValidationState.Skipped -> binding.smsEditText.flush()
+                else -> {
+                    // no operation
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

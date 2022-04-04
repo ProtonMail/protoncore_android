@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
+import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -37,6 +38,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.request.AuthRequest
@@ -46,11 +48,9 @@ import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
-import me.proton.core.user.data.api.request.ChallengePayload
-import me.proton.core.user.data.api.request.ChallengeRecoveryFrame
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
-import me.proton.core.user.data.api.request.ChallengeUsernameFrame
+import me.proton.core.user.data.api.request.UserChallengeFrame
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -67,7 +67,8 @@ class UserRepositoryImpl(
     private val db: UserDatabase,
     private val provider: ApiProvider,
     private val context: Context,
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val product: Product
 ) : UserRepository {
 
     private val onPassphraseChangedListeners = mutableSetOf<PassphraseRepository.OnPassphraseChangedListener>()
@@ -149,11 +150,15 @@ class UserRepositoryImpl(
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>?,
+        frames: List<ChallengeFrameDetails>
     ): User = provider.get<UserApi>().invoke {
-        val usernameFrame = frames?.getOrNull(0)
-        val recoveryFrame = frames?.getOrNull(1)
-
+        val usernameFrame = frames.getOrNull(0)
+        val recoveryFrame = frames.getOrNull(1)
+        val frameMap = HashMap<String, UserChallengeFrame?>(2)
+        frameMap["${product.framePrefix()}-1"] =
+            UserChallengeFrame.UserChallengeRecoveryFrame.from(context, recoveryFrame)
+        frameMap["${product.framePrefix()}-0"] =
+            UserChallengeFrame.UserChallengeUsernameFrame.from(context, usernameFrame)
         val request = CreateUserRequest(
             username,
             recoveryEmail,
@@ -162,10 +167,7 @@ class UserRepositoryImpl(
             type.value,
             AuthRequest.from(auth),
             domain,
-            ChallengePayload(
-                ChallengeUsernameFrame.from(context, usernameFrame),
-                ChallengeRecoveryFrame.from(context, recoveryFrame)
-            )
+            frameMap
         )
         createUser(request).user.toUser()
     }.valueOrThrow

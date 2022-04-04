@@ -42,10 +42,13 @@ public class ChallengeRepositoryImpl(
                 frame = challengeFrameDetails.challengeFrame
             )
             val frameDetails = savedFrame?.let {
+                val focusTime = mutableListOf<Int>()
+                focusTime += it.focusTime
+                focusTime += challengeFrameDetails.focusTime
                 ChallengeFrameEntity(
                     challengeFrame = challengeFrameDetails.challengeFrame,
                     flow = challengeFrameDetails.flow,
-                    focusTime = it.focusTime + challengeFrameDetails.focusTime,
+                    focusTime = focusTime,
                     clicks = it.clicks + challengeFrameDetails.clicks,
                     copy = it.copy + challengeFrameDetails.copy,
                     paste = it.paste + challengeFrameDetails.paste,

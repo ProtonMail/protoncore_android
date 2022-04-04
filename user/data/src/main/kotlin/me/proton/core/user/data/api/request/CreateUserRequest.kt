@@ -39,5 +39,5 @@ data class CreateUserRequest(
     @SerialName("Domain")
     val domain: String?,
     @SerialName("Payload")
-    val payload: ChallengePayload
+    val payload: Map<String, UserChallengeFrame?>
 )

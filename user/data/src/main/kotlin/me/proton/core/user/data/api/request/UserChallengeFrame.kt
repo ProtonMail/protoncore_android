@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.request
+package me.proton.core.user.data.api.request
 
 import android.content.Context
 import kotlinx.serialization.SerialName
@@ -36,7 +36,7 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 const val CHALLENGE_VERSION = "2.0.1"
 
 @Serializable
-sealed class AuthChallengeFrame {
+sealed class UserChallengeFrame {
 
     abstract val appLanguage: String
     abstract val timezone: String
@@ -51,9 +51,8 @@ sealed class AuthChallengeFrame {
     abstract val version: String
     abstract val keyDownField: List<String>
 
-
     @Serializable
-    data class AuthChallengeUsernameFrame(
+    data class UserChallengeUsernameFrame(
         @SerialName("appLang")
         override val appLanguage: String,
         @SerialName("timezone")
@@ -87,14 +86,79 @@ sealed class AuthChallengeFrame {
         @SerialName("frame")
         val frame: ChallengeFrameType,
         @SerialName("keydownUsername")
-        override val keyDownField: List<String>
-    ) : AuthChallengeFrame() {
+        override val keyDownField: List<String>,
+    ) : UserChallengeFrame() {
         companion object {
-            fun from(context: Context, frame: ChallengeFrameDetails?): AuthChallengeUsernameFrame? =
+            fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeUsernameFrame? =
                 if (frame == null) {
                     null
                 } else
-                    AuthChallengeUsernameFrame(
+                    UserChallengeUsernameFrame(
+                        appLanguage = appLanguage(),
+                        timezone = deviceTimezone(),
+                        deviceName = deviceModelName(),
+                        uid = deviceUID(),
+                        regionCode = context.deviceRegion(),
+                        timezoneOffset = deviceTimezoneOffset(),
+                        rooted = isDeviceRooted(),
+                        fontSize = context.deviceFontSize().toString(),
+                        storage = context.deviceStorage(),
+                        darkMode = context.nightMode(),
+                        timeOnField = frame.focusTime,
+                        clickOnField = frame.clicks,
+                        copyField = frame.copy,
+                        pasteField = frame.paste,
+                        version = CHALLENGE_VERSION,
+                        frame = ChallengeFrameType(frame.challengeFrame),
+                        keyDownField = frame.keys
+                    )
+        }
+    }
+
+
+    @Serializable
+    data class UserChallengeRecoveryFrame(
+        @SerialName("appLang")
+        override val appLanguage: String,
+        @SerialName("timezone")
+        override val timezone: String,
+        @SerialName("deviceName")
+        override val deviceName: String,
+        @SerialName("uuid")
+        override val uid: String,
+        @SerialName("regionCode")
+        override val regionCode: String,
+        @SerialName("timezoneOffset")
+        override val timezoneOffset: Int,
+        @SerialName("isJailbreak")
+        override val rooted: Boolean,
+        @SerialName("preferredContentSize")
+        override val fontSize: String,
+        @SerialName("storageCapacity")
+        override val storage: Double,
+        @SerialName("isDarkmodeOn")
+        override val darkMode: Boolean,
+        @SerialName("v")
+        override val version: String,
+        @SerialName("timeRecovery")
+        val timeOnField: List<Int>,
+        @SerialName("clickRecovery")
+        val clickOnField: Int,
+        @SerialName("copyRecovery")
+        val copyField: List<String>,
+        @SerialName("pasteRecovery")
+        val pasteField: List<String>,
+        @SerialName("frame")
+        val frame: ChallengeFrameType,
+        @SerialName("keydownRecovery")
+        override val keyDownField: List<String>
+    ) : UserChallengeFrame() {
+        companion object {
+            fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeRecoveryFrame? =
+                if (frame == null) {
+                    null
+                } else
+                    UserChallengeRecoveryFrame(
                         appLanguage = appLanguage(),
                         timezone = deviceTimezone(),
                         deviceName = deviceModelName(),
