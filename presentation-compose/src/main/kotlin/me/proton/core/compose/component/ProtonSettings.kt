@@ -34,6 +34,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.RadioButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -93,7 +94,7 @@ fun ProtonSettingsTopBar(
         TopAppBar(
             modifier = modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(ProtonDimens.DefaultToolbarHeight),
             title = { Text(title) },
             navigationIcon = {
                 IconButton(onClick = onBackClick) {
@@ -192,7 +193,6 @@ fun ProtonSettingsToggleItem(
         modifier = modifier
             .clickable(enabled = isViewEnabled, onClick = { onToggle(!isSwitchChecked) })
             .padding(
-                vertical = ProtonDimens.ListItemTextStartPadding,
                 horizontal = ProtonDimens.DefaultSpacing
             )
     ) {
@@ -224,6 +224,33 @@ fun ProtonSettingsToggleItem(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ProtonSettingsRadioItem(
+    modifier: Modifier = Modifier,
+    name: String,
+    isSelected: Boolean,
+    onItemSelected: (String) -> Unit
+) {
+    ProtonRawListItem(
+        modifier = modifier
+            .clickable { onItemSelected(name) }
+            .padding(
+                horizontal = ProtonDimens.DefaultSpacing
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = name,
+            color = ProtonTheme.colors.textNorm,
+            style = ProtonTheme.typography.body1Regular
+        )
+        RadioButton(
+            selected = isSelected,
+            onClick = { onItemSelected(name) }
+        )
     }
 }
 
@@ -289,6 +316,19 @@ fun previewSettingsToggleableItemWithHint() {
 @Composable
 fun previewSettingsItemWithNameOnly() {
     ProtonSettingsItem(name = "Setting name")
+}
+
+@Preview(
+    name = "Proton settings radio item",
+    showBackground = true
+)
+@Composable
+fun previewSettingsRadioItem() {
+    ProtonSettingsRadioItem(
+        name = "Setting option",
+        isSelected = true,
+        onItemSelected = {}
+    )
 }
 
 @Preview(

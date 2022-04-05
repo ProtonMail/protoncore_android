@@ -37,6 +37,7 @@ object ProtonDimens {
     val DefaultIconSize = 24.dp
 
     val DefaultBottomSheetHeaderMinHeight = 56.dp
+    val DefaultToolbarHeight = 56.dp
 
     val ListItemHeight = 48.dp
     val ListItemTextStartPadding = 12.dp
