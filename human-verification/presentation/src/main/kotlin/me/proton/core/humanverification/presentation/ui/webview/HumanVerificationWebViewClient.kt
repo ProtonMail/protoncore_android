@@ -27,6 +27,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
+import me.proton.core.humanverification.presentation.LogTag.HV_REQUEST_ERROR
 import me.proton.core.util.kotlin.CoreLogger
 
 /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
@@ -60,16 +61,23 @@ class HumanVerificationWebViewClient(
         errorResponse: WebResourceResponse?
     ) {
         super.onReceivedHttpError(view, request, errorResponse)
+        val logMessage = "Request failed: ${request?.method} ${request?.url} with " +
+            "status ${errorResponse?.statusCode} ${errorResponse?.reasonPhrase}"
+        CoreLogger.log(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, errorResponse?.let { WebResponseError.Http(it) })
     }
 
     override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
         super.onReceivedSslError(view, handler, error)
+        CoreLogger.log(HV_REQUEST_ERROR, "SSL error: ${error?.url} ${error?.primaryError}")
         onResourceLoadingError(null, error?.let { WebResponseError.Ssl(it) })
     }
 
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
+        val logMessage = "Request failed: ${request?.method} ${request?.url} with " +
+            "code ${error?.errorCode} ${error?.description}"
+        CoreLogger.log(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, error?.let { WebResponseError.Resource(it) })
     }
 
@@ -118,6 +126,11 @@ class HumanVerificationWebViewClient(
         acceptSelfSignedCertificates: Boolean
     ): WebResourceResponse? = runCatching {
         val response = networkRequestOverrider.overrideRequest(url, method, headers, acceptSelfSignedCertificates)
+        if (response.httpStatusCode !in 200 until 400) {
+            val logMessage = "Request with override failed: $method $url with " +
+                "code ${response.httpStatusCode} ${response.reasonPhrase}"
+            CoreLogger.log(HV_REQUEST_ERROR, logMessage)
+        }
         WebResourceResponse(
             response.mimeType,
             response.encoding,
