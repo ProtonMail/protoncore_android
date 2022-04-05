@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 - Updated gopenpgp to v2.4.6
+
+### Fixes
 - Fix alternative routing for token refresh
 - Fixes respecting ApiClient.shouldUseDoh
+- Fix issues with CryptoValidator when activities were re-launched.
 
 ## [7.1.9]
 

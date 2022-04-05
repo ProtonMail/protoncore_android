@@ -69,7 +69,7 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.isUsingKeyStore() } returns true
         // WHEN
         keyStoreValidator.validate()
-        activityCallback?.callOnActivityCreated()
+        activityCallback?.callOnActivityResumed()
         // THEN
         verify { keyStoreCrypto.isUsingKeyStore() }
         verify(exactly = 0) { CryptoValidatorErrorDialogActivity.show(any()) }
@@ -81,7 +81,7 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
         every { cryptoPrefs.useInsecureKeystore } returns true
         // WHEN
         keyStoreValidator.validate()
-        activityCallback?.callOnActivityCreated()
+        activityCallback?.callOnActivityResumed()
         // THEN
         verify(exactly = 0) { keyStoreCrypto.isUsingKeyStore() }
     }
@@ -103,12 +103,12 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
         every { cryptoPrefs.useInsecureKeystore } returns false
         // WHEN
         keyStoreValidator.validate()
-        activityCallback?.callOnActivityCreated()
+        activityCallback?.callOnActivityResumed()
         // THEN
         verify { CryptoValidatorErrorDialogActivity.show(any()) }
     }
 }
 
-private fun Application.ActivityLifecycleCallbacks.callOnActivityCreated() {
-    onActivityCreated(mockk(), null)
+private fun Application.ActivityLifecycleCallbacks.callOnActivityResumed() {
+    onActivityResumed(mockk())
 }

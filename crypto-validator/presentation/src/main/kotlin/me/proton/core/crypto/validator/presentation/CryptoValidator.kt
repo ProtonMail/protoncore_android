@@ -35,8 +35,8 @@ public class CryptoValidator(
         if (cryptoPrefs.useInsecureKeystore == true || keyStoreCrypto.isUsingKeyStore()) return
 
         application.registerActivityLifecycleCallbacks(object : EmptyActivityLifecycleCallbacks() {
-            /** Try to display error activity whenever an activity is created. */
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            /** Try to display error activity whenever an activity is resumed. */
+            override fun onActivityResumed(activity: Activity) {
                 if (activity !is CryptoValidatorErrorDialogActivity) {
                     CryptoValidatorErrorDialogActivity.show(activity)
                 }
