@@ -26,8 +26,9 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.planDomain),
+        project(Module.planDagger),
         project(Module.planData),
-        project(Module.planPresentation)
+        project(Module.planDomain),
+        project(Module.planPresentation),
     )
 }

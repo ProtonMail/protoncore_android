@@ -26,6 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.contactHilt),
         project(Module.contactDomain),
         project(Module.contactData)
     )

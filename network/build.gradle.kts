@@ -27,7 +27,8 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     api(
-        project(Module.networkDomain),
-        project(Module.networkData)
+        project(Module.networkDagger),
+        project(Module.networkData),
+        project(Module.networkDomain)
     )
 }

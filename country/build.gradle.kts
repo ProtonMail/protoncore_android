@@ -26,6 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.countryDagger),
         project(Module.countryDomain),
         project(Module.countryData),
         project(Module.countryPresentation)

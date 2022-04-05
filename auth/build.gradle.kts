@@ -26,6 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.authDagger),
         project(Module.authPresentation),
         project(Module.authDomain),
         project(Module.authData)

@@ -31,5 +31,8 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    api(project(Module.contact))
+    api(
+        project(Module.contactData),
+        project(Module.contactDomain),
+    )
 }
