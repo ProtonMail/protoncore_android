@@ -93,7 +93,7 @@ public class CryptoValidatorErrorDialogActivity : AppCompatActivity() {
     private fun removeAllAccounts() {
         viewModel.viewModelScope.launch {
             viewModel.removeAllAccounts()
-            finish()
+            closeApp()
         }
     }
 
