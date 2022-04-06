@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -63,19 +62,17 @@ fun ProtonSettingsList(
     modifier: Modifier = Modifier,
     content: LazyListScope.() -> Unit
 ) {
-    ProtonTheme {
-        Surface(
-            color = ProtonTheme.colors.backgroundNorm,
-            contentColor = ProtonTheme.colors.textNorm,
-            modifier = modifier.fillMaxSize()
-        ) {
-            val state = rememberLazyListState()
+    Surface(
+        color = ProtonTheme.colors.backgroundNorm,
+        contentColor = ProtonTheme.colors.textNorm,
+        modifier = modifier.fillMaxSize()
+    ) {
+        val state = rememberLazyListState()
 
-            LazyColumn(
-                state = state,
-                content = content
-            )
-        }
+        LazyColumn(
+            state = state,
+            content = content
+        )
     }
 }
 
@@ -90,22 +87,18 @@ fun ProtonSettingsTopBar(
     title: String,
     onBackClick: () -> Unit,
 ) {
-    ProtonTheme {
-        TopAppBar(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(ProtonDimens.DefaultToolbarHeight),
-            title = { Text(title) },
-            navigationIcon = {
-                IconButton(onClick = onBackClick) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                }
-            },
-            backgroundColor = ProtonTheme.colors.backgroundNorm,
-            contentColor = ProtonTheme.colors.textNorm,
-            elevation = 0.dp
-        )
-    }
+    TopAppBar(
+        modifier = modifier.fillMaxWidth(),
+        title = { Text(title) },
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+            }
+        },
+        backgroundColor = ProtonTheme.colors.backgroundNorm,
+        contentColor = ProtonTheme.colors.textNorm,
+        elevation = 0.dp
+    )
 }
 
 @Composable
