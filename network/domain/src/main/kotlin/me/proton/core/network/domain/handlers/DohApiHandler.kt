@@ -19,6 +19,8 @@ package me.proton.core.network.domain.handlers
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
@@ -71,34 +73,48 @@ class DohApiHandler<Api>(
             !error.isPotentialBlocking -> error
             error !is ApiResult.Error.Connection -> error
             else -> {
-                coroutineScope {
-                    // Ping primary backend (to make sure failure wasn't a random network error rather than
-                    // an actual block) parallel with refreshing proxy list
-                    val isPotentiallyBlockedAsync = async {
-                        primaryBackend.isPotentiallyBlocked()
-                    }
-                    val dohRefresh = async {
-                        withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
-                            dohProvider.refreshAlternatives()
-                        }
-                    }
-                    // If ping on primary api succeeded don't fallback to proxy
-                    val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
-                    if (isPotentiallyBlocked) {
-                        dohRefresh.await()
-
-                        if (activeAltBackend == null)
-                            prefs.lastPrimaryApiFail = wallClockMs()
-                        else
-                            activeAltBackend = null
-
+                staticMutex.withLock {
+                    if (shouldUseDoh())
                         callWithAlternatives(call) ?: error
-                    } else {
-                        dohRefresh.cancel()
-                        activeAltBackend = null
+                    else
                         error
-                    }
                 }
+            }
+        }
+    }
+
+    private suspend fun shouldUseDoh(): Boolean {
+        return coroutineScope {
+            // Check if other call already refreshed and initialized DOH
+            if (activeAltBackend != null) {
+                return@coroutineScope true
+            }
+
+            // Ping primary backend (to make sure failure wasn't a random network error rather than
+            // an actual block) parallel with refreshing proxy list
+            val isPotentiallyBlockedAsync = async {
+                primaryBackend.isPotentiallyBlocked()
+            }
+            val dohRefresh = async {
+                withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
+                    dohProvider.refreshAlternatives()
+                }
+            }
+            // If ping on primary api succeeded don't fallback to proxy
+            val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
+            if (isPotentiallyBlocked) {
+                dohRefresh.await()
+
+                if (activeAltBackend == null)
+                    prefs.lastPrimaryApiFail = wallClockMs()
+                else
+                    activeAltBackend = null
+
+                true
+            } else {
+                dohRefresh.cancel()
+                activeAltBackend = null
+                false
             }
         }
     }
@@ -119,5 +135,9 @@ class DohApiHandler<Api>(
             }
         }
         return null
+    }
+
+    companion object {
+        private val staticMutex: Mutex = Mutex()
     }
 }
