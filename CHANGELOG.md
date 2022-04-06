@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 - Updated gopenpgp to v2.4.6
+- Added subheadline typography into Compose theme
 
 ### Fixes
 - Fix alternative routing for token refresh

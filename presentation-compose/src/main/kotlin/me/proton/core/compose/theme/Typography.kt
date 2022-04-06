@@ -43,6 +43,8 @@ val ProtonTypography.defaultHighlight: TextStyle
 fun ProtonTypography.defaultHighlight(enabled: Boolean = true): TextStyle =
     body1Bold.copy(color = ProtonTheme.colors.textNorm(enabled))
 
+val ProtonTypography.subheadline: TextStyle
+    @Composable get() = subheadline.copy(color = ProtonTheme.colors.textNorm)
 
 val ProtonTypography.defaultStrong: TextStyle
     @Composable get() = headlineSmall
@@ -152,6 +154,7 @@ fun ProtonTypography.overlineStrong(enabled: Boolean = true): TextStyle =
 @Immutable
 data class ProtonTypography(
     internal val headline: TextStyle,
+    internal val subheadline: TextStyle,
     internal val body1Regular: TextStyle,
     internal val body1Medium: TextStyle,
     internal val body1Bold: TextStyle,
@@ -168,6 +171,12 @@ data class ProtonTypography(
         headline: TextStyle = TextStyle(
             fontSize = 20.sp,
             fontWeight = FontWeight.W700,
+            letterSpacing = 0.01.em,
+            lineHeight = 24.sp
+        ),
+        subheadline: TextStyle = TextStyle(
+            fontSize = 20.sp,
+            fontWeight = FontWeight.W400,
             letterSpacing = 0.01.em,
             lineHeight = 24.sp
         ),
@@ -212,6 +221,7 @@ data class ProtonTypography(
         ),
     ) : this(
         headline = headline.withDefaultFontFamily(defaultFontFamily),
+        subheadline = subheadline.withDefaultFontFamily(defaultFontFamily),
         body1Regular = body1Regular.withDefaultFontFamily(defaultFontFamily),
         body1Medium = body1Medium.withDefaultFontFamily(defaultFontFamily),
         body1Bold = body1Bold.withDefaultFontFamily(defaultFontFamily),
