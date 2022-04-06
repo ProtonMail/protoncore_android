@@ -18,9 +18,6 @@
 package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
@@ -50,23 +47,17 @@ class DohProvider(
     private val sessionId: SessionId?,
     private val dohAlternativesListener: DohAlternativesListener?
 ) {
-    private var ongoingRefresh: Deferred<Unit>? = null
-    private var lastRefresh = Long.MIN_VALUE
 
     suspend fun refreshAlternatives() = withContext(networkMainScope.coroutineContext) {
-        if (monoClockMs() >= lastRefresh + MIN_REFRESH_INTERVAL_MS) {
-            ongoingRefresh = ongoingRefresh ?: async(start = CoroutineStart.LAZY) {
-                val allServicesFailed = tryDohServices()
-                lastRefresh = monoClockMs()
-                ongoingRefresh = null
+        if (monoClockMs() >= prefs.lastAlternativesRefresh + MIN_REFRESH_INTERVAL_MS) {
+            val allServicesFailed = tryDohServices()
+            prefs.lastAlternativesRefresh = monoClockMs()
 
-                if (allServicesFailed && dohAlternativesListener != null) {
-                    dohAlternativesListener.onAlternativesUnblock {
-                        tryProtonDohService()
-                    }
+            if (allServicesFailed && dohAlternativesListener != null) {
+                dohAlternativesListener.onAlternativesUnblock {
+                    tryProtonDohService()
                 }
             }
-            ongoingRefresh!!.join()
         }
     }
 
