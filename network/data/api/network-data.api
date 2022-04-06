@@ -41,10 +41,12 @@ public final class me/proton/core/network/data/NetworkPrefsImpl : me/proton/core
 	public fun <init> (Landroid/content/Context;)V
 	public fun getActiveAltBaseUrl ()Ljava/lang/String;
 	public fun getAlternativeBaseUrls ()Ljava/util/List;
+	public fun getLastAlternativesRefresh ()J
 	public fun getLastPrimaryApiFail ()J
 	public fun getPreferences ()Landroid/content/SharedPreferences;
 	public fun setActiveAltBaseUrl (Ljava/lang/String;)V
 	public fun setAlternativeBaseUrls (Ljava/util/List;)V
+	public fun setLastAlternativesRefresh (J)V
 	public fun setLastPrimaryApiFail (J)V
 }
 
