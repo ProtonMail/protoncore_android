@@ -7,16 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changes
-- Updated gopenpgp to v2.4.6
-- Added subheadline typography into Compose theme
+- Updated gopenpgp to v2.4.6.
+- Added subheadline typography into Compose theme.
 - Added error logging to HV WebView. Errors are logged with `LogTag.HV_REQUEST_ERROR` tag.
 - Merge Drive Compose module to Core.
 
 ### Fixes
-- Fix alternative routing for token refresh
-- Fixes respecting ApiClient.shouldUseDoh
+- Fix alternative routing for token refresh.
+- Fixes respecting ApiClient.shouldUseDoh.
 - Fix issues with CryptoValidator when activities were re-launched.
 - Fix potential issue in database migrations (checking if a column exists before creating it)
+- Don't wrap unexpected Exception as ApiResult.Error.Connection.
 
 ## [7.1.9]
 

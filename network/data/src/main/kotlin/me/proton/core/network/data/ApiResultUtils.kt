@@ -17,7 +17,6 @@
  */
 package me.proton.core.network.data
 
-import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
@@ -41,13 +40,12 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Success(block(api))
     }.getOrElse { e ->
         when (e) {
-            is CancellationException -> throw e
             is ProtonErrorException -> parseHttpError(e.response, e.protonData, e)
             is HttpException -> parseHttpError(e.response()!!.raw(), null, e)
             is SerializationException -> ApiResult.Error.Parse(e)
             is CertificateException -> ApiResult.Error.Certificate(e)
             is ApiConnectionException -> e.toApiResult(networkManager)
-            else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
+            else -> throw e // Throw any other unexpected exception.
         }
     }
     if (result is ApiResult.Error) {
