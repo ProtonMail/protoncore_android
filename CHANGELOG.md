@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added subheadline typography into Compose theme.
 - Added error logging to HV WebView. Errors are logged with `LogTag.HV_REQUEST_ERROR` tag.
 - Merge Drive Compose module to Core.
+- Removed useless `ApiConnectionException`, and `ApiResult.Error.Connection.path/query`.
 
 ### Fixes
 - Fix alternative routing for token refresh.

@@ -20,24 +20,15 @@ package me.proton.core.network.data.interceptor
 
 import me.proton.core.network.data.ProtonErrorException
 import me.proton.core.network.data.protonApi.ProtonErrorData
-import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.util.kotlin.deserializeOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 class ServerErrorInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val response = try {
-            chain.proceed(request)
-        } catch (e: IOException) {
-            // every IO exception is possible potential blocking of the API
-            with(request.url) {
-                throw ApiConnectionException(encodedPath, query, e)
-            }
-        }
+        val response = chain.proceed(request)
         if (!response.isSuccessful) {
             val errorBody = response.peekBody(MAX_ERROR_BYTES).string()
             val protonError = errorBody.deserializeOrNull(ProtonErrorData.serializer())?.apiResultData

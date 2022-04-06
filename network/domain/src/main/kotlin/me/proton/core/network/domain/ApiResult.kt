@@ -20,7 +20,6 @@ package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
-import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.scopes.MissingScopes
 
@@ -105,11 +104,8 @@ sealed class ApiResult<out T> {
         ) : Error(cause) {
             override val isPotentialBlocking get() = potentialBlock
 
-            val path = if (cause is ApiConnectionException) cause.path else null
-            val query = if (cause is ApiConnectionException) cause.query else null
-
             override fun toString() =
-                "${this::class.simpleName} path=$path query=$query potentialBlock=$potentialBlock cause=$cause"
+                "${this::class.simpleName} potentialBlock=$potentialBlock cause=$cause"
         }
 
         /**

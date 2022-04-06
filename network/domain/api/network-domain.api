@@ -99,8 +99,6 @@ public class me/proton/core/network/domain/ApiResult$Error$Connection : me/proto
 	public fun <init> ()V
 	public fun <init> (ZLjava/lang/Throwable;)V
 	public synthetic fun <init> (ZLjava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getPath ()Ljava/lang/String;
-	public final fun getQuery ()Ljava/lang/String;
 	public fun isPotentialBlocking ()Z
 	public fun toString ()Ljava/lang/String;
 }
@@ -345,13 +343,6 @@ public abstract interface class me/proton/core/network/domain/client/ExtraHeader
 	public abstract fun getHeaders ()Ljava/util/List;
 	public abstract fun removeAll (Ljava/lang/String;)V
 	public abstract fun removeFirst (Ljava/lang/String;)V
-}
-
-public final class me/proton/core/network/domain/exception/ApiConnectionException : java/io/IOException {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/io/IOException;)V
-	public final fun getOriginalException ()Ljava/io/IOException;
-	public final fun getPath ()Ljava/lang/String;
-	public final fun getQuery ()Ljava/lang/String;
 }
 
 public final class me/proton/core/network/domain/handlers/DohApiHandler : me/proton/core/network/domain/ApiErrorHandler {

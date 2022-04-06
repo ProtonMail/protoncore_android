@@ -23,7 +23,6 @@ import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.presentation.R
 import org.junit.Before
 import org.junit.Test
@@ -42,37 +41,60 @@ class ErrorUtilsTest {
     }
 
     @Test
-    fun `socket timeout exception returns original exception message`() {
-        val exception = ApiException(ApiResult.Error.Connection(cause = SocketTimeoutException("test-message")))
-        val message = exception.getUserMessage(resources)
-        assertEquals("test-message", message)
-    }
-
-    @Test
-    fun `api connection exception as a result of socket timeout exception should return user friendly error message`() {
+    fun `apiResult Error Certificate return user friendly error message`() {
         val exception = ApiException(
-            ApiResult.Error.Connection(
-                cause = ApiConnectionException(
-                    path = "test-path",
-                    query = null,
-                    originalException = SocketTimeoutException("test-message")
-                )
-            )
+            ApiResult.Error.Connection(cause = SocketTimeoutException("test-message"))
         )
         val message = exception.getUserMessage(resources)
         assertEquals(connectionError, message)
     }
 
     @Test
-    fun `any other exception returns original exception message`() {
+    fun `apiResult Error Connection return user friendly error message`() {
+        val exception = ApiException(
+            ApiResult.Error.Connection(cause = SocketTimeoutException("test-message"))
+        )
+        val message = exception.getUserMessage(resources)
+        assertEquals(connectionError, message)
+    }
+
+    @Test
+    fun `apiResult Error Timeout return user friendly error message`() {
+        val exception = ApiException(
+            ApiResult.Error.Connection(cause = SocketTimeoutException("test-message"))
+        )
+        val message = exception.getUserMessage(resources)
+        assertEquals(connectionError, message)
+    }
+
+    @Test
+    fun `apiResult Error Http returns original error cause message`() {
         val exception = ApiException(
             ApiResult.Error.Http(
-                cause = RuntimeException("test-message"),
-                httpCode = 403,
-                message = "http message"
+                httpCode = 404,
+                message = "test-message-not-found",
+                cause = RuntimeException("test-message-runtime-exception")
             )
         )
         val message = exception.getUserMessage(resources)
-        assertEquals("test-message", message)
+        assertEquals("test-message-runtime-exception", message)
+    }
+
+    @Test
+    fun `apiResult Error Parse returns original error cause message`() {
+        val exception = ApiException(
+            ApiResult.Error.Parse(
+                cause = RuntimeException("test-message-parse-exception")
+            )
+        )
+        val message = exception.getUserMessage(resources)
+        assertEquals("test-message-parse-exception", message)
+    }
+
+    @Test
+    fun `any other exception returns original exception message`() {
+        val exception = IllegalStateException("test-message-illegal-exception")
+        val message = exception.getUserMessage(resources)
+        assertEquals("test-message-illegal-exception", message)
     }
 }
