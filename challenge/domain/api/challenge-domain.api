@@ -4,7 +4,7 @@ public abstract interface class me/proton/core/challenge/domain/ChallengeConfig 
 }
 
 public abstract interface class me/proton/core/challenge/domain/ChallengeManager {
-	public abstract fun addOrUpdateFrameToFlow (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun addOrUpdateFrameToFlow (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getFrameByFlowAndFrameName (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getFramesByFlowName (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun resetFlow (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -14,23 +14,28 @@ public final class me/proton/core/challenge/domain/ChallengeManagerKt {
 	public static final fun useFlow (Lme/proton/core/challenge/domain/ChallengeManager;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/challenge/domain/ChallengeUtilsKt {
+	public static final field CHALLENGE_VERSION Ljava/lang/String;
+	public static final fun framePrefix (Lme/proton/core/domain/entity/Product;)Ljava/lang/String;
+}
+
 public final class me/proton/core/challenge/domain/entity/ChallengeFrameDetails {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()J
+	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()I
 	public final fun component5 ()Ljava/util/List;
 	public final fun component6 ()Ljava/util/List;
 	public final fun component7 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
-	public static synthetic fun copy$default (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Ljava/lang/String;Ljava/lang/String;JILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChallengeFrame ()Ljava/lang/String;
 	public final fun getClicks ()I
 	public final fun getCopy ()Ljava/util/List;
 	public final fun getFlow ()Ljava/lang/String;
-	public final fun getFocusTime ()J
+	public final fun getFocusTime ()Ljava/util/List;
 	public final fun getKeys ()Ljava/util/List;
 	public final fun getPaste ()Ljava/util/List;
 	public fun hashCode ()I

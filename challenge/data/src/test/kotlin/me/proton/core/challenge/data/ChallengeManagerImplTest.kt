@@ -58,7 +58,7 @@ public class ChallengeManagerImplTest {
         val testChallengeFrame = ChallengeFrameDetails(
             flow = testFlow,
             challengeFrame = "test-challenge-frame",
-            focusTime = 0,
+            focusTime = listOf(0),
             clicks = 1,
             copy = emptyList(),
             paste = emptyList(),
@@ -82,7 +82,7 @@ public class ChallengeManagerImplTest {
         val testChallengeFrame = ChallengeFrameDetails(
             flow = testFlow,
             challengeFrame = "test-challenge-frame",
-            focusTime = 0,
+            focusTime = listOf(0),
             clicks = 1,
             copy = emptyList(),
             paste = emptyList(),
@@ -108,10 +108,10 @@ public class ChallengeManagerImplTest {
         val challengeFrame = "test-frame"
         coEvery { repository.insertFrameDetails(any()) } returns Unit
         // When
-        manager.addOrUpdateFrameToFlow(testFlow, challengeFrame, 0, 0, emptyList(), emptyList(), emptyList())
+        manager.addOrUpdateFrameToFlow(testFlow, challengeFrame, listOf(0), 0, emptyList(), emptyList(), emptyList())
         // Then
         val frame = ChallengeFrameDetails(
-            testFlow, challengeFrame, 0, 0, emptyList(), emptyList(), emptyList()
+            testFlow, challengeFrame, listOf(0), 0, emptyList(), emptyList(), emptyList()
         )
         coVerify { repository.insertFrameDetails(frame) }
     }

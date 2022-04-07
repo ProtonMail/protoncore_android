@@ -55,7 +55,7 @@ interface AuthRepository {
         clientSecret: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        frames: List<ChallengeFrameDetails>?
+        frames: List<ChallengeFrameDetails>
     ): SessionInfo
 
     /**

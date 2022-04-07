@@ -31,9 +31,8 @@ import me.proton.core.challenge.data.deviceTimezoneOffset
 import me.proton.core.challenge.data.deviceUID
 import me.proton.core.challenge.data.isDeviceRooted
 import me.proton.core.challenge.data.nightMode
+import me.proton.core.challenge.domain.CHALLENGE_VERSION
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
-
-const val CHALLENGE_VERSION = "2.0.1"
 
 @Serializable
 sealed class UserChallengeFrame {

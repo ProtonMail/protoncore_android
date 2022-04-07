@@ -56,9 +56,7 @@ class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
             when (it) {
                 is RecoveryMethodViewModel.ValidationState.Success,
                 is RecoveryMethodViewModel.ValidationState.Skipped -> binding.emailEditText.flush()
-                else -> {
-                    // no operation
-                }
+                else -> Unit
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

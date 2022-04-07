@@ -19,14 +19,32 @@
 package me.proton.core.challenge.domain
 
 import me.proton.core.domain.entity.Product
-import me.proton.core.util.kotlin.exhaustive
+import org.junit.Test
+import kotlin.test.assertEquals
 
-public const val CHALLENGE_VERSION: String = "2.0.1"
-private const val CHALLENGE_FRAME_SUFFIX = "challenge"
+public class ChallengeUtilsKtTest {
 
-public fun Product.framePrefix(): String = when (this) {
-    Product.Calendar -> "calendar-android-v4-$CHALLENGE_FRAME_SUFFIX"
-    Product.Drive -> "drive-android-v4-$CHALLENGE_FRAME_SUFFIX"
-    Product.Mail -> "mail-android-v4-$CHALLENGE_FRAME_SUFFIX"
-    Product.Vpn -> "vpn-android-v4-$CHALLENGE_FRAME_SUFFIX"
-}.exhaustive
+    @Test
+    public fun `test mail client`(): Unit {
+        val product = Product.Mail
+        assertEquals("mail-android-v4-challenge", product.framePrefix())
+    }
+
+    @Test
+    public fun `test calendar client`(): Unit {
+        val product = Product.Calendar
+        assertEquals("calendar-android-v4-challenge", product.framePrefix())
+    }
+
+    @Test
+    public fun `test drive client`(): Unit {
+        val product = Product.Drive
+        assertEquals("drive-android-v4-challenge", product.framePrefix())
+    }
+
+    @Test
+    public fun `test vpn client`(): Unit {
+        val product = Product.Vpn
+        assertEquals("vpn-android-v4-challenge", product.framePrefix())
+    }
+}

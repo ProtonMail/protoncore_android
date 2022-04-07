@@ -106,25 +106,27 @@ class AuthRepositoryImpl(
         clientSecret: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        frames: List<ChallengeFrameDetails>?
-    ): SessionInfo {
-        val frameMap = HashMap<String, AuthChallengeFrame?>(1)
-        frameMap["${product.framePrefix()}-0"] =
-            AuthChallengeFrame.AuthChallengeUsernameFrame.from(context, frames?.getOrNull(0))
-        return provider.get<AuthenticationApi>().invoke {
-            val request = LoginRequest(
-                username,
-                clientSecret,
-                srpProofs.clientEphemeral,
-                srpProofs.clientProof,
-                srpSession,
-                frameMap
-            )
-            val response = performLogin(request)
-            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "login failed" }
-            response.toSessionInfo(username)
-        }.valueOrThrow
+        frames: List<ChallengeFrameDetails>
+    ) = provider.get<AuthenticationApi>().invoke {
+        val request = LoginRequest(
+            username,
+            clientSecret,
+            srpProofs.clientEphemeral,
+            srpProofs.clientProof,
+            srpSession,
+            getFrameMap(frames)
+        )
+        val response = performLogin(request)
+        response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "login failed" }
+        response.toSessionInfo(username)
+    }.valueOrThrow
+
+    private fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, AuthChallengeFrame?> {
+        val name = "${product.framePrefix()}-0"
+        val frame = AuthChallengeFrame.AuthChallengeUsernameFrame.from(context, frames.getOrNull(0))
+        return mapOf(name to frame)
     }
+
 
     /**
      * Performs the second factor request for the Accounts that have second factor enabled.

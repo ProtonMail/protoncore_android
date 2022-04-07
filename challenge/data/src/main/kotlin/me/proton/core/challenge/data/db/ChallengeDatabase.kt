@@ -47,7 +47,7 @@ public interface ChallengeDatabase : Database {
                         execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))")
                     },
                     createIndices = { },
-                    columns = listOf("focusTime")
+                    column = "focusTime"
                 )
                 database.addTableColumn(
                     table = "ChallengeFrameEntity",

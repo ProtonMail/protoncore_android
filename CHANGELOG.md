@@ -24,6 +24,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MailSettingsRepository now supports offline changes.
 - Added ContactCard type 1 (Encrypted, but not signed).
 - Updated Icons set.
+- Challenge entities improved. Clients should update their DB with the following migration:
+```kotlin
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        ChallengeDatabase.MIGRATION_1.migrate(database)
+    }
+}
+```
+
 
 ### Fixes
 - Remove creating account screen when there is an error in the sign up flow.

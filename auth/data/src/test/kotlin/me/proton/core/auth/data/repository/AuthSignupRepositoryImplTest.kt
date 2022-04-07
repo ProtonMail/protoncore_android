@@ -24,6 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
@@ -49,6 +50,8 @@ class AuthSignupRepositoryImplTest {
     private lateinit var repository: AuthRepositoryImpl
     // endregion
 
+    private val product = Product.Mail
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
@@ -58,7 +61,7 @@ class AuthSignupRepositoryImplTest {
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
-        repository = AuthRepositoryImpl(apiProvider, context)
+        repository = AuthRepositoryImpl(apiProvider, context, product)
     }
 
     @Test

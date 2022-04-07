@@ -152,13 +152,6 @@ class UserRepositoryImpl(
         auth: Auth,
         frames: List<ChallengeFrameDetails>
     ): User = provider.get<UserApi>().invoke {
-        val usernameFrame = frames.getOrNull(0)
-        val recoveryFrame = frames.getOrNull(1)
-        val frameMap = HashMap<String, UserChallengeFrame?>(2)
-        frameMap["${product.framePrefix()}-1"] =
-            UserChallengeFrame.UserChallengeRecoveryFrame.from(context, recoveryFrame)
-        frameMap["${product.framePrefix()}-0"] =
-            UserChallengeFrame.UserChallengeUsernameFrame.from(context, usernameFrame)
         val request = CreateUserRequest(
             username,
             recoveryEmail,
@@ -167,10 +160,18 @@ class UserRepositoryImpl(
             type.value,
             AuthRequest.from(auth),
             domain,
-            frameMap
+            getFrameMap(frames)
         )
         createUser(request).user.toUser()
     }.valueOrThrow
+
+    private fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, UserChallengeFrame?> {
+        val nameUsername = "${product.framePrefix()}-0"
+        val nameRecovery = "${product.framePrefix()}-1"
+        val usernameFrame = UserChallengeFrame.UserChallengeUsernameFrame.from(context, frames.getOrNull(0))
+        val recoveryFrame = UserChallengeFrame.UserChallengeRecoveryFrame.from(context, frames.getOrNull(1))
+        return mapOf(nameUsername to usernameFrame, nameRecovery to recoveryFrame)
+    }
 
     /**
      * Create new [User]. Used during signup.

@@ -126,7 +126,7 @@ public class ProtonMetadataInput : ProtonInput {
                 resetFocusValues()
                 (focusTime / 1000).toInt()
             }
-            focused -> (System.currentTimeMillis() - focusOn).toInt()
+            focused -> ((System.currentTimeMillis() - focusOn) / 1000).toInt()
             else -> 0
         }
     }

@@ -91,6 +91,8 @@ class UserRepositoryImplTests {
     private lateinit var db: AccountManagerDatabase
     private lateinit var userRepository: UserRepository
 
+    private val product = Product.Mail
+
     private val testSrpProofs = SrpProofs(
         clientEphemeral = "test-client-ephemeral",
         clientProof = "test-client-proof",
@@ -109,7 +111,7 @@ class UserRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(

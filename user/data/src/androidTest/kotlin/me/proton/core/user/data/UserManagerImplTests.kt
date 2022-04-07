@@ -104,6 +104,8 @@ class UserManagerImplTests {
 
     private lateinit var userManager: UserManager
 
+    private val product = Product.Mail
+
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -121,7 +123,7 @@ class UserManagerImplTests {
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)
 
         // UserRepositoryImpl implements PassphraseRepository.
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
         passphraseRepository = userRepository
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(

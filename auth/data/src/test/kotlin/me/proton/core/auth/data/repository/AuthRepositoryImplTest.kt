@@ -30,7 +30,9 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
@@ -82,6 +84,8 @@ class AuthRepositoryImplTest {
     private val successSessionInfo = mockk<SessionInfo>()
     private val successScopeInfo = mockk<ScopeInfo>()
 
+    private val product = Product.Mail
+
     // endregion
     @Before
     fun beforeEveryTest() {
@@ -99,7 +103,7 @@ class AuthRepositoryImplTest {
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
-        repository = AuthRepositoryImpl(apiProvider, context)
+        repository = AuthRepositoryImpl(apiProvider, context, product)
     }
 
     @Test
@@ -143,7 +147,38 @@ class AuthRepositoryImplTest {
             testClientSecret,
             testSrpProofs,
             testSrpSession,
-            null
+            emptyList()
+        )
+        // THEN
+        assertNotNull(sessionInfoResponse)
+        assertEquals(testUsername, sessionInfoResponse.username)
+        assertEquals(testAccessToken, sessionInfoResponse.accessToken)
+    }
+
+    @Test
+    fun `login success result with frames`() = runBlockingTest {
+        // GIVEN
+        every { successSessionInfo.username } returns testUsername
+        every { successSessionInfo.accessToken } returns testAccessToken
+        every { successSessionInfo.serverProof } returns testSrpProofs.expectedServerProof
+        coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Success(successSessionInfo)
+        // WHEN
+        val sessionInfoResponse = repository.performLogin(
+            testUsername,
+            testClientSecret,
+            testSrpProofs,
+            testSrpSession,
+            listOf(
+                ChallengeFrameDetails(
+                    flow = "test-flow",
+                    challengeFrame = "test-challenge-frame",
+                    focusTime = listOf(0),
+                    clicks = 1,
+                    copy = emptyList(),
+                    paste = emptyList(),
+                    keys = emptyList()
+                )
+            )
         )
         // THEN
         assertNotNull(sessionInfoResponse)
@@ -164,7 +199,40 @@ class AuthRepositoryImplTest {
                 testClientSecret,
                 testSrpProofs,
                 testSrpSession,
-                null
+                emptyList()
+            )
+        }
+        // THEN
+        assertEquals("test login error", throwable.message)
+        val error = throwable.error as? ApiResult.Error.Http
+        assertNotNull(error)
+        assertEquals(1, error.proton?.code)
+    }
+
+    @Test
+    fun `login error result with frames`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
+        )
+        // WHEN
+        val throwable = assertFailsWith(ApiException::class) {
+            repository.performLogin(
+                testUsername,
+                testClientSecret,
+                testSrpProofs,
+                testSrpSession,
+                listOf(
+                    ChallengeFrameDetails(
+                        flow = "test-flow",
+                        challengeFrame = "test-challenge-frame",
+                        focusTime = listOf(0),
+                        clicks = 1,
+                        copy = emptyList(),
+                        paste = emptyList(),
+                        keys = emptyList()
+                    )
+                )
             )
         }
         // THEN
@@ -194,7 +262,7 @@ class AuthRepositoryImplTest {
                 testClientSecret,
                 testSrpProofs,
                 testSrpSession,
-                null
+                emptyList()
             )
         }
     }
