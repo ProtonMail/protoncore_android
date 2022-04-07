@@ -29,6 +29,8 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.LoggerLogTag
 
 /**
  * Responsible for making an API call according to DoH feature logic: when our API seems blocked
@@ -74,6 +76,13 @@ class DohApiHandler<Api>(
             error !is ApiResult.Error.Connection -> error
             else -> {
                 staticMutex.withLock {
+                    // Invalidate activeAltBackend to refresh alternatives and retry the flow fully
+                    // if connection failure occurred on DOH proxy already
+                    if (activeAltBackend == backend) {
+                        CoreLogger.log(LOG_TAG,"DOH failure on proxy, invalidating alt backend")
+                        activeAltBackend = null
+                    }
+
                     if (shouldUseDoh())
                         callWithAlternatives(call) ?: error
                     else
@@ -87,6 +96,7 @@ class DohApiHandler<Api>(
         return coroutineScope {
             // Check if other call already refreshed and initialized DOH
             if (activeAltBackend != null) {
+                CoreLogger.log(LOG_TAG,"Activate backend already established, unblock right away")
                 return@coroutineScope true
             }
 
@@ -138,6 +148,7 @@ class DohApiHandler<Api>(
     }
 
     companion object {
+        private val LOG_TAG = LoggerLogTag("core.network.api.doh")
         private val staticMutex: Mutex = Mutex()
     }
 }
