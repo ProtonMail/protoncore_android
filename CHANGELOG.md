@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix alternative routing for token refresh
 - Fixes respecting ApiClient.shouldUseDoh
 - Fix issues with CryptoValidator when activities were re-launched.
+- Fix potential issue in database migrations (checking if a column exists before creating it)
 
 ## [7.1.9]
 
