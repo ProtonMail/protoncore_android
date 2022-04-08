@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.10]
+
 ### Changes
 - Updated gopenpgp to v2.4.6.
 - Added subheadline typography into Compose theme.
