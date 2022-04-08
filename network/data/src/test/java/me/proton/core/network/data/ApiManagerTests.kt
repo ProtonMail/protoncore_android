@@ -59,6 +59,7 @@ import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import java.lang.RuntimeException
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -521,6 +522,50 @@ internal class ApiManagerTests {
         }
 
         coVerify {
+            protonDohService.getAlternativeBaseUrls(any(), any())
+        }
+    }
+
+    @Test
+    fun `test exception thrown doh is working properly`() = runBlockingTest {
+        val scope = CoroutineScope(TestCoroutineDispatcher())
+        val dohProvider = DohProvider(
+            baseUrl,
+            apiClient,
+            listOf(dohService),
+            protonDohService,
+            scope,
+            prefs,
+            ::time,
+            null,
+            dohAlternativesListener
+        )
+        dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime, ::time) {
+            altBackend1
+        }
+        apiManager = ApiManagerImpl(
+            apiClient, backend,
+            apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time, dohApiHandler), ::time
+        )
+
+        val lambda = slot<suspend () -> Unit>()
+        coEvery { dohAlternativesListener.onAlternativesUnblock(capture(lambda)) } coAnswers {
+            lambda.captured.invoke()
+        }
+        coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns null
+        coEvery { protonDohService.getAlternativeBaseUrls(any(), any()) } returns listOf(proxy1url)
+        coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Parse(RuntimeException("test"))
+        coEvery { backend.isPotentiallyBlocked() } returns true
+        coEvery { altBackend1.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
+
+        val result = apiManager.invoke { test() }
+        assertTrue(result is ApiResult.Error.Parse)
+
+        coVerify(exactly = 0) {
+            dohService.getAlternativeBaseUrls(any(), any())
+        }
+
+        coVerify(exactly = 0) {
             protonDohService.getAlternativeBaseUrls(any(), any())
         }
     }

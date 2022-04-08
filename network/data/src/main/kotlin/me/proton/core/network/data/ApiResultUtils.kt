@@ -17,11 +17,9 @@
  */
 package me.proton.core.network.data
 
-import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
-import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Response
 import retrofit2.HttpException
@@ -41,30 +39,22 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Success(block(api))
     }.getOrElse { e ->
         when (e) {
-            is CancellationException -> throw e
             is ProtonErrorException -> parseHttpError(e.response, e.protonData, e)
             is HttpException -> parseHttpError(e.response()!!.raw(), null, e)
             is SerializationException -> ApiResult.Error.Parse(e)
             is CertificateException -> ApiResult.Error.Certificate(e)
-            is ApiConnectionException -> e.toApiResult(networkManager)
-            else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
+            is SSLHandshakeException -> ApiResult.Error.Certificate(e)
+            is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(e)
+            is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
+            is UnknownHostException -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
+            is IOException -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
+            else -> throw e // Throw any other unexpected exception.
         }
     }
     if (result is ApiResult.Error) {
         CoreLogger.log(LogTag.API_ERROR, result.toString())
     }
     return result
-}
-
-private fun ApiConnectionException.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
-    // handle the exceptions that might indicate that the API is potentially blocked
-    return when (originalException) {
-        is SSLHandshakeException -> ApiResult.Error.Certificate(this)
-        is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(this)
-        is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), this)
-        is UnknownHostException -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), this)
-        else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), this)
-    }
 }
 
 private fun <T> parseHttpError(

@@ -20,32 +20,24 @@ package me.proton.core.presentation.utils
 
 import android.content.res.Resources
 import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.exception.ApiConnectionException
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.presentation.R
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import javax.net.ssl.SSLHandshakeException
-import javax.net.ssl.SSLPeerUnverifiedException
 
 /**
  * Return localised and user readable error message.
  */
-fun Throwable.getUserMessage(resources: Resources): String? =
-    when (this) {
-        // all connectivity errors are wrapped with ApiConnectionException under ApiException
-        is ApiException ->
-            if (cause is ApiConnectionException) {
-                (cause as ApiConnectionException).getUserMessage(resources)
-            } else message
-        // currently all other errors return their original message
-        else -> message
-    }
+@Suppress("UseIfInsteadOfWhen")
+fun Throwable.getUserMessage(resources: Resources): String? = when (this) {
+    // All api errors are wrapped with ApiException.
+    is ApiException -> getUserMessage(resources)
+    // Currently all other errors return their original message.
+    else -> message
+}
 
-internal fun ApiConnectionException.getUserMessage(resources: Resources): String? =
-    when (this.cause) {
-        is SSLHandshakeException,
-        is SSLPeerUnverifiedException,
-        is SocketTimeoutException,
-        is UnknownHostException -> resources.getString(R.string.presentation_general_connection_error)
-        else -> message
-    }
+internal fun ApiException.getUserMessage(resources: Resources): String? = when (error) {
+    is ApiResult.Error.Certificate,
+    is ApiResult.Error.Connection,
+    is ApiResult.Error.Timeout -> resources.getString(R.string.presentation_general_connection_error)
+    is ApiResult.Error.Http,
+    is ApiResult.Error.Parse -> message
+}
