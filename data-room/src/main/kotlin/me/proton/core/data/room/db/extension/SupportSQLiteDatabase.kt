@@ -60,11 +60,18 @@ fun SupportSQLiteDatabase.addTableColumn(
     table: String,
     column: String,
     type: String,
-    defaultValue: String? = null
+    defaultValue: String? = null,
+    ifNotExists: Boolean = true
 ) {
+    if (ifNotExists && columnExists(table = table, column = column)) return
     val defaultValueSuffix = defaultValue?.let { "DEFAULT '$defaultValue'" } ?: ""
     val sqlStatement = "ALTER TABLE $table ADD COLUMN $column $type $defaultValueSuffix"
     execSQL(sqlStatement)
+}
+
+/** Returns `true` if a [column] already exists in a [table]. */
+fun SupportSQLiteDatabase.columnExists(table: String, column: String): Boolean {
+    return column in getTableColumns(table)
 }
 
 /**
