@@ -16,17 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api.request
+package me.proton.core.challenge.domain
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.Product
+import me.proton.core.util.kotlin.exhaustive
 
-const val CHALLENGE_VERSION = "2.0.1"
+public const val CHALLENGE_VERSION: String = "2.0.1"
+private const val CHALLENGE_FRAME_SUFFIX = "challenge"
 
-@Serializable
-data class ChallengePayload(
-    @SerialName("android-challenge-0")
-    val usernameFrame: ChallengeUsernameFrame?,
-    @SerialName("android-challenge-1")
-    val recoveryFrame: ChallengeRecoveryFrame?
-)
+public fun Product.framePrefix(): String = when (this) {
+    Product.Calendar -> "calendar-android-v4-$CHALLENGE_FRAME_SUFFIX"
+    Product.Drive -> "drive-android-v4-$CHALLENGE_FRAME_SUFFIX"
+    Product.Mail -> "mail-android-v4-$CHALLENGE_FRAME_SUFFIX"
+    Product.Vpn -> "vpn-android-v4-$CHALLENGE_FRAME_SUFFIX"
+}.exhaustive

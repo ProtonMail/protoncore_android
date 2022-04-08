@@ -86,10 +86,13 @@ internal class ChooseUsernameViewModel @Inject constructor(
         }
     }
 
-    private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
+    init {
         viewModelScope.launch {
             challengeManager.resetFlow(challengeConfig.flowName)
         }
+    }
+
+    private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
         return when (requireCurrentAccountType()) {
             AccountType.Username,
             AccountType.Internal -> {

@@ -34,5 +34,5 @@ data class LoginRequest(
     @SerialName("SRPSession")
     val srpSession: String,
     @SerialName("Payload")
-    val payload: ChallengePayload
+    val payload: Map<String, AuthChallengeFrame?>
 )

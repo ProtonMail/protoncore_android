@@ -118,15 +118,15 @@ public class ProtonMetadataInput : ProtonInput {
         }
     }
 
-    private fun calculateFocus(focusLost: Boolean = true): Long {
+    private fun calculateFocus(focusLost: Boolean = true): Int {
         return when {
             focusLost && focusOn != 0L -> {
                 focusOff = System.currentTimeMillis()
                 val focusTime = focusOff - focusOn
                 resetFocusValues()
-                focusTime
+                (focusTime / 1000).toInt()
             }
-            focused -> System.currentTimeMillis() - focusOn
+            focused -> ((System.currentTimeMillis() - focusOn) / 1000).toInt()
             else -> 0
         }
     }
@@ -160,7 +160,7 @@ public class ProtonMetadataInput : ProtonInput {
         challengeManager.addOrUpdateFrameToFlow(
             flow = flow,
             challengeFrame = frame,
-            focusTime = calculateFocus(),
+            focusTime = listOf(calculateFocus()),
             clicks = clicksCounter,
             copies = copies,
             pastes = pastes,

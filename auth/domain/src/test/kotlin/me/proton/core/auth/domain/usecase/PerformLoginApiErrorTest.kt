@@ -124,7 +124,7 @@ class PerformLoginApiErrorTest {
                 testClientSecret,
                 testSrpProofs,
                 testSrpSession,
-                frames = null
+                frames = emptyList()
             ) wasNot called
         }
     }
@@ -153,7 +153,7 @@ class PerformLoginApiErrorTest {
                 testClientSecret,
                 testSrpProofs,
                 testSrpSession,
-                frames = null
+                frames = emptyList()
             )
         }
         verify(exactly = 1) {

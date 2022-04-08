@@ -21,7 +21,6 @@ package me.proton.core.data.room.db
 import androidx.room.TypeConverter
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.session.SessionId
 
 class CommonConverters {
@@ -31,6 +30,12 @@ class CommonConverters {
 
     @TypeConverter
     fun fromStringToListOfString(value: String?): List<String>? = Companion.fromStringToListOfString(value)
+
+    @TypeConverter
+    fun fromListOfIntToString(value: List<Int>?): String? = Companion.fromListOfIntToString(value)
+
+    @TypeConverter
+    fun fromStringToListOfInt(value: String?): List<Int>? = Companion.fromStringToListOfInt(value)
 
     @TypeConverter
     fun fromProductToString(value: Product?): String? = value?.name
@@ -59,5 +64,7 @@ class CommonConverters {
     companion object {
         fun fromListOfStringToString(value: List<String>?): String? = value?.joinToString(separator = ";")
         fun fromStringToListOfString(value: String?): List<String>? = value?.split(";")?.filter { it.isNotBlank() }
+        fun fromListOfIntToString(value: List<Int>?): String? = value?.joinToString(separator = ";")
+        fun fromStringToListOfInt(value: String?): List<Int>? = value?.split(";")?.filter { it.isNotBlank() }?.map { it.toInt() }
     }
 }

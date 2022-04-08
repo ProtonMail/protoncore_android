@@ -42,7 +42,7 @@ internal class RecoveryMethodViewModel @Inject constructor(
 ) : ProtonViewModel() {
 
     private val _recoveryMethodUpdate = MutableStateFlow(RecoveryMethodType.EMAIL)
-    private val _validationResult = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
+    private val _validationResult = MutableStateFlow<ValidationState>(ValidationState.None)
 
     val recoveryMethodUpdate = _recoveryMethodUpdate.asStateFlow()
     val validationResult = _validationResult.asStateFlow()
@@ -52,9 +52,22 @@ internal class RecoveryMethodViewModel @Inject constructor(
     val recoveryMethod: RecoveryMethod
         get() = _currentActiveRecoveryMethod
 
+    sealed class ValidationState {
+        object None : ValidationState()
+        object Processing : ValidationState()
+        object Skipped : ValidationState()
+        data class Success(val value: Boolean) : ValidationState()
+        data class Error(val throwable: Throwable?) : ValidationState()
+    }
+
     /** Called when destination (email or phone) is empty/blank. */
     fun onRecoveryMethodDestinationMissing() {
-        _validationResult.tryEmit(ViewModelResult.Success(false))
+        _validationResult.tryEmit(ValidationState.Success(false))
+    }
+
+    /** Called when destination (email or phone) is empty/blank. */
+    fun onRecoveryMethodDestinationSkipped() {
+        _validationResult.tryEmit(ValidationState.Skipped)
     }
 
     /**
@@ -73,7 +86,7 @@ internal class RecoveryMethodViewModel @Inject constructor(
      * Validates the user input recovery destination (email or phone number) on the API.
      */
     fun validateRecoveryDestinationInput() = flow {
-        emit(ViewModelResult.Processing)
+        emit(ValidationState.Processing)
         emit(
             when (_currentActiveRecoveryMethod.type) {
                 RecoveryMethodType.EMAIL -> validateRecoveryEmail()
@@ -81,7 +94,7 @@ internal class RecoveryMethodViewModel @Inject constructor(
             }.exhaustive
         )
     }.catch { error ->
-        emit(ViewModelResult.Error(error))
+        emit(ValidationState.Error(error))
     }.onEach {
         _validationResult.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -90,11 +103,11 @@ internal class RecoveryMethodViewModel @Inject constructor(
      * Checks on the API if the email is a valid one.
      */
     private suspend fun validateRecoveryEmail() =
-        ViewModelResult.Success(validateEmail(_currentActiveRecoveryMethod.destination))
+        ValidationState.Success(validateEmail(_currentActiveRecoveryMethod.destination))
 
     /**
      * Checks on the API if the phone is a valid one.
      */
     private suspend fun validateRecoveryPhone() =
-        ViewModelResult.Success(validatePhone(_currentActiveRecoveryMethod.destination))
+        ValidationState.Success(validatePhone(_currentActiveRecoveryMethod.destination))
 }

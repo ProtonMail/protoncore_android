@@ -27,7 +27,7 @@ public interface ChallengeManager {
     public suspend fun addOrUpdateFrameToFlow(
         flow: String,
         challengeFrame: String,
-        focusTime: Long,
+        focusTime: List<Int>,
         clicks: Int,
         copies: List<String>,
         pastes: List<String>,

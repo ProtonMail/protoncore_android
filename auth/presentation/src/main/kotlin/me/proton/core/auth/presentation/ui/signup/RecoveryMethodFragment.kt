@@ -44,7 +44,6 @@ import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
-import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -65,6 +64,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         super.onViewCreated(view, savedInstanceState)
 
         skipRecoveryDialogResultLauncher = childFragmentManager.registerSkipRecoveryDialogResultLauncher(this) {
+            viewModel.onRecoveryMethodDestinationSkipped()
             signupViewModel.skipRecoveryMethod()
         }
 
@@ -97,10 +97,11 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
 
         viewModel.validationResult.onEach {
             when (it) {
-                is ViewModelResult.None -> Unit
-                is ViewModelResult.Error -> showError(it.throwable?.getUserMessage(resources))
-                is ViewModelResult.Processing -> showLoading(true)
-                is ViewModelResult.Success -> {
+                is RecoveryMethodViewModel.ValidationState.None -> Unit
+                is RecoveryMethodViewModel.ValidationState.Error -> showError(it.throwable?.getUserMessage(resources))
+                is RecoveryMethodViewModel.ValidationState.Processing -> showLoading(true)
+                is RecoveryMethodViewModel.ValidationState.Skipped -> {}
+                is RecoveryMethodViewModel.ValidationState.Success -> {
                     if (it.value) {
                         // if recovery destination is valid
                         signupViewModel.setRecoveryMethod(viewModel.recoveryMethod)
@@ -142,14 +143,18 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
 
     private fun initTabs() = with(binding) {
         recoveryOptions.apply {
-            addTab(newTab().apply {
-                text = getString(R.string.auth_signup_recovery_method_email)
-                tag = RecoveryMethodType.EMAIL
-            })
-            addTab(newTab().apply {
-                text = getString(R.string.auth_signup_recovery_method_phone)
-                tag = RecoveryMethodType.SMS
-            })
+            addTab(
+                newTab().apply {
+                    text = getString(R.string.auth_signup_recovery_method_email)
+                    tag = RecoveryMethodType.EMAIL
+                }
+            )
+            addTab(
+                newTab().apply {
+                    text = getString(R.string.auth_signup_recovery_method_phone)
+                    tag = RecoveryMethodType.SMS
+                }
+            )
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabReselected(tab: TabLayout.Tab?) {}

@@ -25,6 +25,91 @@ public abstract interface class me/proton/core/auth/data/api/AuthenticationApi :
 	public abstract fun validatePhone (Lme/proton/core/auth/data/api/request/PhoneValidationRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract class me/proton/core/auth/data/api/request/AuthChallengeFrame {
+	public static final field Companion Lme/proton/core/auth/data/api/request/AuthChallengeFrame$Companion;
+	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public abstract fun getAppLanguage ()Ljava/lang/String;
+	public abstract fun getDarkMode ()Z
+	public abstract fun getDeviceName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getKeyDownField ()Ljava/util/List;
+	public abstract fun getRegionCode ()Ljava/lang/String;
+	public abstract fun getRooted ()Z
+	public abstract fun getStorage ()D
+	public abstract fun getTimezone ()Ljava/lang/String;
+	public abstract fun getTimezoneOffset ()I
+	public abstract fun getUid ()Ljava/lang/String;
+	public abstract fun getVersion ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/auth/data/api/request/AuthChallengeFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame : me/proton/core/auth/data/api/request/AuthChallengeFrame {
+	public static final field Companion Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/util/List;
+	public final fun component13 ()I
+	public final fun component14 ()Ljava/util/List;
+	public final fun component15 ()Ljava/util/List;
+	public final fun component16 ()Lme/proton/core/auth/data/api/request/ChallengeFrameType;
+	public final fun component17 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
+	public final fun component7 ()Z
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()D
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAppLanguage ()Ljava/lang/String;
+	public final fun getClickOnField ()I
+	public final fun getCopyField ()Ljava/util/List;
+	public fun getDarkMode ()Z
+	public fun getDeviceName ()Ljava/lang/String;
+	public fun getFontSize ()Ljava/lang/String;
+	public final fun getFrame ()Lme/proton/core/auth/data/api/request/ChallengeFrameType;
+	public fun getKeyDownField ()Ljava/util/List;
+	public final fun getPasteField ()Ljava/util/List;
+	public fun getRegionCode ()Ljava/lang/String;
+	public fun getRooted ()Z
+	public fun getStorage ()D
+	public final fun getTimeOnField ()Ljava/util/List;
+	public fun getTimezone ()Ljava/lang/String;
+	public fun getTimezoneOffset ()I
+	public fun getUid ()Ljava/lang/String;
+	public fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame$Companion {
+	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/auth/data/api/request/ChallengeFrameType {
 	public static final field Companion Lme/proton/core/auth/data/api/request/ChallengeFrameType$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -52,103 +137,6 @@ public final class me/proton/core/auth/data/api/request/ChallengeFrameType$$seri
 }
 
 public final class me/proton/core/auth/data/api/request/ChallengeFrameType$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengePayload {
-	public static final field Companion Lme/proton/core/auth/data/api/request/ChallengePayload$Companion;
-	public synthetic fun <init> (ILme/proton/core/auth/data/api/request/ChallengeUsernameFrame;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;)V
-	public final fun component1 ()Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;
-	public final fun copy (Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;)Lme/proton/core/auth/data/api/request/ChallengePayload;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/ChallengePayload;Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/ChallengePayload;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getUsernameFrame ()Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/auth/data/api/request/ChallengePayload;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengePayload$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/auth/data/api/request/ChallengePayload$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/ChallengePayload;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/request/ChallengePayload;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengePayload$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengePayloadKt {
-	public static final field CHALLENGE_VERSION Ljava/lang/String;
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengeUsernameFrame : me/proton/core/challenge/data/api/Frame {
-	public static final field Companion Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Z
-	public final fun component11 ()Ljava/lang/String;
-	public final fun component12 ()Ljava/util/List;
-	public final fun component13 ()I
-	public final fun component14 ()Ljava/util/List;
-	public final fun component15 ()Ljava/util/List;
-	public final fun component16 ()Lme/proton/core/auth/data/api/request/ChallengeFrameType;
-	public final fun component17 ()Ljava/util/List;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()I
-	public final fun component7 ()Z
-	public final fun component8 ()Ljava/lang/String;
-	public final fun component9 ()D
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;)Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getAppLanguage ()Ljava/lang/String;
-	public final fun getClickOnField ()I
-	public final fun getCopyField ()Ljava/util/List;
-	public fun getDarkMode ()Z
-	public fun getDeviceName ()Ljava/lang/String;
-	public fun getFontSize ()Ljava/lang/String;
-	public final fun getFrame ()Lme/proton/core/auth/data/api/request/ChallengeFrameType;
-	public fun getKeyDownField ()Ljava/util/List;
-	public final fun getPasteField ()Ljava/util/List;
-	public fun getRegionCode ()Ljava/lang/String;
-	public fun getRooted ()Z
-	public fun getStorage ()D
-	public final fun getTimeOnField ()Ljava/util/List;
-	public fun getTimezone ()Ljava/lang/String;
-	public fun getTimezoneOffset ()I
-	public fun getUid ()Ljava/lang/String;
-	public fun getVersion ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengeUsernameFrame$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/auth/data/api/request/ChallengeUsernameFrame$Companion {
-	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;)Lme/proton/core/auth/data/api/request/ChallengeUsernameFrame;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -216,21 +204,21 @@ public final class me/proton/core/auth/data/api/request/LoginInfoRequest$Compani
 
 public final class me/proton/core/auth/data/api/request/LoginRequest {
 	public static final field Companion Lme/proton/core/auth/data/api/request/LoginRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/ChallengePayload;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/ChallengePayload;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Lme/proton/core/auth/data/api/request/ChallengePayload;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/ChallengePayload;)Lme/proton/core/auth/data/api/request/LoginRequest;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/LoginRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/ChallengePayload;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/LoginRequest;
+	public final fun component6 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/auth/data/api/request/LoginRequest;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/LoginRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/LoginRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClientEphemeral ()Ljava/lang/String;
 	public final fun getClientProof ()Ljava/lang/String;
 	public final fun getClientSecret ()Ljava/lang/String;
-	public final fun getPayload ()Lme/proton/core/auth/data/api/request/ChallengePayload;
+	public final fun getPayload ()Ljava/util/Map;
 	public final fun getSrpSession ()Ljava/lang/String;
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -654,7 +642,7 @@ public final class me/proton/core/auth/data/api/response/SecondFactorResponse$Co
 }
 
 public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/proton/core/auth/domain/repository/AuthRepository {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)V
 	public fun getAuthInfo (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLoginInfo (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

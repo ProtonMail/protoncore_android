@@ -29,19 +29,19 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class ChallengeManagerImplTest {
+public class ChallengeManagerImplTest {
 
     private val repository = mockk<ChallengeRepository>()
 
     private lateinit var manager: ChallengeManager
 
     @Before
-    fun beforeEveryTest() {
+    public fun beforeEveryTest() {
         manager = ChallengeManagerImpl(repository)
     }
 
     @Test
-    fun `reset flow calls repository delete`() = runBlockingTest {
+    public fun `reset flow calls repository delete`(): Unit = runBlockingTest {
         // Given
         val testFlow = "test-flow"
         coEvery { repository.deleteFrames(testFlow) } returns Unit
@@ -52,13 +52,13 @@ class ChallengeManagerImplTest {
     }
 
     @Test
-    fun `get frames by flow returns correctly`() = runBlockingTest {
+    public fun `get frames by flow returns correctly`(): Unit = runBlockingTest {
         // Given
         val testFlow = "test-flow"
         val testChallengeFrame = ChallengeFrameDetails(
             flow = testFlow,
             challengeFrame = "test-challenge-frame",
-            focusTime = 0,
+            focusTime = listOf(0),
             clicks = 1,
             copy = emptyList(),
             paste = emptyList(),
@@ -76,13 +76,13 @@ class ChallengeManagerImplTest {
     }
 
     @Test
-    fun `get frames by flow and frame name returns correctly`() = runBlockingTest {
+    public fun `get frames by flow and frame name returns correctly`(): Unit = runBlockingTest {
         // Given
         val testFlow = "test-flow"
         val testChallengeFrame = ChallengeFrameDetails(
             flow = testFlow,
             challengeFrame = "test-challenge-frame",
-            focusTime = 0,
+            focusTime = listOf(0),
             clicks = 1,
             copy = emptyList(),
             paste = emptyList(),
@@ -102,16 +102,16 @@ class ChallengeManagerImplTest {
     }
 
     @Test
-    fun `insert new frame works correctly`() = runBlockingTest {
+    public fun `insert new frame works correctly`(): Unit = runBlockingTest {
         // Given
         val testFlow = "test-flow"
         val challengeFrame = "test-frame"
         coEvery { repository.insertFrameDetails(any()) } returns Unit
         // When
-        manager.addOrUpdateFrameToFlow(testFlow, challengeFrame, 0, 0, emptyList(), emptyList(), emptyList())
+        manager.addOrUpdateFrameToFlow(testFlow, challengeFrame, listOf(0), 0, emptyList(), emptyList(), emptyList())
         // Then
         val frame = ChallengeFrameDetails(
-            testFlow, challengeFrame, 0, 0, emptyList(), emptyList(), emptyList()
+            testFlow, challengeFrame, listOf(0), 0, emptyList(), emptyList(), emptyList()
         )
         coVerify { repository.insertFrameDetails(frame) }
     }

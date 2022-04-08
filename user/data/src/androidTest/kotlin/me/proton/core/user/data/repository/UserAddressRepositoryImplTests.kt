@@ -101,6 +101,8 @@ class UserAddressRepositoryImplTests {
     private lateinit var userAddressRepository: UserAddressRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
+    private val product = Product.Mail
+
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -114,7 +116,7 @@ class UserAddressRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             userRepository,

@@ -18,7 +18,6 @@
 
 package me.proton.core.challenge.data.repository
 
-import io.mockk.InternalPlatformDsl.toArray
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -26,9 +25,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkStatic
-import junit.framework.TestCase
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.challenge.data.ChallengeManagerImpl
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.db.ChallengeFramesDao
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
@@ -68,14 +65,14 @@ public class ChallengeRepositoryImplTest {
         val flow = "test-flow"
         val frame = "test-frame"
         val frameDetails = ChallengeFrameDetails(
-            flow, frame, 0, 0, emptyList(), emptyList(), emptyList()
+            flow, frame, listOf(0), 0, emptyList(), emptyList(), emptyList()
         )
         coEvery { dao.getByFlowAndFrame(flow, frame) } returns null
         // When
         repository.insertFrameDetails(frameDetails)
         // Then
         val entity = ChallengeFrameEntity(
-            frame, flow, 0, 0, emptyList(), emptyList(), emptyList()
+            frame, flow, listOf(0), 0, emptyList(), emptyList(), emptyList()
         )
         coVerify { dao.insertOrUpdate(entity) }
     }
@@ -86,16 +83,16 @@ public class ChallengeRepositoryImplTest {
         val flow = "test-flow"
         val frame = "test-frame"
         val frameDetails = ChallengeFrameDetails(
-            flow, frame, 2, 2, listOf("new copy"), listOf("new paste"), listOf("h")
+            flow, frame, listOf(2), 2, listOf("new copy"), listOf("new paste"), listOf("h")
         )
         coEvery { dao.getByFlowAndFrame(flow, frame) } returns ChallengeFrameEntity(
-            frame, flow, 1, 1, listOf("copy"), listOf("paste"), listOf("c")
+            frame, flow, listOf(1), 1, listOf("copy"), listOf("paste"), listOf("c")
         )
         // When
         repository.insertFrameDetails(frameDetails)
         // Then
         val entity = ChallengeFrameEntity(
-            frame, flow, 3, 3, listOf("copy", "new copy"), listOf("paste", "new paste"), listOf("c", "h")
+            frame, flow, listOf(2, 1), 3, listOf("copy", "new copy"), listOf("paste", "new paste"), listOf("c", "h")
         )
         coVerify { dao.insertOrUpdate(entity) }
     }

@@ -101,7 +101,7 @@ interface UserRepository : PassphraseRepository {
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>?
+        frames: List<ChallengeFrameDetails>
     ): User
 
     /**

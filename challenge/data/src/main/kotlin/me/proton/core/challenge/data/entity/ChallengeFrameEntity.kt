@@ -27,7 +27,7 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 public data class ChallengeFrameEntity(
     val challengeFrame: String,
     val flow: String,
-    val focusTime: Long,
+    val focusTime: List<Int>,
     val clicks: Int,
     val copy: List<String>,
     val paste: List<String>,

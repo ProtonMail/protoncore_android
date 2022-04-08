@@ -30,9 +30,11 @@ public final class me/proton/core/data/room/db/BaseDatabase$Companion {
 public final class me/proton/core/data/room/db/CommonConverters {
 	public static final field Companion Lme/proton/core/data/room/db/CommonConverters$Companion;
 	public fun <init> ()V
+	public final fun fromListOfIntToString (Ljava/util/List;)Ljava/lang/String;
 	public final fun fromListOfStringToString (Ljava/util/List;)Ljava/lang/String;
 	public final fun fromProductToString (Lme/proton/core/domain/entity/Product;)Ljava/lang/String;
 	public final fun fromSessionIdToString (Lme/proton/core/network/domain/session/SessionId;)Ljava/lang/String;
+	public final fun fromStringToListOfInt (Ljava/lang/String;)Ljava/util/List;
 	public final fun fromStringToListOfString (Ljava/lang/String;)Ljava/util/List;
 	public final fun fromStringToProduct (Ljava/lang/String;)Lme/proton/core/domain/entity/Product;
 	public final fun fromStringToSessionId (Ljava/lang/String;)Lme/proton/core/network/domain/session/SessionId;
@@ -41,7 +43,9 @@ public final class me/proton/core/data/room/db/CommonConverters {
 }
 
 public final class me/proton/core/data/room/db/CommonConverters$Companion {
+	public final fun fromListOfIntToString (Ljava/util/List;)Ljava/lang/String;
 	public final fun fromListOfStringToString (Ljava/util/List;)Ljava/lang/String;
+	public final fun fromStringToListOfInt (Ljava/lang/String;)Ljava/util/List;
 	public final fun fromStringToListOfString (Ljava/lang/String;)Ljava/util/List;
 }
 

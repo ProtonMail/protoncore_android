@@ -20,6 +20,8 @@ package me.proton.core.challenge.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
+import me.proton.core.data.room.db.extension.dropTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
 public interface ChallengeDatabase : Database {
@@ -31,8 +33,28 @@ public interface ChallengeDatabase : Database {
          */
         public val MIGRATION_0: DatabaseMigration = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
-                // Added Table FrameEntity.
+                // Added Table ChallengeFrameEntity.
                 database.execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `focusTime` INTEGER NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))")
+            }
+        }
+
+        public val MIGRATION_1: DatabaseMigration = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Change focusTime column type from INTEGER to TEXT.
+                database.dropTableColumn(
+                    table = "ChallengeFrameEntity",
+                    createTable = {
+                        execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))")
+                    },
+                    createIndices = { },
+                    column = "focusTime"
+                )
+                database.addTableColumn(
+                    table = "ChallengeFrameEntity",
+                    column = "focusTime",
+                    type = "TEXT NOT NULL",
+                    defaultValue = ""
+                )
             }
         }
     }
