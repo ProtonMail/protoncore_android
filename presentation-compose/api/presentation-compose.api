@@ -1,7 +1,44 @@
+public final class me/proton/core/compose/activity/CameraLauncher {
+	public static final field $stable I
+	public fun <init> (Landroidx/activity/compose/ManagedActivityResultLauncher;Landroidx/activity/compose/ManagedActivityResultLauncher;)V
+	public final fun capture (Landroid/net/Uri;Lme/proton/core/compose/activity/Capture;)V
+	public static synthetic fun capture$default (Lme/proton/core/compose/activity/CameraLauncher;Landroid/net/Uri;Lme/proton/core/compose/activity/Capture;ILjava/lang/Object;)V
+	public final fun copy (Landroidx/activity/compose/ManagedActivityResultLauncher;Landroidx/activity/compose/ManagedActivityResultLauncher;)Lme/proton/core/compose/activity/CameraLauncher;
+	public static synthetic fun copy$default (Lme/proton/core/compose/activity/CameraLauncher;Landroidx/activity/compose/ManagedActivityResultLauncher;Landroidx/activity/compose/ManagedActivityResultLauncher;ILjava/lang/Object;)Lme/proton/core/compose/activity/CameraLauncher;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/compose/activity/CameraLauncherKt {
+	public static final fun rememberCameraLauncher (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)Lme/proton/core/compose/activity/CameraLauncher;
+}
+
+public final class me/proton/core/compose/activity/Capture : java/lang/Enum {
+	public static final field IMAGE Lme/proton/core/compose/activity/Capture;
+	public static final field VIDEO Lme/proton/core/compose/activity/Capture;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/compose/activity/Capture;
+	public static fun values ()[Lme/proton/core/compose/activity/Capture;
+}
+
 public final class me/proton/core/compose/activity/DocumentLauncherKt {
 	public static final fun rememberOpenDocumentLauncher ([Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
 	public static final fun rememberOpenDocumentTreeLauncher (Landroid/net/Uri;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
 	public static final fun rememberOpenMultipleDocumentsLauncher ([Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
+}
+
+public final class me/proton/core/compose/activity/FilePickerLauncher {
+	public static final field $stable I
+	public fun <init> (Landroidx/activity/compose/ManagedActivityResultLauncher;[Ljava/lang/String;)V
+	public final fun showPicker ()V
+}
+
+public final class me/proton/core/compose/activity/FilePickerLauncherKt {
+	public static final fun rememberFilePickerLauncher (Lkotlin/jvm/functions/Function1;[Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/FilePickerLauncher;
+}
+
+public final class me/proton/core/compose/activity/KeepScreenOnKt {
+	public static final fun KeepScreenOn (Landroidx/compose/runtime/Composer;I)V
 }
 
 public final class me/proton/core/compose/activity/LauncherWithInput {
@@ -14,6 +51,17 @@ public final class me/proton/core/compose/activity/LauncherWithInput {
 public final class me/proton/core/compose/activity/RememberLauncherKt {
 	public static final fun rememberLauncher (Landroidx/activity/result/contract/ActivityResultContract;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)Landroidx/activity/compose/ManagedActivityResultLauncher;
 	public static final fun rememberLauncherWithInput (Ljava/lang/Object;Landroidx/activity/result/contract/ActivityResultContract;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)Lme/proton/core/compose/activity/LauncherWithInput;
+}
+
+public final class me/proton/core/compose/component/ComposableSingletons$ProtonAlertDialogKt {
+	public static final field INSTANCE Lme/proton/core/compose/component/ComposableSingletons$ProtonAlertDialogKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-2$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class me/proton/core/compose/component/ComposableSingletons$ProtonBottomNavigationKt {
@@ -117,6 +165,10 @@ public final class me/proton/core/compose/component/ComposableSingletons$ProtonS
 	public final fun getLambda-4$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class me/proton/core/compose/component/DeferredCircularProgressIndicatorKt {
+	public static final fun DeferredCircularProgressIndicator-WPwdCS8 (Landroidx/compose/ui/Modifier;JLandroidx/compose/runtime/Composer;II)V
+}
+
 public final class me/proton/core/compose/component/NavigationTab {
 	public static final field $stable I
 	public fun <init> (II)V
@@ -132,6 +184,18 @@ public final class me/proton/core/compose/component/NavigationTab {
 	public final fun getTitle ()Lkotlin/jvm/functions/Function2;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/compose/component/ProtonAlertDialogKt {
+	public static final fun PreviewProtonAlertDialog (Landroidx/compose/runtime/Composer;I)V
+	public static final fun ProtonAlertDialog-3csKH6Y (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialog-lmFMXvc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;ILandroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialog-lmFMXvc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialog-lmFMXvc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialogText (ILandroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialogText (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonDialogTitle (ILandroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonDialogTitle (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/compose/component/ProtonBottomNavigationKt {
@@ -160,6 +224,15 @@ public final class me/proton/core/compose/component/ProtonCenteredProgressKt {
 	public static final fun ProtonCenteredProgress (Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class me/proton/core/compose/component/ProtonErrorMessageKt {
+	public static final fun PreviewProtonErrorMessage (Landroidx/compose/runtime/Composer;I)V
+	public static final fun PreviewProtonErrorMessageMultiline (Landroidx/compose/runtime/Composer;I)V
+	public static final fun PreviewProtonErrorMessageWithAction (Landroidx/compose/runtime/Composer;I)V
+	public static final fun ProtonErrorMessage-6a0pyJM (Ljava/lang/String;Landroidx/compose/ui/Modifier;FLandroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonErrorMessageWithAction-TN_CM5M (Ljava/lang/String;Landroidx/compose/ui/Modifier;FLjava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getErrorPadding ()F
+}
+
 public final class me/proton/core/compose/component/ProtonListItemKt {
 	public static final fun PreviewProtonListItem (Landroidx/compose/runtime/Composer;I)V
 	public static final fun PreviewProtonListItemCount (Landroidx/compose/runtime/Composer;I)V
@@ -182,6 +255,10 @@ public final class me/proton/core/compose/component/ProtonModalBottomSheetLayout
 }
 
 public final class me/proton/core/compose/component/ProtonOutlinedTextFieldKt {
+	public static final fun OutlinedTextFieldWithError (Landroidx/compose/runtime/MutableState;Landroidx/compose/ui/Modifier;Ljava/lang/String;Landroidx/compose/ui/focus/FocusRequester;ILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OutlinedTextFieldWithError (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/ranges/IntRange;Ljava/lang/String;Landroidx/compose/ui/focus/FocusRequester;ILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PreviewOutlinedTextFieldWithError (Landroidx/compose/runtime/Composer;I)V
+	public static final fun PreviewOutlinedTextFieldWithProtonColors (Landroidx/compose/runtime/Composer;I)V
 	public static final fun protonOutlineTextFieldColors (Landroidx/compose/material/TextFieldDefaults;Landroidx/compose/runtime/Composer;I)Landroidx/compose/material/TextFieldColors;
 }
 
@@ -245,6 +322,63 @@ public final class me/proton/core/compose/component/ProtonSnackbarType : java/la
 
 public final class me/proton/core/compose/component/VerticalSpacerKt {
 	public static final fun VerticalSpacer-rAjV9yQ (Landroidx/compose/ui/Modifier;FLandroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/compose/component/bottomsheet/BottomSheetContentKt {
+	public static final fun BottomSheetContent (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/ScrollState;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/compose/component/bottomsheet/BottomSheetEntryKt {
+	public static final fun BottomSheetEntry (ILjava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/compose/component/bottomsheet/BottomSheetHeaderKt {
+	public static final fun BottomSheetHeader (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/compose/component/bottomsheet/ComposableSingletons$ModalBottomSheetContentStateKt {
+	public static final field INSTANCE Lme/proton/core/compose/component/bottomsheet/ComposableSingletons$ModalBottomSheetContentStateKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function4;
+	public fun <init> ()V
+	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function4;
+}
+
+public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheetContentState {
+	public fun <init> (Landroidx/compose/material/ModalBottomSheetState;Landroidx/compose/runtime/MutableState;)V
+	public final fun component1 ()Landroidx/compose/material/ModalBottomSheetState;
+	public final fun component2 ()Landroidx/compose/runtime/MutableState;
+	public final fun copy (Landroidx/compose/material/ModalBottomSheetState;Landroidx/compose/runtime/MutableState;)Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetContentState;
+	public static synthetic fun copy$default (Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetContentState;Landroidx/compose/material/ModalBottomSheetState;Landroidx/compose/runtime/MutableState;ILjava/lang/Object;)Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetContentState;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSheetContent ()Landroidx/compose/runtime/MutableState;
+	public final fun getSheetState ()Landroidx/compose/material/ModalBottomSheetState;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheetContentStateKt {
+	public static final fun rememberModalBottomSheetContentState (Landroidx/compose/material/ModalBottomSheetState;Landroidx/compose/runtime/MutableState;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetContentState;
+}
+
+public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheetKt {
+	public static final fun ModalBottomSheet (Landroidx/compose/material/ModalBottomSheetState;Lkotlin/jvm/functions/Function4;Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetViewState;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheetViewState {
+	public fun <init> ()V
+	public fun <init> (ZZZ)V
+	public synthetic fun <init> (ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun copy (ZZZ)Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetViewState;
+	public static synthetic fun copy$default (Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetViewState;ZZZILjava/lang/Object;)Lme/proton/core/compose/component/bottomsheet/ModalBottomSheetViewState;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCloseOnAction ()Z
+	public final fun getCloseOnBack ()Z
+	public final fun getDismissOnAction ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/compose/flow/RememberFlowKt {

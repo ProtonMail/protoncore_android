@@ -106,3 +106,5 @@ fun colorsFromXml(
         }
     }
 }
+
+private fun TypedArray.getColor(@StyleableRes key: Int): Color = Color(getColorOrThrow(key))
