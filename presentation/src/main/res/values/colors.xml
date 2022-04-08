@@ -55,6 +55,9 @@
     <color name="whisper">#F5F6FA</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="haiti">#1B1340</color>
+    <color name="valhalla">#271B54</color>
+    <color name="jacarta">#2E2260</color>
     <color name="chambray">#372580</color>
     <color name="san_marino">#4D34B3</color>
     <color name="cornflower_blue">#6D4AFF</color>
@@ -172,15 +175,14 @@
     <color name="nav_view_divider">@color/tuna</color>
 
     <!--  Sidebar navigation colors  -->
-    <color name="sidebar_background">@color/background_norm</color>
-    <color name="sidebar_interaction_weak_norm">@color/interaction_weak</color>
-    <color name="sidebar_interaction_weak_pressed">@color/interaction_weak_pressed</color>
-    <color name="sidebar_separator">@color/separator_norm</color>
-    <color name="sidebar_text_norm">@color/text_norm</color>
-    <color name="sidebar_text_weak">@color/text_weak</color>
-    <color name="sidebar_text_inverted">@color/text_inverted</color>
-    <color name="sidebar_icon_norm">@color/icon_norm</color>
-    <color name="sidebar_icon_weak">@color/icon_weak</color>
+    <color name="sidebar_background">@color/haiti</color>
+    <color name="sidebar_interaction_weak_norm">@color/jacarta</color>
+    <color name="sidebar_interaction_weak_pressed">@color/valhalla</color>
+    <color name="sidebar_separator">@color/jacarta</color>
+    <color name="sidebar_text_norm">@color/white</color>
+    <color name="sidebar_text_weak">@color/cadet_blue</color>
+    <color name="sidebar_icon_norm">@color/white</color>
+    <color name="sidebar_icon_weak">@color/cadet_blue</color>
     <color name="sidebar_interaction_pressed">@color/san_marino</color>
 
     <!-- Floaty view colors -->

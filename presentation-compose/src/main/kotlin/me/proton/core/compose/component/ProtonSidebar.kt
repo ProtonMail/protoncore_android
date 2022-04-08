@@ -151,8 +151,8 @@ fun ProtonSidebarItem(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
     isSelected: Boolean = false,
-    textColor: Color = if (isSelected) Color.White else Color.Unspecified,
-    iconTint: Color = if (isSelected) Color.White else ProtonTheme.colors.iconHint,
+    textColor: Color = if (isSelected) ProtonTheme.colors.textNorm else Color.Unspecified,
+    iconTint: Color = if (isSelected) ProtonTheme.colors.iconNorm else ProtonTheme.colors.iconWeak,
     count: Int? = null,
     onClick: () -> Unit = {},
 ) {
@@ -177,7 +177,7 @@ fun ProtonSidebarItem(
     isClickable: Boolean = true,
     isSelected: Boolean = false,
     textColor: Color = Color.Unspecified,
-    iconTint: Color = ProtonTheme.colors.iconHint,
+    iconTint: Color = ProtonTheme.colors.iconWeak,
     count: Int? = null,
     onClick: () -> Unit = {},
 ) {
@@ -223,6 +223,7 @@ fun ProtonSidebarAppVersionItem(
             .padding(ProtonDimens.MediumSpacing),
         text = "$name $version",
         textAlign = TextAlign.Center,
+        color = ProtonTheme.colors.textWeak,
         style = ProtonTheme.typography.captionHint,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis

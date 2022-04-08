@@ -30,6 +30,9 @@ import me.proton.core.presentation.utils.ProtonColorUtils.intenseColorVariant
 import me.proton.core.presentation.utils.ProtonColorUtils.strongColorVariant
 
 private object ProtonPalette {
+    val Haiti = Color(0xFF1B1340)
+    val Valhalla = Color(0xFF271B54)
+    val Jacarta = Color(0xFF2E2260)
     val Chambray = Color(0xFF372580)
     val SanMarino = Color(0xFF4D34B3)
     val CornflowerBlue = Color(0xFF6D4AFF)
@@ -52,6 +55,7 @@ private object ProtonPalette {
     val Cloud = Color(0xFFD1CFCD)
     val Ebb = Color(0xFFEAE7E4)
     val Carrara = Color(0xFFF5F4F2)
+    val White = Color(0xFFFFFFFF)
 
     val Woodsmoke = Color(0xFF17181C)
     val Charade = Color(0xFF25272C)
@@ -456,6 +460,16 @@ class ProtonColors(
             brandNorm = brandNorm,
             brandLighten20 = brandLighten20,
             brandLighten40 = brandLighten40,
+        ).copy(
+            backgroundNorm = ProtonPalette.Haiti,
+            interactionWeakNorm = ProtonPalette.Jacarta,
+            interactionWeakPressed = ProtonPalette.Valhalla,
+            separatorNorm = ProtonPalette.Jacarta,
+            textNorm = ProtonPalette.White,
+            textWeak = ProtonPalette.CadetBlue,
+            iconNorm = ProtonPalette.White,
+            iconWeak = ProtonPalette.CadetBlue,
+            interactionPressed = ProtonPalette.SanMarino,
         )
 
         private fun sidebarDark(
@@ -470,6 +484,16 @@ class ProtonColors(
             brandNorm = brandNorm,
             brandLighten20 = brandLighten20,
             brandLighten40 = brandLighten40,
+        ).copy(
+            backgroundNorm = ProtonPalette.BalticSea,
+            interactionWeakNorm = ProtonPalette.BlackCurrant,
+            interactionWeakPressed = ProtonPalette.GunPowder,
+            separatorNorm = ProtonPalette.BlackCurrant,
+            textNorm = ProtonPalette.White,
+            textWeak = ProtonPalette.CadetBlue,
+            iconNorm = ProtonPalette.White,
+            iconWeak = ProtonPalette.CadetBlue,
+            interactionPressed = ProtonPalette.SanMarino,
         )
 
         fun light(

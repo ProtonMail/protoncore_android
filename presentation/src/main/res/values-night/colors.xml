@@ -30,6 +30,17 @@
 
     <!-- colors to use in the app -->
 
+    <!--  Sidebar navigation colors  -->
+    <color name="sidebar_background">@color/baltic_sea</color>
+    <color name="sidebar_interaction_weak_norm">@color/blackcurrant</color>
+    <color name="sidebar_interaction_weak_pressed">@color/gunpowder</color>
+    <color name="sidebar_separator">@color/blackcurrant</color>
+    <color name="sidebar_text_norm">@color/white</color>
+    <color name="sidebar_text_weak">@color/cadet_blue</color>
+    <color name="sidebar_icon_norm">@color/white</color>
+    <color name="sidebar_icon_weak">@color/cadet_blue</color>
+    <color name="sidebar_interaction_pressed">@color/san_marino</color>
+
     <color name="blender_norm">#85000000</color>
 
     <!--
