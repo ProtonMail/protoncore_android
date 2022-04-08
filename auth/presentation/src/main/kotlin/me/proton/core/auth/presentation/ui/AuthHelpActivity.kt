@@ -19,16 +19,17 @@
 package me.proton.core.auth.presentation.ui
 
 import android.os.Bundle
-import me.proton.core.auth.presentation.R
+import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.databinding.ActivityAuthHelpBinding
+import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.openBrowserLink
+import javax.inject.Inject
 
-/**
- * Authentication help Activity which offers common authentication problems help.
- * @author Dino Kadrikj.
- */
+@AndroidEntryPoint
 class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpBinding::inflate) {
+
+    @Inject
+    lateinit var helpOptionHandler: HelpOptionHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +39,17 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
             }
 
             helpOptionCustomerSupport.root.onClick {
-                openBrowserLink(getString(R.string.contact_support_link))
+                helpOptionHandler.onCustomerSupport(this@AuthHelpActivity)
             }
+
             helpOptionOtherIssues.root.onClick {
-                openBrowserLink(getString(R.string.common_login_problems_link))
+                helpOptionHandler.onOtherSignInIssues(this@AuthHelpActivity)
             }
             helpOptionForgotPassword.root.onClick {
-                openBrowserLink(getString(R.string.forgot_password_link))
+                helpOptionHandler.onForgotPassword(this@AuthHelpActivity)
             }
             helpOptionForgotUsername.root.onClick {
-                openBrowserLink(getString(R.string.forgot_username_link))
+                helpOptionHandler.onForgotUsername(this@AuthHelpActivity)
             }
         }
     }

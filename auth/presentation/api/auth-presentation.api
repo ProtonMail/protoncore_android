@@ -10,6 +10,10 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_AddAccoun
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_AuthHelpActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_ChooseAddressActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -194,6 +198,14 @@ public final class me/proton/core/auth/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
+public class me/proton/core/auth/presentation/DefaultHelpOptionHandler : me/proton/core/auth/presentation/HelpOptionHandler {
+	public fun <init> ()V
+	public fun onCustomerSupport (Landroidx/appcompat/app/AppCompatActivity;)V
+	public fun onForgotPassword (Landroidx/appcompat/app/AppCompatActivity;)V
+	public fun onForgotUsername (Landroidx/appcompat/app/AppCompatActivity;)V
+	public fun onOtherSignInIssues (Landroidx/appcompat/app/AppCompatActivity;)V
+}
+
 public class me/proton/core/auth/presentation/DefaultUserCheck : me/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;)V
 	public fun invoke (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -205,6 +217,13 @@ public final class me/proton/core/auth/presentation/DefaultUserCheck_Factory : d
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/DefaultUserCheck;
 	public static fun newInstance (Landroid/content/Context;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/auth/presentation/DefaultUserCheck;
+}
+
+public abstract interface class me/proton/core/auth/presentation/HelpOptionHandler {
+	public abstract fun onCustomerSupport (Landroidx/appcompat/app/AppCompatActivity;)V
+	public abstract fun onForgotPassword (Landroidx/appcompat/app/AppCompatActivity;)V
+	public abstract fun onForgotUsername (Landroidx/appcompat/app/AppCompatActivity;)V
+	public abstract fun onOtherSignInIssues (Landroidx/appcompat/app/AppCompatActivity;)V
 }
 
 public final class me/proton/core/auth/presentation/LogTag {
@@ -1076,7 +1095,22 @@ public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/prot
 }
 
 public final class me/proton/core/auth/presentation/ui/AuthHelpActivity : me/proton/core/auth/presentation/ui/AuthActivity {
+	public field helpOptionHandler Lme/proton/core/auth/presentation/HelpOptionHandler;
 	public fun <init> ()V
+	public final fun getHelpOptionHandler ()Lme/proton/core/auth/presentation/HelpOptionHandler;
+	public final fun setHelpOptionHandler (Lme/proton/core/auth/presentation/HelpOptionHandler;)V
+}
+
+public abstract interface class me/proton/core/auth/presentation/ui/AuthHelpActivity_GeneratedInjector {
+	public abstract fun injectAuthHelpActivity (Lme/proton/core/auth/presentation/ui/AuthHelpActivity;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/AuthHelpActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectHelpOptionHandler (Lme/proton/core/auth/presentation/ui/AuthHelpActivity;Lme/proton/core/auth/presentation/HelpOptionHandler;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/AuthHelpActivity;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/ChooseAddressActivity : me/proton/core/auth/presentation/ui/AuthActivity {
@@ -1125,6 +1159,15 @@ public abstract interface class me/proton/core/auth/presentation/ui/CreateAddres
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_AddAccountActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+}
+
+public abstract class me/proton/core/auth/presentation/ui/Hilt_AuthHelpActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
