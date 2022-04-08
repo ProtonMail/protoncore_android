@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated gopenpgp to v2.4.6
 - Added subheadline typography into Compose theme
 - Added error logging to HV WebView. Errors are logged with `LogTag.HV_REQUEST_ERROR` tag.
+- Merge Drive Compose module to Core.
 
 ### Fixes
 - Fix alternative routing for token refresh

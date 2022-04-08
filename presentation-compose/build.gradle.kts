@@ -49,6 +49,7 @@ dependencies {
         `compose-foundation`,
         `compose-foundation-layout`,
         `compose-material`,
+        `compose-material3`,
         `compose-runtime`,
         `compose-ui`,
         `compose-ui-tooling`,

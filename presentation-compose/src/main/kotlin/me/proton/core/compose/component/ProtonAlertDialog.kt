@@ -1,0 +1,217 @@
+/*
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package me.proton.core.compose.component
+
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultWeak
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun ProtonAlertDialog(
+    onDismissRequest: () -> Unit,
+    confirmButton: @Composable () -> Unit,
+    @StringRes titleResId: Int,
+    modifier: Modifier = Modifier,
+    text: @Composable (() -> Unit)? = null,
+    dismissButton: @Composable (() -> Unit)? = null,
+    shape: Shape = ProtonTheme.shapes.medium,
+    backgroundColor: Color = ProtonTheme.colors.backgroundSecondary,
+    properties: DialogProperties = DialogProperties(),
+) {
+    ProtonAlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = confirmButton,
+        modifier = modifier,
+        dismissButton = dismissButton,
+        title = stringResource(id = titleResId),
+        text = text,
+        shape = shape,
+        backgroundColor = backgroundColor,
+        properties = properties,
+    )
+}
+
+@Composable
+fun ProtonAlertDialog(
+    onDismissRequest: () -> Unit,
+    confirmButton: @Composable () -> Unit,
+    title: String,
+    modifier: Modifier = Modifier,
+    dismissButton: @Composable (() -> Unit)? = null,
+    text: @Composable (() -> Unit)? = null,
+    shape: Shape = ProtonTheme.shapes.medium,
+    backgroundColor: Color = ProtonTheme.colors.backgroundSecondary,
+    properties: DialogProperties = DialogProperties(),
+) {
+    ProtonAlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = confirmButton,
+        modifier = modifier,
+        dismissButton = dismissButton,
+        title = { ProtonDialogTitle(title = title) },
+        text = text,
+        shape = shape,
+        backgroundColor = backgroundColor,
+        properties = properties,
+    )
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun ProtonAlertDialog(
+    onDismissRequest: () -> Unit,
+    confirmButton: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    dismissButton: @Composable (() -> Unit)? = null,
+    title: @Composable (() -> Unit)? = null,
+    text: @Composable (() -> Unit)? = null,
+    shape: Shape = ProtonTheme.shapes.medium,
+    backgroundColor: Color = ProtonTheme.colors.backgroundSecondary,
+    properties: DialogProperties = DialogProperties(),
+) {
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = confirmButton,
+        modifier = modifier.fixAlertDialogSize(),
+        dismissButton = dismissButton,
+        title = title,
+        text = text,
+        shape = shape,
+        containerColor = backgroundColor,
+        properties = DialogProperties(
+            dismissOnBackPress = properties.dismissOnBackPress,
+            dismissOnClickOutside = properties.dismissOnClickOutside,
+            securePolicy = properties.securePolicy,
+            usePlatformDefaultWidth = false,
+        ),
+    )
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun ProtonAlertDialog(
+    onDismissRequest: () -> Unit,
+    buttons: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    title: (@Composable () -> Unit)? = null,
+    text: @Composable (() -> Unit)? = null,
+    shape: Shape = ProtonTheme.shapes.medium,
+    backgroundColor: Color = ProtonTheme.colors.backgroundSecondary,
+    properties: DialogProperties = DialogProperties(),
+) {
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = buttons,
+        modifier = modifier.fixAlertDialogSize(),
+        title = title,
+        text = text,
+        shape = shape,
+        containerColor = backgroundColor,
+        properties = DialogProperties(
+            dismissOnBackPress = properties.dismissOnBackPress,
+            dismissOnClickOutside = properties.dismissOnClickOutside,
+            securePolicy = properties.securePolicy,
+            usePlatformDefaultWidth = false,
+        ),
+    )
+}
+
+@Composable
+fun ProtonDialogTitle(
+    @StringRes titleResId: Int,
+    modifier: Modifier = Modifier,
+) {
+    ProtonDialogTitle(
+        title = stringResource(id = titleResId),
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun ProtonDialogTitle(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = title,
+        style = ProtonTheme.typography.headline,
+        color = ProtonTheme.colors.textNorm,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun ProtonAlertDialogText(
+    @StringRes textResId: Int,
+    modifier: Modifier = Modifier,
+) {
+    ProtonAlertDialogText(
+        text = stringResource(id = textResId),
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun ProtonAlertDialogText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        style = ProtonTheme.typography.defaultWeak,
+        modifier = modifier,
+    )
+}
+
+@Preview
+@Composable
+fun PreviewProtonAlertDialog() {
+    ProtonAlertDialog(
+        onDismissRequest = {},
+        confirmButton = { TextButton(onClick = {}) { Text("Ok") } },
+        text = { ProtonAlertDialogText("This is an alert dialog.") },
+        title = "Alert",
+    )
+}
+
+private fun Modifier.fixAlertDialogSize() = fillMaxWidth(fraction = AlertDialogWidthFraction)
+    .widthIn(max = MaxAlertDialogWidth)
+
+private const val AlertDialogWidthFraction = 0.9f
+
+// Mobile alert on desktop is 560dp wide
+// https://material.io/components/dialogs#specs
+private val MaxAlertDialogWidth = 560.dp
