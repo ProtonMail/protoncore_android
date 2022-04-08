@@ -147,6 +147,42 @@ private fun PreviewNormSnackbar() {
     }
 }
 
+@Preview
+@Composable
+@Suppress("unused")
+private fun PreviewSuccessSnackbarDark() {
+    ProtonTheme(isDark = true) {
+        ProtonSnackbar(snackbarData = previewSnackbarData, type = ProtonSnackbarType.SUCCESS)
+    }
+}
+
+@Preview
+@Composable
+@Suppress("unused")
+private fun PreviewErrorSnackbarDark() {
+    ProtonTheme(isDark = true) {
+        ProtonSnackbar(snackbarData = previewSnackbarData, type = ProtonSnackbarType.ERROR)
+    }
+}
+
+@Preview
+@Composable
+@Suppress("unused")
+private fun PreviewWarningSnackbarDark() {
+    ProtonTheme(isDark = true) {
+        ProtonSnackbar(snackbarData = previewSnackbarData, type = ProtonSnackbarType.WARNING)
+    }
+}
+
+@Preview
+@Composable
+@Suppress("unused")
+private fun PreviewNormSnackbarDark() {
+    ProtonTheme(isDark = true) {
+        ProtonSnackbar(snackbarData = previewSnackbarData, type = ProtonSnackbarType.NORM)
+    }
+}
+
 enum class ProtonSnackbarType {
     SUCCESS, WARNING, ERROR, NORM
 }

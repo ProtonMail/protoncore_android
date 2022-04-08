@@ -73,9 +73,12 @@ private object ProtonPalette {
     val AthensGray = Color(0xFFEAECF1)
     val Whisper = Color(0xFFF5F6FA)
 
-    val Pomegranate = Color(0xFFDC3251)
-    val Sunglow = Color(0xFFFF9900)
-    val Apple = Color(0xFF1EA885)
+    val Pomegranate = Color(0xFFCC2D4F)
+    val Mauvelous = Color(0xFFF08FA4)
+    val Sunglow = Color(0xFFE65200)
+    val TexasRose = Color(0xFFFFB84D)
+    val Apple = Color(0xFF007B58)
+    val PuertoRico = Color(0xFF4AB89A)
 
     // New accent colors for rebranding
     val PurpleBase = Color(0xFF8080FF)
@@ -407,6 +410,9 @@ class ProtonColors(
             brandNorm = brandNorm,
             brandLighten20 = brandLighten20,
             brandLighten40 = brandLighten40,
+            notificationError = ProtonPalette.Pomegranate,
+            notificationWarning = ProtonPalette.Sunglow,
+            notificationSuccess = ProtonPalette.Apple,
             shade100 = ProtonPalette.Cinder,
             shade80 = ProtonPalette.DoveGray,
             shade60 = ProtonPalette.Dawn,
@@ -434,6 +440,9 @@ class ProtonColors(
             brandNorm = brandNorm,
             brandLighten20 = brandLighten20,
             brandLighten40 = brandLighten40,
+            notificationError = ProtonPalette.Mauvelous,
+            notificationWarning = ProtonPalette.TexasRose,
+            notificationSuccess = ProtonPalette.PuertoRico,
             shade100 = Color.White,
             shade80 = ProtonPalette.CadetBlue,
             shade60 = ProtonPalette.Dolphin,

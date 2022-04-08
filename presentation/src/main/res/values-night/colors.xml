@@ -30,6 +30,12 @@
 
     <!-- colors to use in the app -->
 
+    <!-- Notification colors  -->
+    <color name="notification_norm">@color/shade_100</color>
+    <color name="notification_error">@color/mauvelous</color>
+    <color name="notification_success">@color/puerto_rico</color>
+    <color name="notification_warning">@color/texas_Rose</color>
+
     <!--  Sidebar navigation colors  -->
     <color name="sidebar_background">@color/baltic_sea</color>
     <color name="sidebar_interaction_weak_norm">@color/blackcurrant</color>

@@ -70,9 +70,12 @@
     <color name="mantis">#71B579</color>
     <color name="fern">#94C89B</color>
 
-    <color name="pomegranate">#DC3251</color>
-    <color name="sunglow">#FF9900</color>
-    <color name="apple">#1EA885</color>
+    <color name="pomegranate">#CC2D4F</color>
+    <color name="mauvelous">#F08FA4</color>
+    <color name="sunglow">#E65200</color>
+    <color name="texas_Rose">#FFB84D</color>
+    <color name="apple">#007B58</color>
+    <color name="puerto_rico">#4AB89A</color>
 
     <color name="purple_base">#8080FF</color>
     <color name="purple_strong">#5151FB</color>
