@@ -38,11 +38,12 @@ open class CoreVerify : CoreRobot() {
             .checkContains(text)
     }
 
-    fun inputErrorDisplayed(@StringRes stringRes: Int) {
+    fun inputErrorDisplayed(@StringRes stringRes: Int, scroll: Boolean = false) {
         view
             .withId(R.id.textinput_error)
             .instanceOf(TextView::class.java)
             .withText(stringRes)
+            .apply { if (scroll) scrollTo() }
             .checkDisplayed()
     }
 

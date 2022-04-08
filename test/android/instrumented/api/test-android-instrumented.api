@@ -348,6 +348,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnView :
 	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkEffectiveVisibility (Landroidx/test/espresso/matcher/ViewMatchers$Visibility;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun checkEnabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun checkIsChecked ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun checkIsNotChecked ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
@@ -762,7 +763,8 @@ public class me/proton/core/test/android/robots/CoreVerify : me/proton/core/test
 	public fun <init> ()V
 	public final fun errorSnackbarDisplayed (I)V
 	public final fun errorSnackbarDisplayed (Ljava/lang/String;)V
-	public final fun inputErrorDisplayed (I)V
+	public final fun inputErrorDisplayed (IZ)V
+	public static synthetic fun inputErrorDisplayed$default (Lme/proton/core/test/android/robots/CoreVerify;IZILjava/lang/Object;)V
 	public final fun snackbarDisplayed (I)V
 }
 
@@ -1013,9 +1015,8 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot : me
 	public fun <init> ()V
 	public final fun changeBillingCycle (Lme/proton/core/test/android/plugins/data/BillingCycle;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 	public final fun changeCurrency (Lme/proton/core/test/android/plugins/data/Currency;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
-	public final fun expandPlan (Lme/proton/core/test/android/plugins/data/Plan;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
-	public final fun scrollForward ()Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 	public final fun scrollToPlan (Lme/proton/core/test/android/plugins/data/Plan;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
+	public final fun toggleExpandPlan (Lme/proton/core/test/android/plugins/data/Plan;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;
 }
 

@@ -18,10 +18,8 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.android.core.coreexample.BuildConfig
-import me.proton.core.test.android.uitests.tests.SmokeTest
-import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.plugins.data.Plan.Dev
+import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
@@ -30,6 +28,7 @@ import me.proton.core.test.android.robots.humanverification.HumanVerificationRob
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Before
 import org.junit.Test
 
@@ -43,7 +42,7 @@ class SelectPlanTests : BaseTest() {
         val user = User()
         AddAccountRobot()
             .createAccount()
-            .verify { suffixDisplayed(BuildConfig.HOST) }
+            .verify { domainInputDisplayed() }
 
         ChooseUsernameRobot()
             .username(user.name)
@@ -51,17 +50,23 @@ class SelectPlanTests : BaseTest() {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
             .skipConfirm()
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Free)
-                canSelectPlan(Dev)
-            }
+    }
+
+    @Test
+    fun verifyInitialState() {
+        selectPlanRobot
+            .toggleExpandPlan(Free)
+            .verify { planDetailsDisplayedInsideRecyclerView(Free) }
+        selectPlanRobot
+            .toggleExpandPlan(Dev)
+            .verify { canSelectPlan(Dev) }
     }
 
     @Test
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .scrollToPlan(Free)
-            .expandPlan(Free)
+            .toggleExpandPlan(Free)
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {
                 hvElementsDisplayed()
@@ -79,13 +84,13 @@ class SelectPlanTests : BaseTest() {
     @SmokeTest
     fun selectPlusAndCancelPayment() {
         selectPlanRobot
-            .expandPlan(Dev)
+            .toggleExpandPlan(Dev)
             .selectPlan<AddCreditCardRobot>(Dev)
             .verify { addCreditCardElementsDisplayed() }
 
         AddCreditCardRobot()
             .close<SelectPlanRobot>()
-            .expandPlan(Free)
+            .toggleExpandPlan(Free)
             .verify { planDetailsDisplayedInsideRecyclerView(Free) }
     }
 }

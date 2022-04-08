@@ -46,6 +46,7 @@ import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
@@ -61,6 +62,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -477,12 +479,13 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        assertFailsWith<InvalidServerAuthenticationException> {
+        val apiException = assertFailsWith<ApiException> {
             userRepository.unlockUserForLockedScope(
                 TestUsers.User1.id,
                 testSrpProofs,
                 "test-srp-session"
             )
         }
+        assertIs<InvalidServerAuthenticationException>(apiException.cause)
     }
 }

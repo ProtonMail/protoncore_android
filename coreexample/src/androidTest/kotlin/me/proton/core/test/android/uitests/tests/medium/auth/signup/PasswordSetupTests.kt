@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.auth.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.robots.CoreRobot
@@ -41,7 +40,7 @@ class PasswordSetupTests : BaseTest() {
 
         CoreexampleRobot()
             .signup()
-            .verify { suffixDisplayed(BuildConfig.HOST) }
+            .verify { domainInputDisplayed() }
 
         ChooseUsernameRobot()
             .username(randomString())

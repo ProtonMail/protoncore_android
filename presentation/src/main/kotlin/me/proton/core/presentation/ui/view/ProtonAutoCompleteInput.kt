@@ -81,9 +81,6 @@ open class ProtonAutoCompleteInput : LinearLayout {
             isEnabled = getBoolean(R.styleable.ProtonAutoCompleteInput_android_enabled, true)
         }
 
-        // Set internal input id.
-        binding.input.id = id
-
         // Clear error on text changed.
         binding.input.addTextChangedListener { editable ->
             if (editable?.isNotEmpty() == true) clearInputError()

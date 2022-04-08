@@ -43,6 +43,7 @@ class UpgradePlanTests : BaseTest() {
         coreExampleRobot
             .plansUpgrade()
             .scrollToPlan(Plan.Dev)
+            .toggleExpandPlan(Plan.Dev)
             .verify {
                 planDetailsDisplayedInsideRecyclerView(Plan.Dev)
                 canUpgradeToPlan(Plan.Dev)

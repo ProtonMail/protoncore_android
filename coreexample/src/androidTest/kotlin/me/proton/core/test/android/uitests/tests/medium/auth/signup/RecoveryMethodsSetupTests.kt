@@ -18,15 +18,14 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
+import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot.RecoveryMethodType
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import me.proton.core.test.android.plugins.data.Plan.Dev
 import org.junit.Before
 import org.junit.Test
 
@@ -42,7 +41,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
 
         CoreexampleRobot()
             .signup()
-            .verify { suffixDisplayed(BuildConfig.HOST) }
+            .verify { domainInputDisplayed() }
 
         ChooseUsernameRobot()
             .username(randomString())
@@ -73,6 +72,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
         recoveryMethodsRobot
             .skip()
             .skipConfirm()
+            .toggleExpandPlan(Dev)
             .verify {
                 planDetailsDisplayedInsideRecyclerView(Dev)
                 canSelectPlan(Dev)
@@ -84,6 +84,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
         recoveryMethodsRobot
             .next<RecoveryMethodsRobot.SkipRecoveryRobot>()
             .skipConfirm()
+            .toggleExpandPlan(Dev)
             .verify {
                 planDetailsDisplayedInsideRecyclerView(Dev)
                 canSelectPlan(Dev)

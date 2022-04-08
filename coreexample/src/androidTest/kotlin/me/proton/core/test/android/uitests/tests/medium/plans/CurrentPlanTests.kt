@@ -41,6 +41,7 @@ class CurrentPlanTests : BaseTest() {
     fun userWithFreePlan() {
         navigateUserToCurrentPlans(user)
             .scrollToPlan(Plan.Dev)
+            .toggleExpandPlan(Plan.Dev)
             .verify {
                 planDetailsDisplayedInsideRecyclerView(Plan.Dev)
                 canUpgradeToPlan(Plan.Dev)
