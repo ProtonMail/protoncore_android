@@ -44,16 +44,10 @@ public interface ChallengeDatabase : Database {
                 database.dropTableColumn(
                     table = "ChallengeFrameEntity",
                     createTable = {
-                        execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`challengeFrame` TEXT NOT NULL, `flow` TEXT NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))")
+                        execSQL("CREATE TABLE IF NOT EXISTS `ChallengeFrameEntity` (`challengeFrame` TEXT NOT NULL, `focusTime` TEXT NOT NULL, `flow` TEXT NOT NULL, `clicks` INTEGER NOT NULL, `copy` TEXT NOT NULL, `paste` TEXT NOT NULL, `keys` TEXT NOT NULL, PRIMARY KEY(`challengeFrame`))")
                     },
                     createIndices = { },
                     column = "focusTime"
-                )
-                database.addTableColumn(
-                    table = "ChallengeFrameEntity",
-                    column = "focusTime",
-                    type = "TEXT NOT NULL",
-                    defaultValue = ""
                 )
             }
         }
