@@ -17,6 +17,7 @@
  */
 package me.proton.core.compose.theme
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -27,7 +28,7 @@ import androidx.compose.runtime.remember
 
 @Composable
 fun ProtonTheme(
-    isDark: Boolean = isSystemInDarkTheme(),
+    isDark: Boolean = isNightMode(),
     colors: ProtonColors = if (isDark) ProtonColors.Dark else ProtonColors.Light,
     typography: ProtonTypography = ProtonTypography.Default,
     shapes: ProtonShapes = ProtonShapes(),
@@ -48,6 +49,13 @@ fun ProtonTheme(
             content = content
         )
     }
+}
+
+@Composable
+fun isNightMode() = when (AppCompatDelegate.getDefaultNightMode()) {
+    AppCompatDelegate.MODE_NIGHT_NO -> false
+    AppCompatDelegate.MODE_NIGHT_YES -> true
+    else -> isSystemInDarkTheme()
 }
 
 object ProtonTheme {

@@ -3,7 +3,6 @@ package me.proton.core.compose.theme
 import android.content.Context
 import android.content.res.TypedArray
 import androidx.annotation.StyleableRes
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -15,7 +14,7 @@ import me.proton.core.presentation.compose.R
 @Composable
 fun rememberColorsFromXml(
     context: Context = LocalContext.current,
-    isSystemDark: Boolean = isSystemInDarkTheme()
+    isSystemDark: Boolean = isNightMode()
 ): ProtonColors = remember(context.theme) {
     colorsFromXml(context, isSystemDark)
 }

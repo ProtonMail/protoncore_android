@@ -19,6 +19,7 @@
 import studio.forface.easygradle.dsl.android.`android-annotation`
 import studio.forface.easygradle.dsl.android.`lifecycle-runtime`
 import studio.forface.easygradle.dsl.android.androidTestImplementation
+import studio.forface.easygradle.dsl.android.appcompat
 import studio.forface.easygradle.dsl.compileOnly
 import studio.forface.easygradle.dsl.implementation
 import studio.forface.easygradle.dsl.testImplementation
@@ -42,6 +43,7 @@ dependencies {
 
         // Android
         `lifecycle-runtime`,
+        appcompat,
 
         // Compose
         `activity-compose`,
