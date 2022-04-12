@@ -37,6 +37,9 @@ When providing the AuthRepository there is a new `Product` parameter that is nee
 ### Fixes
 - Fix EventManager Completed state and potential edge cases.
 
+### Fixes
+- Fix UserAddressRepository returning wrong address (FetchedTagAddress).
+
 ## [7.1.10]
 
 ### Changes

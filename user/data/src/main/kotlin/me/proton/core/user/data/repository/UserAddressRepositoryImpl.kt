@@ -82,7 +82,7 @@ class UserAddressRepositoryImpl(
         sourceOfTruth = SourceOfTruth.of(
             reader = { key ->
                 observeAddressesLocal(key.userId).map { addresses ->
-                    addresses.takeIf { it.isNotEmpty() }?.minus(key.getFetchedTagAddress())
+                    addresses.takeIf { it.hasBeenFetched(key) }?.filterNot { it.isFetchedTag() }
                 }
             },
             writer = { key, addresses ->
@@ -222,6 +222,8 @@ class UserAddressRepositoryImpl(
     }
 
     companion object {
+        private fun UserAddress.isFetchedTag() = email == "fetched"
+        private fun List<UserAddress>.hasBeenFetched(key: StoreKey) = contains(key.getFetchedTagAddress())
         // Fake Address tagging the repo the addresses have been fetched once.
         private fun StoreKey.getFetchedTagAddress() = UserAddress(
             userId = userId,
