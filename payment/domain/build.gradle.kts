@@ -37,6 +37,7 @@ dependencies {
         project(Module.networkDomain),
 
         // Features
+        project(Module.humanVerificationDomain),
         project(Module.accountDomain),
         project(Module.featureFlagDomain),
 

@@ -1,5 +1,6 @@
 public abstract interface class me/proton/core/humanverification/domain/HumanVerificationManager : me/proton/core/network/domain/humanverification/HumanVerificationListener, me/proton/core/network/domain/humanverification/HumanVerificationProvider {
 	public abstract fun addDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun clearDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onHumanVerificationStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
 }
 
@@ -34,6 +35,7 @@ public final class me/proton/core/humanverification/domain/entity/TokenType$Comp
 }
 
 public abstract interface class me/proton/core/humanverification/domain/repository/HumanVerificationRepository {
+	public abstract fun deleteHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllHumanVerificationDetails (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun insertHumanVerificationDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

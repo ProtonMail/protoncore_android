@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
@@ -40,6 +42,7 @@ import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.MASK_VPN
@@ -61,7 +64,9 @@ class BillingCommonViewModel @Inject constructor(
     private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
     private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
     private val performSubscribe: PerformSubscribe,
-    private val getCountry: GetCountry
+    private val getCountry: GetCountry,
+    private val humanVerificationManager: HumanVerificationManager,
+    private val clientIdProvider: ClientIdProvider,
 ) : ProtonViewModel() {
 
     private val _subscriptionState = MutableStateFlow<State>(State.Idle)
@@ -247,7 +252,11 @@ class BillingCommonViewModel @Inject constructor(
         token: String
     ): State =
         if (userId == null) {
-            // subscription should be created by the sign up module. return payment info (needed for Human Ver headers).
+            // Token will be used during sign up (create user), as part of HumanVerification headers.
+            // Subscription will be performed during login, just after create user.
+            // Token will be cleared by PerformSubscribe.
+            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+            humanVerificationManager.addDetails(BillingResult.paymentDetails(clientId = clientId, token = token))
             State.Success.SignUpTokenReady(amount, currency, cycle, token)
         } else {
             State.Success.SubscriptionCreated(

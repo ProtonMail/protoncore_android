@@ -385,7 +385,7 @@ public final class me/proton/core/payment/domain/usecase/GetPaymentTokenStatus {
 }
 
 public final class me/proton/core/payment/domain/usecase/PerformSubscribe {
-	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }

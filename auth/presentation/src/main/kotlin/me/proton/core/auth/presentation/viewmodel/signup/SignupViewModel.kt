@@ -49,10 +49,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
@@ -68,7 +65,6 @@ internal class SignupViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val plansOrchestrator: PlansOrchestrator,
     private val paymentsOrchestrator: PaymentsOrchestrator,
-    private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
     private val performLogin: PerformLogin,
     private val challengeManager: ChallengeManager,
@@ -198,33 +194,6 @@ internal class SignupViewModel @Inject constructor(
                 createExternalUser(email, password)
             }
         }.exhaustive
-    }
-
-    fun startCreatePaidUserWorkflow(
-        planName: String,
-        planDisplayName: String,
-        cycle: SubscriptionCycle,
-        billingResult: BillingResult
-    ) = viewModelScope.launch {
-        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-        subscriptionDetails = SubscriptionDetails(
-            billingResult = billingResult,
-            planName = planName,
-            planDisplayName = planDisplayName,
-            cycle = cycle
-        )
-        if (billingResult.paySuccess) {
-            viewModelScope.launch {
-                // update subscription details
-                humanVerificationManager.addDetails(
-                    details = BillingResult.paymentDetails(
-                        clientId = clientId,
-                        token = billingResult.token!!
-                    )
-                )
-            }
-            startCreateUserWorkflow()
-        }
     }
 
     override fun register(context: FragmentActivity) {

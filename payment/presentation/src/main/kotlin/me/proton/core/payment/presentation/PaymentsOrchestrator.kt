@@ -29,6 +29,7 @@ import me.proton.core.payment.presentation.ui.StartBilling
 import me.proton.core.payment.presentation.ui.StartPaymentOptions
 import javax.inject.Inject
 
+@Suppress("UseIfInsteadOfWhen")
 class PaymentsOrchestrator @Inject constructor() {
 
     // region result launchers
@@ -37,6 +38,9 @@ class PaymentsOrchestrator @Inject constructor() {
     // endregion
 
     private var onPaymentResultListener: (result: BillingResult?) -> Unit = {}
+
+    private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
+        checkNotNull(launcher) { "You must call PaymentsOrchestrator.register(context) before starting workflow!" }
 
     // region public api
     fun register(caller: ActivityResultCaller) {
@@ -60,16 +64,15 @@ class PaymentsOrchestrator @Inject constructor() {
         selectedPlan: PlanShortDetails,
         codes: List<String>? = null
     ) {
-        userId?.let {
-            // start the payment options chooser screen
-            paymentOptionsLauncher?.launch(
-                PaymentOptionsInput(it.id, selectedPlan, codes)
-            ) ?: throw IllegalStateException("You must call register(context) before any start workflow function!")
-        } ?: run {
-            // directly start the billing screen
-            billingLauncher?.launch(
+        when (userId) {
+            // Directly start the billing screen.
+            null -> checkRegistered(billingLauncher).launch(
                 BillingInput(null, emptyList(), selectedPlan, codes, null)
-            ) ?: throw IllegalStateException("You must call register before any start workflow function!")
+            )
+            // Start the payment options chooser screen.
+            else -> checkRegistered(paymentOptionsLauncher).launch(
+                PaymentOptionsInput(userId.id, selectedPlan, codes)
+            )
         }
     }
     // endregion

@@ -490,7 +490,7 @@ public final class me/proton/core/payment/presentation/ui/UtilsKt {
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
 	public static final field Companion Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion;
-	public fun <init> (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;)V
+	public fun <init> (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)V
 	public final fun getPlansValidationState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getSubscriptionResult ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun onThreeDSTokenApproved (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;)Lkotlinx/coroutines/Job;
@@ -649,11 +649,11 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingCommonVi
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;
-	public static fun newInstance (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {

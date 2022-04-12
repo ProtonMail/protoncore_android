@@ -37,6 +37,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.AuthActivity
 import me.proton.core.auth.presentation.ui.removeCreatingUser
 import me.proton.core.auth.presentation.ui.showCongrats
@@ -122,10 +123,16 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             KEY_PLAN_SELECTED, this
         ) { _, bundle ->
             val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
-            val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
+            val billingResult = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
             if (plan != null) {
+                signUpViewModel.subscriptionDetails = SubscriptionDetails(
+                    billingResult = billingResult,
+                    planName = plan.planName,
+                    planDisplayName = plan.planDisplayName,
+                    cycle = plan.cycle.toSubscriptionCycle()
+                )
+                signUpViewModel.startCreateUserWorkflow()
                 supportFragmentManager.showCreatingUser()
-                onPlanSelected(plan, billing)
             } else {
                 supportFragmentManager.removePlansSignup()
                 signUpViewModel.onPlanChooserCancel()
@@ -138,21 +145,11 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onLoginError(result.error.localizedMessage)
             is PostLoginAccountSetup.Result.UserUnlocked -> onLoginSuccess(result.userId)
-
             is PostLoginAccountSetup.Result.Need.ChangePassword,
             is PostLoginAccountSetup.Result.Need.ChooseUsername,
             is PostLoginAccountSetup.Result.Need.SecondFactor,
             is PostLoginAccountSetup.Result.Need.TwoPassMode -> Unit // Ignored.
         }.exhaustive
-    }
-
-    private fun onPlanSelected(plan: SelectedPlan, billingResult: BillingResult?) {
-        if (billingResult == null) {
-            signUpViewModel.startCreateUserWorkflow()
-        } else {
-            val cycle = plan.cycle.toSubscriptionCycle()
-            signUpViewModel.startCreatePaidUserWorkflow(plan.planName, plan.planDisplayName, cycle, billingResult)
-        }
     }
 
     private fun onSignUpSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
