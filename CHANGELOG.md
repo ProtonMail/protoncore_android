@@ -33,6 +33,10 @@ When providing the AuthRepository there is a new `Product` parameter that is nee
     ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
 
 ```
+
+### Fixes
+- Fix EventManager Completed state and potential edge cases.
+
 ## [7.1.10]
 
 ### Changes

@@ -23,6 +23,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
@@ -103,8 +104,8 @@ class EventManagerImpl @AssistedInject constructor(
                 State.NotifyPrepare -> notifyPrepare(metadata)
                 State.NotifyEvents -> notifyPrepare(metadata)
                 State.NotifyResetAll -> notifyResetAll(metadata)
-                State.NotifyComplete -> notifyComplete(metadata, true)
-                State.Completed -> Unit
+                State.NotifyComplete -> notifyComplete(metadata, success = true)
+                State.Completed -> enqueue(metadata.nextEventId, immediately = true)
             }
         }
     }
@@ -245,7 +246,7 @@ class EventManagerImpl @AssistedInject constructor(
         }
     }
 
-    private suspend fun enqueue(eventId: EventId?, immediately: Boolean) = runCatching {
+    private suspend fun enqueue(eventId: EventId?, immediately: Boolean) {
         val metadata = eventId?.let { eventMetadataRepository.get(config, it) }
         eventMetadataRepository.update(
             metadata?.takeUnless { metadata.eventId == metadata.nextEventId }?.copy(
@@ -276,6 +277,7 @@ class EventManagerImpl @AssistedInject constructor(
         accountManager.getAccount(config.userId)
             .distinctUntilChangedBy { it?.state }
             .onEach { account -> enqueueOrStop(account) }
+            .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
             .collect()
     }
 
@@ -284,6 +286,7 @@ class EventManagerImpl @AssistedInject constructor(
         appLifecycleProvider.state
             .filter { it == AppLifecycleProvider.State.Foreground }
             .onEach { enqueueOrStop(accountManager.getAccount(config.userId).firstOrNull()) }
+            .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
             .collect()
     }
 

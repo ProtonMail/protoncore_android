@@ -27,6 +27,9 @@ object LogTag {
     /** Tag for Notify Errors. */
     const val NOTIFY_ERROR = "core.eventmanager.notify"
 
+    /** Tag for Collect Errors. */
+    const val COLLECT_ERROR = "core.eventmanager.collect"
+
     /** Tag for Max Retry Reports. */
     val REPORT_MAX_RETRY = LoggerLogTag("core.eventmanager.report.maxretry")
 }
