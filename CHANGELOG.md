@@ -5,17 +5,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Added HelpOptionHandler interface so that clients can have more control over the Sign In Help
-screen options. Core also provides default implementation.
 
-```kotlin
-@Provides
-    @Singleton
-    fun provideHelpOptionHandler(): HelpOptionHandler = DefaultHelpOptionHandler()
-```
+## [7.1.11]
 
 ### Changes
-- Challenge entities improved. Clients should update their DB with the following migration:
+
+When providing the AuthRepository & UserRepository there is a new `Product` parameter that is needed:
+```kotlin
+@Singleton
+fun provideAuthRepository(
+    apiProvider: ApiProvider,
+    @ApplicationContext context: Context,
+    product: Product
+): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
+
+@Provides
+@Singleton
+fun provideUserRepositoryImpl(
+    db: UserDatabase,
+    provider: ApiProvider,
+    @ApplicationContext context: Context,
+    cryptoContext: CryptoContext,
+    product: Product
+): UserRepository = UserRepositoryImpl(db, provider, context, cryptoContext, product)
+
+```
+
+### Fixes
+- Fix EventManager Completed state and potential edge cases.
+- Fix UserAddressRepository returning wrong address (FetchedTagAddress).
+- Challenge entities fixed. Clients should update their DB with the following migration:
 ```kotlin
 val MIGRATION_X_Y = object : Migration(X, Y) {
     override fun migrate(database: SupportSQLiteDatabase) {
@@ -23,22 +42,17 @@ val MIGRATION_X_Y = object : Migration(X, Y) {
     }
 }
 ```
-When providing the AuthRepository there is a new `Product` parameter that is needed:
+
+### New
+
+- Added HelpOptionHandler interface so that clients can have more control over the Sign In Help
+screen options. Core also provides default implementation.
+
 ```kotlin
+@Provides
 @Singleton
-    fun provideAuthRepository(
-        apiProvider: ApiProvider,
-        @ApplicationContext context: Context,
-        product: Product
-    ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
-
+fun provideHelpOptionHandler(): HelpOptionHandler = DefaultHelpOptionHandler()
 ```
-
-### Fixes
-- Fix EventManager Completed state and potential edge cases.
-
-### Fixes
-- Fix UserAddressRepository returning wrong address (FetchedTagAddress).
 
 ## [7.1.10]
 
