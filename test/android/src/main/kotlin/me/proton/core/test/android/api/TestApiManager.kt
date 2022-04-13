@@ -19,21 +19,24 @@
 package me.proton.core.test.android.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.safeCall
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import java.net.SocketTimeoutException
+import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkStatus
 
-class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
+class TestApiManager<Api : BaseRetrofitApi>(
+    private val api: Api,
+    private val networkManager: NetworkManager = FakeNetworkManager(),
+) : ApiManager<Api> {
     override suspend fun <T> invoke(
         forceNoRetryOnConnectionErrors: Boolean,
-        block: suspend Api.() -> T
-    ): ApiResult<T> = try {
-        val result = block.invoke(api)
-        ApiResult.Success(result)
-    } catch (throwable: Throwable) {
-        when (throwable) {
-            is SocketTimeoutException -> ApiResult.Error.Timeout(false, throwable)
-            else -> ApiResult.Error.Parse(throwable)
-        }
-    }
+        block: suspend Api.() -> T,
+    ): ApiResult<T> = api.safeCall(networkManager, block)
+}
+
+class FakeNetworkManager : NetworkManager() {
+    override var networkStatus: NetworkStatus = NetworkStatus.Metered
+    override fun register() {}
+    override fun unregister() {}
 }

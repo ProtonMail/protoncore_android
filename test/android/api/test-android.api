@@ -48,8 +48,15 @@ public final class me/proton/core/test/android/RunBlockingWithTimeoutKt {
 	public static synthetic fun runBlockingWithTimeout$default (JLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/test/android/api/FakeNetworkManager : me/proton/core/network/domain/NetworkManager {
+	public fun <init> ()V
+	public fun getNetworkStatus ()Lme/proton/core/network/domain/NetworkStatus;
+	public fun setNetworkStatus (Lme/proton/core/network/domain/NetworkStatus;)V
+}
+
 public final class me/proton/core/test/android/api/TestApiManager : me/proton/core/network/domain/ApiManager {
-	public fun <init> (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;)V
+	public fun <init> (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;Lme/proton/core/network/domain/NetworkManager;)V
+	public synthetic fun <init> (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;Lme/proton/core/network/domain/NetworkManager;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun invoke (ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

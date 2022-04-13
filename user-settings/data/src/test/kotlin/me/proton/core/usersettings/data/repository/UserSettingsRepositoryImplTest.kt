@@ -25,6 +25,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
@@ -149,7 +150,7 @@ class UserSettingsRepositoryImplTest {
         setUpRecoveryEmailUpdateTest(testSrpProofs.expectedServerProof + "corrupted")
 
         // WHEN & THEN
-        val exception = assertFailsWith<ApiException> {
+        val exception = assertFailsWith<InvalidServerAuthenticationException> {
             repository.updateRecoveryEmail(
                 sessionUserId = UserId(testUserId),
                 email = "test-email2",
@@ -219,7 +220,7 @@ class UserSettingsRepositoryImplTest {
         val testAuth = setUpUpdatePasswordTest(testSrpProofs.expectedServerProof + "corrupted")
 
         // WHEN & THEN
-        val exception = assertFailsWith<ApiException> {
+        val exception = assertFailsWith<InvalidServerAuthenticationException> {
             repository.updateLoginPassword(
                 sessionUserId = UserId(testUserId),
                 srpProofs = testSrpProofs,

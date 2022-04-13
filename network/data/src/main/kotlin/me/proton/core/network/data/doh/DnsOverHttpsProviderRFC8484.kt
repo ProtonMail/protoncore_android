@@ -19,12 +19,13 @@ package me.proton.core.network.data.doh
 
 import android.util.Base64
 import me.proton.core.network.data.initLogging
-import me.proton.core.network.data.safeApiCall
+import me.proton.core.network.data.safeCall
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.safe
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
@@ -94,8 +95,8 @@ class DnsOverHttpsProviderRFC8484(
             Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP
         )
 
-        val response = safeApiCall(networkManager, api) {
-            api.getServers(baseUrl.removeSuffix("/"), queryMessageBase64)
+        val response = api.safeCall(networkManager) {
+            getServers(baseUrl.removeSuffix("/"), queryMessageBase64)
         }
         if (response is ApiResult.Success) {
             val answers = response.value.answerSection

@@ -34,6 +34,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.serialization.SerializationException
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.MailSettingsApi
 import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
@@ -50,7 +51,10 @@ import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.io.IOException
+import java.lang.IllegalStateException
 import java.net.SocketTimeoutException
+import kotlin.test.assertFailsWith
 
 class UpdateSettingsWorkerTest {
 
@@ -77,9 +81,7 @@ class UpdateSettingsWorkerTest {
         coEvery { this@mockk.getSessionId(any()) } returns sessionId
     }
     private val apiManagerFactory = mockk<ApiManagerFactory> {
-        every {
-            this@mockk.create(any(), interfaceClass = MailSettingsApi::class)
-        } returns TestApiManager(mailSettingsApi)
+        every { this@mockk.create(any(), MailSettingsApi::class) } returns TestApiManager(mailSettingsApi)
     }
 
     private val worker = UpdateSettingsWorker(
@@ -165,8 +167,8 @@ class UpdateSettingsWorkerTest {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.ShowImages(3))
-            coEvery { mailSettingsApi.updateShowImages(any()) } throws Exception("Failed.")
-            every { parameters.runAttemptCount } returns 2
+            coEvery { mailSettingsApi.updateShowImages(any()) } throws IOException("Retryable error")
+            every { parameters.runAttemptCount } returns 5
 
             // WHEN
             val result = worker.doWork()
@@ -181,7 +183,7 @@ class UpdateSettingsWorkerTest {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.ShowImages(3))
-            coEvery { mailSettingsApi.updateShowImages(any()) } throws Exception("Non retryable error")
+            coEvery { mailSettingsApi.updateShowImages(any()) } throws SerializationException("Non retryable error")
             every { parameters.runAttemptCount } returns 0
 
             // WHEN
@@ -205,6 +207,21 @@ class UpdateSettingsWorkerTest {
 
             // THEN
             assertEquals(Retry.retry(), result)
+        }
+
+    @Test
+    fun `worker returns Failure when API call throw unexpected exception`() =
+        runBlockingTest {
+            // GIVEN
+            userIdInputIs("userId")
+            settingPropertyInputIs(SettingsProperty.ShowImages(3))
+            coEvery { mailSettingsApi.updateShowImages(any()) } throws IllegalStateException("error")
+            every { parameters.runAttemptCount } returns 5
+
+            // WHEN
+            assertFailsWith(IllegalStateException::class) {
+                worker.doWork()
+            }
         }
 
     private fun settingPropertyInputIs(displayNameProperty: SettingsProperty) {

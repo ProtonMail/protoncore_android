@@ -19,6 +19,10 @@ public final class me/proton/core/network/data/ApiProvider {
 	public final fun getSessionProvider ()Lme/proton/core/network/domain/session/SessionProvider;
 }
 
+public final class me/proton/core/network/data/ApiResultUtilsKt {
+	public static final fun safeCall (Ljava/lang/Object;Lme/proton/core/network/domain/NetworkManager;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/network/data/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
