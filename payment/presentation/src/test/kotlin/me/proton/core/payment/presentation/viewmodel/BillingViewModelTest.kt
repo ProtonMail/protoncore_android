@@ -25,8 +25,10 @@ import io.mockk.mockk
 import me.proton.core.country.domain.entity.Country
 import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
@@ -57,6 +59,8 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
     private val performSubscribe = mockk<PerformSubscribe>()
     private val getCountryCode = mockk<GetCountry>()
+    private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
+    private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     // endregion
 
     // region test data
@@ -88,7 +92,9 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             createPaymentTokenWithNewPayPal,
             createPaymentTokenWithExistingPaymentMethod,
             performSubscribe,
-            getCountryCode
+            getCountryCode,
+            humanVerificationManager,
+            clientIdProvider
         )
     }
 
@@ -522,6 +528,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
             // THEN
             coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { humanVerificationManager.addDetails(any()) }
             coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
             assertIs<BillingCommonViewModel.State.Idle>(awaitItem())
             assertIs<BillingCommonViewModel.State.Processing>(awaitItem())

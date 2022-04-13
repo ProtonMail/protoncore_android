@@ -26,7 +26,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationState
 interface HumanVerificationRepository {
 
     /**
-     * Get [HumanVerificationDetails], if exist, by sessionId.
+     * Get [HumanVerificationDetails], if exist, by [clientId].
      */
     suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails?
 
@@ -36,9 +36,14 @@ interface HumanVerificationRepository {
     suspend fun getAllHumanVerificationDetails(): Flow<List<HumanVerificationDetails>>
 
     /**
-     * Set [HumanVerificationDetails], by clientId. Basically it inserts new record in the DB.
+     * Insert [HumanVerificationDetails], by [HumanVerificationDetails.clientId].
      */
     suspend fun insertHumanVerificationDetails(details: HumanVerificationDetails)
+
+    /**
+     * Delete [HumanVerificationDetails], by [clientId].
+     */
+    suspend fun deleteHumanVerificationDetails(clientId: ClientId)
 
     /**
      * Sets new state for a human verification flow, along with the token type and token code if needed.

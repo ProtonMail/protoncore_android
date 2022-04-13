@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+
+- Clear consumed Payment Token (HumanVerification token).
+
 ## [7.1.11]
 
 ### Changes

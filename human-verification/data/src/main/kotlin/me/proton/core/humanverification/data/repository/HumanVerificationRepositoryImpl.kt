@@ -75,6 +75,9 @@ class HumanVerificationRepositoryImpl(
         getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }
     }
 
+    override suspend fun deleteHumanVerificationDetails(clientId: ClientId) =
+        humanVerificationDetailsDao.deleteByClientId(clientId.id)
+
     override suspend fun updateHumanVerificationState(
         clientId: ClientId,
         state: HumanVerificationState,

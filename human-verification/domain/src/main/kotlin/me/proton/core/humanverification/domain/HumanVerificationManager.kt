@@ -20,6 +20,7 @@ package me.proton.core.humanverification.domain
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -34,7 +35,15 @@ interface HumanVerificationManager : HumanVerificationProvider, HumanVerificatio
      */
     fun onHumanVerificationStateChanged(initialState: Boolean = false): Flow<HumanVerificationDetails>
 
+    /**
+     * Add (insert or update) a [HumanVerificationDetails].
+     */
     suspend fun addDetails(details: HumanVerificationDetails)
+
+    /**
+     * Clear all [HumanVerificationDetails], by [clientId].
+     */
+    suspend fun clearDetails(clientId: ClientId)
 }
 
 /**

@@ -23,8 +23,10 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.Subscription
@@ -39,6 +41,8 @@ import kotlin.test.assertNotNull
 class PerformSubscribeTest {
     // region mocks
     private val repository = mockk<PaymentsRepository>(relaxed = true)
+    private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
+    private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     // endregion
 
     // region test data
@@ -63,7 +67,7 @@ class PerformSubscribeTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = PerformSubscribe(repository)
+        useCase = PerformSubscribe(repository, humanVerificationManager, clientIdProvider)
         coEvery {
             repository.createOrUpdateSubscription(
                 testUserId,
@@ -204,5 +208,35 @@ class PerformSubscribeTest {
         }
         assertNotNull(throwable)
         assertEquals("Test error", throwable.message)
+    }
+
+    @Test
+    fun `payment token is cleared on successful subscription`() = runBlockingTest {
+        useCase.invoke(
+            userId = testUserId,
+            amount = 48,
+            currency = Currency.CHF,
+            cycle = SubscriptionCycle.YEARLY,
+            planNames = listOf(testPlanName),
+            codes = null,
+            paymentToken = "token"
+        )
+
+        coVerify(atLeast = 1) { humanVerificationManager.clearDetails(any()) }
+    }
+
+    @Test
+    fun `null payment token is not cleared on successful subscription`() = runBlockingTest {
+        useCase.invoke(
+            userId = testUserId,
+            amount = 0,
+            currency = Currency.CHF,
+            cycle = SubscriptionCycle.YEARLY,
+            planNames = listOf(testPlanName),
+            codes = null,
+            paymentToken = null
+        )
+
+        coVerify(exactly = 0) { humanVerificationManager.clearDetails(any()) }
     }
 }

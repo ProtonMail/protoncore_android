@@ -17,6 +17,7 @@ public final class me/proton/core/humanverification/data/HumanVerificationManage
 	public fun <init> (Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
 	public fun addDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun awaitHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun clearDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun handleHumanVerificationFailed (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun handleHumanVerificationSuccess (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -187,6 +188,7 @@ public final class me/proton/core/humanverification/data/entity/HumanVerificatio
 
 public final class me/proton/core/humanverification/data/repository/HumanVerificationRepositoryImpl : me/proton/core/humanverification/domain/repository/HumanVerificationRepository {
 	public fun <init> (Lme/proton/core/humanverification/data/db/HumanVerificationDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
+	public fun deleteHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllHumanVerificationDetails (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertHumanVerificationDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

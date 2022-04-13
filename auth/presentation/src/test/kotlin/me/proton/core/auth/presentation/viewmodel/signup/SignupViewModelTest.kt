@@ -119,7 +119,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             keyStoreCrypto,
             plansOrchestrator,
             paymentsOrchestrator,
-            clientIdProvider,
             humanVerificationManager,
             performLogin,
             challengeManager,

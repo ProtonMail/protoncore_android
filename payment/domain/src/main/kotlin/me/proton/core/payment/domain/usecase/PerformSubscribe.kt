@@ -19,6 +19,8 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
@@ -33,7 +35,9 @@ import javax.inject.Inject
  * Headers with token and token type "payment".
  */
 class PerformSubscribe @Inject constructor(
-    private val paymentsRepository: PaymentsRepository
+    private val paymentsRepository: PaymentsRepository,
+    private val humanVerificationManager: HumanVerificationManager,
+    private val clientIdProvider: ClientIdProvider,
 ) {
     /**
      * @param codes optional an array of [String] coupon or gift codes used for discounts.
@@ -61,6 +65,13 @@ class PerformSubscribe @Inject constructor(
             codes = codes,
             plans = planNames.map { it to MAX_PLAN_QUANTITY }.toMap(),
             cycle = cycle
-        )
+        ).also {
+            if (paymentToken != null) {
+                // Clear any previous payment token (unauthenticated session cookie HV details).
+                // HV payment token is previously added by BillingCommonViewModel.
+                val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+                humanVerificationManager.clearDetails(clientId)
+            }
+        }
     }
 }
