@@ -481,13 +481,12 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        val apiException = assertFailsWith<ApiException> {
+        assertFailsWith<InvalidServerAuthenticationException> {
             userRepository.unlockUserForLockedScope(
                 TestUsers.User1.id,
                 testSrpProofs,
                 "test-srp-session"
             )
         }
-        assertIs<InvalidServerAuthenticationException>(apiException.cause)
     }
 }

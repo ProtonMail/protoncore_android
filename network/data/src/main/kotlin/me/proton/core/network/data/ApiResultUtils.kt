@@ -30,13 +30,15 @@ import java.security.cert.CertificateException
 import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
 
-internal suspend fun <Api, T> safeApiCall(
+/**
+ * Wrap the result with [ApiResult], catching expected Network related exceptions.
+ */
+suspend fun <Api, T> Api.safeCall(
     networkManager: NetworkManager,
-    api: Api,
-    block: suspend (Api) -> T
+    block: suspend Api.() -> T
 ): ApiResult<T> {
     val result = runCatching {
-        ApiResult.Success(block(api))
+        ApiResult.Success(block(this))
     }.getOrElse { e ->
         when (e) {
             is ProtonErrorException -> parseHttpError(e.response, e.protonData, e)
