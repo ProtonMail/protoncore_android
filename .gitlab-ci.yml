@@ -214,6 +214,14 @@ trigger-client-integration-tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
+calendar-integration-tests:
+  extends: .client-integration-tests
+  variables:
+    CALENDAR_INTEGRATION_REF: develop
+  trigger:
+    project: android/calendar/proton-calendar-android
+    branch: $CALENDAR_INTEGRATION_REF
+
 mail-v6-integration-tests:
   extends: .client-integration-tests
   variables:
