@@ -20,13 +20,14 @@ package me.proton.core.eventmanager.domain
 
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
+import me.proton.core.eventmanager.domain.entity.EventMetadata
 import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.eventmanager.domain.extension.groupByAction
 import me.proton.core.util.kotlin.takeIfNotEmpty
 
-abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
+abstract class EventListener<K : Any, T : Any> : TransactionHandler {
 
-    private val actionMapByConfig = mutableMapOf<EventManagerConfig, Map<Action, List<Event<Key, Type>>>>()
+    private val actionMapByConfig = mutableMapOf<EventManagerConfig, Map<Action, List<Event<K, T>>>>()
 
     /**
      * Type of Event loop.
@@ -57,7 +58,7 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
     /**
      * Listener [type] to associate with this [EventListener].
      */
-    abstract val type: EventListener.Type
+    abstract val type: Type
 
     /**
      * The degrees of separation from this entity to the User entity.
@@ -70,30 +71,31 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
      */
     abstract val order: Int
 
-    /**
-     * Get actions part of the current set of modifications.
-     *
-     * Note: The map is created just before [onPrepare], and cleared after [onComplete].
-     */
-    fun getActionMap(config: EventManagerConfig): Map<Action, List<Event<Key, Type>>> {
-        return actionMapByConfig.getOrPut(config) { emptyMap() }
+    private suspend fun setActionMap(config: EventManagerConfig, metadata: EventMetadata) {
+        val events = metadata.response?.let { deserializeEvents(config, it) }.orEmpty()
+        actionMapByConfig[config] = events.groupByAction()
+    }
+
+    private fun clearActionMap(config: EventManagerConfig) {
+        actionMapByConfig.remove(config)
     }
 
     /**
-     * Set the actions part of the current set of modifications.
+     * Get actions part of the current set of modifications.
      *
-     * Note: Called before [notifyPrepare] and after [notifyComplete].
+     * Note: The map is created in first place just before [onPrepare], and cleared after [onComplete].
      */
-    fun setActionMap(config: EventManagerConfig, events: List<Event<Key, Type>>) {
-        actionMapByConfig[config] = events.groupByAction()
-    }
+    fun getActionMap(config: EventManagerConfig): Map<Action, List<Event<K, T>>> =
+        actionMapByConfig.getOrPut(config) { emptyMap() }
 
     /**
      * Notify to prepare any additional data (e.g. foreign key).
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyPrepare(config: EventManagerConfig) {
+    suspend fun notifyPrepare(config: EventManagerConfig, metadata: EventMetadata) {
+        requireNotNull(metadata.response)
+        setActionMap(config, metadata)
         val actions = getActionMap(config)
         val entities = actions[Action.Create].orEmpty() + actions[Action.Update].orEmpty()
         entities.takeIfNotEmpty()?.let { list -> onPrepare(config, list.mapNotNull { it.entity }) }
@@ -104,7 +106,9 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
      *
      * Note: A transaction wraps this function.
      */
-    suspend fun notifyEvents(config: EventManagerConfig) {
+    suspend fun notifyEvents(config: EventManagerConfig, metadata: EventMetadata) {
+        requireNotNull(metadata.response)
+        setActionMap(config, metadata)
         val actions = getActionMap(config)
         actions[Action.Create]?.takeIfNotEmpty()?.let { list -> onCreate(config, list.mapNotNull { it.entity }) }
         actions[Action.Update]?.takeIfNotEmpty()?.let { list -> onUpdate(config, list.mapNotNull { it.entity }) }
@@ -122,33 +126,41 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
     }
 
     /**
-     * Notify complete, whether set of modifications was successful or not.
+     * Notify successful completion of applying the set of modifications.
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyComplete(config: EventManagerConfig) {
-        onComplete(config)
-        setActionMap(config, emptyList())
+    suspend fun notifySuccess(config: EventManagerConfig, metadata: EventMetadata) {
+        requireNotNull(metadata.response)
+        setActionMap(config, metadata)
+        onSuccess(config)
     }
 
     /**
-     * Notify successful completion of the [EventListener]'s loop. Called before [onComplete].
+     * Notify failure of applying the set of modifications.
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifySuccess(config: EventManagerConfig) = onSuccess(config)
+    suspend fun notifyFailure(config: EventManagerConfig, metadata: EventMetadata) {
+        setActionMap(config, metadata)
+        onFailure(config)
+    }
 
     /**
-     * Notify completion with failures of the [EventListener]'s loop. Called before [onComplete] and after [onResetAll].
+     * Notify complete, whether applying the set of modifications is a success or a failure.
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyFailure(config: EventManagerConfig) = onFailure(config)
+    suspend fun notifyComplete(config: EventManagerConfig, metadata: EventMetadata) {
+        setActionMap(config, metadata)
+        onComplete(config)
+        clearActionMap(config)
+    }
 
     /**
      * Deserialize [response] into a typed list of [Event].
      */
-    abstract suspend fun deserializeEvents(config: EventManagerConfig, response: EventsResponse): List<Event<Key, Type>>?
+    abstract suspend fun deserializeEvents(config: EventManagerConfig, response: EventsResponse): List<Event<K, T>>?
 
     /**
      * Called before applying a set of modifications to prepare any additional action (e.g. fetch foreign entities).
@@ -157,33 +169,7 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
      *
      * @see onComplete
      */
-    open suspend fun onPrepare(config: EventManagerConfig, entities: List<Type>) = Unit
-
-    /**
-     * Called at the end of a set of modifications, whether it is successful or not. It can be used to clean up any
-     * resources that are no longer needed.
-     *
-     * @see onPrepare
-     */
-    open suspend fun onComplete(config: EventManagerConfig) = Unit
-
-    /**
-     * Called at the end of a set of modifications when it is successful.
-     *
-     * Note: [onComplete] will be called right after.
-     *
-     * @see onComplete
-     */
-    open suspend fun onSuccess(config: EventManagerConfig) = Unit
-
-    /**
-     * Called at the end of a set of modifications after it failed.
-     *
-     * Note: [onComplete] will be called right after.
-     *
-     * @see onComplete
-     */
-    open suspend fun onFailure(config: EventManagerConfig) = Unit
+    open suspend fun onPrepare(config: EventManagerConfig, entities: List<T>) {}
 
     /**
      * Called to created entities in persistence.
@@ -194,7 +180,7 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
      *
      * @see onPrepare
      */
-    open suspend fun onCreate(config: EventManagerConfig, entities: List<Type>) = Unit
+    open suspend fun onCreate(config: EventManagerConfig, entities: List<T>) {}
 
     /**
      * Called to update or insert entities in persistence.
@@ -205,7 +191,7 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
      *
      * @see onPrepare
      */
-    open suspend fun onUpdate(config: EventManagerConfig, entities: List<Type>) = Unit
+    open suspend fun onUpdate(config: EventManagerConfig, entities: List<T>) {}
 
     /**
      * Called to partially update entities in persistence.
@@ -216,19 +202,49 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
      *
      * @see onPrepare
      */
-    open suspend fun onPartial(config: EventManagerConfig, entities: List<Type>) = Unit
+    open suspend fun onPartial(config: EventManagerConfig, entities: List<T>) {}
 
     /**
      * Called to delete, if exist, entities in persistence.
      *
      * Note: A transaction wraps this function and must return as fast as possible.
      */
-    open suspend fun onDelete(config: EventManagerConfig, keys: List<Key>) = Unit
+    open suspend fun onDelete(config: EventManagerConfig, keys: List<K>) {}
 
     /**
      * Called to reset/delete all entities in persistence, for this type.
      *
      * Note: Usually a good time the fetch minimal data after deletion.
      */
-    open suspend fun onResetAll(config: EventManagerConfig) = Unit
+    open suspend fun onResetAll(config: EventManagerConfig) {}
+
+    /**
+     * Called after successfully applying the set of modifications.
+     *
+     * Note: [onComplete] will be called right after.
+     *
+     * @see onComplete
+     */
+    open suspend fun onSuccess(config: EventManagerConfig) {}
+
+    /**
+     * Called after failing applying the set of modifications.
+     *
+     * Note: [onResetAll] will be called right after.
+     *
+     * @see onResetAll
+     */
+    open suspend fun onFailure(config: EventManagerConfig) {}
+
+    /**
+     * Called as a final step, whether it is a success or a failure.
+     *
+     * Note: It can be used to perform any final cleanup before processing the next set of modifications.
+     *       Do not count on this method being called as a place for saving data, there is no retry logic here.
+     *       For those use cases, you should rely on [onSuccess] or on [onFailure], not here.
+     *
+     * @see onSuccess
+     * @see onFailure
+     */
+    open suspend fun onComplete(config: EventManagerConfig) {}
 }

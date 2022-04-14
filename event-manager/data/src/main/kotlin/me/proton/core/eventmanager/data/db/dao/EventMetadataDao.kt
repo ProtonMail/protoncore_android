@@ -45,11 +45,20 @@ abstract class EventMetadataDao : BaseDao<EventMetadataEntity>() {
     @Query("SELECT * FROM EventMetadataEntity WHERE config = :config AND userId = :userId AND eventId = :eventId")
     abstract suspend fun get(userId: UserId, config: EventManagerConfig, eventId: String): EventMetadataEntity?
 
+    @Query("UPDATE OR REPLACE EventMetadataEntity SET eventId = :newEventId WHERE config = :config AND userId = :userId AND eventId = :oldEventId")
+    abstract suspend fun updateEventId(userId: UserId, config: EventManagerConfig, oldEventId: String?, newEventId: String)
+
+    @Query("UPDATE OR REPLACE EventMetadataEntity SET nextEventId = :nextEventId WHERE config = :config AND userId = :userId AND eventId = :eventId")
+    abstract suspend fun updateNextEventId(userId: UserId, config: EventManagerConfig, eventId: String?, nextEventId: String)
+
     @Query("UPDATE EventMetadataEntity SET state = :state, updatedAt = :updatedAt WHERE config = :config AND userId = :userId AND eventId = :eventId")
     abstract suspend fun updateState(userId: UserId, config: EventManagerConfig, eventId: String, state: State, updatedAt: Long)
 
     @Query("UPDATE EventMetadataEntity SET state = :state, updatedAt = :updatedAt WHERE config = :config AND userId = :userId")
     abstract suspend fun updateState(userId: UserId, config: EventManagerConfig, state: State, updatedAt: Long)
+
+    @Query("UPDATE EventMetadataEntity SET retry = :retry, updatedAt = :updatedAt WHERE config = :config AND userId = :userId")
+    abstract suspend fun updateRetry(userId: UserId, config: EventManagerConfig, retry: Int, updatedAt: Long)
 
     @Query("DELETE FROM EventMetadataEntity WHERE config = :config AND userId = :userId AND eventId = :eventId")
     abstract suspend fun delete(userId: UserId, config: EventManagerConfig, eventId: String)

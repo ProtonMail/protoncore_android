@@ -33,7 +33,18 @@ data class EventMetadata(
     val state: State = State.Enqueued,
     val createdAt: Long,
     val updatedAt: Long? = null
-)
+) {
+    companion object {
+        fun newFrom(config: EventManagerConfig, eventId: EventId?) = EventMetadata(
+            userId = config.userId,
+            eventId = eventId,
+            config = config,
+            retry = 0,
+            state = State.Enqueued,
+            createdAt = System.currentTimeMillis()
+        )
+    }
+}
 
 enum class RefreshType(val value: Int) {
     Nothing(0),
@@ -42,18 +53,29 @@ enum class RefreshType(val value: Int) {
     All(255);
 
     companion object {
-        val map = values().associateBy { it.value }
+        val mapByValue = values().associateBy { it.value }
+        val mapByName = values().associateBy { it.name }
+        fun enumOf(name: String?) = name?.let { mapByName[name] ?: All }
     }
 }
 
-enum class State(val value: Int) {
-    Cancelled(-1),
-    Enqueued(0),
-    Fetching(1),
-    Persisted(2),
-    NotifyPrepare(3),
-    NotifyEvents(4),
-    NotifyResetAll(5),
-    NotifyComplete(6),
-    Completed(7),
+enum class State {
+    Cancelled,
+    Enqueued,
+    Fetching,
+    Persisted,
+    NotifyResetAll,
+    NotifyPrepare,
+    NotifyEvents,
+    Success,
+    NotifySuccess,
+    Failure,
+    NotifyFailure,
+    NotifyComplete,
+    Completed;
+
+    companion object {
+        val map = values().associateBy { it.name }
+        fun enumOf(value: String?) = map[value] ?: Enqueued
+    }
 }

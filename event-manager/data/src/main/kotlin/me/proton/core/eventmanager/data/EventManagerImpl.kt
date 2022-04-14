@@ -33,15 +33,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.SerializationException
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.eventmanager.data.extension.runCatching
 import me.proton.core.eventmanager.data.extension.runInTransaction
 import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManager
 import me.proton.core.eventmanager.domain.EventManagerConfig
-import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventId
 import me.proton.core.eventmanager.domain.entity.EventMetadata
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -61,11 +60,13 @@ interface EventManagerFactory {
     fun create(deserializer: EventDeserializer): EventManagerImpl
 }
 
+@Suppress("UseIfInsteadOfWhen", "ClassOrdering", "ComplexMethod", "TooManyFunctions")
 class EventManagerImpl @AssistedInject constructor(
     @EventManagerCoroutineScope private val coroutineScope: CoroutineScope,
     private val appLifecycleProvider: AppLifecycleProvider,
     private val accountManager: AccountManager,
     private val eventWorkerManager: EventWorkerManager,
+    private val database: EventMetadataDatabase,
     internal val eventMetadataRepository: EventMetadataRepository,
     @Assisted val deserializer: EventDeserializer
 ) : EventManager {
@@ -76,37 +77,43 @@ class EventManagerImpl @AssistedInject constructor(
 
     internal val eventListenersByOrder = sortedMapOf<Int, MutableSet<EventListener<*, *>>>()
 
-    private suspend fun deserializeEventsByListener(
-        response: EventsResponse
-    ): Map<EventListener<*, *>, List<Event<*, *>>> {
-        return eventListenersByOrder.values.flatten().associateWith { eventListener ->
-            eventListener.deserializeEvents(config, response).orEmpty()
-        }
-    }
+    private suspend fun getMetadataFirstUncompleted() = eventMetadataRepository.get(config)
+        .firstOrNull { it.state != State.Completed }
 
-    private suspend fun processFirstFromConfig() {
-        val metadata = eventMetadataRepository.get(config).firstOrNull()
+    private suspend fun getMetadataLastCompleted() = eventMetadataRepository.get(config)
+        .lastOrNull { it.state == State.Completed }
+
+    private suspend fun processFirstUncompleted() {
+        val metadata = getMetadataFirstUncompleted()
         when {
             metadata == null -> stop()
-            metadata.retry > retriesBeforeReset -> {
+            metadata.retry > retriesBeforeDeleteAllMetadata -> {
                 reportFailure(metadata)
-                reset()
+                deleteAllMetadata()
             }
             metadata.retry > retriesBeforeNotifyResetAll -> {
                 reportFailure(metadata)
                 notifyResetAll(metadata)
+            }
+            metadata.retry > retriesBeforeNotifyFailure -> {
+                reportFailure(metadata)
+                notifyFailure(metadata)
             }
             else -> when (metadata.state) {
                 State.Cancelled -> fetch(metadata)
                 State.Enqueued -> fetch(metadata)
                 State.Fetching -> fetch(metadata)
                 State.Persisted -> notify(metadata)
+                State.NotifyResetAll -> notifyResetAll(metadata)
                 State.NotifyPrepare -> notifyPrepare(metadata)
                 State.NotifyEvents -> notifyPrepare(metadata)
-                State.NotifyResetAll -> notifyResetAll(metadata)
-                State.NotifyComplete -> notifyComplete(metadata, success = true)
-                State.Completed -> enqueue(metadata.nextEventId, immediately = true)
-            }
+                State.Success -> notifySuccess(metadata)
+                State.NotifySuccess -> notifySuccess(metadata)
+                State.Failure -> notifyFailure(metadata)
+                State.NotifyFailure -> notifyFailure(metadata)
+                State.NotifyComplete -> notifyComplete(metadata)
+                State.Completed -> enqueueOrStop(immediately = true, failure = false)
+            }.exhaustive
         }
     }
 
@@ -115,13 +122,14 @@ class EventManagerImpl @AssistedInject constructor(
         CoreLogger.log(LogTag.REPORT_MAX_RETRY, "Max Failure reached (current: ${metadata.eventId}): $list")
     }
 
-    private suspend fun reset() {
+    private suspend fun deleteAllMetadata() {
         eventMetadataRepository.deleteAll(config)
-        enqueue(eventId = null, immediately = true)
+        enqueueOrStop(immediately = true, failure = false)
     }
 
     private suspend fun fetch(metadata: EventMetadata) {
         val eventId = metadata.eventId ?: getLatestEventId()
+        eventMetadataRepository.updateEventId(config, metadata.eventId, eventId)
         runCatching(
             config = config,
             eventId = eventId,
@@ -131,19 +139,24 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             val response = getEventResponse(eventId)
             val deserializedMetadata = deserializeEventMetadata(eventId, response)
-            eventMetadataRepository.update(deserializedMetadata)
+            eventMetadataRepository.update(deserializedMetadata.copy(state = State.Persisted))
             deserializedMetadata
         }.onFailure {
             when {
                 // throw it -> Use the WorkManager RETRY mechanism (backoff + network constraint).
                 it is ApiException && it.isForceUpdate() -> throw it
-                it is ApiException && it.isRetryable().not() -> notifyResetAll(metadata)
-                it is SerializationException -> notifyResetAll(metadata)
+                it is ApiException && it.isRetryable().not() -> permanentFetchFailure(metadata, it)
+                it is SerializationException -> permanentFetchFailure(metadata, it)
                 else -> throw it
             }
         }.onSuccess {
             notify(it)
         }
+    }
+
+    private suspend fun permanentFetchFailure(metadata: EventMetadata, error: Throwable) {
+        CoreLogger.e(LogTag.FETCH_ERROR, error)
+        notifyResetAll(metadata)
     }
 
     private suspend fun notify(metadata: EventMetadata) {
@@ -164,15 +177,18 @@ class EventManagerImpl @AssistedInject constructor(
             successState = State.NotifyComplete,
             failureState = State.NotifyResetAll
         ) {
+            // If needed, get latest remote eventId, before notifyResetAll, so we don't miss any changes.
+            val nextEventId = metadata.nextEventId ?: getLatestEventId()
+            eventMetadataRepository.updateNextEventId(config, metadata.eventId, nextEventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach {
                 it.notifyResetAll(config)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
-            enqueue(requireNotNull(metadata.eventId), immediately = true)
+            enqueueOrStop(immediately = true, failure = true)
         }.onSuccess {
-            notifyComplete(metadata, success = false)
+            notifyComplete(metadata)
         }
     }
 
@@ -184,18 +200,13 @@ class EventManagerImpl @AssistedInject constructor(
             successState = State.NotifyEvents,
             failureState = State.NotifyPrepare
         ) {
-            // Set actions for all listeners.
-            val eventsByListener = deserializeEventsByListener(requireNotNull(metadata.response))
-            eventsByListener.forEach { (eventListener, list) ->
-                eventListener.setActionMap(config, list as List<Nothing>)
-            }
             // Notify prepare for all listeners.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyPrepare(config)
+                eventListener.notifyPrepare(config, metadata)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
-            enqueue(metadata.eventId, immediately = true)
+            enqueueOrStop(immediately = true, failure = true)
         }.onSuccess {
             notifyEvents(metadata)
         }
@@ -206,69 +217,122 @@ class EventManagerImpl @AssistedInject constructor(
             config = config,
             eventId = requireNotNull(metadata.eventId),
             processingState = State.NotifyEvents,
-            successState = State.NotifyComplete,
+            successState = State.Success,
             failureState = State.NotifyPrepare
         ) {
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyEvents(config)
+                eventListener.notifyEvents(config, metadata)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
-            enqueue(metadata.eventId, immediately = true)
+            enqueueOrStop(immediately = true, failure = true)
         }.onSuccess {
-            notifyComplete(metadata, success = true)
+            notifySuccess(metadata)
         }
     }
 
-    private suspend fun notifyComplete(metadata: EventMetadata, success: Boolean) {
+    private suspend fun notifySuccess(metadata: EventMetadata) {
+        runCatching(
+            config = config,
+            eventId = requireNotNull(metadata.eventId),
+            processingState = State.NotifySuccess,
+            successState = State.NotifyComplete,
+            failureState = State.Success
+        ) {
+            // Fully sequential and ordered.
+            eventListenersByOrder.values.flatten().forEach { eventListener ->
+                eventListener.notifySuccess(config, metadata)
+            }
+        }.onFailure {
+            CoreLogger.e(LogTag.NOTIFY_ERROR, it)
+            enqueueOrStop(immediately = true, failure = true)
+        }.onSuccess {
+            notifyComplete(metadata)
+        }
+    }
+
+    private suspend fun notifyFailure(metadata: EventMetadata) {
+        runCatching(
+            config = config,
+            eventId = requireNotNull(metadata.eventId),
+            processingState = State.NotifyFailure,
+            successState = State.NotifyResetAll,
+            failureState = State.Failure
+        ) {
+            // Fully sequential and ordered.
+            eventListenersByOrder.values.flatten().forEach { eventListener ->
+                eventListener.notifyFailure(config, metadata)
+            }
+        }.onFailure {
+            CoreLogger.e(LogTag.NOTIFY_ERROR, it)
+            enqueueOrStop(immediately = true, failure = true)
+        }.onSuccess {
+            notifyResetAll(metadata)
+        }
+    }
+
+    private suspend fun notifyComplete(metadata: EventMetadata) {
         runCatching(
             config = config,
             eventId = requireNotNull(metadata.eventId),
             processingState = State.NotifyComplete,
             successState = State.Completed,
-            failureState = State.Completed
+            failureState = State.Completed,
         ) {
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                if (success) {
-                    eventListener.notifySuccess(config)
-                } else {
-                    eventListener.notifyFailure(config)
-                }
-                eventListener.notifyComplete(config)
+                eventListener.notifyComplete(config, metadata)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
-            enqueue(metadata.nextEventId, immediately = metadata.more ?: false)
+            enqueueOrStop(immediately = metadata.more ?: true, failure = true)
         }.onSuccess {
-            enqueue(metadata.nextEventId, immediately = metadata.more ?: false)
+            enqueueOrStop(immediately = metadata.more ?: true, failure = false)
         }
     }
 
-    private suspend fun enqueue(eventId: EventId?, immediately: Boolean) {
-        val metadata = eventId?.let { eventMetadataRepository.get(config, it) }
-        eventMetadataRepository.update(
-            metadata?.takeUnless { metadata.eventId == metadata.nextEventId }?.copy(
-                retry = metadata.retry.plus(1)
-            ) ?: EventMetadata(
-                userId = config.userId,
-                eventId = eventId,
-                config = config,
-                retry = 0,
-                state = State.Enqueued,
-                createdAt = System.currentTimeMillis()
-            )
-        )
-        eventWorkerManager.enqueue(config, immediately)
+    private enum class Action { None, Enqueue, Stop }
+
+    private suspend fun getNextAction(failure: Boolean): Action {
+        return database.inTransaction {
+            val account = accountManager.getAccount(config.userId).firstOrNull()
+            when {
+                account == null -> Action.Stop
+                account.state != AccountState.Ready -> Action.Stop
+                else -> {
+                    val update = when (val metadata = getMetadataFirstUncompleted()) {
+                        null -> EventMetadata.newFrom(config, eventId = getMetadataLastCompleted()?.nextEventId)
+                        else -> when (metadata.state) {
+                            // Paused states should not change metadata.
+                            State.Cancelled,
+                            State.Enqueued -> metadata
+                            // Final states should enqueue nextEventId.
+                            State.Completed -> EventMetadata.newFrom(config, metadata.nextEventId)
+                            else -> when {
+                                // Any failure should be retried.
+                                failure -> metadata.copy(retry = metadata.retry + 1)
+                                // Prevent cancelling/re-enqueueing currently running non-failure.
+                                eventWorkerManager.isRunning(config) -> null
+                                // All other states should be retried.
+                                else -> metadata.copy(retry = metadata.retry + 1)
+                            }
+                        }
+                    }
+                    when (update) {
+                        null -> Action.None
+                        else -> Action.Enqueue.also { eventMetadataRepository.update(update) }
+                    }
+                }
+            }
+        }
     }
 
-    private suspend fun enqueueOrStop(account: Account?) {
-        when {
-            account == null || account.userId != config.userId -> stop()
-            account.state != AccountState.Ready -> stop()
-            eventMetadataRepository.get(config).isEmpty() -> enqueue(eventId = null, immediately = true)
-            else -> eventWorkerManager.enqueue(config, immediately = true)
+    private suspend fun enqueueOrStop(immediately: Boolean, failure: Boolean) {
+        when (getNextAction(failure)) {
+            Action.None -> Unit
+            Action.Enqueue -> eventWorkerManager.enqueue(config, immediately)
+            Action.Stop -> stop()
         }
     }
 
@@ -276,7 +340,7 @@ class EventManagerImpl @AssistedInject constructor(
     private suspend fun collectAccountChanges() {
         accountManager.getAccount(config.userId)
             .distinctUntilChangedBy { it?.state }
-            .onEach { account -> enqueueOrStop(account) }
+            .onEach { enqueueOrStop(immediately = true, failure = false) }
             .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
             .collect()
     }
@@ -285,7 +349,7 @@ class EventManagerImpl @AssistedInject constructor(
     private suspend fun collectAppStateChanges() {
         appLifecycleProvider.state
             .filter { it == AppLifecycleProvider.State.Foreground }
-            .onEach { enqueueOrStop(accountManager.getAccount(config.userId).firstOrNull()) }
+            .onEach { enqueueOrStop(immediately = true, failure = false) }
             .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
             .collect()
     }
@@ -296,15 +360,18 @@ class EventManagerImpl @AssistedInject constructor(
             launch { collectAccountChanges() }
             launch { collectAppStateChanges() }
         }
-        // Now isStarted == true -> observeJob.isActive.
+        // Now isStarted === true === observeJob.isActive.
     }
 
     private suspend fun internalStop() {
-        if (!isStarted) return
-        eventWorkerManager.cancel(config)
-        eventMetadataRepository.updateState(config, State.Cancelled)
-        observeJob?.cancel()
-        // Now isStarted == false -> !observeJob.isActive.
+        try {
+            eventWorkerManager.cancel(config)
+        } finally {
+            eventMetadataRepository.updateState(config, State.Cancelled)
+            eventMetadataRepository.updateRetry(config, 0)
+            observeJob?.cancel()
+        }
+        // Now isStarted === false === observeJob.isActive.
     }
 
     private suspend fun <R> internalSuspend(block: suspend () -> R): R {
@@ -339,7 +406,7 @@ class EventManagerImpl @AssistedInject constructor(
         eventListenersByOrder.getOrPut(eventListener.order) { mutableSetOf() }.add(eventListener)
     }
 
-    override suspend fun process() = processFirstFromConfig()
+    override suspend fun process() = processFirstUncompleted()
 
     override suspend fun getLatestEventId(): EventId =
         eventMetadataRepository.getLatestEventId(config.userId, deserializer.endpoint)
@@ -352,8 +419,9 @@ class EventManagerImpl @AssistedInject constructor(
         deserializer.deserializeEventMetadata(eventId, response)
 
     companion object {
-        // Constraint: retriesBeforeNotifyResetAll < retriesBeforeReset.
-        const val retriesBeforeNotifyResetAll = 3
-        const val retriesBeforeReset = 6
+        private const val minRetries = 3
+        const val retriesBeforeNotifyFailure = minRetries
+        const val retriesBeforeNotifyResetAll = retriesBeforeNotifyFailure + minRetries
+        const val retriesBeforeDeleteAllMetadata = retriesBeforeNotifyResetAll + minRetries
     }
 }

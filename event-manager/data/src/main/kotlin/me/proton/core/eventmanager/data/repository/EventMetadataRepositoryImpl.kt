@@ -60,11 +60,20 @@ open class EventMetadataRepositoryImpl(
     override suspend fun update(metadata: EventMetadata) =
         insertOrUpdate(metadata.toEntity().copy(updatedAt = System.currentTimeMillis()))
 
+    override suspend fun updateEventId(config: EventManagerConfig, oldEventId: EventId?, newEventId: EventId) =
+        eventMetadataDao.updateEventId(config.userId, config, oldEventId?.id, newEventId.id)
+
+    override suspend fun updateNextEventId(config: EventManagerConfig, eventId: EventId?, nextEventId: EventId) =
+        eventMetadataDao.updateNextEventId(config.userId, config, eventId?.id, nextEventId.id)
+
     override suspend fun updateState(config: EventManagerConfig, state: State) =
         eventMetadataDao.updateState(config.userId, config, state, System.currentTimeMillis())
 
     override suspend fun updateState(config: EventManagerConfig, eventId: EventId, state: State) =
         eventMetadataDao.updateState(config.userId, config, eventId.id, state, System.currentTimeMillis())
+
+    override suspend fun updateRetry(config: EventManagerConfig, retry: Int) =
+        eventMetadataDao.updateRetry(config.userId, config, retry, System.currentTimeMillis())
 
     override suspend fun getAll(userId: UserId): List<EventMetadata> =
         eventMetadataDao.getAll(userId).map { it.fromEntity() }

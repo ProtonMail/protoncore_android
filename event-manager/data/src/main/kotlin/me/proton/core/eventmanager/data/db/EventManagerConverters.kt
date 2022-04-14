@@ -20,6 +20,8 @@ package me.proton.core.eventmanager.data.db
 
 import androidx.room.TypeConverter
 import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.entity.RefreshType
+import me.proton.core.eventmanager.domain.entity.State
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 
@@ -29,4 +31,16 @@ class EventManagerConverters {
 
     @TypeConverter
     fun fromStringToEventManagerConfig(value: String?): EventManagerConfig? = value?.deserialize()
+
+    @TypeConverter
+    fun fromStateToString(value: State?) = value?.name
+
+    @TypeConverter
+    fun fromStringToState(value: String?): State? = State.enumOf(value)
+
+    @TypeConverter
+    fun fromRefreshTypeToString(value: RefreshType?) = value?.name
+
+    @TypeConverter
+    fun fromStringToRefreshType(value: String?): RefreshType? = RefreshType.enumOf(value)
 }

@@ -19,7 +19,10 @@
 package me.proton.core.eventmanager.data.work
 
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import androidx.work.await
+import kotlinx.coroutines.delay
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
@@ -46,5 +49,11 @@ class EventWorkerManagerImpl @Inject constructor(
     override fun cancel(config: EventManagerConfig) {
         val uniqueWorkName = getUniqueWorkName(config)
         workManager.cancelUniqueWork(uniqueWorkName)
+    }
+
+    override suspend fun isRunning(config: EventManagerConfig): Boolean {
+        val uniqueWorkName = getUniqueWorkName(config)
+        val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().first()
+        return info.state == WorkInfo.State.RUNNING
     }
 }

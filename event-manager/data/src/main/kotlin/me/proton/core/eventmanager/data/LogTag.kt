@@ -27,6 +27,9 @@ object LogTag {
     /** Tag for Notify Errors. */
     const val NOTIFY_ERROR = "core.eventmanager.notify"
 
+    /** Tag for Fetch Errors. */
+    const val FETCH_ERROR = "core.eventmanager.fetch"
+
     /** Tag for Collect Errors. */
     const val COLLECT_ERROR = "core.eventmanager.collect"
 

@@ -55,7 +55,7 @@ internal data class CoreEventDeserializer(
                 eventId = eventId,
                 config = config,
                 nextEventId = EventId(it.eventId),
-                refresh = RefreshType.map[it.refresh],
+                refresh = RefreshType.mapByValue[it.refresh],
                 more = it.more > 0,
                 response = response,
                 createdAt = System.currentTimeMillis()
@@ -79,7 +79,7 @@ internal data class CalendarEventDeserializer(
                 eventId = eventId,
                 config = config,
                 nextEventId = EventId(it.eventId),
-                refresh = RefreshType.map[it.refresh],
+                refresh = RefreshType.mapByValue[it.refresh],
                 more = it.more > 0,
                 response = response,
                 createdAt = System.currentTimeMillis()

@@ -49,9 +49,10 @@ public final class me/proton/core/eventmanager/data/EventManagerFactory_Impl : m
 
 public final class me/proton/core/eventmanager/data/EventManagerImpl : me/proton/core/eventmanager/domain/EventManager {
 	public static final field Companion Lme/proton/core/eventmanager/data/EventManagerImpl$Companion;
+	public static final field retriesBeforeDeleteAllMetadata I
+	public static final field retriesBeforeNotifyFailure I
 	public static final field retriesBeforeNotifyResetAll I
-	public static final field retriesBeforeReset I
-	public fun <init> (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)V
+	public fun <init> (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)V
 	public fun deserializeEventMetadata (Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
 	public final fun getDeserializer ()Lme/proton/core/eventmanager/data/EventDeserializer;
@@ -69,10 +70,10 @@ public final class me/proton/core/eventmanager/data/EventManagerImpl$Companion {
 }
 
 public final class me/proton/core/eventmanager/data/EventManagerImpl_Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/EventManagerImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/EventManagerImpl_Factory;
 	public fun get (Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
-	public static fun newInstance (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
+	public static fun newInstance (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
 }
 
 public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : me/proton/core/eventmanager/domain/EventManagerProvider {
@@ -83,6 +84,7 @@ public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : m
 
 public final class me/proton/core/eventmanager/data/LogTag {
 	public static final field COLLECT_ERROR Ljava/lang/String;
+	public static final field FETCH_ERROR Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/LogTag;
 	public static final field NOTIFY_ERROR Ljava/lang/String;
 	public static final field WORKER_ERROR Ljava/lang/String;
@@ -285,7 +287,11 @@ public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestE
 public final class me/proton/core/eventmanager/data/db/EventManagerConverters {
 	public fun <init> ()V
 	public final fun fromEventManagerConfigToString (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Ljava/lang/String;
+	public final fun fromRefreshTypeToString (Lme/proton/core/eventmanager/domain/entity/RefreshType;)Ljava/lang/String;
+	public final fun fromStateToString (Lme/proton/core/eventmanager/domain/entity/State;)Ljava/lang/String;
 	public final fun fromStringToEventManagerConfig (Ljava/lang/String;)Lme/proton/core/eventmanager/domain/EventManagerConfig;
+	public final fun fromStringToRefreshType (Ljava/lang/String;)Lme/proton/core/eventmanager/domain/entity/RefreshType;
+	public final fun fromStringToState (Ljava/lang/String;)Lme/proton/core/eventmanager/domain/entity/State;
 }
 
 public abstract interface class me/proton/core/eventmanager/data/db/EventMetadataDatabase : me/proton/core/data/room/db/Database {
@@ -306,6 +312,9 @@ public abstract class me/proton/core/eventmanager/data/db/dao/EventMetadataDao :
 	public abstract fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateEventId (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateNextEventId (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateRetry (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;IJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -362,6 +371,9 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
 	public fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;)Lkotlinx/coroutines/flow/Flow;
 	public fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateNextEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateRetry (Lme/proton/core/eventmanager/domain/EventManagerConfig;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -380,6 +392,7 @@ public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl 
 	public fun <init> (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)V
 	public fun cancel (Lme/proton/core/eventmanager/domain/EventManagerConfig;)V
 	public fun enqueue (Lme/proton/core/eventmanager/domain/EventManagerConfig;Z)V
+	public fun isRunning (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory : dagger/internal/Factory {

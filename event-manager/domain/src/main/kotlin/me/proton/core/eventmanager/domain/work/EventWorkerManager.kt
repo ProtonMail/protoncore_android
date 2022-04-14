@@ -32,9 +32,14 @@ interface EventWorkerManager {
     fun enqueue(config: EventManagerConfig, immediately: Boolean)
 
     /**
-     * Cancel Worker(s) for this [config].
+     * Cancel Worker for this [config].
      */
     fun cancel(config: EventManagerConfig)
+
+    /**
+     * Returns true if Worker is running.
+     */
+    suspend fun isRunning(config: EventManagerConfig): Boolean
 
     companion object {
         val REPEAT_INTERVAL_FOREGROUND = 30.seconds
