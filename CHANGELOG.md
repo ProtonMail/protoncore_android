@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+The changelog is automatically generated from commits that adhere
+to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.
+See [README.md](README.md#allowed-commit-types) for commit types which are used to generate the changelog.
+If needed, you can also manually update this file (provided the general structure is kept).
+
 ## [Unreleased]
 
 ### New

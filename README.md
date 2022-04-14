@@ -16,18 +16,49 @@ or
 implementation("~:network:~")
 ```
 while the first one is suitable for multi-module projects, the latter is the suggested solution for monolithic clients.
+
+# Conventional Commits
+
+For each Merge Request, at least one commit must adhere to
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.
+
+Whenever possible, use a module name as a scope, e.g. `fix(account-manager): Fix login issue`.
+
+## Allowed commit types
+
+- `build`: Changes that affect build system (e.g. Gradle update)
+- `chore`: Changes other than source or test code (e.g. library version updates)
+- `ci`: CI configuration
+- `docs`: Documentation changes
+- `feat`: A new feature
+- `fix`: Bug fixes
+- `perf`: Performance Improvements
+- `refactor`: A change in the source code that neither fixes a bug nor adds a feature
+- `revert`: Reverting a commit
+- `style`: Code style changes, not affecting code meaning (formatting)
+- `test`: Adding new tests or improving existing ones
+- `theme`: Changes related to UI theming
+
+Commits with the following types, will be used to **generate changelog** entries:
+`chore`, `feat`, `fix`, `perf`, `refactor`, `revert`.
     
 # Release
 
 ## Core libraries
 Release process is based on [trunk branch for release process](https://trunkbaseddevelopment.com/branch-for-release/).
-Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch named `release/libs/X.Y.Z`.
+Release is done by the CI.
+
+To trigger a new release, navigate to the latest CI build on the `main` branch and launch
+the `trigger-new-libs-release` job. Before launching it, you can specify the next version number,
+by entering a `NEXT_VERSION` variable. If unspecified, the version number will be calculated automatically.
+
+The `trigger-new-libs-release` job will generate and update the changelog, and commit the changes to
+the `main` branch. At this point you will be able to review the automatic changes.
+If the changes are correct, you should push a new branch named `release/libs/X.Y.Z`.
+
 When the release is successfully done:
 * A message is post on internal communication tool using the content of the [`CHANGELOG.MD`](./CHANGELOG.md) under the entry `## [X.Y.Z].
 * A tag `release/libs/X.Y.Z` is created from the commit used to do the release.
-
-Before triggering a release (by pushing a release branch), `CHANGELOG.MD` should be updated by adding a entry `## [X.Y.Z]` with the content cut/paste from the entry `## [Unreleased]`.
-Release should be made from `main` branch.
 
 ## Version
 - Stable release `X.Y.Z` are published on `MavenCentral`.

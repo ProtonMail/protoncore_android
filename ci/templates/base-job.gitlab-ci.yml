@@ -13,7 +13,7 @@ include:
     - !reference [.gradle-cache, cache]
 
 .ruby-job:
-  image: ruby:2.7
+  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   variables:
     BUNDLE_GEM_PATH: 'vendor/ruby'
   cache:

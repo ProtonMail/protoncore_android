@@ -1,4 +1,3 @@
-
 import io.github.gradlenexus.publishplugin.NexusPublishExtension
 import io.github.gradlenexus.publishplugin.NexusPublishPlugin
 import kotlinx.serialization.Serializable
@@ -71,10 +70,20 @@ private fun generateReleaseNoteIfNeeded(versionName: String): String? {
     val releaseChangelogText = fullChangelogText
         .substringAfter("## [$versionName]", "No changelog :cry:")
         .substringBefore("## [")
+        .replaceCommitHashWithLink()
     return StringBuilder()
         .appendLine("New Core release available `$versionName` :tada:")
         .appendLine(releaseChangelogText)
         .toString()
+}
+
+private fun String.replaceCommitHashWithLink(): String {
+    val projectUrl = System.getenv("CI_PROJECT_URL") ?: return this
+    val commitHashRegex = Regex("\\[([a-fA-F0-9]{8})]")
+    return replace(commitHashRegex) {
+        val hash = it.groupValues[1]
+        "<$projectUrl/-/commit/$hash|$hash>"
+    }
 }
 
 private fun Project.notifyRelease(releaseNote: String) {

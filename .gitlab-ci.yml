@@ -19,6 +19,8 @@ include:
 
   - local: '/ci/templates/base-job.gitlab-ci.yml'
 
+  - local: '/ci/templates/tools.gitlab-ci.yml'
+
   - project: 'proton/devops/atlas-deploy'
     ref: main
     file: '/scenarios/pipeline-env.yml'
@@ -330,6 +332,24 @@ androidTest:coreexample-migration:
   extends: .firebase-tests-common
 
 ## publish stage ###################################################################################
+
+trigger-new-libs-release:
+  extends: .script-job
+  stage: publish
+  when: manual
+  resource_group: release/libs
+  tags:
+    - small
+  variables:
+    NEXT_VERSION: '' # If empty, the version will be automatically calculated.
+  before_script:
+    - source /load-env.sh
+    - !reference [.download-tools, script]
+  script:
+    - ./ci/script/prepareRelease.sh
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+
 release-publish-github:
   stage: publish
   tags:
@@ -343,6 +363,7 @@ release-publish-github:
 publish-libs:
   extends: .gradle-job
   stage: publish
+  resource_group: release/libs
   variables:
     ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
     ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
@@ -359,6 +380,7 @@ publish-libs:
 tag-libs-release:
   extends: .gradle-job
   stage: publish
+  resource_group: release/libs
   needs:
     - job: publish-libs
   rules:
@@ -404,6 +426,7 @@ danger-review:
   needs:
     - unit-tests-and-coverage-report
   script:
+    - !reference [.download-tools, script]
     - bundle exec danger --fail-on-errors=false
   allow_failure: true
   variables:
