@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### New
+
+- ProtonTheme composable considers user's preference to set the Theme
+
 ### Fixes
 
 - Clear consumed Payment Token (HumanVerification token).
