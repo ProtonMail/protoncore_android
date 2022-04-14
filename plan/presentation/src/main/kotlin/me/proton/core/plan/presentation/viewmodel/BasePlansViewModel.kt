@@ -79,7 +79,7 @@ internal abstract class BasePlansViewModel(
         PlanDetailsItem.FreePlanDetailsItem(
             name = freePlan.name,
             displayName = freePlan.title,
-            storage = freePlan.maxSpace,
+            storage = freePlan.maxRewardSpace ?: freePlan.maxSpace,
             members = freePlan.maxMembers,
             addresses = freePlan.maxAddresses,
             calendars = freePlan.maxCalendars,
