@@ -14,3 +14,8 @@
           git -C ./proton-libs checkout "$CORE_COMMIT_SHA";
         fi
       fi
+
+# Each job in the client app, that calls `gradlew`, should also extend this job.
+.checkout_core_submodule_job:
+  variables:
+    CHECKOUT_CORE_SUBMODULE: "true"

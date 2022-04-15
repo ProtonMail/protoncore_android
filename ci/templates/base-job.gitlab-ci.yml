@@ -16,8 +16,6 @@ include:
   image: ruby:2.7
   variables:
     BUNDLE_GEM_PATH: 'vendor/ruby'
-  tags:
-    - xlarge-k8s
   cache:
     - !reference [.ruby-cache, cache]
   before_script:
@@ -28,5 +26,3 @@ include:
 .script-job:
   image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   cache: []
-  tags:
-    - xlarge-k8s
