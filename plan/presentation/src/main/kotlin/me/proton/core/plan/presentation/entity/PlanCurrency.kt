@@ -31,4 +31,8 @@ enum class PlanCurrency(val sign: String) {
             CHF -> Currency.CHF
         }.exhaustive
     }
+
+    companion object {
+        val map = values().associateBy { it.sign }
+    }
 }

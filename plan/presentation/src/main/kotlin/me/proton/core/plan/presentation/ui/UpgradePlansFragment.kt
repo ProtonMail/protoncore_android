@@ -112,7 +112,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
                         val plan = it.subscribedPlans[0]
                         val cycle = plan.cycle
-                        val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency
+                        val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.userCurrency
                         binding.manageSubscriptionText.visibility = VISIBLE
                         binding.currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
