@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Clear consumed Payment Token (HumanVerification token).
 - Current plan used space color indicator.
 - Default plan max space to take into account RewardsMaxSpace.
+- Use user currency in the current plan subscription screen for free plan.
 
 ## [7.1.11]
 

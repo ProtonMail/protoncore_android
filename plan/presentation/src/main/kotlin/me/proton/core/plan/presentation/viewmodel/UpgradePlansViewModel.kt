@@ -35,6 +35,7 @@ import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
 import me.proton.core.user.domain.usecase.GetUser
@@ -67,7 +68,8 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         sealed class Success : SubscribedPlansState() {
             data class SubscribedPlans(
-                val subscribedPlans: List<PlanDetailsItem>
+                val subscribedPlans: List<PlanDetailsItem>,
+                val userCurrency: PlanCurrency?
             ) : Success()
         }
 
@@ -110,7 +112,7 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
         getAvailablePlansForUpgrade(userId, isFree)
-        emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans))
+        emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans, PlanCurrency.map[user.currency]))
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
     }.onEach {
