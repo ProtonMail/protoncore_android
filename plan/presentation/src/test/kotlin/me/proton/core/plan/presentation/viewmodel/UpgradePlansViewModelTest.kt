@@ -230,9 +230,27 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
             val plansStatus = awaitItem()
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            coVerify(exactly = 1) { getPlanDefaultUseCase(testUserId) }
             assertEquals(1, plansStatus.plans.size)
-            val planOne = plansStatus.plans[0]
-            assertEquals("plan-name-1", planOne.name)
+            assertEquals("plan-name-1", plansStatus.plans[0].name)
+        }
+    }
+
+    @Test
+    fun `get plans for upgrade currently free current plan success handled correctly`() = coroutinesTest {
+        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
+        viewModel.subscribedPlansState.test {
+            // WHEN
+            viewModel.getCurrentSubscribedPlans(testUserId)
+            // THEN
+            assertIs<UpgradePlansViewModel.SubscribedPlansState.Idle>(awaitItem())
+            assertIs<UpgradePlansViewModel.SubscribedPlansState.Processing>(awaitItem())
+            val currentPlan = awaitItem()
+            assertTrue(currentPlan is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans)
+            assertEquals(1, currentPlan.subscribedPlans.size)
+            val plan = currentPlan.subscribedPlans[0]
+            assertEquals("plan-default", plan.name)
+            assertEquals(1, plan.storage)
         }
     }
 
