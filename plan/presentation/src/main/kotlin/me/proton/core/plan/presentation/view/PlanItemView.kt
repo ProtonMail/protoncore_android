@@ -83,7 +83,13 @@ class PlanItemView @JvmOverloads constructor(
     private fun bindCurrentPlan(plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
         currentPlanGroup.visibility = VISIBLE
         storageProgress.apply {
-            setIndicatorColor(ContextCompat.getColor(context, R.color.green_pea))
+            val usedPercentage = plan.usedSpace.toDouble() / plan.maxSpace
+            val indicatorColor = when {
+                usedPercentage < 0.5 -> ContextCompat.getColor(context, R.color.notification_success)
+                usedPercentage < 0.9 -> ContextCompat.getColor(context, R.color.notification_warning)
+                else -> ContextCompat.getColor(context, R.color.notification_error)
+            }
+            setIndicatorColor(indicatorColor)
             progress = plan.progressValue
         }
         storageText.text = formatUsedSpace(context, plan.usedSpace, plan.maxSpace)
