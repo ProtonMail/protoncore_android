@@ -48,6 +48,8 @@ internal data class PlanResponse(
     val maxCalendars: Int,
     @SerialName("MaxSpace")
     val maxSpace: Long,
+    @SerialName("MaxRewardsSpace")
+    val maxRewardSpace: Long? = null,
     @SerialName("MaxMembers")
     val maxMembers: Int,
     @SerialName("MaxVPN")

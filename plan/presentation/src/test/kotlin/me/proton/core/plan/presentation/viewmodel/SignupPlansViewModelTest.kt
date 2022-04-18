@@ -135,6 +135,34 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             val planThree = plansStatus.plans[2]
             coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
             assertEquals("plan-default", planThree.name)
+            assertEquals(1, planThree.storage)
+            assertEquals("plan-name-1", planOne.name)
+            assertEquals("plan-name-2", planTwo.name)
+        }
+    }
+
+    @Test
+    fun `get plans for signup reward storage respected`() = coroutinesTest {
+        coEvery { plansRepository.getPlansDefault(null) } returns testDefaultPlan.copy(maxRewardSpace = 2)
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
+            testPlan,
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2")
+        )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(3, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            val planThree = plansStatus.plans[2]
+            coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
+            assertEquals("plan-default", planThree.name)
+            assertEquals(2, planThree.storage)
             assertEquals("plan-name-1", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
         }

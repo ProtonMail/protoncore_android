@@ -92,7 +92,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     )
     private val testSubscribedPlan = Plan(
         "test-subscribed-plan-id", 1, 12, "test-subscribed-plan-name", "test-plan", "EUR",
-        2, 1, 1, 1, 1, 1, 1, 1,
+        2, 1, 1, 1, 2, 1, 1, 1, 1,
         1, 1, 1, true
     )
     private val testSubscription = Subscription(

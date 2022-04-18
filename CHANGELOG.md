@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixes
 
 - Clear consumed Payment Token (HumanVerification token).
+- Current plan used space color indicator.
+- Default plan max space to take into account RewardsMaxSpace.
 
 ## [7.1.11]
 
