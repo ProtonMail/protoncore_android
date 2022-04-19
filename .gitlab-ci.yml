@@ -246,6 +246,14 @@ vpn-integration-tests:
     project: ProtonVPN/android/android-app-new
     branch: $VPN_INTEGRATION_REF
 
+drive-integration-tests:
+  extends: .client-integration-tests
+  variables:
+    DRIVE_INTEGRATION_REF: develop
+  trigger:
+    project: android/drive/proton-drive
+    branch: $DRIVE_INTEGRATION_REF
+
 ## firebase stage ##################################################################################
 .firebase-tests-common:
   stage: firebase
