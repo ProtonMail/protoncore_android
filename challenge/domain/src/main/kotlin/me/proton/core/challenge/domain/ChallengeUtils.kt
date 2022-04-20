@@ -21,7 +21,7 @@ package me.proton.core.challenge.domain
 import me.proton.core.domain.entity.Product
 import me.proton.core.util.kotlin.exhaustive
 
-public const val CHALLENGE_VERSION: String = "2.0.1"
+public const val CHALLENGE_VERSION: String = "2.0.2"
 private const val CHALLENGE_FRAME_SUFFIX = "challenge"
 
 public fun Product.framePrefix(): String = when (this) {

@@ -21,7 +21,6 @@ package me.proton.android.core.coreexample.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.GET
-import retrofit2.http.PUT
 
 interface CoreExampleApi : BaseRetrofitApi {
 
@@ -31,6 +30,6 @@ interface CoreExampleApi : BaseRetrofitApi {
     @GET("keys/salts")
     suspend fun triggerConfirmPasswordLockedScope(): GenericResponse
 
-    @PUT("settings/mnemonic")
+    @GET("settings/mnemonic")
     suspend fun triggerConfirmPasswordForPasswordScope(): GenericResponse
 }

@@ -35,7 +35,7 @@ import me.proton.core.presentation.ui.view.ProtonInput
 import javax.inject.Inject
 
 @AndroidEntryPoint
-public class ProtonMetadataInput : ProtonInput {
+public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPasteListener {
 
     @Inject
     public lateinit var challengeManager: ChallengeManager
@@ -116,6 +116,7 @@ public class ProtonMetadataInput : ProtonInput {
             }
             false
         }
+        input.setCopyPasteListener(this)
     }
 
     private fun calculateFocus(focusLost: Boolean = true): Int {
@@ -166,6 +167,14 @@ public class ProtonMetadataInput : ProtonInput {
             pastes = pastes,
             keys = keys
         )
+    }
+
+    override fun onCopyHappened() {
+        keys.add(COPY)
+    }
+
+    override fun onPasteHappened() {
+        keys.add(PASTE)
     }
 
     private companion object {

@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText
 public class ProtonCopyPasteEditText : TextInputEditText {
 
     private val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    private var copyPasteListener: CopyPasteListener? = null
 
     internal val copyList: MutableList<String> = mutableListOf()
     internal val pasteList: MutableList<String> = mutableListOf()
@@ -50,14 +51,31 @@ public class ProtonCopyPasteEditText : TextInputEditText {
         return consumed
     }
 
-    private fun onCopy() = checkClipboardAndAddToList(copyList)
+    private fun onCopy() {
+        if (checkClipboardAndAddToList(copyList)) {
+            copyPasteListener?.onCopyHappened()
+        }
+    }
 
-    private fun onPaste() = checkClipboardAndAddToList(pasteList)
+    private fun onPaste() {
+        if (checkClipboardAndAddToList(pasteList)) {
+            copyPasteListener?.onPasteHappened()
+        }
+    }
 
-    private fun checkClipboardAndAddToList(list: MutableList<String>) {
+    private fun checkClipboardAndAddToList(list: MutableList<String>): Boolean =
         if (clipboard.hasPrimaryClip() && clipboard.primaryClipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) == true) {
             val item = clipboard.primaryClip?.getItemAt(0)
             list.add(item?.text.toString())
-        }
+            true
+        } else false
+
+    public fun setCopyPasteListener(listener: CopyPasteListener) {
+        copyPasteListener = listener
+    }
+
+    public interface CopyPasteListener {
+        public fun onCopyHappened()
+        public fun onPasteHappened()
     }
 }

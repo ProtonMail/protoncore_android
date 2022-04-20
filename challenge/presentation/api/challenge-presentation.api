@@ -22,9 +22,15 @@ public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun onTextContextMenuItem (I)Z
+	public final fun setCopyPasteListener (Lme/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener;)V
 }
 
-public final class me/proton/core/challenge/presentation/ProtonMetadataInput : me/proton/core/presentation/ui/view/ProtonInput {
+public abstract interface class me/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener {
+	public abstract fun onCopyHappened ()V
+	public abstract fun onPasteHappened ()V
+}
+
+public final class me/proton/core/challenge/presentation/ProtonMetadataInput : me/proton/core/presentation/ui/view/ProtonInput, me/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener {
 	public field challengeManager Lme/proton/core/challenge/domain/ChallengeManager;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
@@ -32,6 +38,8 @@ public final class me/proton/core/challenge/presentation/ProtonMetadataInput : m
 	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChallengeManager ()Lme/proton/core/challenge/domain/ChallengeManager;
 	public synthetic fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
+	public fun onCopyHappened ()V
+	public fun onPasteHappened ()V
 	public final fun setChallengeManager (Lme/proton/core/challenge/domain/ChallengeManager;)V
 }
 
