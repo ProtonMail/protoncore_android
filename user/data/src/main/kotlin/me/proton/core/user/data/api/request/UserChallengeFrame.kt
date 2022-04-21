@@ -23,6 +23,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.challenge.data.appLanguage
 import me.proton.core.challenge.data.deviceFontSize
+import me.proton.core.challenge.data.deviceInputMethods
 import me.proton.core.challenge.data.deviceModelName
 import me.proton.core.challenge.data.deviceRegion
 import me.proton.core.challenge.data.deviceStorage
@@ -49,6 +50,7 @@ sealed class UserChallengeFrame {
     abstract val darkMode: Boolean
     abstract val version: String
     abstract val keyDownField: List<String>
+    abstract val keyboards: List<String>
 
     @Serializable
     data class UserChallengeUsernameFrame(
@@ -86,6 +88,8 @@ sealed class UserChallengeFrame {
         val frame: ChallengeFrameType,
         @SerialName("keydownUsername")
         override val keyDownField: List<String>,
+        @SerialName("keyboards")
+        override val keyboards: List<String>
     ) : UserChallengeFrame() {
         companion object {
             fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeUsernameFrame? =
@@ -109,7 +113,8 @@ sealed class UserChallengeFrame {
                         pasteField = frame.paste,
                         version = CHALLENGE_VERSION,
                         frame = ChallengeFrameType(frame.challengeFrame),
-                        keyDownField = frame.keys
+                        keyDownField = frame.keys,
+                        keyboards = context.deviceInputMethods()
                     )
         }
     }
@@ -150,7 +155,9 @@ sealed class UserChallengeFrame {
         @SerialName("frame")
         val frame: ChallengeFrameType,
         @SerialName("keydownRecovery")
-        override val keyDownField: List<String>
+        override val keyDownField: List<String>,
+        @SerialName("keyboards")
+        override val keyboards: List<String>
     ) : UserChallengeFrame() {
         companion object {
             fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeRecoveryFrame? =
@@ -174,7 +181,8 @@ sealed class UserChallengeFrame {
                         pasteField = frame.paste,
                         version = CHALLENGE_VERSION,
                         frame = ChallengeFrameType(frame.challengeFrame),
-                        keyDownField = frame.keys
+                        keyDownField = frame.keys,
+                        keyboards = context.deviceInputMethods()
                     )
         }
     }

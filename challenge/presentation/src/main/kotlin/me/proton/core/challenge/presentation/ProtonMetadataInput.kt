@@ -59,9 +59,8 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
     override val label: TextView
         get() = (binding as ProtonMetadataInputBinding).label
 
-    private var focusOn: Long = 0
-    private var focusOff: Long = 0
-    private var focused: Boolean = false
+    private var lastFocusOn: Long = 0
+    private var focusList = mutableListOf<Int>()
 
     private lateinit var flow: String
 
@@ -119,39 +118,11 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
         input.setCopyPasteListener(this)
     }
 
-    private fun calculateFocus(focusLost: Boolean = true): Int {
-        return when {
-            focusLost && focusOn != 0L -> {
-                focusOff = System.currentTimeMillis()
-                val focusTime = focusOff - focusOn
-                resetFocusValues()
-                (focusTime / 1000).toInt()
-            }
-            focused -> ((System.currentTimeMillis() - focusOn) / 1000).toInt()
-            else -> 0
-        }
-    }
-
-    private fun resetFocusValues() {
-        focusOn = 0
-        focusOff = 0
-        focused = input.hasFocus()
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun enableMetrics() {
         input.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 clicksCounter++
-                handler.postDelayed(
-                    {
-                        focused = input.hasFocus()
-                        if (focused) {
-                            focusOn = System.currentTimeMillis()
-                        }
-                    },
-                    focusCheckDelay
-                )
             }
             super.onTouchEvent(event)
         }
@@ -161,7 +132,7 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
         challengeManager.addOrUpdateFrameToFlow(
             flow = flow,
             challengeFrame = frame,
-            focusTime = listOf(calculateFocus()),
+            focusTime = focusList,
             clicks = clicksCounter,
             copies = copies,
             pastes = pastes,
@@ -177,8 +148,17 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
         keys.add(PASTE)
     }
 
+    override fun onFocusChanged(focused: Boolean) {
+        lastFocusOn = if (focused) {
+            System.currentTimeMillis()
+        } else {
+            val lastFocusTime = (System.currentTimeMillis() - lastFocusOn) / 1000
+            focusList.add(lastFocusTime.toInt())
+            0
+        }
+    }
+
     private companion object {
-        private const val focusCheckDelay = 500L
         private const val BACKSPACE = "Backspace"
         private const val COPY = "Copy"
         private const val PASTE = "Paste"

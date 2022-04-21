@@ -71,7 +71,7 @@ public fun Context.deviceInputMethods(): List<String> {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     val inputMethodProperties = imm.enabledInputMethodList
 
-    return inputMethodProperties.map { it.id }
+    return inputMethodProperties.map { it.packageName }
 }
 
 public fun Context.nightMode(): Boolean =

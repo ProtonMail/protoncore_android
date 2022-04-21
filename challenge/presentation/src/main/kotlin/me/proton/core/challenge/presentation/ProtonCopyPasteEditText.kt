@@ -21,6 +21,7 @@ package me.proton.core.challenge.presentation
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import com.google.android.material.textfield.TextInputEditText
 
@@ -74,8 +75,14 @@ public class ProtonCopyPasteEditText : TextInputEditText {
         copyPasteListener = listener
     }
 
+    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect)
+        copyPasteListener?.onFocusChanged(focused)
+    }
+
     public interface CopyPasteListener {
         public fun onCopyHappened()
         public fun onPasteHappened()
+        public fun onFocusChanged(focused: Boolean)
     }
 }

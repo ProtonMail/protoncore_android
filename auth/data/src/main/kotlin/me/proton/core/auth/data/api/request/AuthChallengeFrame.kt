@@ -23,6 +23,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.challenge.data.appLanguage
 import me.proton.core.challenge.data.deviceFontSize
+import me.proton.core.challenge.data.deviceInputMethods
 import me.proton.core.challenge.data.deviceModelName
 import me.proton.core.challenge.data.deviceRegion
 import me.proton.core.challenge.data.deviceStorage
@@ -49,7 +50,7 @@ sealed class AuthChallengeFrame {
     abstract val darkMode: Boolean
     abstract val version: String
     abstract val keyDownField: List<String>
-
+    abstract val keyboards: List<String>
 
     @Serializable
     data class AuthChallengeUsernameFrame(
@@ -86,7 +87,9 @@ sealed class AuthChallengeFrame {
         @SerialName("frame")
         val frame: ChallengeFrameType,
         @SerialName("keydownUsername")
-        override val keyDownField: List<String>
+        override val keyDownField: List<String>,
+        @SerialName("keyboards")
+        override val keyboards: List<String>
     ) : AuthChallengeFrame() {
         companion object {
             fun from(context: Context, frame: ChallengeFrameDetails?): AuthChallengeUsernameFrame? =
@@ -110,7 +113,8 @@ sealed class AuthChallengeFrame {
                         pasteField = frame.paste,
                         version = CHALLENGE_VERSION,
                         frame = ChallengeFrameType(frame.challengeFrame),
-                        keyDownField = frame.keys
+                        keyDownField = frame.keys,
+                        keyboards = context.deviceInputMethods()
                     )
         }
     }

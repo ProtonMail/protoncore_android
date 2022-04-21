@@ -33,6 +33,7 @@ public abstract class me/proton/core/auth/data/api/request/AuthChallengeFrame {
 	public abstract fun getDeviceName ()Ljava/lang/String;
 	public abstract fun getFontSize ()Ljava/lang/String;
 	public abstract fun getKeyDownField ()Ljava/util/List;
+	public abstract fun getKeyboards ()Ljava/util/List;
 	public abstract fun getRegionCode ()Ljava/lang/String;
 	public abstract fun getRooted ()Z
 	public abstract fun getStorage ()D
@@ -45,8 +46,8 @@ public abstract class me/proton/core/auth/data/api/request/AuthChallengeFrame {
 
 public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame : me/proton/core/auth/data/api/request/AuthChallengeFrame {
 	public static final field Companion Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Z
 	public final fun component11 ()Ljava/lang/String;
@@ -56,6 +57,7 @@ public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthC
 	public final fun component15 ()Ljava/util/List;
 	public final fun component16 ()Lme/proton/core/auth/data/api/request/ChallengeFrameType;
 	public final fun component17 ()Ljava/util/List;
+	public final fun component18 ()Ljava/util/List;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
@@ -64,8 +66,8 @@ public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthC
 	public final fun component7 ()Z
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()D
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/auth/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/AuthChallengeFrame$AuthChallengeUsernameFrame;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAppLanguage ()Ljava/lang/String;
 	public final fun getClickOnField ()I
@@ -75,6 +77,7 @@ public final class me/proton/core/auth/data/api/request/AuthChallengeFrame$AuthC
 	public fun getFontSize ()Ljava/lang/String;
 	public final fun getFrame ()Lme/proton/core/auth/data/api/request/ChallengeFrameType;
 	public fun getKeyDownField ()Ljava/util/List;
+	public fun getKeyboards ()Ljava/util/List;
 	public final fun getPasteField ()Ljava/util/List;
 	public fun getRegionCode ()Ljava/lang/String;
 	public fun getRooted ()Z

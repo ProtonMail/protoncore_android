@@ -37,22 +37,7 @@ public class ChallengeRepositoryImpl(
 
     override suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails) {
         db.inTransaction {
-            val savedFrame = challengeDao.getByFlowAndFrame(
-                flow = challengeFrameDetails.flow,
-                frame = challengeFrameDetails.challengeFrame
-            )
-            val frameDetails = savedFrame?.let {
-
-                ChallengeFrameEntity(
-                    challengeFrame = challengeFrameDetails.challengeFrame,
-                    flow = challengeFrameDetails.flow,
-                    focusTime = challengeFrameDetails.focusTime + it.focusTime,
-                    clicks = it.clicks + challengeFrameDetails.clicks,
-                    copy = it.copy + challengeFrameDetails.copy,
-                    paste = it.paste + challengeFrameDetails.paste,
-                    keys = it.keys + challengeFrameDetails.keys
-                )
-            } ?: ChallengeFrameEntity(
+            val frameDetails = ChallengeFrameEntity(
                 challengeFrame = challengeFrameDetails.challengeFrame,
                 flow = challengeFrameDetails.flow,
                 focusTime = challengeFrameDetails.focusTime,
@@ -61,7 +46,6 @@ public class ChallengeRepositoryImpl(
                 paste = challengeFrameDetails.paste,
                 keys = challengeFrameDetails.keys
             )
-
             challengeDao.insertOrUpdate(frameDetails)
         }
     }

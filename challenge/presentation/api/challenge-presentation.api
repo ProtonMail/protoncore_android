@@ -27,6 +27,7 @@ public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText
 
 public abstract interface class me/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener {
 	public abstract fun onCopyHappened ()V
+	public abstract fun onFocusChanged (Z)V
 	public abstract fun onPasteHappened ()V
 }
 
@@ -39,6 +40,7 @@ public final class me/proton/core/challenge/presentation/ProtonMetadataInput : m
 	public final fun getChallengeManager ()Lme/proton/core/challenge/domain/ChallengeManager;
 	public synthetic fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
 	public fun onCopyHappened ()V
+	public fun onFocusChanged (Z)V
 	public fun onPasteHappened ()V
 	public final fun setChallengeManager (Lme/proton/core/challenge/domain/ChallengeManager;)V
 }
