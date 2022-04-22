@@ -223,7 +223,7 @@ mail-v6-integration-tests:
 mail-integration-tests:
   extends: .client-integration-tests
   variables:
-    MAIL_INTEGRATION_REF: feat/cp-3695-core_ci_integration # TODO change back to `develop` branch
+    MAIL_INTEGRATION_REF: develop
   trigger:
     project: android/mail/proton-mail-android
     branch: $MAIL_INTEGRATION_REF
