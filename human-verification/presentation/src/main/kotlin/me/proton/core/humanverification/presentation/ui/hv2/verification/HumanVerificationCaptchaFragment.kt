@@ -97,6 +97,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
             binding.root.errorSnack(R.string.human_verification_sending_failed)
         }
 
+        binding.captchaWebView.setAllowForceDark()
         binding.captchaWebView.apply {
             WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
             setBackgroundColor(Color.TRANSPARENT)

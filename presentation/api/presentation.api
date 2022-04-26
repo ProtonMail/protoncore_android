@@ -463,6 +463,7 @@ public final class me/proton/core/presentation/ui/webview/ProtonWebView : androi
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public final fun setAllowForceDark ()V
 }
 
 public final class me/proton/core/presentation/ui/webview/ProtonWebView$Companion {
@@ -672,7 +673,7 @@ public final class me/proton/core/presentation/utils/UiUtilsKt {
 	public static final fun hideKeyboard (Landroidx/fragment/app/Fragment;)V
 	public static final fun hideKeyboard (Landroidx/fragment/app/FragmentActivity;)V
 	public static final fun inTransaction (Landroidx/fragment/app/FragmentManager;Lkotlin/jvm/functions/Function1;)V
-	public static final fun isNightMode (Landroidx/appcompat/app/AppCompatActivity;)Z
+	public static final fun isNightMode (Landroid/content/Context;)Z
 	public static final fun openBrowserLink (Landroid/content/Context;Ljava/lang/String;)V
 	public static final fun openMarketLink (Landroid/content/Context;)V
 	public static final fun setDarkStatusBar (Landroidx/appcompat/app/AppCompatActivity;)V

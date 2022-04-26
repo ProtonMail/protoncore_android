@@ -22,7 +22,9 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.webkit.WebSettings
 import android.webkit.WebView
+import me.proton.core.presentation.utils.isNightMode
 
 /**
  * @author Dino Kadrikj.
@@ -43,6 +45,12 @@ class ProtonWebView : WebView {
         defStyleAttr: Int,
         defStyleRes: Int
     ) : super(getFixedContext(context), attrs, defStyleAttr, defStyleRes)
+
+    fun setAllowForceDark() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && context.isNightMode()) {
+            settings.forceDark = WebSettings.FORCE_DARK_ON
+        }
+    }
 
     companion object {
         private fun getFixedContext(context: Context): Context =

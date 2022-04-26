@@ -62,6 +62,8 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.watchNetwork()
+
+        binding.termsConditionsWebView.setAllowForceDark()
     }
 
     override fun onBackPressed() {

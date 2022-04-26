@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -89,7 +90,7 @@ fun Fragment.hideKeyboard() = requireContext().hideKeyboard(requireView())
  *
  * @see <a href="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme">DarkTheme</a>
  */
-fun AppCompatActivity.isNightMode() =
+fun Context.isNightMode() =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
 /**
