@@ -214,7 +214,7 @@
         <item>@drawable/ic_proton_shield</item>
         <item>@drawable/ic_proton_play</item>
         <item>@drawable/ic_proton_lock</item>
-        <item>@drawable/ic_proton_tor</item>
+        <item>@drawable/ic_proton_brand_tor</item>
         <item>@drawable/ic_proton_arrows_switch</item>
     </integer-array>
     <integer-array name="plan_id_vpn2022">
