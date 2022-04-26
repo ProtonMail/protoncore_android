@@ -170,6 +170,8 @@ dependencies {
         `room-compiler`,
     )
 
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
+
     // Test
     testImplementation(project(Module.androidTest))
     androidTestImplementation(

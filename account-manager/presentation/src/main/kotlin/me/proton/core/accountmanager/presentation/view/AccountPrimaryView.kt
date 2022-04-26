@@ -26,7 +26,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.presentation.R
@@ -39,6 +43,7 @@ class AccountPrimaryView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     @StyleRes defStyleRes: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRes) {
+    private var accountObserver: Job? = null
 
     private val binding = AccountPrimaryViewBinding.inflate(LayoutInflater.from(context), this, true)
 
@@ -105,19 +110,22 @@ class AccountPrimaryView @JvmOverloads constructor(
 
     fun setViewModel(viewModel: AccountSwitcherViewModel?) {
         this.viewModel = viewModel
+        accountObserver?.cancel()
 
-        viewModel?.apply {
-            primaryAccount.onEach { account ->
+        val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
+        accountObserver = (viewModel?.primaryAccount ?: flowOf(null))
+            .flowWithLifecycle(lifecycleOwner.lifecycle)
+            .onEach { account ->
                 initials = account?.initials
                 name = account?.name
                 email = account?.email
-            }.launchIn(viewModelScope)
-        }
+            }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     fun showDialog() {
+        val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
         if (dialog == null) {
-            dialog = AccountListView.createDialog(context, viewModel)
+            dialog = AccountListView.createDialog(context, lifecycleOwner, viewModel)
             dialog?.setOnDismissListener { onDialogDismissed?.invoke() }
             dialog?.setOnShowListener { onDialogShown?.invoke() }
         }

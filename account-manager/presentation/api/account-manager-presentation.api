@@ -240,7 +240,7 @@ public final class me/proton/core/accountmanager/presentation/view/AccountListVi
 }
 
 public final class me/proton/core/accountmanager/presentation/view/AccountListView$Companion {
-	public final fun createDialog (Landroid/content/Context;Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)Landroidx/appcompat/app/AlertDialog;
+	public final fun createDialog (Landroid/content/Context;Landroidx/lifecycle/LifecycleOwner;Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)Landroidx/appcompat/app/AlertDialog;
 }
 
 public final class me/proton/core/accountmanager/presentation/view/AccountPrimaryView : androidx/constraintlayout/widget/ConstraintLayout {
