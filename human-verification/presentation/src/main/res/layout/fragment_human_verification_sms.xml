@@ -60,6 +60,7 @@
         android:id="@+id/smsEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/gap_single"
         android:hint="@string/sms_hint"
         android:inputType="text|phone"
         app:layout_constraintBottom_toBottomOf="@+id/callingCodeText"
