@@ -18,13 +18,12 @@ public final class me/proton/core/challenge/data/DeviceUtilsKt {
 	public static final fun defaultDeviceInputMethod (Landroid/content/Context;)Ljava/lang/String;
 	public static final fun deviceFontSize (Landroid/content/Context;)F
 	public static final fun deviceInputMethods (Landroid/content/Context;)Ljava/util/List;
-	public static final fun deviceModelName ()Ljava/lang/String;
+	public static final fun deviceModelName ()J
 	public static final fun deviceRegion (Landroid/content/Context;)Ljava/lang/String;
 	public static final fun deviceStorage (Landroid/content/Context;)D
 	public static final fun deviceTimezone ()Ljava/lang/String;
 	public static final fun deviceTimezoneOffset ()I
-	public static final fun deviceUID ()Ljava/lang/String;
-	public static final fun deviceVolumesStorage (Landroid/content/Context;)D
+	public static final fun deviceUID (Landroid/content/Context;)Ljava/lang/String;
 	public static final fun isDeviceRooted ()Z
 	public static final fun nightMode (Landroid/content/Context;)Z
 }

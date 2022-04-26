@@ -18,6 +18,7 @@
 
 package me.proton.core.challenge.presentation
 
+import android.content.ClipDescription
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
@@ -64,12 +65,19 @@ public class ProtonCopyPasteEditText : TextInputEditText {
         }
     }
 
-    private fun checkClipboardAndAddToList(list: MutableList<String>): Boolean =
-        if (clipboard.hasPrimaryClip() && clipboard.primaryClipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) == true) {
-            val item = clipboard.primaryClip?.getItemAt(0)
-            list.add(item?.text.toString())
-            true
-        } else false
+    private fun checkClipboardAndAddToList(list: MutableList<String>): Boolean {
+        val clipDescription = clipboard.primaryClipDescription
+        return when {
+            !clipboard.hasPrimaryClip() -> false
+            clipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) == true ||
+                clipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML) == true -> {
+                val item = clipboard.primaryClip?.getItemAt(0)
+                list.add(item?.text.toString())
+                true
+            }
+            else -> false
+        }
+    }
 
     public fun setCopyPasteListener(listener: CopyPasteListener) {
         copyPasteListener = listener

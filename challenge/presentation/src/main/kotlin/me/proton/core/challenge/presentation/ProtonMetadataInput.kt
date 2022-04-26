@@ -20,6 +20,8 @@ package me.proton.core.challenge.presentation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -109,12 +111,44 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
                     KeyEvent.KEYCODE_DPAD_DOWN -> ARROW_DOWN
                     KeyEvent.KEYCODE_COPY -> COPY
                     KeyEvent.KEYCODE_PASTE -> PASTE
-                    else -> event.unicodeChar.toChar().toString()
+                    else -> null
                 }
-                keys.add(char)
+                if (char != null) {
+                    keys.add(char)
+                }
             }
             false
         }
+
+        addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // noop
+            }
+
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                val range = IntRange(start, start + count - 1)
+                val newText = text.substring(range)
+                val rangeCount = range.count()
+                if (rangeCount > 1) {
+                    if (newText == DOT_COM) {
+                        // .com is an exception
+                        keys += newText.toCharArray().map { it.toString() }
+                    } else {
+                        keys += newText.toCharArray()[rangeCount - 1].toString()
+                    }
+                    return
+                }
+                if (text.isNotEmpty()) {
+                    keys += newText.toCharArray().map { it.toString() }
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // noop
+            }
+
+        })
         input.setCopyPasteListener(this)
     }
 
@@ -145,6 +179,7 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
     }
 
     override fun onPasteHappened() {
+        keys.removeLast()
         keys.add(PASTE)
     }
 
@@ -169,5 +204,6 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
         private const val ARROW_RIGHT = "ArrowRight"
         private const val ARROW_UP = "ArrowUp"
         private const val ARROW_DOWN = "ArrowDOWN"
+        private const val DOT_COM = ".com"
     }
 }

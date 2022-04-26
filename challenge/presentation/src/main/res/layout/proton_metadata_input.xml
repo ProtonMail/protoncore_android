@@ -59,6 +59,7 @@
             android:focusableInTouchMode="true"
             android:gravity="top"
             android:inputType="text"
+            android:imeOptions="normal"
             tools:text="firstname.lastname" />
 
     </com.google.android.material.textfield.TextInputLayout>

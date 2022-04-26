@@ -76,24 +76,4 @@ public class ChallengeRepositoryImplTest {
         )
         coVerify { dao.insertOrUpdate(entity) }
     }
-
-    @Test
-    public fun `update frame details works correctly`(): Unit = runBlockingTest {
-        // Given
-        val flow = "test-flow"
-        val frame = "test-frame"
-        val frameDetails = ChallengeFrameDetails(
-            flow, frame, listOf(2), 2, listOf("new copy"), listOf("new paste"), listOf("h")
-        )
-        coEvery { dao.getByFlowAndFrame(flow, frame) } returns ChallengeFrameEntity(
-            frame, flow, listOf(1), 1, listOf("copy"), listOf("paste"), listOf("c")
-        )
-        // When
-        repository.insertFrameDetails(frameDetails)
-        // Then
-        val entity = ChallengeFrameEntity(
-            frame, flow, listOf(2, 1), 3, listOf("copy", "new copy"), listOf("paste", "new paste"), listOf("c", "h")
-        )
-        coVerify { dao.insertOrUpdate(entity) }
-    }
 }

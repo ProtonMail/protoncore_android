@@ -35,12 +35,21 @@ import java.io.InputStreamReader
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.math.roundToInt
 
 private const val MILLIS_IN_MINUTE = 60_000
+private const val BYTES_GB = 1_000_000_000
 
-public fun deviceModelName(): String = Build.MODEL
+public fun deviceModelName(): Long =
+    String.format(
+        Locale.US,
+        "%s/%s %s",
+        Build.MODEL,
+        Build.BRAND,
+        Build.DEVICE
+    ).rollingHash()
 
-public fun deviceUID(): String = Settings.Secure.ANDROID_ID
+public fun Context.deviceUID(): String = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
 
 public fun appLanguage(): String = LocaleListCompat.getDefault()[0].language
 
@@ -77,30 +86,28 @@ public fun Context.deviceInputMethods(): List<String> {
 public fun Context.nightMode(): Boolean =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
-public fun Context.deviceStorage(): Double {
-    val totalBytes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        deviceVolumesStorage()
+public fun Context.deviceStorage(): Double =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        (deviceVolumesStorage() / BYTES_GB).toDoubleRound()
     } else {
         val stat = StatFs(Environment.getDataDirectory().path)
-        (stat.blockCountLong * stat.blockSizeLong).toDouble()
+        (stat.blockCountLong * stat.blockSizeLong / BYTES_GB).toDoubleRound()
     }
-    return totalBytes / 1_000_000_000 // in GB
-}
 
 @RequiresApi(Build.VERSION_CODES.O)
-public fun Context.deviceVolumesStorage(): Double {
+private fun Context.deviceVolumesStorage(): Long {
     val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
-    val extDirs = getExternalFilesDirs(null)
-    var totalStorage = 0.0
+    val externalDirs = getExternalFilesDirs(null)
+    var totalStorage: Long = 0
 
-    extDirs.forEach { file ->
-        val storageVolume = storageManager.getStorageVolume(file)
+    externalDirs.forEach { dir ->
+        val storageVolume = storageManager.getStorageVolume(dir)
         if (storageVolume != null) {
             totalStorage += if (storageVolume.isPrimary) {
                 val storageStatsManager = getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
                 storageStatsManager.getTotalBytes(StorageManager.UUID_DEFAULT)
             } else {
-                file.totalSpace
+                dir.totalSpace
             }
         }
     }
@@ -142,4 +149,26 @@ private fun checkRootMethod3(): Boolean {
     } finally {
         process?.destroy()
     }
+}
+
+private fun Long.toDoubleRound(): Double = (this * 100.0).roundToInt() / 100.0
+
+/**
+ * Rolling hash a string via sliding window.
+ * Returns a hash of the string.
+ *
+ * Based on the BE requirements.
+ */
+private fun String.rollingHash(base: Long = 7, mod: Long = 100000007): Long {
+    var answer: Long = 0
+    var coefficient: Long = 0
+    for (code in this.toByteArray(Charsets.UTF_8)) {
+        coefficient = if (coefficient == 0L) {
+            1L
+        } else {
+            coefficient * base % mod
+        }
+        answer += code * coefficient
+    }
+    return answer
 }

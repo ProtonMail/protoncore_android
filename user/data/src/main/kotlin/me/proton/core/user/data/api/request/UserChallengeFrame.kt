@@ -40,7 +40,7 @@ sealed class UserChallengeFrame {
 
     abstract val appLanguage: String
     abstract val timezone: String
-    abstract val deviceName: String
+    abstract val deviceName: Long
     abstract val uid: String
     abstract val regionCode: String
     abstract val timezoneOffset: Int
@@ -59,7 +59,7 @@ sealed class UserChallengeFrame {
         @SerialName("timezone")
         override val timezone: String,
         @SerialName("deviceName")
-        override val deviceName: String,
+        override val deviceName: Long,
         @SerialName("uuid")
         override val uid: String,
         @SerialName("regionCode")
@@ -100,7 +100,7 @@ sealed class UserChallengeFrame {
                         appLanguage = appLanguage(),
                         timezone = deviceTimezone(),
                         deviceName = deviceModelName(),
-                        uid = deviceUID(),
+                        uid = context.deviceUID(),
                         regionCode = context.deviceRegion(),
                         timezoneOffset = deviceTimezoneOffset(),
                         rooted = isDeviceRooted(),
@@ -127,7 +127,7 @@ sealed class UserChallengeFrame {
         @SerialName("timezone")
         override val timezone: String,
         @SerialName("deviceName")
-        override val deviceName: String,
+        override val deviceName: Long,
         @SerialName("uuid")
         override val uid: String,
         @SerialName("regionCode")
@@ -168,7 +168,7 @@ sealed class UserChallengeFrame {
                         appLanguage = appLanguage(),
                         timezone = deviceTimezone(),
                         deviceName = deviceModelName(),
-                        uid = deviceUID(),
+                        uid = context.deviceUID(),
                         regionCode = context.deviceRegion(),
                         timezoneOffset = deviceTimezoneOffset(),
                         rooted = isDeviceRooted(),
