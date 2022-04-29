@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Test
 
 class ConfirmPasswordTests : BaseTest() {
-    private val confirmPasswordRobot = ConfirmPasswordRobot()
+    private lateinit var confirmPasswordRobot: ConfirmPasswordRobot
     private val user = users.getUser()
 
     @Before
@@ -34,34 +34,62 @@ class ConfirmPasswordTests : BaseTest() {
         quark.jailUnban()
         login(user)
 
-        CoreexampleRobot().lockScopes()
-
         CoreexampleRobot()
-            .confirmPasswordPassword()
-            .verify { confirmPasswordElementsDisplayed() }
+            .lockScopes()
+            .verify {
+                secureScopeStateIs("[]")
+                scopeTriggerStatusIs("removed")
+            }
     }
 
     @Test
     @SmokeTest
     fun closeConfirmPassword() {
+        confirmPasswordRobot = CoreexampleRobot().confirmPasswordPassword()
+        confirmPasswordRobot.verify { confirmPasswordElementsDisplayed() }
+
         confirmPasswordRobot
             .cancel<CoreexampleRobot>()
-            .verify { primaryUserIs(user) }
+            .verify {
+                secureScopeStateIs()
+                scopeTriggerStatusIs("403")
+                primaryUserIs(user)
+            }
     }
 
     @Test
     fun lockedScope() {
+        confirmPasswordRobot = CoreexampleRobot().confirmPasswordLocked()
+        confirmPasswordRobot.verify { confirmPasswordElementsDisplayed() }
+
         confirmPasswordRobot
             .setPassword(user.password)
             .enter<CoreexampleRobot>()
-            .verify { primaryUserIs(user) }
+            .verify {
+                secureScopeStateIs("locked")
+                scopeTriggerStatusIs("1000")
+                primaryUserIs(user)
+            }
     }
 
     @Test
     fun passwordScope() {
+        confirmPasswordRobot = CoreexampleRobot().confirmPasswordPassword()
+        confirmPasswordRobot.verify { confirmPasswordElementsDisplayed() }
+
         confirmPasswordRobot
             .setPassword(user.password)
             .enter<CoreexampleRobot>()
-            .verify { primaryUserIs(user) }
+            .verify {
+                secureScopeStateIs("locked", "password")
+
+                // Receiving code 2011 or 2501 is still fine, it just means the account
+                // cannot be used to get a mnemonic;
+                // 2011 "Recovery phrase can be used only by users with migrated keys"
+                // 2501 "Recovery phrase not set for the current account"
+                scopeTriggerStatusIs("1000", "2011", "2501")
+
+                primaryUserIs(user)
+            }
     }
 }

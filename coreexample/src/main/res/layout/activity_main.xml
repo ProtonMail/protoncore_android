@@ -17,6 +17,7 @@
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -268,6 +269,32 @@
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/lock_scopes" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/gap_small">
+
+                    <TextView
+                        android:id="@+id/trigger_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        tools:autoSizeMinTextSize="6sp"
+                        tools:autoSizeTextType="uniform"
+                        tools:text="triggering" />
+
+                    <TextView
+                        android:id="@+id/scope_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        app:autoSizeMinTextSize="6sp"
+                        app:autoSizeTextType="uniform"
+                        tools:text="[locked, password]" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

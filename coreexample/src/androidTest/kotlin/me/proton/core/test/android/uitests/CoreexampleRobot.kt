@@ -65,7 +65,7 @@ open class CoreexampleRobot : CoreRobot() {
     fun settingsPasswordManagement(): PasswordManagementRobot = scrollToAndClick(R.id.settingsPassword)
     fun confirmPasswordLocked(): ConfirmPasswordRobot = scrollToAndClick(R.id.trigger_confirm_password_locked)
     fun confirmPasswordPassword(): ConfirmPasswordRobot = scrollToAndClick(R.id.trigger_confirm_password_pass)
-    fun lockScopes(): ConfirmPasswordRobot = scrollToAndClick(R.id.lock_scope)
+    fun lockScopes(): CoreexampleRobot = scrollToAndClick(R.id.lock_scope)
     fun accountSwitcher(): AccountSwitcherRobot = scrollToAndClick(R.id.accountPrimaryView, ViewGroup::class.java)
 
     private inline fun <reified T> scrollToAndClick(@IdRes id: Int, clazz: Class<*> = Button::class.java): T {
@@ -89,6 +89,20 @@ open class CoreexampleRobot : CoreRobot() {
         fun primaryUserIs(user: User) {
             view.instanceOf(ScrollView::class.java).swipeDown()
             view.withId(R.id.account_email_textview).startsWith("${user.name}@").checkDisplayed()
+        }
+
+        fun secureScopeStateIs(vararg states: String) {
+            view.withId(R.id.scope_status).scrollTo().let { view ->
+                if (states.isEmpty()) {
+                    view.checkContains("[]")
+                } else {
+                    states.forEach { view.checkContains(it) }
+                }
+            }
+        }
+
+        fun scopeTriggerStatusIs(vararg oneOf: String) {
+            view.withId(R.id.trigger_status).scrollTo().checkContainsAny(*oneOf)
         }
     }
 

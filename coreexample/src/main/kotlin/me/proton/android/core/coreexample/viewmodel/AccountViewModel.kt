@@ -27,14 +27,17 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
@@ -58,6 +61,7 @@ import me.proton.core.humanverification.presentation.HumanVerificationOrchestrat
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
 import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.user.domain.UserManager
@@ -73,6 +77,7 @@ class AccountViewModel @Inject constructor(
     private val missingScopeListener: MissingScopeListener
 ) : ViewModel() {
 
+    private val _secureSessionScopes = MutableStateFlow(emptyList<String>())
     private val _state = MutableStateFlow(State.Processing as State)
 
     sealed class State {
@@ -81,6 +86,7 @@ class AccountViewModel @Inject constructor(
         data class AccountList(val accounts: List<Account>) : State()
     }
 
+    val secureSessionScopes = _secureSessionScopes.asStateFlow()
     val state = _state.asStateFlow()
 
     fun register(context: FragmentActivity) {
@@ -114,6 +120,18 @@ class AccountViewModel @Inject constructor(
             humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.RESUMED)
                 .onHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
         }
+
+        accountManager.getPrimaryAccount()
+            .combine(accountManager.getSessions()) { account, sessions ->
+                sessions.find { it.sessionId == account?.sessionId }
+            }
+            .flowWithLifecycle(context.lifecycle)
+            .map { session ->
+                val scopes = session?.scopes ?: emptyList()
+                scopes.filter { it == Scope.LOCKED.value || it == Scope.PASSWORD.value }
+            }
+            .onEach { _secureSessionScopes.emit(it) }
+            .launchIn(context.lifecycleScope)
 
         with(authOrchestrator) {
             missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)

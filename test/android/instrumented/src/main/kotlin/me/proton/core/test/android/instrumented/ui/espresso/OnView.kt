@@ -369,6 +369,11 @@ class OnView : ConditionWatcher {
         viewInteraction(matches(ViewMatchers.withText(CoreMatchers.containsString(text))))
     }
 
+    fun checkContainsAny(vararg text: String) = apply {
+        val matchers = text.map { CoreMatchers.containsString(it) }
+        viewInteraction(matches(ViewMatchers.withText(CoreMatchers.anyOf(matchers))))
+    }
+
     fun checkContains(@StringRes textId: Int) = apply {
         viewInteraction(matches(ViewMatchers.withText(stringFromResource(textId))))
     }

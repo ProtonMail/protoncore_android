@@ -39,10 +39,10 @@ class CoreExampleRepository(
     suspend fun triggerConfirmPasswordLockedScope(userId: UserId) =
         provider.get<CoreExampleApi>(userId).invoke {
             triggerConfirmPasswordLockedScope()
-        }.valueOrNull
+        }
 
     suspend fun triggerConfirmPasswordPasswordScope(userId: UserId) =
         provider.get<CoreExampleApi>(userId).invoke {
             triggerConfirmPasswordForPasswordScope()
-        }.valueOrNull
+        }
 }
