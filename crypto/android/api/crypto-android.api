@@ -70,6 +70,7 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun generateNewPrivateKey (Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;
 	public fun generateNewSessionKey ()Lme/proton/core/crypto/common/pgp/SessionKey;
 	public fun generateNewToken (J)[B
+	public fun generateRandomBytes (J)[B
 	public fun getArmored ([B)Ljava/lang/String;
 	public fun getBase64Decoded (Ljava/lang/String;)[B
 	public fun getBase64Encoded ([B)Ljava/lang/String;

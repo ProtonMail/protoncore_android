@@ -584,8 +584,19 @@ interface PGPCrypto {
      * Generate new random Token.
      *
      * Default token size is 32 bytes.
+     * Note: The tokens are encoded in hexadecimal
+     * and then treated as bytes.
      */
     fun generateNewToken(size: Long = 32): ByteArray
+
+    /**
+     * Generate a new random byte array.
+     *
+     * Default token size is 32 bytes.
+     * Note: contrary to [generateNewToken], this function
+     * doesn't apply any kind of encoding to the bytes generated
+     */
+    fun generateRandomBytes(size: Long = 32): ByteArray
 
     /**
      * Generate new private key of type [KeyType.X25519].

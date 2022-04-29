@@ -19,6 +19,8 @@ the passphrase is generated and encoded. The default value keeps the same behavi
 ### New
 
 - ProtonTheme composable considers user's preference to set the Theme
+- New crypto function `PGPCrypto.generateRandomBytes()` to generate
+random bytes without any encoding
 
 ### Fixes
 

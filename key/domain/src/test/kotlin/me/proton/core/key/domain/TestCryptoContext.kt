@@ -396,6 +396,7 @@ class TestCryptoContext : CryptoContext {
         override fun generateNewKeySalt(): String = "keySalt"
 
         override fun generateNewToken(size: Long): ByteArray = "token".toByteArray()
+        override fun generateRandomBytes(size: Long): ByteArray = "random".toByteArray()
 
         override fun generateNewPrivateKey(
             username: String,

@@ -897,10 +897,16 @@ class GOpenPGPCrypto : PGPCrypto {
 
     override fun generateNewToken(size: Long): ByteArray {
         fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
-        val secret = Crypto.randomToken(size)
+        val secret = generateRandomBytes(size)
         val token = secret.toHexString().toByteArray(Charsets.UTF_8)
         require(token.size == secret.size * 2)
         return token
+    }
+
+    override fun generateRandomBytes(size: Long): ByteArray {
+        val secret = Crypto.randomToken(size)
+        require(size == secret.size.toLong())
+        return secret
     }
 
     @Suppress("MagicNumber")
