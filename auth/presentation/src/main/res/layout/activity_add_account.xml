@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/welcome_privacy_by_default"
-            android:textColor="?brand_norm" />
+            android:textColor="?proton_text_accent" />
 
     </LinearLayout>
 
