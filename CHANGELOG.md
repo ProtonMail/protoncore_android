@@ -11,6 +11,11 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+### Changes
+- `KeyHolderContext.generateNestedPrivateKey` and `NestedPrivateKey.generateNestedPrivateKey`
+have an optional parameter, `generatePassphrase: ()->ByteArray` to let the caller choose how
+the passphrase is generated and encoded. The default value keeps the same behavior as before.
+
 ### New
 
 - ProtonTheme composable considers user's preference to set the Theme

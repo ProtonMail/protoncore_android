@@ -58,9 +58,10 @@ data class NestedPrivateKey(
         fun generateNestedPrivateKey(
             context: CryptoContext,
             username: String,
-            domain: String
+            domain: String,
+            generatePassphrase: () -> ByteArray = { context.pgpCrypto.generateNewToken() }
         ): NestedPrivateKey {
-            return context.pgpCrypto.generateNewToken().use { passphrase ->
+            return generatePassphrase().use { passphrase ->
                 val privateKey = context.pgpCrypto.generateNewPrivateKey(
                     username = username,
                     domain = domain,

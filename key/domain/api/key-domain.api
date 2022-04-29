@@ -67,7 +67,8 @@ public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static final fun encryptFile (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;[B[B)Ljava/io/File;
 	public static final fun encryptSessionKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lme/proton/core/crypto/common/pgp/SessionKey;)[B
 	public static final fun encryptText (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;)Ljava/lang/String;
-	public static final fun generateNestedPrivateKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
+	public static final fun generateNestedPrivateKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
+	public static synthetic fun generateNestedPrivateKey$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
 	public static final fun generateNewHashKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)Lme/proton/core/crypto/common/pgp/HashKey;
 	public static final fun generateNewKeyPacket (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)[B
 	public static final fun generateNewSessionKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)Lme/proton/core/crypto/common/pgp/SessionKey;
@@ -284,7 +285,8 @@ public final class me/proton/core/key/domain/entity/key/NestedPrivateKey {
 
 public final class me/proton/core/key/domain/entity/key/NestedPrivateKey$Companion {
 	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
-	public final fun generateNestedPrivateKey (Lme/proton/core/crypto/common/context/CryptoContext;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
+	public final fun generateNestedPrivateKey (Lme/proton/core/crypto/common/context/CryptoContext;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
+	public static synthetic fun generateNestedPrivateKey$default (Lme/proton/core/key/domain/entity/key/NestedPrivateKey$Companion;Lme/proton/core/crypto/common/context/CryptoContext;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
 }
 
 public final class me/proton/core/key/domain/entity/key/PrivateAddressKey {

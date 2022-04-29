@@ -38,7 +38,6 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
-import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
 import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
@@ -1129,8 +1128,12 @@ fun KeyHolderContext.encryptAndSignNestedKey(
  *
  * Note: Only this [KeyHolder] will be able to decrypt.
  */
-fun KeyHolderContext.generateNestedPrivateKey(username: String, domain: String): NestedPrivateKey =
-    NestedPrivateKey.generateNestedPrivateKey(context, username, domain)
+fun KeyHolderContext.generateNestedPrivateKey(
+    username: String,
+    domain: String,
+    generatePassphrase: () -> ByteArray = { context.pgpCrypto.generateNewToken() }
+): NestedPrivateKey =
+    NestedPrivateKey.generateNestedPrivateKey(context, username, domain, generatePassphrase)
 
 /**
  * Generate new [SessionKey].
