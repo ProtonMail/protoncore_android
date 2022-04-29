@@ -55,6 +55,6 @@ interface UserApi : BaseRetrofitApi {
     @PUT("core/v4/users/unlock")
     suspend fun unlockLockedScope(@Body unlockRequest: UnlockRequest): SRPAuthenticationResponse
 
-    @PUT("core/v4/user/password")
+    @PUT("core/v4/users/password")
     suspend fun unlockPasswordScope(@Body unlockRequest: UnlockPasswordRequest): SRPAuthenticationResponse
 }
