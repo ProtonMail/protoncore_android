@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Default plan max space to take into account RewardsMaxSpace.
 - Use user currency in the current plan subscription screen for free plan.
 - Improve displaying error messages in Bug Report form
+- human-verification: add a gap between calling code and phone number
+- auth, human-verification: allow forced dark mode on web views for ToS and captcha
+- payment: correct placement of the billing period label
 
 ## [7.1.11]
 
