@@ -90,6 +90,7 @@ internal class UpgradePlansViewModel @Inject constructor(
             calendar.timeInMillis = currentSubscription.periodEnd * 1000
             createCurrentPlan(
                 plan = it,
+                defaultPlan = getPlanDefault(userId),
                 endDate = calendar.time,
                 user = user,
                 paymentMethods = paymentMethods,
@@ -102,6 +103,7 @@ internal class UpgradePlansViewModel @Inject constructor(
             subscribedPlans.add(
                 createCurrentPlan(
                     plan = getPlanDefault(userId),
+                    defaultPlan = null,
                     endDate = null,
                     user = user,
                     paymentMethods = paymentMethods,

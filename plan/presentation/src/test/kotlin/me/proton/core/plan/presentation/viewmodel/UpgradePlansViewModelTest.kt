@@ -359,7 +359,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             val plansStatus = awaitItem()
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             assertEquals(0, plansStatus.plans.size)
-            coVerify(exactly = 0) { getPlanDefaultUseCase.invoke(any()) }
+            coVerify(exactly = 1) { getPlanDefaultUseCase.invoke(any()) }
         }
     }
 

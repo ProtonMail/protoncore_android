@@ -89,12 +89,19 @@ internal abstract class BasePlansViewModel(
 
     protected fun createCurrentPlan(
         plan: Plan,
+        defaultPlan: Plan?,
         user: User,
         paymentMethods: List<PaymentMethod>,
         organization: Organization?, // there can be no organization for free plans
         endDate: Date?
     ): PlanDetailsItem {
         val autoRenewal = paymentMethods.isNotEmpty() || user.credit >= plan.amount
+        val usedAddresses = organization?.usedAddresses ?: 0
+        val usedMembers = organization?.usedMembers ?: 0
+        val usedDomains = organization?.usedDomains ?: 0
+        val usedCalendars = organization?.usedCalendars ?: 0
+        val connections = organization?.maxVPN ?: 0
+
         return PlanDetailsItem.CurrentPlanDetailsItem(
             name = plan.name,
             displayName = plan.title,
@@ -107,14 +114,14 @@ internal abstract class BasePlansViewModel(
             addresses = plan.maxAddresses,
             calendars = plan.maxCalendars,
             domains = plan.maxDomains,
-            connections = plan.maxVPN,
+            connections = if (connections > 0) connections else defaultPlan?.maxVPN ?: 1,
             usedSpace = user.usedSpace,
             maxSpace = user.maxSpace,
             progressValue = user.calculateUsedSpacePercentage().roundToInt(),
-            usedAddresses = organization?.usedAddresses ?: plan.maxAddresses,
-            usedDomains = organization?.usedDomains ?: plan.maxDomains,
-            usedMembers = organization?.usedMembers ?: plan.maxMembers,
-            usedCalendars = organization?.usedCalendars ?: plan.maxCalendars
+            usedAddresses = if (usedAddresses > 0) usedAddresses else defaultPlan?.maxAddresses ?: 1, // by design
+            usedDomains = usedDomains,
+            usedMembers = usedMembers,
+            usedCalendars = usedCalendars
         )
     }
 
