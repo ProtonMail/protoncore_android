@@ -256,7 +256,7 @@ fun ProtonSettingsRadioItem(
     uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
-fun previewSettingsTopBar() {
+fun SettingsTopBarPreview() {
     ProtonSettingsTopBar(title = "Setting", onBackClick = {})
 }
 
@@ -265,7 +265,7 @@ fun previewSettingsTopBar() {
     showBackground = true
 )
 @Composable
-fun previewSettingsItem() {
+fun SettingsItemPreview() {
     ProtonSettingsItem(name = "Setting name", hint = "This settings does nothing")
 }
 
@@ -274,7 +274,7 @@ fun previewSettingsItem() {
     showBackground = true
 )
 @Composable
-fun previewSettingsToggleableItem() {
+fun SettingsToggleableItemPreview() {
     ProtonSettingsToggleItem(name = "Setting toggle", value = true)
 }
 
@@ -283,7 +283,7 @@ fun previewSettingsToggleableItem() {
     showBackground = true
 )
 @Composable
-fun previewDisabledSettingsToggleableItem() {
+fun DisabledSettingsToggleableItemPreview() {
     ProtonSettingsToggleItem(name = "Setting toggle", value = null)
 }
 
@@ -292,7 +292,7 @@ fun previewDisabledSettingsToggleableItem() {
     showBackground = true
 )
 @Composable
-fun previewSettingsToggleableItemWithHint() {
+fun SettingsToggleableItemWithHintPreview() {
     ProtonSettingsToggleItem(
         name = "Setting toggle",
         hint = "Use this space to provide an explanation of what toggling this setting does",
@@ -305,7 +305,7 @@ fun previewSettingsToggleableItemWithHint() {
     showBackground = true
 )
 @Composable
-fun previewSettingsItemWithNameOnly() {
+fun SettingsItemWithNameOnlyPreview() {
     ProtonSettingsItem(name = "Setting name")
 }
 
@@ -314,7 +314,7 @@ fun previewSettingsItemWithNameOnly() {
     showBackground = true
 )
 @Composable
-fun previewSettingsRadioItem() {
+fun SettingsRadioItemPreview() {
     ProtonSettingsRadioItem(
         name = "Setting option",
         isSelected = true,
@@ -333,11 +333,11 @@ fun previewSettingsRadioItem() {
     uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
-fun previewSettings() {
+fun SettingsPreview() {
     ProtonSettingsList {
         item { ProtonSettingsHeader(title = "Account settings") }
         item { ProtonSettingsItem(name = "Test user", hint = "testuser@proton.ch") {} }
     }
 }
 
-private val toggleItemNegativeOffset = -10.dp
+private val toggleItemNegativeOffset = (-10).dp
