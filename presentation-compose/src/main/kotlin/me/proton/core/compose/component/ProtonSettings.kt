@@ -49,6 +49,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.textNorm
@@ -87,17 +88,14 @@ fun ProtonSettingsTopBar(
     title: String,
     onBackClick: () -> Unit,
 ) {
-    TopAppBar(
+    ProtonTopAppBar(
         modifier = modifier.fillMaxWidth(),
         title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
-        },
-        backgroundColor = ProtonTheme.colors.backgroundNorm,
-        contentColor = ProtonTheme.colors.textNorm,
-        elevation = 0.dp
+        }
     )
 }
 
