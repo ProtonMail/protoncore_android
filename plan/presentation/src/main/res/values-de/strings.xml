@@ -17,19 +17,19 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Paket auswählen</string>
+  <string name="plans_select_a_plan">Abonnement auswählen</string>
   <string name="plans_select_a_plan_subtitle">Ein Abonnement für alle Proton-Dienste</string>
-  <string name="plans_fetching_general_error">Das Abrufen der Tarife ist fehlgeschlagen.</string>
+  <string name="plans_fetching_general_error">Das Abrufen der Abonnements ist fehlgeschlagen.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pro Monat</string>
   <string name="plan_price_annually">pro Monat*</string>
-  <string name="plans_current_plan">Aktuelles Paket</string>
+  <string name="plans_current_plan">Aktuelles Abonnement</string>
   <string name="plans_upgrade_plan">Abonnement wechseln</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Dein Abonnement wird automatisch am &lt;b&gt;%s&lt;/b&gt; verlängert</string>
   <string name="plans_expiration_date">Dein Abonnement läuft am &lt;b&gt;%s&lt;/b&gt; ab</string>
-  <string name="plans_billed_yearly">*Jährlich am %s in Rechnung gestellt</string>
-  <string name="plans_billed_monthly">Monatlich in Rechnung gestellt</string>
+  <string name="plans_billed_yearly">*Jährlich verrechnet zu %s</string>
+  <string name="plans_billed_monthly">Monatliche Abrechnung</string>
   <string name="plans_billing_monthly">Für einen Monat</string>
   <string name="plans_billing_yearly">Für ein Jahr</string>
   <string name="plans_billing_two_years">Für zwei Jahre</string>
@@ -44,6 +44,10 @@
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz</item>
     <item quantity="other">#proton_storage# Speicherplatz</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Bis zu #proton_storage# Speicherplatz</item>
+    <item quantity="other">Up to #proton_storage# storage</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz/Nutzer</item>
@@ -82,8 +86,8 @@
     <item quantity="other">#proton_vpn# Hochgeschwindigkeits-VPN-Verbindungen</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# Nutzer</item>
-    <item quantity="other">#proton_users# Nutzer</item>
+    <item quantity="one">#proton_users# Benutzer</item>
+    <item quantity="other">#proton_users# Benutzer</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
     <item quantity="one">%d von #proton_users# Benutzer</item>
@@ -122,8 +126,8 @@
     <item>CHF</item>
   </string-array>
   <string-array name="supported_billing_cycle">
-    <item>Monatliche Zahlweise</item>
-    <item>Jährliche Zahlweise</item>
+    <item>Monatlich bezahlen</item>
+    <item>Jährlich bezahlen</item>
     <item>Zahlung alle 2 Jahre</item>
   </string-array>
 </resources>

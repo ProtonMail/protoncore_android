@@ -19,23 +19,23 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Se ha producido un error.</string>
-  <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
+  <string name="payments_no_connectivity">No hay conexión disponible para mostrar la página de confirmación 3DS.</string>
   <string name="payments_3ds_not_approved">La aprobación de 3DS ha sido rechazada.</string>
   <string name="payments_error_card_name">El titular de la tarjeta es obligatorio.</string>
   <string name="payments_error_card_number">Número de tarjeta no válido.</string>
   <string name="payments_error_cvc">Por favor, introduce un código de seguridad válido.</string>
-  <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
-  <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
-  <string name="payments_error_invalid_session">Invalid session.</string>
+  <string name="payments_error_session">El ID de sesión es necesario cuando se subscribe a un usuario conectado.</string>
+  <string name="payments_error_signup_paymentmethod">No se puede acceder con el método actual de pago.</string>
+  <string name="payments_error_invalid_session">Sesión no válida.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Elije el método de pago</string>
   <string name="payments_add_credit_debit_card">Añadir tarjeta de crédito/débito</string>
-  <string name="payments_billing_monthly">For 1 month</string>
-  <string name="payments_billing_yearly">For 1 year</string>
-  <string name="payments_billing_two_years">For 2 years</string>
-  <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
-  <string name="payments_method_icon">Payment method icon.</string>
+  <string name="payments_billing_monthly">Para 1 mes</string>
+  <string name="payments_billing_yearly">Durante 1 año</string>
+  <string name="payments_billing_two_years">Durante 2 años</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Pagar %s</string>
+  <string name="payments_method_icon">Ícono de método de pago.</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Detalles del pago</string>
@@ -43,13 +43,13 @@
   <string name="payments_card_number">Número de tarjeta</string>
   <string name="payments_expiration_date">Fecha de expiración</string>
   <string name="payments_security_code">Código de seguridad</string>
-  <string name="payments_postal_code">ZIP code</string>
+  <string name="payments_postal_code">Código postal</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">País</string>
-  <string name="payments_paying_in_process">Paying</string>
-  <string name="payments_choose_country">Select country</string>
+  <string name="payments_paying_in_process">Pagando</string>
+  <string name="payments_choose_country">Seleccionar país</string>
   <string name="payments_info_not_available">n/d</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>

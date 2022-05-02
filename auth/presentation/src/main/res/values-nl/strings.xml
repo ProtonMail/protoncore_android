@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Gebruik in plaats daarvan uw huidige e-mail</string>
   <string name="auth_signup_create_secure_proton_address">Maak in plaats daarvan een veilig ProtonMail e-mailadres</string>
   <string name="auth_signup_username">Gebruikersnaam</string>
+  <string name="auth_signup_domain">Domein</string>
   <string name="auth_signup_email">E-mail</string>
   <string name="auth_signup_next">Volgende</string>
   <string name="auth_signup_choose_password">Maak uw wachtwoord</string>

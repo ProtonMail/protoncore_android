@@ -47,6 +47,12 @@
     <item quantity="many">#proton_storage# сховища</item>
     <item quantity="other">#proton_storage# сховища</item>
   </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">До #proton_storage# сховища</item>
+    <item quantity="few">До #proton_storage# сховища</item>
+    <item quantity="many">До #proton_storage# сховища</item>
+    <item quantity="other">До #proton_storage# сховища</item>
+  </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховища на користувача</item>
     <item quantity="few">#proton_storage# сховища на користувача</item>

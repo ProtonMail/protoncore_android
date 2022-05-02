@@ -47,6 +47,12 @@
     <item quantity="many">#proton_storage# przestrzeni dyskowej</item>
     <item quantity="other">#proton_storage# przestrzeni dyskowej</item>
   </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Do #proton_storage# przestrzeni dyskowej</item>
+    <item quantity="few">Do #proton_storage# przestrzeni dyskowej</item>
+    <item quantity="many">Do #proton_storage# przestrzeni dyskowej</item>
+    <item quantity="other">Do #proton_storage# przestrzeni dyskowej</item>
+  </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# przestrzeni dyskowej / użytkownika</item>
     <item quantity="few">#proton_storage# przestrzeni dyskowej / użytkownika</item>

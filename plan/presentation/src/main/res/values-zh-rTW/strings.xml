@@ -39,10 +39,13 @@
   <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
   <string name="plans_used_space">%s 中的 %s</string>
   <string name="plans_manage_your_subscription_vpn">在 <a href="https://protonvpn.com/pricing">protonvpn.com</a> 管理您的訂閱</string>
-  <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置應用程式升級。</string>
+  <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置內的應用程式升級。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 儲存空間</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="other">多達 #proton_storage# 的儲存空間。</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 儲存空間 / 使用者</item>
@@ -54,7 +57,7 @@
     <item quantity="other">#proton_addresses# 個電子郵件地址 / 使用者</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_addresses# addresses</item>
+    <item quantity="other">#proton_addresses# %d 的電郵地址。</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">#proton_domains# 個自訂網域</item>
@@ -63,7 +66,7 @@
     <item quantity="other">#proton_calendars# 個行事曆</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="other">#proton_calendars# %d 的行事曆。</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 個 VPN 連線</item>
@@ -75,26 +78,26 @@
     <item quantity="other">#proton_users# 個使用者</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="other">#proton_users# %d 的用家。</item>
   </plurals>
   <!-- endregion -->
   <!-- region plan free -->
-  <string name="plan_id_free_header">The basic for private and secure communications.</string>
+  <string name="plan_id_free_header">私密和安全通訊的基本。</string>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">全功能的郵件信箱，配備進階保護。</string>
   <!-- endregion -->
   <!-- region vpn basic -->
-  <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_countries">63 countries</string>
+  <string name="plan_id_vpnbasic_header">VPN 基本。</string>
+  <string name="plan_id_vpnbasic_countries">63個國家。</string>
   <string name="plan_id_vpnbasic_high_speed">高速</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_countries">63 countries</string>
+  <string name="plan_id_vpnplus_countries">63個國家。</string>
   <string name="plan_id_vpnplus_highest_speed">最高速度</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Streaming service support</string>
+  <string name="plan_id_vpnplus_adblock">廣告封鎖程式 (NetShield)。</string>
+  <string name="plan_id_vpnplus_streaming">串流服務支援。</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
@@ -111,7 +114,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>月繳制</item>
-    <item>Pay annually</item>
-    <item>Pay every 2 years</item>
+    <item>年繳制。</item>
+    <item>每兩年收費。</item>
   </string-array>
 </resources>

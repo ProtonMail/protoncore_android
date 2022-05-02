@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Místo toho použijte vaši aktuální e-mailovou adresu</string>
   <string name="auth_signup_create_secure_proton_address">Namísto toho vytvořit zabezpečenou ProtonMail adresu</string>
   <string name="auth_signup_username">Uživatelské jméno</string>
+  <string name="auth_signup_domain">Doména</string>
   <string name="auth_signup_email">E-mail</string>
   <string name="auth_signup_next">Další</string>
   <string name="auth_signup_choose_password">Vytvořte si heslo</string>

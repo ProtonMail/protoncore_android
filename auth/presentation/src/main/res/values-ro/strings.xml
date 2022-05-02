@@ -17,26 +17,26 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">Protect your privacy with Proton</string>
-  <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
-  <string name="welcome_title_mail">Protect your privacy with ProtonMail</string>
-  <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
-  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
-  <string name="welcome_title_drive">Protect your privacy with Proton Drive</string>
-  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
-  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
-  <string name="welcome_title_calendar">Protect your privacy with Proton Calendar</string>
-  <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
-  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
+  <string name="welcome_title">Protejați-vă confidențialitatea cu Proton</string>
+  <string name="welcome_subtitle">Criptarea menține datele dvs. private. Datele dvs. vă aparțin cu adevărat.</string>
+  <string name="welcome_title_mail">Protejați-vă confidențialitatea cu ProtonMail</string>
+  <string name="welcome_subtitle_mail">Email criptat care vă păstrează conversațiile private. Mesajele primite vă aparțin cu adevărat.</string>
+  <string name="welcome_subtitle_mail_alt">Confidențialitate. Securitate. Comoditate. Email criptat care vă oferă controlul datelor personale.</string>
+  <string name="welcome_title_drive">Protejați-vă confidențialitatea cu Proton Drive</string>
+  <string name="welcome_subtitle_drive">Comoditatea stocării în cloud și securitatea tehnologiilor de criptare. În sfârșit stocarea în cloud în care puteți avea încredere.</string>
+  <string name="welcome_subtitle_drive_alt">Cel mai sigur mod de a vă stoca fișierele. Încărcați, sincronizați și partajați folosind cea mai puternică criptare disponibilă.</string>
+  <string name="welcome_title_calendar">Protejați-vă confidențialitatea cu Proton Calendar</string>
+  <string name="welcome_subtitle_calendar">Calendar criptat care asigură confidențialitatea și siguranța evenimentelor din viața dvs.</string>
+  <string name="welcome_subtitle_calendar_alt">Calendarul nostru criptat end-to-end vă ajută să rămâneți organizat, concentrat și în control.</string>
   <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
-  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
-  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="welcome_subtitle_vpn">VPN elvețian de mare viteză care vă protejează confidențialitatea criptându-vă conexiunea la Internet.</string>
+  <string name="welcome_subtitle_vpn_alt">VPN elvețian de mare viteză care vă protejează confidențialitatea. Securitate maximă, 1.600+ servere și fără restricții.</string>
+  <string name="welcome_privacy_by_default">Implict confidențialitate</string>
   <string name="auth_password_label">Parolă</string>
-  <string name="auth_password_help">Password must contain at least 8 characters</string>
-  <string name="auth_current_login_password">Current login password</string>
-  <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
-  <string name="auth_second_factor_code">Two-Factor code</string>
+  <string name="auth_password_help">Parola trebuie să conțină cel puțin 8 de caractere</string>
+  <string name="auth_current_login_password">Parola actuală de conectare</string>
+  <string name="auth_enter_six_digit_code">Introduceți codul din 6 cifre</string>
+  <string name="auth_second_factor_code">Cod conectare cu doi factori</string>
   <string name="auth_email_username">E-mail sau utilizator</string>
   <string name="auth_account_details">Enter your Proton Account details.</string>
   <string name="auth_sign_in">Autentificare</string>
@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Use your current email instead</string>
   <string name="auth_signup_create_secure_proton_address">Creare adresă securizată ProtonMail</string>
   <string name="auth_signup_username">Nume utilizator</string>
+  <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">E-mail</string>
   <string name="auth_signup_next">Înainte</string>
   <string name="auth_signup_choose_password">Create your password</string>

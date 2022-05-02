@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">代わりに現在のメールアドレスを使用</string>
   <string name="auth_signup_create_secure_proton_address">代わりに安全な ProtonMail アドレスを作成</string>
   <string name="auth_signup_username">ユーザー名</string>
+  <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">メールアドレス</string>
   <string name="auth_signup_next">次へ</string>
   <string name="auth_signup_choose_password">パスワードを作成</string>

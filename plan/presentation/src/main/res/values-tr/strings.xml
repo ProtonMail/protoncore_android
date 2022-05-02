@@ -45,6 +45,10 @@
     <item quantity="one">#proton_storage# depolama alanı</item>
     <item quantity="other">#proton_storage# depolama alanı</item>
   </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# depolama alanına kadar</item>
+    <item quantity="other">#proton_storage# depolama alanına kadar</item>
+  </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# depolama alanı / kullanıcı</item>
     <item quantity="other">#proton_storage# depolama alanı / kullanıcı</item>

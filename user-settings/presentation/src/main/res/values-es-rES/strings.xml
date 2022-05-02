@@ -20,15 +20,15 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Correo electrónico de recuperación</string>
   <string name="settings_recovery_email_current">Dirección de correo electrónico de recuperación/notificación actual</string>
-  <string name="settings_recovery_email_new">New Reset/Notification email</string>
-  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+  <string name="settings_recovery_email_new">Nuevo correo electrónico de recuperación/notificación</string>
+  <string name="settings_recovery_email_confirm">Confirmar correo de recuperación/notificación</string>
+  <string name="settings_recovery_email_new_hint">Introduzca su correo electrónico</string>
+  <string name="settings_recovery_email_confirm_hint">Reintroduzca su correo electrónico</string>
   <string name="settings_save">Guardar</string>
-  <string name="settings_password_required">Ingrese su contraseña de inicio de sesión</string>
+  <string name="settings_password_required">Introduzca su contraseña de inicio de sesión</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">No establecido</string>
-  <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
+  <string name="settings_recovery_email_error_no_match">Los correos electrónicos de recuperación y confirmación de recuperación no coinciden.</string>
   <string name="settings_validation_email">El correo electrónico no es válido.</string>
   <string name="settings_general_error">Se ha producido un error.</string>
   <!-- login and mailbox password settings -->
@@ -40,9 +40,9 @@
   <string name="settings_login_password_hint_new_confirm">Confirmar nueva contraseña de inicio de sesión</string>
   <string name="settings_mailbox_password_hint_new">Nueva contraseña del buzón</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmar nueva contraseña de buzón</string>
-  <string name="settings_change_password_error">A change password error has occurred.</string>
-  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_change_password_error">Se ha producido un error al cambiar la contraseña.</string>
+  <string name="settings_recovery_email_success">Correo electrónico de recuperación actualizado</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>
-  <string name="settings_password_management_login_password_success">Login password updated</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_login_password_success">Contraseña de acceso actualizada</string>
+  <string name="settings_password_management_mailbox_password_success">Se ha actualizado la contraseña del buzón</string>
 </resources>

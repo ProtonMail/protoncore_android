@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Använd din nuvarande e-post istället</string>
   <string name="auth_signup_create_secure_proton_address">Skapa en säker ProtonMail-adress istället</string>
   <string name="auth_signup_username">Användarnamn</string>
+  <string name="auth_signup_domain">Domän</string>
   <string name="auth_signup_email">E-post</string>
   <string name="auth_signup_next">Nästa</string>
   <string name="auth_signup_choose_password">Skapa ditt lösenord</string>

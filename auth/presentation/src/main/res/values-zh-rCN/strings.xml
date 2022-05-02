@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">使用您已有的邮箱地址</string>
   <string name="auth_signup_create_secure_proton_address">创建一个安全的 ProtonMail 邮箱地址</string>
   <string name="auth_signup_username">用户名</string>
+  <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">邮箱</string>
   <string name="auth_signup_next">下一步</string>
   <string name="auth_signup_choose_password">创建密码</string>

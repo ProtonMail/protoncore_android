@@ -47,6 +47,12 @@
     <item quantity="many">#proton_storage# úložiště</item>
     <item quantity="other">#proton_storage# úložiště</item>
   </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Až #proton_storage# úložiště</item>
+    <item quantity="few">Až #proton_storage# úložiště</item>
+    <item quantity="many">Až #proton_storage# úložiště</item>
+    <item quantity="other">Až #proton_storage# úložiště</item>
+  </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložiště / uživatel</item>
     <item quantity="few">#proton_storage# úložiště / uživatel</item>

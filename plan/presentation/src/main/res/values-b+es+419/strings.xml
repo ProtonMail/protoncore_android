@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">Seleccione un plan</string>
+  <string name="plans_select_a_plan_subtitle">Un plan para todos los servicios de Proton</string>
+  <string name="plans_fetching_general_error">Ocurrió un error al recuperar los planes.</string>
+  <string name="plans_free_name">Gratuito</string>
+  <string name="plan_price_monthly">al mes</string>
+  <string name="plan_price_annually">al mes*</string>
+  <string name="plans_current_plan">Plan actual</string>
+  <string name="plans_upgrade_plan">Actualice su plan</string>
+  <string name="plans_subscription">Suscripción</string>
+  <string name="plans_renewal_date">Su plan se renovará automáticamente en &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Su plan expirará en &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_billed_yearly">*Facturado anualmente en %s</string>
+  <string name="plans_billed_monthly">Facturado mensualmente</string>
+  <string name="plans_billing_monthly">Por 1 mes</string>
+  <string name="plans_billing_yearly">Por 1 año</string>
+  <string name="plans_billing_two_years">Por 2 años</string>
+  <string name="plans_upgrade_your_plan">Actualice su plan</string>
+  <string name="plans_proton_for_free">Obtenga Proton gratis</string>
+  <string name="plans_get_proton">Obtenga %s</string>
+  <string name="plans_manage_your_subscription">Gestione su suscripción en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_used_space">%s de %s</string>
+  <string name="plans_manage_your_subscription_vpn">Gestione su suscripción en <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_can_not_upgrade_from_mobile">No puede actualizar desde la aplicación móvil.</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# almacenamiento</item>
+    <item quantity="other">#proton_storage# almacenamiento</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Hasta #proton_storage# de almacenamiento</item>
+    <item quantity="other">Hasta #proton_storage# de almacenamiento</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# almacenamiento / usuario</item>
+    <item quantity="other">#proton_storage# almacenamiento / usuario</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# dirección</item>
+    <item quantity="other">#proton_addresses# direcciones</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# dirección / usuario</item>
+    <item quantity="other">#proton_addresses# direcciones / usuario</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d de #proton_addresses# dirección</item>
+    <item quantity="other">%d de #proton_addresses# direcciones</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">#proton_domains# dominio personalizado</item>
+    <item quantity="other">#proton_domains# dominios personalizados</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# calendario</item>
+    <item quantity="other">#proton_calendars# calendarios</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d de #proton_calendars# calendario</item>
+    <item quantity="other">%d de #proton_calendars# calendarios</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# conexión VPN</item>
+    <item quantity="other">#proton_vpn# conexiones VPN</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# conexión VPN de alta velocidad</item>
+    <item quantity="other">#proton_vpn# conexiones VPN de alta velocidad</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# usuario</item>
+    <item quantity="other">#proton_users# usuarios</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d de #proton_users# usuario</item>
+    <item quantity="other">%d de #proton_users# usuarios</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plan free -->
+  <string name="plan_id_free_header">La básica para comunicaciones privadas y seguras.</string>
+  <!-- endregion -->
+  <!-- region plan plus. Note: the order array is affected by the change in the -->
+  <string name="plan_id_plus_header">Buzón completo con protección avanzada.</string>
+  <!-- endregion -->
+  <!-- region vpn basic -->
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 países</string>
+  <string name="plan_id_vpnbasic_high_speed">Velocidad alta</string>
+  <!-- endregion -->
+  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 países</string>
+  <string name="plan_id_vpnplus_highest_speed">Velocidad máxima</string>
+  <string name="plan_id_vpnplus_adblock">Bloqueador de anuncios (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Soporte de servicio de streaming</string>
+  <!-- endregion -->
+  <!-- region plan professional -->
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Soporte multi usuario</string>
+  <!-- endregion -->
+  <!-- region plan visionary -->
+  <string name="plan_id_visionary_header">Visionary</string>
+  <!-- endregion -->
+  <!-- supported plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <string-array name="supported_billing_cycle">
+    <item>Pago mensual</item>
+    <item>Pago anual</item>
+    <item>Pago cada 2 años</item>
+  </string-array>
+</resources>

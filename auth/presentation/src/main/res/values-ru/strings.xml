@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Использовать ваш текущий адрес электронной почты</string>
   <string name="auth_signup_create_secure_proton_address">Создать безопасный адрес ProtonMail</string>
   <string name="auth_signup_username">Имя пользователя</string>
+  <string name="auth_signup_domain">Домен</string>
   <string name="auth_signup_email">Эл. почта</string>
   <string name="auth_signup_next">Далее</string>
   <string name="auth_signup_choose_password">Создайте пароль</string>

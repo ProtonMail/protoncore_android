@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Reportar un problema</string>
+  <string name="core_report_bug_close">Cerrar</string>
+  <string name="core_report_bug_subject_field_hint">Asunto</string>
+  <string name="core_report_bug_subject_field_required">Ingrese un asunto</string>
+  <string name="core_report_bug_description_field_hint">¿Cuál es el problema? Mínimo 10 caracteres</string>
+  <string name="core_report_bug_description_field_placeholder">Describa el problema con tanto detalle como pueda. Si hubo un mensaje de error, inclúyalo también.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Ingrese al menos %d caracter</item>
+    <item quantity="other">Ingrese al menos %d caracteres</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">¿Cerrar reporte de errores?</string>
+  <string name="core_report_bug_discard_changes_description">Si abandona esta página, su reporte no se guardará.</string>
+  <string name="core_report_bug_discard_changes_cancel">Continuar escribiendo</string>
+  <string name="core_report_bug_discard_changes_confirm">Cerrar sin guardar</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Máximo %d caracter</item>
+    <item quantity="other">Máximo %d caracteres</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Hubo un problema. Intente de nuevo en unos minutos.</string>
+  <string name="core_report_bug_send">Enviar reporte</string>
+  <string name="core_report_bug_success">Gracias por su reporte</string>
+</resources>

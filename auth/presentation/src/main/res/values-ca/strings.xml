@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual</string>
   <string name="auth_signup_create_secure_proton_address">Creeu una adreça ProtonMail segura</string>
   <string name="auth_signup_username">Nom d\'usuari</string>
+  <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">Correu electrònic</string>
   <string name="auth_signup_next">Següent</string>
   <string name="auth_signup_choose_password">Creeu la vostra contrasenya</string>

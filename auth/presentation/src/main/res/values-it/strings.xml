@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Usa invece la tua email attuale</string>
   <string name="auth_signup_create_secure_proton_address">Crea invece un indirizzo ProtonMail sicuro</string>
   <string name="auth_signup_username">Nome utente</string>
+  <string name="auth_signup_domain">Dominio</string>
   <string name="auth_signup_email">Email</string>
   <string name="auth_signup_next">Prossimo</string>
   <string name="auth_signup_choose_password">Crea la tua password</string>

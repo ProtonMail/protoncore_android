@@ -45,6 +45,10 @@
     <item quantity="one">#proton_storage# lager</item>
     <item quantity="other">#proton_storage# lager</item>
   </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Op til #proton_storage# lagerplads</item>
+    <item quantity="other">Op til #proton_storage# lagerplads</item>
+  </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lager / bruger</item>
     <item quantity="other">#proton_storage# lager / bruger</item>
@@ -98,15 +102,15 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_countries">63 countries</string>
+  <string name="plan_id_vpnbasic_countries">63 lande</string>
   <string name="plan_id_vpnbasic_high_speed">Høj hastighed</string>
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_countries">63 countries</string>
+  <string name="plan_id_vpnplus_countries">63 lande</string>
   <string name="plan_id_vpnplus_highest_speed">Højeste hastighed</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Streaming service support</string>
+  <string name="plan_id_vpnplus_adblock">Annonceblokering (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Understøttelse af streamingtjeneste</string>
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>

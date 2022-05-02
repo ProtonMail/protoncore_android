@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Correo de recuperación</string>
+  <string name="settings_recovery_email_current">Dirección de correo electrónico de recuperación/notificación actual</string>
+  <string name="settings_recovery_email_new">Correo de recuperación/notificación nuevo</string>
+  <string name="settings_recovery_email_confirm">Confirmar correo de recuperación/notificación nuevo</string>
+  <string name="settings_recovery_email_new_hint">Ingresar dirección de correo</string>
+  <string name="settings_recovery_email_confirm_hint">Reingresar dirección de correo</string>
+  <string name="settings_save">Guardar</string>
+  <string name="settings_password_required">Ingrese su contraseña de inicio de sesión</string>
+  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_not_set">No definido</string>
+  <string name="settings_recovery_email_error_no_match">Los correos de recuperación y confirmación no coinciden.</string>
+  <string name="settings_validation_email">Correo inválido.</string>
+  <string name="settings_general_error">Ocurrió un error.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Cambiar contraseña</string>
+  <string name="settings_password_management_change_mailbox_password">Cambiar contraseña del buzón</string>
+  <string name="settings_password_management_header">Gestión de contraseñas</string>
+  <string name="settings_login_password_hint_current">Contraseña de inicio de sesión actual</string>
+  <string name="settings_login_password_hint_new">Contraseña nueva de inicio de sesión</string>
+  <string name="settings_login_password_hint_new_confirm">Confirmar contraseña nueva de inicio de sesión</string>
+  <string name="settings_mailbox_password_hint_new">Contraseña nueva del buzón</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirmar contraseña nueva del buzón</string>
+  <string name="settings_change_password_error">Ocurrió un error al cambiar la contraseña.</string>
+  <string name="settings_recovery_email_success">Correo de recuperación actualizado</string>
+  <string name="settings_password_management_success">Contraseña actualizada</string>
+  <string name="settings_password_management_login_password_success">Contraseña de inicio de sesión actualizada</string>
+  <string name="settings_password_management_mailbox_password_success">Contraseña del buzón actualizada</string>
+</resources>

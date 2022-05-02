@@ -46,6 +46,11 @@
     <item quantity="few">#proton_storage# storage</item>
     <item quantity="other">#proton_storage# storage</item>
   </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Up to #proton_storage# storage</item>
+    <item quantity="few">Up to #proton_storage# storage</item>
+    <item quantity="other">Up to #proton_storage# storage</item>
+  </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# storage / user</item>
     <item quantity="few">#proton_storage# storage / user</item>

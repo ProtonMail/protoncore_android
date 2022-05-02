@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Laporkan masalah</string>
+  <string name="core_report_bug_close">Tutup</string>
+  <string name="core_report_bug_subject_field_hint">Subjek</string>
+  <string name="core_report_bug_subject_field_required">Beri subjek</string>
+  <string name="core_report_bug_description_field_hint">Apa yang salah? Minimum 10 karakter</string>
+  <string name="core_report_bug_description_field_placeholder">Harap jabarkan masalah Anda serinci mungkin. Jika menjumpai pesan eror, harap beri tahu kami isi pesan eror tersebut.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="other">Masukkan setidaknya %d karakter</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Tutup laporan bug?</string>
+  <string name="core_report_bug_discard_changes_description">Jika Anda meninggalkan halaman ini, laporan Anda tidak akan disimpan.</string>
+  <string name="core_report_bug_discard_changes_cancel">Teruskan menulis</string>
+  <string name="core_report_bug_discard_changes_confirm">Tutup tanpa menyimpan</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="other">Maksimum %d karakter</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Terjadi kesalahan. Silakan coba beberapa saat lagi.</string>
+  <string name="core_report_bug_send">Kirim laporan</string>
+  <string name="core_report_bug_success">Terima kasih atas laporan Anda</string>
+</resources>

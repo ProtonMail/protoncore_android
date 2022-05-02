@@ -19,11 +19,11 @@
 <resources>
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Es wurde kein Browser gefunden, um den Link zu öffnen.</string>
-  <string name="presentation_force_update_title">Umstieg erforderlich</string>
-  <string name="presentation_force_update_message">Diese Version der App wird nicht mehr unterstützt, bitte aktualisieren Sie sie, um sie weiter verwenden zu können.</string>
+  <string name="presentation_force_update_title">Aktualisierung erforderlich</string>
+  <string name="presentation_force_update_message">Diese Version der App wird nicht mehr unterstützt, bitte führe eine Aktualisierung durch, um sie weiter nutzen zu können.</string>
   <string name="presentation_force_update_learn_more">Mehr erfahren</string>
   <string name="presentation_force_update_update">Aktualisieren</string>
-  <string name="presentation_market_missing">Die auf dem Gerät installierte Marktanwendung konnte nicht gefunden werden. Bitte besuchen Sie den Store und aktualisieren Sie die Anwendung.</string>
+  <string name="presentation_market_missing">Die Anwendung zum Verwalten von Aktualisierungen konnte auf dem Gerät nicht gefunden werden. Bitte rufe den Store auf und aktualisiere die Anwendung.</string>
   <string name="presentation_authenticate">Authentifizieren</string>
   <string name="presentation_signin_to_continue">Anmelden um fortzufahren</string>
   <string name="presentation_alert_title">Benachrichtigung</string>

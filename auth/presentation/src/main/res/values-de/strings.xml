@@ -31,7 +31,7 @@
   <string name="welcome_title_vpn">Schützen Sie Ihre Privatsphäre mit Proton VPN</string>
   <string name="welcome_subtitle_vpn">Schweizer Hochgeschwindigkeits-VPN, das Ihre Privatsphäre schützt, indem es Ihre Internetverbindung verschlüsselt.</string>
   <string name="welcome_subtitle_vpn_alt">Schweizer Hochgeschwindigkeits-VPN, das deine Privatsphäre schützt. Maximale Sicherheit, über 1.600 Server und keine Einschränkungen.</string>
-  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="welcome_privacy_by_default">Privatsphäre als Standard</string>
   <string name="auth_password_label">Passwort</string>
   <string name="auth_password_help">Das Passwort muss mindestens 8 Zeichen enthalten</string>
   <string name="auth_current_login_password">Aktuelles Anmeldepasswort</string>
@@ -42,7 +42,7 @@
   <string name="auth_sign_in">Anmelden</string>
   <string name="auth_sign_in_action">Anmelden</string>
   <string name="auth_need_help">Benötigen Sie Hilfe?</string>
-  <string name="auth_login_assistive_text">Bitte geben Sie Ihre Proton E-Mail-Adresse oder Ihren Benutzernamen ein.</string>
+  <string name="auth_login_assistive_text">Bitte gib deine Proton-E-Mail-Adresse oder deinen Benutzernamen ein.</string>
   <string name="auth_help_title">Wie können wir behilflich sein?</string>
   <string name="auth_help_option_forgot_username">Benutzername vergessen</string>
   <string name="auth_help_option_forgot_password">Passwort vergessen</string>
@@ -51,11 +51,11 @@
   <string name="auth_help_option_customer_support">Kundensupport</string>
   <string name="auth_2fa_title">Zwei‐Faktor‐Authentifizierung</string>
   <string name="auth_2fa_label">Zwei‐Faktor‐Code</string>
-  <string name="auth_2fa_recovery_code_label">Wiederherstellungsschlüssel</string>
-  <string name="auth_2fa_assistive_text">6-stelligen Schlüssel eingeben.</string>
-  <string name="auth_2fa_recovery_code_assistive_text">Geben Sie einen 8-stelligen Wiederherstellungsschlüssel ein.</string>
+  <string name="auth_2fa_recovery_code_label">Wiederherstellungscode</string>
+  <string name="auth_2fa_assistive_text">6-stelligen Code eingeben.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Gib einen 8-stelligen Wiederherstellungscode ein.</string>
   <string name="auth_2fa_action">Authentifizieren</string>
-  <string name="auth_2fa_use_recovery_code">Wiederherstellungsschlüssel verwenden</string>
+  <string name="auth_2fa_use_recovery_code">Wiederherstellungscode verwenden</string>
   <string name="auth_2fa_use_2fa_code">Zwei-Faktor-Code verwenden</string>
   <string name="auth_2fa_error_empty_code">Bitte den Zwei-Faktor-Code eingegeben</string>
   <string name="auth_mailbox_title">Postfach entsperren</string>
@@ -70,16 +70,16 @@
   <string name="auth_username">Benutzername</string>
   <string name="auth_username_next_action">Weiter</string>
   <string name="auth_create_address_result_title">%s ist verfügbar</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s ist Ihre neue ProtonMail-E-Mail-Adresse.</string>
-  <string name="auth_create_address_result_subtitle">Mit dieser E-Mail-Adresse können Sie sich bei allen Proton-Diensten anmelden.</string>
-  <string name="auth_create_address_result_recovery_title">Ihre Wiederherstellungs-E-Mail-Adresse lautet:</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s ist deine neue ProtonMail-E-Mail-Adresse.</string>
+  <string name="auth_create_address_result_subtitle">Mit dieser E-Mail-Adresse kannst du dich bei allen Proton-Diensten anmelden.</string>
+  <string name="auth_create_address_result_recovery_title">Deine Wiederherstellungs-E-Mail-Adresse lautet:</string>
   <string name="auth_create_address_create">Neue E-Mail-Adresse</string>
   <string name="auth_create_address_creating">Neue E-Mail-Adresse</string>
   <string name="auth_create_address_terms">Indem du auf Adresse erstellen klickst, erklärst du dich mit den <a href="https://protonmail.com/terms-and-conditions">Nutzungsbedingungen</a> von Proton einverstanden.</string>
   <string name="auth_create_address_error_credentials">Anmeldeinformationen müssen eingegeben werden.</string>
   <string name="auth_create_address_error_no_available_domain">Keine verfügbare Domain.</string>
   <string name="auth_create_address_error_private_key">Das Erzeugen des privaten Schlüssels ist fehlgeschlagen.</string>
-  <string name="auth_create_address_error_signed_key_list">Generieren der Schlüsselliste fehlgeschlagen.</string>
+  <string name="auth_create_address_error_signed_key_list">Das Generieren der Schlüsselliste ist fehlgeschlagen.</string>
   <string name="auth_create_address_error_setusername">Zuordnen des Benutzernamens ist fehlgeschlagen.</string>
   <string name="auth_create_address_error_username_unavailable">Der gewählte Benutzername ist nicht verfügbar.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Kein Primärschlüssel gefunden.</string>
@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Stattdessen Ihre aktuelle E-Mail-Adresse verwenden</string>
   <string name="auth_signup_create_secure_proton_address">Erstellen Sie stattdessen eine sichere ProtonMail-Adresse</string>
   <string name="auth_signup_username">Benutzername</string>
+  <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">E‐Mail‐Adresse</string>
   <string name="auth_signup_next">Weiter</string>
   <string name="auth_signup_choose_password">Passwort erstellen</string>

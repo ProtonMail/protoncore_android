@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Bunun yerine var olan e-posta adresinizi kullanın</string>
   <string name="auth_signup_create_secure_proton_address">Bunun yerine güvenli bir ProtonMail adresi oluşturun</string>
   <string name="auth_signup_username">Kullanıcı adı</string>
+  <string name="auth_signup_domain">Etki alanı</string>
   <string name="auth_signup_email">E-posta</string>
   <string name="auth_signup_next">Sonraki</string>
   <string name="auth_signup_choose_password">Parolanızı oluşturun</string>

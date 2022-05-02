@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Use your current email instead</string>
   <string name="auth_signup_create_secure_proton_address">Rnu tansa n ProtonMail taɣellsant deg ubdil</string>
   <string name="auth_signup_username">Isem n useqdac</string>
+  <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">Imayl</string>
   <string name="auth_signup_next">Ɣer sdat</string>
   <string name="auth_signup_choose_password">Create your password</string>

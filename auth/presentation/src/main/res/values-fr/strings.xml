@@ -27,7 +27,7 @@
   <string name="welcome_subtitle_drive_alt">Le moyen le plus sûr de stocker vos fichiers. Téléchargez, synchronisez et partagez avec le chiffrement le plus fort disponible.</string>
   <string name="welcome_title_calendar">Protégez votre vie privée avec Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendrier chiffré qui préserve la confidentialité et la sécurité des événements de votre vie.</string>
-  <string name="welcome_subtitle_calendar_alt">Notre calendrier chiffré de bout en bout vous aide à rester organisé, sur la bonne voie et en contrôle.</string>
+  <string name="welcome_subtitle_calendar_alt">Notre calendrier chiffré de bout en bout vous aide à rester organisé, concentré et maître de la situation.</string>
   <string name="welcome_title_vpn">Protégez votre vie privée avec ProtonVPN</string>
   <string name="welcome_subtitle_vpn">VPN suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suisse à haut débit qui protège votre vie privée. Sécurité maximale, plus de 1 600 serveurs et aucune restriction.</string>
@@ -99,6 +99,7 @@
   <string name="auth_signup_current_email">Utiliser plutôt votre adresse électronique actuelle</string>
   <string name="auth_signup_create_secure_proton_address">Créez plutôt une adresse ProtonMail sécurisée</string>
   <string name="auth_signup_username">Nom d\'utilisateur</string>
+  <string name="auth_signup_domain">Domaine</string>
   <string name="auth_signup_email">Adresse électronique</string>
   <string name="auth_signup_next">Suivant</string>
   <string name="auth_signup_choose_password">Créer votre mot de passe</string>
