@@ -11,27 +11,60 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
-### Changes
-- `KeyHolderContext.generateNestedPrivateKey` and `NestedPrivateKey.generateNestedPrivateKey`
-have an optional parameter, `generatePassphrase: ()->ByteArray` to let the caller choose how
-the passphrase is generated and encoded. The default value keeps the same behavior as before.
+## [7.2.0] - 2022-05-02
 
-### New
+### Features
 
-- ProtonTheme composable considers user's preference to set the Theme
-- New crypto function `PGPCrypto.generateRandomBytes()` to generate
-random bytes without any encoding
+- Added automatic Changelog based on conventional commits.
+
+  See more details in [README.md](README.md#conventional-commits).
+  See [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
+
+- crypto:
+  - New crypto function `PGPCrypto.generateRandomBytes()` to generate random bytes without any encoding.
+  - `KeyHolderContext.generateNestedPrivateKey` and `NestedPrivateKey.generateNestedPrivateKey` have an optional parameter, `generatePassphrase: ()->ByteArray` to let the caller choose how the passphrase is generated and encoded. The default value keeps the same behavior as before.
+
+- theme: ProtonTheme composable considers user's preference to set the Theme.
 
 ### Fixes
 
-- Clear consumed Payment Token (HumanVerification token).
-- Current plan used space color indicator.
-- Default plan max space to take into account RewardsMaxSpace.
-- Use user currency in the current plan subscription screen for free plan.
-- Improve displaying error messages in Bug Report form
-- human-verification: add a gap between calling code and phone number
-- auth, human-verification: allow forced dark mode on web views for ToS and captcha
-- payment: correct placement of the billing period label
+- account-manager:
+  - Memory leak in Account[List|Primary]View.
+
+- bug-report:
+  - Improve displaying error messages in Bug Report form
+
+- human-verification:
+  - Add a gap between calling code and phone number.
+  - Allow forced dark mode on web views for ToS and captcha.
+
+- key:
+  - Added a way to control the passphrase of generated nested private keys.
+  - Added an optional parameter `generatePassphrase` that let the caller of the generation function choose the format of the generated passphrase.
+
+- payment:
+  - Clear consumed Payment Token (HumanVerification token).
+  - Correct placement of the billing period label.
+
+- plan:
+  - Current plan used space color indicator.
+  - Default plan max space to take into account RewardsMaxSpace.
+  - Use user currency in the current plan subscription screen for free plan.
+  - Fallback to default plan for connections and addresses counters.
+  
+### Refactor
+
+- Improved EventManager States handling.
+
+  - Don't re-enqueue the Worker if it is currently running. This help to prevent canceling long running operation.
+  - Cancel/suspend will always directly stop the Worker. The Worker will be resumed if previously suspended and will re-fetch data (could have changed in the meantime).
+  - OnComplete is always the last step. It should not be used for long running operation or as a place for saving data.
+  - OnSuccess is called after successfully notifying all the listeners.
+  - OnFailure is called after too many retries, when at least one listener constantly failed to apply the set of modifications.
+  - OnResetAll is called after onFailure.
+  - Example of success: Enqueued -> Fetching -> Persisted -> NotifyPrepare -> NotifyEvents -> Success -> NotifySuccess -> NotifyComplete -> Completed.
+  - Example of failure: ... Persisted -> NotifyPrepare -> NotifyEvents -> max retries reached -> Failure -> NotifyFailure -> NotifyResetAll -> NotifyComplete -> Completed.
+  - Example of normal reset: ... Persisted -> Refresh > 0 -> NotifyResetAll -> NotifyComplete -> Completed.
 
 ## [7.1.11]
 
