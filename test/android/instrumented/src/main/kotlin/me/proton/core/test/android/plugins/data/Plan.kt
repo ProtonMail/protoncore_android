@@ -25,9 +25,9 @@ import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetCo
 @Serializable
 enum class Plan(var planName: String, var text: String) {
     Free("free", "Proton Free"),
-    Professional("pro", "ProtonMail Professional"),
+    Professional("pro", "Proton Mail Professional"),
     Visionary("visionary", "Visionary"),
-    Plus("plus", "ProtonMail Plus"),
+    Plus("plus", "Proton Mail Plus"),
     Dev("", "")
 }
 

@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Lindungi privasi Anda dengan Proton</string>
   <string name="welcome_subtitle">Enkripsi memastikan data Anda tetap privat. Data Anda adalah milik Anda.</string>
-  <string name="welcome_title_mail">Lindungi privasi Anda dengan ProtonMail</string>
+  <string name="welcome_title_mail">Lindungi privasi Anda dengan Proton Mail</string>
   <string name="welcome_subtitle_mail">Email terenkripsi yang menjaga percakapan Anda tetap privat. Kotak masuk Anda adalah milik Anda.</string>
   <string name="welcome_subtitle_mail_alt">Privasi. Keamanan. Kenyamanan. Email terenkripsi yang memberi Anda kendali penuh terhadap data pribadi Anda.</string>
   <string name="welcome_title_drive">Lindungi privasi Anda dengan Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Lindungi privasi Anda dengan Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga hidup Anda tetap privat, aman, dan terkunci rapat.</string>
   <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi dari ujung ke ujung membantu Anda tetap teratur, berada dalam jalur, dan terkendali.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
   <string name="welcome_privacy_by_default">Berstandar privasi</string>
@@ -65,8 +65,8 @@
   <string name="auth_login_general_error">Terjadi galat.</string>
   <string name="auth_login_empty_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh dikosongkan.</string>
-  <string name="auth_create_address_title">Buat alamat ProtonMail</string>
-  <string name="auth_create_address_subtitle">Akun Proton Anda terasosiasi dengan %1$s. Untuk menggunakan ProtonMail, mohon buat alamat email.</string>
+  <string name="auth_create_address_title">Buat alamat Proton Mail</string>
+  <string name="auth_create_address_subtitle">Akun Proton Anda terasosiasi dengan %1$s. Untuk menggunakan Proton Mail, mohon buat alamat email.</string>
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Selanjutnya</string>
   <string name="auth_create_address_result_title">%s tersedia</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Buat Akun Proton Anda</string>
   <string name="auth_signup_current_email">Gunakan alamat surel terkini Anda</string>
-  <string name="auth_signup_create_secure_proton_address">Buat alamat ProtonMail yang aman</string>
+  <string name="auth_signup_create_secure_proton_address">Buat alamat Proton Mail yang aman</string>
   <string name="auth_signup_username">Nama pengguna</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">Surel</string>

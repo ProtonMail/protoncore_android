@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Protect your privacy with Proton</string>
   <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
-  <string name="welcome_title_mail">Protect your privacy with ProtonMail</string>
+  <string name="welcome_title_mail">Protect your privacy with Proton Mail</string>
   <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">Protect your privacy with Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Protect your privacy with Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">An error occurred.</string>
   <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
-  <string name="auth_create_address_title">ProtonMail cím létrehozása</string>
-  <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use ProtonMail, please create an address.</string>
+  <string name="auth_create_address_title">Proton Mail cím létrehozása</string>
+  <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use Proton Mail, please create an address.</string>
   <string name="auth_username">Felhasználónév</string>
   <string name="auth_username_next_action">Következő</string>
   <string name="auth_create_address_result_title">%s elérhető</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new ProtonMail email address.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new Proton Mail email address.</string>
   <string name="auth_create_address_result_subtitle">You will use this address to log in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
   <string name="auth_create_address_create">Cím létrehozása</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Proton fiók létrehozása</string>
   <string name="auth_signup_current_email">Use your current email instead</string>
-  <string name="auth_signup_create_secure_proton_address">Inkább egy biztonságos ProtonMail cím létrehozása</string>
+  <string name="auth_signup_create_secure_proton_address">Inkább egy biztonságos Proton Mail cím létrehozása</string>
   <string name="auth_signup_username">Felhasználónév</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">E-mail</string>

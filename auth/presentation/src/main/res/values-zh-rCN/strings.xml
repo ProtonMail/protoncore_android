@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">使用 Proton 来保护您的隐私</string>
   <string name="welcome_subtitle">我们依靠加密机制保护个人隐私，让您的数据真正归您所有。</string>
-  <string name="welcome_title_mail">使用 ProtonMail 来保护您的隐私</string>
+  <string name="welcome_title_mail">使用 Proton Mail 来保护您的隐私</string>
   <string name="welcome_subtitle_mail">加密邮件保护您的通讯隐私，打造您的专属收件箱。</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">使用 Proton Drive 来保护您的隐私</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">使用 Proton Calendar 来保护您的隐私</string>
   <string name="welcome_subtitle_calendar">加密日历让您的生活大小事保持隐私、安全和可靠。</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">通过加密网络连接来保护您隐私的瑞士高速VPN。</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">出错了。</string>
   <string name="auth_login_empty_credentials">账号和密码不应为空。</string>
   <string name="auth_mailbox_empty_credentials">账号和密码不应为空。</string>
-  <string name="auth_create_address_title">创建 ProtonMail 地址</string>
-  <string name="auth_create_address_subtitle">您的 Proton 账户已关联至 %1$s，要使用 ProtonMail，请先创建一个地址。</string>
+  <string name="auth_create_address_title">创建 Proton Mail 地址</string>
+  <string name="auth_create_address_subtitle">您的 Proton 账户已关联至 %1$s，要使用 Proton Mail，请先创建一个地址。</string>
   <string name="auth_username">用户名</string>
   <string name="auth_username_next_action">下一步</string>
   <string name="auth_create_address_result_title">%s 可以注册</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s 将是您新的 ProtonMail 邮箱地址。</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s 将是您新的 Proton Mail 邮箱地址。</string>
   <string name="auth_create_address_result_subtitle">您可以使用该地址登录所有 Proton 服务。</string>
   <string name="auth_create_address_result_recovery_title">您的密保邮箱：</string>
   <string name="auth_create_address_create">创建地址</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">创建您的账户</string>
   <string name="auth_signup_current_email">使用您已有的邮箱地址</string>
-  <string name="auth_signup_create_secure_proton_address">创建一个安全的 ProtonMail 邮箱地址</string>
+  <string name="auth_signup_create_secure_proton_address">创建一个安全的 Proton Mail 邮箱地址</string>
   <string name="auth_signup_username">用户名</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">邮箱</string>

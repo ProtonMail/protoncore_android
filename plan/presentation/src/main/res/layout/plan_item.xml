@@ -37,7 +37,7 @@
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="ProtonMail PLUS" />
+        tools:text="Proton Mail PLUS" />
 
     <ImageView
         android:id="@+id/starred"

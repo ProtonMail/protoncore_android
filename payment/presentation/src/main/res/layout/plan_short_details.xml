@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toStartOf="@id/amountText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="ProtonMail PLUS" />
+        tools:text="Proton Mail PLUS" />
 
     <TextView
         android:id="@+id/billingPeriodText"

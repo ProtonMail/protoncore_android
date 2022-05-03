@@ -47,7 +47,7 @@ import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
 
 /**
- * Creates a ProtonMail address when needed.
+ * Creates a Proton Mail address when needed.
  * Usually a common use case would be a user with external email trying to
  * login into one of Proton services (apps) which require a Proton Mail address.
  * In this flow, the external email address would be set as an account recovery email address.

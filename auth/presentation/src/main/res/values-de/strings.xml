@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Schützen Sie Ihre Privatsphäre mit Proton</string>
   <string name="welcome_subtitle">Das Verschlüsseln hält Ihre Daten privat. Ihre Daten gehören ausschließlich Ihnen.</string>
-  <string name="welcome_title_mail">Schützen Sie Ihre Privatsphäre mit ProtonMail</string>
+  <string name="welcome_title_mail">Schützen Sie Ihre Privatsphäre mit Proton Mail</string>
   <string name="welcome_subtitle_mail">Verschlüsselte E-Mails halten Ihre Konversationen privat. Ihr Posteingang gehört ausschließlich Ihnen.</string>
   <string name="welcome_subtitle_mail_alt">Privatsphäre. Sicherheit. Komfort. Verschlüsselte E-Mail, mit der du die volle Kontrolle über deine persönlichen Daten hast.</string>
   <string name="welcome_title_drive">Schützen Sie Ihre Privatsphäre mit Proton Drive</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Es ist ein Fehler aufgetreten.</string>
   <string name="auth_login_empty_credentials">Anmeldeinformationen müssen eingegeben werden.</string>
   <string name="auth_mailbox_empty_credentials">Anmeldeinformationen müssen eingegeben werden.</string>
-  <string name="auth_create_address_title">ProtonMail-E-Mail-Adresse erstellen</string>
-  <string name="auth_create_address_subtitle">Ihr Proton-Konto ist mit %1$s verknüpft. Um ProtonMail verwenden zu können, legen Sie zunächst bitte eine E-Mail-Adresse an.</string>
+  <string name="auth_create_address_title">Proton Mail-E-Mail-Adresse erstellen</string>
+  <string name="auth_create_address_subtitle">Ihr Proton-Konto ist mit %1$s verknüpft. Um Proton Mail verwenden zu können, legen Sie zunächst bitte eine E-Mail-Adresse an.</string>
   <string name="auth_username">Benutzername</string>
   <string name="auth_username_next_action">Weiter</string>
   <string name="auth_create_address_result_title">%s ist verfügbar</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s ist deine neue ProtonMail-E-Mail-Adresse.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s ist deine neue Proton Mail-E-Mail-Adresse.</string>
   <string name="auth_create_address_result_subtitle">Mit dieser E-Mail-Adresse kannst du dich bei allen Proton-Diensten anmelden.</string>
   <string name="auth_create_address_result_recovery_title">Deine Wiederherstellungs-E-Mail-Adresse lautet:</string>
   <string name="auth_create_address_create">Neue E-Mail-Adresse</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Erstellen Sie Ihr Proton-Konto</string>
   <string name="auth_signup_current_email">Stattdessen Ihre aktuelle E-Mail-Adresse verwenden</string>
-  <string name="auth_signup_create_secure_proton_address">Erstellen Sie stattdessen eine sichere ProtonMail-Adresse</string>
+  <string name="auth_signup_create_secure_proton_address">Erstellen Sie stattdessen eine sichere Proton Mail-Adresse</string>
   <string name="auth_signup_username">Benutzername</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">E‐Mail‐Adresse</string>

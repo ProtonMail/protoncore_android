@@ -65,10 +65,10 @@ data class UserAddress(
 ) : KeyHolder
 
 enum class AddressType(val value: Int) {
-    /** First address the user created using a ProtonMail domain. */
+    /** First address the user created using a Proton Mail domain. */
     Original(1),
 
-    /** Subsequent addresses created using a ProtonMail domain. */
+    /** Subsequent addresses created using a Proton Mail domain. */
     Alias(2),
 
     /** Custom domain address. */

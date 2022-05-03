@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Bescherm uw privacy met Proton</string>
   <string name="welcome_subtitle">Encryptie houdt uw gegevens privé. Uw gegevens zijn echt van u.</string>
-  <string name="welcome_title_mail">Bescherm uw privacy met ProtonMail</string>
+  <string name="welcome_title_mail">Bescherm uw privacy met Proton Mail</string>
   <string name="welcome_subtitle_mail">Versleutelde e-mail die uw gesprekken privé houdt. Uw inbox is echt van u.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Veiligheid. Gebruiksgemak. Versleutelde e-mail dat u volledige controle biedt over uw persoonlijke gegevens.</string>
   <string name="welcome_title_drive">Bescherm uw privacy met Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Bescherm uw privacy met Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Gecodeerde agenda die uw levensgebeurtenissen privé, veilig en beveiligd houdt.</string>
   <string name="welcome_subtitle_calendar_alt">Onze end-to-end versleutelde agenda helpt u om georganiseerd, op schema en in controle te blijven.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">Snelle Zwitserse VPN die uw privacy waarborgt door uw internetverbinding te versleutelen.</string>
   <string name="welcome_subtitle_vpn_alt">Hogesnelheid Zwitserse VPN die uw privacy beschermt. Maximale beveiliging, 1600 servers en geen beperkingen.</string>
   <string name="welcome_privacy_by_default">Privacy als standaard</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Er is iets fout gegaan.</string>
   <string name="auth_login_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_mailbox_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>
-  <string name="auth_create_address_title">Maak een ProtonMail e-mailadres aan</string>
-  <string name="auth_create_address_subtitle">Uw Proton-account is gekoppeld aan %1$s. Maak een adres aan om ProtonMail te gebruiken.</string>
+  <string name="auth_create_address_title">Maak een Proton Mail e-mailadres aan</string>
+  <string name="auth_create_address_subtitle">Uw Proton-account is gekoppeld aan %1$s. Maak een adres aan om Proton Mail te gebruiken.</string>
   <string name="auth_username">Gebruikersnaam</string>
   <string name="auth_username_next_action">Volgende</string>
   <string name="auth_create_address_result_title">%s is beschikbaar</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s zal uw nieuw ProtonMail e-mailadres zijn.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s zal uw nieuw Proton Mail e-mailadres zijn.</string>
   <string name="auth_create_address_result_subtitle">U zult dit adres gebruiken om in te loggen op alle Proton diensten.</string>
   <string name="auth_create_address_result_recovery_title">Uw herstel e-mailadres is:</string>
   <string name="auth_create_address_create">Adres toevoegen</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Maak uw Proton Account aan</string>
   <string name="auth_signup_current_email">Gebruik in plaats daarvan uw huidige e-mail</string>
-  <string name="auth_signup_create_secure_proton_address">Maak in plaats daarvan een veilig ProtonMail e-mailadres</string>
+  <string name="auth_signup_create_secure_proton_address">Maak in plaats daarvan een veilig Proton Mail e-mailadres</string>
   <string name="auth_signup_username">Gebruikersnaam</string>
   <string name="auth_signup_domain">Domein</string>
   <string name="auth_signup_email">E-mail</string>

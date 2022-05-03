@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Chraňte své soukromí pomocí Proton</string>
   <string name="welcome_subtitle">Šifrování udržuje Vaše data v soukromí. Vaše data skutečně patří Vám.</string>
-  <string name="welcome_title_mail">Chraňte své soukromí pomocí ProtonMail</string>
+  <string name="welcome_title_mail">Chraňte své soukromí pomocí Proton Mail</string>
   <string name="welcome_subtitle_mail">Šifrovaný e-mail, který udržuje Vaše konverzace soukromé. Vaše doručená pošta skutečně patří Vám.</string>
   <string name="welcome_subtitle_mail_alt">Soukromí. Bezpečnostní. Pohodlí. Šifrovaný e-mail, který vám dává plnou kontrolu nad vašimi osobními údaji.</string>
   <string name="welcome_title_drive">Chraňte své soukromí pomocí Proton Drive</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Došlo k chybě.</string>
   <string name="auth_login_empty_credentials">Pověřovací listiny by neměly být prázdné.</string>
   <string name="auth_mailbox_empty_credentials">Pověřovací listiny by neměly být prázdné.</string>
-  <string name="auth_create_address_title">Vytvořit adresu ProtonMail</string>
-  <string name="auth_create_address_subtitle">Váš Proton účet je spojen s $%1$s. Chcete-li použít ProtonMail, vytvořte prosím adresu.</string>
+  <string name="auth_create_address_title">Vytvořit adresu Proton Mail</string>
+  <string name="auth_create_address_subtitle">Váš Proton účet je spojen s $%1$s. Chcete-li použít Proton Mail, vytvořte prosím adresu.</string>
   <string name="auth_username">Uživatelské jméno</string>
   <string name="auth_username_next_action">Další</string>
   <string name="auth_create_address_result_title">%s je k dispozici</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s bude Vaše nová e-mailová adresa služby ProtonMail.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s bude Vaše nová e-mailová adresa služby Proton Mail.</string>
   <string name="auth_create_address_result_subtitle">Tuto adresu použijete k přihlášení ke všem službám Proton.</string>
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Vytvořte si Proton účet</string>
   <string name="auth_signup_current_email">Místo toho použijte vaši aktuální e-mailovou adresu</string>
-  <string name="auth_signup_create_secure_proton_address">Namísto toho vytvořit zabezpečenou ProtonMail adresu</string>
+  <string name="auth_signup_create_secure_proton_address">Namísto toho vytvořit zabezpečenou Proton Mail adresu</string>
   <string name="auth_signup_username">Uživatelské jméno</string>
   <string name="auth_signup_domain">Doména</string>
   <string name="auth_signup_email">E-mail</string>

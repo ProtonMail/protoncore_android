@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Beskyt dit privatliv med Proton</string>
   <string name="welcome_subtitle">Kryptering holder dine data private. Dine data tilhører kun dig.</string>
-  <string name="welcome_title_mail">Beskyt dit privatliv med ProtonMail</string>
+  <string name="welcome_title_mail">Beskyt dit privatliv med Proton Mail</string>
   <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke er helt din egen.</string>
   <string name="welcome_subtitle_mail_alt">Privatliv. Sikkerhed. Bekvemmelighed. Krypteret e-mail, der giver dig fuld kontrol over dine personlige data.</string>
   <string name="welcome_title_drive">Beskyt dit privatliv med Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Beskyt dit privatliv med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypteret kalender, der holder dine livsbegivenheder private, sikre og trygge.</string>
   <string name="welcome_subtitle_calendar_alt">Vores end-to-end-krypterede kalender hjælper dig med at holde dig organiseret, på sporet og have kontrol.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.</string>
   <string name="welcome_subtitle_vpn_alt">Højhastigheds schweizisk VPN, der beskytter dit privatliv. Maksimal sikkerhed, 1.600+ servere og ingen begrænsninger.</string>
   <string name="welcome_privacy_by_default">Fortrolighed som standard</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Der opstod en fejl.</string>
   <string name="auth_login_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
   <string name="auth_mailbox_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
-  <string name="auth_create_address_title">Opret en ProtonMail-adresse</string>
-  <string name="auth_create_address_subtitle">Din Proton-konto er tilknyttet %1$s. For at bruge ProtonMail bedes du oprette en adresse.</string>
+  <string name="auth_create_address_title">Opret en Proton Mail-adresse</string>
+  <string name="auth_create_address_subtitle">Din Proton-konto er tilknyttet %1$s. For at bruge Proton Mail bedes du oprette en adresse.</string>
   <string name="auth_username">Brugernavn</string>
   <string name="auth_username_next_action">Næste</string>
   <string name="auth_create_address_result_title">%s er tilgængelig</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s bliver din nye ProtonMail e-mailadresse.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s bliver din nye Proton Mail e-mailadresse.</string>
   <string name="auth_create_address_result_subtitle">Du vil bruge denne adresse til at logge ind på alle Proton-tjenester.</string>
   <string name="auth_create_address_result_recovery_title">Din e-mailadresse til gendannelse er:</string>
   <string name="auth_create_address_create">Opret adresse</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Opret din Proton-konto</string>
   <string name="auth_signup_current_email">Brug din nuværende e-mail i stedet</string>
-  <string name="auth_signup_create_secure_proton_address">Opret en sikker ProtonMail-adresse i stedet</string>
+  <string name="auth_signup_create_secure_proton_address">Opret en sikker Proton Mail-adresse i stedet</string>
   <string name="auth_signup_username">Brugernavn</string>
   <string name="auth_signup_domain">Domæne</string>
   <string name="auth_signup_email">E-mail</string>

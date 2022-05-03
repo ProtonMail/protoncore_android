@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Обеспечьте конфиденциальность ваших данных с Proton</string>
   <string name="welcome_subtitle">Шифрование позволяет сохранить ваши данные в тайне. Ваши данные по-настоящему ваши.</string>
-  <string name="welcome_title_mail">Обеспечьте конфиденциальность ваших данных с ProtonMail</string>
+  <string name="welcome_title_mail">Обеспечьте конфиденциальность ваших данных с Proton Mail</string>
   <string name="welcome_subtitle_mail">Шифрование почты позволяет сохранить вашу переписку в тайне. Ваша почта по-настоящему ваша.</string>
   <string name="welcome_subtitle_mail_alt">Конфиденциальность. Безопасность. Удобство. Зашифрованная электронная почта, которая дает вам полный контроль над вашими личными данными.</string>
   <string name="welcome_title_drive">Обеспечьте конфиденциальность ваших данных с Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Обеспечьте конфиденциальность ваших данных с Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Шифрование календаря позволяет сохранить ваши события вне досягаемости и безопасности.</string>
   <string name="welcome_subtitle_calendar_alt">Наш календарь со сквозным шифрованием поможет вам оставаться организованным, идти в ногу со временем и контролировать ситуацию.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">Быстрый Швейцарский VPN, который охраняет конфиденциальность ваших данных шифруя ваше интернет-соединение.</string>
   <string name="welcome_subtitle_vpn_alt">Высокоскоростная швейцарская VPN, которая защищает вашу конфиденциальность. Максимальная безопасность, 1 600+ серверов и никаких ограничений.</string>
   <string name="welcome_privacy_by_default">Конфиденциальность по умолчанию</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Произошла ошибка.</string>
   <string name="auth_login_empty_credentials">Значения учетных данных не должны быть пустыми.</string>
   <string name="auth_mailbox_empty_credentials">Значения учетных данных не должны быть пустыми.</string>
-  <string name="auth_create_address_title">Создать адрес ProtonMail</string>
-  <string name="auth_create_address_subtitle">Ваша учетная запись Proton связана с $%1$s. Чтобы использовать ProtonMail, пожалуйста, создайте адрес.</string>
+  <string name="auth_create_address_title">Создать адрес Proton Mail</string>
+  <string name="auth_create_address_subtitle">Ваша учетная запись Proton связана с $%1$s. Чтобы использовать Proton Mail, пожалуйста, создайте адрес.</string>
   <string name="auth_username">Имя пользователя</string>
   <string name="auth_username_next_action">Далее</string>
   <string name="auth_create_address_result_title">%s доступно</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s ваш новый адрес электронной почты в ProtonMail.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s ваш новый адрес электронной почты в Proton Mail.</string>
   <string name="auth_create_address_result_subtitle">Используйте этот адрес для входа во все сервисы Proton.</string>
   <string name="auth_create_address_result_recovery_title">Ваш электронный адрес для восстановления доступов:</string>
   <string name="auth_create_address_create">Создать адрес</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Создание учётной записи Proton</string>
   <string name="auth_signup_current_email">Использовать ваш текущий адрес электронной почты</string>
-  <string name="auth_signup_create_secure_proton_address">Создать безопасный адрес ProtonMail</string>
+  <string name="auth_signup_create_secure_proton_address">Создать безопасный адрес Proton Mail</string>
   <string name="auth_signup_username">Имя пользователя</string>
   <string name="auth_signup_domain">Домен</string>
   <string name="auth_signup_email">Эл. почта</string>

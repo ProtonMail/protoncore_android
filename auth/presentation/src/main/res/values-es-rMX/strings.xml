@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Proteja su privacidad con Proton</string>
   <string name="welcome_subtitle">El cifrado mantiene sus datos privados. Sus datos realmente le pertenecen.</string>
-  <string name="welcome_title_mail">Proteja su privacidad con ProtonMail</string>
+  <string name="welcome_title_mail">Proteja su privacidad con Proton Mail</string>
   <string name="welcome_subtitle_mail">Correo electrónico cifrado que mantiene sus conversaciones privadas. Su bandeja de entrada realmente le pertenece.</string>
   <string name="welcome_subtitle_mail_alt">Privacidad. Seguridad. Conveniencia. Correo electrónico cifrado que le brinda control total de sus datos personales.</string>
   <string name="welcome_title_drive">Proteja su privacidad con Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Proteja su privacidad con Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendario cifrado que mantiene sus eventos de vida privados, seguros y protegidos.</string>
   <string name="welcome_subtitle_calendar_alt">Nuestro calendario con cifrado de extremo a extremo le ayuda a organizarse, a estar al día y en control.</string>
-  <string name="welcome_title_vpn">Proteja su privacidad con ProtonVPN</string>
+  <string name="welcome_title_vpn">Proteja su privacidad con Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suiza de alta velocidad que protege su privacidad cifrando su conexión a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suiza de gran velocidad que protege su privacidad. Seguridad máxima, más de 1600 servidores y sin restricciones.</string>
   <string name="welcome_privacy_by_default">Privacidad por defecto</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Ocurrió un error.</string>
   <string name="auth_login_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_mailbox_empty_credentials">Las credenciales no deben estar vacías.</string>
-  <string name="auth_create_address_title">Crear una dirección de ProtonMail</string>
-  <string name="auth_create_address_subtitle">Su cuenta de Proton está asociada con %1$s. Para usar ProtonMail, cree una dirección.</string>
+  <string name="auth_create_address_title">Crear una dirección de Proton Mail</string>
+  <string name="auth_create_address_subtitle">Su cuenta de Proton está asociada con %1$s. Para usar Proton Mail, cree una dirección.</string>
   <string name="auth_username">Nombre de usuario</string>
   <string name="auth_username_next_action">Siguiente</string>
   <string name="auth_create_address_result_title">%s está disponible</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s será su nueva dirección de correo electrónico de ProtonMail.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s será su nueva dirección de correo electrónico de Proton Mail.</string>
   <string name="auth_create_address_result_subtitle">Usará esta dirección para iniciar sesión en todos los servicios de Proton.</string>
   <string name="auth_create_address_result_recovery_title">Su dirección de correo de recuperación es:</string>
   <string name="auth_create_address_create">Crear dirección</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Cree su cuenta de Proton</string>
   <string name="auth_signup_current_email">Usar su correo electrónico actual en su lugar</string>
-  <string name="auth_signup_create_secure_proton_address">Crear una dirección segura de ProtonMail en su lugar</string>
+  <string name="auth_signup_create_secure_proton_address">Crear una dirección segura de Proton Mail en su lugar</string>
   <string name="auth_signup_username">Nombre de usuario</string>
   <string name="auth_signup_domain">Dominio</string>
   <string name="auth_signup_email">Correo</string>

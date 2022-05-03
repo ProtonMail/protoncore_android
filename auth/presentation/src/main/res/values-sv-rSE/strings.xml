@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Skydda din integritet med Proton</string>
   <string name="welcome_subtitle">Kryptering håller din data privat. Din data tillhör dig på riktigt.</string>
-  <string name="welcome_title_mail">Skydda din integritet med ProtonMail</string>
+  <string name="welcome_title_mail">Skydda din integritet med Proton Mail</string>
   <string name="welcome_subtitle_mail">Krypterad e-post som håller dina konversationer privata. Din inkorg tillhör dig på riktigt.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">Skydda din integritet med Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Skydda din integritet med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypterad kalender som håller dina livshändelser privat, skyddad och säker.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Skydda din integritet med ProtonVPN</string>
+  <string name="welcome_title_vpn">Skydda din integritet med Proton VPN</string>
   <string name="welcome_subtitle_vpn">Schweizisk VPN med hög hastighet som skyddar din integritet genom att kryptera din Internetanslutning.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
   <string name="welcome_privacy_by_default">Integritet som standard</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">Ett fel inträffade.</string>
   <string name="auth_login_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_mailbox_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
-  <string name="auth_create_address_title">Skapa en ProtonMail-adress</string>
+  <string name="auth_create_address_title">Skapa en Proton Mail-adress</string>
   <string name="auth_create_address_subtitle">Ditt Proton-konto är associerat med %1$s. För att använda Proton, skapa en adress.</string>
   <string name="auth_username">Användarnamn</string>
   <string name="auth_username_next_action">Nästa</string>
   <string name="auth_create_address_result_title">%s är tillgänglig</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s kommer bli din nya e-postadress för ProtonMail.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s kommer bli din nya e-postadress för Proton Mail.</string>
   <string name="auth_create_address_result_subtitle">Du kommer att använda denna adress för att logga in på alla Proton-tjänster.</string>
   <string name="auth_create_address_result_recovery_title">Din e-postadress för återställning är:</string>
   <string name="auth_create_address_create">Skapa adress</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Skapa ditt Proton-konto</string>
   <string name="auth_signup_current_email">Använd din nuvarande e-post istället</string>
-  <string name="auth_signup_create_secure_proton_address">Skapa en säker ProtonMail-adress istället</string>
+  <string name="auth_signup_create_secure_proton_address">Skapa en säker Proton Mail-adress istället</string>
   <string name="auth_signup_username">Användarnamn</string>
   <string name="auth_signup_domain">Domän</string>
   <string name="auth_signup_email">E-post</string>
