@@ -39,6 +39,7 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig
 import me.proton.core.humanverification.presentation.CaptchaApiHost
+import me.proton.core.humanverification.presentation.LogTag
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
@@ -51,6 +52,7 @@ import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -92,6 +94,8 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
 
         val baseUrl = viewModel.activeAltUrlForDoH ?: captchaUrl
+
+        CoreLogger.log(LogTag.HV_REQUEST_INFO, "loading captcha from $baseUrl")
 
         humanVerificationBase.onViewCreated(viewLifecycleOwner, parentFragmentManager) {
             binding.root.errorSnack(R.string.human_verification_sending_failed)
