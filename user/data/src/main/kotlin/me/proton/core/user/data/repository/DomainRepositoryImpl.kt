@@ -19,24 +19,16 @@
 package me.proton.core.user.data.repository
 
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.user.data.DefaultDomainHost
 import me.proton.core.user.data.api.DomainApi
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
 
 class DomainRepositoryImpl(
-    @DefaultDomainHost private val defaultDomain: Domain,
     private val provider: ApiProvider
 ) : DomainRepository {
 
-    override suspend fun getAvailableDomains(): List<Domain> {
-        val domains = provider.get<DomainApi>().invoke {
+    override suspend fun getAvailableDomains(): List<Domain> =
+        provider.get<DomainApi>().invoke {
             getAvailableDomains().domains
-        }.valueOrNull
-        return when {
-            // Fallback to default domain.
-            domains.isNullOrEmpty() -> listOf(defaultDomain)
-            else -> (domains.toSet() + setOf(defaultDomain)).toList()
-        }
-    }
+        }.valueOrThrow
 }

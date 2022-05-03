@@ -11,6 +11,17 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+### Fixes
+
+- Removed default domain (DefaultDomainHost qualifier doesn't exist anymore). Please update your DomainRepository injection as follow:
+```
+@Provides
+@Singleton
+fun provideDomainRepository(
+    provider: ApiProvider
+): DomainRepository = DomainRepositoryImpl(provider)
+```
+
 ## [7.2.0] - 2022-05-02
 
 ### Features

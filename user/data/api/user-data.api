@@ -5,9 +5,6 @@ public final class me/proton/core/user/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public abstract interface annotation class me/proton/core/user/data/DefaultDomainHost : java/lang/annotation/Annotation {
-}
-
 public final class me/proton/core/user/data/UserAddressEvent {
 	public static final field Companion Lme/proton/core/user/data/UserAddressEvent$Companion;
 	public synthetic fun <init> (ILjava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -952,7 +949,7 @@ public final class me/proton/core/user/data/extension/UserMapperKt {
 }
 
 public final class me/proton/core/user/data/repository/DomainRepositoryImpl : me/proton/core/user/domain/repository/DomainRepository {
-	public fun <init> (Ljava/lang/String;Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
 	public fun getAvailableDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
