@@ -53,6 +53,7 @@ class DohApiHandler<Api>(
             // If alt backend is outdated reset it so that primary backend is attempted.
             if (wallClockMs() - prefs.lastPrimaryApiFail >= apiClient.proxyValidityPeriodMs) {
                 field = null
+                prefs.activeAltBaseUrl = null
             } else if (field == null) {
                 val baseUrl = prefs.activeAltBaseUrl
                 if (baseUrl != null)
