@@ -326,6 +326,22 @@ public final class me/proton/core/compose/component/VerticalSpacerKt {
 	public static final fun VerticalSpacer-rAjV9yQ (Landroidx/compose/ui/Modifier;FLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class me/proton/core/compose/component/appbar/ComposableSingletons$ProtonTopAppBarKt {
+	public static final field INSTANCE Lme/proton/core/compose/component/appbar/ComposableSingletons$ProtonTopAppBarKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-2$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class me/proton/core/compose/component/appbar/ProtonTopAppBarKt {
+	public static final fun ProtonTopAppBar-xWeB9-s (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;JJFLandroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonTopAppBarPreview (Landroidx/compose/runtime/Composer;I)V
+}
+
 public final class me/proton/core/compose/component/bottomsheet/BottomSheetContentKt {
 	public static final fun BottomSheetContent (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/ScrollState;Landroidx/compose/runtime/Composer;II)V
 }
