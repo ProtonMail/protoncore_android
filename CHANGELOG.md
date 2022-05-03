@@ -11,6 +11,8 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [7.2.1] - 2022-05-03
+
 ### Fixes
 
 - Removed default domain (DefaultDomainHost qualifier doesn't exist anymore). Please update your DomainRepository injection as follow:
