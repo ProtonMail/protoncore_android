@@ -110,11 +110,22 @@ class AccountListView @JvmOverloads constructor(
 
     fun setViewModel(viewModel: AccountSwitcherViewModel?) {
         this.viewModel = viewModel
-        accountsObserver?.cancel()
+    }
 
-        val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        findViewTreeLifecycleOwner()?.observeAccounts()
+    }
+
+    override fun onDetachedFromWindow() {
+        accountsObserver?.cancel()
+        super.onDetachedFromWindow()
+    }
+
+    private fun LifecycleOwner.observeAccounts() {
+        accountsObserver?.cancel()
         accountsObserver = (viewModel?.accounts ?: flowOf(emptyList()))
-            .flowWithLifecycle(lifecycleOwner.lifecycle)
+            .flowWithLifecycle(lifecycle)
             .onEach { accounts ->
                 val primary = accounts.firstOrNull { it is AccountListItem.Account.Primary }
                 val ready = accounts.filterIsInstance<AccountListItem.Account.Ready>()
@@ -129,7 +140,7 @@ class AccountListView @JvmOverloads constructor(
                 }
                 list.add(AccountListItem.Action.AddAccount)
                 accountListItemAdapter.submitList(list)
-            }.launchIn(lifecycleOwner.lifecycleScope)
+            }.launchIn(lifecycleScope)
     }
 
     companion object {

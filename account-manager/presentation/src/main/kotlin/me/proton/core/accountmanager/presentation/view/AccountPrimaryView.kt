@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -41,11 +42,12 @@ class AccountPrimaryView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    @StyleRes defStyleRes: Int = 0
+    @StyleRes defStyleRes: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRes) {
     private var accountObserver: Job? = null
 
-    private val binding = AccountPrimaryViewBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding =
+        AccountPrimaryViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     private var onViewClicked: (() -> Unit)? = null
     private var onDialogShown: (() -> Unit)? = null
@@ -110,24 +112,11 @@ class AccountPrimaryView @JvmOverloads constructor(
 
     fun setViewModel(viewModel: AccountSwitcherViewModel?) {
         this.viewModel = viewModel
-        accountObserver?.cancel()
-
-        val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-        accountObserver = (viewModel?.primaryAccount ?: flowOf(null))
-            .flowWithLifecycle(lifecycleOwner.lifecycle)
-            .onEach { account ->
-                initials = account?.initials
-                name = account?.name
-                email = account?.email
-            }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     fun showDialog() {
-        val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
         if (dialog == null) {
-            dialog = AccountListView.createDialog(context, lifecycleOwner, viewModel)
-            dialog?.setOnDismissListener { onDialogDismissed?.invoke() }
-            dialog?.setOnShowListener { onDialogShown?.invoke() }
+            dialog = findViewTreeLifecycleOwner()?.createDialog()
         }
         dialog?.show()
     }
@@ -137,8 +126,32 @@ class AccountPrimaryView @JvmOverloads constructor(
         dialog = null
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        findViewTreeLifecycleOwner()?.observeAccount()
+    }
+
     override fun onDetachedFromWindow() {
         dismissDialog()
+        accountObserver?.cancel()
         super.onDetachedFromWindow()
+    }
+
+    private fun LifecycleOwner.observeAccount() {
+        accountObserver?.cancel()
+        accountObserver = (viewModel?.primaryAccount ?: flowOf(null))
+            .flowWithLifecycle(lifecycle)
+            .onEach { account ->
+                initials = account?.initials
+                name = account?.name
+                email = account?.email
+            }.launchIn(lifecycleScope)
+    }
+
+    private fun LifecycleOwner.createDialog(): AlertDialog {
+        val dialog = AccountListView.createDialog(context, this, viewModel)
+        dialog.setOnDismissListener { onDialogDismissed?.invoke() }
+        dialog.setOnShowListener { onDialogShown?.invoke() }
+        return dialog
     }
 }
