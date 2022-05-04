@@ -11,6 +11,27 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [7.2.2] - 2022-05-04
+
+### Theme
+
+- Changed Proton Product names (e.g. "ProtonMail" -> "Proton Mail").
+
+### Fixes
+
+- account-manager:
+  - ViewModel Flow in Account[List|Primary]View (fix Compose usage). 
+- humanverification:
+  - Log url used to load captcha page.
+- network:
+  - Persist resetting expired alt. backend.
+
+### Features
+
+- presentation-compose:
+  - Added ProtonTopAppBar Composable.
+  - Changed ProtonSettingsTopBar to use ProtonTopAppBar.
+
 ## [7.2.1] - 2022-05-03
 
 ### Fixes
