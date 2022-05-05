@@ -32,6 +32,7 @@ Whenever possible, use a module name as a scope, e.g. `fix(account-manager): Fix
 - `docs`: Documentation changes
 - `feat`: A new feature
 - `fix`: Bug fixes
+- `i18n`: Internationalization and translations
 - `perf`: Performance Improvements
 - `refactor`: A change in the source code that neither fixes a bug nor adds a feature
 - `revert`: Reverting a commit

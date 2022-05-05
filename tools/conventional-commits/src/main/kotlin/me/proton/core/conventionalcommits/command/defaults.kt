@@ -18,8 +18,21 @@
 
 package me.proton.core.conventionalcommits.command
 
-internal val defaultAllowedTypes =
-    listOf("build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test", "theme")
+internal val defaultAllowedTypes = listOf(
+    "build",
+    "chore",
+    "ci",
+    "docs",
+    "feat",
+    "fix",
+    "i18n",
+    "perf",
+    "refactor",
+    "revert",
+    "style",
+    "test",
+    "theme"
+)
 
 /** Commits with these types, will trigger a minor version bump. */
 internal val defaultMinorTypes = listOf("feat")
