@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import java.io.ByteArrayOutputStream
 
 /*
  * Copyright (c) 2020 Proton Technologies AG
@@ -66,6 +67,29 @@ tasks.withType<DependencyUpdatesTask> {
     outputFormatter = "json, html, plain"
     outputDir = "build/dependencyUpdates"
     reportfileName = "report"
+}
+
+tasks.register("generateChangelog", JavaExec::class.java) {
+    dependsOn(gradle.includedBuild("tools").task(":conventional-commits:shadowJar"))
+
+    classpath = files("tools/conventional-commits/build/libs/conventional-commits-all.jar")
+    mainClass.set("me.proton.core.conventionalcommits.AppKt")
+
+    args("changelog",
+        "--repo-dir", projectDir.absolutePath,
+        "--output", projectDir.resolve("CHANGELOG.md")
+    )
+
+    doFirst {
+        // Make sure there are no uncommitted/unstaged changes for CHANGELOG.md:
+        val output = ByteArrayOutputStream()
+        exec {
+            commandLine("git", "diff", "--name-only", "CHANGELOG.md")
+            workingDir(projectDir)
+            standardOutput = output
+        }
+        check(output.toString().isBlank()) { "Cannot update CHANGELOG.md file, because it has been modified." }
+    }
 }
 
 protonCoverageMultiModuleOptions {

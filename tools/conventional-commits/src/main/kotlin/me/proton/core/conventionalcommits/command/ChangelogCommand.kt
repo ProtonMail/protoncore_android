@@ -29,6 +29,7 @@ import me.proton.core.conventionalcommits.usecase.GetCommits
 import me.proton.core.conventionalcommits.usecase.GetConventionalCommits
 import me.proton.core.conventionalcommits.usecase.GetLatestTag
 import me.proton.core.conventionalcommits.usecase.GetVersionTags
+import me.proton.core.conventionalcommits.usecase.ProposeNextVersion
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -38,7 +39,8 @@ import kotlin.system.exitProcess
 private const val BreakingChangeLogPrefix = "BREAKING CHANGE: "
 
 class ChangelogCommand : CliktCommand() {
-    private val nextVersion by option().convert { it.trim() }.required()
+    private val minorTypes by minorTypesOption()
+    private val nextVersion by option().convert { it.trim() }
     private val output by option().file(canBeDir = false, mustBeReadable = true, mustBeWritable = true)
     private val repoDir by repoDirOption().required()
     private val skipTypes by option().multiple(default = defaultChangelogSkipTypes)
@@ -64,7 +66,12 @@ class ChangelogCommand : CliktCommand() {
         val changes = getConventionalCommits.invoke(since = latestTag?.objectId).filter { (_, commit) ->
             commit.type !in skipTypes && !commit.breaking
         }.map { it.second }
-        return renderPartialChangelog(changes, nextVersion)
+        val version = nextVersion?.takeIf { it.isNotBlank() } ?: ProposeNextVersion(
+            getConventionalCommits,
+            minorTypes,
+            versionPrefix
+        ).invoke(latestTag)
+        return renderPartialChangelog(changes, version)
     }
 
     /** Renders a partial changelog, covering the [version] and its [changes].

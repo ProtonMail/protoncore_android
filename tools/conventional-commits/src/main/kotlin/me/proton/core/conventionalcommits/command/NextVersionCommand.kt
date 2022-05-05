@@ -30,7 +30,7 @@ import me.proton.core.conventionalcommits.usecase.ProposeNextVersion
 
 /** Calculate next version number. */
 class NextVersionCommand : CliktCommand() {
-    private val minorTypes by option().multiple(default = defaultMinorTypes)
+    private val minorTypes by minorTypesOption()
     private val repoDir by repoDirOption().required()
     private val versionPrefix by versionPrefixOption()
 
