@@ -21,9 +21,12 @@ package me.proton.core.user.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.user.data.api.response.AvailableDomainsResponse
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface DomainApi : BaseRetrofitApi {
 
     @GET("domains/available")
-    suspend fun getAvailableDomains(): AvailableDomainsResponse
+    suspend fun getAvailableDomains(
+        @Query("Type") type: String = "signup",
+    ): AvailableDomainsResponse
 }

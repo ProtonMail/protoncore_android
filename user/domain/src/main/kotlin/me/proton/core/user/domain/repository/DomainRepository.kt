@@ -23,12 +23,7 @@ import me.proton.core.user.domain.entity.Domain
 interface DomainRepository {
 
     /**
-     * Return the list of all available domains.
-     *
-     * This list always contains at least 1 domain.
-     *
-     * If no network or if server return an empty list,
-     * this function fallback to a default domain.
+     * Return the list of all available domains, for signup.
      */
     suspend fun getAvailableDomains(): List<Domain>
 }

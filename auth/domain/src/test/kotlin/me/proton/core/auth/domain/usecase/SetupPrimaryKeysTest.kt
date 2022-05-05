@@ -249,7 +249,9 @@ class SetupPrimaryKeysTest {
             if (withException != null) {
                 throw withException
             } else {
-                mockk()
+                mockk {
+                    every { email } returns "$displayName@$testDomain"
+                }
             }
         }
     }

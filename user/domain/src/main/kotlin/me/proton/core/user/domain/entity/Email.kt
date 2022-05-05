@@ -23,7 +23,8 @@ package me.proton.core.user.domain.entity
  */
 data class Email(
     val username: String,
-    val domain: String
+    val domain: String,
+    val value: String,
 )
 
 /**
@@ -33,7 +34,7 @@ private fun String.split(): Email = split("@").let { pair ->
     require(pair.size == 2) { "Email is not correctly using `@` delimiter." }
     require(pair[0].isNotBlank()) { "Username is blank." }
     require(pair[1].isNotBlank()) { "Domain is blank." }
-    Email(username = pair[0], domain = pair[1])
+    Email(username = pair[0], domain = pair[1], this)
 }
 
 /**

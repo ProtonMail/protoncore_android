@@ -183,7 +183,11 @@ public abstract interface class me/proton/core/user/data/api/AddressApi : me/pro
 }
 
 public abstract interface class me/proton/core/user/data/api/DomainApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
-	public abstract fun getAvailableDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAvailableDomains (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/api/DomainApi$DefaultImpls {
+	public static synthetic fun getAvailableDomains$default (Lme/proton/core/user/data/api/DomainApi;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/user/data/api/UserApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {

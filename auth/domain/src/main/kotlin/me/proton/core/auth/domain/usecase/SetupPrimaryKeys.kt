@@ -48,6 +48,7 @@ class SetupPrimaryKeys @Inject constructor(
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto
 ) {
+
     suspend operator fun invoke(
         userId: UserId,
         password: EncryptedString,
@@ -56,46 +57,42 @@ class SetupPrimaryKeys @Inject constructor(
         val user = userManager.getUser(userId, refresh = true)
         if (user.keys.primary() != null) return
 
-        val username = if (accountType == AccountType.External) {
-            checkNotNull(user.emailSplit?.username) { "Email username is needed to setup primary keys." }
-        } else {
-            checkNotNull(user.name) { "Username is needed." }
+        val username = when (accountType) {
+            AccountType.External -> checkNotNull(user.emailSplit?.username) { "User email username is needed." }
+            else -> checkNotNull(user.name) { "Username is needed." }
         }
 
-        val domain = if (accountType == AccountType.External) {
-            checkNotNull(user.emailSplit?.domain) { "Email domain is needed to setup primary keys." }
-        } else {
-            domainRepository.getAvailableDomains().first()
+        val email = when (accountType) {
+            AccountType.External -> checkNotNull(user.emailSplit) { "Email is needed." }
+            AccountType.Internal -> getOrCreateInternalAddress(userId, username).emailSplit
+            AccountType.Username -> return
         }
-
-        val email = if (accountType == AccountType.External) {
-            checkNotNull(user.email) { "Email is needed." }
-        } else {
-            "$username@$domain"
-        }
-        val modulus = authRepository.randomModulus()
 
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
+            val modulus = authRepository.randomModulus()
             val auth = srpCrypto.calculatePasswordVerifier(
-                username = email,
+                username = email.value,
                 password = decryptedPassword.array,
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
-
-            if (accountType == AccountType.Internal) {
-                if (userAddressRepository.getAddresses(userId, refresh = true).firstInternalOrNull() == null) {
-                    userAddressRepository.createAddress(userId, username, domain)
-                }
-            }
-
             userManager.setupPrimaryKeys(
                 sessionUserId = userId,
                 username = username,
-                domain = domain,
+                domain = email.domain,
                 auth = auth,
                 password = decryptedPassword.array
             )
         }
     }
+
+    private suspend fun getOrCreateInternalAddress(
+        userId: UserId,
+        username: String,
+    ): UserAddress = userAddressRepository.getAddresses(userId, refresh = true).firstInternalOrNull()
+        ?: userAddressRepository.createAddress(
+            sessionUserId = userId,
+            displayName = username,
+            domain = domainRepository.getAvailableDomains().first()
+        )
 }

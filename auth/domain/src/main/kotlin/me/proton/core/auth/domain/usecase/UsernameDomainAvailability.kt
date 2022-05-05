@@ -25,7 +25,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 /**
- * Availability of domains and username for the address creation purposes.
+ * Availability of domains and username for the address creation purposes (signup).
  */
 class UsernameDomainAvailability @Inject constructor(
     private val userRepository: UserRepository,
