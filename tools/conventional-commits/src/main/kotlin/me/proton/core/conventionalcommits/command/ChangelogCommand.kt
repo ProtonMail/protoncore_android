@@ -29,7 +29,6 @@ import me.proton.core.conventionalcommits.usecase.GetCommits
 import me.proton.core.conventionalcommits.usecase.GetConventionalCommits
 import me.proton.core.conventionalcommits.usecase.GetLatestTag
 import me.proton.core.conventionalcommits.usecase.GetVersionTags
-import org.eclipse.jgit.revwalk.RevCommit
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -37,7 +36,6 @@ import java.util.Locale
 import kotlin.system.exitProcess
 
 private const val BreakingChangeLogPrefix = "BREAKING CHANGE: "
-private const val ShortCommitHashLength = 8
 
 class ChangelogCommand : CliktCommand() {
     private val nextVersion by option().convert { it.trim() }.required()
@@ -65,7 +63,7 @@ class ChangelogCommand : CliktCommand() {
         val getConventionalCommits = GetConventionalCommits(getCommits)
         val changes = getConventionalCommits.invoke(since = latestTag?.objectId).filter { (_, commit) ->
             commit.type !in skipTypes && !commit.breaking
-        }
+        }.map { it.second }
         return renderPartialChangelog(changes, nextVersion)
     }
 
@@ -78,30 +76,37 @@ class ChangelogCommand : CliktCommand() {
      *
      * - auth: fixed login process
      */
-    private fun renderPartialChangelog(changes: List<Pair<RevCommit, ConventionalCommit>>, version: String): String {
+    internal fun renderPartialChangelog(changes: List<ConventionalCommit>, version: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
         val currentDate = dateFormat.format(Date())
 
         return buildString {
             append("## [$version] - $currentDate")
-            append('\n')
 
             changes
-                .groupBy { it.second.type }
+                .groupBy { it.type }
                 .toList()
                 .sortedBy { it.first } // sort by commit type (feat, fix etc.)
                 .forEach { (type, commits) ->
-                    append('\n')
+                    append("\n\n")
                     append("### ")
                     append(getReadableCommitType(type))
                     append('\n')
 
                     commits
-                        .sortedBy { it.first.commitTime }
-                        .forEach { (revCommit, convCommit) ->
-                            append('\n')
-                            val shortCommitHash = revCommit.id.name.substring(0 until ShortCommitHashLength)
-                            append(renderCommit(convCommit, shortCommitHash))
+                        .groupBy { it.scope }
+                        .toList()
+                        .sortedBy { it.first } // sort by commit scope
+                        .forEach { (scope, commits) ->
+                            val indentLevel = if (scope.isBlank()) 0U else 1U
+                            if (scope.isNotBlank()) {
+                                append('\n')
+                                append("- $scope:")
+                            }
+                            commits.forEach { convCommit ->
+                                append('\n')
+                                append(renderCommit(convCommit, indentLevel = indentLevel))
+                            }
                         }
                 }
 
@@ -122,39 +127,29 @@ class ChangelogCommand : CliktCommand() {
     /** Renders a single conventional commit as a changelog entry.
      * Visible for testing.
      */
-    internal fun renderCommit(convCommit: ConventionalCommit, shortCommitHash: String): String = buildString {
-        append("- ")
+    internal fun renderCommit(convCommit: ConventionalCommit, indentLevel: UInt = 0U): String = buildString {
+        val rootIndentation = "  ".repeat(indentLevel.toInt())
+        val indentation = "  ".repeat(indentLevel.toInt() + 1)
+
+        append("$rootIndentation- ")
         if (convCommit.breaking) {
             append(BreakingChangeLogPrefix)
         }
 
-        if (convCommit.scope.isNotBlank()) {
-            append(convCommit.scope)
-            append(": ")
-        }
-
         append(convCommit.description)
 
-        append(" [")
-        append(shortCommitHash)
-        append("]")
-
         if (convCommit.body.isNotBlank()) {
-            append("\n\n  ")
-            val bodyWithIndentation = convCommit.body.lines().joinToString("\n  ")
+            append("\n$indentation")
+            val bodyWithIndentation = convCommit.body.lines().joinToString("\n$indentation")
             append(bodyWithIndentation)
         }
 
-        if (convCommit.footers.isNotEmpty()) {
-            append('\n')
-        }
-
         convCommit.footers.forEach { footer ->
-            append("\n  ")
+            append("\n$indentation")
             append(footer.key)
             append(": ")
 
-            val footerValueWithIndentation = footer.value.lines().joinToString("\n  ")
+            val footerValueWithIndentation = footer.value.lines().joinToString("\n$indentation")
             append(footerValueWithIndentation)
         }
     }

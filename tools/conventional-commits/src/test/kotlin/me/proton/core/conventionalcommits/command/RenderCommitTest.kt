@@ -36,8 +36,17 @@ class RenderCommitTest {
     fun `render simple commit`() {
         val commit = ConventionalCommit("fix", "", "fixed bugs", "", emptyList(), false)
         assertEquals(
-            "- fixed bugs [comm1234]",
-            tested.renderCommit(commit, "comm1234")
+            "- fixed bugs",
+            tested.renderCommit(commit)
+        )
+    }
+
+    @Test
+    fun `render simple commit with indent`() {
+        val commit = ConventionalCommit("fix", "", "fixed bugs", "", emptyList(), false)
+        assertEquals(
+            "  - fixed bugs",
+            tested.renderCommit(commit, indentLevel = 1U)
         )
     }
 
@@ -45,8 +54,8 @@ class RenderCommitTest {
     fun `render commit with scope`() {
         val commit = ConventionalCommit("fix", "auth", "fixed login", "", emptyList(), false)
         assertEquals(
-            "- auth: fixed login [comm1234]",
-            tested.renderCommit(commit, "comm1234")
+            "- fixed login",
+            tested.renderCommit(commit)
         )
     }
 
@@ -55,11 +64,10 @@ class RenderCommitTest {
         val commit = ConventionalCommit("fix", "", "fixed login", "Body", emptyList(), false)
         assertEquals(
             """
-                - fixed login [comm1234]
-
+                - fixed login
                   Body
             """.trimIndent(),
-            tested.renderCommit(commit, "comm1234")
+            tested.renderCommit(commit)
         )
     }
 
@@ -68,12 +76,11 @@ class RenderCommitTest {
         val commit = ConventionalCommit("fix", "", "fixed login", "Line1\nLine2", emptyList(), false)
         assertEquals(
             """
-                - fixed login [comm1234]
-
+                - fixed login
                   Line1
                   Line2
             """.trimIndent(),
-            tested.renderCommit(commit, "comm1234")
+            tested.renderCommit(commit)
         )
     }
 
@@ -82,11 +89,10 @@ class RenderCommitTest {
         val commit = ConventionalCommit("fix", "", "fixed bugs", "", listOf(CommitFooter("Author", "Me")), false)
         assertEquals(
             """
-                - fixed bugs [comm1234]
-
+                - fixed bugs
                   Author: Me
             """.trimIndent(),
-            tested.renderCommit(commit, "comm1234")
+            tested.renderCommit(commit)
         )
     }
 
@@ -98,12 +104,11 @@ class RenderCommitTest {
         )
         assertEquals(
             """
-                - fixed bugs [comm1234]
-
+                - fixed bugs
                   Author: Me
                   Others
             """.trimIndent(),
-            tested.renderCommit(commit, "comm1234")
+            tested.renderCommit(commit)
         )
     }
 
@@ -119,12 +124,11 @@ class RenderCommitTest {
         )
         assertEquals(
             """
-                - fixed bugs [comm1234]
-
+                - fixed bugs
                   Author: Me
                   Commit: 123abcde
             """.trimIndent(),
-            tested.renderCommit(commit, "comm1234")
+            tested.renderCommit(commit)
         )
     }
 
@@ -132,8 +136,8 @@ class RenderCommitTest {
     fun `render commit with breaking change`() {
         val commit = ConventionalCommit("fix", "", "fixed bugs", "", emptyList(), true)
         assertEquals(
-            "- BREAKING CHANGE: fixed bugs [comm1234]",
-            tested.renderCommit(commit, "comm1234")
+            "- BREAKING CHANGE: fixed bugs",
+            tested.renderCommit(commit)
         )
     }
 
@@ -149,16 +153,14 @@ class RenderCommitTest {
         )
         assertEquals(
             """
-                - BREAKING CHANGE: auth: fixed bugs [comm1234]
-
+                - BREAKING CHANGE: fixed bugs
                   Line1
                   Line2
-
                   Author: Me
                   and Others
                   Commit: 123abcde
             """.trimIndent(),
-            tested.renderCommit(commit, "comm1234")
+            tested.renderCommit(commit)
         )
     }
 }
