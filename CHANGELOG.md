@@ -11,6 +11,14 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [7.2.3] - 2022-05-05
+
+### Fixes
+
+- Added Signup type for Domain availability check:
+  - Usage of getAvailableDomains ("api.host/domains/available?Type=signup") is now only for Signup.
+  - SetupPrimaryKeys now assume freshly created internal users (vai POST /users) already have an internal address with the right domain to use.
+
 ## [7.2.2] - 2022-05-04
 
 ### Theme
