@@ -10,5 +10,5 @@ cobertura.warn_if_file_less_than(percentage: 50)
 cobertura.show_coverage
 
 if !check_conventional_commits()
-  warn("At least one commit message or MR title must conform to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.")
+  warn("All commit messages must conform to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.")
 end

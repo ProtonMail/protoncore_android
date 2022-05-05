@@ -11,5 +11,5 @@ def check_conventional_commits()
   first_commit_for_mr = `git -C "#{repo_dir}" log "refs/remotes/origin/#{target_branch}..#{current_commit_sha}" --pretty=format:'%H' | tail -1`
 
   puts "Checking conventional commits from commit #{first_commit_for_mr}"
-  system("java", "-jar", "./conventional-commits.jar", "verify-commit", "--verbose", "--match-any", "--from-commit-sha", first_commit_for_mr, "--repo-dir", repo_dir)
+  system("java", "-jar", "./conventional-commits.jar", "verify-commit", "--verbose", "--from-commit-sha", first_commit_for_mr, "--repo-dir", repo_dir)
 end
