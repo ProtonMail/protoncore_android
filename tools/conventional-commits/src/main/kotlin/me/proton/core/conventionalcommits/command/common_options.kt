@@ -20,12 +20,10 @@ package me.proton.core.conventionalcommits.command
 
 import com.github.ajalt.clikt.core.ParameterHolder
 import com.github.ajalt.clikt.parameters.options.default
-import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.multiple
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.file
 
 fun ParameterHolder.minorTypesOption() = option().multiple(default = defaultMinorTypes)
 fun ParameterHolder.repoDirOption() = option().file(mustExist = true, canBeFile = false, mustBeReadable = true)
-fun ParameterHolder.verboseOption() = option().flag(default = false)
 fun ParameterHolder.versionPrefixOption() = option().default("release/libs/")

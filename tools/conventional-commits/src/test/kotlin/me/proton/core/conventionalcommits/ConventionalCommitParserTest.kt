@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.conventionalcommits;
+package me.proton.core.conventionalcommits
 
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -44,6 +44,21 @@ class ConventionalCommitParserTest {
         assertEquals("fix", commit?.type)
         assertEquals("message", commit?.description)
         assertTrue(commit?.breaking == true)
+    }
+
+    @Test
+    fun `breaking commit with scope`() {
+        val commit = ConventionalCommitParser.parse("fix(auth)!: message")
+        assertEquals("fix", commit?.type)
+        assertEquals("auth", commit?.scope)
+        assertEquals("message", commit?.description)
+        assertTrue(commit?.breaking == true)
+    }
+
+    @Test
+    fun `mistyped breaking commit`() {
+        val commit = ConventionalCommitParser.parse("fix!(auth): message")
+        assertNull(commit)
     }
 
     @Test
