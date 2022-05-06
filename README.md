@@ -19,30 +19,28 @@ while the first one is suitable for multi-module projects, the latter is the sug
 
 # Conventional Commits
 
-For each Merge Request, at least one commit must adhere to
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.
-
-Whenever possible, use a module name as a scope, e.g. `fix(account-manager): Fix login issue`.
+- For each Merge Request, all commits must adhere to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.
+- Whenever possible, use a module name as a scope (e.g. `fix(account-manager): Fix login issue.`).
+- Use a proper sentence as a description — start with an uppercase letter, end with a dot.
 
 ## Allowed commit types
 
-- `build`: Changes that affect build system (e.g. Gradle update)
+- <font color="grey">`build`</font><sup>*</sup>: Changes that affect build system (e.g. Gradle update)
 - `chore`: Changes other than source or test code (e.g. library version updates)
-- `ci`: CI configuration
-- `docs`: Documentation changes
+- <font color="grey">`ci`</font><sup>*</sup>: CI configuration
+- <font color="grey">`docs`</font><sup>*</sup>: Documentation changes
 - `feat`: A new feature
 - `fix`: Bug fixes
 - `i18n`: Internationalization and translations
 - `perf`: Performance Improvements
 - `refactor`: A change in the source code that neither fixes a bug nor adds a feature
 - `revert`: Reverting a commit
-- `style`: Code style changes, not affecting code meaning (formatting)
-- `test`: Adding new tests or improving existing ones
+- <font color="grey">`style`</font><sup>*</sup>: Code style changes, not affecting code meaning (formatting)
+- <font color="grey">`test`</font><sup>*</sup>: Adding new tests or improving existing ones
 - `theme`: Changes related to UI theming
 
-Commits with the following types, will be used to **generate changelog** entries:
-`chore`, `feat`, `fix`, `perf`, `refactor`, `revert`.
-    
+<sup>*</sup> Commits with those types, will be *skipped* when generating changelog.
+
 # Release
 
 ## Core libraries
