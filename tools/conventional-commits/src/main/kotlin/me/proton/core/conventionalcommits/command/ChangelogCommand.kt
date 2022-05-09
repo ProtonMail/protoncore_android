@@ -63,102 +63,18 @@ class ChangelogCommand : CliktCommand() {
         val getCommits = GetCommits(repo)
         val latestTag = GetLatestTag(getVersionTags).invoke()
         val getConventionalCommits = GetConventionalCommits(getCommits)
-        val changes = getConventionalCommits.invoke(since = latestTag?.objectId).filter { (_, commit) ->
-            commit.type !in skipTypes && !commit.breaking
-        }.map { it.second }
+        val changes = getConventionalCommits(since = latestTag?.objectId)
+            .map { it.second }
+            .filter { commit ->
+                commit.type !in skipTypes && !commit.breaking
+            }
         val version = nextVersion?.takeIf { it.isNotBlank() } ?: ProposeNextVersion(
             getConventionalCommits,
             minorTypes,
             versionPrefix
         ).invoke(latestTag)
-        return renderPartialChangelog(changes, version)
-    }
-
-    /** Renders a partial changelog, covering the [version] and its [changes].
-     * Sample output:
-     *
-     * ## [1.2.3] - 2022-01-31
-     *
-     * ### Bug Fixes
-     *
-     * - auth: fixed login process
-     */
-    internal fun renderPartialChangelog(changes: List<ConventionalCommit>, version: String): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
-        val currentDate = dateFormat.format(Date())
-
-        return buildString {
-            append("## [$version] - $currentDate")
-
-            changes
-                .groupBy { it.type }
-                .toList()
-                .sortedBy { it.first } // sort by commit type (feat, fix etc.)
-                .forEach { (type, commits) ->
-                    append("\n\n")
-                    append("### ")
-                    append(getReadableCommitType(type))
-                    append('\n')
-
-                    commits
-                        .groupBy { it.scope }
-                        .toList()
-                        .sortedBy { it.first } // sort by commit scope
-                        .forEach { (scope, commits) ->
-                            val indentLevel = if (scope.isBlank()) 0U else 1U
-                            if (scope.isNotBlank()) {
-                                append('\n')
-                                append("- $scope:")
-                            }
-                            commits.forEach { convCommit ->
-                                append('\n')
-                                append(renderCommit(convCommit, indentLevel = indentLevel))
-                            }
-                        }
-                }
-
-            append('\n')
-        }
-    }
-
-    private fun getReadableCommitType(conventionalType: String): String {
-        return when (conventionalType.lowercase()) {
-            "chore" -> "Chores"
-            "fix" -> "Bug Fixes"
-            "feat" -> "Features"
-            "perf" -> "Performance Improvements"
-            else -> conventionalType.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-        }
-    }
-
-    /** Renders a single conventional commit as a changelog entry.
-     * Visible for testing.
-     */
-    internal fun renderCommit(convCommit: ConventionalCommit, indentLevel: UInt = 0U): String = buildString {
-        val rootIndentation = "  ".repeat(indentLevel.toInt())
-        val indentation = "  ".repeat(indentLevel.toInt() + 1)
-
-        append("$rootIndentation- ")
-        if (convCommit.breaking) {
-            append(BreakingChangeLogPrefix)
-        }
-
-        append(convCommit.description)
-
-        if (convCommit.body.isNotBlank()) {
-            append("\n$indentation")
-            val bodyWithIndentation = convCommit.body.lines().joinToString("\n$indentation")
-            append(bodyWithIndentation)
-        }
-
-        convCommit.footers.forEach { footer ->
-            append("\n$indentation")
-            append(footer.key)
-            append(": ")
-
-            val footerValueWithIndentation = footer.value.lines().joinToString("\n$indentation")
-            append(footerValueWithIndentation)
-        }
+        val renderer = ChangelogRenderer()
+        return renderer(changes, Date(), version)
     }
 
     /** Updates an [existingChangelogFile] by inserting a [partialChangelog]. */
@@ -169,12 +85,12 @@ class ChangelogCommand : CliktCommand() {
             exitProcess(1)
         }
 
-        val newChangelog = renderNewChangelog(partialChangelog, currentChangelog)
+        val newChangelog = updateChangelog(partialChangelog, currentChangelog)
         existingChangelogFile.writeText(newChangelog)
     }
 
-    // Visible for testing
-    internal fun renderNewChangelog(partialChangelog: String, currentChangelog: String): String {
+    /** Inserts [partialChangelog] into the [currentChangelog] in appropriate place. */
+    internal fun updateChangelog(partialChangelog: String, currentChangelog: String): String {
         val versionHeader = "## ["
         val unreleasedHeader = "## [Unreleased]"
 
@@ -215,6 +131,96 @@ class ChangelogCommand : CliktCommand() {
             }
 
             append('\n')
+        }
+    }
+}
+
+internal class ChangelogRenderer {
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
+
+    /** Renders a partial changelog, covering the [version] and its [changes].
+     * Sample output:
+     *
+     * ## [1.2.3] - 2022-01-31
+     *
+     * ### Bug Fixes
+     *
+     * - auth: fixed login process
+     */
+    operator fun invoke(changes: List<ConventionalCommit>, date: Date, version: String): String = buildString {
+        append("## [$version] - ${dateFormat.format(date)}")
+
+        changes
+            .groupBy { it.type }
+            .toList()
+            .sortedBy { it.first } // sort by commit type (feat, fix etc.)
+            .forEach { (type, commits) ->
+                append("\n\n")
+                append("### ")
+                append(getReadableCommitType(type))
+                append('\n')
+
+                commits
+                    .groupBy { it.scope }
+                    .toList()
+                    .sortedBy { it.first } // sort by commit scope
+                    .forEach { (scope, commits) ->
+                        val indentLevel = if (scope.isBlank()) 0U else 1U
+                        if (scope.isNotBlank()) {
+                            append('\n')
+                            append("- $scope:")
+                        }
+                        commits.forEach { convCommit ->
+                            append('\n')
+                            append(renderCommit(convCommit, indentLevel = indentLevel))
+                        }
+                    }
+            }
+
+        append('\n')
+    }
+
+    /** Renders a single conventional commit as a changelog entry.
+     * Visible for testing.
+     */
+    internal fun renderCommit(convCommit: ConventionalCommit, indentLevel: UInt = 0U): String = buildString {
+        val rootIndentation = "  ".repeat(indentLevel.toInt())
+        val indentation = "  ".repeat(indentLevel.toInt() + 1)
+
+        append("$rootIndentation- ")
+        if (convCommit.breaking) {
+            append(BreakingChangeLogPrefix)
+        }
+
+        append(convCommit.description)
+
+        if (convCommit.body.isNotBlank()) {
+            append("\n$indentation")
+            val bodyWithIndentation = convCommit.body.lines().joinToString("\n$indentation")
+            append(bodyWithIndentation)
+        }
+
+        convCommit.footers.forEach { footer ->
+            append("\n$indentation")
+            append(footer.key)
+            append(": ")
+
+            val footerValueWithIndentation = footer.value.lines().joinToString("\n$indentation")
+            append(footerValueWithIndentation)
+        }
+    }
+
+    private fun getReadableCommitType(conventionalType: String): String {
+        return when (conventionalType.lowercase()) {
+            "chore" -> "Chores"
+            "fix" -> "Bug Fixes"
+            "feat" -> "Features"
+            "i18n" -> "Internationalization"
+            "perf" -> "Performance Improvements"
+            "refactor" -> "Refactoring"
+            "revert" -> "Reverted Changes"
+            "theme" -> "Theming"
+            else -> conventionalType.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         }
     }
 }

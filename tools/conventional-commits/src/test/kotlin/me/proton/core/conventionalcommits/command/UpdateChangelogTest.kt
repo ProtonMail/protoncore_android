@@ -22,7 +22,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class RenderChangelogTest {
+class UpdateChangelogTest {
     private lateinit var tested: ChangelogCommand
 
     @BeforeTest
@@ -34,7 +34,7 @@ class RenderChangelogTest {
     fun `update empty changelog`() {
         assertEquals(
             "ABC\n",
-            tested.renderNewChangelog("ABC", "")
+            tested.updateChangelog("ABC", "")
         )
     }
 
@@ -42,7 +42,7 @@ class RenderChangelogTest {
     fun `update simple changelog`() {
         assertEquals(
             "## [Unreleased]\n\n## 1.2.3\n- Fixes\n",
-            tested.renderNewChangelog("## 1.2.3\n- Fixes", "## [Unreleased]")
+            tested.updateChangelog("## 1.2.3\n- Fixes", "## [Unreleased]")
         )
     }
 
@@ -50,7 +50,7 @@ class RenderChangelogTest {
     fun `update changelog with title and existing version`() {
         assertEquals(
             "# Changelog\n\nABC\n\n## [1.2.3]\n- Fixes\n",
-            tested.renderNewChangelog("ABC", "# Changelog\n\n## [1.2.3]\n- Fixes")
+            tested.updateChangelog("ABC", "# Changelog\n\n## [1.2.3]\n- Fixes")
         )
     }
 
@@ -58,7 +58,7 @@ class RenderChangelogTest {
     fun `update changelog with unreleased logs`() {
         assertEquals(
             "## [Unreleased]\n\n## 1.2.3\n- Fixes\n\n- feat1\n- feat2\n",
-            tested.renderNewChangelog("## 1.2.3\n- Fixes", "## [Unreleased]\n- feat1\n- feat2")
+            tested.updateChangelog("## 1.2.3\n- Fixes", "## [Unreleased]\n- feat1\n- feat2")
         )
     }
 
@@ -109,7 +109,7 @@ class RenderChangelogTest {
 
         assertEquals(
             newChangelog,
-            tested.renderNewChangelog("## [7.1.12]", originalChangelog)
+            tested.updateChangelog("## [7.1.12]", originalChangelog)
         )
     }
 }

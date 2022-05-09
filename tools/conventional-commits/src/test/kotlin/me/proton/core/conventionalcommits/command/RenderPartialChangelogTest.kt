@@ -19,27 +19,28 @@
 package me.proton.core.conventionalcommits.command
 
 import me.proton.core.conventionalcommits.ConventionalCommit
-import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class RenderPartialChangelogTest {
-    private lateinit var tested: ChangelogCommand
+    private val date: Date = Calendar.getInstance().apply { set(2022, 0, 30) }.time
+    private val readableDate = "2022-01-30"
+    private lateinit var tested: ChangelogRenderer
 
     @BeforeTest
     fun setUp() {
-        tested = ChangelogCommand()
+        tested = ChangelogRenderer()
     }
 
     @Test
     fun `no changes`() {
         val changes = listOf<ConventionalCommit>()
         assertEquals(
-            "## [1.2.3] - $today\n",
-            tested.renderPartialChangelog(changes, "1.2.3")
+            "## [1.2.3] - $readableDate\n",
+            tested(changes, date, "1.2.3")
         )
     }
 
@@ -50,14 +51,14 @@ class RenderPartialChangelogTest {
         )
         assertEquals(
             """
-                ## [1.2.3] - $today
+                ## [1.2.3] - $readableDate
                 
                 ### Bug Fixes
                 
                 - My fix.
 
             """.trimIndent(),
-            tested.renderPartialChangelog(changes, "1.2.3")
+            tested(changes, date, "1.2.3")
         )
     }
 
@@ -69,7 +70,7 @@ class RenderPartialChangelogTest {
         )
         assertEquals(
             """
-                ## [1.2.3] - $today
+                ## [1.2.3] - $readableDate
                 
                 ### Bug Fixes
                 
@@ -78,7 +79,7 @@ class RenderPartialChangelogTest {
                   Long description.
 
             """.trimIndent(),
-            tested.renderPartialChangelog(changes, "1.2.3")
+            tested(changes, date, "1.2.3")
         )
     }
 
@@ -90,7 +91,7 @@ class RenderPartialChangelogTest {
         )
         assertEquals(
             """
-                ## [1.2.3] - $today
+                ## [1.2.3] - $readableDate
 
                 ### Bug Fixes
 
@@ -99,7 +100,7 @@ class RenderPartialChangelogTest {
                   - Another fix.
 
             """.trimIndent(),
-            tested.renderPartialChangelog(changes, "1.2.3")
+            tested(changes, date, "1.2.3")
         )
     }
 
@@ -112,7 +113,7 @@ class RenderPartialChangelogTest {
         )
         assertEquals(
             """
-                ## [1.2.3] - $today
+                ## [1.2.3] - $readableDate
 
                 ### Bug Fixes
 
@@ -124,7 +125,7 @@ class RenderPartialChangelogTest {
                   - Data fix.
 
             """.trimIndent(),
-            tested.renderPartialChangelog(changes, "1.2.3")
+            tested(changes, date, "1.2.3")
         )
     }
 
@@ -136,7 +137,7 @@ class RenderPartialChangelogTest {
         )
         assertEquals(
             """
-                ## [1.2.3] - $today
+                ## [1.2.3] - $readableDate
                 
                 ### Features
                 
@@ -147,7 +148,7 @@ class RenderPartialChangelogTest {
                 - My fix.
 
             """.trimIndent(),
-            tested.renderPartialChangelog(changes, "1.2.3")
+            tested(changes, date, "1.2.3")
         )
     }
 
@@ -159,7 +160,7 @@ class RenderPartialChangelogTest {
         )
         assertEquals(
             """
-                ## [1.2.3] - $today
+                ## [1.2.3] - $readableDate
 
                 ### Features
 
@@ -172,9 +173,7 @@ class RenderPartialChangelogTest {
                   - My fix.
 
             """.trimIndent(),
-            tested.renderPartialChangelog(changes, "1.2.3")
+            tested(changes, date, "1.2.3")
         )
     }
-
-    private val today: String get() = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).format(Date())
 }

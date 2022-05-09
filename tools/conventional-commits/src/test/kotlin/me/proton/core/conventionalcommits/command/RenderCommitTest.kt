@@ -25,11 +25,11 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class RenderCommitTest {
-    private lateinit var tested: ChangelogCommand
+    private lateinit var tested: ChangelogRenderer
 
     @BeforeTest
     fun setUp() {
-        tested = ChangelogCommand()
+        tested = ChangelogRenderer()
     }
 
     @Test
