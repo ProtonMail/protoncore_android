@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
@@ -84,6 +85,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
 
             signInButton.onClick(::onSignInClicked)
+            usernameInput.labelText = when (input.requiredAccountType) {
+                AccountType.Internal, AccountType.Username -> R.string.auth_proton_email_or_username
+                AccountType.External -> R.string.auth_email_username
+            }.let { getString(it) }
             usernameInput.text = input.username
             usernameInput.setOnFocusLostListener { _, _ ->
                 usernameInput.validateUsername()
