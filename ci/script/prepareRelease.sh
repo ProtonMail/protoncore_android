@@ -66,13 +66,10 @@ function prepare_new_release() {
   update_remote_origin_url
   update_changelog
 
-  local source_branch
-  source_branch=$(git rev-parse --symbolic-full-name HEAD)
-
   git add CHANGELOG.md
   git commit -m "docs: Updated Changelog for version $NEXT_VERSION."
 
-  git push origin "$source_branch" -o ci.skip
+  git push origin "HEAD:$CI_COMMIT_REF_NAME" -o ci.skip
 
   #git checkout -b "$RELEASE_BRANCH"
   #git push origin "$RELEASE_BRANCH"
