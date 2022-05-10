@@ -30,6 +30,10 @@ import org.parboiled.support.StringVar;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Parser for conventional commits.
+ * Needs to be written in Java, because Parboiled library is doing some "magic" stuff,
+ * which doesn't work with Kotlin.
+ */
 public class ConventionalCommitParser extends BaseParser<ConventionalCommit> {
     private static final ConventionalCommitParser parser = Parboiled.createParser(ConventionalCommitParser.class);
     private static final ParseRunner<ConventionalCommit> parseRunner = new BasicParseRunner<>(parser.Commit());
@@ -48,7 +52,7 @@ public class ConventionalCommitParser extends BaseParser<ConventionalCommit> {
         return Sequence(
                 push(new ConventionalCommit()),
                 Type(),
-                Optional(Scope()),
+                Optional(Scopes()),
                 Optional(
                         "!",
                         push(pop().breaking(true))
@@ -106,7 +110,7 @@ public class ConventionalCommitParser extends BaseParser<ConventionalCommit> {
                                 OneOrMore(NoneOf("\n"))
                         )
                 ),
-                push(peek().footers(append(pop().footers, new CommitFooter(footerKeyName.get(), match()))))
+                push(pop().appendFooter(new CommitFooter(footerKeyName.get(), match())))
         );
     }
 
@@ -129,12 +133,20 @@ public class ConventionalCommitParser extends BaseParser<ConventionalCommit> {
         return Ch('\n');
     }
 
-    public Rule Scope() {
+    public Rule Scopes() {
         return Sequence(
                 Ch('('),
-                OneOrMore(NoneOf(")")),
-                push(pop().scope(match())),
+                OneOrMore(Scope()),
                 Ch(')')
+        );
+    }
+
+    public Rule Scope() {
+        return Sequence(
+                ZeroOrMore(" "),
+                OneOrMore(NoneOf(",)")),
+                push(pop().appendScope(match())),
+                ZeroOrMore(AnyOf(" ,"))
         );
     }
 

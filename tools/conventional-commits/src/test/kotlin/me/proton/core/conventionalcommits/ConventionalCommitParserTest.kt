@@ -50,7 +50,7 @@ class ConventionalCommitParserTest {
     fun `breaking commit with scope`() {
         val commit = ConventionalCommitParser.parse("fix(auth)!: message")
         assertEquals("fix", commit?.type)
-        assertEquals("auth", commit?.scope)
+        assertContentEquals(listOf("auth"), commit?.scopes)
         assertEquals("message", commit?.description)
         assertTrue(commit?.breaking == true)
     }
@@ -83,15 +83,15 @@ class ConventionalCommitParserTest {
     fun `type, scope and message`() {
         val commit = ConventionalCommitParser.parse("fix(core): message")
         assertEquals("fix", commit?.type)
-        assertEquals("core", commit?.scope)
+        assertContentEquals(listOf("core"), commit?.scopes)
         assertEquals("message", commit?.description)
     }
 
     @Test
     fun `multiple scopes`() {
-        val commit = ConventionalCommitParser.parse("fix(account, auth): message")
+        val commit = ConventionalCommitParser.parse("fix(account, auth, crypto): message")
         assertEquals("fix", commit?.type)
-        assertEquals("account, auth", commit?.scope)
+        assertContentEquals(listOf("account", "auth", "crypto"), commit?.scopes)
         assertEquals("message", commit?.description)
     }
 

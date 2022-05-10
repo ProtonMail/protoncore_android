@@ -47,7 +47,7 @@ class RenderPartialChangelogTest {
     @Test
     fun `single change`() {
         val changes = listOf(
-            ConventionalCommit("fix", "", "My fix.", "", emptyList(), false)
+            ConventionalCommit("fix", emptyList(), "My fix.", "", emptyList(), false)
         )
         assertEquals(
             """
@@ -63,10 +63,55 @@ class RenderPartialChangelogTest {
     }
 
     @Test
+    fun `single breaking change`() {
+        val changes = listOf(
+            ConventionalCommit("fix", emptyList(), "My fix.", "", emptyList(), true)
+        )
+        assertEquals(
+            """
+                ## [1.2.3] - $readableDate
+                
+                ### Breaking Changes
+
+                **Bug Fixes**
+                
+                - My fix.
+
+            """.trimIndent(),
+            tested(changes, date, "1.2.3")
+        )
+    }
+
+    @Test
+    fun `non-breaking and breaking change`() {
+        val changes = listOf(
+            ConventionalCommit("fix", emptyList(), "My non-breaking fix.", "", emptyList(), false),
+            ConventionalCommit("fix", emptyList(), "My breaking fix.", "", emptyList(), true)
+        )
+        assertEquals(
+            """
+                ## [1.2.3] - $readableDate
+                
+                ### Breaking Changes
+
+                **Bug Fixes**
+
+                - My breaking fix.
+
+                ### Bug Fixes
+
+                - My non-breaking fix.
+
+            """.trimIndent(),
+            tested(changes, date, "1.2.3")
+        )
+    }
+
+    @Test
     fun `multiple changes of the same type`() {
         val changes = listOf(
-            ConventionalCommit("fix", "", "My fix.", "", emptyList(), false),
-            ConventionalCommit("fix", "", "Another fix.", "Long description.", emptyList(), false)
+            ConventionalCommit("fix", emptyList(), "My fix.", "", emptyList(), false),
+            ConventionalCommit("fix", emptyList(), "Another fix.", "Long description.", emptyList(), false)
         )
         assertEquals(
             """
@@ -76,6 +121,7 @@ class RenderPartialChangelogTest {
                 
                 - My fix.
                 - Another fix.
+                
                   Long description.
 
             """.trimIndent(),
@@ -86,8 +132,8 @@ class RenderPartialChangelogTest {
     @Test
     fun `multiple changes of the same type with same scopes`() {
         val changes = listOf(
-            ConventionalCommit("fix", "auth", "My fix.", "", emptyList(), false),
-            ConventionalCommit("fix", "auth", "Another fix.", "", emptyList(), false)
+            ConventionalCommit("fix", listOf("auth"), "My fix.", "", emptyList(), false),
+            ConventionalCommit("fix", listOf("auth"), "Another fix.", "", emptyList(), false)
         )
         assertEquals(
             """
@@ -107,9 +153,9 @@ class RenderPartialChangelogTest {
     @Test
     fun `multiple changes of the same type with different scopes`() {
         val changes = listOf(
-            ConventionalCommit("fix", "", "My fix.", "", emptyList(), false),
-            ConventionalCommit("fix", "data", "Data fix.", "", emptyList(), false),
-            ConventionalCommit("fix", "auth", "Another fix.", "Long description.", emptyList(), false)
+            ConventionalCommit("fix", emptyList(), "My fix.", "", emptyList(), false),
+            ConventionalCommit("fix", listOf("data"), "Data fix.", "", emptyList(), false),
+            ConventionalCommit("fix", listOf("auth"), "Another fix.", "Long description.", emptyList(), false)
         )
         assertEquals(
             """
@@ -120,6 +166,7 @@ class RenderPartialChangelogTest {
                 - My fix.
                 - auth:
                   - Another fix.
+                
                     Long description.
                 - data:
                   - Data fix.
@@ -130,10 +177,33 @@ class RenderPartialChangelogTest {
     }
 
     @Test
+    fun `multiple changes of the same type with multiple scopes`() {
+        val changes = listOf(
+            ConventionalCommit("fix", listOf("auth", "data"), "Combined fix.", "", emptyList(), false),
+            ConventionalCommit("fix", listOf("auth"), "Auth fix.", "", emptyList(), false)
+        )
+        assertEquals(
+            """
+                ## [1.2.3] - $readableDate
+
+                ### Bug Fixes
+
+                - auth:
+                  - Combined fix.
+                  - Auth fix.
+                - data:
+                  - Combined fix.
+
+            """.trimIndent(),
+            tested(changes, date, "1.2.3")
+        )
+    }
+
+    @Test
     fun `multiple changes with different type`() {
         val changes = listOf(
-            ConventionalCommit("fix", "", "My fix.", "", emptyList(), false),
-            ConventionalCommit("feat", "", "Some feature.", "", emptyList(), false)
+            ConventionalCommit("fix", emptyList(), "My fix.", "", emptyList(), false),
+            ConventionalCommit("feat", emptyList(), "Some feature.", "", emptyList(), false)
         )
         assertEquals(
             """
@@ -155,8 +225,8 @@ class RenderPartialChangelogTest {
     @Test
     fun `multiple changes with different type and same scopes`() {
         val changes = listOf(
-            ConventionalCommit("fix", "auth", "My fix.", "", emptyList(), false),
-            ConventionalCommit("feat", "auth", "Some feature.", "", emptyList(), false)
+            ConventionalCommit("fix", listOf("auth"), "My fix.", "", emptyList(), false),
+            ConventionalCommit("feat", listOf("auth"), "Some feature.", "", emptyList(), false)
         )
         assertEquals(
             """

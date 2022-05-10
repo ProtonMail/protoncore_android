@@ -36,7 +36,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.system.exitProcess
 
-private const val BreakingChangeLogPrefix = "BREAKING CHANGE: "
+private const val breakingChangesHeader = "Breaking Changes"
 
 class ChangelogCommand : CliktCommand() {
     private val minorTypes by minorTypesOption()
@@ -138,46 +138,74 @@ class ChangelogCommand : CliktCommand() {
 internal class ChangelogRenderer {
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
 
-    /** Renders a partial changelog, covering the [version] and its [changes].
-     * Sample output:
-     *
-     * ## [1.2.3] - 2022-01-31
-     *
-     * ### Bug Fixes
-     *
-     * - auth: fixed login process
-     */
+    /** Renders a partial changelog, covering the [version] and its [changes]. */
     operator fun invoke(changes: List<ConventionalCommit>, date: Date, version: String): String = buildString {
         append("## [$version] - ${dateFormat.format(date)}")
 
-        changes
+        val (breakingChanges, nonBreakingChanges) = changes.partition { it.breaking }
+
+        if (breakingChanges.isNotEmpty()) {
+            append("\n\n### $breakingChangesHeader")
+            append(renderCommits(breakingChanges, headerLevel = null, bold = true))
+        }
+
+        append(renderCommits(nonBreakingChanges, headerLevel = 3, bold = false))
+        append('\n')
+    }
+
+    private fun renderCommits(commits: List<ConventionalCommit>, headerLevel: Int?, bold: Boolean) = buildString {
+        commits
             .groupBy { it.type }
             .toList()
             .sortedBy { it.first } // sort by commit type (feat, fix etc.)
             .forEach { (type, commits) ->
                 append("\n\n")
-                append("### ")
+                headerLevel?.let {
+                    append("#".repeat(it))
+                    append(' ')
+                }
+                if (bold) append("**")
                 append(getReadableCommitType(type))
+                if (bold) append("**")
+
                 append('\n')
-
-                commits
-                    .groupBy { it.scope }
-                    .toList()
-                    .sortedBy { it.first } // sort by commit scope
-                    .forEach { (scope, commits) ->
-                        val indentLevel = if (scope.isBlank()) 0U else 1U
-                        if (scope.isNotBlank()) {
-                            append('\n')
-                            append("- $scope:")
-                        }
-                        commits.forEach { convCommit ->
-                            append('\n')
-                            append(renderCommit(convCommit, indentLevel = indentLevel))
-                        }
-                    }
+                append(renderCommitTypeGroup(commits))
             }
+    }
 
-        append('\n')
+    /** Renders commits with the same type. */
+    private fun renderCommitTypeGroup(commits: List<ConventionalCommit>): String = buildString {
+        commits
+            .groupByScope()
+            .toList()
+            .sortedBy { it.first } // sort by commit scope
+            .forEach { (scope, commits) ->
+                val indentLevel = if (scope.isBlank()) 0U else 1U
+                if (scope.isNotBlank()) {
+                    append('\n')
+                    append("- $scope:")
+                }
+                commits.forEach { convCommit ->
+                    append('\n')
+                    append(renderCommit(convCommit, indentLevel = indentLevel))
+                }
+            }
+    }
+
+    private fun List<ConventionalCommit>.groupByScope(): Map<String, List<ConventionalCommit>> {
+        val map = mutableMapOf<String, MutableList<ConventionalCommit>>()
+        forEach { commit ->
+            val scopeNames = if (commit.scopes.isEmpty()) {
+                listOf("")
+            } else {
+                commit.scopes
+            }
+            scopeNames.forEach { scope ->
+                val list = map.getOrPut(scope) { mutableListOf() }
+                list.add(commit)
+            }
+        }
+        return map
     }
 
     /** Renders a single conventional commit as a changelog entry.
@@ -188,18 +216,15 @@ internal class ChangelogRenderer {
         val indentation = "  ".repeat(indentLevel.toInt() + 1)
 
         append("$rootIndentation- ")
-        if (convCommit.breaking) {
-            append(BreakingChangeLogPrefix)
-        }
-
         append(convCommit.description)
 
         if (convCommit.body.isNotBlank()) {
-            append("\n$indentation")
+            append("\n\n$indentation")
             val bodyWithIndentation = convCommit.body.lines().joinToString("\n$indentation")
             append(bodyWithIndentation)
         }
 
+        if (convCommit.footers.isNotEmpty()) append('\n')
         convCommit.footers.forEach { footer ->
             append("\n$indentation")
             append(footer.key)
