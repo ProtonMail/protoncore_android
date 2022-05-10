@@ -2,6 +2,10 @@ public final class me/proton/core/payment/domain/ConstKt {
 	public static final field MAX_PLAN_QUANTITY I
 }
 
+public final class me/proton/core/payment/domain/UtilsKt {
+	public static final fun adjustExpirationYear (Ljava/lang/String;)Ljava/lang/String;
+}
+
 public abstract class me/proton/core/payment/domain/entity/Card {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCountry ()Ljava/lang/String;

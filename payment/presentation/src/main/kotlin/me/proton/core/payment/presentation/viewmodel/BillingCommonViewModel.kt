@@ -42,6 +42,7 @@ import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.payment.presentation.adjustExpirationYear
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.plan.domain.entity.MASK_MAIL
@@ -173,7 +174,8 @@ class BillingCommonViewModel @Inject constructor(
                     val paymentTypeRefined =
                         paymentType.copy(
                             card = (paymentType.card as Card.CardWithPaymentDetails).copy(
-                                country = country?.code ?: countryName
+                                country = country?.code ?: countryName,
+                                expirationYear = paymentType.card.expirationYear.adjustExpirationYear()
                             )
                         )
                     createPaymentTokenWithNewCreditCard(userId, subscription.amountDue, currency, paymentTypeRefined)

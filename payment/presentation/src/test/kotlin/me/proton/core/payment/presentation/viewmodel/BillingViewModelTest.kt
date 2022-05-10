@@ -114,6 +114,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             gift = null
         )
 
+        val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             validateSubscription.invoke(
                 testUserId,
@@ -129,7 +130,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testUserId,
                 2,
                 testCurrency,
-                paymentType
+                expectedCard
             )
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
@@ -141,7 +142,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             billingCommonViewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
 
             // THEN
-            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard) }
             coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
 
             assertIs<BillingCommonViewModel.State.Idle>(awaitItem())
@@ -170,6 +171,8 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
+
+        val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             validateSubscription.invoke(
                 null,
@@ -184,7 +187,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 null,
                 2,
                 testCurrency,
-                paymentType
+                expectedCard
             )
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
@@ -195,7 +198,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             billingCommonViewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
 
             // THEN
-            coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, expectedCard) }
             coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
             assertIs<BillingCommonViewModel.State.Idle>(awaitItem())
             assertIs<BillingCommonViewModel.State.Processing>(awaitItem())
@@ -407,12 +410,13 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             )
         } returns testSubscriptionPlanStatus
 
+        val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             createPaymentToken.invoke(
                 testUserId,
                 2,
                 testCurrency,
-                paymentType
+                expectedCard
             )
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, "test-approval-url", "test-token", "test-return-host"
@@ -427,7 +431,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             billingCommonViewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
             // THEN
-            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard) }
             coVerify(exactly = 1) {
                 performSubscribe.invoke(
                     testUserId, 2, testCurrency, testSubscriptionCycle,
@@ -499,6 +503,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             gift = null
         )
 
+        val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             validateSubscription.invoke(
                 null,
@@ -513,7 +518,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 null,
                 2,
                 testCurrency,
-                paymentType
+                expectedCard
             )
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
@@ -527,7 +532,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             )
 
             // THEN
-            coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, expectedCard) }
             coVerify(exactly = 1) { humanVerificationManager.addDetails(any()) }
             coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
             assertIs<BillingCommonViewModel.State.Idle>(awaitItem())
@@ -557,12 +562,13 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             gift = null
         )
 
+        val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             validateSubscription.invoke(testUserId, null, testPlanIds, testCurrency, testSubscriptionCycle)
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType)
+            createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard)
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
@@ -586,7 +592,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 "test-token"
             )
             // THEN
-            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard) }
             coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
             assertIs<BillingCommonViewModel.State.Idle>(awaitItem())
             assertIs<BillingCommonViewModel.State.Processing>(awaitItem())
