@@ -23,7 +23,10 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
+
+const val PROTON_PROGRESS_TEST_TAG = "ProtonProgress"
 
 @Composable
 fun ProtonCenteredProgress(
@@ -31,7 +34,7 @@ fun ProtonCenteredProgress(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier = modifier.testTag(PROTON_PROGRESS_TEST_TAG)
     ) {
         CircularProgressIndicator()
     }

@@ -220,6 +220,7 @@ public final class me/proton/core/compose/component/ProtonButtonKt {
 }
 
 public final class me/proton/core/compose/component/ProtonCenteredProgressKt {
+	public static final field PROTON_PROGRESS_TEST_TAG Ljava/lang/String;
 	public static final fun PreviewProtonCenteredProgress (Landroidx/compose/runtime/Composer;I)V
 	public static final fun ProtonCenteredProgress (Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 }
