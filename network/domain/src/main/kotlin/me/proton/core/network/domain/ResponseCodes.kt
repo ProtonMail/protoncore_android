@@ -27,6 +27,7 @@ object ResponseCodes {
     const val NOT_EXISTS = 2501
     const val APP_VERSION_BAD = 5003
     const val API_VERSION_INVALID = 5005
+    const val PASSWORD_WRONG = 8002
     const val HUMAN_VERIFICATION_REQUIRED = 9001
     const val USER_CREATE_NAME_INVALID = 12_081
     const val USER_CREATE_TOKEN_INVALID = 12_087

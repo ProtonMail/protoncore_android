@@ -116,6 +116,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is LoginViewModel.State.Processing -> showLoading(true)
                     is LoginViewModel.State.Error -> onLoginError(it.error.getUserMessage(resources))
                     is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
+                    is LoginViewModel.State.InvalidPassword -> onLoginError(it.error.getUserMessage(resources))
                 }.exhaustive
             }.launchIn(lifecycleScope)
 

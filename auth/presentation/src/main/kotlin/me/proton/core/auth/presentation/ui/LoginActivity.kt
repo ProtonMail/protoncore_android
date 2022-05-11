@@ -120,6 +120,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     is LoginViewModel.State.Processing -> showLoading(true)
                     is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
                     is LoginViewModel.State.Error -> onError(true, it.error.getUserMessage(resources), it.isPotentialBlocking)
+                    is LoginViewModel.State.InvalidPassword -> onWrongPassword(it.error.getUserMessage(resources))
                 }.exhaustive
             }.launchIn(lifecycleScope)
     }
@@ -155,6 +156,11 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             .putExtra(ARG_RESULT, LoginResult(userId = userId.id, nextStep = nextStep))
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    private fun onWrongPassword(message: String?) {
+        binding.passwordInput.text = null
+        onError(triggerValidation = true, message = message, isPotentialBlocking = false)
     }
 
     override fun onError(triggerValidation: Boolean, message: String?, isPotentialBlocking: Boolean) {

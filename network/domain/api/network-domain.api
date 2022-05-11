@@ -245,6 +245,7 @@ public final class me/proton/core/network/domain/ResponseCodes {
 	public static final field NOT_ALLOWED I
 	public static final field NOT_EXISTS I
 	public static final field OK I
+	public static final field PASSWORD_WRONG I
 	public static final field PAYMENTS_SUBSCRIPTION_NOT_EXISTS I
 	public static final field USER_CREATE_NAME_INVALID I
 	public static final field USER_CREATE_TOKEN_INVALID I

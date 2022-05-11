@@ -43,8 +43,12 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
@@ -68,6 +72,7 @@ internal class LoginViewModel @Inject constructor(
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
         data class Error(val error: Throwable, val isPotentialBlocking: Boolean) : State()
+        data class InvalidPassword(val error: Throwable) : State()
     }
 
     override val recoveryEmailAddress: String?
@@ -115,6 +120,8 @@ internal class LoginViewModel @Inject constructor(
         emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
+    }.catchWhen(Throwable::isWrongPassword) {
+        emit(State.InvalidPassword(it))
     }.catch { error ->
         emit(State.Error(error, error.isPotentialBlocking()))
     }.onEach { state ->
@@ -124,4 +131,14 @@ internal class LoginViewModel @Inject constructor(
     companion object {
         const val STATE_USER_ID = "userId"
     }
+}
+
+/**
+ * Note: server may also return this error, when an account doesn't exist,
+ * i.e. there is no account with given username/email.
+ */
+private fun Throwable.isWrongPassword(): Boolean {
+    if (this !is ApiException) return false
+    val error = error as? ApiResult.Error.Http
+    return error?.proton?.code == ResponseCodes.PASSWORD_WRONG
 }

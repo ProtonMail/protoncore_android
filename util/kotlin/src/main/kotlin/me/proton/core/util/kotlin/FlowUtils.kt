@@ -29,11 +29,11 @@ import kotlinx.coroutines.flow.retryWhen
  */
 inline fun <T> Flow<T>.catchWhen(
     crossinline predicate: suspend (Throwable) -> Boolean,
-    crossinline action: suspend FlowCollector<T>.() -> Unit
+    crossinline action: suspend FlowCollector<T>.(Throwable) -> Unit
 ): Flow<T> {
     return catch { error ->
         if (predicate(error)) {
-            action()
+            action(error)
         } else {
             throw error
         }

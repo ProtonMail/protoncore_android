@@ -846,6 +846,7 @@ public final class me/proton/core/test/android/robots/auth/login/LoginRobot$Veri
 	public fun <init> ()V
 	public final fun loginElementsDisplayed ()V
 	public final fun passwordInputHasError ()V
+	public final fun passwordInputIsEmpty ()V
 	public final fun usernameInputHasError ()V
 }
 

@@ -36,6 +36,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
@@ -248,6 +249,29 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
         coVerify(exactly = 2) { createLoginSession.invoke(testUserName, testPassword, any()) }
         coVerify(exactly = 2) { postLoginAccountSetup.invoke(any(), testPassword, any(), any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `handles invalid password`() = coroutinesTest {
+        coEvery { createLoginSession.invoke(any(), any(), any()) } throws ApiException(ApiResult.Error.Http(
+            HttpResponseCodes.HTTP_UNPROCESSABLE,
+            "Unprocessable Content",
+            ApiResult.Error.ProtonData(ResponseCodes.PASSWORD_WRONG, "Incorrect login credentials. Please try again")
+        ))
+
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, "invalid-password", mockk())
+
+            // THEN
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
+            assertIs<LoginViewModel.State.InvalidPassword>(awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        coVerify(exactly = 1) { createLoginSession.invoke(testUserName, any(), any()) }
+        coVerify(exactly = 0) { postLoginAccountSetup.invoke(any(), testPassword, any(), any(), any(), any(), any()) }
     }
 
     private fun mockSessionInfo(

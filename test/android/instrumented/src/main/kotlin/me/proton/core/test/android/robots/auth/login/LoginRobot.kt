@@ -70,6 +70,12 @@ class LoginRobot : CoreRobot() {
             view.withId(R.id.signInButton).checkDisplayed()
         }
 
+        fun passwordInputIsEmpty() {
+            view.withId(me.proton.core.presentation.R.id.textinput_error)
+                .withAncestor(view.withId(R.id.passwordInput))
+                .checkContains("")
+        }
+
         fun passwordInputHasError() {
             view.withId(me.proton.core.presentation.R.id.textinput_error)
                 .withAncestor(view.withId(R.id.passwordInput))

@@ -62,6 +62,7 @@ class LoginTests : BaseTest() {
                 // given we support multiple languages.
                 errorSnackbarDisplayed("")
 
+                passwordInputIsEmpty()
                 passwordInputHasError()
                 usernameInputHasError()
             }
