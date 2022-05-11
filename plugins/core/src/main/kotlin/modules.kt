@@ -158,6 +158,11 @@ public object Module {
     public const val planData: String = "$plan:plan-data"
     public const val planPresentation: String = "$plan:plan-presentation"
 
+    public const val push: String = ":push"
+    public const val pushDomain: String = "$push:push-domain"
+    public const val pushData: String = "$push:push-data"
+    public const val pushDagger: String = "$push:push-dagger"
+
     // Reports
     public const val report: String = ":report"
     public const val reportDomain: String = ":report:report-domain"

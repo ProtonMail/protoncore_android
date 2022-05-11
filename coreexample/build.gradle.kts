@@ -155,6 +155,7 @@ dependencies {
         project(Module.reportDagger),
         project(Module.country),
         project(Module.plan),
+        project(Module.push),
         project(Module.userSettings),
         project(Module.challenge),
 
