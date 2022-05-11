@@ -37,8 +37,6 @@ internal data class PaymentMethodDetails(
     val brand: String? = null,
     @SerialName("Last4")
     val last4: String? = null,
-    @SerialName("ThreeDSSupport")
-    val threeDS: Boolean? = null,
     @SerialName("BillingAgreementID")
     val billingAgreementID: String? = null,
     @SerialName("Payer")
