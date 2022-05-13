@@ -34,6 +34,15 @@ public final class me/proton/core/presentation/databinding/ProtonAutocompleteInp
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/presentation/databinding/ProtonAutocompleteInputBinding;
 }
 
+public final class me/proton/core/presentation/databinding/ProtonDialogSinglechoiceItemBinding : androidx/viewbinding/ViewBinding {
+	public final field text1 Landroid/widget/CheckedTextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonDialogSinglechoiceItemBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/CheckedTextView;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/presentation/databinding/ProtonDialogSinglechoiceItemBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonDialogSinglechoiceItemBinding;
+}
+
 public final class me/proton/core/presentation/databinding/ProtonInputBinding : androidx/viewbinding/ViewBinding {
 	public final field input Lcom/google/android/material/textfield/TextInputEditText;
 	public final field inputLayout Lcom/google/android/material/textfield/TextInputLayout;

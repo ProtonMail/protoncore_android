@@ -29,6 +29,8 @@
     </style>
 
     <style name="Proton.MaterialAlertDialog" parent="MaterialAlertDialog.MaterialComponents">
+        <!-- Workaround for https://issuetracker.google.com/232516808 (AlertDialogs with singleChoiceItems have sometimes incorrect height). -->
+        <item name="singleChoiceItemLayout">@layout/proton_dialog_singlechoice_item</item>
         <item name="shapeAppearance">@style/Proton.ShapeAppearance.MediumComponent</item>
     </style>
 
