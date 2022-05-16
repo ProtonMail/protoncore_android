@@ -19,16 +19,16 @@
 <resources>
   <string name="welcome_title">Protegiu la vostra privadesa amb Proton</string>
   <string name="welcome_subtitle">El xifratge manté privades les vostres dades. Les vostres dades us pertanyen.</string>
-  <string name="welcome_title_mail">Protegiu la vostra privadesa amb Proton Mail</string>
+  <string name="welcome_title_mail">Protect your privacy with Proton Mail</string>
   <string name="welcome_subtitle_mail">El correu electrònic xifrat manté en privat les vostres converses. La vostra safata d\'entrada us pertany.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
-  <string name="welcome_title_drive">Protegiu la vostra privadesa amb Proton Drive</string>
+  <string name="welcome_title_drive">Protegiu la vostra privadesa amb ProtonDrive</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
-  <string name="welcome_title_calendar">Protegiu la vostra privadesa amb Proton Calendar</string>
+  <string name="welcome_title_calendar">Protegiu la vostra privadesa amb ProtonCalendar</string>
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Protegiu la vostra privadesa amb Proton VPN</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat xifrant la vostra connexió a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
@@ -65,12 +65,12 @@
   <string name="auth_login_general_error">S\'ha produït un error.</string>
   <string name="auth_login_empty_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_mailbox_empty_credentials">Les credencials no poden estar buides.</string>
-  <string name="auth_create_address_title">Creeu una adreça Proton Mail</string>
-  <string name="auth_create_address_subtitle">El vostre compte de Proton està associat amb %1$s. Per utilitzar Proton Mail, creeu una adreça.</string>
+  <string name="auth_create_address_title">Create a Proton Mail address</string>
+  <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use Proton Mail, please create an address.</string>
   <string name="auth_username">Nom d\'usuari</string>
   <string name="auth_username_next_action">Següent</string>
   <string name="auth_create_address_result_title">%s està disponible</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s serà la vostra nova adreça de correu electrònic de Proton Mail.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new Proton Mail email address.</string>
   <string name="auth_create_address_result_subtitle">Utilitzareu aquesta adreça per iniciar sessió a tots els serveis de Proton.</string>
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crear adreça</string>
@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creeu el vostre Compte Proton</string>
   <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual</string>
-  <string name="auth_signup_create_secure_proton_address">Creeu una adreça Proton Mail segura</string>
+  <string name="auth_signup_create_secure_proton_address">Create a secure Proton Mail address instead</string>
   <string name="auth_signup_username">Nom d\'usuari</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">Correu electrònic</string>

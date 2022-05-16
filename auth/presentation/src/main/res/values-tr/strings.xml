@@ -65,7 +65,7 @@
   <string name="auth_login_general_error">Bir sorun çıktı.</string>
   <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
-  <string name="auth_create_address_title">Bir Proton Mail adresi oluştur</string>
+  <string name="auth_create_address_title">Bir Proton Mail adresi oluşturun</string>
   <string name="auth_create_address_subtitle">Proton hesabınız %1$s ile bağlantılı. Proton Mail kullanmak için bir adres oluşturun.</string>
   <string name="auth_username">Kullanıcı adı</string>
   <string name="auth_username_next_action">Sonraki</string>

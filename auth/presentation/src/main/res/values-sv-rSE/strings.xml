@@ -21,10 +21,10 @@
   <string name="welcome_subtitle">Kryptering håller din data privat. Din data tillhör dig på riktigt.</string>
   <string name="welcome_title_mail">Skydda din integritet med Proton Mail</string>
   <string name="welcome_subtitle_mail">Krypterad e-post som håller dina konversationer privata. Din inkorg tillhör dig på riktigt.</string>
-  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
+  <string name="welcome_subtitle_mail_alt">Integritet. Säkerhet. Bekvämlighet. Krypterad e-post som ger dig full kontroll över dina personuppgifter.</string>
   <string name="welcome_title_drive">Skydda din integritet med Proton Drive</string>
   <string name="welcome_subtitle_drive">Bekvämligheten med molnlagring och säkerheten med krypteringsteknik. Äntligen en molnlagringslösning du kan lita på.</string>
-  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
+  <string name="welcome_subtitle_drive_alt">Det säkraste sättet att lagra dina filer. Ladda upp, synkronisera och dela med den starkaste krypteringen som finns.</string>
   <string name="welcome_title_calendar">Skydda din integritet med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypterad kalender som håller dina livshändelser privat, skyddad och säker.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
@@ -66,7 +66,7 @@
   <string name="auth_login_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_mailbox_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_create_address_title">Skapa en Proton Mail-adress</string>
-  <string name="auth_create_address_subtitle">Ditt Proton-konto är associerat med %1$s. För att använda Proton, skapa en adress.</string>
+  <string name="auth_create_address_subtitle">Ditt Proton-konto är associerat med %1$s. För att använda Proton Mail, skapa en adress.</string>
   <string name="auth_username">Användarnamn</string>
   <string name="auth_username_next_action">Nästa</string>
   <string name="auth_create_address_result_title">%s är tillgänglig</string>

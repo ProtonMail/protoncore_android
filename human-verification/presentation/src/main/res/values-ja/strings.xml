@@ -20,10 +20,10 @@
   <!-- base common strings -->
   <string name="human_verification_help">ヘルプ</string>
   <string name="human_verification_title">人間であることの検証</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
-  <string name="human_verification_enter_code_subtitle">Enter the verification code that was sent to %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Enter the verification code that was sent to %s. If you don\'t find the email in your inbox, please check your spam folder.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>
+  <string name="human_verification_main_subtitle">不正利用を防止するために、以下のオプションから人間であることを証明してください</string>
+  <string name="human_verification_enter_code_subtitle">%s に送信された認証コードを入力してください。</string>
+  <string name="human_verification_enter_code_subtitle_email">%s に送信した検証コードを入力してください。受信箱にメールがない場合、迷惑メールフォルダーを確認してください。</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">すでに持っている検証コードを入力:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">メールアドレス</string>
   <string name="human_verification_option_email_subtitle">Your email will only be used for this one-time verification. If you don\'t find the email in your inbox, please check your spam folder.</string>
@@ -35,7 +35,7 @@
   <string name="human_verification_verify">検証</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Do you need any help with human verification?</string>
-  <string name="human_verification_code">Verification Code</string>
+  <string name="human_verification_code">検証コード</string>
   <string name="human_verification_code_request_new_code_title">新しいコードをリクエスト?</string>
   <string name="human_verification_code_request_new_code_action">新しいコードをリクエスト</string>
   <string name="human_verification_code_request_new_code">Get a replacement code sent to %s.</string>
@@ -45,15 +45,15 @@
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">登録を申請する</string>
-  <string name="human_verification_help_manual">If you are having trouble creating your account, please request an invitation and we will respond within 1 business day.</string>
-  <string name="human_verification_help_website_title">Visit our Help Center</string>
+  <string name="human_verification_help_manual">アカウントの作成に問題がある場合は、招待をリクエストしてください。1 営業日以内に対応します。</string>
+  <string name="human_verification_help_website_title">ヘルプセンターを閲覧</string>
   <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
-  <string name="human_verification_sending_failed">Verification code sending failed. Please try again.</string>
-  <string name="human_verification_incorrect_code">Incorrect code. Please try again.</string>
-  <string name="human_verification_resent_code">We have sent you another code.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA verification failed. Please try one more time or choose another verification option.</string>
+  <string name="human_verification_sending_failed">検証コードの送信に失敗しました。再度お試しください。</string>
+  <string name="human_verification_incorrect_code">無効なコードです。再度お試しください。</string>
+  <string name="human_verification_resent_code">ほかのコードを送信しました。</string>
+  <string name="human_verification_captcha_failed">CAPTCHA 検証に失敗しました。もう一度試すか、別の検証方法を選択してください。</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load CAPTCHA.</string>
-  <string name="human_verification_action_retry">Retry</string>
+  <string name="human_verification_captcha_no_connectivity">接続されていません、CAPTCHA の読み込みに失敗しました。</string>
+  <string name="human_verification_action_retry">再試行</string>
   <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
 </resources>

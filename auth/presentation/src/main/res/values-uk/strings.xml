@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Створіть свій обліковий запис Proton</string>
   <string name="auth_signup_current_email">Використати натомість вашу поточну адресу е-пошти</string>
-  <string name="auth_signup_create_secure_proton_address">Створити натомість захищену адресу Proton Mail</string>
+  <string name="auth_signup_create_secure_proton_address">Створити натомість захищену електронну адресу Proton</string>
   <string name="auth_signup_username">Ім\'я користувача</string>
   <string name="auth_signup_domain">Домен</string>
   <string name="auth_signup_email">Е-пошта</string>

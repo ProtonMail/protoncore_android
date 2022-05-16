@@ -20,17 +20,17 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">回復用のメールアドレス</string>
   <string name="settings_recovery_email_current">現在の回復・通知用のメールアドレス</string>
-  <string name="settings_recovery_email_new">New Reset/Notification email</string>
-  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+  <string name="settings_recovery_email_new">新しい回復・通知用メールアドレス</string>
+  <string name="settings_recovery_email_confirm">回復・通知用メールアドレスの確認</string>
+  <string name="settings_recovery_email_new_hint">メールアドレスを入力</string>
+  <string name="settings_recovery_email_confirm_hint">メールアドレスを再入力</string>
   <string name="settings_save">保存</string>
-  <string name="settings_password_required">Enter your login password</string>
+  <string name="settings_password_required">ログインパスワードを入力</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">未設定</string>
   <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
-  <string name="settings_validation_email">Email is invalid.</string>
-  <string name="settings_general_error">An error occurred.</string>
+  <string name="settings_validation_email">メールアドレスが無効です。</string>
+  <string name="settings_general_error">エラーが発生しました。</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">パスワードを変更</string>
   <string name="settings_password_management_change_mailbox_password">メールボックスパスワードを変更</string>
@@ -41,8 +41,8 @@
   <string name="settings_mailbox_password_hint_new">新しいメールボックスのパスワード</string>
   <string name="settings_mailbox_password_hint_new_confirm">メールボックスの新しいパスワードを確認</string>
   <string name="settings_change_password_error">A change password error has occurred.</string>
-  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_recovery_email_success">回復用メールアドレスが更新されました</string>
   <string name="settings_password_management_success">パスワードが更新されました。</string>
-  <string name="settings_password_management_login_password_success">Login password updated</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_login_password_success">ログインパスワードが更新されました</string>
+  <string name="settings_password_management_mailbox_password_success">受信箱のパスワードが更新されました</string>
 </resources>

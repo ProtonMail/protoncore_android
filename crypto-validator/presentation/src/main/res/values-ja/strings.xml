@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="crypto_keystore_error_title">Encryption error</string>
+  <string name="crypto_keystore_error_title">暗号化エラーが発生しました</string>
   <string name="crypto_keystore_error_message">This device uses a faulty implementation of Android Keystore, which we use to keep your data safe. This means your data can be compromised if an attacker gets physical access to this device. What would you like to do?</string>
-  <string name="crypto_keystore_error_continue_action">Continue</string>
-  <string name="crypto_keystore_error_more_info_action">Get more information</string>
-  <string name="crypto_keystore_error_logout_action">Log out</string>
-  <string name="crypto_keystore_error_exit_action">Exit</string>
+  <string name="crypto_keystore_error_continue_action">続行</string>
+  <string name="crypto_keystore_error_more_info_action">詳細情報を入手</string>
+  <string name="crypto_keystore_error_logout_action">ログアウト</string>
+  <string name="crypto_keystore_error_exit_action">終了</string>
 </resources>

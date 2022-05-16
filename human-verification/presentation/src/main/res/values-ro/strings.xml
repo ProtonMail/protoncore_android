@@ -38,7 +38,7 @@
   <string name="human_verification_code">Cod de verificare</string>
   <string name="human_verification_code_request_new_code_title">Solicitare cod nou?</string>
   <string name="human_verification_code_request_new_code_action">Solicitare cod nou</string>
-  <string name="human_verification_code_request_new_code">Get a replacement code sent to %s.</string>
+  <string name="human_verification_code_request_new_code">Obțineți codul de înlocuire trimis la %s.</string>
   <string name="email">E-mail</string>
   <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
@@ -46,14 +46,14 @@
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Solicitați o invitație</string>
   <string name="human_verification_help_manual">Dacă aveți probleme cu crearea contului, solicitați o invitație și vom răspunde în termen de o zi lucrătoare.</string>
-  <string name="human_verification_help_website_title">Visit our Help Center</string>
-  <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
-  <string name="human_verification_sending_failed">Verification code sending failed. Please try again.</string>
-  <string name="human_verification_incorrect_code">Incorrect code. Please try again.</string>
-  <string name="human_verification_resent_code">We have sent you another code.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA verification failed. Please try one more time or choose another verification option.</string>
+  <string name="human_verification_help_website_title">Vizitați centrul nostru de ajutor</string>
+  <string name="human_verification_help_website">Aflați mai mult despre verificarea umană și de ce o cerem.</string>
+  <string name="human_verification_sending_failed">Trimiterea codului de verificare a eșuat. Reîncercați.</string>
+  <string name="human_verification_incorrect_code">Cod incorect. Reîncercați.</string>
+  <string name="human_verification_resent_code">Am trimis un alt cod.</string>
+  <string name="human_verification_captcha_failed">Verificare CAPTCHA a eșuat. Reîncercați sau alegeți o altă metodă de verificare.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load CAPTCHA.</string>
-  <string name="human_verification_action_retry">Retry</string>
-  <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
+  <string name="human_verification_captcha_no_connectivity">Fără conexiune. Nu se poate încărca CAPTCHA.</string>
+  <string name="human_verification_action_retry">Reîncercare</string>
+  <string name="human_verification_method_loading_failed">Nu se poate încărca metoda de verificare actuală. Dacă problema persistă, vă rugăm să încercați o altă metodă disponibilă sau verificați ecranul Ajutor.</string>
 </resources>

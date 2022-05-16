@@ -97,7 +97,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Créez votre compte Proton</string>
   <string name="auth_signup_current_email">Utiliser plutôt votre adresse courriel actuelle</string>
-  <string name="auth_signup_create_secure_proton_address">Créez plutôt une adresse Proton Mail sécurisée</string>
+  <string name="auth_signup_create_secure_proton_address">Créer plutôt une adresse Proton Mail sécurisée</string>
   <string name="auth_signup_username">Nom d\'utilisateur</string>
   <string name="auth_signup_domain">Domaine</string>
   <string name="auth_signup_email">Courriel</string>

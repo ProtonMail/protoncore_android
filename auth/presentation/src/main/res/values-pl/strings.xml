@@ -70,7 +70,7 @@
   <string name="auth_username">Nazwa użytkownika</string>
   <string name="auth_username_next_action">Dalej</string>
   <string name="auth_create_address_result_title">Adres %s jest dostępny</string>
-  <string name="auth_create_address_result_title_username">Twoim nowy adresem Proton Mail będzie %1$s@%2$s.</string>
+  <string name="auth_create_address_result_title_username">Twoim nowym adresem Proton Mail będzie %1$s@%2$s.</string>
   <string name="auth_create_address_result_subtitle">Będziesz używać tego adresu do logowania się do wszystkich usług Proton.</string>
   <string name="auth_create_address_result_recovery_title">Twój adres pomocniczy:</string>
   <string name="auth_create_address_create">Utwórz adres</string>
