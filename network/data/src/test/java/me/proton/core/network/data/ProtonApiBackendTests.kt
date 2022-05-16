@@ -26,7 +26,6 @@ import io.mockk.spyk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockNetworkPrefs
@@ -231,8 +230,6 @@ internal class ProtonApiBackendTests {
         assertTrue(result is ApiResult.Error.TooManyRequest)
         assertEquals(429, result.httpCode)
         assertEquals(5, result.retryAfterSeconds)
-
-        TooManyRequestInterceptor.reset()
     }
 
     @Test

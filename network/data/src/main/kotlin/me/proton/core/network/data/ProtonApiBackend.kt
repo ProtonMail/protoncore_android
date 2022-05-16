@@ -22,7 +22,6 @@ import me.proton.core.network.data.interceptor.CacheOverrideInterceptor
 import me.proton.core.network.data.interceptor.DoHCookieInterceptor
 import me.proton.core.network.data.interceptor.ServerErrorInterceptor
 import me.proton.core.network.data.interceptor.ServerTimeInterceptor
-import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
 import me.proton.core.network.domain.ApiBackend
@@ -93,7 +92,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             }
             .addInterceptor(CacheOverrideInterceptor())
             .addInterceptor(ServerErrorInterceptor())
-            .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
             .apply { cookieStore?.let { addInterceptor(DoHCookieInterceptor(networkPrefs, it)) } }
             .initLogging(client)

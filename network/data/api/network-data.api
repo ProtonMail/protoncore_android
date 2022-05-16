@@ -173,31 +173,6 @@ public final class me/proton/core/network/data/interceptor/ServerTimeInterceptor
 	public fun intercept (Lokhttp3/Interceptor$Chain;)Lokhttp3/Response;
 }
 
-public final class me/proton/core/network/data/interceptor/TooManyRequestInterceptor : okhttp3/Interceptor {
-	public static final field Companion Lme/proton/core/network/data/interceptor/TooManyRequestInterceptor$Companion;
-	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Lkotlin/jvm/functions/Function0;)V
-	public fun intercept (Lokhttp3/Interceptor$Chain;)Lokhttp3/Response;
-}
-
-public final class me/proton/core/network/data/interceptor/TooManyRequestInterceptor$BlockedRequest {
-	public fun <init> (Lokhttp3/Response;II)V
-	public final fun component1 ()Lokhttp3/Response;
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun copy (Lokhttp3/Response;II)Lme/proton/core/network/data/interceptor/TooManyRequestInterceptor$BlockedRequest;
-	public static synthetic fun copy$default (Lme/proton/core/network/data/interceptor/TooManyRequestInterceptor$BlockedRequest;Lokhttp3/Response;IIILjava/lang/Object;)Lme/proton/core/network/data/interceptor/TooManyRequestInterceptor$BlockedRequest;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getResponse ()Lokhttp3/Response;
-	public final fun getRetryAfterSeconds ()I
-	public final fun getTimestampSeconds ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/network/data/interceptor/TooManyRequestInterceptor$Companion {
-	public final fun reset ()V
-}
-
 public final class me/proton/core/network/data/mapper/EntityMapperKt {
 	public static final fun parseDetails (Lme/proton/core/network/domain/ApiResult$Error$ProtonData;ILme/proton/core/network/data/protonApi/Details;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
 	public static final fun toHumanVerificationEntity (Lme/proton/core/network/data/protonApi/Details;)Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;
