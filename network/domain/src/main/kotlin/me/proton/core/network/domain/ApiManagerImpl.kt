@@ -46,10 +46,11 @@ class ApiManagerImpl<Api>(
 
     private val dohApiHandler = errorHandlers.firstNotNullOfOrNull { it as? DohApiHandler<Api> }
 
-    private val activeBackend get() = if (client.shouldUseDoh)
-        dohApiHandler?.activeAltBackend ?: primaryBackend
-    else
-        primaryBackend
+    private val activeBackend
+        get() = if (client.shouldUseDoh)
+            dohApiHandler?.activeAltBackend ?: primaryBackend
+        else
+            primaryBackend
 
     override suspend operator fun <T> invoke(
         forceNoRetryOnConnectionErrors: Boolean,
