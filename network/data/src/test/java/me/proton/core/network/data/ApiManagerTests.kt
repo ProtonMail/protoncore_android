@@ -65,6 +65,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 internal class ApiManagerTests {
 
@@ -347,14 +348,32 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test too many requests`() = runBlockingTest {
+    fun `test too many requests recovered`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
-            ApiResult.Error.TooManyRequest(5),
+            ApiResult.Error.Http(429, "Too Many Request", retryAfter = 1.seconds),
+            ApiResult.Error.Http(429, "Too Many Request", retryAfter = 2.seconds),
+            ApiResult.Error.Http(429, "Too Many Request", retryAfter = 3.seconds),
             ApiResult.Success(TestResult(5, "foo"))
         )
 
         val result = apiManager.invoke { test() }
-        assertTrue(result is ApiResult.Error.TooManyRequest)
+        assertTrue(result is ApiResult.Error.Http)
+        assertEquals(3.seconds, result.retryAfter)
+
+        val result2 = apiManager.invoke { test() }
+        assertTrue(result2 is ApiResult.Success)
+    }
+
+    @Test
+    fun `service unavailable`() = runBlockingTest {
+        coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
+            ApiResult.Error.Http(503, "Service Unavailable", retryAfter = 60.seconds),
+            ApiResult.Success(TestResult(5, "foo"))
+        )
+
+        val result = apiManager.invoke { test() }
+        assertTrue(result is ApiResult.Error.Http)
+        assertEquals(60.seconds, result.retryAfter)
 
         val result2 = apiManager.invoke { test() }
         assertTrue(result2 is ApiResult.Success)

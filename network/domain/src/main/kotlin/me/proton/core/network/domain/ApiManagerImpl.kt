@@ -18,9 +18,14 @@
 package me.proton.core.network.domain
 
 import kotlinx.coroutines.delay
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_SERVICE_UNAVAILABLE
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_TOO_MANY_REQUESTS
 import me.proton.core.network.domain.handlers.DohApiHandler
 import kotlin.math.pow
 import kotlin.random.Random
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Implementation of [ApiManager].
@@ -59,21 +64,29 @@ class ApiManagerImpl<Api>(
     }
 
     private suspend fun <T> callWithBackoff(call: ApiManager.Call<Api, T>): ApiResult<T> {
-        fun sample(min: Double, max: Double) = min + Random.nextDouble() * (max - min)
         var retryCount = 0
-        while (true) {
-            val result = handledCall(call)
-            if (retryCount < client.backoffRetryCount && result.isRetryable()) {
-                val delayCoefficient = sample(
-                    min = 2.0.pow(retryCount),
-                    max = 2.0.pow(retryCount + 1)
-                )
-                delay(client.backoffBaseDelayMs * delayCoefficient.toLong())
-                retryCount++
-            } else {
-                return result
-            }
+        var result = handledCall(call)
+
+        while (result.needsRetry(retryCount, maxRetryCount = client.backoffRetryCount)) {
+            delay(result.getRetryDelay(retryCount))
+            result = handledCall(call)
+            retryCount++
         }
+        return result
+    }
+
+    private fun <T> ApiResult<T>.getRetryDelay(retryCount: Int): Duration {
+        return retryAfter()?.exponentialDelay(retryCount, base = 1.2)
+            ?: client.backoffBaseDelayMs.milliseconds.exponentialDelay(retryCount)
+    }
+
+    private fun Duration.exponentialDelay(retryCount: Int, base: Double = 2.0): Duration {
+        fun sample(min: Double, max: Double) = min + Random.nextDouble() * (max - min)
+        val delayCoefficient = sample(
+            min = base.pow(retryCount),
+            max = base.pow(retryCount + 1)
+        )
+        return this * delayCoefficient
     }
 
     private suspend fun <T> handledCall(
@@ -103,5 +116,28 @@ class ApiManagerImpl<Api>(
             }
         }
         return currentResult
+    }
+}
+
+/**
+ * Sometimes, a result is [isRetryable], but [ApiManagerImpl] may sometimes resign from retrying.
+ * Visible for testing.
+ * @param retryCount The retry counter (starting from 0, which means the request was executed once, but hasn't been retried yet).
+ * @param maxRetryCount Maximum number of retries allowed.
+ * @param maxRetryAfter Maximum duration for which we can retry.
+ */
+internal fun <T> ApiResult<T>.needsRetry(
+    retryCount: Int,
+    maxRetryCount: Int,
+    maxRetryAfter: Duration = 10.seconds
+): Boolean {
+    if (retryCount >= maxRetryCount) return false
+    if (!isRetryable()) return false
+
+    val httpCode = (this as? ApiResult.Error.Http)?.httpCode
+
+    return when (val retryAfter = retryAfter()) {
+        null -> httpCode !in arrayOf(HTTP_TOO_MANY_REQUESTS, HTTP_SERVICE_UNAVAILABLE)
+        else -> retryAfter <= maxRetryAfter
     }
 }

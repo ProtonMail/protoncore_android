@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain
+package me.proton.core.network.data
 
-/**
- * Contains general constants http response codes.
- */
-object HttpResponseCodes {
-    const val HTTP_UNAUTHORIZED = 401
-    const val HTTP_BAD_REQUEST = 400
-    const val HTTP_UNPROCESSABLE = 422
-    const val HTTP_FORBIDDEN = 403
-    const val HTTP_REQUEST_TIMEOUT = 408
-    const val HTTP_TOO_MANY_REQUESTS = 429
-    const val HTTP_SERVICE_UNAVAILABLE = 503
-}
+import okhttp3.Headers
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+
+internal val Headers.Companion.RetryAfter get() = "Retry-After"
+internal fun Headers.retryAfter(): Duration? = this[Headers.RetryAfter]?.toIntOrNull()?.seconds

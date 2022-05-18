@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.scopes.MissingScopes
+import kotlin.time.Duration
 
 /**
  * Result of the safe API call.
@@ -57,7 +58,8 @@ sealed class ApiResult<out T> {
             val httpCode: Int,
             val message: String,
             val proton: ProtonData? = null,
-            cause: Throwable? = null
+            cause: Throwable? = null,
+            val retryAfter: Duration? = null,
         ) : Error(cause) {
 
             override fun toString() =
@@ -71,18 +73,6 @@ sealed class ApiResult<out T> {
             val error: String,
             var humanVerification: HumanVerificationAvailableMethods? = null,
             var missingScopes: MissingScopes? = null
-        )
-
-        /**
-         * 429 "Too Many Requests"
-         *
-         * @property retryAfterSeconds Number of seconds to hold all requests (network layer will
-         *  automatically fail requests that don't comply)
-         */
-        class TooManyRequest(val retryAfterSeconds: Int, proton: ProtonData? = null) : Http(
-            httpCode = HTTP_TOO_MANY_REQUESTS,
-            message = "Too Many Requests",
-            proton = proton
         )
 
         /**
@@ -158,8 +148,6 @@ sealed class ApiResult<out T> {
     }
 
     companion object {
-        const val HTTP_TOO_MANY_REQUESTS = 429
-
         /**
          * Introduce timeout for given block returning [ApiResult].
          *
@@ -211,20 +199,25 @@ fun Throwable.isPotentialBlocking() =
  */
 fun ApiException.isRetryable() = error.isRetryable()
 
+fun ApiException.retryAfter(): Duration? = error.retryAfter()
+
 /**
  * Return true if [ApiResult] is retryable (e.g. connection issue or http error 5XX).
  */
 fun <T> ApiResult<T>.isRetryable(): Boolean = when (this) {
     is ApiResult.Success,
     is ApiResult.Error.Parse,
-    is ApiResult.Error.Certificate,
-    is ApiResult.Error.TooManyRequest -> false
+    is ApiResult.Error.Certificate -> false
     is ApiResult.Error.Connection -> true
     is ApiResult.Error.Http -> when (httpCode) {
-        HttpResponseCodes.HTTP_REQUEST_TIMEOUT, in 500..599 -> true
+        HttpResponseCodes.HTTP_REQUEST_TIMEOUT,
+        HttpResponseCodes.HTTP_TOO_MANY_REQUESTS,
+        in 500..599 -> true
         else -> false
     }
 }
+
+fun <T> ApiResult<T>.retryAfter(): Duration? = (this as? ApiResult.Error.Http)?.retryAfter
 
 /**
  * Performs the given [action] if this instance represents an [ApiResult.Error].

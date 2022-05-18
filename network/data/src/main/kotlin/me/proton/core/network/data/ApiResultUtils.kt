@@ -64,12 +64,7 @@ private fun <T> parseHttpError(
     protonData: ApiResult.Error.ProtonData?,
     cause: Exception
 ): ApiResult<T> {
-    return if (response.code == ApiResult.HTTP_TOO_MANY_REQUESTS) {
-        val retryAfter = response.headers["Retry-After"]?.toIntOrNull() ?: 0
-        ApiResult.Error.TooManyRequest(retryAfter, protonData)
-    } else {
-        ApiResult.Error.Http(response.code, response.message, protonData, cause)
-    }
+    return ApiResult.Error.Http(response.code, response.message, protonData, cause, response.headers.retryAfter())
 }
 
 data class ProtonErrorException(

@@ -66,6 +66,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 // Can't use runBlockingTest with MockWebServer. See:
 // https://github.com/square/retrofit/issues/3330
@@ -227,9 +228,9 @@ internal class ProtonApiBackendTests {
         webServer.enqueue(response)
 
         val result = backend(ApiManager.Call(0) { test() })
-        assertTrue(result is ApiResult.Error.TooManyRequest)
+        assertTrue(result is ApiResult.Error.Http)
         assertEquals(429, result.httpCode)
-        assertEquals(5, result.retryAfterSeconds)
+        assertEquals(5.seconds, result.retryAfter)
     }
 
     @Test

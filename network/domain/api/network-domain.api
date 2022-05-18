@@ -73,7 +73,6 @@ public final class me/proton/core/network/domain/ApiManagerImpl : me/proton/core
 
 public abstract class me/proton/core/network/domain/ApiResult {
 	public static final field Companion Lme/proton/core/network/domain/ApiResult$Companion;
-	public static final field HTTP_TOO_MANY_REQUESTS I
 	public final fun getExceptionOrNull ()Ljava/lang/Throwable;
 	public fun getValueOrNull ()Ljava/lang/Object;
 	public final fun getValueOrThrow ()Ljava/lang/Object;
@@ -104,11 +103,12 @@ public class me/proton/core/network/domain/ApiResult$Error$Connection : me/proto
 }
 
 public class me/proton/core/network/domain/ApiResult$Error$Http : me/proton/core/network/domain/ApiResult$Error {
-	public fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/ApiResult$Error$ProtonData;Ljava/lang/Throwable;)V
-	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/ApiResult$Error$ProtonData;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/ApiResult$Error$ProtonData;Ljava/lang/Throwable;Lkotlin/time/Duration;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/ApiResult$Error$ProtonData;Ljava/lang/Throwable;Lkotlin/time/Duration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getHttpCode ()I
 	public final fun getMessage ()Ljava/lang/String;
 	public final fun getProton ()Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
+	public final fun getRetryAfter-FghU774 ()Lkotlin/time/Duration;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -148,12 +148,6 @@ public final class me/proton/core/network/domain/ApiResult$Error$Timeout : me/pr
 	public synthetic fun <init> (ZLjava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
-public final class me/proton/core/network/domain/ApiResult$Error$TooManyRequest : me/proton/core/network/domain/ApiResult$Error$Http {
-	public fun <init> (ILme/proton/core/network/domain/ApiResult$Error$ProtonData;)V
-	public synthetic fun <init> (ILme/proton/core/network/domain/ApiResult$Error$ProtonData;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getRetryAfterSeconds ()I
-}
-
 public final class me/proton/core/network/domain/ApiResult$Success : me/proton/core/network/domain/ApiResult {
 	public fun <init> (Ljava/lang/Object;)V
 	public final fun getValue ()Ljava/lang/Object;
@@ -169,6 +163,8 @@ public final class me/proton/core/network/domain/ApiResultKt {
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiResult;)Z
 	public static final fun onError (Lme/proton/core/network/domain/ApiResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/network/domain/ApiResult;
 	public static final fun onSuccess (Lme/proton/core/network/domain/ApiResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/network/domain/ApiResult;
+	public static final fun retryAfter (Lme/proton/core/network/domain/ApiException;)Lkotlin/time/Duration;
+	public static final fun retryAfter (Lme/proton/core/network/domain/ApiResult;)Lkotlin/time/Duration;
 }
 
 public final class me/proton/core/network/domain/CacheOverride {
@@ -205,6 +201,9 @@ public abstract interface class me/proton/core/network/domain/DohService {
 public final class me/proton/core/network/domain/HttpResponseCodes {
 	public static final field HTTP_BAD_REQUEST I
 	public static final field HTTP_FORBIDDEN I
+	public static final field HTTP_REQUEST_TIMEOUT I
+	public static final field HTTP_SERVICE_UNAVAILABLE I
+	public static final field HTTP_TOO_MANY_REQUESTS I
 	public static final field HTTP_UNAUTHORIZED I
 	public static final field HTTP_UNPROCESSABLE I
 	public static final field INSTANCE Lme/proton/core/network/domain/HttpResponseCodes;
