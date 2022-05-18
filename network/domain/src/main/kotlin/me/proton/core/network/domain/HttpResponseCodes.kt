@@ -26,4 +26,5 @@ object HttpResponseCodes {
     const val HTTP_BAD_REQUEST = 400
     const val HTTP_UNPROCESSABLE = 422
     const val HTTP_FORBIDDEN = 403
+    const val HTTP_REQUEST_TIMEOUT = 408
 }
