@@ -18,6 +18,7 @@
 package me.proton.core.network.data
 
 import android.content.Context
+import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
@@ -126,7 +127,7 @@ class ApiManagerFactory(
         DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, "${baseUrl}dns-query/", apiClient, networkManager)
     }
 
-    private fun javaMonoClockMs(): Long = TimeUnit.NANOSECONDS.toMillis(System.nanoTime())
+    private fun javaMonoClockMs(): Long = SystemClock.elapsedRealtime()
     private fun javaWallClockMs(): Long = System.currentTimeMillis()
 
     internal fun <Api> createBaseErrorHandlers(
