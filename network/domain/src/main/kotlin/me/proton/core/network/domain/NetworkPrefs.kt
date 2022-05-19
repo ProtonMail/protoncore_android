@@ -31,8 +31,4 @@ interface NetworkPrefs {
 
     /** List of base urls for Proton API proxies returned in the last DoH query. */
     var alternativeBaseUrls: List<String>?
-
-    /** Timestamp for last alternatives refresh. Will used with [DohProvider.MIN_REFRESH_INTERVAL_MS]
-     * and compared to current timestamp */
-    var lastAlternativesRefresh: Long
 }

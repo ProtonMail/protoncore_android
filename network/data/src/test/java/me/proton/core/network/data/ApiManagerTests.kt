@@ -174,6 +174,7 @@ internal class ApiManagerTests {
             null,
             dohAlternativesListener
         )
+        DohProvider.lastAlternativesRefresh = Long.MIN_VALUE
         dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime, ::time) {
             altBackend1
         }

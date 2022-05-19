@@ -17,6 +17,7 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.`android-annotation`
 
 plugins {
     protonKotlinLibrary
@@ -38,7 +39,10 @@ dependencies {
 
         // Kotlin
         `coroutines-core`,
-        `serialization-json`
+        `serialization-json`,
+
+        // Other
+        `android-annotation`,
     )
 
     testImplementation(project(Module.kotlinTest))

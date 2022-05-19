@@ -33,7 +33,6 @@ class NetworkPrefsImpl(context: Context) : NetworkPrefs, PreferencesProvider {
     override var activeAltBaseUrl: String? by string()
     override var lastPrimaryApiFail: Long by long(default = Long.MIN_VALUE)
     override var alternativeBaseUrls: List<String>? by list()
-    override var lastAlternativesRefresh: Long by long(default = Long.MIN_VALUE)
 
     companion object {
         private const val PREFS_NAME = "me.proton.core.network"

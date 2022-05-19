@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.domain
 
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
@@ -49,9 +50,9 @@ class DohProvider(
 ) {
 
     suspend fun refreshAlternatives() = withContext(networkMainScope.coroutineContext) {
-        if (monoClockMs() >= prefs.lastAlternativesRefresh + MIN_REFRESH_INTERVAL_MS) {
+        if (monoClockMs() >= lastAlternativesRefresh + MIN_REFRESH_INTERVAL_MS) {
             val allServicesFailed = tryDohServices()
-            prefs.lastAlternativesRefresh = monoClockMs()
+            lastAlternativesRefresh = monoClockMs()
 
             if (allServicesFailed && dohAlternativesListener != null) {
                 dohAlternativesListener.onAlternativesUnblock {
@@ -90,5 +91,8 @@ class DohProvider(
 
     companion object {
         val MIN_REFRESH_INTERVAL_MS = TimeUnit.MINUTES.toMillis(10)
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        @Volatile var lastAlternativesRefresh = Long.MIN_VALUE
     }
 }

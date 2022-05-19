@@ -193,7 +193,9 @@ public final class me/proton/core/network/domain/DohProvider {
 }
 
 public final class me/proton/core/network/domain/DohProvider$Companion {
+	public final fun getLastAlternativesRefresh ()J
 	public final fun getMIN_REFRESH_INTERVAL_MS ()J
+	public final fun setLastAlternativesRefresh (J)V
 }
 
 public abstract interface class me/proton/core/network/domain/DohService {
@@ -221,11 +223,9 @@ public abstract class me/proton/core/network/domain/NetworkManager {
 public abstract interface class me/proton/core/network/domain/NetworkPrefs {
 	public abstract fun getActiveAltBaseUrl ()Ljava/lang/String;
 	public abstract fun getAlternativeBaseUrls ()Ljava/util/List;
-	public abstract fun getLastAlternativesRefresh ()J
 	public abstract fun getLastPrimaryApiFail ()J
 	public abstract fun setActiveAltBaseUrl (Ljava/lang/String;)V
 	public abstract fun setAlternativeBaseUrls (Ljava/util/List;)V
-	public abstract fun setLastAlternativesRefresh (J)V
 	public abstract fun setLastPrimaryApiFail (J)V
 }
 
