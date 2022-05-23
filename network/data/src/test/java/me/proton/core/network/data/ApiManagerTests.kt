@@ -72,6 +72,7 @@ internal class ApiManagerTests {
     private val baseUrl = "https://primary.com/"
     private val proxy1url = "https://proxy1.com/"
     private val success5foo = ApiResult.Success(TestResult(5, "foo"))
+    private val error401 = ApiResult.Error.Http(401, "refresh token")
 
     private lateinit var apiClient: MockApiClient
 
@@ -401,6 +402,32 @@ internal class ApiManagerTests {
         assertNull(dohApiHandler.activeAltBackend)
         apiManager.invoke { test() }
         coVerify(exactly = 2) {
+            backend.invoke<TestResult>(any())
+        }
+    }
+
+    @Test
+    fun `test token refresh via doh`() = runBlockingTest {
+        coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Timeout(true)
+        coEvery { backend.isPotentiallyBlocked() } returns true
+        coEvery { altBackend1.invoke<TestResult>(any()) } answers {
+            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
+                success5foo
+            else
+                error401
+        }
+        coEvery { altBackend1.refreshSession(any()) } returns
+            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
+
+        val result1 = apiManager.invoke { test() }
+        assertTrue(result1 is ApiResult.Success)
+        coVerify(exactly = 2) {
+            altBackend1.invoke<TestResult>(any())
+        }
+        coVerify(exactly = 1) {
+            altBackend1.refreshSession(any())
+        }
+        coVerify(exactly = 1) {
             backend.invoke<TestResult>(any())
         }
     }
