@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Introduceți codul din 6 cifre</string>
   <string name="auth_second_factor_code">Cod conectare cu doi factori</string>
   <string name="auth_email_username">E-mail sau utilizator</string>
+  <string name="auth_proton_email_or_username">Username or Proton Address</string>
   <string name="auth_account_details">Introduceți detaliile contului Proton.</string>
   <string name="auth_sign_in">Autentificare</string>
   <string name="auth_sign_in_action">Autentificare</string>

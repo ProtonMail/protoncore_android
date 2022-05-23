@@ -34,7 +34,7 @@
   <string name="human_verification_request_replacement_code">コードを受け取っていませんか?</string>
   <string name="human_verification_verify">検証</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Do you need any help with human verification?</string>
+  <string name="human_verification_help_title">人間ではないことの検証に助けが必要ですか?</string>
   <string name="human_verification_code">検証コード</string>
   <string name="human_verification_code_request_new_code_title">新しいコードをリクエスト?</string>
   <string name="human_verification_code_request_new_code_action">新しいコードをリクエスト</string>
@@ -47,7 +47,7 @@
   <string name="human_verification_help_manual_title">登録を申請する</string>
   <string name="human_verification_help_manual">アカウントの作成に問題がある場合は、招待をリクエストしてください。1 営業日以内に対応します。</string>
   <string name="human_verification_help_website_title">ヘルプセンターを閲覧</string>
-  <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
+  <string name="human_verification_help_website">人間であることの検証についてとなぜ必要なのかについての詳細</string>
   <string name="human_verification_sending_failed">検証コードの送信に失敗しました。再度お試しください。</string>
   <string name="human_verification_incorrect_code">無効なコードです。再度お試しください。</string>
   <string name="human_verification_resent_code">ほかのコードを送信しました。</string>

@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">6 rakamlı kodu yazın</string>
   <string name="auth_second_factor_code">İki aşamalı kimlik doğrulama kodu</string>
   <string name="auth_email_username">E-posta ya da kullanıcı adı</string>
+  <string name="auth_proton_email_or_username">Kullanıcı adı ya da Proton adresi</string>
   <string name="auth_account_details">Proton hesabınızın bilgilerini yazın.</string>
   <string name="auth_sign_in">Oturum aç</string>
   <string name="auth_sign_in_action">Oturum aç</string>

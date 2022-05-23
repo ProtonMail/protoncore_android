@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
   <string name="auth_second_factor_code">Two-Factor code</string>
   <string name="auth_email_username">Adresa e-pošte ili korisničko ime</string>
+  <string name="auth_proton_email_or_username">Username or Proton Address</string>
   <string name="auth_account_details">Enter your Proton Account details.</string>
   <string name="auth_sign_in">Prijavite se</string>
   <string name="auth_sign_in_action">Prijavite se</string>

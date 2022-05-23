@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Zadejte 6-místný kód</string>
   <string name="auth_second_factor_code">Kód pro dvoufaktorové ověření</string>
   <string name="auth_email_username">E-mail nebo uživatelské jméno</string>
+  <string name="auth_proton_email_or_username">Uživatelské jméno nebo e-mailová adresa Proton</string>
   <string name="auth_account_details">Zadejte údaje Vašeho účtu Proton.</string>
   <string name="auth_sign_in">Přihlásit se</string>
   <string name="auth_sign_in_action">Přihlásit se</string>

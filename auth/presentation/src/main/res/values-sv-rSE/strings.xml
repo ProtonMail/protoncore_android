@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Ange en 6-siffrig kod</string>
   <string name="auth_second_factor_code">Tvåfaktorskod</string>
   <string name="auth_email_username">E-post eller användarnamn</string>
+  <string name="auth_proton_email_or_username">Användarnamn eller Proton-adress</string>
   <string name="auth_account_details">Ange dina kontodetaljer för Proton.</string>
   <string name="auth_sign_in">Logga in</string>
   <string name="auth_sign_in_action">Logga in</string>
@@ -62,7 +63,7 @@
   <string name="auth_mailbox_password_label">Lösenord för brevlådan</string>
   <string name="auth_mailbox_unlock_action">Lås upp</string>
   <string name="auth_forgot_password">Glömt lösenord</string>
-  <string name="auth_login_general_error">Ett fel inträffade.</string>
+  <string name="auth_login_general_error">Ett fel uppstod.</string>
   <string name="auth_login_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_mailbox_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_create_address_title">Skapa en Proton Mail-adress</string>
@@ -104,7 +105,7 @@
   <string name="auth_signup_next">Nästa</string>
   <string name="auth_signup_choose_password">Skapa ditt lösenord</string>
   <string name="auth_signup_repeat_password">Upprepa lösenord</string>
-  <string name="auth_signup_recovery_method_title">Ange återställningsmetod (Valfritt)</string>
+  <string name="auth_signup_recovery_method_title">Ställ in återställningsmetod (valfritt)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Ställ in återställningsmetod</string>
   <string name="auth_signup_recovery_method_subtitle">Vi kommer skicka återställningsinstruktioner till denna e-post eller telefonnummer om du blir utelåst från ditt konto.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">Vi kommer att skicka återställningsinstruktioner till denna e-post om du blir utelåst från ditt konto.</string>
@@ -117,7 +118,7 @@
   <string name="auth_signup_skip_recovery_title">Hoppa över återställningsmetod?</string>
   <string name="auth_signup_skip_recovery_description">En återställningsmetod hjälper dig att komma åt ditt konto om du glömmer ditt lösenord eller blir utelåst från ditt konto.</string>
   <string name="auth_signup_skip_recovery">Hoppa över</string>
-  <string name="auth_signup_set_recovery">Ange återställningsmetod</string>
+  <string name="auth_signup_set_recovery">Ställ in återställningsmetod</string>
   <string name="auth_signup_no_connectivity">Ingen anslutning för att visa användarvillkor.</string>
   <string name="auth_signup_error_username_blank">Användarnamn får inte vara tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lösenorden matchar inte.</string>

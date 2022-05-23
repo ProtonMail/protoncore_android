@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Masukkan kode 6 digit</string>
   <string name="auth_second_factor_code">Kode Dua Faktor</string>
   <string name="auth_email_username">Surel atau nama pengguna</string>
+  <string name="auth_proton_email_or_username">Username or Proton Address</string>
   <string name="auth_account_details">Masukkan detail Akun Proton Anda.</string>
   <string name="auth_sign_in">Masuk</string>
   <string name="auth_sign_in_action">Masuk</string>

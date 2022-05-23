@@ -47,7 +47,7 @@
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Bis zu #proton_storage# Speicherplatz</item>
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="other">Bis zu #proton_storage# Speicherplatz</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz/Nutzer</item>

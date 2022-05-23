@@ -21,7 +21,7 @@
   <string name="presentation_browser_missing">Kan inte hitta webbläsare för att öppna länken.</string>
   <string name="presentation_force_update_title">Uppdatering krävs</string>
   <string name="presentation_force_update_message">Denna version av appen stöds inte längre, uppdatera för att fortsätta använda den.</string>
-  <string name="presentation_force_update_learn_more">Läs mer</string>
+  <string name="presentation_force_update_learn_more">Lär dig mer</string>
   <string name="presentation_force_update_update">Uppdatera</string>
   <string name="presentation_market_missing">Kan inte hitta marknadsapplikation installerad på enheten. Gå till butiken och uppdatera applikationen.</string>
   <string name="presentation_authenticate">Autentisera</string>

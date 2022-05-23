@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Voer 6-cijferige code in</string>
   <string name="auth_second_factor_code">Tweestapsverificatiecode</string>
   <string name="auth_email_username">E-mailadres of gebruikersnaam</string>
+  <string name="auth_proton_email_or_username">Gebruikersnaam of Proton E-mailadres</string>
   <string name="auth_account_details">Vul uw Proton Account gegevens in.</string>
   <string name="auth_sign_in">Inloggen</string>
   <string name="auth_sign_in_action">Inloggen</string>

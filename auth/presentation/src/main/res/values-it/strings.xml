@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice a due fattori</string>
   <string name="auth_email_username">Email o username</string>
+  <string name="auth_proton_email_or_username">Nome utente o Indirizzo Proton</string>
   <string name="auth_account_details">Inserisci i dettagli del tuo account Proton.</string>
   <string name="auth_sign_in">Accedi</string>
   <string name="auth_sign_in_action">Accedi</string>

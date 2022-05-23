@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">请输入 6 位验证码</string>
   <string name="auth_second_factor_code">双重验证码</string>
   <string name="auth_email_username">邮箱或用户名</string>
+  <string name="auth_proton_email_or_username">Username or Proton Address</string>
   <string name="auth_account_details">请输入您的 Proton 账户详细信息。</string>
   <string name="auth_sign_in">登录</string>
   <string name="auth_sign_in_action">登录</string>

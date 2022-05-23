@@ -23,13 +23,13 @@
   <string name="settings_recovery_email_new">Ny e-post för återställning/avisering</string>
   <string name="settings_recovery_email_confirm">Bekräfta e-post för återställning/avisering</string>
   <string name="settings_recovery_email_new_hint">Ange e-postadress</string>
-  <string name="settings_recovery_email_confirm_hint">Upprepa e-postadress</string>
+  <string name="settings_recovery_email_confirm_hint">Ange e-postadress igen</string>
   <string name="settings_save">Spara</string>
   <string name="settings_password_required">Ange ditt inloggningslösenord</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Inte inställd</string>
   <string name="settings_recovery_email_error_no_match">E-postadressen för återställning och bekräftelse av återställning matchar inte.</string>
-  <string name="settings_validation_email">E-postadressen är ogiltig.</string>
+  <string name="settings_validation_email">E-post är ogiltig.</string>
   <string name="settings_general_error">Ett fel uppstod.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Ändra lösenord</string>
@@ -42,7 +42,7 @@
   <string name="settings_mailbox_password_hint_new_confirm">Bekräfta nytt lösenord för brevlådan</string>
   <string name="settings_change_password_error">Ett fel uppstod vid ändring av lösenord.</string>
   <string name="settings_recovery_email_success">E-post för återställning uppdaterad</string>
-  <string name="settings_password_management_success">Lösenordet har uppdaterats</string>
+  <string name="settings_password_management_success">Lösenord uppdaterat</string>
   <string name="settings_password_management_login_password_success">Inloggningslösenord uppdaterat</string>
   <string name="settings_password_management_mailbox_password_success">Brevlådans lösenord uppdaterad</string>
 </resources>

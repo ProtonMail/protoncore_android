@@ -24,10 +24,10 @@
   <string name="core_report_bug_description_field_hint">何が起きましたか? 10 文字以上</string>
   <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="other">%d 文字以上入力</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">バグ報告を閉じますか?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
+  <string name="core_report_bug_discard_changes_description">ページを離れると、報告は保存されません。</string>
   <string name="core_report_bug_discard_changes_cancel">編集を続ける</string>
   <string name="core_report_bug_discard_changes_confirm">保存しないで閉じる</string>
   <plurals name="core_report_bug_form_field_too_long">

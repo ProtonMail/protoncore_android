@@ -20,7 +20,7 @@
   <!-- region payment errors -->
   <string name="payments_general_error">エラーが発生しました。</string>
   <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
-  <string name="payments_3ds_not_approved">3DS approval has been rejected.</string>
+  <string name="payments_3ds_not_approved">3DS の承認は却下されました。</string>
   <string name="payments_error_card_name">カードの名義人を入力してください。</string>
   <string name="payments_error_card_number">無効なカード番号です。</string>
   <string name="payments_error_cvc">有効なセキュリティ コードを入力してください。</string>

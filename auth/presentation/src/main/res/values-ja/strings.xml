@@ -24,7 +24,7 @@
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
   <string name="welcome_title_drive">Proton Drive でプライバシーを保護</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
-  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
+  <string name="welcome_subtitle_drive_alt">ファイルを保管する最も安全な方法。強力な暗号化を使いファイルのアップロード、同期および共有が利用できます。</string>
   <string name="welcome_title_calendar">Proton Calender でプライバシーを保護</string>
   <string name="welcome_subtitle_calendar">暗号化されたカレンダーでイベントをプライベートかつ、安心安全に保ちます。</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
@@ -38,6 +38,7 @@
   <string name="auth_enter_six_digit_code">6 桁のコードを入力</string>
   <string name="auth_second_factor_code">2 要素認証コード</string>
   <string name="auth_email_username">メールアドレスまたはユーザー名</string>
+  <string name="auth_proton_email_or_username">ユーザー名または Proton アドレス</string>
   <string name="auth_account_details">Proton アカウントの詳細を入力してください。</string>
   <string name="auth_sign_in">サインイン</string>
   <string name="auth_sign_in_action">サインイン</string>
@@ -79,8 +80,8 @@
   <string name="auth_create_address_error_credentials">認証情報を空にできません。</string>
   <string name="auth_create_address_error_no_available_domain">利用可能なドメインがありません。</string>
   <string name="auth_create_address_error_private_key">プライベートキーの生成に失敗しました。</string>
-  <string name="auth_create_address_error_signed_key_list">Generating key list failed.</string>
-  <string name="auth_create_address_error_setusername">Associating username has failed.</string>
+  <string name="auth_create_address_error_signed_key_list">キーリストの生成に失敗しました。</string>
+  <string name="auth_create_address_error_setusername">ユーザー名の関連付けに失敗しました。</string>
   <string name="auth_create_address_error_username_unavailable">選択されたユーザー名は利用できません。</string>
   <string name="auth_mailbox_login_error_no_primary_key">プライマリキーが見つかりません。</string>
   <string name="auth_mailbox_login_error_primary_key_error">プライマリー キー エラーです。</string>
