@@ -29,7 +29,7 @@ fun Context.readSelfSignedDoHCerts(): KeyStore {
         certFile.readBytes().decodeToString()
             // Split by 'BEGIN CERTIFICATE' without removing it
             .split(Pattern.compile("(?=-----BEGIN CERTIFICATE-----)"))
-            .takeWhile { it.isNotEmpty() }
+            .filter { it.isNotEmpty() }
     }
     val keystore = KeyStore.getInstance("BKS")
     keystore.load(null, null)
