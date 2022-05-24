@@ -68,7 +68,7 @@ import kotlin.reflect.KClass
  * @param cache [Cache] shared across all user, session, api or call.
  */
 class ApiManagerFactory(
-    private val baseUrl: String,
+    baseUrl: String,
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
     private val serverTimeListener: ServerTimeListener,
@@ -88,12 +88,13 @@ class ApiManagerFactory(
     private val clientVersionValidator: ClientVersionValidator,
     private val dohAlternativesListener: DohAlternativesListener?
 ) {
+    private val baseUri = URI(baseUrl)
 
     @OptIn(ObsoleteCoroutinesApi::class)
     private val mainScope = scope + newSingleThreadContext("core.network.main")
 
     init {
-        requireNotNull(URI(baseUrl).host)
+        requireNotNull(baseUri.host)
     }
 
     internal val jsonConverter = ProtonCoreConfig
@@ -124,7 +125,8 @@ class ApiManagerFactory(
     }
 
     private val protonDohService by lazy {
-        DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, "${baseUrl}dns-query/", apiClient, networkManager)
+        val url = baseUri.resolve("/dns-query/").toString()
+        DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, url, apiClient, networkManager)
     }
 
     private fun javaMonoClockMs(): Long = SystemClock.elapsedRealtime()
@@ -172,10 +174,10 @@ class ApiManagerFactory(
         alternativeApiPins: List<String> = this@ApiManagerFactory.alternativeApiPins
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
-            initPinning(builder, URI(baseUrl).host, certificatePins)
+            initPinning(builder, baseUri.host, certificatePins)
         }
         val primaryBackend = ProtonApiBackend(
-            baseUrl,
+            baseUri.toString(),
             apiClient,
             clientIdProvider,
             serverTimeListener,
@@ -198,7 +200,7 @@ class ApiManagerFactory(
         }
 
         val dohProvider = DohProvider(
-            baseUrl,
+            baseUri.toString(),
             apiClient,
             dohServices,
             protonDohService,
