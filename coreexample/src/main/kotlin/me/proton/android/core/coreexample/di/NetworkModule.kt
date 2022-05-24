@@ -38,9 +38,9 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
+import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
-import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
@@ -76,16 +76,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideClientIdProvider(cookieStore: ProtonCookieStore): ClientIdProvider =
-        ClientIdProviderImpl(Constants.BASE_URL, cookieStore)
-
-    @Provides
-    @Singleton
-    fun provideServerTimeListener(context: CryptoContext) = object : ServerTimeListener {
-        override fun onServerTimeUpdated(epochSeconds: Long) {
-            context.pgpCrypto.updateTime(epochSeconds)
-        }
-    }
+    fun provideClientIdProvider(@BaseApiUrl baseApiUrl: String, cookieStore: ProtonCookieStore): ClientIdProvider =
+        ClientIdProviderImpl(baseApiUrl, cookieStore)
 
     @Provides
     @Singleton
@@ -114,20 +106,14 @@ class NetworkModule {
         missingScopeListener: MissingScopeListener,
         extraHeaderProvider: ExtraHeaderProvider,
         clientVersionValidator: ClientVersionValidator,
-        dohAlternativesListener: DohAlternativesListener? = null
+        dohAlternativesListener: DohAlternativesListener? = null,
+        @BaseApiUrl baseApiUrl: String,
+        @DohProviderUrls dohProviderUrls: Array<String>,
+        @CertificatePins certificatePins: Array<String>,
+        @AlternativeApiPins alternativeApiPins: List<String>
     ): ApiManagerFactory {
-        val certificatePins = if (BuildConfig.USE_DEFAULT_PINS) {
-            NetWorkDataConstants.DEFAULT_SPKI_PINS
-        } else {
-            emptyArray()
-        }
-        val alternativeApiPins = if (BuildConfig.USE_DEFAULT_PINS) {
-            NetWorkDataConstants.ALTERNATIVE_API_SPKI_PINS
-        } else {
-            emptyList()
-        }
         return ApiManagerFactory(
-            Constants.BASE_URL,
+            baseApiUrl,
             apiClient,
             clientIdProvider,
             serverTimeListener,
@@ -150,7 +136,8 @@ class NetworkModule {
             },
             extraHeaderProvider = extraHeaderProvider,
             clientVersionValidator = clientVersionValidator,
-            dohAlternativesListener = dohAlternativesListener
+            dohAlternativesListener = dohAlternativesListener,
+            dohProviderUrls = dohProviderUrls
         )
     }
 
@@ -158,15 +145,56 @@ class NetworkModule {
     @Singleton
     fun provideApiProvider(apiManagerFactory: ApiManagerFactory, sessionProvider: SessionProvider): ApiProvider =
         ApiProvider(apiManagerFactory, sessionProvider)
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkConstantsModule {
+    @BaseApiUrl
+    @Provides
+    fun provideBaseApiUrl(): String = Constants.BASE_URL
+
+    @DohProviderUrls
+    @Provides
+    fun provideDohProviderUrls(): Array<String> = NetWorkDataConstants.DOH_PROVIDERS_URLS
+
+    @CertificatePins
+    @Provides
+    fun provideCertificatePins() = if (BuildConfig.USE_DEFAULT_PINS) {
+        NetWorkDataConstants.DEFAULT_SPKI_PINS
+    } else {
+        emptyArray()
+    }
+
+    @AlternativeApiPins
+    @Provides
+    fun provideAlternativeApiPins() = if (BuildConfig.USE_DEFAULT_PINS) {
+        NetWorkDataConstants.ALTERNATIVE_API_SPKI_PINS
+    } else {
+        emptyList()
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkCallbacksModule {
     @Provides
     @Singleton
     fun provideDohAlternativesListener(): DohAlternativesListener? = null
+
+    @Provides
+    @Singleton
+    fun provideServerTimeListener(context: CryptoContext) = object : ServerTimeListener {
+        override fun onServerTimeUpdated(epochSeconds: Long) {
+            context.pgpCrypto.updateTime(epochSeconds)
+        }
+    }
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class NetworkBindsModule {
     @Binds
+    @Singleton
     abstract fun provideApiClient(coreExampleApiClient: CoreExampleApiClient): ApiClient
 }

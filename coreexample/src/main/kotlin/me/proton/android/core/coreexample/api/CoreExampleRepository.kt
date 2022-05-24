@@ -20,6 +20,7 @@ package me.proton.android.core.coreexample.api
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.user.data.api.UserApi
 
 class CoreExampleRepository(
@@ -50,4 +51,9 @@ class CoreExampleRepository(
         provider.get<CoreExampleApi>(userId).invoke {
             markAsRead(CoreExampleApi.MarkAsReadRequest(listOf(messageId)))
         }.valueOrThrow
+
+    suspend fun ping(timeoutOverride: TimeoutOverride) =
+        provider.get<CoreExampleApi>().invoke {
+            ping(timeoutOverride)
+        }
 }

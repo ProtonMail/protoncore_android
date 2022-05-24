@@ -188,7 +188,18 @@ dependencies {
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
 
     // Test
-    testImplementation(project(Module.androidTest))
+    testImplementation(
+        project(Module.androidTest),
+        `hilt-android-testing`,
+        miniDns,
+        mockWebServer,
+        squareup("okhttp3", "okhttp-tls") version `okHttp version`
+    )
+
+    kaptTest(
+        `hilt-android-compiler`
+    )
+
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
         `hilt-android-testing`
