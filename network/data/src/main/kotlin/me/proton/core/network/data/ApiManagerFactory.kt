@@ -86,7 +86,8 @@ class ApiManagerFactory(
     private val cache: () -> Cache? = { null },
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
     private val clientVersionValidator: ClientVersionValidator,
-    private val dohAlternativesListener: DohAlternativesListener?
+    private val dohAlternativesListener: DohAlternativesListener?,
+    private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS
 ) {
     private val baseUri = URI(baseUrl)
 
@@ -119,7 +120,7 @@ class ApiManagerFactory(
     }
 
     private val dohServices by lazy {
-        Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
+        dohProviderUrls.map { serviceUrl ->
             DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, serviceUrl, apiClient, networkManager)
         }
     }
