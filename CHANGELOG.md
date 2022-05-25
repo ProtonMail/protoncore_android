@@ -9,17 +9,109 @@ to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec.
 See [README.md](README.md#allowed-commit-types) for commit types which are used to generate the changelog.
 If needed, you can also manually update this file (provided the general structure is kept).
 
-### [Rebranding]
-- Update corner radius for Buttons, TextFields, Snackbars, Dialogs and Drowndown menus.
-- Add new logos, replace existing ones.
-- Update color taxonomy.
-- Removed VPN specific brand colors.
-- Updated Splash/Welcome/SignIn/SignUp Screens. Added SplashScreen API support (https://developer.android.com/guide/topics/ui/splash-screen). Client MainActivity migration: Call `installSplashScreen()` before `onCreate`, and optionally `setKeepOnScreenCondition` to minimize transition between Splash and next Activity.
-- Add updated accent colors, clients must use them instead of their current ones.
-- Add new plans texts. Update plans rebranding.
-- Replace sign up screen lottie animation.
-
 ## [Unreleased]
+
+## [8.0.0] - 2022-05-25
+
+### Chores
+
+- auth:
+  - Update forgot password url.
+
+### Features
+
+- gopenpgp:
+  - Update to gopenpgp v2.4.7 and go-srp v0.0.5.
+- network:
+  - Improvements for responses with `Retry-After` header.
+
+    If a response's HTTP code is 429 or 503, and if `Retry-After` is <= 10 seconds,
+    the request will be automatically retried. Otherwise, an error will be directly
+    returned to the client.
+    
+    You can use `ApiResult.retryAfter()` method to check the
+    `Retry-After` header value returned by the server.
+  - Retry a request if server returns HTTP 408 (request timeout).
+
+### Bug Fixes
+
+- auth:
+  - Clear password field, if user entered wrong password/credentials.
+  - More suitable label when logging in with internal/username account.
+- network:
+  - Fix issue with reading alt. routing certs on older Androids.
+
+    Turns out that on some Android versions (like 8.1)
+    split(Pattern.compile("(?=-----BEGIN CERTIFICATE-----)"))
+    gives ["", "cert1", "cert2"] as a result, leading to reading
+    empty list of certificates and captcha not loading on alt.
+    routing.
+  - Don't persist last DoH refresh.
+
+    lastAlternativesRefresh shouldn't be persisted as it's a value coming
+    from monotonic clock (which is not consistent between app launches or
+    reboots).
+  - Use elapsedRealtime instead of nanoTime as mono clock.
+
+    elapsedRealtime will give correct durations also when device was in
+    a deep sleep, which is not the case for nanoTime.
+- payment:
+  - Remove not needed ThreeDSSupport field in PaymentMethodDetails.kt
+  - Credit card expiration year should contain 4 digits.
+- presentation:
+  - Incorrect height of AlertDialogs with single-choice items.
+
+    As a workaround, set a custom layout for `singleChoiceItemLayout`,
+    which uses `drawableLeftCompat`/`drawableRightCompat`.
+    Using relative attributes (e.g. `drawableStartCompat`) would result in incorrect height.
+  - Remove unneeded padding from AlertDialog's button bar.
+- user:
+  - Incorrect URL for unlocking password scope.
+
+### Internationalization
+
+- Upgrade translations from crowdin (537d3637).
+- Upgrade translations from crowdin (93469489).
+
+### Reverted Changes
+
+- network:
+  - Remove `TooManyRequestInterceptor`.
+
+    The network layer will no longer prevent executing subsequent requests
+    during the cool-down period (after the server has returned a `Retry-After` header).
+
+### Theming
+
+- Update color of some "branding" UI elements.
+
+  In dark mode, we should use `brand_lighten_20` for "branding" elements.
+- Update core-splashscreen library.
+
+  Includes a fix for an issue with MIUI, when the logo is not shown on the splash screen in dark mode.
+- update header string for VPN plan.
+- Use an icon for tor with 24dp size (the same as the other icons).
+- Replaced Snackbar colors (new colors: Mauvelous, Texas Rose, Puerto Rico; adjusted: Pomegranate, Sunglow, Apple).
+- Replaced Sidebar colors (new: Haiti, Valhalla, Jacarta).
+- Update create account Lottie animation.
+- Added ProtonBottomSheetDialog Theme to ProtonTheme Material styles overrides.
+- Update the image in "congratulations" screen after creating a new account.
+- Update icons usage.
+- Updated Sidebar & Primary Account Switcher colors.
+- Fixed Vector Drawable crash for Android 6.0.
+- Remove temporary tint, add support for different icons for plan feature items and add new plans texts.
+- Add updated accent colors to taxonomy.
+- Updated Logos colors (with brand references).
+- Updated Splash/Welcome/SignIn/SignUp Screens.
+
+  Added SplashScreen API support (https://developer.android.com/guide/topics/ui/splash-screen).
+  Client MainActivity migration: Call installSplashScreen() before onCreate, and optionally setKeepOnScreenCondition to minimize transition between Splash and next Activity.
+- Removed VPN specific brand colors.
+- Update color taxonomy.
+- Add new logos, replace existing ones.
+- Update corner radius for rebranding.
+- presentation-compose:
+  - Added PROTON_PROGRESS_TEST_TAG to ProtonCenteredProgress.
 
 ## [7.2.3] - 2022-05-05
 
