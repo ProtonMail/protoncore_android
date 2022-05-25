@@ -117,6 +117,8 @@ fun ProtonListItem(
     icon: Painter,
     text: String,
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
     isClickable: Boolean = true,
     isSelected: Boolean = false,
     textColor: Color = Color.Unspecified,
@@ -129,18 +131,18 @@ fun ProtonListItem(
         onClick = onClick,
         isClickable = isClickable,
         isSelected = isSelected,
-        icon = { iconModifier ->
+        icon = { defaultModifier ->
             Icon(
                 painter = icon,
                 contentDescription = null,
-                modifier = iconModifier,
+                modifier = defaultModifier.then(iconModifier),
                 tint = iconTint
             )
         },
-        text = { titleModifier ->
+        text = { defaultModifier ->
             Text(
                 text = text,
-                modifier = titleModifier,
+                modifier = defaultModifier.then(textModifier),
                 color = textColor,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -167,6 +169,8 @@ fun ProtonListItem(
     @DrawableRes icon: Int,
     @StringRes text: Int,
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
     isClickable: Boolean = true,
     isSelected: Boolean = false,
     textColor: Color = Color.Unspecified,
@@ -180,6 +184,8 @@ fun ProtonListItem(
     isClickable = isClickable,
     isSelected = isSelected,
     modifier = modifier,
+    iconModifier = iconModifier,
+    textModifier = textModifier,
     textColor = textColor,
     iconTint = iconTint,
     count = count
