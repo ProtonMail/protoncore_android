@@ -502,6 +502,11 @@ public final class me/proton/core/test/android/instrumented/utils/WaitUntilKt {
 	public static synthetic fun waitUntil$default (JJLkotlin/jvm/functions/Function0;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/test/android/plugins/Features {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getPaymentsAndroidDisabled ()Z
+}
+
 public final class me/proton/core/test/android/plugins/Quark {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;
@@ -910,7 +915,6 @@ public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethod
 public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$SkipRecoveryRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun setRecoveryMethod ()Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot;
-	public final fun skipConfirm ()Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
 }
 
 public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
@@ -919,6 +923,16 @@ public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethod
 	public final fun recoveryDestinationErrorSnackbarDisplayed ()V
 	public final fun recoveryMethodsElementsDisplayed ()V
 	public final fun skipMenuButtonNotDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/SignupFinishedRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/SignupFinishedRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/SignupFinishedRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun signupFinishedDisplayed ()V
 }
 
 public class me/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot : me/proton/core/test/android/robots/CoreRobot {
