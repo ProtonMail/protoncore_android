@@ -97,13 +97,18 @@ class AccountViewModel @Inject constructor(
             .flowWithLifecycle(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
             .onEach { accounts ->
                 if (accounts.isEmpty())
-                    _state.tryEmit(State.LoginNeeded)
+                    _state.emit(State.LoginNeeded)
                 else
-                    _state.tryEmit(State.AccountList(accounts))
+                    _state.emit(State.AccountList(accounts))
             }.launchIn(context.lifecycleScope)
 
         authOrchestrator.setOnAddAccountResult {
-            if (it == null) _state.tryEmit(State.AccountList(emptyList()))
+            if (it == null) {
+                viewModelScope.launch {
+                    val accounts = accountManager.getAccounts().first()
+                    _state.emit(State.AccountList(accounts))
+                }
+            }
         }
 
         with(authOrchestrator) {
