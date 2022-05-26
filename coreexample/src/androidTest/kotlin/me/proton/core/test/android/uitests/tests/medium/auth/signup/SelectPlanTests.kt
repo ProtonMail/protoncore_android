@@ -34,7 +34,8 @@ import org.junit.Test
 
 class SelectPlanTests : BaseTest() {
 
-    private val selectPlanRobot = SelectPlanRobot()
+    private var humanVerificationRobot: HumanVerificationRobot? = null
+    private var selectPlanRobot: SelectPlanRobot? = null
 
     @Before
     fun goToPlanSelection() {
@@ -44,53 +45,74 @@ class SelectPlanTests : BaseTest() {
             .createAccount()
             .verify { domainInputDisplayed() }
 
-        ChooseUsernameRobot()
+        val skipRecoveryRobot = ChooseUsernameRobot()
             .username(user.name)
             .next()
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
-            .skipConfirm()
+
+        if (features.paymentsAndroidDisabled) {
+            humanVerificationRobot = skipRecoveryRobot.skipConfirm<HumanVerificationRobot>()
+        } else {
+            selectPlanRobot = skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
+        }
     }
 
     @Test
     fun verifyInitialState() {
-        selectPlanRobot
-            .toggleExpandPlan(Free)
-            .verify { planDetailsDisplayedInsideRecyclerView(Free) }
-        selectPlanRobot
-            .toggleExpandPlan(Dev)
-            .verify { canSelectPlan(Dev) }
+        humanVerificationRobot?.let {
+            it.verify { hvElementsDisplayed() }
+        }
+
+        selectPlanRobot?.let {
+            it
+                .toggleExpandPlan(Free)
+                .verify { planDetailsDisplayedInsideRecyclerView(Free) }
+            it
+                .toggleExpandPlan(Dev)
+                .verify { canSelectPlan(Dev) }
+        }
     }
 
     @Test
     fun selectFreeAndCancelHumanVerification() {
-        selectPlanRobot
-            .scrollToPlan(Free)
-            .toggleExpandPlan(Free)
-            .selectPlan<HumanVerificationRobot>(Free)
-            .verify {
-                hvElementsDisplayed()
-            }
+        humanVerificationRobot?.let {
+            it.verify { hvElementsDisplayed() }
+        }
 
-        HumanVerificationRobot()
-            .close<SelectPlanRobot>()
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Free)
-                errorSnackbarDisplayed("Human verification required")
-            }
+        selectPlanRobot?.let {
+            it.scrollToPlan(Free)
+                .toggleExpandPlan(Free)
+                .selectPlan<HumanVerificationRobot>(Free)
+                .verify {
+                    hvElementsDisplayed()
+                }
+
+            HumanVerificationRobot()
+                .close<SelectPlanRobot>()
+                .verify {
+                    planDetailsDisplayedInsideRecyclerView(Free)
+                    errorSnackbarDisplayed("Human verification required")
+                }
+        }
     }
 
     @Test
     @SmokeTest
     fun selectPlusAndCancelPayment() {
-        selectPlanRobot
-            .toggleExpandPlan(Dev)
-            .selectPlan<AddCreditCardRobot>(Dev)
-            .verify { addCreditCardElementsDisplayed() }
+        humanVerificationRobot?.let {
+            it.verify { hvElementsDisplayed() }
+        }
 
-        AddCreditCardRobot()
-            .close<SelectPlanRobot>()
-            .toggleExpandPlan(Free)
-            .verify { planDetailsDisplayedInsideRecyclerView(Free) }
+        selectPlanRobot?.let {
+            it.toggleExpandPlan(Dev)
+                .selectPlan<AddCreditCardRobot>(Dev)
+                .verify { addCreditCardElementsDisplayed() }
+
+            AddCreditCardRobot()
+                .close<SelectPlanRobot>()
+                .toggleExpandPlan(Free)
+                .verify { planDetailsDisplayedInsideRecyclerView(Free) }
+        }
     }
 }

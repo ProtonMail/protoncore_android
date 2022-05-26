@@ -24,6 +24,8 @@ import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot.RecoveryMethodType
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -69,25 +71,35 @@ class RecoveryMethodsSetupTests : BaseTest() {
 
     @Test
     fun skipRecoveryMethods() {
-        recoveryMethodsRobot
-            .skip()
-            .skipConfirm()
-            .toggleExpandPlan(Dev)
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Dev)
-                canSelectPlan(Dev)
+        val skipRecoveryRobot = recoveryMethodsRobot.skip()
+        if (features.paymentsAndroidDisabled) {
+            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+                hvElementsDisplayed()
             }
+        } else {
+            skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
+                .toggleExpandPlan(Dev)
+                .verify {
+                    planDetailsDisplayedInsideRecyclerView(Dev)
+                    canSelectPlan(Dev)
+                }
+        }
     }
 
     @Test
     fun emptyFieldsTriggerSkip() {
-        recoveryMethodsRobot
-            .next<RecoveryMethodsRobot.SkipRecoveryRobot>()
-            .skipConfirm()
-            .toggleExpandPlan(Dev)
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Dev)
-                canSelectPlan(Dev)
+        val skipRecoveryRobot = recoveryMethodsRobot.next<RecoveryMethodsRobot.SkipRecoveryRobot>()
+        if (features.paymentsAndroidDisabled) {
+            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+                hvElementsDisplayed()
             }
+        } else {
+            skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
+                .toggleExpandPlan(Dev)
+                .verify {
+                    planDetailsDisplayedInsideRecyclerView(Dev)
+                    canSelectPlan(Dev)
+                }
+        }
     }
 }

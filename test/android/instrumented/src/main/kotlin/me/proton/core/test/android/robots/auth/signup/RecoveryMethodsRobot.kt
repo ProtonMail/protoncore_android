@@ -46,9 +46,9 @@ class RecoveryMethodsRobot : CoreRobot() {
 
         /**
          * Clicks "Skip" button
-         * @return [HumanVerificationRobot]
+         * The next step is usually [HumanVerificationRobot] or [SelectPlanRobot].
          */
-        fun skipConfirm(): SelectPlanRobot =
+        inline fun <reified T> skipConfirm(): T =
             clickElement(stringFromResource(R.string.auth_signup_skip_recovery))
     }
 

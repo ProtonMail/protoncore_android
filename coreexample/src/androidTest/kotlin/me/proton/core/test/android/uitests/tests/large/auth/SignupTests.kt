@@ -60,14 +60,21 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Test
     fun signupPlusWithCreditCard() {
         val user = User(plan = Plan.Dev)
-        AddAccountRobot()
+        val skipRecoveryRobot = AddAccountRobot()
             .createAccount()
             .setUsername(user.name)
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
-            .skipConfirm()
-            .selectPlan<AddCreditCardRobot>(user.plan)
-            .payWithCreditCard<CoreexampleRobot>(Card.default)
-            .verify { userStateIs(user, Ready, Authenticated) }
+
+        if (features.paymentsAndroidDisabled) {
+            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+                hvElementsDisplayed()
+            }
+        } else {
+            skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
+                .selectPlan<AddCreditCardRobot>(user.plan)
+                .payWithCreditCard<CoreexampleRobot>(Card.default)
+                .verify { userStateIs(user, Ready, Authenticated) }
+        }
     }
 }

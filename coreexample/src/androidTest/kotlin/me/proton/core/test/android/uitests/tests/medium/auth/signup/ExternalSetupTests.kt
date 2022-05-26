@@ -18,13 +18,14 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.CodeVerificationRobot
+import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -70,13 +71,20 @@ class ExternalSetupTests : BaseTest() {
         val user = User(name = "${randomString()}@example.lt")
         val defaultCode = quark.defaultVerificationCode
 
-        chooseUsernameRobotExt
+        val codeVerificationRobot = chooseUsernameRobotExt
             .username(user.name)
             .next()
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)
             .setCode(defaultCode)
-            .verifyCode<SelectPlanRobot>()
-            .toggleExpandPlan(Dev)
-            .verify { canSelectPlan(Dev) }
+
+        if (features.paymentsAndroidDisabled) {
+            codeVerificationRobot.verifyCode<SignupFinishedRobot>().verify {
+                signupFinishedDisplayed()
+            }
+        } else {
+            codeVerificationRobot.verifyCode<SelectPlanRobot>()
+                .toggleExpandPlan(Dev)
+                .verify { canSelectPlan(Dev) }
+        }
     }
 }
