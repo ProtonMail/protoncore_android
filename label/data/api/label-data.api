@@ -474,6 +474,7 @@ public final class me/proton/core/label/data/repository/LabelRepositoryImpl : me
 	public fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;)V
 	public fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/Label;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateLabelIsExpanded (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/label/data/repository/LabelRepositoryImpl_Factory : dagger/internal/Factory {

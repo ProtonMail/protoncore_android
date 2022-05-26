@@ -48,9 +48,14 @@ interface LabelRepository {
     suspend fun createLabel(userId: UserId, label: NewLabel)
 
     /**
-     * Update label for [userId], locally, then remotely in background.
+     * Update [Label] for [userId], locally, then remotely in background.
      */
     suspend fun updateLabel(userId: UserId, label: Label)
+
+    /**
+     * Update [Label.isExpanded] for [userId], locally, then remotely in background.
+     */
+    suspend fun updateLabelIsExpanded(userId: UserId, type: LabelType, labelId: LabelId, isExpanded: Boolean)
 
     /**
      * Delete label for [userId] by [labelId], locally, then remotely in background.

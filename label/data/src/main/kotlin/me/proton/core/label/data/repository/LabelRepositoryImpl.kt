@@ -99,6 +99,11 @@ class LabelRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun updateLabelIsExpanded(userId: UserId, type: LabelType, labelId: LabelId, isExpanded: Boolean) {
+        val label = requireNotNull(getLabel(userId, type, labelId))
+        updateLabel(userId, label.copy(isExpanded = isExpanded))
+    }
+
     override suspend fun deleteLabel(userId: UserId, type: LabelType, labelId: LabelId) {
         localDataSource.deleteLabel(userId, listOf(labelId))
         // Replace any existing [Update|Delete]LabelWorker.
