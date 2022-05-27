@@ -30,6 +30,7 @@ import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class ExternalSetupTests : BaseTest() {
@@ -67,6 +68,7 @@ class ExternalSetupTests : BaseTest() {
     }
 
     @Test
+    @Ignore("May be enabled after !548 is merged (External account signups).")
     fun emailCodeVerification() {
         val user = User(name = "${randomString()}@example.lt")
         val defaultCode = quark.defaultVerificationCode
