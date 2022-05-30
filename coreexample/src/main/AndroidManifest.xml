@@ -55,6 +55,9 @@
             <meta-data
                 android:name="me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer"
                 android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.core.coreexample.init.StrictModeInitializer"
+                android:value="androidx.startup" />
         </provider>
 
         <activity
