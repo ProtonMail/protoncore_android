@@ -168,7 +168,7 @@ class UserRepositoryImpl @Inject constructor(
         createUser(request).user.toUser()
     }.valueOrThrow
 
-    private fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, UserChallengeFrame?> {
+    private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, UserChallengeFrame?> {
         val nameUsername = "${product.framePrefix()}-0"
         val nameRecovery = "${product.framePrefix()}-1"
         val usernameFrame = UserChallengeFrame.UserChallengeUsernameFrame.from(context, frames.getOrNull(0))

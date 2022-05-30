@@ -121,7 +121,7 @@ class AuthRepositoryImpl(
         response.toSessionInfo(username)
     }.valueOrThrow
 
-    private fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, AuthChallengeFrame?> {
+    private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, AuthChallengeFrame?> {
         val name = "${product.framePrefix()}-0"
         val frame = AuthChallengeFrame.AuthChallengeUsernameFrame.from(context, frames.getOrNull(0))
         return mapOf(name to frame)

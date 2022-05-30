@@ -92,7 +92,7 @@ sealed class AuthChallengeFrame {
         override val keyboards: List<String>
     ) : AuthChallengeFrame() {
         companion object {
-            fun from(context: Context, frame: ChallengeFrameDetails?): AuthChallengeUsernameFrame? =
+            suspend fun from(context: Context, frame: ChallengeFrameDetails?): AuthChallengeUsernameFrame? =
                 if (frame == null) {
                     null
                 } else

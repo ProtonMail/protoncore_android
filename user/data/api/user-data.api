@@ -606,7 +606,7 @@ public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserC
 }
 
 public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame$Companion {
-	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;
+	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -671,7 +671,7 @@ public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserC
 }
 
 public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame$Companion {
-	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;
+	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

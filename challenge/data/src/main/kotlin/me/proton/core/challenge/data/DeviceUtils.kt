@@ -29,6 +29,8 @@ import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.os.LocaleListCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -69,7 +71,7 @@ public fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.V
     resources.configuration.locale.country
 }
 
-public fun isDeviceRooted(): Boolean = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
+public suspend fun isDeviceRooted(): Boolean = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
 
 public fun Context.deviceFontSize(): Float = resources.configuration.fontScale
 
@@ -86,13 +88,14 @@ public fun Context.deviceInputMethods(): List<String> {
 public fun Context.nightMode(): Boolean =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
-public fun Context.deviceStorage(): Double =
+public suspend fun Context.deviceStorage(): Double = withContext(Dispatchers.IO) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         (deviceVolumesStorage() / BYTES_GB).toDoubleRound()
     } else {
         val stat = StatFs(Environment.getDataDirectory().path)
         (stat.blockCountLong * stat.blockSizeLong / BYTES_GB).toDoubleRound()
     }
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun Context.deviceVolumesStorage(): Long {
@@ -119,7 +122,7 @@ private fun checkRootMethod1(): Boolean {
     return buildTags != null && buildTags.contains("test-keys")
 }
 
-private fun checkRootMethod2(): Boolean {
+private suspend fun checkRootMethod2(): Boolean = withContext(Dispatchers.IO) {
     val paths = arrayOf(
         "/system/app/Superuser.apk",
         "/sbin/su",
@@ -132,15 +135,12 @@ private fun checkRootMethod2(): Boolean {
         "/data/local/su",
         "/su/bin/su"
     )
-    for (path in paths) {
-        if (File(path).exists()) return true
-    }
-    return false
+    paths.any { File(it).exists() }
 }
 
-private fun checkRootMethod3(): Boolean {
+private suspend fun checkRootMethod3(): Boolean = withContext(Dispatchers.IO) {
     var process: Process? = null
-    return try {
+    try {
         process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
         val stream = BufferedReader(InputStreamReader(process.inputStream))
         stream.readLine() != null

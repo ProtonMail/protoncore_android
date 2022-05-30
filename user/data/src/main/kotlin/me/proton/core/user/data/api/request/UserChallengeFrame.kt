@@ -92,7 +92,7 @@ sealed class UserChallengeFrame {
         override val keyboards: List<String>
     ) : UserChallengeFrame() {
         companion object {
-            fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeUsernameFrame? =
+            suspend fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeUsernameFrame? =
                 if (frame == null) {
                     null
                 } else
@@ -160,7 +160,7 @@ sealed class UserChallengeFrame {
         override val keyboards: List<String>
     ) : UserChallengeFrame() {
         companion object {
-            fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeRecoveryFrame? =
+            suspend fun from(context: Context, frame: ChallengeFrameDetails?): UserChallengeRecoveryFrame? =
                 if (frame == null) {
                     null
                 } else
