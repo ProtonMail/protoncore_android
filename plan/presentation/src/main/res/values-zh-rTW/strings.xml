@@ -51,7 +51,7 @@
     <item quantity="other">#proton_storage# 儲存空間 / 使用者</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# 個電子郵件地址</item>
+    <item quantity="other">#proton_addresses# 個電郵位址</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# 個電子郵件地址 / 使用者</item>
@@ -60,16 +60,16 @@
     <item quantity="other">%d 本 #proton_addresses# 通訊錄</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">#proton_domains# 個自訂網域</item>
+    <item quantity="other">支援 #proton_domains# 個自訂電子郵件網域</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="other">#proton_calendars# 個行事曆</item>
+    <item quantity="other">#proton_calendars# 本個人行事曆</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="other">%d 本 #proton_calendars# 行事曆</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="other">#proton_vpn# 個 VPN 連線</item>
+    <item quantity="other">配備 #proton_vpn# 裝置上進行飆速 VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 個高速 VPN 連線</item>
@@ -81,32 +81,34 @@
     <item quantity="other">%d 位 #proton_users# 使用者</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">私密專屬與安全防護通訊的基礎。</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">全功能的郵件信箱，配備進階保護。</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 個國家</string>
   <string name="plan_id_vpnbasic_high_speed">高速</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">廣告攔截程式 (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">支援影音串流服務</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 個國家</string>
   <string name="plan_id_vpnplus_highest_speed">最高速度</string>
-  <string name="plan_id_vpnplus_adblock">廣告攔截程式 (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">支援影音串流服務</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">多使用者支援</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">不限數的資料夾、標籤與過篩選器</string>
+  <string name="highest_vpn_speed" comment="new_plans">頂尖 VPN 速度</string>
+  <string name="servers_in_countries" comment="new_plans">1500 臺以上伺服器，遍布於 63 個國家</string>
+  <string name="ad_blocker" comment="new_plans">內置廣告攔截程式 (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">全球性存取影音串流服務</string>
+  <string name="secure_core" comment="new_plans">Secure Core 伺服器</string>
+  <string name="tor_vpn" comment="new_plans">透過 VPN 使用 Tor</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">隱私為先的電子郵件與行事曆解決方案，適合您的日常通訊需要。</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

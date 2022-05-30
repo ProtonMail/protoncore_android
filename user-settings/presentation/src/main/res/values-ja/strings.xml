@@ -40,7 +40,7 @@
   <string name="settings_login_password_hint_new_confirm">新しいログインパスワードを確認</string>
   <string name="settings_mailbox_password_hint_new">新しいメールボックスのパスワード</string>
   <string name="settings_mailbox_password_hint_new_confirm">メールボックスの新しいパスワードを確認</string>
-  <string name="settings_change_password_error">A change password error has occurred.</string>
+  <string name="settings_change_password_error">パスワード変更に失敗しました。</string>
   <string name="settings_recovery_email_success">回復用メールアドレスが更新されました</string>
   <string name="settings_password_management_success">パスワードが更新されました。</string>
   <string name="settings_password_management_login_password_success">ログインパスワードが更新されました</string>

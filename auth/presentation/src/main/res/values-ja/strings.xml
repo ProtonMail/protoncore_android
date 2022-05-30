@@ -21,7 +21,7 @@
   <string name="welcome_subtitle">暗号化でデータをプライベートに保ちます。データは完全にあなたのものです。</string>
   <string name="welcome_title_mail">Proton Mail でプライバシーを保護</string>
   <string name="welcome_subtitle_mail">メールの暗号化で会話をプライベートに保ちます。受信トレイは完全にあなたのものです。</string>
-  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
+  <string name="welcome_subtitle_mail_alt">プライバシー、セキュリティ、かつ便利。暗号メールで個人データを完全にコントロールします。</string>
   <string name="welcome_title_drive">Proton Drive でプライバシーを保護</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_subtitle_drive_alt">ファイルを保管する最も安全な方法。強力な暗号化を使いファイルのアップロード、同期および共有が利用できます。</string>
@@ -42,13 +42,13 @@
   <string name="auth_account_details">Proton アカウントの詳細を入力してください。</string>
   <string name="auth_sign_in">サインイン</string>
   <string name="auth_sign_in_action">サインイン</string>
-  <string name="auth_need_help">お困りですか？</string>
+  <string name="auth_need_help">お困りですか?</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
   <string name="auth_help_title">お困りですか?</string>
   <string name="auth_help_option_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_help_option_forgot_password">パスワードを忘れた</string>
   <string name="auth_help_option_other">その他のサインインに関する問題</string>
-  <string name="auth_help_other">問題が解決しませんか? 直接お問い合わせる.</string>
+  <string name="auth_help_other">問題が解決しませんか? 直接お問い合わせる。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
   <string name="auth_2fa_title">2 要素認証</string>
   <string name="auth_2fa_label">2要素認証コード</string>
@@ -63,7 +63,7 @@
   <string name="auth_mailbox_password_label">メールボックスのパスワード</string>
   <string name="auth_mailbox_unlock_action">ロック解除</string>
   <string name="auth_forgot_password">パスワードを忘れた</string>
-  <string name="auth_login_general_error">エラーが発生しました.</string>
+  <string name="auth_login_general_error">エラーが発生しました。</string>
   <string name="auth_login_empty_credentials">認証情報を空にできません。</string>
   <string name="auth_mailbox_empty_credentials">認証情報を空にできません。</string>
   <string name="auth_create_address_title">Proton Mail アドレスを作成</string>

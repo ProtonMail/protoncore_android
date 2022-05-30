@@ -54,8 +54,8 @@
     <item quantity="other">#proton_storage# lager / bruger</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adresse</item>
-    <item quantity="other">#proton_addresses# adresser</item>
+    <item quantity="one">#proton_addresses# e-mailadresse</item>
+    <item quantity="other">#proton_addresses# e-mailadresser</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# adresse / bruger</item>
@@ -66,20 +66,20 @@
     <item quantity="other">%d af #proton_addresses# adresser</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# brugerdomæne</item>
-    <item quantity="other">#proton_domains# brugerdomæner</item>
+    <item quantity="one">Understøtter #proton_domains# brugerdefineret e-mail-domæne</item>
+    <item quantity="other">Understøtter #proton_domains# brugerdefinerede e-mail-domæner</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# kalender</item>
-    <item quantity="other">#proton_calendars# kalendere</item>
+    <item quantity="one">#proton_calendars# personlig kalender</item>
+    <item quantity="other">#proton_calendars# personlige kalendere</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d af #proton_calendars# kalender</item>
     <item quantity="other">%d af #proton_calendars# kalendere</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN-forbindelse</item>
-    <item quantity="other">#proton_vpn# VPN-forbindelser</item>
+    <item quantity="one">Gratis VPN på en enkelt enhed</item>
+    <item quantity="other">Højhastigheds-VPN på #proton_vpn# enheder</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# højhastigheds VPN-forbindelse</item>
@@ -94,32 +94,34 @@
     <item quantity="other">%d af #proton_users# brugere</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Det grundlæggende til privat og sikker kommunikation.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Fuld funktionsdygtig postkasse med avanceret beskyttelse.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 lande</string>
   <string name="plan_id_vpnbasic_high_speed">Høj hastighed</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Annonceblokering (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Understøttelse af streamingtjeneste</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 lande</string>
   <string name="plan_id_vpnplus_highest_speed">Højeste hastighed</string>
-  <string name="plan_id_vpnplus_adblock">Annonceblokering (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Understøttelse af streamingtjeneste</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Flerbrugerunderstøttelse</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Ubegrænsede mapper, etiketter og filtre</string>
+  <string name="highest_vpn_speed" comment="new_plans">Højeste VPN-hastighed</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ servere i 63 lande</string>
+  <string name="ad_blocker" comment="new_plans">Indbygget annonceblokering (Netshield)</string>
+  <string name="streaming_services_access" comment="new_plans">Adgang til streamingtjenester i hele verden</string>
+  <string name="secure_core" comment="new_plans">Secure Core servere</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">E-mail og kalender til dine daglige kommunikationsbehov som beskytter dit privatliv.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Vores topprioritet er dit privatliv og sikkerhed.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Vores topprioritet er dit privatliv og sikkerhed.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

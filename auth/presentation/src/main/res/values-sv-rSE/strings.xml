@@ -27,10 +27,10 @@
   <string name="welcome_subtitle_drive_alt">Det säkraste sättet att lagra dina filer. Ladda upp, synkronisera och dela med den starkaste krypteringen som finns.</string>
   <string name="welcome_title_calendar">Skydda din integritet med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypterad kalender som håller dina livshändelser privat, skyddad och säker.</string>
-  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
+  <string name="welcome_subtitle_calendar_alt">Vår end-to-end-krypterade kalender hjälper dig att hålla ordning, på rätt spår och ha kontroll.</string>
   <string name="welcome_title_vpn">Skydda din integritet med Proton VPN</string>
   <string name="welcome_subtitle_vpn">Schweizisk VPN med hög hastighet som skyddar din integritet genom att kryptera din Internetanslutning.</string>
-  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_subtitle_vpn_alt">Höghastighets schweizisk VPN som skyddar din integritet. Maximal säkerhet, 1600+ servrar och inga begränsningar.</string>
   <string name="welcome_privacy_by_default">Integritet som standard</string>
   <string name="auth_password_label">Lösenord</string>
   <string name="auth_password_help">Lösenordet måste innehålla minst åtta tecken</string>
@@ -113,7 +113,7 @@
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">E-post för återställning</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonnummer för återställning</string>
-  <string name="auth_signup_terms_conditions">Villkor</string>
+  <string name="auth_signup_terms_conditions">Användarvillkor</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Genom att klicka på ”Nästa” godkänner du Protons <annotation link="terms">användarvillkor</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Hoppa över återställningsmetod?</string>
   <string name="auth_signup_skip_recovery_description">En återställningsmetod hjälper dig att komma åt ditt konto om du glömmer ditt lösenord eller blir utelåst från ditt konto.</string>

@@ -57,9 +57,9 @@
     <item quantity="other">#proton_storage# stocare / utilizator</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adresă</item>
-    <item quantity="few">#proton_addresses# adrese</item>
-    <item quantity="other">#proton_addresses# adrese</item>
+    <item quantity="one">#proton_addresses# adresă de e-mail</item>
+    <item quantity="few">#proton_addresses# adrese de e-mail</item>
+    <item quantity="other">#proton_addresses# adrese de e-mail</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# adresă / utilizator</item>
@@ -72,14 +72,14 @@
     <item quantity="other">%d pentru #proton_addresses# adrese</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# domeniu personalizat</item>
-    <item quantity="few">#proton_domains# domenii personalizate</item>
-    <item quantity="other">#proton_domains# domenii personalizate</item>
+    <item quantity="one">Support for #proton_domains# custom email domain</item>
+    <item quantity="few">Support for #proton_domains# custom email domains</item>
+    <item quantity="other">Support for #proton_domains# custom email domains</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# calendar</item>
-    <item quantity="few">#proton_calendars# calendare</item>
-    <item quantity="other">#proton_calendars# calendare</item>
+    <item quantity="one">#proton_calendars# personal calendar</item>
+    <item quantity="few">#proton_calendars# personal calendars</item>
+    <item quantity="other">#proton_calendars# personal calendars</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d pentru #proton_calendars# calendar</item>
@@ -87,9 +87,9 @@
     <item quantity="other">%d pentru #proton_calendars# calendare</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# conexiune VPN</item>
-    <item quantity="few">#proton_vpn# conexiuni VPN</item>
-    <item quantity="other">#proton_vpn# conexiuni VPN</item>
+    <item quantity="one">VPN gratuit pe un singur dispozitiv</item>
+    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# conexiune VPN de mare viteză</item>
@@ -107,32 +107,34 @@
     <item quantity="other">%d pentru #proton_users# utilizatori</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Baza pentru comunicații private și sigure.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Cutie poștală completă cu protecție avansată.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 țări</string>
   <string name="plan_id_vpnbasic_high_speed">Viteză mare</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Blocare reclame (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Suport servicii de transmisie în flux</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 țări</string>
   <string name="plan_id_vpnplus_highest_speed">Cea mai mare viteză</string>
-  <string name="plan_id_vpnplus_adblock">Blocare reclame (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Suport servicii de transmisie în flux</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suport utilizatori multipli</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Foldere, etichete și filtre nelimitate</string>
+  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ servere în 63 de țări</string>
+  <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
+  <string name="secure_core" comment="new_plans">Secure Core servers</string>
+  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

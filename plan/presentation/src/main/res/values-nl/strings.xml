@@ -54,8 +54,8 @@
     <item quantity="other">#proton_storage# opslagruimte / gebruiker</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adres</item>
-    <item quantity="other">#proton_addresses# adressen</item>
+    <item quantity="one">#proton_addresses# e-mailadres</item>
+    <item quantity="other">#proton_addresses# e-mailadressen</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# adres / gebruiker</item>
@@ -66,20 +66,20 @@
     <item quantity="other">%d van #proton_addresses# adressen</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# eigen domein</item>
-    <item quantity="other">#proton_domains# eigen domeinen</item>
+    <item quantity="one">Ondersteuning voor #proton_domains# aangepast e-maildomein</item>
+    <item quantity="other">Ondersteuning voor #proton_domains# aangepaste e-maildomeinen</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# agenda</item>
-    <item quantity="other">#proton_calendars# agenda\'s</item>
+    <item quantity="one">#proton_calendars# persoonlijke agenda</item>
+    <item quantity="other">#proton_calendars# persoonlijke agenda\'s</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d van #proton_calendars# agenda</item>
     <item quantity="other">%d van #proton_calendars# agenda\'s</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN-verbinding</item>
-    <item quantity="other">#proton_vpn# VPN-verbindingen</item>
+    <item quantity="one">Gratis VPN op één toestel</item>
+    <item quantity="other">Supersnelle VPN op #proton_vpn# toestellen</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# hoge snelheid VPN-verbinding</item>
@@ -94,32 +94,34 @@
     <item quantity="other">%d van #proton_users# gebruikers</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">De basis voor privé-en veilige communicatie.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Volledige mailbox met geavanceerde beveiliging.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basis</string>
   <string name="plan_id_vpnbasic_countries">63 landen</string>
   <string name="plan_id_vpnbasic_high_speed">Hoge snelheid</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Streamingdienst ondersteuning</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 landen</string>
   <string name="plan_id_vpnplus_highest_speed">Hoogste snelheid</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Streamingdienst ondersteuning</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Ondersteuning voor meerdere gebruikers</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Ongelimiteerde mappen, labels en filters</string>
+  <string name="highest_vpn_speed" comment="new_plans">Hoogste VPN-snelheid</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 landen</string>
+  <string name="ad_blocker" comment="new_plans">Ingebouwde adblocker (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Wereldwijde toegang tot streamingdiensten</string>
+  <string name="secure_core" comment="new_plans">Secure Core-servers</string>
+  <string name="tor_vpn" comment="new_plans">TOR via VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">De privacy-eerst e-mail en agenda oplossing voor uw alledaagse communicatienoden.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Uw privacy en veiligheid zijn onze prioriteit.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Uw privacy en veiligheid zijn onze prioriteit.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

@@ -60,10 +60,10 @@
     <item quantity="other">#proton_storage# przestrzeni dyskowej / użytkownika</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adres</item>
-    <item quantity="few">#proton_addresses# adresy</item>
-    <item quantity="many">#proton_addresses# adresów</item>
-    <item quantity="other">#proton_addresses# adresów</item>
+    <item quantity="one">#proton_addresses# adres e-mail</item>
+    <item quantity="few">#proton_addresses# adresy e-mail</item>
+    <item quantity="many">#proton_addresses# adresów e-mail</item>
+    <item quantity="other">#proton_addresses# adresów e-mail</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# adres / użytkownika</item>
@@ -78,16 +78,16 @@
     <item quantity="other">Adresy: %d / #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# niestandardowa domena</item>
-    <item quantity="few">#proton_domains# niestandardowe domeny</item>
-    <item quantity="many">#proton_domains# niestandardowych domen</item>
-    <item quantity="other">#proton_domains# niestandardowych domen</item>
+    <item quantity="one">Wsparcie dla #proton_domains# niestandardowej domeny</item>
+    <item quantity="few">Wsparcie dla #proton_domains# niestandardowych domen</item>
+    <item quantity="many">Wsparcie dla #proton_domains# niestandardowych domen</item>
+    <item quantity="other">Wsparcie dla #proton_domains# niestandardowych domen</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# kalendarz</item>
-    <item quantity="few">#proton_calendars# kalendarze</item>
-    <item quantity="many">#proton_calendars# kalendarzy</item>
-    <item quantity="other">#proton_calendars# kalendarzy</item>
+    <item quantity="one">#proton_calendars# osobisty kalendarz</item>
+    <item quantity="few">#proton_calendars# osobiste kalendarze</item>
+    <item quantity="many">#proton_calendars# osobistych kalendarzy</item>
+    <item quantity="other">#proton_calendars# osobistych kalendarzy</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">Kalendarz: %d / #proton_calendars#</item>
@@ -96,10 +96,10 @@
     <item quantity="other">Kalendarze: %d / #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# połączenie VPN</item>
-    <item quantity="few">#proton_vpn# połączenia VPN</item>
-    <item quantity="many">#proton_vpn# połączeń VPN</item>
-    <item quantity="other">#proton_vpn# połączeń VPN</item>
+    <item quantity="one">Darmowy VPN na 1 urządzenie</item>
+    <item quantity="few">Szybki VPN na #proton_vpn# urządzenia</item>
+    <item quantity="many">Szybki VPN na #proton_vpn# urządzeń</item>
+    <item quantity="other">Szybki VPN na #proton_vpn# urządzeń</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# szybkie połączenie VPN</item>
@@ -120,32 +120,34 @@
     <item quantity="other">Użytkownicy: %d / #proton_users#</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Podstawowa ochrona prywatności i bezpieczna komunikacja.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">W pełni funkcjonalna skrzynka pocztowa z zaawansowaną ochroną.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 kraje</string>
   <string name="plan_id_vpnbasic_high_speed">Wysoka prędkość</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Blokada reklam (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Wsparcie usług streamingu</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 kraje</string>
   <string name="plan_id_vpnplus_highest_speed">Najwyższa prędkość</string>
-  <string name="plan_id_vpnplus_adblock">Blokada reklam (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Wsparcie usług streamingu</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Obsługa wielu użytkowników</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Nieograniczona liczba folderów, etykiet i filtrów</string>
+  <string name="highest_vpn_speed" comment="new_plans">Najwyższa prędkość VPN</string>
+  <string name="servers_in_countries" comment="new_plans">Ponad 1500 serwerów w 63 krajach</string>
+  <string name="ad_blocker" comment="new_plans">Wbudowana blokada reklam (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Dostęp do usług streamingu na całym świecie</string>
+  <string name="secure_core" comment="new_plans">Serwery Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">Tor przez VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P / BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Prywatna poczta i kalendarz do codziennej komunikacji.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Twoja prywatność i bezpieczeństwo są naszym priorytetem.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Twoja prywatność i bezpieczeństwo są naszym priorytetem.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

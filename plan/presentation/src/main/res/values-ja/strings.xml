@@ -51,7 +51,7 @@
     <item quantity="other">#proton_storage# ストレージ / ユーザー</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# アドレス</item>
+    <item quantity="other">#proton_addresses# 件のメールアドレス</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# アドレス / ユーザー</item>
@@ -60,16 +60,16 @@
     <item quantity="other">%d of #proton_addresses# addresses</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">#proton_domains# カスタム ドメイン</item>
+    <item quantity="other">#proton_domains# 件のカスタムメールドメインに対応</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="other">#proton_calendars# カレンダー</item>
+    <item quantity="other">#proton_calendars# 件のパーソナルカレンダー</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="other">%d of #proton_calendars# calendars</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="other">#proton_vpn# VPN 接続</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 高速 VPN 接続</item>
@@ -81,32 +81,34 @@
     <item quantity="other">%d of #proton_users# users</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">プライベートで安全な会話のための基本機能。</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">高度な保護を備えたフル機能のメールボックス。</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 か国</string>
   <string name="plan_id_vpnbasic_high_speed">高速</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">広告ブロッカー (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">ストリーミングサービス対応</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 か国</string>
   <string name="plan_id_vpnplus_highest_speed">最高速</string>
-  <string name="plan_id_vpnplus_adblock">広告ブロッカー (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">ストリーミングサービス対応</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">複数ユーザー対応</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">制限なしのフォルダー、ラベル、フィルター</string>
+  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
+  <string name="ad_blocker" comment="new_plans">広告ブロッカー内蔵 (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">世界中でストリーミングサービスにアクセス</string>
+  <string name="secure_core" comment="new_plans">Secure Core サーバー</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>ユーロ</item>
     <item>米ドル</item>

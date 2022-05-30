@@ -17,23 +17,23 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Välj en plan</string>
-  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
-  <string name="plans_fetching_general_error">Ett fel uppstod när planerna skulle hämtas.</string>
+  <string name="plans_select_a_plan">Välj ett paket</string>
+  <string name="plans_select_a_plan_subtitle">Ett paket för alla Proton-tjänster</string>
+  <string name="plans_fetching_general_error">Ett fel uppstod vid hämtning av paket.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per månad</string>
   <string name="plan_price_annually">per månad*</string>
-  <string name="plans_current_plan">Nuvarande plan</string>
-  <string name="plans_upgrade_plan">Upgrade your plan</string>
+  <string name="plans_current_plan">Nuvarande paket</string>
+  <string name="plans_upgrade_plan">Uppgradera ditt paket</string>
   <string name="plans_subscription">Prenumeration</string>
-  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_renewal_date">Ditt paket kommer att förnyas automatiskt den &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Ditt paket kommer att löpa ut den &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Faktureras årligen med %s</string>
   <string name="plans_billed_monthly">Faktureras månadsvis</string>
   <string name="plans_billing_monthly">För 1 månad</string>
   <string name="plans_billing_yearly">För 1 år</string>
   <string name="plans_billing_two_years">För 2 år</string>
-  <string name="plans_upgrade_your_plan">Uppgradera ditt abonnemang</string>
+  <string name="plans_upgrade_your_plan">Uppgradera ditt paket</string>
   <string name="plans_proton_for_free">Skaffa Proton gratis</string>
   <string name="plans_get_proton">Skaffa %s</string>
   <string name="plans_manage_your_subscription">Hantera din prenumeration på <a href="https://account.protonmail.com">account.protonmail.com</a></string>
@@ -54,8 +54,8 @@
     <item quantity="other">#proton_storage# lagringsutrymme/användare</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adress</item>
-    <item quantity="other">#proton_addresses# adresser</item>
+    <item quantity="one">#proton_addresses# e-postadress</item>
+    <item quantity="other">#proton_addresses# e-postadresser</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# adress/användare</item>
@@ -66,20 +66,20 @@
     <item quantity="other">%d av #proton_addresses# adresser</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# anpassad domän</item>
-    <item quantity="other">#proton_domains# anpassade domäner</item>
+    <item quantity="one">Stöd för #proton_domains# anpassad e-postdomän</item>
+    <item quantity="other">Stöd för #proton_domains# anpassade e-postdomänet</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# kalender</item>
-    <item quantity="other">#proton_calendars# kalendrar</item>
+    <item quantity="one">#proton_calendars# personlig kalender</item>
+    <item quantity="other">#proton_calendars# personliga kalendrar</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d av #proton_calendars# kalender</item>
     <item quantity="other">%d av #proton_calendars# kalendrar</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN-anslutning</item>
-    <item quantity="other">#proton_vpn# VPN-anslutningar</item>
+    <item quantity="one">Gratis VPN på en enhet</item>
+    <item quantity="other">Höghastighets-VPN på #proton_vpn# enheter</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN-anslutning med hög hastighet</item>
@@ -94,32 +94,34 @@
     <item quantity="other">%d av #proton_users# användare</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Det grundläggande för privat och säker kommunikation.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Fullfjädrad brevlåda med avancerat skydd.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 länder</string>
   <string name="plan_id_vpnbasic_high_speed">Hög hastighet</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Annonsblockerare (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Stöd för streamingtjänster</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 länder</string>
   <string name="plan_id_vpnplus_highest_speed">Högsta hastighet</string>
-  <string name="plan_id_vpnplus_adblock">Annonsblockerare (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Stöd för streamingtjänster</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Stöd för flera användare</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Obegränsade mappar, etiketter och filter</string>
+  <string name="highest_vpn_speed" comment="new_plans">Högsta VPN-hastighet</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ servrar i 63 länder</string>
+  <string name="ad_blocker" comment="new_plans">Inbyggd annonsblockerare (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Åtkomst till streamingtjänster globalt</string>
+  <string name="secure_core" comment="new_plans">Secure Core-servrar</string>
+  <string name="tor_vpn" comment="new_plans">Tor över VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Din integritet och säkerhet är vår prioritet.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Din integritet och säkerhet är vår prioritet.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

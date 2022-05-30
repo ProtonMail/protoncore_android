@@ -60,10 +60,10 @@
     <item quantity="other">#proton_storage# úložiště / uživatel</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adresa</item>
-    <item quantity="few">#proton_addresses# adresy</item>
-    <item quantity="many">#proton_addresses# adres</item>
-    <item quantity="other">#proton_addresses# adres</item>
+    <item quantity="one">#proton_addresses# e-mailová adresa</item>
+    <item quantity="few">#proton_addresses# e-mailových adres</item>
+    <item quantity="many">#proton_addresses# e-mailových adres</item>
+    <item quantity="other">#proton_addresses# e-mailových adres</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# adresa / uživatel</item>
@@ -78,16 +78,16 @@
     <item quantity="other">%d z #proton_addresses# adres</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# vlastní doména</item>
-    <item quantity="few">#proton_domains# vlastní domény</item>
-    <item quantity="many">#proton_domains# vlastních domén</item>
-    <item quantity="other">#proton_domains# vlastních domén</item>
+    <item quantity="one">Podpora pro vlastní e-mailovou doménu #proton_domains#</item>
+    <item quantity="few">Podpora pro vlastní e-mailové domény #proton_domains#</item>
+    <item quantity="many">Podpora pro vlastní e-mailové domény #proton_domains#</item>
+    <item quantity="other">Podpora pro vlastní e-mailové domény #proton_domains#</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# kalendář</item>
-    <item quantity="few">#proton_calendars# kalendáře</item>
-    <item quantity="many">#proton_calendars# kalendářů</item>
-    <item quantity="other">#proton_calendars# kalendářů</item>
+    <item quantity="one">osobní kalendář #proton_calendars#</item>
+    <item quantity="few">osobní kalendáře #proton_calendars#</item>
+    <item quantity="many">osobní kalendáře #proton_calendars#</item>
+    <item quantity="other">osobní kalendáře #proton_calendars#</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d z #proton_calendars# kalendáře</item>
@@ -96,10 +96,10 @@
     <item quantity="other">%d z #proton_calendars# kalendářů</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN připojení</item>
-    <item quantity="few">#proton_vpn# VPN připojení</item>
-    <item quantity="many">#proton_vpn# VPN připojení</item>
-    <item quantity="other">#proton_vpn# VPN připojení</item>
+    <item quantity="one">Bezplatná VPN na jednom zařízení</item>
+    <item quantity="few">Vysokorychlostní VPN na #proton_vpn# zařízení</item>
+    <item quantity="many">Vysokorychlostní VPN na #proton_vpn# zařízení</item>
+    <item quantity="other">Vysokorychlostní VPN na #proton_vpn# zařízení</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN vysokorychlostní připojení</item>
@@ -120,32 +120,34 @@
     <item quantity="other">%d z #proton_users# uživatelů</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Základ pro soukromou a bezpečnou komunikaci.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Plně vybavená e-mailová schránka s pokročilou ochranou.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 zemí</string>
   <string name="plan_id_vpnbasic_high_speed">Vysoká rychlost</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Podpora streamovacích služeb</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 zemí</string>
   <string name="plan_id_vpnplus_highest_speed">Nejvyšší rychlost</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Podpora streamovacích služeb</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Podpora pro více uživatelů</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Neomezený počet složek, štítků a filtrů</string>
+  <string name="highest_vpn_speed" comment="new_plans">Nejvyšší rychlost VPN</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ serverů v 63 zemích</string>
+  <string name="ad_blocker" comment="new_plans">Vestavěný blokátor reklam (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Globální přístup ke streamovacím službám</string>
+  <string name="secure_core" comment="new_plans">Servery Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">TOR skrze VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Řešení e-mailu a kalendáře pro každodenní komunikaci s ohledem na soukromí.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Vaše soukromí a bezpečnost jsou pro nás prioritou.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Vaše soukromí a bezpečnost jsou pro nás prioritou.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

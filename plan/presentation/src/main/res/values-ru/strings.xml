@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Выберите тариф</string>
   <string name="plans_select_a_plan_subtitle">Один аккаунт для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
-  <string name="plans_free_name">Бесплатный</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">в месяц</string>
   <string name="plan_price_annually">в месяц*</string>
   <string name="plans_current_plan">Текущий тариф</string>
@@ -60,10 +60,10 @@
     <item quantity="other">#proton_storage# хранилищ на пользователя</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# адрес</item>
-    <item quantity="few">#proton_addresses# адреса</item>
-    <item quantity="many">#proton_addresses# адресов</item>
-    <item quantity="other">#proton_addresses# адреса</item>
+    <item quantity="one">#proton_addresses# адрес электронной почты</item>
+    <item quantity="few">#proton_addresses# адреса электронной почты</item>
+    <item quantity="many">#proton_addresses# адресов электронной почты</item>
+    <item quantity="other">#proton_addresses# адресов электронной почты</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# адрес</item>
@@ -78,16 +78,16 @@
     <item quantity="other">%d из #proton_addresses# адресов</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# свой домен</item>
-    <item quantity="few">#proton_domains# своих домена</item>
-    <item quantity="many">#proton_domains# своих доменов</item>
-    <item quantity="other">#proton_domains# своих домена</item>
+    <item quantity="one">Поддержка #proton_domains# пользовательского домена электронной почты</item>
+    <item quantity="few">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
+    <item quantity="many">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
+    <item quantity="other">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# календарь</item>
-    <item quantity="few">#proton_calendars# календаря</item>
-    <item quantity="many">#proton_calendars# календарей</item>
-    <item quantity="other">#proton_calendars# календаря</item>
+    <item quantity="one">#proton_calendars# личный календарь</item>
+    <item quantity="few">#proton_calendars# личных календаря</item>
+    <item quantity="many">#proton_calendars# личных календарей</item>
+    <item quantity="other">#proton_calendars# личных календарей</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d из #proton_calendars# календаря</item>
@@ -96,10 +96,10 @@
     <item quantity="other">%d из #proton_calendars# календарей</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# подключение VPN</item>
-    <item quantity="few">#proton_vpn# подключения VPN</item>
-    <item quantity="many">#proton_vpn# подключений VPN</item>
-    <item quantity="other">#proton_vpn# подключения VPN</item>
+    <item quantity="one">Бесплатная VPN на одном устройстве</item>
+    <item quantity="few">Высокоскоростная VPN на #proton_vpn# устройствах</item>
+    <item quantity="many">Высокоскоростная VPN на #proton_vpn# устройствах</item>
+    <item quantity="other">Высокоскоростная VPN на #proton_vpn# устройствах</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# высокоскоростное подключение к VPN</item>
@@ -120,32 +120,34 @@
     <item quantity="other">%d из #proton_users# пользователей</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Основа для конфиденциальных и безопасных коммуникаций.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Полнофункциональный почтовый ящик с расширенной защитой.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 страны</string>
   <string name="plan_id_vpnbasic_high_speed">Высокая скорость</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Блокировщик рекламы (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Поддержка служб трансляции</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 страны</string>
   <string name="plan_id_vpnplus_highest_speed">Наивысшая скорость</string>
-  <string name="plan_id_vpnplus_adblock">Блокировщик рекламы (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Поддержка служб трансляции</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Многопользовательская поддержка</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Неограниченное количество папок, ярлыков и фильтров</string>
+  <string name="highest_vpn_speed" comment="new_plans">Наивысшая скорость VPN</string>
+  <string name="servers_in_countries" comment="new_plans">Более 1500 серверов в 63 странах</string>
+  <string name="ad_blocker" comment="new_plans">Встроенный блокировщик рекламы (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Доступ к службам трансляции по всему миру</string>
+  <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">TOR через VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Почта и календарь с приоритетом конфиденциальности для повседневных коммуникаций.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Наш приоритет — ваша конфиденциальность и безопасность.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Наш приоритет — ваша конфиденциальность и безопасность.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

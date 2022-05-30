@@ -66,20 +66,20 @@
     <item quantity="other">%d von #proton_addresses# Adressen</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# eigene Domain</item>
-    <item quantity="other">#proton_domains# eigene Domains</item>
+    <item quantity="one">Unterstützung für #proton_domains# benutzerdefinierte E-Mail-Domain</item>
+    <item quantity="other">Unterstützung für #proton_domains# benutzerdefinierte E-Mail-Domains</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# Kalender</item>
-    <item quantity="other">#proton_calendars# Kalender</item>
+    <item quantity="one">#proton_calendars# persönlicher Kalender</item>
+    <item quantity="other">#proton_calendars# persönliche Kalender</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d von #proton_calendars# Kalender</item>
     <item quantity="other">%d von #proton_calendars# Kalendern</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN-Verbindung</item>
-    <item quantity="other">#proton_vpn# VPN-Verbindungen</item>
+    <item quantity="one">Free VPN on a single device</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# Hochgeschwindigkeits-VPN-Verbindung</item>
@@ -94,32 +94,34 @@
     <item quantity="other">%d von #proton_users# Benutzern</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Die Voraussetzung für private und sichere Kommunikation.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Voll funktionales Postfach mit erweitertem Schutz.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 Länder</string>
   <string name="plan_id_vpnbasic_high_speed">Hochgeschwindigkeit</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Werbeblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Unterstützung von Streaming-Diensten</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 Länder</string>
   <string name="plan_id_vpnplus_highest_speed">Höchstgeschwindigkeit</string>
-  <string name="plan_id_vpnplus_adblock">Werbeblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Unterstützung von Streaming-Diensten</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Unterstützung mehrerer Benutzer</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Unbegrenzte Anzahl von Ordnern, Kategorien und Filterlisten</string>
+  <string name="highest_vpn_speed" comment="new_plans">Höchste VPN-Geschwindigkeiten</string>
+  <string name="servers_in_countries" comment="new_plans">Mehr als 1.500 Server in 63 Ländern</string>
+  <string name="ad_blocker" comment="new_plans">Integrierter Werbeblocker (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Weltweiter Zugang zu Streaming-Diensten</string>
+  <string name="secure_core" comment="new_plans">„Secure Core”‐Server</string>
+  <string name="tor_vpn" comment="new_plans">Tor über VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Die datenschutzfreundliche E-Mail- und Kalenderlösung für deine täglichen Kommunikationsbedürfnisse.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

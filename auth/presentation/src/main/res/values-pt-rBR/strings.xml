@@ -31,7 +31,7 @@
   <string name="welcome_title_vpn">Proteja sua privacidade com Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suiça de alta velocidade que protege sua privacidade criptografando sua conexão à internet.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
-  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="welcome_privacy_by_default">Privacidade por padrão</string>
   <string name="auth_password_label">Senha</string>
   <string name="auth_password_help">A senha deve conter ao menos 8 caracteres</string>
   <string name="auth_current_login_password">Senha de acesso atual</string>

@@ -38,7 +38,7 @@
   <string name="auth_enter_six_digit_code">Εισάγετε τον 6-ψήφιο κωδικό</string>
   <string name="auth_second_factor_code">Κωδικός Δύο Παραγόντων (2FA)</string>
   <string name="auth_email_username">Διεύθυνση ή όνομα χρήστη</string>
-  <string name="auth_proton_email_or_username">Username or Proton Address</string>
+  <string name="auth_proton_email_or_username">Όνομα χρήστη ή Διεύθυνση Proton</string>
   <string name="auth_account_details">Εισαγάγετε τα στοιχεία του Λογαριασμού Proton σας.</string>
   <string name="auth_sign_in">Είσοδος</string>
   <string name="auth_sign_in_action">Είσοδος</string>

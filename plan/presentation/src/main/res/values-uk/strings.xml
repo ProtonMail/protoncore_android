@@ -60,10 +60,10 @@
     <item quantity="other">#proton_storage# сховища на користувача</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# адреса</item>
-    <item quantity="few">#proton_addresses# адреси</item>
-    <item quantity="many">#proton_addresses# адрес</item>
-    <item quantity="other">#proton_addresses# адреси</item>
+    <item quantity="one">#proton_addresses# адреса е-пошти</item>
+    <item quantity="few">#proton_addresses# адреси е-пошти</item>
+    <item quantity="many">#proton_addresses# адрес е-пошти</item>
+    <item quantity="other">#proton_addresses# адреси е-пошти</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# адреса на користувача</item>
@@ -78,16 +78,16 @@
     <item quantity="other">%d адреси з #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# власний домен</item>
-    <item quantity="few">#proton_domains# власні домени</item>
-    <item quantity="many">#proton_domains# власних доменів</item>
-    <item quantity="other">#proton_domains# власні домени</item>
+    <item quantity="one">Підтримка #proton_domains# власного домену електронної пошти</item>
+    <item quantity="few">Підтримка #proton_domains# власних доменів електронної пошти</item>
+    <item quantity="many">Підтримка #proton_domains# власних доменів електронної пошти</item>
+    <item quantity="other">Підтримка #proton_domains# власних доменів електронної пошти</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# календар</item>
-    <item quantity="few">#proton_calendars# календарі</item>
-    <item quantity="many">#proton_calendars# календарів</item>
-    <item quantity="other">#proton_calendars# календаря</item>
+    <item quantity="one">#proton_calendars# особистий календар</item>
+    <item quantity="few">#proton_calendars# особисті календарі</item>
+    <item quantity="many">#proton_calendars# особистих календарів</item>
+    <item quantity="other">#proton_calendars# особистих календарів</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d календар із #proton_calendars#</item>
@@ -96,10 +96,10 @@
     <item quantity="other">%d календаря з #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN-з\'єднання</item>
-    <item quantity="few">#proton_vpn# VPN-з\'єднання</item>
-    <item quantity="many">#proton_vpn# VPN-з\'єднань</item>
-    <item quantity="other">#proton_vpn# VPN-з\'єднання</item>
+    <item quantity="one">Безплатна VPN для одного пристрою</item>
+    <item quantity="few">Високошвидкісна VPN на #proton_vpn# пристроях</item>
+    <item quantity="many">Високошвидкісна VPN на #proton_vpn# пристроях</item>
+    <item quantity="other">Високошвидкісна VPN на #proton_vpn# пристроях</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# високошвидкісне VPN-з\'єднання</item>
@@ -120,32 +120,34 @@
     <item quantity="other">%d користувача з #proton_users#</item>
   </plurals>
   <!-- endregion -->
-  <!-- region plan free -->
+  <!-- region plans headers -->
   <string name="plan_id_free_header">Основа для приватного та захищеного спілкування.</string>
-  <!-- endregion -->
-  <!-- region plan plus. Note: the order array is affected by the change in the -->
   <string name="plan_id_plus_header">Повнофункціональна поштова скринька з додатковим захистом.</string>
-  <!-- endregion -->
-  <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 країни</string>
   <string name="plan_id_vpnbasic_high_speed">Висока швидкість</string>
-  <!-- endregion -->
-  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_adblock">Блокувальник реклами (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Підтримка служб трансляції</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 країни</string>
   <string name="plan_id_vpnplus_highest_speed">Найвища швидкість</string>
-  <string name="plan_id_vpnplus_adblock">Блокувальник реклами (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Підтримка служб трансляції</string>
-  <!-- endregion -->
-  <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Підтримка кількох користувачів</string>
-  <!-- endregion -->
-  <!-- region plan visionary -->
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
-  <!-- supported plans -->
+  <!-- region new plans -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Необмежена кількість тек, міток і фільтрів</string>
+  <string name="highest_vpn_speed" comment="new_plans">Найвища швидкість VPN</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ серверів у 63 країнах</string>
+  <string name="ad_blocker" comment="new_plans">Вбудований блокувальник реклами (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Доступ до сервісів трансляції по всьому світу</string>
+  <string name="secure_core" comment="new_plans">Secure Core сервери</string>
+  <string name="tor_vpn" comment="new_plans">TOR через VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Створена для приватності електронна пошта й календар для ваших повсякденних потреб спілкування.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Ваша приватність і безпека — наш пріоритет.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Ваша приватність і безпека — наш пріоритет.</string>
+  <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
     <item>USD</item>

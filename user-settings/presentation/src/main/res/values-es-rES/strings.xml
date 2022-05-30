@@ -22,7 +22,7 @@
   <string name="settings_recovery_email_current">Dirección de correo electrónico de recuperación/notificación actual</string>
   <string name="settings_recovery_email_new">Nuevo correo electrónico de recuperación/notificación</string>
   <string name="settings_recovery_email_confirm">Confirmar correo de recuperación/notificación</string>
-  <string name="settings_recovery_email_new_hint">Introduzca su correo electrónico</string>
+  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
   <string name="settings_recovery_email_confirm_hint">Reintroduzca su correo electrónico</string>
   <string name="settings_save">Guardar</string>
   <string name="settings_password_required">Introduzca su contraseña de inicio de sesión</string>

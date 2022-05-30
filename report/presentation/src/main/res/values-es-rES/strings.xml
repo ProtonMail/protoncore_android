@@ -20,7 +20,7 @@
   <string name="core_report_bug_activity_title">Notificar un problema</string>
   <string name="core_report_bug_close">Cerrar</string>
   <string name="core_report_bug_subject_field_hint">Asunto</string>
-  <string name="core_report_bug_subject_field_required">Indique un asunto</string>
+  <string name="core_report_bug_subject_field_required">Introduce un asunto</string>
   <string name="core_report_bug_description_field_hint">¿Qué salió mal? Mínimo 10 caracteres</string>
   <string name="core_report_bug_description_field_placeholder">Por favor describa el problema con el máximo detalle que pueda. Si recibió un mensaje de error, por favor háganos saber su contenido.</string>
   <plurals name="core_report_bug_description_field_required">
