@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.transformLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
@@ -35,6 +36,7 @@ import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.UserManager
+import me.proton.core.util.kotlin.DispatcherProvider
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -42,7 +44,8 @@ import javax.inject.Inject
 class UserKeyViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     sealed class UserKeyState {
@@ -75,8 +78,10 @@ class UserKeyViewModel @Inject constructor(
                 }
             }
             emit(state)
-        }.catch { error ->
+        }
+        .catch { error ->
             Timber.e(error)
             emit(UserKeyState.Error.Message(error.message))
         }
+        .flowOn(dispatcherProvider.Comp)
 }
