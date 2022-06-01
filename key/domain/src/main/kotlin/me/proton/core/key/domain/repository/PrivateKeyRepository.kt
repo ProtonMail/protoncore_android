@@ -55,6 +55,6 @@ interface PrivateKeyRepository {
         auth: Auth?,
         keys: List<Key>? = null,
         userKeys: List<Key>? = null,
-        organizationKey: String
+        organizationKey: String?
     ): Boolean
 }

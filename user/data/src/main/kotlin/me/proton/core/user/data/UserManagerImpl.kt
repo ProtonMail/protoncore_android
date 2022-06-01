@@ -45,6 +45,7 @@ import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -162,9 +163,8 @@ class UserManagerImpl(
                     ?.mapNotNull { it.updatePrivateKeyPassphraseOrNull(cryptoContext, newPassphrase.array) }
 
                 // Update organization key if provided.
-                val updatedOrgPrivateKey = orgPrivateKey?.let { key ->
-                    val encryptedPassphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
-                    encryptedPassphrase.decrypt(keyStore).use {
+                val updatedOrgPrivateKey = orgPrivateKey?.takeIf { user.isOrganizationAdmin() }?.let { key ->
+                    requireNotNull(passphraseRepository.getPassphrase(userId)).decrypt(keyStore).use {
                         key.updatePrivateKeyPassphrase(cryptoContext, it.array, newPassphrase.array)
                     }
                 }
@@ -179,7 +179,7 @@ class UserManagerImpl(
                     auth = auth,
                     keys = updatedKeys,
                     userKeys = updatedUserKeys,
-                    organizationKey = updatedOrgPrivateKey ?: ""
+                    organizationKey = updatedOrgPrivateKey
                 )
 
                 // Lock, refresh and unlock.

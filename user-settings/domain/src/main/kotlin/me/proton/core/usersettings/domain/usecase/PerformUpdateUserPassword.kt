@@ -27,7 +27,7 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.hasSubscription
+import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.takeIfNotEmpty
@@ -57,9 +57,9 @@ class PerformUpdateUserPassword @Inject constructor(
         val loginInfo = authRepository.getLoginInfo(username, clientSecret)
         val modulus = authRepository.randomModulus()
 
-        val organizationKeys = if (user.hasSubscription()) {
-            organizationRepository.getOrganizationKeys(userId)
-        } else null
+        val organizationKeys = if (user.isOrganizationAdmin())
+            organizationRepository.getOrganizationKeys(userId, refresh = true)
+        else null
 
         loginPassword.decrypt(keyStore).toByteArray().use { decryptedLoginPassword ->
             newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->

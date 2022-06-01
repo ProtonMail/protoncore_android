@@ -56,7 +56,6 @@ class PrivateKeyRepositoryImpl(
         )
     }
 
-
     override suspend fun setupInitialKeys(
         sessionUserId: SessionUserId,
         primaryKey: Armored,
@@ -99,7 +98,7 @@ class PrivateKeyRepositoryImpl(
         auth: Auth?,
         keys: List<Key>?,
         userKeys: List<Key>?,
-        organizationKey: String
+        organizationKey: String?
     ): Boolean {
         return provider.get<KeyApi>(sessionUserId).invoke {
             val response = updatePrivateKeys(

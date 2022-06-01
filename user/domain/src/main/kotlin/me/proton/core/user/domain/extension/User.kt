@@ -20,7 +20,6 @@ package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
-import me.proton.core.util.kotlin.exhaustive
 
 /**
  * @return true if the user have at least 1 key.
@@ -38,11 +37,21 @@ fun User.hasUsername() = !name.isNullOrBlank()
 fun User.isPrivate() = private
 
 /**
- * @return true if the user is a sub-user, part of an organization (admin or member).
+ * @return true if the user have the [Role.OrganizationAdmin] role.
  */
-fun User.isSubUser() = when (role) {
-    null -> false
-    Role.NoOrganization -> false
-    Role.OrganizationMember -> true
-    Role.OrganizationAdmin -> true
-}.exhaustive
+fun User.isOrganizationAdmin() = role == Role.OrganizationAdmin
+
+/**
+ * @return true if the user have the [Role.OrganizationMember] role.
+ */
+fun User.isOrganizationMember() = role == Role.OrganizationMember
+
+/**
+ * @return true if the user have the [Role.NoOrganization] role.
+ */
+fun User.isNotOrganizationUser() = role == Role.NoOrganization
+
+/**
+ * @return true if the user [isOrganizationMember] or [isOrganizationAdmin].
+ */
+fun User.isOrganizationUser() = isOrganizationAdmin() || isOrganizationMember()

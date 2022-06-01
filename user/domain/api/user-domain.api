@@ -318,8 +318,11 @@ public final class me/proton/core/user/domain/extension/UserAddressListKt {
 public final class me/proton/core/user/domain/extension/UserKt {
 	public static final fun hasKeys (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasUsername (Lme/proton/core/user/domain/entity/User;)Z
+	public static final fun isNotOrganizationUser (Lme/proton/core/user/domain/entity/User;)Z
+	public static final fun isOrganizationAdmin (Lme/proton/core/user/domain/entity/User;)Z
+	public static final fun isOrganizationMember (Lme/proton/core/user/domain/entity/User;)Z
+	public static final fun isOrganizationUser (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun isPrivate (Lme/proton/core/user/domain/entity/User;)Z
-	public static final fun isSubUser (Lme/proton/core/user/domain/entity/User;)Z
 }
 
 public final class me/proton/core/user/domain/extension/UserPlanKt {
