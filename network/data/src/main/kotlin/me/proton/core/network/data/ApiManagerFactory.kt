@@ -118,13 +118,13 @@ class ApiManagerFactory(
 
     private val dohServices by lazy {
         dohProviderUrls.map { serviceUrl ->
-            DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, serviceUrl, apiClient, networkManager)
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager)
         }
     }
 
     private val protonDohService by lazy {
         val url = requireNotNull(baseUrl.resolve("/dns-query/")?.toString())
-        DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, url, apiClient, networkManager)
+        DnsOverHttpsProviderRFC8484(baseOkHttpClient, url, apiClient, networkManager)
     }
 
     private fun javaMonoClockMs(): Long = SystemClock.elapsedRealtime()
@@ -182,7 +182,7 @@ class ApiManagerFactory(
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            { baseOkHttpClient },
+            baseOkHttpClient,
             listOf(jsonConverter),
             interfaceClass,
             networkManager,
@@ -224,7 +224,7 @@ class ApiManagerFactory(
                 sessionId,
                 sessionProvider,
                 humanVerificationProvider,
-                { baseOkHttpClient },
+                baseOkHttpClient,
                 listOf(jsonConverter),
                 interfaceClass,
                 networkManager,

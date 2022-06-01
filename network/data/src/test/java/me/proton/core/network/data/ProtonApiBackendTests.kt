@@ -181,7 +181,7 @@ internal class ProtonApiBackendTests {
             session.sessionId,
             sessionProvider,
             humanVerificationProvider,
-            { apiManagerFactory.baseOkHttpClient },
+            apiManagerFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
                 apiManagerFactory.jsonConverter

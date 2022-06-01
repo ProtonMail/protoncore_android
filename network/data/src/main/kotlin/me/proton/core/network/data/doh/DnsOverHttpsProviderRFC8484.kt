@@ -41,7 +41,7 @@ import java.net.URISyntaxException
 import java.util.concurrent.TimeUnit
 
 class DnsOverHttpsProviderRFC8484(
-    baseOkHttpClient: () -> OkHttpClient,
+    baseOkHttpClient: OkHttpClient,
     private val baseUrl: String,
     client: ApiClient,
     private val networkManager: NetworkManager
@@ -50,7 +50,7 @@ class DnsOverHttpsProviderRFC8484(
     private val api: DnsOverHttpsRetrofitApi
 
     private val okClient by lazy {
-        baseOkHttpClient().newBuilder()
+        baseOkHttpClient.newBuilder()
             .connectTimeout(TIMEOUT_S, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_S, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT_S, TimeUnit.SECONDS)

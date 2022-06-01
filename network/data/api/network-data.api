@@ -12,19 +12,19 @@ public final class me/proton/core/network/data/ApiManagerFactoryKt {
 }
 
 public final class me/proton/core/network/data/ApiProvider {
-	public fun <init> (Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;)V
+	public fun <init> (Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/util/kotlin/DispatcherProvider;)V
+	public final fun get (Lkotlin/reflect/KClass;Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun get$default (Lme/proton/core/network/data/ApiProvider;Lkotlin/reflect/KClass;Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getApiManagerFactory ()Lme/proton/core/network/data/ApiManagerFactory;
-	public final fun getInstances ()Ljava/util/concurrent/ConcurrentHashMap;
-	public final fun getOrPutWeakRef (Ljava/util/concurrent/ConcurrentMap;Ljava/lang/Object;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public final fun getSessionProvider ()Lme/proton/core/network/domain/session/SessionProvider;
 }
 
 public final class me/proton/core/network/data/ApiProvider_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/data/ApiProvider_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/data/ApiProvider_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/network/data/ApiProvider;
-	public static fun newInstance (Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/network/data/ApiProvider;
+	public static fun newInstance (Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/util/kotlin/DispatcherProvider;)Lme/proton/core/network/data/ApiProvider;
 }
 
 public final class me/proton/core/network/data/ApiResultUtilsKt {
@@ -178,7 +178,7 @@ public abstract interface annotation class me/proton/core/network/data/di/Shared
 
 public final class me/proton/core/network/data/doh/DnsOverHttpsProviderRFC8484 : me/proton/core/network/domain/DohService {
 	public static final field Companion Lme/proton/core/network/data/doh/DnsOverHttpsProviderRFC8484$Companion;
-	public fun <init> (Lkotlin/jvm/functions/Function0;Ljava/lang/String;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/NetworkManager;)V
+	public fun <init> (Lokhttp3/OkHttpClient;Ljava/lang/String;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/NetworkManager;)V
 	public fun getAlternativeBaseUrls (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

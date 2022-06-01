@@ -18,17 +18,22 @@
 
 package me.proton.core.network.data
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.util.kotlin.DispatcherProvider
 import java.lang.ref.Reference
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.reflect.KClass
 
 /**
  * Provide [ApiManager] instance bound to a specific [SessionId].
@@ -36,9 +41,11 @@ import javax.inject.Singleton
 @Singleton
 class ApiProvider @Inject constructor(
     val apiManagerFactory: ApiManagerFactory,
-    val sessionProvider: SessionProvider
+    val sessionProvider: SessionProvider,
+    private val dispatcherProvider: DispatcherProvider
 ) {
-    val instances: ConcurrentHashMap<String, ConcurrentHashMap<String, Reference<ApiManager<*>>>> =
+    private val instancesMutex = Mutex()
+    private val instances: ConcurrentHashMap<String, ConcurrentHashMap<String, Reference<ApiManager<*>>>> =
         ConcurrentHashMap()
 
     suspend inline fun <reified Api : BaseRetrofitApi> get(
@@ -50,21 +57,33 @@ class ApiProvider @Inject constructor(
         return get(sessionId = sessionId)
     }
 
-    inline fun <reified Api : BaseRetrofitApi> get(
+    suspend inline fun <reified Api : BaseRetrofitApi> get(
+        sessionId: SessionId? = null
+    ): ApiManager<out Api> = get(Api::class, sessionId)
+
+    suspend fun <Api : BaseRetrofitApi> get(
+        apiClass: KClass<Api>,
+        sessionId: SessionId? = null
+    ): ApiManager<out Api> = withContext(dispatcherProvider.Io) {
+        instancesMutex.withLock { blockingGet(apiClass, sessionId) }
+    }
+
+    private fun <Api : BaseRetrofitApi> blockingGet(
+        apiClass: KClass<Api>,
         sessionId: SessionId? = null
     ): ApiManager<out Api> {
         // ConcurrentHashMap does not allow null to be used as a key or value.
         // If sessionId == null -> sessionName = "null".
         // We still want to store an instance if sessionId == null.
         val sessionName = sessionId?.id.toString()
-        val className = Api::class.java.name
+        val className = apiClass.java.name
         return instances
             .getOrPut(sessionName) { ConcurrentHashMap() }
             .getOrPutWeakRef(className) {
-                apiManagerFactory.create(sessionId = sessionId, interfaceClass = Api::class)
+                apiManagerFactory.create(sessionId = sessionId, interfaceClass = apiClass)
             } as ApiManager<out Api>
     }
 
-    fun <K, V> ConcurrentMap<K, Reference<V>>.getOrPutWeakRef(key: K, defaultValue: () -> V): V =
+    private fun <K, V> ConcurrentMap<K, Reference<V>>.getOrPutWeakRef(key: K, defaultValue: () -> V): V =
         this[key]?.get() ?: defaultValue().apply { put(key, WeakReference(this)) }
 }

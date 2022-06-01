@@ -71,7 +71,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val humanVerificationProvider: HumanVerificationProvider,
-    baseOkHttpClient: () -> OkHttpClient,
+    baseOkHttpClient: OkHttpClient,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
     private val networkManager: NetworkManager,
@@ -84,8 +84,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
 
     private val api: Api
 
-    private val okClient by lazy {
-        baseOkHttpClient().newBuilder()
+    private val okClient =
+        baseOkHttpClient.newBuilder()
             .addInterceptor { orgChain ->
                 val chain = handleTimeoutTag(orgChain)
                 chain.proceed(prepareHeaders(chain.request()).build())
@@ -97,7 +97,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             .initLogging(client)
             .apply(securityStrategy)
             .build()
-    }
 
     init {
         val baseUrlFixed = if (!baseUrl.endsWith('/')) "$baseUrl/" else baseUrl

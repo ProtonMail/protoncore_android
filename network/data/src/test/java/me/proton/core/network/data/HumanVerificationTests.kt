@@ -198,7 +198,7 @@ internal class HumanVerificationTests {
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            { apiManagerFactory.baseOkHttpClient },
+            apiManagerFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
                 apiManagerFactory.jsonConverter
