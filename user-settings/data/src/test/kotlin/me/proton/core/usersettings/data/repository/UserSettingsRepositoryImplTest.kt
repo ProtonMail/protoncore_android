@@ -35,6 +35,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.usersettings.data.api.UserSettingsApi
 import me.proton.core.usersettings.data.api.response.FlagsResponse
 import me.proton.core.usersettings.data.api.response.PasswordResponse
@@ -82,7 +83,7 @@ class UserSettingsRepositoryImplTest {
         // GIVEN
         every { db.userSettingsDao() } returns userSettingsDao
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
         every { apiFactory.create(any(), interfaceClass = UserSettingsApi::class) } returns TestApiManager(
             userSettingsApi
         )

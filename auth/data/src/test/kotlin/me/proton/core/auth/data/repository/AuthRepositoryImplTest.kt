@@ -40,6 +40,7 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
@@ -91,7 +92,7 @@ class AuthRepositoryImplTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
         every {
             apiManagerFactory.create(
                 interfaceClass = AuthenticationApi::class

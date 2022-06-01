@@ -47,6 +47,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import org.junit.Assert.assertEquals
@@ -87,7 +88,7 @@ class UpdateSettingsWorkerTest {
     private val worker = UpdateSettingsWorker(
         context,
         parameters,
-        ApiProvider(apiManagerFactory, sessionProvider)
+        ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
     )
 
     @Test

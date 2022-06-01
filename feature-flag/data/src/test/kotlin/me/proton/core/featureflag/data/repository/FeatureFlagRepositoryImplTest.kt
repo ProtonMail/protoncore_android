@@ -53,6 +53,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
@@ -89,7 +90,7 @@ class FeatureFlagRepositoryImplTest {
     fun setUp() {
         repository = FeatureFlagRepositoryImpl(
             FeatureFlagLocalDataSourceImpl(database),
-            FeatureFlagRemoteDataSourceImpl(ApiProvider(apiManagerFactory, sessionProvider)),
+            FeatureFlagRemoteDataSourceImpl(ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)),
             workManager,
         )
     }

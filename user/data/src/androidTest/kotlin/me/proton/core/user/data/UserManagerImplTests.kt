@@ -56,6 +56,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
@@ -117,7 +118,7 @@ class UserManagerImplTests {
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
         every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
 
         keySaltRepository = KeySaltRepositoryImpl(db, apiProvider)
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)

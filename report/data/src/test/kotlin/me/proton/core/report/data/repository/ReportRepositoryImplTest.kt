@@ -34,6 +34,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.report.data.api.ReportApi
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -67,7 +68,7 @@ internal class ReportRepositoryImplTest {
         mockApiManagerFactory = mockk {
             every { create(any(), ReportApi::class) } returns mockApiManager
         }
-        mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider)
+        mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider, TestDispatcherProvider)
         tested = ReportRepositoryImpl(mockApiProvider)
     }
 

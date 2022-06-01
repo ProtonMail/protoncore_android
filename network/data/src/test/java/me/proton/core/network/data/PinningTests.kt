@@ -60,7 +60,9 @@ import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.util.kotlin.DispatcherProvider
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.junit.Rule
@@ -86,6 +88,9 @@ internal class PinningTests {
 
     @BindValue
     internal val coroutineScopeProvider: CoroutineScopeProvider = TestCoroutineScopeProvider
+
+    @BindValue
+    internal val dispatcherProvider: DispatcherProvider = TestDispatcherProvider
 
     @BindValue
     internal val missingScopeListener: MissingScopeListener = mockk()

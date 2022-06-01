@@ -34,6 +34,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -58,7 +59,7 @@ class PlansRepositoryImplTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
         every {
             apiFactory.create(
                 interfaceClass = PlansApi::class

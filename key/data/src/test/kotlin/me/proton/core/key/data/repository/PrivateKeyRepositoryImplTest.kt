@@ -33,6 +33,7 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -68,7 +69,7 @@ class PrivateKeyRepositoryImplTest {
             ): ApiResult<T> = ApiResult.Success(block.invoke(keyApi))
         }
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
         every { apiFactory.create(any(), interfaceClass = KeyApi::class) } returns apiManager
         repository = PrivateKeyRepositoryImpl(apiProvider)
     }

@@ -51,6 +51,9 @@ dependencies {
         `javax-inject`
     )
 
-    testImplementation(project(Module.androidTest))
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+    )
     androidTestImplementation(project(Module.androidInstrumentedTest))
 }

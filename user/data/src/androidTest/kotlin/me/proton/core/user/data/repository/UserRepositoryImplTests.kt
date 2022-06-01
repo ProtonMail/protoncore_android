@@ -50,6 +50,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
 import me.proton.core.user.data.TestUsers
@@ -109,7 +110,7 @@ class UserRepositoryImplTests {
         coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
 
         userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
 

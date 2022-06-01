@@ -37,6 +37,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import org.junit.Test
 
@@ -92,7 +93,7 @@ internal class MetricsRepositoryImplTest {
                 ApiResult.Success(Unit)
             }
         }
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
         metricsRepository = MetricsRepositoryImpl(apiProvider)
     }
 

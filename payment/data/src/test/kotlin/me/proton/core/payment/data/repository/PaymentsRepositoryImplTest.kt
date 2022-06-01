@@ -46,6 +46,7 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
 import org.junit.Test
@@ -82,7 +83,7 @@ class PaymentsRepositoryImplTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
         every {
             apiManagerFactory.create(
                 interfaceClass = PaymentsApi::class
