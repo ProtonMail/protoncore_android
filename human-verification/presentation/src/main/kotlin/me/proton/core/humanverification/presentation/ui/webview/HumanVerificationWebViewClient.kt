@@ -76,7 +76,7 @@ class HumanVerificationWebViewClient(
 
     @SuppressLint("WebViewClientOnReceivedSslError")
     override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-        CoreLogger.log(HV_REQUEST_ERROR, "SSL error: ${error?.url} ${error?.primaryError}")
+        CoreLogger.log(HV_REQUEST_ERROR, "SSL error: ${error.url} ${error.primaryError}")
         if (tryAllowingSelfSignedDoHCert(error)) {
             handler.proceed()
         } else {
