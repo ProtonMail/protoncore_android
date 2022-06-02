@@ -97,6 +97,10 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     @Inject
     lateinit var networkRequestOverrider: NetworkRequestOverrider
 
+    @Inject
+    @HumanVerificationApiHost
+    internal lateinit var verifyAppUrl: String
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navigationIconId = if (parsedArgs.isPartOfFlow)
@@ -148,7 +152,8 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             onResourceLoadingError = { _, _ ->
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { setLoading(false) }
             },
-            onWebLocationChanged = {}
+            onWebLocationChanged = {},
+            verifyAppUrl = verifyAppUrl
         )
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
         // Workaround to get transparent webview background

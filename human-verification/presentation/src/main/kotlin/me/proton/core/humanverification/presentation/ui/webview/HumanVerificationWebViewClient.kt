@@ -29,6 +29,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.net.toUri
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
+import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.LogTag.HV_REQUEST_ERROR
 import me.proton.core.humanverification.presentation.utils.getCompatX509Cert
 import me.proton.core.network.data.LeafSPKIPinningTrustManager
@@ -43,14 +44,14 @@ class HumanVerificationWebViewClient(
     private val networkRequestOverrider: NetworkRequestOverrider,
     private val onResourceLoadingError: (request: WebResourceRequest?, response: WebResponseError?) -> Unit,
     private val onWebLocationChanged: (String) -> Unit,
+    @HumanVerificationApiHost private val verifyAppUrl: String
 ) : WebViewClient() {
 
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
         val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.host == apiHost
-        val usesDoH = alternativeUrl != null && request.url.isAlternativeUrl()
         return when {
             request.method != "GET" -> null
-            usesDoH -> overrideForDoH(request, extraHeaders)
+            request.url.isAlternativeUrl() -> overrideForDoH(request, extraHeaders)
             needsExtraHeaderForAPI -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
         }
@@ -122,7 +123,7 @@ class HumanVerificationWebViewClient(
         // This allows a custom redirection to HumanVerificationApiHost Url from the DoH one
         // Must be skipped for the internal captcha request
         val dohHeader = if (!request.url.isLoadCaptchaUrl()) {
-            "X-PM-DoH-Host" to "verify.protonmail.com"
+            "X-PM-DoH-Host" to verifyAppUrl.toUri().host
         } else null
         return overrideRequest(
             request.url.toString(),
@@ -170,7 +171,9 @@ class HumanVerificationWebViewClient(
     }.getOrNull()
 
     private fun Uri.isLoadCaptchaUrl() = path?.endsWith("/core/v4/captcha") == true
-    private fun Uri.isAlternativeUrl() = host?.endsWith("compute.amazonaws.com") == true
+    private fun Uri.isAlternativeUrl() = alternativeUrl?.toUri()?.let { alternativeUri ->
+        host == alternativeUri.host
+    } ?: false
 
     companion object {
         const val TAG = "HumanVerificationWebViewClient"

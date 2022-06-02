@@ -39,6 +39,7 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig
 import me.proton.core.humanverification.presentation.CaptchaApiHost
+import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.LogTag
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
@@ -71,6 +72,10 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
 
     @Inject
     lateinit var networkRequestOverrider: NetworkRequestOverrider
+
+    @Inject
+    @HumanVerificationApiHost
+    internal lateinit var verifyAppUrl: String
 
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
     private val binding by viewBinding(FragmentHumanVerificationCaptchaBinding::bind)
@@ -114,7 +119,8 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
                 viewModel.activeAltUrlForDoH,
                 networkRequestOverrider,
                 onResourceLoadingError = ::handleError,
-                onWebLocationChanged = {}
+                onWebLocationChanged = {},
+                verifyAppUrl = verifyAppUrl
             )
             webChromeClient = CaptchaWebChromeClient()
         }
