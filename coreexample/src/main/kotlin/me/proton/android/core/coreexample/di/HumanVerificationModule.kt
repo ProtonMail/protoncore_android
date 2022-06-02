@@ -49,7 +49,7 @@ import javax.inject.Singleton
 object HumanVerificationModule {
 
     @Provides
-    fun provideHumanVerificationVersion() = HumanVerificationVersion.HV2
+    fun provideHumanVerificationVersion() = HumanVerificationVersion.HV3
 
     @Provides
     @HumanVerificationApiHost
