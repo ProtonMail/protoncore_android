@@ -67,7 +67,7 @@ class Features constructor(private val host: String, private val proxyToken: Str
 
     private fun fetchFeatures(): JSONArray {
         val request = Request.Builder().apply {
-            url("https://${host}/api/core/v4/features")
+            url("https://$host/core/v4/features")
             addHeader("x-pm-appversion", "android-mail@1.14.0")
             proxyToken?.let { addHeader("x-atlas-secret", it) }
         }.build()

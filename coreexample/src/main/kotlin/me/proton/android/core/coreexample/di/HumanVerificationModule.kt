@@ -53,7 +53,7 @@ object HumanVerificationModule {
 
     @Provides
     @HumanVerificationApiHost
-    fun provideHumanVerificationApiHost(): String = "https://verify.${Constants.HOST}"
+    fun provideHumanVerificationApiHost(): String = "https://${Constants.HV3_HOST}"
 
     @Provides
     @CaptchaApiHost

@@ -22,6 +22,7 @@ import android.app.Application
 import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import me.proton.android.core.coreexample.BuildConfig
+import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
 import me.proton.core.test.android.instrumented.ProtonTest
@@ -57,9 +58,9 @@ open class BaseTest(
     }
 
     companion object {
-        val features = Features(BuildConfig.HOST, BuildConfig.PROXY_TOKEN)
+        val features = Features(Constants.API_HOST, BuildConfig.PROXY_TOKEN)
         val users = Users("sensitive/users.json")
-        val quark = Quark(BuildConfig.HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
+        val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
         val authHelper = ProtonTestEntryPoint.provide(ApplicationProvider.getApplicationContext<Application>())
 
         @JvmStatic

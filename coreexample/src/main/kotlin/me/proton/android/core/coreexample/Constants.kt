@@ -19,9 +19,10 @@
 package me.proton.android.core.coreexample
 
 object Constants {
-    const val HOST = BuildConfig.HOST
-    const val API_HOST = "api.$HOST"
+    const val API_HOST = BuildConfig.API_HOST
+    const val HV3_HOST = BuildConfig.HV3_HOST
     const val BASE_URL = "https://$API_HOST"
+    const val QUARK_HOST = BuildConfig.QUARK_HOST
 }
 
 const val PLAN_PLUS_ID =
