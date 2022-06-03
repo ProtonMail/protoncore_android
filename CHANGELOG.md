@@ -11,6 +11,30 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [8.1.0] - 2022-06-03
+
+### Features
+
+- label:
+  - Added LabelRepository updateLabelIsExpanded.
+- presentation-compose:
+  - Added ProtonSidebarItem/ProtonListItem iconModifier/textModifier.
+
+### Bug Fixes
+
+- user:
+  - Fixed UserAddressRepository getAddress/observeAddress.
+
+    Always get all addresses first, then filter on addressId.
+    Added observeAddress for consistency.
+  - Fixed UserAddressRepository fetching addresses even if exist in Database.
+- user-settings:
+  - Fixed Non-admin Organization Member cannot change password.
+
+### Internationalization
+
+- Upgrade translations from crowdin (8a9fab5e).
+
 ## [8.0.0] - 2022-05-25
 
 ### Chores
