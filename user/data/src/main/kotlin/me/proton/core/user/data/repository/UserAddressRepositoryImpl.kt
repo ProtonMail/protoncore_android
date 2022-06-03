@@ -67,26 +67,21 @@ class UserAddressRepositoryImpl(
     private val addressKeyDao = db.addressKeyDao()
     private val addressWithKeysDao = db.addressWithKeysDao()
 
-    private data class StoreKey(val userId: UserId, val addressId: AddressId? = null)
-
     private val store = StoreBuilder.from(
-        fetcher = Fetcher.of { key: StoreKey ->
-            val list = apiProvider.get<AddressApi>(key.userId).invoke {
-                if (key.addressId != null)
-                    listOf(getAddress(key.addressId.id).address)
-                else
-                    getAddresses().addresses
+        fetcher = Fetcher.of { userId: UserId ->
+            val list = apiProvider.get<AddressApi>(userId).invoke {
+                getAddresses().addresses
             }.valueOrThrow
-            list.map { it.toAddress(key.userId) }
+            list.map { it.toAddress(userId) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key ->
-                observeAddressesLocal(key.userId).map { addresses ->
-                    addresses.takeIf { it.isNotEmpty() || it.hasBeenFetched(key) }?.filterNot { it.isFetchedTag() }
+            reader = { userId: UserId ->
+                observeAddressesLocal(userId).map { addresses ->
+                    addresses.takeIf { it.isNotEmpty() }?.filterNot { it.isFetchedTag() }
                 }
             },
-            writer = { key, addresses ->
-                insertOrUpdate(addresses.plus(key.getFetchedTagAddress()))
+            writer = { userId, addresses ->
+                insertOrUpdate(addresses.plus(userId.getFetchedTagAddress()))
             },
             delete = null, // Not used.
             deleteAll = null // Not used.
@@ -98,7 +93,7 @@ class UserAddressRepositoryImpl(
     }
 
     private suspend fun invalidateMemCache(userId: UserId? = null) =
-        if (userId != null) store.clear(StoreKey(userId)) else store.clearAll()
+        if (userId != null) store.clear(userId) else store.clearAll()
 
     private suspend fun List<UserAddressKey>.updateIsActive(userId: UserId): List<UserAddressKey> =
         userRepository.getUser(userId).useKeysAs(context) { userContext ->
@@ -140,12 +135,6 @@ class UserAddressRepositoryImpl(
         invalidateMemCache(userId)
     }
 
-    private suspend fun getAddresses(
-        sessionUserId: SessionUserId,
-        addressId: AddressId?,
-        refresh: Boolean
-    ): List<UserAddress> = StoreKey(sessionUserId, addressId).let { if (refresh) store.fresh(it) else store.get(it) }
-
     override suspend fun onPassphraseChanged(userId: UserId) {
         db.inTransaction {
             insertOrUpdate(getAddressesLocal(userId))
@@ -166,23 +155,23 @@ class UserAddressRepositoryImpl(
         deleteAll(userId)
 
     override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> =
-        store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh))
+        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
             .map { it.dataOrNull().orEmpty() }
             .distinctUntilChanged()
 
+    override fun observeAddress(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean): Flow<UserAddress?> =
+        observeAddresses(sessionUserId, refresh).map { list -> list.firstOrNull { it.addressId == addressId } }
+
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
-        store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh))
+        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
             .map { it.toDataResult() }
             .distinctUntilChanged()
 
     override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> =
-        getAddresses(sessionUserId, addressId = null, refresh = refresh)
+        if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
 
-    override suspend fun getAddress(
-        sessionUserId: SessionUserId,
-        addressId: AddressId,
-        refresh: Boolean
-    ): UserAddress? = getAddresses(sessionUserId, addressId, refresh).firstOrNull()
+    override suspend fun getAddress(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean): UserAddress? =
+        getAddresses(sessionUserId, refresh).firstOrNull { it.addressId == addressId }
 
     override suspend fun createAddress(
         sessionUserId: SessionUserId,
@@ -223,11 +212,10 @@ class UserAddressRepositoryImpl(
 
     companion object {
         private fun UserAddress.isFetchedTag() = email == "fetched"
-        private fun List<UserAddress>.hasBeenFetched(key: StoreKey) = contains(key.getFetchedTagAddress())
         // Fake Address tagging the repo the addresses have been fetched once.
-        private fun StoreKey.getFetchedTagAddress() = UserAddress(
-            userId = userId,
-            addressId = AddressId("fetched-$addressId"),
+        private fun UserId.getFetchedTagAddress() = UserAddress(
+            userId = this,
+            addressId = AddressId("fetched"),
             email = "fetched",
             displayName = null,
             signature = null,

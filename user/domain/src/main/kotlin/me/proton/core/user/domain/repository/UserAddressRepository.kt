@@ -77,6 +77,17 @@ interface UserAddressRepository {
     ): Flow<List<UserAddress>>
 
     /**
+     * Observe [UserAddress], by [addressId], using [sessionUserId].
+     *
+     * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
+     */
+    fun observeAddress(
+        sessionUserId: SessionUserId,
+        addressId: AddressId,
+        refresh: Boolean = false
+    ): Flow<UserAddress?>
+
+    /**
      * Get all [UserAddress], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.

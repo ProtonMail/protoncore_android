@@ -967,6 +967,7 @@ public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl
 	public fun getAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAddressesFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun observeAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observeAddresses (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun onPassphraseChanged (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
