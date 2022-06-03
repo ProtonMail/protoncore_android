@@ -82,7 +82,7 @@ class UserAddressRepositoryImpl(
         sourceOfTruth = SourceOfTruth.of(
             reader = { key ->
                 observeAddressesLocal(key.userId).map { addresses ->
-                    addresses.takeIf { it.hasBeenFetched(key) }?.filterNot { it.isFetchedTag() }
+                    addresses.takeIf { it.isNotEmpty() || it.hasBeenFetched(key) }?.filterNot { it.isFetchedTag() }
                 }
             },
             writer = { key, addresses ->
