@@ -159,6 +159,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:push-domain|
 |me.proton.core:presentation|
 |me.proton.core:presentation-compose|
+|me.proton.core:proguard-rules|
 |me.proton.core:report|
 |me.proton.core:report-dagger|
 |me.proton.core:report-data|

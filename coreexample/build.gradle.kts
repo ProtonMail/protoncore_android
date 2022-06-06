@@ -156,6 +156,7 @@ dependencies {
         project(Module.plan),
         project(Module.userSettings),
         project(Module.challenge),
+        project(Module.proguardRules),
 
         `coroutines-android`,
 
