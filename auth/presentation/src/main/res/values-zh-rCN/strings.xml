@@ -19,9 +19,9 @@
 <resources>
   <string name="welcome_title">使用 Proton 来保护您的隐私</string>
   <string name="welcome_subtitle">我们依靠加密机制保护个人隐私，让您的数据真正归您所有。</string>
-  <string name="welcome_title_mail">Protect your privacy with Proton Mail</string>
+  <string name="welcome_title_mail">使用 Proton Mail 捍卫您的隐私</string>
   <string name="welcome_subtitle_mail">加密邮件保护您的通讯隐私，打造您的专属收件箱。</string>
-  <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
+  <string name="welcome_subtitle_mail_alt">隐私、安全、便利相辅相成。将个人数据掌控权交给您自己的加密邮箱。</string>
   <string name="welcome_title_drive">使用 Proton Drive 来保护您的隐私</string>
   <string name="welcome_subtitle_drive">便捷的云端存储与安全的加密技术完美结合，众望所归的可信云存储服务。</string>
   <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
@@ -39,12 +39,12 @@
   <string name="auth_second_factor_code">双重验证码</string>
   <string name="auth_email_username">邮箱或用户名</string>
   <string name="auth_proton_email_or_username">Username or Proton Address</string>
-  <string name="auth_account_details">请输入您的 Proton 账户详细信息。</string>
+  <string name="auth_account_details">请输入您的 Proton 账户信息。</string>
   <string name="auth_sign_in">登录</string>
   <string name="auth_sign_in_action">登录</string>
   <string name="auth_need_help">需要帮助？</string>
   <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>
-  <string name="auth_help_title">我们能帮你什么吗？</string>
+  <string name="auth_help_title">您需要什么帮助？</string>
   <string name="auth_help_option_forgot_username">忘记用户名</string>
   <string name="auth_help_option_forgot_password">忘记密码</string>
   <string name="auth_help_option_other">其他登录问题</string>
@@ -100,7 +100,7 @@
   <string name="auth_signup_current_email">使用您已有的邮箱地址</string>
   <string name="auth_signup_create_secure_proton_address">Create a secure Proton Mail address instead</string>
   <string name="auth_signup_username">用户名</string>
-  <string name="auth_signup_domain">Domain</string>
+  <string name="auth_signup_domain">域名</string>
   <string name="auth_signup_email">邮箱</string>
   <string name="auth_signup_next">下一步</string>
   <string name="auth_signup_choose_password">创建密码</string>

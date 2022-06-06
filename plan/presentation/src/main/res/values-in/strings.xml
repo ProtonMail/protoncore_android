@@ -19,7 +19,7 @@
 <resources>
   <string name="plans_select_a_plan">Pilih Paket</string>
   <string name="plans_select_a_plan_subtitle">Satu paket untuk semua layanan Proton</string>
-  <string name="plans_fetching_general_error">Terjadi galat mengambil paket.</string>
+  <string name="plans_fetching_general_error">Terjadi kesalahan pada saat mengambil daftar paket.</string>
   <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">per bulan</string>
   <string name="plan_price_annually">per bulan*</string>
@@ -45,13 +45,13 @@
     <item quantity="other">#proton_storage# storage</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="other">Kuota penyimpanan hingga #proton_storage#</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# storage / user</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="other">#proton_addresses# alamat email</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# addresses / user</item>
@@ -60,16 +60,16 @@
     <item quantity="other">%d dari #proton_addresses# address</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="other">Dukungan #proton_domains# alamat email khusus</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="other">#proton_calendars# kalender personal</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="other">%d dari #proton_calendars# calendar</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">VPN berkecepatan tinggi pada #proton_vpn# perangkat</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# high-speed VPN connections</item>
@@ -97,17 +97,17 @@
   <string name="plan_id_visionary_header">Visioner</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Unlimited folders, labels, and filters</string>
-  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
-  <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
-  <string name="secure_core" comment="new_plans">Secure Core servers</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Tanpa batasan jumlah folder, label, dan filter</string>
+  <string name="highest_vpn_speed" comment="new_plans">Kecepatan VPN tertinggi</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ server di 63 negara</string>
+  <string name="ad_blocker" comment="new_plans">Ad-blocker bawaan (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Akses ke berbagai layanan streaming di seluruh dunia</string>
+  <string name="secure_core" comment="new_plans">Server Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">TOR via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Solusi email dan kalender yang mengedepankan privasi untuk kebutuhan komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

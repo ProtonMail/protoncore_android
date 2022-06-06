@@ -118,7 +118,7 @@
   <string name="secure_core" comment="new_plans">Secure Core-servrar</string>
   <string name="tor_vpn" comment="new_plans">Tor över VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">E-post och kalender-lösningen för dina behov av vardagskommunikation som sätter integriteten i första rummet.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Din integritet och säkerhet är vår prioritet.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Din integritet och säkerhet är vår prioritet.</string>
   <!-- endregion -->

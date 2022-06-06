@@ -46,8 +46,8 @@
     <item quantity="other">#proton_storage# de armazenamento</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Up to #proton_storage# storage</item>
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="one">Até #proton_storage# de armazenamento</item>
+    <item quantity="other">Até #proton_storage# de armazenamento</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# de armazenamento / usuário</item>
@@ -66,8 +66,8 @@
     <item quantity="other">%d de #proton_addresses# endereços</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Support for #proton_domains# custom email domain</item>
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="one">Suporte para #proton_domains# domínio de e-mail personalizado</item>
+    <item quantity="other">Suporte para #proton_domains# domínios de e-mail personalizados</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# calendário pessoal</item>
@@ -78,8 +78,8 @@
     <item quantity="other">%d de #proton_calendars# calendários</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">VPN gratuita para um único dispositivo</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="one">VPN gratuita em um único dispositivo</item>
+    <item quantity="other">VPN de alta velocidade em #proton_vpn# dispositivos</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# conexão VPN de alta velocidade</item>

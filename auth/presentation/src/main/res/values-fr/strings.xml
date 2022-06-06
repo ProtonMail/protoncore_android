@@ -21,7 +21,7 @@
   <string name="welcome_subtitle">Le chiffrement assure la confidentialité de vos données. Vos données vous appartiennent vraiment.</string>
   <string name="welcome_title_mail">Protégez votre vie privée avec Proton Mail</string>
   <string name="welcome_subtitle_mail">E-mails chiffrés qui préservent la confidentialité de vos conversations. Votre boîte de réception vous appartient vraiment.</string>
-  <string name="welcome_subtitle_mail_alt">Vie privée. Sécurité. Commodité. E-mail chiffré qui vous donne le contrôle total de vos données personnelles.</string>
+  <string name="welcome_subtitle_mail_alt">Vie privée. Sécurité. Facilité d\'utilisation. Une messagerie chiffrée qui vous donne le contrôle total de vos données personnelles.</string>
   <string name="welcome_title_drive">Protégez votre vie privée avec Proton Drive</string>
   <string name="welcome_subtitle_drive">La commodité du stockage sur le cloud et la sécurité de la technologie de chiffrement. Enfin une solution de stockage sur le cloud en laquelle vous pouvez avoir confiance.</string>
   <string name="welcome_subtitle_drive_alt">Le moyen le plus sûr de stocker vos fichiers. Téléchargez, synchronisez et partagez avec le chiffrement le plus fort disponible.</string>
@@ -29,9 +29,9 @@
   <string name="welcome_subtitle_calendar">Calendrier chiffré qui préserve la confidentialité et la sécurité des événements de votre vie.</string>
   <string name="welcome_subtitle_calendar_alt">Notre calendrier chiffré de bout en bout vous aide à rester organisé, concentré et maître de la situation.</string>
   <string name="welcome_title_vpn">Protégez votre vie privée avec Proton VPN</string>
-  <string name="welcome_subtitle_vpn">VPN suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion Internet.</string>
+  <string name="welcome_subtitle_vpn">VPN suisse haut débit qui protège votre vie privée en chiffrant votre connexion internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suisse à haut débit qui protège votre vie privée. Sécurité maximale, plus de 1 600 serveurs et aucune restriction.</string>
-  <string name="welcome_privacy_by_default">Confidentialité par défaut</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Mot de passe</string>
   <string name="auth_password_help">Le mot de passe doit contenir au moins 8 caractères</string>
   <string name="auth_current_login_password">Mot de passe de connexion actuel</string>
@@ -49,7 +49,7 @@
   <string name="auth_help_option_forgot_password">Mot de passe oublié</string>
   <string name="auth_help_option_other">Autres problèmes de connexion</string>
   <string name="auth_help_other">Vous avez encore besoin d\'aide ? Contactez-nous directement.</string>
-  <string name="auth_help_option_customer_support">Assistance client</string>
+  <string name="auth_help_option_customer_support">Support client</string>
   <string name="auth_2fa_title">Authentification à deux facteurs</string>
   <string name="auth_2fa_label">Code à deux facteurs</string>
   <string name="auth_2fa_recovery_code_label">Code de récupération</string>
@@ -132,7 +132,7 @@
   <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s :</string>
   <string name="auth_signup_error_human_verification_failed">La vérification humaine a échoué.</string>
   <string name="auth_signup_token_code_resent">Code jeton renvoyé.</string>
-  <string name="auth_signup_congratulations_subtitle">Votre compte Proton a été correctement créé.\nProfitez du monde de la confidentialité.</string>
+  <string name="auth_signup_congratulations_subtitle">Votre compte Proton a bien été créé.\nProfitez d\'un monde où la vie privée est respectée.</string>
   <string name="auth_signup_congratulations">Félicitations !</string>
   <string name="auth_signup_start_using_proton">Commencez à utiliser Proton</string>
   <string name="auth_signup_start_using_calendar">Commencez à utiliser Proton Calendar</string>

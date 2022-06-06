@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="crypto_keystore_error_title">Encryption error</string>
-  <string name="crypto_keystore_error_message">This device uses a faulty implementation of Android Keystore, which we use to keep your data safe. This means your data can be compromised if an attacker gets physical access to this device. What would you like to do?</string>
-  <string name="crypto_keystore_error_continue_action">Continue</string>
-  <string name="crypto_keystore_error_more_info_action">Get more information</string>
-  <string name="crypto_keystore_error_logout_action">Log out</string>
-  <string name="crypto_keystore_error_exit_action">Exit</string>
+  <string name="crypto_keystore_error_title">Titkosítási hiba</string>
+  <string name="crypto_keystore_error_message">Ezen az eszközön az Android Keystore implementációja hibás, pedig ez tartaná biztonságban az adatait. Ez azt jelenti, hogy adatai kompromittálhatók, ha az eszköz rossz kezekbe kerül. Mit szeretne tenni?</string>
+  <string name="crypto_keystore_error_continue_action">Folytatás</string>
+  <string name="crypto_keystore_error_more_info_action">További információk</string>
+  <string name="crypto_keystore_error_logout_action">Kijelentkezés</string>
+  <string name="crypto_keystore_error_exit_action">Kilépés</string>
 </resources>

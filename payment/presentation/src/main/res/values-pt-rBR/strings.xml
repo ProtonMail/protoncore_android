@@ -24,8 +24,8 @@
   <string name="payments_error_card_name">Obrigatório o nome no cartão.</string>
   <string name="payments_error_card_number">Número do cartão inválido.</string>
   <string name="payments_error_cvc">Por favor, entre um código de segurança válido.</string>
-  <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
-  <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
+  <string name="payments_error_session">Um ID de sessão válido é necessário ao fazer a assinatura de um usuário conectado.</string>
+  <string name="payments_error_signup_paymentmethod">Não foi possível criar uma conta com o método de pagamento existente.</string>
   <string name="payments_error_invalid_session">Sessão inválida.</string>
   <!-- endregion -->
   <!-- region payment options -->

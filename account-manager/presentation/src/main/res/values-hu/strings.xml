@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Switch to</string>
+  <string name="account_switcher_section_switch_to">Váltás:</string>
   <string name="account_switcher_action_add_account">Fiók hozzáadása</string>
   <string name="account_switcher_action_sign_in">Bejelentkezés</string>
   <string name="account_switcher_action_sign_out">Kijelentkezés</string>

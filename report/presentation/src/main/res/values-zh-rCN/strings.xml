@@ -20,7 +20,7 @@
   <string name="core_report_bug_activity_title">反馈问题</string>
   <string name="core_report_bug_close">关闭</string>
   <string name="core_report_bug_subject_field_hint">主题</string>
-  <string name="core_report_bug_subject_field_required">输入标题</string>
+  <string name="core_report_bug_subject_field_required">请填写主题</string>
   <string name="core_report_bug_description_field_hint">您遇到了什么问题？请至少填写 10 个字符</string>
   <string name="core_report_bug_description_field_placeholder">请尽可能详细地描述您的问题。如果看到错误提示，也请附上其内容。</string>
   <plurals name="core_report_bug_description_field_required">

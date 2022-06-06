@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Sélectionnez une offre</string>
   <string name="plans_select_a_plan_subtitle">Un seul abonnement pour tous les services Proton</string>
   <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des offres.</string>
-  <string name="plans_free_name">FREE</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">par mois</string>
   <string name="plan_price_annually">par mois*</string>
   <string name="plans_current_plan">Offre actuelle</string>
@@ -32,7 +32,7 @@
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>
   <string name="plans_billing_yearly">Pour 1 an</string>
-  <string name="plans_billing_two_years">Pendant 2 ans</string>
+  <string name="plans_billing_two_years">Pour 2 ans</string>
   <string name="plans_upgrade_your_plan">Changez d\'offre</string>
   <string name="plans_proton_for_free">Obtenir Proton gratuitement</string>
   <string name="plans_get_proton">Obtenir %s</string>
@@ -66,8 +66,8 @@
     <item quantity="other">%d sur #proton_addresses# adresses</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Assistance de #proton_domains# domaine personnalisé</item>
-    <item quantity="other">Assistance de #proton_domains# domaines personnalisés</item>
+    <item quantity="one">Support de #proton_domains# domaine personnalisé</item>
+    <item quantity="other">Support de #proton_domains# domaines personnalisés</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# calendrier personnel</item>
@@ -106,21 +106,21 @@
   <string name="plan_id_vpnplus_countries">63 pays</string>
   <string name="plan_id_vpnplus_highest_speed">Vitesse maximale</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Prise en charge du multiutilisateur</string>
+  <string name="plan_id_professional_multiuser">Prise en charge du multi-utilisateur</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Dossiers, labels et filtres illimités</string>
   <string name="highest_vpn_speed" comment="new_plans">Vitesse VPN maximale</string>
-  <string name="servers_in_countries" comment="new_plans">Plus de 1500 serveurs dans 63 pays</string>
+  <string name="servers_in_countries" comment="new_plans">Plus de 1 500 serveurs dans 63 pays</string>
   <string name="ad_blocker" comment="new_plans">Bloqueur de publicités intégré (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Accédez aux services de streaming dans le monde entier</string>
   <string name="secure_core" comment="new_plans">Serveurs Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">La première solution d\'e-mail et de calendrier orientée confidentialité pour vos besoins de communication quotidiens.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Votre confidentialité et votre sécurité sont notre priorité.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Votre confidentialité et votre sécurité sont notre priorité.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">La solution de messagerie et d\'agenda qui privilégie le respect de la vie privée pour vos besoins de communication quotidiens.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Votre vie privée et votre sécurité sont notre priorité.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Votre vie privée et votre sécurité sont notre priorité.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -128,7 +128,7 @@
     <item>CHF</item>
   </string-array>
   <string-array name="supported_billing_cycle">
-    <item>Payez mensuellement</item>
+    <item>Paiement mensuel</item>
     <item>Paiement annuel</item>
     <item>Paiement tous les 2 ans</item>
   </string-array>

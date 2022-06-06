@@ -26,8 +26,8 @@
   <string name="plans_current_plan">目前方案</string>
   <string name="plans_upgrade_plan">升級您的方案</string>
   <string name="plans_subscription">訂閲</string>
-  <string name="plans_renewal_date">您的方案將會在 &lt;b&gt;%s&lt;/b&gt; 自動續訂</string>
-  <string name="plans_expiration_date">您的方案將會在 &lt;b&gt;%s&lt;/b&gt; 過期</string>
+  <string name="plans_renewal_date">您的方案將於 &lt;b&gt;%s&lt;/b&gt; 自動續購</string>
+  <string name="plans_expiration_date">您的方案將會在 &lt;b&gt;%s&lt;/b&gt;到期</string>
   <string name="plans_billed_yearly">* 以每年 %s 扣帳</string>
   <string name="plans_billed_monthly">月費方案</string>
   <string name="plans_billing_monthly">為期1個月</string>

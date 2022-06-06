@@ -35,7 +35,7 @@
   <string name="auth_password_label">Lösenord</string>
   <string name="auth_password_help">Lösenordet måste innehålla minst åtta tecken</string>
   <string name="auth_current_login_password">Nuvarande inloggningslösenord</string>
-  <string name="auth_enter_six_digit_code">Ange en 6-siffrig kod</string>
+  <string name="auth_enter_six_digit_code">Ange 6-siffrig kod</string>
   <string name="auth_second_factor_code">Tvåfaktorskod</string>
   <string name="auth_email_username">E-post eller användarnamn</string>
   <string name="auth_proton_email_or_username">Användarnamn eller Proton-adress</string>
@@ -90,7 +90,7 @@
   <string name="auth_password_chooser_description">För att kunna använda Proton-appen som medlem i en organisation måste du först ändra ditt lösenord genom att logga in på Proton i en webbläsare.</string>
   <string name="auth_password_chooser_change">Ändra lösenord</string>
   <string name="auth_user_check_one_free_error">Endast ett gratis Proton-konto är tillåtet.</string>
-  <string name="auth_user_check_delinquent_error">Ditt konto är för närvarande spärrat p.g.a. en förfallen faktura.</string>
+  <string name="auth_user_check_delinquent_error">Ditt konto är för närvarande pausad på grund av en försenad faktura.</string>
   <string name="auth_user_check_delinquent_action">Betala faktura</string>
   <string name="auth_account_not_found_error">Fel med kontot</string>
   <string name="auth_one_account_all_services">Ett konto för alla Proton-tjänster.</string>

@@ -51,7 +51,7 @@
   <string name="payments_paying_in_process">Betalar</string>
   <string name="payments_choose_country">Välj land</string>
   <string name="payments_info_not_available">n/a</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (Upphör %3$s/%4$s)</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Löper ut %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->
 </resources>

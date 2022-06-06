@@ -18,12 +18,12 @@
   -->
 <resources>
   <string name="welcome_title">使用 Proton 保護您的隱私</string>
-  <string name="welcome_subtitle">加密讓您的資料保持私密。您的資料真正屬於您。</string>
-  <string name="welcome_title_mail">使用 Proton Mail 保護您的隱私</string>
-  <string name="welcome_subtitle_mail">維持您郵件隱密的加密電子郵件。您的收件匣真正屬於您。</string>
-  <string name="welcome_subtitle_mail_alt">隱私。安全。方便。讓您可完全控制自己的個人資料的加密電子郵件。</string>
-  <string name="welcome_title_drive">使用 Proton Drive 保護您的隱私</string>
-  <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。最後成為了您可信賴的雲端儲存解決方案。</string>
+  <string name="welcome_subtitle">高階加密把守您的資料隱密。您的資料真實地掌握手中。</string>
+  <string name="welcome_title_mail">有 Proton Mail 保護您的隱私權</string>
+  <string name="welcome_subtitle_mail">經加密過的電郵，守住來往訊息隱密。您的收件匣真實地掌握手中。</string>
+  <string name="welcome_subtitle_mail_alt">隱密。安全防護。便捷。加密電郵提供您個資的完全控管。</string>
+  <string name="welcome_title_drive">Proton Drive 保護您隱私權</string>
+  <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。千呼萬喚終於出現讓您可完全信賴的雲端儲存。</string>
   <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。使用最強大的加密方式上傳、同步並分享。</string>
   <string name="welcome_title_calendar">使用 Proton Calendar 保護您的隱私</string>
   <string name="welcome_subtitle_calendar">讓您的生活大事維持隱密、安全且可靠的加密行事曆。</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">您的備援電子郵件地址為：</string>
   <string name="auth_create_address_create">建立電子郵件地址</string>
   <string name="auth_create_address_creating">正在建立電子郵件地址</string>
-  <string name="auth_create_address_terms">點擊建立電子郵件地址，即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">條款與細則</a>。</string>
+  <string name="auth_create_address_terms">點擊建立電郵件位址，即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">條款與細則</a>。</string>
   <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>
@@ -98,7 +98,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">建立您的 Proton 帳號</string>
   <string name="auth_signup_current_email">改為使用您目前的電子郵件地址</string>
-  <string name="auth_signup_create_secure_proton_address">改建一個安全的 ProtonMail 電子郵件地址。</string>
+  <string name="auth_signup_create_secure_proton_address">另行創建安全防護的 ProtonMail 電郵件位址</string>
   <string name="auth_signup_username">使用者名稱</string>
   <string name="auth_signup_domain">網域</string>
   <string name="auth_signup_email">電子郵件</string>

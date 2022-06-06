@@ -78,8 +78,8 @@
     <item quantity="other">%d von #proton_calendars# Kalendern</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Free VPN on a single device</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="one">Kostenloses VPN auf einem einzigen Gerät</item>
+    <item quantity="other">Hochgeschwindigkeits-VPN auf #proton_vpn# Geräten</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# Hochgeschwindigkeits-VPN-Verbindung</item>

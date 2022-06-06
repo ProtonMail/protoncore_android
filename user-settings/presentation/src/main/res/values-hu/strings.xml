@@ -20,17 +20,17 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Helyreállítási email</string>
   <string name="settings_recovery_email_current">Jelenlegi visszaállító és értesítési e-mail</string>
-  <string name="settings_recovery_email_new">New Reset/Notification email</string>
-  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+  <string name="settings_recovery_email_new">Új visszaállító és értesítési e-mail</string>
+  <string name="settings_recovery_email_confirm">Visszaállító és értesítési e-mail megerősítése</string>
+  <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
+  <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>
   <string name="settings_save">Mentés</string>
   <string name="settings_password_required">Adja meg a bejelentkezési jelszavát</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nincs beállítva</string>
-  <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
-  <string name="settings_validation_email">Email is invalid.</string>
-  <string name="settings_general_error">An error occurred.</string>
+  <string name="settings_recovery_email_error_no_match">A helyreállító és a megerősítő e-mail nem egyezik meg.</string>
+  <string name="settings_validation_email">Hibás email cím.</string>
+  <string name="settings_general_error">Hiba történt.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Jelszó megváltoztatása</string>
   <string name="settings_password_management_change_mailbox_password">Postafiók jelszó módosítása</string>
@@ -40,9 +40,9 @@
   <string name="settings_login_password_hint_new_confirm">Új bejelentkezési jelszó megerősítése</string>
   <string name="settings_mailbox_password_hint_new">Új e-mail jelszó</string>
   <string name="settings_mailbox_password_hint_new_confirm">Új e-mail jelszó megerősítése</string>
-  <string name="settings_change_password_error">A change password error has occurred.</string>
-  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_change_password_error">Hiba történt a jelszó megváltoztatása közben.</string>
+  <string name="settings_recovery_email_success">Helyreállító e-mail frissítve</string>
   <string name="settings_password_management_success">Jelszó frissítve</string>
-  <string name="settings_password_management_login_password_success">Login password updated</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_login_password_success">Bejelentkezési jelszó frissítve</string>
+  <string name="settings_password_management_mailbox_password_success">E-mail titkosítási jelszó frissítve</string>
 </resources>

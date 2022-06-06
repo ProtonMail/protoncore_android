@@ -18,40 +18,40 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">An error occurred.</string>
-  <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
-  <string name="payments_3ds_not_approved">3DS approval has been rejected.</string>
+  <string name="payments_general_error">Hiba történt.</string>
+  <string name="payments_no_connectivity">Nincs kapcsolat az erős ügyfél-hitelesítés betöltéséhez.</string>
+  <string name="payments_3ds_not_approved">Erős ügyfél-hitelesítés elutasítva.</string>
   <string name="payments_error_card_name">Kártyára írt név megadása kötelező.</string>
   <string name="payments_error_card_number">Érvénytelen kártyaszám.</string>
-  <string name="payments_error_cvc">Please enter valid security code.</string>
-  <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
-  <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
-  <string name="payments_error_invalid_session">Invalid session.</string>
+  <string name="payments_error_cvc">Adjon meg egy érvényes biztonsági kódot.</string>
+  <string name="payments_error_session">Érvényes munkafolyamat azonosító szükséges, belépett felhasználó előfizetése esetén.</string>
+  <string name="payments_error_signup_paymentmethod">Előfizetés nem sikerült a jelenlegi fizetési móddal.</string>
+  <string name="payments_error_invalid_session">Érvénytelen munkafolyamat.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Choose your payment method</string>
-  <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
-  <string name="payments_billing_monthly">For 1 month</string>
-  <string name="payments_billing_yearly">For 1 year</string>
-  <string name="payments_billing_two_years">For 2 years</string>
-  <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
-  <string name="payments_method_icon">Payment method icon.</string>
+  <string name="payments_choose_payment_method">Válasszon fizetési módot</string>
+  <string name="payments_add_credit_debit_card">Új bankkártya hozzáadása</string>
+  <string name="payments_billing_monthly">1 hónapra</string>
+  <string name="payments_billing_yearly">1 évre</string>
+  <string name="payments_billing_two_years">2 évre</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">%s fizetése</string>
+  <string name="payments_method_icon">Fizetési mód ikon.</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Fizetés részletei</string>
   <string name="payments_card_name">Kártyán megjelenített név</string>
   <string name="payments_card_number">Kártyaszám</string>
-  <string name="payments_expiration_date">Expiration date</string>
+  <string name="payments_expiration_date">Lejárati dátum</string>
   <string name="payments_security_code">Biztonsági kód</string>
-  <string name="payments_postal_code">ZIP code</string>
+  <string name="payments_postal_code">Irányítószám</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">MM/YY</string>
+  <string name="payments_expiration_date_hint">HH/ÉÉ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Ország</string>
-  <string name="payments_paying_in_process">Paying</string>
-  <string name="payments_choose_country">Select country</string>
+  <string name="payments_paying_in_process">Fizetés</string>
+  <string name="payments_choose_country">Válasszon országot</string>
   <string name="payments_info_not_available">n/a</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Lej. %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->
 </resources>

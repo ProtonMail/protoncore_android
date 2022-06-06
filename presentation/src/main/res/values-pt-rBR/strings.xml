@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Esta versão do aplicativo não é mais suportada. Por favor, atualize para continuar usando.</string>
   <string name="presentation_force_update_learn_more">Saiba mais</string>
   <string name="presentation_force_update_update">Atualizar</string>
-  <string name="presentation_market_missing">Can not find market application installed on the device. Please go to the store and update the application.</string>
+  <string name="presentation_market_missing">Não foi possível encontrar um aplicativo de mercado instalado no dispositivo. Acesse a loja e atualize o aplicativo.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Inicie a sessão para continuar</string>
   <string name="presentation_alert_title">Alerta</string>

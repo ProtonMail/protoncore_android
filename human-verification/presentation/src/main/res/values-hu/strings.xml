@@ -20,13 +20,13 @@
   <!-- base common strings -->
   <string name="human_verification_help">Segítség</string>
   <string name="human_verification_title">Nem vagyok robot</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
-  <string name="human_verification_enter_code_subtitle">Enter the verification code that was sent to %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Enter the verification code that was sent to %s. If you don\'t find the email in your inbox, please check your spam folder.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>
+  <string name="human_verification_main_subtitle">A visszaélések elkerülése végett, következő lehetőségek egyikével, bizonyítania kell, hogy nem robot</string>
+  <string name="human_verification_enter_code_subtitle">Írja be a %s címre küldött ellenőrző kódot.</string>
+  <string name="human_verification_enter_code_subtitle_email">Adja meg a %s címre küldött ellenőrző kódot. Ha nem találja az e-mailt, ellenőrizze a Levélszemét mappában.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Írja be a már meglévő ellenőrző kódot:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">Your email will only be used for this one-time verification. If you don\'t find the email in your inbox, please check your spam folder.</string>
+  <string name="human_verification_option_email_subtitle">E-mail címét csak erre az egyszer ellenőrzésre fogjuk használni. Ha nem találja az e-mailt, nézze meg a Levélszemét közt is.</string>
   <string name="human_verification_option_sms">Telefonszám</string>
   <string name="human_verification_option_sms_subtitle">A telefonszám csak erre az egyszeri ellenőrzésre lesz felhasználva.</string>
   <string name="human_verification_get_verification_code">Ellenőrző kód küldése</string>
@@ -34,26 +34,26 @@
   <string name="human_verification_request_replacement_code">Nem kapta meg a kódot?</string>
   <string name="human_verification_verify">Ellenőrzés</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Do you need any help with human verification?</string>
-  <string name="human_verification_code">Verification Code</string>
+  <string name="human_verification_help_title">Segítségre van szüksége a robot ellenőrzéssel kapcsolatban?</string>
+  <string name="human_verification_code">Ellenőrző kód</string>
   <string name="human_verification_code_request_new_code_title">Új kód kérése?</string>
   <string name="human_verification_code_request_new_code_action">Új kód kérése</string>
-  <string name="human_verification_code_request_new_code">Get a replacement code sent to %s.</string>
+  <string name="human_verification_code_request_new_code">Cserekód küldése a %s címre.</string>
   <string name="email">E-mail</string>
   <string name="email_hint">email@example.com</string>
-  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="sms_hint">XX XX XXX XXXX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Meghívó kérése</string>
-  <string name="human_verification_help_manual">If you are having trouble creating your account, please request an invitation and we will respond within 1 business day.</string>
-  <string name="human_verification_help_website_title">Visit our Help Center</string>
-  <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
-  <string name="human_verification_sending_failed">Verification code sending failed. Please try again.</string>
-  <string name="human_verification_incorrect_code">Incorrect code. Please try again.</string>
-  <string name="human_verification_resent_code">We have sent you another code.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA verification failed. Please try one more time or choose another verification option.</string>
+  <string name="human_verification_help_manual">Ha problémába ütközik a fiók létrehozásakor, kérjen egy meghívót és 1 munkanapon belül segítséget nyújtunk.</string>
+  <string name="human_verification_help_website_title">Súgóközpont megnyitása</string>
+  <string name="human_verification_help_website">Tudjon meg többet a robot ellenőrzésről és hogy miért szükséges.</string>
+  <string name="human_verification_sending_failed">Ellenőrző kód küldése sikertelen. Próbálja meg újra.</string>
+  <string name="human_verification_incorrect_code">Hibás kód. Próbálja meg újra.</string>
+  <string name="human_verification_resent_code">Küldtünk egy újabb kódot.</string>
+  <string name="human_verification_captcha_failed">CAPTCHA ellenőrzés sikertelen. Próbálja meg újra, vagy válasszon egy másik ellenőrzési módot.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load CAPTCHA.</string>
-  <string name="human_verification_action_retry">Retry</string>
-  <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
+  <string name="human_verification_captcha_no_connectivity">Nincs kapcsolat. CAPTCHA betöltése sikertelen.</string>
+  <string name="human_verification_action_retry">Újra</string>
+  <string name="human_verification_method_loading_failed">Nem sikerült a kiválasztott ellenőrzési mód betöltése. Ha a probléma továbbra is fennáll, próbáljon meg egy másik módot, ha van, vagy nézze meg a Súgó képernyőt.</string>
 </resources>

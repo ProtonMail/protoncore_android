@@ -17,17 +17,17 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">选择套餐</string>
-  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
-  <string name="plans_fetching_general_error">获取套餐时出错了。</string>
+  <string name="plans_select_a_plan">选择账户等级</string>
+  <string name="plans_select_a_plan_subtitle">账户等级对所有 Proton 服务均有效</string>
+  <string name="plans_fetching_general_error">获取账户等级失败。</string>
   <string name="plans_free_name">免费版</string>
-  <string name="plan_price_monthly">per month</string>
-  <string name="plan_price_annually">per month*</string>
+  <string name="plan_price_monthly">每月</string>
+  <string name="plan_price_annually">每月*</string>
   <string name="plans_current_plan">当前等级</string>
-  <string name="plans_upgrade_plan">Upgrade your plan</string>
-  <string name="plans_subscription">订阅</string>
-  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_upgrade_plan">升级您的账户</string>
+  <string name="plans_subscription">账户等级</string>
+  <string name="plans_renewal_date">下次自动续费日期为 &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">账户等级将于 &lt;b&gt;%s&lt;/b&gt; 失效</string>
   <string name="plans_billed_yearly">* 按每年 %s 收费</string>
   <string name="plans_billed_monthly">按月计费</string>
   <string name="plans_billing_monthly">For 1 month</string>
@@ -37,9 +37,9 @@
   <string name="plans_proton_for_free">Get Proton for free</string>
   <string name="plans_get_proton">Get %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
-  <string name="plans_used_space">%s of %s</string>
+  <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
   <string name="plans_manage_your_subscription_vpn">Manage your subscription at <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
-  <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
+  <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间</item>

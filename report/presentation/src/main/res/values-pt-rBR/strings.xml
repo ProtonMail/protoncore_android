@@ -20,22 +20,22 @@
   <string name="core_report_bug_activity_title">Reportar um problema</string>
   <string name="core_report_bug_close">Fechar</string>
   <string name="core_report_bug_subject_field_hint">Assunto</string>
-  <string name="core_report_bug_subject_field_required">Enter a subject</string>
-  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_subject_field_required">Insira um assunto</string>
+  <string name="core_report_bug_description_field_hint">O que deu errado? Mínimo de 10 caracteres</string>
+  <string name="core_report_bug_description_field_placeholder">Descreva o problema com o máximo possível de detalhes. Se havia uma mensagem de erro, informe-nos o que estava escrito nela.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Enter at least %d character</item>
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="one">Insira pelo menos %d caractere</item>
+    <item quantity="other">Insira pelo menos %d caracteres</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
+  <string name="core_report_bug_discard_changes_title">Fechar relatório de erro?</string>
+  <string name="core_report_bug_discard_changes_description">Se você sair desta página, seu relatório não será salvo.</string>
   <string name="core_report_bug_discard_changes_cancel">Continuar editando</string>
   <string name="core_report_bug_discard_changes_confirm">Fechar sem salvar</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">Máximo de %d caractere</item>
+    <item quantity="other">Máximo de %d caracteres</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
+  <string name="core_report_bug_general_error">Ocorreu um erro. Tente novamente em alguns minutos.</string>
   <string name="core_report_bug_send">Enviar relatório</string>
   <string name="core_report_bug_success">Obrigado por seu relatório</string>
 </resources>

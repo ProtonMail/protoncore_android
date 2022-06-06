@@ -78,8 +78,8 @@
     <item quantity="other">%d of #proton_calendars# calendars</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Free VPN on a single device</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="one">Δωρεάν VPN σε μία μόνο συσκευή</item>
+    <item quantity="other">VPN υψηλής ταχύτητας σε #proton_vpn# συσκευές</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# high-speed VPN connection</item>
@@ -110,17 +110,17 @@
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Unlimited folders, labels, and filters</string>
-  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
-  <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
-  <string name="secure_core" comment="new_plans">Secure Core servers</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Απεριόριστοι φάκελοι, ετικέτες και φίλτρα</string>
+  <string name="highest_vpn_speed" comment="new_plans">Ύψιστη ταχύτητα VPN</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ διακομιστές σε 63 χώρες</string>
+  <string name="ad_blocker" comment="new_plans">Ενσωματωμένη φραγή διαφημίσεων (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Πρόσβαση παγκοσμίως σε υπηρεσίες μετάδοσης</string>
+  <string name="secure_core" comment="new_plans">Διακομιστές Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">Tor μέσω VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Η κατά προτεραιότητα απόρρητη λύση ταχυδρομείου και ημερολογίου για τις καθημερινές ανάγκες επικοινωνίας σας.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Η ιδιωτικότητα και διασφάλισή σας είναι η προτεραιότητά μας.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Η ιδιωτικότητα και διασφάλισή σας είναι η προτεραιότητά μας.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

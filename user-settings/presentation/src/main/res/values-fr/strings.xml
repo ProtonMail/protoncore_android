@@ -23,7 +23,7 @@
   <string name="settings_recovery_email_new">Nouvelle adresse électronique de réinitialisation/notification</string>
   <string name="settings_recovery_email_confirm">Confirmer la nouvelle adresse électronique de réinitialisation/notification</string>
   <string name="settings_recovery_email_new_hint">Saisissez votre adresse électronique</string>
-  <string name="settings_recovery_email_confirm_hint">Saisissez une nouvelle fois votre adresse électronique</string>
+  <string name="settings_recovery_email_confirm_hint">Saisissez à nouveau votre adresse électronique</string>
   <string name="settings_save">Enregistrer</string>
   <string name="settings_password_required">Saisissez votre mot de passe de connexion</string>
   <string name="settings_password_required_ok">OK</string>

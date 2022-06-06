@@ -66,8 +66,8 @@
     <item quantity="other">%d di #proton_addresses# indirizzi</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Support for #proton_domains# custom email domain</item>
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="one">Supporto per il dominio di posta elettronica personalizzato #proton_domains#</item>
+    <item quantity="other">Supporto per i domini di posta elettronica personalizzati #proton_domains#</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# calendario personale</item>
@@ -79,7 +79,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN gratuita su un unico dispositivo</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">VPN ad Alta Velocità su dispositivi #proton_vpn#</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# connessione VPN ad alta velocità</item>

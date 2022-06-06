@@ -18,29 +18,29 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Can not find browser to open the link.</string>
+  <string name="presentation_browser_missing">Nem található böngésző. a hivatkozás megnyitásához.</string>
   <string name="presentation_force_update_title">Frissítés szükséges</string>
-  <string name="presentation_force_update_message">This version of the app is no longer supported, please update to continue using it.</string>
+  <string name="presentation_force_update_message">Az alkalmazás ezen verziója már nem támogatott. Frissítenie kell egy újabbra.</string>
   <string name="presentation_force_update_learn_more">További információk</string>
   <string name="presentation_force_update_update">Frissítés</string>
-  <string name="presentation_market_missing">Can not find market application installed on the device. Please go to the store and update the application.</string>
+  <string name="presentation_market_missing">Nem található az áruház alkalmazás ezen az eszközön. Nyissa meg az áruházat és frissítse az alkalmazást.</string>
   <string name="presentation_authenticate">Azonosítás</string>
-  <string name="presentation_signin_to_continue">Sign in to continue</string>
+  <string name="presentation_signin_to_continue">Jelentkezzen be a folytatáshoz</string>
   <string name="presentation_alert_title">Figyelmeztetés</string>
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Belépés</string>
   <string name="presentation_alert_cancel">Mégsem</string>
-  <string name="presentation_alert_submit">Submit</string>
+  <string name="presentation_alert_submit">Küldés</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report an issue</string>
+  <string name="presentation_menu_item_title_report_a_bug">Hibabejelentés</string>
   <string name="presentation_menu_item_title_settings">Beállítások</string>
-  <string name="presentation_menu_item_title_subscription">Subscription</string>
+  <string name="presentation_menu_item_title_subscription">Előfizetés</string>
   <string name="presentation_menu_item_title_sign_out">Kijelentkezés</string>
   <!-- Other -->
   <string name="presentation_close">Bezárás</string>
   <string name="presentation_skip">Kihagyás</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Could not connect to server.</string>
-  <string name="presentation_check_your_connection">Check your connection</string>
-  <string name="presentation_connectivity_issues">Connectivity issues</string>
+  <string name="presentation_general_connection_error">Nem sikerült kapcsolódni a szerverhez.</string>
+  <string name="presentation_check_your_connection">Ellenőrizze a kapcsolatot</string>
+  <string name="presentation_connectivity_issues">Kapcsolódási problémák</string>
 </resources>

@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Lindungi privasi Anda dengan Proton</string>
   <string name="welcome_subtitle">Enkripsi memastikan data Anda tetap privat. Data Anda adalah milik Anda.</string>
-  <string name="welcome_title_mail">Protect your privacy with Proton Mail</string>
+  <string name="welcome_title_mail">Lindungi privasi Anda dengan Proton Mail</string>
   <string name="welcome_subtitle_mail">Email terenkripsi yang menjaga percakapan Anda tetap privat. Kotak masuk Anda adalah milik Anda.</string>
   <string name="welcome_subtitle_mail_alt">Privasi. Keamanan. Kenyamanan. Email terenkripsi yang memberi Anda kendali penuh terhadap data pribadi Anda.</string>
   <string name="welcome_title_drive">Lindungi privasi Anda dengan Proton Drive</string>
@@ -28,7 +28,7 @@
   <string name="welcome_title_calendar">Lindungi privasi Anda dengan Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga hidup Anda tetap privat, aman, dan terkunci rapat.</string>
   <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi dari ujung ke ujung membantu Anda tetap teratur, berada dalam jalur, dan terkendali.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
+  <string name="welcome_title_vpn">Lindungi privasi Anda dengan Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
   <string name="welcome_privacy_by_default">Berstandar privasi</string>
@@ -37,13 +37,13 @@
   <string name="auth_current_login_password">Kata sandi saat ini</string>
   <string name="auth_enter_six_digit_code">Masukkan kode 6 digit</string>
   <string name="auth_second_factor_code">Kode Dua Faktor</string>
-  <string name="auth_email_username">Surel atau nama pengguna</string>
-  <string name="auth_proton_email_or_username">Username or Proton Address</string>
+  <string name="auth_email_username">Email atau nama pengguna</string>
+  <string name="auth_proton_email_or_username">Nama pengguna atau alamat Proton</string>
   <string name="auth_account_details">Masukkan detail Akun Proton Anda.</string>
   <string name="auth_sign_in">Masuk</string>
   <string name="auth_sign_in_action">Masuk</string>
   <string name="auth_need_help">Butuh bantuan?</string>
-  <string name="auth_login_assistive_text">Masukkan surel Proton atau nama pengguna Anda.</string>
+  <string name="auth_login_assistive_text">Masukkan email atau nama pengguna Proton Anda.</string>
   <string name="auth_help_title">Bagaimana kami dapat membantu Anda?</string>
   <string name="auth_help_option_forgot_username">Lupa nama pengguna</string>
   <string name="auth_help_option_forgot_password">Lupa kata sandi</string>
@@ -66,12 +66,12 @@
   <string name="auth_login_general_error">Terjadi galat.</string>
   <string name="auth_login_empty_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh dikosongkan.</string>
-  <string name="auth_create_address_title">Create a Proton Mail address</string>
-  <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use Proton Mail, please create an address.</string>
+  <string name="auth_create_address_title">Buat alamat Proton Mail</string>
+  <string name="auth_create_address_subtitle">Akun Proton Anda terhubung dengan %1$s. Untuk dapat menggunakan Proton Mail, silakan buat alamat email.</string>
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Selanjutnya</string>
   <string name="auth_create_address_result_title">%s tersedia</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new Proton Mail email address.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s akan menjadi alamat Proton Mail baru Anda.</string>
   <string name="auth_create_address_result_subtitle">Anda akan menggunakan alamat ini untuk masuk ke semua layanan Proton.</string>
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
@@ -97,19 +97,19 @@
   <string name="auth_create_account">Buat akun</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Buat Akun Proton Anda</string>
-  <string name="auth_signup_current_email">Gunakan alamat surel terkini Anda</string>
-  <string name="auth_signup_create_secure_proton_address">Create a secure Proton Mail address instead</string>
+  <string name="auth_signup_current_email">Gunakan alamat email Anda saat ini</string>
+  <string name="auth_signup_create_secure_proton_address">Buat alamat Proton Mail yang aman</string>
   <string name="auth_signup_username">Nama pengguna</string>
   <string name="auth_signup_domain">Domain</string>
-  <string name="auth_signup_email">Surel</string>
+  <string name="auth_signup_email">Email</string>
   <string name="auth_signup_next">Selanjutnya</string>
   <string name="auth_signup_choose_password">Buat kata sandi Anda</string>
   <string name="auth_signup_repeat_password">Ulangi kata sandi</string>
   <string name="auth_signup_recovery_method_title">Atur metode pemulihan (opsional)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Atur metode pemulihan</string>
-  <string name="auth_signup_recovery_method_subtitle">Kami akan mengirimkan instruksi pemulihan ke surel berikut atau nomor telepon jika Anda terkunci dari akun Anda.</string>
+  <string name="auth_signup_recovery_method_subtitle">Kami akan mengirimkan petunjuk pemulihan akun ke alamat email atau nomor telepon berikut apabila Anda terkunci dari akun Anda.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">Kami akan mengirimkan instruksi pemulihan ke email ini seandainya Anda terkunci dari akun Anda.</string>
-  <string name="auth_signup_recovery_method_email">Surel</string>
+  <string name="auth_signup_recovery_method_email">Email</string>
   <string name="auth_signup_recovery_method_phone">Telepon</string>
   <string name="auth_signup_recovery_method_email_hint">Alamat email pemulihan</string>
   <string name="auth_signup_recovery_method_phone_hint">Nomor telepon pemulihan</string>
