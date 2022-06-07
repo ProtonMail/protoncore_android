@@ -554,6 +554,7 @@ class ProtonColors(
 fun ProtonColors.textNorm(enabled: Boolean = true) = if (enabled) textNorm else textDisabled
 fun ProtonColors.textWeak(enabled: Boolean = true) = if (enabled) textWeak else textDisabled
 fun ProtonColors.textInverted(enabled: Boolean = true) = if (enabled) textInverted else textDisabled
+fun ProtonColors.interactionNorm(enabled: Boolean = true) = if (enabled) interactionNorm else interactionDisabled
 
 internal fun ProtonColors.toMaterialThemeColors() = Colors(
     primary = brandNorm,
