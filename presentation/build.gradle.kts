@@ -42,7 +42,6 @@ dependencies {
         project(Module.challengeDomain),
 
         // Kotlin
-        `kotlin-reflect`,
         `coroutines-android`,
 
         // Android

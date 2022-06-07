@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 /**
  * A common interface for Adapters that have clickable items [UiModel]
@@ -77,12 +78,12 @@ interface ClickableAdapter<UiModel, ViewRef : Any> {
              * @throws IllegalArgumentException if [V] constraints are not satisfied
              */
             fun <V : Any> V.getView(): View {
-                val viewRefClass = this::class
-
-                return if (this is View) this
-                else viewRefClass.members.find { it.name == "getRoot" }?.call(this) as? View
-                    ?: throw IllegalArgumentException("Impossible to get a View for ViewHolder from constructor " +
-                        "parameter of type ${viewRefClass.simpleName}, use a View or a ViewBinding reference")
+                return when (this) {
+                    is View -> this
+                    is ViewBinding -> this.root
+                    else -> throw IllegalArgumentException("Impossible to get a View for ViewHolder from constructor " +
+                        "parameter of type ${this::class.qualifiedName}, use a View or a ViewBinding reference")
+                }
             }
         }
     }
