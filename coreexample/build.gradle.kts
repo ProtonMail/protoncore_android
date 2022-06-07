@@ -47,6 +47,13 @@ android {
     buildTypes {
         debug {}
         release {
+            postprocessing {
+                isRemoveUnusedCode = true
+                isRemoveUnusedResources = true
+                isObfuscate = true
+                isOptimizeCode = true
+                proguardFile("proguard-rules.pro")
+            }
             signingConfig = signingConfigs.getByName("release")
         }
     }
