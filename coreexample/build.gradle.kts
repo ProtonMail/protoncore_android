@@ -36,6 +36,20 @@ protonDagger {
 protonTestsOptions.unitTestFlavor = "dev"
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("coreexample.jks")
+            storePassword = "coreexample"
+            keyAlias = "coreexample"
+            keyPassword = "coreexample"
+        }
+    }
+    buildTypes {
+        debug {}
+        release {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
     defaultConfig {
         javaCompileOptions {
             annotationProcessorOptions {
