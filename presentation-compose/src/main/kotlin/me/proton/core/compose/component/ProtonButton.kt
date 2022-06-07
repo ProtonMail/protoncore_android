@@ -53,6 +53,7 @@ fun ProtonSolidButton(
     loading: Boolean = false,
     contained: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: ButtonColors = ButtonDefaults.protonButtonColors(loading),
     content: @Composable () -> Unit,
 ) {
     ProtonButton(
@@ -65,7 +66,7 @@ fun ProtonSolidButton(
         elevation = ButtonDefaults.protonElevation(),
         shape = ProtonTheme.shapes.medium,
         border = null,
-        colors = ButtonDefaults.protonButtonColors(loading),
+        colors = colors,
         contentPadding = ButtonDefaults.ContentPadding,
         content = content,
     )
@@ -104,6 +105,7 @@ fun ProtonOutlinedButton(
     loading: Boolean = false,
     contained: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: ButtonColors = ButtonDefaults.protonOutlinedButtonColors(loading),
     content: @Composable () -> Unit,
 ) {
     ProtonButton(
@@ -116,7 +118,7 @@ fun ProtonOutlinedButton(
         elevation = null,
         shape = ProtonTheme.shapes.medium,
         border = ButtonDefaults.protonOutlinedBorder(enabled, loading),
-        colors = ButtonDefaults.protonOutlinedButtonColors(loading),
+        colors = colors,
         contentPadding = ButtonDefaults.ContentPadding,
         content = content,
     )
@@ -165,6 +167,7 @@ fun ProtonTextButton(
     loading: Boolean = false,
     contained: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: ButtonColors = ButtonDefaults.protonTextButtonColors(loading),
     content: @Composable () -> Unit,
 ) {
     ProtonButton(
@@ -177,7 +180,7 @@ fun ProtonTextButton(
         elevation = null,
         shape = ProtonTheme.shapes.small,
         border = null,
-        colors = ButtonDefaults.protonTextButtonColors(loading),
+        colors = colors,
         contentPadding = ButtonDefaults.TextButtonContentPadding,
         content = content,
     )
@@ -216,6 +219,7 @@ fun ProtonSecondaryButton(
     enabled: Boolean = true,
     loading: Boolean = false,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: ButtonColors = ButtonDefaults.protonSecondaryButtonColors(loading),
     content: @Composable () -> Unit,
 ) {
     ProtonButton(
@@ -227,7 +231,7 @@ fun ProtonSecondaryButton(
         elevation = null,
         shape = ProtonTheme.shapes.medium,
         border = null,
-        colors = ButtonDefaults.protonSecondaryButtonColors(loading),
+        colors = colors,
         contentPadding = ButtonDefaults.TextButtonContentPadding,
         content = content,
     )

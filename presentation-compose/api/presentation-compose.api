@@ -55,13 +55,11 @@ public final class me/proton/core/compose/activity/RememberLauncherKt {
 
 public final class me/proton/core/compose/component/ComposableSingletons$ProtonAlertDialogKt {
 	public static final field INSTANCE Lme/proton/core/compose/component/ComposableSingletons$ProtonAlertDialogKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
 	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function2;
 	public fun <init> ()V
-	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-2$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class me/proton/core/compose/component/ComposableSingletons$ProtonBottomNavigationKt {
@@ -200,6 +198,8 @@ public final class me/proton/core/compose/component/ProtonAlertDialogKt {
 	public static final fun ProtonAlertDialog-lmFMXvc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;ILandroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonAlertDialog-lmFMXvc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonAlertDialog-lmFMXvc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;JLandroidx/compose/ui/window/DialogProperties;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialogButton (ILandroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonAlertDialogButton (Ljava/lang/String;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonAlertDialogText (ILandroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonAlertDialogText (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonDialogTitle (ILandroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
@@ -215,10 +215,10 @@ public final class me/proton/core/compose/component/ProtonBottomNavigationKt {
 
 public final class me/proton/core/compose/component/ProtonButtonKt {
 	public static final fun ProtonButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/material/ButtonElevation;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/material/ButtonColors;Landroidx/compose/foundation/layout/PaddingValues;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
-	public static final fun ProtonOutlinedButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun ProtonSecondaryButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun ProtonSolidButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun ProtonTextButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonOutlinedButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/material/ButtonColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSecondaryButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/material/ButtonColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSolidButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/material/ButtonColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonTextButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/material/ButtonColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun protonButtonColors-NghDbR4 (Landroidx/compose/material/ButtonDefaults;ZJJJJLandroidx/compose/runtime/Composer;II)Landroidx/compose/material/ButtonColors;
 	public static final fun protonElevation (Landroidx/compose/material/ButtonDefaults;Landroidx/compose/runtime/Composer;I)Landroidx/compose/material/ButtonElevation;
 	public static final fun protonOutlinedBorder (Landroidx/compose/material/ButtonDefaults;ZZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/BorderStroke;
@@ -439,6 +439,8 @@ public final class me/proton/core/compose/theme/AccentColors {
 
 public final class me/proton/core/compose/theme/ColorsKt {
 	public static final fun intenseVariant-8_81llA (J)J
+	public static final fun interactionNorm (Lme/proton/core/compose/theme/ProtonColors;Z)J
+	public static synthetic fun interactionNorm$default (Lme/proton/core/compose/theme/ProtonColors;ZILjava/lang/Object;)J
 	public static final fun strongVariant-8_81llA (J)J
 	public static final fun textInverted (Lme/proton/core/compose/theme/ProtonColors;Z)J
 	public static synthetic fun textInverted$default (Lme/proton/core/compose/theme/ProtonColors;ZILjava/lang/Object;)J

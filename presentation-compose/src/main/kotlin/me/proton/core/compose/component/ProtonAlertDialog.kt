@@ -18,12 +18,13 @@
 package me.proton.core.compose.component
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -196,12 +197,61 @@ fun ProtonAlertDialogText(
     )
 }
 
+@Composable
+fun ProtonAlertDialogButton(
+    @StringRes titleResId: Int,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    loading: Boolean = false,
+    contained: Boolean = true,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onClick: () -> Unit,
+) {
+    ProtonAlertDialogButton(
+        title = stringResource(id = titleResId),
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        loading = loading,
+        contained = contained,
+        interactionSource = interactionSource,
+    )
+}
+
+@Composable
+fun ProtonAlertDialogButton(
+    title: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    loading: Boolean = false,
+    contained: Boolean = true,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onClick: () -> Unit,
+) {
+    ProtonTextButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        loading = loading,
+        contained = contained,
+        interactionSource = interactionSource,
+    ) {
+        Text(
+            text = title,
+            style = ProtonTheme.typography.body1Medium,
+            color = ProtonTheme.colors.interactionNorm,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
 @Preview
 @Composable
 fun PreviewProtonAlertDialog() {
     ProtonAlertDialog(
         onDismissRequest = {},
-        confirmButton = { TextButton(onClick = {}) { Text("Ok") } },
+        confirmButton = { ProtonAlertDialogButton(title = "Ok") { } },
         text = { ProtonAlertDialogText("This is an alert dialog.") },
         title = "Alert",
     )
