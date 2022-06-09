@@ -20,19 +20,25 @@ package me.proton.core.crypto.validator.presentation
 
 import android.app.Activity
 import android.app.Application
-import android.os.Bundle
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
 import me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity
 import me.proton.core.presentation.utils.EmptyActivityLifecycleCallbacks
+import me.proton.core.util.kotlin.CoroutineScopeProvider
+import javax.inject.Inject
 
-public class CryptoValidator(
+public class CryptoValidator @Inject constructor(
     private val application: Application,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val cryptoPrefs: CryptoPrefs,
+    private val scopeProvider: CoroutineScopeProvider
 ) {
-    public fun validate() {
-        if (cryptoPrefs.useInsecureKeystore == true || keyStoreCrypto.isUsingKeyStore()) return
+    private val scope get() = scopeProvider.GlobalIOSupervisedScope
+
+    public fun validate(): Job = scope.launch {
+        if (cryptoPrefs.useInsecureKeystore == true || keyStoreCrypto.isUsingKeyStore()) return@launch
 
         application.registerActivityLifecycleCallbacks(object : EmptyActivityLifecycleCallbacks() {
             /** Try to display error activity whenever an activity is resumed. */
@@ -44,8 +50,13 @@ public class CryptoValidator(
 
             /** Don't check again if user accepted the risk of not using proper encryption. */
             override fun onActivityDestroyed(activity: Activity) {
-                if (activity is CryptoValidatorErrorDialogActivity && cryptoPrefs.useInsecureKeystore == true) {
-                    application.unregisterActivityLifecycleCallbacks(this)
+                if (activity !is CryptoValidatorErrorDialogActivity) return
+
+                val callbacks = this
+                scope.launch {
+                    if (cryptoPrefs.useInsecureKeystore == true) {
+                        application.unregisterActivityLifecycleCallbacks(callbacks)
+                    }
                 }
             }
         })

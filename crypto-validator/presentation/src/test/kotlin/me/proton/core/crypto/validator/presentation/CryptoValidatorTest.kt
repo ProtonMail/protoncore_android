@@ -24,12 +24,14 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import io.mockk.verify
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
 import me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -54,7 +56,8 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
         keyStoreValidator = CryptoValidator(
             application,
             keyStoreCrypto,
-            cryptoPrefs
+            cryptoPrefs,
+            TestCoroutineScopeProvider
         )
     }
 

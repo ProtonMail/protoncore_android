@@ -22,8 +22,16 @@ public final class me/proton/core/crypto/validator/presentation/BuildConfig {
 }
 
 public final class me/proton/core/crypto/validator/presentation/CryptoValidator {
-	public fun <init> (Landroid/app/Application;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/crypto/validator/domain/prefs/CryptoPrefs;)V
-	public final fun validate ()V
+	public fun <init> (Landroid/app/Application;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/crypto/validator/domain/prefs/CryptoPrefs;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public final fun validate ()Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/crypto/validator/presentation/CryptoValidator_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/crypto/validator/presentation/CryptoValidator_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/crypto/validator/presentation/CryptoValidator;
+	public static fun newInstance (Landroid/app/Application;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/crypto/validator/domain/prefs/CryptoPrefs;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/crypto/validator/presentation/CryptoValidator;
 }
 
 public final class me/proton/core/crypto/validator/presentation/init/CryptoValidatorInitializer : androidx/startup/Initializer {

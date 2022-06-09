@@ -28,7 +28,9 @@ import javax.inject.Inject
 public class CryptoPrefsImpl @Inject constructor(
     @ApplicationContext context: Context
 ) : PreferencesProvider, me.proton.core.crypto.validator.domain.prefs.CryptoPrefs {
-    override val preferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    override val preferences: SharedPreferences by lazy {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
 
     public override var useInsecureKeystore: Boolean? by boolean()
 

@@ -18,35 +18,12 @@
 
 package me.proton.core.crypto.validator.dagger
 
-import android.app.Application
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.validator.data.prefs.CryptoPrefsImpl
 import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
-import me.proton.core.crypto.validator.presentation.CryptoValidator
-import javax.inject.Singleton
-
-@Module
-@InstallIn(SingletonComponent::class)
-internal object CoreCryptoValidatorModule {
-
-    @Provides
-    @Singleton
-    fun provideKeyStoreCryptoCheck(
-        application: Application,
-        keyStoreCrypto: KeyStoreCrypto,
-        cryptoPrefs: CryptoPrefs,
-    ): CryptoValidator =
-        CryptoValidator(
-            application,
-            keyStoreCrypto,
-            cryptoPrefs
-        )
-}
 
 @Module
 @InstallIn(SingletonComponent::class)
