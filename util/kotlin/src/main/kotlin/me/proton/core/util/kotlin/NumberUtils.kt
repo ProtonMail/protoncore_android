@@ -20,6 +20,9 @@ fun Int.toBoolean() = when (this) {
 /** @return `true` if receiver [Int] is `1`, else `false` */
 fun Int.toBooleanOrFalse() = this == 1
 
+/** @return `false` if receiver [Int] is `0`, else `true` */
+fun Int.toBooleanOrTrue() = this != 0
+
 /**
  * @return `1` if receiver [Boolean] is `true` or `0` if receiver is `false`.
  */
