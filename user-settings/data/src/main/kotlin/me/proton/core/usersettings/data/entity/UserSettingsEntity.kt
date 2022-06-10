@@ -78,14 +78,13 @@ data class TwoFAEntity(
     val enabled: Int?,
     val allowed: Int?,
     val expirationTime: Int?,
-    val u2fKeys: List<U2FKeyEntity>?
 )
 
 @Serializable
-data class U2FKeyEntity(
-    val label: String?,
-    val keyHandle: String?,
-    val compromised: Int?
+data class RegisteredKeyEntity(
+    val attestationFormat: String,
+    val credentialID: List<Int>,
+    val name: String,
 )
 
 data class FlagsEntity(

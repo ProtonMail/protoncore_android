@@ -87,18 +87,6 @@ data class TwoFAResponse(
     val allowed: Int,
     @SerialName("ExpirationTime")
     val expirationTime: Int?,
-    @SerialName("U2FKeys")
-    val u2fKeys: List<U2FKeyResponse>?
-)
-
-@Serializable
-data class U2FKeyResponse(
-    @SerialName("Label")
-    val label: String,
-    @SerialName("KeyHandle")
-    val keyHandle: String,
-    @SerialName("Compromised")
-    val compromised: Int
 )
 
 @Serializable

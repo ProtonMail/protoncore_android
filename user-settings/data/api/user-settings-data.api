@@ -424,19 +424,17 @@ public final class me/proton/core/usersettings/data/api/response/SingleUserSetti
 
 public final class me/proton/core/usersettings/data/api/response/TwoFAResponse {
 	public static final field Companion Lme/proton/core/usersettings/data/api/response/TwoFAResponse$Companion;
-	public synthetic fun <init> (IIILjava/lang/Integer;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (IILjava/lang/Integer;Ljava/util/List;)V
+	public synthetic fun <init> (IIILjava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (IILjava/lang/Integer;)V
 	public final fun component1 ()I
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/Integer;
-	public final fun component4 ()Ljava/util/List;
-	public final fun copy (IILjava/lang/Integer;Ljava/util/List;)Lme/proton/core/usersettings/data/api/response/TwoFAResponse;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/response/TwoFAResponse;IILjava/lang/Integer;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/usersettings/data/api/response/TwoFAResponse;
+	public final fun copy (IILjava/lang/Integer;)Lme/proton/core/usersettings/data/api/response/TwoFAResponse;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/response/TwoFAResponse;IILjava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/usersettings/data/api/response/TwoFAResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowed ()I
 	public final fun getEnabled ()I
 	public final fun getExpirationTime ()Ljava/lang/Integer;
-	public final fun getU2fKeys ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Lme/proton/core/usersettings/data/api/response/TwoFAResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -455,40 +453,6 @@ public final class me/proton/core/usersettings/data/api/response/TwoFAResponse$$
 }
 
 public final class me/proton/core/usersettings/data/api/response/TwoFAResponse$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/usersettings/data/api/response/U2FKeyResponse {
-	public static final field Companion Lme/proton/core/usersettings/data/api/response/U2FKeyResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;I)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()I
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;I)Lme/proton/core/usersettings/data/api/response/U2FKeyResponse;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/response/U2FKeyResponse;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Object;)Lme/proton/core/usersettings/data/api/response/U2FKeyResponse;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCompromised ()I
-	public final fun getKeyHandle ()Ljava/lang/String;
-	public final fun getLabel ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/usersettings/data/api/response/U2FKeyResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/usersettings/data/api/response/U2FKeyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/usersettings/data/api/response/U2FKeyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/usersettings/data/api/response/U2FKeyResponse;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/usersettings/data/api/response/U2FKeyResponse;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/usersettings/data/api/response/U2FKeyResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -599,8 +563,8 @@ public final class me/proton/core/usersettings/data/db/OrganizationDatabase$Comp
 
 public final class me/proton/core/usersettings/data/db/UserSettingsConverters {
 	public fun <init> ()V
-	public final fun fromListOfU2FKeyEntityToString (Ljava/util/List;)Ljava/lang/String;
-	public final fun fromStringToListOfU2FKeyEntity (Ljava/lang/String;)Ljava/util/List;
+	public final fun fromListOfRegisteredKeyEntityToString (Ljava/util/List;)Ljava/lang/String;
+	public final fun fromStringToListOfRegisteredKeyEntity (Ljava/lang/String;)Ljava/util/List;
 }
 
 public abstract interface class me/proton/core/usersettings/data/db/UserSettingsDatabase : me/proton/core/data/room/db/Database {
@@ -610,6 +574,7 @@ public abstract interface class me/proton/core/usersettings/data/db/UserSettings
 
 public final class me/proton/core/usersettings/data/db/UserSettingsDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/usersettings/data/db/dao/OrganizationDao : me/proton/core/data/room/db/BaseDao {
@@ -751,55 +716,53 @@ public final class me/proton/core/usersettings/data/entity/RecoverySettingEntity
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/usersettings/data/entity/RegisteredKeyEntity {
+	public static final field Companion Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttestationFormat ()Ljava/lang/String;
+	public final fun getCredentialID ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/usersettings/data/entity/RegisteredKeyEntity$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/usersettings/data/entity/RegisteredKeyEntity;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/usersettings/data/entity/RegisteredKeyEntity$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/usersettings/data/entity/TwoFAEntity {
-	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;)V
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/Integer;
 	public final fun component2 ()Ljava/lang/Integer;
 	public final fun component3 ()Ljava/lang/Integer;
-	public final fun component4 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;)Lme/proton/core/usersettings/data/entity/TwoFAEntity;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/usersettings/data/entity/TwoFAEntity;
+	public final fun copy (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/usersettings/data/entity/TwoFAEntity;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/usersettings/data/entity/TwoFAEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowed ()Ljava/lang/Integer;
 	public final fun getEnabled ()Ljava/lang/Integer;
 	public final fun getExpirationTime ()Ljava/lang/Integer;
-	public final fun getU2fKeys ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/usersettings/data/entity/U2FKeyEntity {
-	public static final field Companion Lme/proton/core/usersettings/data/entity/U2FKeyEntity$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/Integer;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Lme/proton/core/usersettings/data/entity/U2FKeyEntity;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/entity/U2FKeyEntity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/usersettings/data/entity/U2FKeyEntity;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCompromised ()Ljava/lang/Integer;
-	public final fun getKeyHandle ()Ljava/lang/String;
-	public final fun getLabel ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/usersettings/data/entity/U2FKeyEntity;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/usersettings/data/entity/U2FKeyEntity$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/usersettings/data/entity/U2FKeyEntity$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/usersettings/data/entity/U2FKeyEntity;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/usersettings/data/entity/U2FKeyEntity;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/usersettings/data/entity/U2FKeyEntity$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class me/proton/core/usersettings/data/entity/UserSettingsEntity {

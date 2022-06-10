@@ -114,13 +114,6 @@ data class TwoFASetting(
     val enabled: Boolean?,
     val allowed: Int?,
     val expirationTime: Int?,
-    val u2fKeys: List<U2FKeySetting>?
-)
-
-data class U2FKeySetting(
-    val label: String?,
-    val keyHandle: String?,
-    val compromised: Boolean?
 )
 
 data class Flags(

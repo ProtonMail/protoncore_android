@@ -146,4 +146,10 @@ object AccountManagerDatabaseMigrations {
             ChallengeDatabase.MIGRATION_1.migrate(database)
         }
     }
+
+    val MIGRATION_18_19 = object : Migration(18, 19) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserSettingsDatabase.MIGRATION_1.migrate(database)
+        }
+    }
 }

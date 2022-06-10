@@ -116,7 +116,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `get current settings 2 Pass handled correctly`() = coroutinesTest {
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null, null),
+            twoFA = TwoFASetting(true, 1, null),
             password = PasswordSetting(mode = 2, expirationTime = null)
         )
         viewModel.state.test {
@@ -133,7 +133,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `get current settings 1 Pass handled correctly`() = coroutinesTest {
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null, null),
+            twoFA = TwoFASetting(true, 1, null),
             password = PasswordSetting(mode = 1, expirationTime = null)
         )
         viewModel.state.test {
@@ -155,7 +155,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.encrypt(testNewPassword) } returns "encrypted-test-new-password"
 
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null, null),
+            twoFA = TwoFASetting(true, 1, null),
             password = PasswordSetting(mode = 1, expirationTime = null)
         )
 
@@ -193,7 +193,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
         val testNewMailboxPassword = testNewPassword
 
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null, null),
+            twoFA = TwoFASetting(true, 1, null),
             password = PasswordSetting(mode = 2, expirationTime = null)
         )
 
@@ -233,7 +233,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
         val testNewMailboxPassword = testNewPassword
 
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null, null),
+            twoFA = TwoFASetting(true, 1, null),
             password = PasswordSetting(mode = 1, expirationTime = null)
         )
 

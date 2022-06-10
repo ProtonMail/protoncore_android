@@ -19,14 +19,14 @@
 package me.proton.core.usersettings.data.db
 
 import androidx.room.TypeConverter
-import me.proton.core.usersettings.data.entity.U2FKeyEntity
+import me.proton.core.usersettings.data.entity.RegisteredKeyEntity
 import me.proton.core.util.kotlin.deserializeList
 import me.proton.core.util.kotlin.serialize
 
 class UserSettingsConverters {
     @TypeConverter
-    fun fromListOfU2FKeyEntityToString(value: List<U2FKeyEntity>?) = value?.serialize()
+    fun fromListOfRegisteredKeyEntityToString(value: List<RegisteredKeyEntity>?) = value?.serialize()
 
     @TypeConverter
-    fun fromStringToListOfU2FKeyEntity(value: String?): List<U2FKeyEntity>? = value?.deserializeList()
+    fun fromStringToListOfRegisteredKeyEntity(value: String?): List<RegisteredKeyEntity>? = value?.deserializeList()
 }
