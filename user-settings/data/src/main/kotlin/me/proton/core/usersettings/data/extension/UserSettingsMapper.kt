@@ -37,8 +37,14 @@ import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.U2FKeySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.entity.UserSettings.*
+import me.proton.core.usersettings.domain.entity.UserSettings.DateFormat
+import me.proton.core.usersettings.domain.entity.UserSettings.Density
+import me.proton.core.usersettings.domain.entity.UserSettings.LogAuth
+import me.proton.core.usersettings.domain.entity.UserSettings.TimeFormat
+import me.proton.core.usersettings.domain.entity.UserSettings.WeekStart
 import me.proton.core.util.kotlin.toBoolean
+import me.proton.core.util.kotlin.toBooleanOrFalse
+import me.proton.core.util.kotlin.toBooleanOrTrue
 import me.proton.core.util.kotlin.toInt
 
 fun UserSettingsResponse.toUserSettings(userId: UserId): UserSettings = fromResponse(userId)
@@ -59,22 +65,39 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     weekStart = WeekStart.enumOf(weekStart),
     dateFormat = DateFormat.enumOf(dateFormat),
     timeFormat = TimeFormat.enumOf(timeFormat),
-    welcome = welcome.toBoolean(),
-    earlyAccess = earlyAccess.toBoolean(),
+    welcome = welcome.toBooleanOrFalse(),
+    earlyAccess = earlyAccess.toBooleanOrFalse(),
     flags = flags?.fromResponse()
 )
 
-internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(value, status, notify.toBoolean(), reset.toBoolean())
+internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(
+    value = value,
+    status = status,
+    notify = notify.toBooleanOrFalse(),
+    reset = reset.toBooleanOrFalse()
+)
 
-internal fun PasswordResponse.fromResponse() = PasswordSetting(mode, expirationTime)
+internal fun PasswordResponse.fromResponse() = PasswordSetting(
+    mode = mode,
+    expirationTime = expirationTime
+)
 
-internal fun TwoFAResponse.fromResponse() = TwoFASetting(enabled.toBoolean(), allowed, expirationTime, u2fKeys?.map {
-    it.fromResponse()
-})
+internal fun TwoFAResponse.fromResponse() = TwoFASetting(
+    enabled = enabled.toBooleanOrTrue(),
+    allowed = allowed,
+    expirationTime = expirationTime,
+    u2fKeys = u2fKeys?.map { it.fromResponse() }
+)
 
-internal fun U2FKeyResponse.fromResponse() = U2FKeySetting(label, keyHandle, compromised.toBoolean())
+internal fun U2FKeyResponse.fromResponse() = U2FKeySetting(
+    label = label,
+    keyHandle = keyHandle,
+    compromised = compromised.toBooleanOrTrue()
+)
 
-internal fun FlagsResponse.fromResponse() = Flags(welcomed.toBoolean())
+internal fun FlagsResponse.fromResponse() = Flags(
+    welcomed = welcomed.toBooleanOrFalse()
+)
 
 internal fun UserSettingsEntity.fromEntity() = UserSettings(
     userId = userId,
@@ -121,8 +144,8 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
 internal fun RecoverySettingEntity.fromEntity() = RecoverySetting(
     value = value,
     status = status,
-    notify = notify?.toBoolean(),
-    reset = reset?.toBoolean()
+    notify = notify?.toBooleanOrFalse(),
+    reset = reset?.toBooleanOrFalse()
 )
 
 internal fun RecoverySetting.toEntity() = RecoverySettingEntity(
@@ -143,27 +166,23 @@ internal fun PasswordSetting.toEntity() = PasswordEntity(
 )
 
 internal fun TwoFAEntity.fromEntity() = TwoFASetting(
-    enabled = enabled?.toBoolean(),
+    enabled = enabled?.toBooleanOrTrue(),
     allowed = allowed,
     expirationTime = expirationTime,
-    u2fKeys = u2fKeys?.map {
-        it.fromEntity()
-    }
+    u2fKeys = u2fKeys?.map { it.fromEntity() }
 )
 
 internal fun TwoFASetting.toEntity() = TwoFAEntity(
     enabled = enabled?.toInt(),
-    allowed = allowed?.toInt(),
+    allowed = allowed,
     expirationTime = expirationTime,
-    u2fKeys = u2fKeys?.map {
-        it.toEntity()
-    }
+    u2fKeys = u2fKeys?.map { it.toEntity() }
 )
 
 internal fun U2FKeyEntity.fromEntity() = U2FKeySetting(
     label = label,
     keyHandle = keyHandle,
-    compromised = compromised?.toBoolean()
+    compromised = compromised?.toBooleanOrTrue()
 )
 
 internal fun U2FKeySetting.toEntity() = U2FKeyEntity(
