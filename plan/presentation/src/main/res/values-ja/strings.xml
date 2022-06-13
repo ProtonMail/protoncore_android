@@ -99,7 +99,7 @@
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">制限なしのフォルダー、ラベル、フィルター</string>
   <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
+  <string name="servers_in_countries" comment="new_plans">63 か国にある 1500 台を超えるサーバー</string>
   <string name="ad_blocker" comment="new_plans">広告ブロッカー内蔵 (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">世界中でストリーミングサービスにアクセス</string>
   <string name="secure_core" comment="new_plans">Secure Core サーバー</string>

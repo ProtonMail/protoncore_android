@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">Protect your privacy with Proton</string>
-  <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
-  <string name="welcome_title_mail">Protect your privacy with Proton Mail</string>
-  <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
+  <string name="welcome_title">Proteja a sua privacidade com Proton</string>
+  <string name="welcome_subtitle">A encriptação mantém os seus dados privados. Os seus dados pertencem apenas a si.</string>
+  <string name="welcome_title_mail">Proteja a sua privacidade com Proton Mail</string>
+  <string name="welcome_subtitle_mail">O correio electrónico encriptado que mantém as suas conversas privadas. A caixa de entrada pertence apenas a si.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
-  <string name="welcome_title_drive">Protect your privacy with Proton Drive</string>
+  <string name="welcome_title_drive">Proteja a sua privacidade com Proton Drive</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
-  <string name="welcome_title_calendar">Protect your privacy with Proton Calendar</string>
+  <string name="welcome_title_calendar">Proteja a sua privacidade com Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
+  <string name="welcome_title_vpn">Proteja a sua privacidade com Proton VPN</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
-  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="welcome_privacy_by_default">Privacidade por padrão</string>
   <string name="auth_password_label">Senha</string>
-  <string name="auth_password_help">Password must contain at least 8 characters</string>
-  <string name="auth_current_login_password">Current login password</string>
-  <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
+  <string name="auth_password_help">A senha deve conter pelo menos 8 caracteres</string>
+  <string name="auth_current_login_password">Senha atual de acesso</string>
+  <string name="auth_enter_six_digit_code">Insira o código de 6 algarismos</string>
   <string name="auth_second_factor_code">Two-Factor code</string>
   <string name="auth_email_username">Email ou utilizador</string>
   <string name="auth_proton_email_or_username">Username or Proton Address</string>
@@ -71,14 +71,14 @@
   <string name="auth_username">Utilizador</string>
   <string name="auth_username_next_action">Seguinte</string>
   <string name="auth_create_address_result_title">%s está disponível</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new Proton Mail email address.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s será o seu novo endereço de correio electrónico ProtonMail.</string>
   <string name="auth_create_address_result_subtitle">You will use this address to log in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
   <string name="auth_create_address_create">Criar endereço</string>
-  <string name="auth_create_address_creating">Creating address</string>
+  <string name="auth_create_address_creating">Criando endereço</string>
   <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
-  <string name="auth_create_address_error_no_available_domain">No available domain.</string>
+  <string name="auth_create_address_error_no_available_domain">Nenhum domínio disponível.</string>
   <string name="auth_create_address_error_private_key">Generating private key failed.</string>
   <string name="auth_create_address_error_signed_key_list">Generating key list failed.</string>
   <string name="auth_create_address_error_setusername">Associating username has failed.</string>
@@ -86,7 +86,7 @@
   <string name="auth_mailbox_login_error_no_primary_key">No Primary key found.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Primary key error.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Invalid passphrase.</string>
-  <string name="auth_password_chooser_title">Change your password</string>
+  <string name="auth_password_chooser_title">Altere a sua senha</string>
   <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
   <string name="auth_password_chooser_change">Alterar senha</string>
   <string name="auth_user_check_one_free_error">Only one free Proton account is allowed.</string>

@@ -32,7 +32,7 @@
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>
   <string name="plans_billing_yearly">Pour 1 an</string>
-  <string name="plans_billing_two_years">Pour 2 ans</string>
+  <string name="plans_billing_two_years">Pour 2 ans</string>
   <string name="plans_upgrade_your_plan">Changez d\'offre</string>
   <string name="plans_proton_for_free">Obtenir Proton gratuitement</string>
   <string name="plans_get_proton">Obtenir %s</string>
@@ -130,6 +130,6 @@
   <string-array name="supported_billing_cycle">
     <item>Paiement mensuel</item>
     <item>Paiement annuel</item>
-    <item>Paiement tous les 2 ans</item>
+    <item>Paiement tous les 2 ans</item>
   </string-array>
 </resources>

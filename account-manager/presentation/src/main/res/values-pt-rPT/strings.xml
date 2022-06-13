@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Switch to</string>
+  <string name="account_switcher_section_switch_to">Mudar para</string>
   <string name="account_switcher_action_add_account">Adicionar conta</string>
   <string name="account_switcher_action_sign_in">Iniciar sessão</string>
   <string name="account_switcher_action_sign_out">Terminar sessão</string>

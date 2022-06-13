@@ -20,10 +20,10 @@
   <string name="plans_select_a_plan">Pilih Paket</string>
   <string name="plans_select_a_plan_subtitle">Satu paket untuk semua layanan Proton</string>
   <string name="plans_fetching_general_error">Terjadi kesalahan pada saat mengambil daftar paket.</string>
-  <string name="plans_free_name">Gratis</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per bulan</string>
   <string name="plan_price_annually">per bulan*</string>
-  <string name="plans_current_plan">Paket saat ini</string>
+  <string name="plans_current_plan">Paket Saat Ini</string>
   <string name="plans_upgrade_plan">Tingkatkan paket langganan Anda</string>
   <string name="plans_subscription">Langganan</string>
   <string name="plans_renewal_date">Paket langganan Anda akan otomatis diperbarui pada &lt;b&gt;%s&lt;/b&gt;</string>
@@ -42,22 +42,22 @@
   <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan dari aplikasi seluler.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="other">#proton_storage# storage</item>
+    <item quantity="other">Kuota penyimpanan #proton_storage#</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="other">Kuota penyimpanan hingga #proton_storage#</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="other">#proton_storage# storage / user</item>
+    <item quantity="other">Kuota penyimpanan #proton_storage# / pengguna</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# alamat email</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# addresses / user</item>
+    <item quantity="other">#proton_addresses# alamat / pengguna</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d dari #proton_addresses# address</item>
+    <item quantity="other">%d dari #proton_addresses# alamat</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">Dukungan #proton_domains# alamat email khusus</item>
@@ -66,19 +66,19 @@
     <item quantity="other">#proton_calendars# kalender personal</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d dari #proton_calendars# calendar</item>
+    <item quantity="other">%d dari #proton_calendars# kalender</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">VPN berkecepatan tinggi pada #proton_vpn# perangkat</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="other">#proton_vpn# koneksi VPN berkecepatan tinggi</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="other">#proton_users# users</item>
+    <item quantity="other">#proton_users# pengguna</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d dari #proton_users# user</item>
+    <item quantity="other">%d dari #proton_users# pengguna</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -94,7 +94,7 @@
   <string name="plan_id_vpnplus_highest_speed">Kecepatan tertinggi</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Dukungan multi-pengguna</string>
-  <string name="plan_id_visionary_header">Visioner</string>
+  <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Tanpa batasan jumlah folder, label, dan filter</string>

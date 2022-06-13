@@ -18,8 +18,8 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Nu am găsit un browser pentru a deschide linkul.</string>
-  <string name="presentation_force_update_title">Actualizare necesară</string>
+  <string name="presentation_browser_missing">Nu s-a găsit un navigator web pentru a deschide legătura.</string>
+  <string name="presentation_force_update_title">Necesită actualizare</string>
   <string name="presentation_force_update_message">Această versiune a aplicației nu mai este acceptată, actualizați-o pentru a o mai putea folosi.</string>
   <string name="presentation_force_update_learn_more">Detalii</string>
   <string name="presentation_force_update_update">Actualizare</string>

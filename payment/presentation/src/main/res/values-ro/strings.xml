@@ -24,13 +24,13 @@
   <string name="payments_error_card_name">Numele de pe card este obligatoriu.</string>
   <string name="payments_error_card_number">Număr de card nevalid.</string>
   <string name="payments_error_cvc">Introduceți un cod de securitate valid.</string>
-  <string name="payments_error_session">Un identificator de sesiune valid este necesar la abonarea unui utilizator conectat.</string>
-  <string name="payments_error_signup_paymentmethod">Nu se poate crea cont cu metoda de plată existentă.</string>
-  <string name="payments_error_invalid_session">Sesiune invalidă.</string>
+  <string name="payments_error_session">Este necesar un ID de sesiune valid pentru abonarea unui utilizator conectat.</string>
+  <string name="payments_error_signup_paymentmethod">Nu se poate crea un cont cu metoda de plată existentă.</string>
+  <string name="payments_error_invalid_session">Sesiune nevalidă.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Alegeți metoda de plată</string>
-  <string name="payments_add_credit_debit_card">Adăugare card de credit/debit nou</string>
+  <string name="payments_add_credit_debit_card">Adăugare card de credit / debit</string>
   <string name="payments_billing_monthly">Pentru o lună</string>
   <string name="payments_billing_yearly">Pentru un an</string>
   <string name="payments_billing_two_years">Pentru doi ani</string>
@@ -49,9 +49,9 @@
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Țara</string>
   <string name="payments_paying_in_process">Se plătește</string>
-  <string name="payments_choose_country">Selectați țara</string>
-  <string name="payments_info_not_available">indisponibil</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (data expirării %3$s/%4$s)</string>
+  <string name="payments_choose_country">Selectare țară</string>
+  <string name="payments_info_not_available">n/d</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (dată expirare %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->
 </resources>

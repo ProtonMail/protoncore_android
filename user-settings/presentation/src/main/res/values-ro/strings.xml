@@ -19,17 +19,17 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">E-mail de recuperare</string>
-  <string name="settings_recovery_email_current">Adresă curentă e-mail de recuperare</string>
-  <string name="settings_recovery_email_new">E-mail de recuperare nou</string>
-  <string name="settings_recovery_email_confirm">Confirmare adresă de recuperare</string>
+  <string name="settings_recovery_email_current">Adresa de e-mail de recuperare / notificare</string>
+  <string name="settings_recovery_email_new">E-mail nou de recuperare / notificare</string>
+  <string name="settings_recovery_email_confirm">Confirmare adresă de recuperare / notificare</string>
   <string name="settings_recovery_email_new_hint">Introduceți adresa de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Reintroduceți adresa de e-mail</string>
   <string name="settings_save">Salvare</string>
-  <string name="settings_password_required">Introducere parolă de acces</string>
+  <string name="settings_password_required">Introduceți parola de acces</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nesetat</string>
-  <string name="settings_recovery_email_error_no_match">Adresele de email nu coincid.</string>
-  <string name="settings_validation_email">E-mail incorect.</string>
+  <string name="settings_recovery_email_error_no_match">Adresele de e-mail de recuperare și confirmare nu coincid.</string>
+  <string name="settings_validation_email">E-mail nevalid.</string>
   <string name="settings_general_error">A apărut o eroare.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Schimbare parolă</string>
@@ -37,12 +37,12 @@
   <string name="settings_password_management_header">Gestionare parole</string>
   <string name="settings_login_password_hint_current">Parola actuală de conectare</string>
   <string name="settings_login_password_hint_new">Parola nouă de conectare</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmare parolă nouă conectare</string>
+  <string name="settings_login_password_hint_new_confirm">Confirmare parolă nouă de conectare</string>
   <string name="settings_mailbox_password_hint_new">Parola nouă mesaje</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmare parolă nouă mesaje</string>
   <string name="settings_change_password_error">A apărut o eroare la schimbarea parolei.</string>
-  <string name="settings_recovery_email_success">Adresa de email pentru recuperare actualizată</string>
+  <string name="settings_recovery_email_success">S-a actualizat adresa de e-mail pentru recuperare</string>
   <string name="settings_password_management_success">Parolă actualizată</string>
-  <string name="settings_password_management_login_password_success">Parola de conectare actualizată</string>
-  <string name="settings_password_management_mailbox_password_success">Parola pentru mesaje a fost actualizată</string>
+  <string name="settings_password_management_login_password_success">Parola de conectare s-a actualizat</string>
+  <string name="settings_password_management_mailbox_password_success">Parola pentru mesaje s-a actualizat</string>
 </resources>

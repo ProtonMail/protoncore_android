@@ -19,14 +19,14 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Ajutor</string>
-  <string name="human_verification_title">Verificarea umană</string>
-  <string name="human_verification_main_subtitle">Pentru prevenirea abuzului, vă rugăm să folosiți una din următoarele opțiuni de verificare a faptului că sunteți o persoană</string>
+  <string name="human_verification_title">Verificare umană</string>
+  <string name="human_verification_main_subtitle">Pentru prevenirea abuzului, folosiți una din opțiuni pentru a dovedi că sunteți o persoană</string>
   <string name="human_verification_enter_code_subtitle">Introduceți codul de verificare care a fost trimis la %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Introduceți codul de verificare care a fost trimis la %s. Dacă nu găsiți mesajul, verificați și în folderul de mesaje nedorite.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Introduceți codul de verificare pe care îl aveți deja:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">Emailul va fi folosit o singură dată pentru această verificare. Dacă nu găsiți mesajul, verificați și în folderul de mesaje nedorite.</string>
+  <string name="human_verification_option_email_subtitle">Adresa de email va fi folosită o singură dată pentru această verificare. Dacă nu găsiți mesajul, verificați și în folderul de mesaje nedorite.</string>
   <string name="human_verification_option_sms">Număr de telefon</string>
   <string name="human_verification_option_sms_subtitle">Numărul de telefon va fi folosit doar pentru această verificare unică.</string>
   <string name="human_verification_get_verification_code">Obținere cod de verificare</string>
@@ -34,26 +34,26 @@
   <string name="human_verification_request_replacement_code">Nu ați primit codul?</string>
   <string name="human_verification_verify">Verificare</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Aveți nevoie de asistență pentru verificarea faptului că sunteți o persoană?</string>
+  <string name="human_verification_help_title">Aveți nevoie de asistență pentru a dovedi că sunteți o persoană?</string>
   <string name="human_verification_code">Cod de verificare</string>
   <string name="human_verification_code_request_new_code_title">Solicitare cod nou?</string>
   <string name="human_verification_code_request_new_code_action">Solicitare cod nou</string>
-  <string name="human_verification_code_request_new_code">Obțineți codul de înlocuire trimis la %s.</string>
+  <string name="human_verification_code_request_new_code">Obțineți un cod de înlocuire trimis la %s.</string>
   <string name="email">E-mail</string>
-  <string name="email_hint">email@example.com</string>
-  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="email_hint">email@exemplu.com</string>
+  <string name="sms_hint">+40 XXXXXXXXX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
-  <string name="human_verification_help_manual_title">Solicitați o invitație</string>
-  <string name="human_verification_help_manual">Dacă aveți probleme cu crearea contului, solicitați o invitație și vom răspunde în termen de o zi lucrătoare.</string>
-  <string name="human_verification_help_website_title">Vizitați centrul nostru de ajutor</string>
-  <string name="human_verification_help_website">Aflați mai mult despre verificarea umană și de ce o cerem.</string>
+  <string name="human_verification_help_manual_title">Solicitați invitație</string>
+  <string name="human_verification_help_manual">Dacă aveți probleme la crearea contului, solicitați o invitație și vă vom răspunde în termen de o zi lucrătoare.</string>
+  <string name="human_verification_help_website_title">Vizitați centrul de ajutor</string>
+  <string name="human_verification_help_website">Aflați mai multe despre verificarea umană și de ce o solicităm.</string>
   <string name="human_verification_sending_failed">Trimiterea codului de verificare a eșuat. Reîncercați.</string>
   <string name="human_verification_incorrect_code">Cod incorect. Reîncercați.</string>
-  <string name="human_verification_resent_code">Am trimis un alt cod.</string>
-  <string name="human_verification_captcha_failed">Verificare CAPTCHA a eșuat. Reîncercați sau alegeți o altă metodă de verificare.</string>
+  <string name="human_verification_resent_code">S-a trimis un alt cod.</string>
+  <string name="human_verification_captcha_failed">Verificarea cu CAPTCHA a eșuat. Reîncercați sau alegeți o altă metodă de verificare.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">Fără conexiune. Nu se poate încărca CAPTCHA.</string>
+  <string name="human_verification_captcha_no_connectivity">NU aveți conexiune. Nu se poate încărca CAPTCHA.</string>
   <string name="human_verification_action_retry">Reîncercare</string>
-  <string name="human_verification_method_loading_failed">Nu se poate încărca metoda de verificare actuală. Dacă problema persistă, vă rugăm să încercați o altă metodă disponibilă sau verificați ecranul Ajutor.</string>
+  <string name="human_verification_method_loading_failed">Nu se poate încărca metoda de verificare actuală. Dacă problema persistă, încercați o altă metodă disponibilă sau consultați pagina de ajutor.</string>
 </resources>

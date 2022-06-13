@@ -22,11 +22,11 @@
   <string name="human_verification_title">Vérification humaine</string>
   <string name="human_verification_main_subtitle">Pour lutter contre les abus, veuillez prouver que vous êtes humain en utilisant l\'une des options suivantes</string>
   <string name="human_verification_enter_code_subtitle">Saisissez le code de vérification que nous avons envoyé à %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Saisissez le code de vérification qui a été envoyé à %s. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
+  <string name="human_verification_enter_code_subtitle_email">Saisissez le code de vérification qui a été envoyé à %s. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier indésirables/spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Saisissez le code de vérification que vous possédez déjà :</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">Votre adresse électronique ne sera utilisée que pour cette vérification unique. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
+  <string name="human_verification_option_email_subtitle">Votre adresse électronique ne sera utilisée que pour cette vérification unique. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier indésirables/spam.</string>
   <string name="human_verification_option_sms">Numéro de téléphone</string>
   <string name="human_verification_option_sms_subtitle">Votre numéro de téléphone ne sera utilisé que pour cette vérification unique.</string>
   <string name="human_verification_get_verification_code">Obtenir un code de vérification</string>

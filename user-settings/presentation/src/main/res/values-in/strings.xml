@@ -25,15 +25,15 @@
   <string name="settings_recovery_email_new_hint">Masukkan Alamat Email</string>
   <string name="settings_recovery_email_confirm_hint">Masukkan Ulang Alamat Email</string>
   <string name="settings_save">Simpan</string>
-  <string name="settings_password_required">Masukkan kata sandi login anda</string>
-  <string name="settings_password_required_ok">OKE</string>
-  <string name="settings_not_set">Tidak diatur</string>
-  <string name="settings_recovery_email_error_no_match">Emil pemulihan dan Konfirmasi email pemulihan tidak sesuai.</string>
+  <string name="settings_password_required">Masukkan kata sandi login Anda</string>
+  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_not_set">Belum ditentukan</string>
+  <string name="settings_recovery_email_error_no_match">Email pada kolom Pemulihan dan Konfirmasi tidak sesuai.</string>
   <string name="settings_validation_email">Email tidak valid.</string>
-  <string name="settings_general_error">Terjadi galat.</string>
+  <string name="settings_general_error">Terjadi kesalahan.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Ubah Kata Sandi</string>
-  <string name="settings_password_management_change_mailbox_password">Ubah Password Kotak Pesan</string>
+  <string name="settings_password_management_change_mailbox_password">Ubah Kata Sandi Kotak Pesan</string>
   <string name="settings_password_management_header">Pengelolaan kata sandi</string>
   <string name="settings_login_password_hint_current">Masukan kata sandi saat ini</string>
   <string name="settings_login_password_hint_new">Kata sandi baru untuk masuk</string>
