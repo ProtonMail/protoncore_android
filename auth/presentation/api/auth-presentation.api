@@ -563,7 +563,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupFi
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding : androidx/viewbinding/ViewBinding {
-	public final field fragmentOptionsContainer Landroid/widget/FrameLayout;
+	public final field fragmentOptionsContainer Landroidx/fragment/app/FragmentContainerView;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field recoveryInstructions Landroid/widget/TextView;
 	public final field recoveryOptions Lcom/google/android/material/tabs/TabLayout;

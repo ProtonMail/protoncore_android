@@ -83,7 +83,7 @@
                     app:tabMaxWidth="0dp"
                     app:tabMode="fixed" />
 
-                <FrameLayout
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentOptionsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
