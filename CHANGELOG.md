@@ -11,6 +11,33 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [8.2.0] - 2022-06-14
+
+### Features
+
+- presentation-compose:
+  - Added `ProtonAlertDialogButton` and more flexibility for overriding button colors on `ProtonButton`.
+  - Added `ProtonColors.interactionNorm` with enabled/disabled state.
+- util-kotlin:
+  - Added `Int.toBooleanOrTrue()`.
+
+### Bug Fixes
+
+- plugins-detekt:
+  - Ignore '@Preview' annotated functions from 'UnusedPrivateMember'
+- user-setting:
+  - Updated UserSettings Boolean conversions to be more resilient to unexpected values from server.
+
+### Internationalization
+
+- Upgrade translations from crowdin (8faa0ac5).
+- Upgrade translations from crowdin (8f6544b6).
+
+### Refactoring
+
+- user-setting:
+  - Removed deprecated UserSettings twoFA u2fKeys property.
+
 ## [8.1.0] - 2022-06-03
 
 ### Features
