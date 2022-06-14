@@ -33,6 +33,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:navigationContentDescription="@string/presentation_close"
             app:navigationIcon="@drawable/ic_proton_close"
             tools:title="Title" />
 

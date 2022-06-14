@@ -33,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/input_padding"
+        android:labelFor="@id/input"
         android:visibility="gone"
         tools:text="Input Header"
         tools:visibility="visible" />

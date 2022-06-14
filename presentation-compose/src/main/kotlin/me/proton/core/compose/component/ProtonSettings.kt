@@ -28,9 +28,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.RadioButton
@@ -44,8 +47,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,6 +55,7 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.textNorm
+import me.proton.core.presentation.compose.R
 
 /**
  * A full-size [LazyColumn] list styled with [ProtonTheme]
@@ -93,7 +96,7 @@ fun ProtonSettingsTopBar(
         title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(id = R.string.presentation_back))
             }
         }
     )
@@ -146,10 +149,7 @@ fun ProtonSettingsItem(
     ) {
         Column(
             modifier = Modifier
-                .semantics(mergeDescendants = true) {
-                    contentDescription = name
-                    heading()
-                }
+                .semantics(mergeDescendants = true) {}
                 .fillMaxWidth(),
         ) {
             Text(
@@ -180,40 +180,38 @@ fun ProtonSettingsToggleItem(
 ) {
     val isSwitchChecked = value ?: false
     val isViewEnabled = value != null
-    ProtonRawListItem(
+    Column(
         modifier = modifier
-            .clickable(enabled = isViewEnabled, onClick = { onToggle(!isSwitchChecked) })
-            .padding(
-                horizontal = ProtonDimens.DefaultSpacing
-            )
+            .toggleable(
+                value = isSwitchChecked,
+                enabled = isViewEnabled,
+                role = Role.Switch
+            ) { onToggle(!isSwitchChecked) }
+            .padding(horizontal = ProtonDimens.DefaultSpacing),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            modifier = Modifier
-                .semantics(mergeDescendants = true) {
-                    contentDescription = name
-                    heading()
-                }
+        ProtonRawListItem(
+            modifier = Modifier.sizeIn(minHeight = ProtonDimens.ListItemHeight),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            ProtonRawListItem(horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(
-                    text = name,
-                    color = ProtonTheme.colors.textNorm(isViewEnabled),
-                    style = ProtonTheme.typography.body1Regular
-                )
-                Switch(
-                    checked = isSwitchChecked,
-                    onCheckedChange = onToggle,
-                    enabled = isViewEnabled
-                )
-            }
-            hint?.let {
-                Text(
-                    modifier = Modifier.offset(y = toggleItemNegativeOffset),
-                    text = hint,
-                    color = ProtonTheme.colors.textHint,
-                    style = ProtonTheme.typography.body2Regular
-                )
-            }
+            Text(
+                text = name,
+                color = ProtonTheme.colors.textNorm(isViewEnabled),
+                style = ProtonTheme.typography.body1Regular
+            )
+            Switch(
+                checked = isSwitchChecked,
+                onCheckedChange = null,
+                enabled = isViewEnabled
+            )
+        }
+        hint?.let {
+            Text(
+                modifier = Modifier.offset(y = toggleItemNegativeOffset),
+                text = hint,
+                color = ProtonTheme.colors.textHint,
+                style = ProtonTheme.typography.body2Regular
+            )
         }
     }
 }
@@ -227,10 +225,9 @@ fun ProtonSettingsRadioItem(
 ) {
     ProtonRawListItem(
         modifier = modifier
-            .clickable { onItemSelected(name) }
-            .padding(
-                horizontal = ProtonDimens.DefaultSpacing
-            ),
+            .selectable(selected = isSelected, role = Role.RadioButton) { onItemSelected(name) }
+            .sizeIn(minHeight = ProtonDimens.ListItemHeight)
+            .padding(horizontal = ProtonDimens.DefaultSpacing),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -240,7 +237,7 @@ fun ProtonSettingsRadioItem(
         )
         RadioButton(
             selected = isSelected,
-            onClick = { onItemSelected(name) }
+            onClick = null
         )
     }
 }

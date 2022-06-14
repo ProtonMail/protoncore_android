@@ -127,7 +127,7 @@ fun ProtonListItem(
     onClick: () -> Unit = {},
 ) {
     ProtonListItem(
-        modifier = modifier.semantics(mergeDescendants = true) { contentDescription = text },
+        modifier = modifier.semantics(mergeDescendants = true) { },
         onClick = onClick,
         isClickable = isClickable,
         isSelected = isSelected,

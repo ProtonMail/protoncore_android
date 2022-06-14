@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/help_menu"
+            app:navigationContentDescription="@string/presentation_close"
             app:navigationIcon="@drawable/ic_proton_close"
             app:title="@string/human_verification_title"
             tools:title="Title" />
