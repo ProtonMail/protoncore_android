@@ -72,7 +72,7 @@ fun FragmentManager.showCreatingUser(
     val creatingUserFragment = CreatingUserFragment()
     inTransaction {
         setCustomAnimations(0, 0)
-        add(containerId, creatingUserFragment, TAG_CREATING_USER)
+        replace(containerId, creatingUserFragment, TAG_CREATING_USER)
         addToBackStack(null)
     }
     creatingUserFragment
@@ -94,7 +94,7 @@ fun FragmentManager.showCongrats(
     val congratsFragment = SignupFinishedFragment()
     inTransaction {
         setCustomAnimations(0, 0)
-        add(containerId, congratsFragment, TAG_CONGRATS)
+        replace(containerId, congratsFragment, TAG_CONGRATS)
         addToBackStack(null)
     }
     congratsFragment
