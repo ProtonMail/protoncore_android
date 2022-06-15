@@ -166,9 +166,8 @@ fun ApiResult.Error.doThrow() {
 }
 
 open class ApiException(val error: ApiResult.Error) : Exception(
-    if (error is ApiResult.Error.Http && error.proton?.error != null) error.proton.error
-    else error.cause?.message,
-    error.cause
+    /* message = */ (error as? ApiResult.Error.Http)?.proton?.error ?: error.cause?.message,
+    /* cause = */ error.cause
 )
 
 /**

@@ -18,10 +18,6 @@ public final class me/proton/core/data/arch/ProtonStore : com/dropbox/android/ex
 	public fun stream (Lcom/dropbox/android/external/store4/StoreRequest;)Lkotlinx/coroutines/flow/Flow;
 }
 
-public final class me/proton/core/data/arch/StoreException : java/io/IOException {
-	public fun <init> ()V
-}
-
 public final class me/proton/core/data/arch/StoreExtensionsKt {
 	public static final fun buildProtonStore (Lcom/dropbox/android/external/store4/StoreBuilder;)Lme/proton/core/data/arch/ProtonStore;
 }

@@ -22,26 +22,19 @@ import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
-import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException
 
-/**
- * Exception that encapsulates a Store error.
- */
-class StoreException : IOException()
-
 private suspend fun <T> catchWithStackTrace(block: suspend () -> T): T {
-    // We initialize the exception here to get the stacktrace before it's 'corrupted' by any coroutine magic
-    val potentialException = StoreException()
+    // An exception from Store fetcher will result in a partial stacktrace, due to the asynchronicity of Store.
+    // More info: https://github.com/Kotlin/kotlinx.coroutines/blob/master/docs/topics/debugging.md#stacktrace-recovery.
+    // Remember current stacktrace to append it to potential inner throwable.
+    val initialStackTrace = Throwable().stackTrace
     return runCatching {
         block()
-    }.getOrElse { actualThrowable ->
-        if (actualThrowable is CancellationException) {
-            throw actualThrowable
-        } else {
-            // We add the actual exception to the potential one to retain the original stacktrace
-            potentialException.initCause(actualThrowable)
-            throw potentialException
+    }.getOrElse {
+        when (it) {
+            is CancellationException -> throw it
+            else -> throw it.apply { stackTrace += initialStackTrace }
         }
     }
 }
