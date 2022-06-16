@@ -28,8 +28,10 @@ import me.proton.core.crypto.common.keystore.LogTag
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.util.kotlin.CoreLogger
+import java.security.GeneralSecurityException
 import java.security.Key
 import java.security.KeyStore
+import java.security.ProviderException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.GCMParameterSpec
@@ -37,9 +39,12 @@ import javax.crypto.spec.GCMParameterSpec
 /**
  * [KeyStoreCrypto] implementation based on Android KeyStore System.
  *
+ * Note: This implementation use the same KeyStore workaround as Tink `AndroidKeystoreAesGcm`.
+ *
  * @see <a href="https://developer.android.com/training/articles/keystore">Android KeyStore System</a>
  * @see [KeyStore]
  * @see [KeyGenParameterSpec]
+ * @see <a href="https://github.com/google/tink/blob/master/java_src/src/main/java/com/google/crypto/tink/integration/android/AndroidKeystoreAesGcm.java">Tink AndroidKeystoreAesGcm</a>
  */
 class AndroidKeyStoreCrypto private constructor(
     masterKeyAlias: String = DEFAULT_MASTER_KEY_ALIAS
@@ -74,8 +79,8 @@ class AndroidKeyStoreCrypto private constructor(
             // Check if encrypt/decrypt is properly working (CP-1500).
             runCatching {
                 val message = "message"
-                val encrypted = encrypt(message, keyStoreKey)
-                val decrypted = decrypt(encrypted, keyStoreKey)
+                val encrypted = encryptOrRetry(message, keyStoreKey)
+                val decrypted = decryptOrRetry(encrypted, keyStoreKey)
                 check(message == decrypted)
                 keyStoreKey
             }.getOrElse {
@@ -85,14 +90,14 @@ class AndroidKeyStoreCrypto private constructor(
         }
     }
 
-    private fun encrypt(value: PlainByteArray, key: Key): EncryptedByteArray {
+    private fun encryptInternal(value: PlainByteArray, key: Key): EncryptedByteArray {
         val cipher = Cipher.getInstance(cipherTransformation)
         cipher.init(Cipher.ENCRYPT_MODE, key)
         val cipherByteArray = cipher.doFinal(value.array)
         return EncryptedByteArray(cipher.iv + cipherByteArray)
     }
 
-    private fun decrypt(value: EncryptedByteArray, key: Key): PlainByteArray {
+    private fun decryptInternal(value: EncryptedByteArray, key: Key): PlainByteArray {
         val cipher = Cipher.getInstance(cipherTransformation)
         val iv = value.array.copyOf(cipherIvBytes)
         val cipherByteArray = value.array.copyOfRange(cipherIvBytes, value.array.size)
@@ -100,15 +105,53 @@ class AndroidKeyStoreCrypto private constructor(
         return PlainByteArray(cipher.doFinal(cipherByteArray))
     }
 
-    private fun encrypt(value: String, key: Key): EncryptedString {
-        return value.encodeToByteArray().use {
-            Base64.encodeToString(encrypt(it, key).array, Base64.NO_WRAP)
+    private fun sleep() {
+        try {
+            Thread.sleep((Math.random() * MAX_WAIT_TIME_MILLISECONDS_BEFORE_RETRY).toLong())
+        } catch (e: InterruptedException) {
+            // Ignored.
         }
     }
 
-    private fun decrypt(value: EncryptedString, key: Key): String {
+    private fun encryptOrRetry(value: PlainByteArray, key: Key): EncryptedByteArray {
+        // If encountered a potentially transient KeyStore error, will wait and retry.
+        return runCatching { encryptInternal(value, key) }.getOrElse {
+            when (it) {
+                is ProviderException,
+                is GeneralSecurityException -> {
+                    CoreLogger.e(LogTag.KEYSTORE_ENCRYPT_RETRY, it)
+                    sleep()
+                    encryptInternal(value, key)
+                }
+                else -> throw it
+            }
+        }
+    }
+
+    private fun decryptOrRetry(value: EncryptedByteArray, key: Key): PlainByteArray {
+        // If encountered a potentially transient KeyStore error, will wait and retry.
+        return runCatching { decryptInternal(value, key) }.getOrElse {
+            when (it) {
+                is ProviderException,
+                is GeneralSecurityException -> {
+                    CoreLogger.e(LogTag.KEYSTORE_DECRYPT_RETRY, it)
+                    sleep()
+                    decryptInternal(value, key)
+                }
+                else -> throw it
+            }
+        }
+    }
+
+    private fun encryptOrRetry(value: String, key: Key): EncryptedString {
+        return value.encodeToByteArray().use {
+            Base64.encodeToString(encryptOrRetry(it, key).array, Base64.NO_WRAP)
+        }
+    }
+
+    private fun decryptOrRetry(value: EncryptedString, key: Key): String {
         val encryptedByteArray = Base64.decode(value, Base64.NO_WRAP)
-        return decrypt(EncryptedByteArray(encryptedByteArray), key).use {
+        return decryptOrRetry(EncryptedByteArray(encryptedByteArray), key).use {
             it.array.decodeToString()
         }
     }
@@ -116,23 +159,24 @@ class AndroidKeyStoreCrypto private constructor(
     override fun isUsingKeyStore(): Boolean = secretKey != null
 
     override fun encrypt(value: PlainByteArray): EncryptedByteArray {
-        return secretKey?.let { encrypt(value, it) } ?: EncryptedByteArray(value.array.copyOf())
+        return secretKey?.let { encryptOrRetry(value, it) } ?: EncryptedByteArray(value.array.copyOf())
     }
 
     override fun decrypt(value: EncryptedByteArray): PlainByteArray {
-        return secretKey?.let { decrypt(value, it) } ?: PlainByteArray(value.array.copyOf())
+        return secretKey?.let { decryptOrRetry(value, it) } ?: PlainByteArray(value.array.copyOf())
     }
 
     override fun encrypt(value: String): EncryptedString {
-        return secretKey?.let { encrypt(value, it) } ?: value
+        return secretKey?.let { encryptOrRetry(value, it) } ?: value
     }
 
     override fun decrypt(value: EncryptedString): String {
-        return secretKey?.let { decrypt(value, it) } ?: value
+        return secretKey?.let { decryptOrRetry(value, it) } ?: value
     }
 
     companion object {
         private const val DEFAULT_MASTER_KEY_ALIAS = "_me_proton_core_data_crypto_master_key_"
+        private const val MAX_WAIT_TIME_MILLISECONDS_BEFORE_RETRY = 100.0
 
         /**
          * Default KeyStoreSimpleCrypto instance using master key alias.

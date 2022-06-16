@@ -118,6 +118,12 @@ object LogTag {
     /** Tag for KeyStore encrypt failure. */
     const val KEYSTORE_ENCRYPT = "core.crypto.common.keystore.encrypt"
 
+    /** Tag for KeyStore encrypt failure retry. */
+    const val KEYSTORE_ENCRYPT_RETRY = "core.crypto.common.keystore.encrypt.retry"
+
     /** Tag for KeyStore decrypt failure. */
     const val KEYSTORE_DECRYPT = "core.crypto.common.keystore.decrypt"
+
+    /** Tag for KeyStore decrypt failure retry. */
+    const val KEYSTORE_DECRYPT_RETRY = "core.crypto.common.keystore.decrypt.retry"
 }
