@@ -83,7 +83,10 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signUpViewModel.register(this)
-        supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
+        }
 
         signUpViewModel.inputState
             .flowWithLifecycle(lifecycle)
