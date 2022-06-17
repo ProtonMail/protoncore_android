@@ -207,6 +207,10 @@ internal class SignupViewModel @Inject constructor(
             challengeManager.resetFlow(challengeConfig.flowName)
         }
     }
+
+    fun onSignupCompleted() {
+        _userCreationState.tryEmit(State.Idle)
+    }
     // endregion
 
     // region private functions

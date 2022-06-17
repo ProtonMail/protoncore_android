@@ -24,6 +24,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -154,11 +156,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     private fun onSignUpSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
-        with(supportFragmentManager) {
-            for (i in 0..backStackEntryCount) {
-                popBackStackImmediate()
-            }
-        }
+        supportFragmentManager.popAllBackStackFragments()
+
         binding.lottieProgress.visibility = View.VISIBLE
 
         val subscriptionDetails = signUpViewModel.subscriptionDetails
@@ -178,6 +177,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             signUpViewModel.currentAccountType,
             billingDetails
         )
+
+        signUpViewModel.onSignupCompleted()
     }
 
     private fun onSignupError(message: String?) {
@@ -198,6 +199,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         if (product == Product.Vpn) {
             signupDone(userId)
         } else {
+            supportFragmentManager.popAllBackStackFragments()
             supportFragmentManager.showCongrats()
             supportFragmentManager.setFragmentResultListener(
                 SignupFinishedFragment.KEY_START_USING_SELECTED, this
@@ -227,6 +229,12 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         )
 
         finish()
+    }
+
+    private fun FragmentManager.popAllBackStackFragments() {
+        if (backStackEntryCount == 0) return
+        val entry = getBackStackEntryAt(0)
+        popBackStackImmediate(entry.id, POP_BACK_STACK_INCLUSIVE)
     }
 
     companion object {
