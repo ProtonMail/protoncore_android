@@ -18,40 +18,18 @@
 
 package me.proton.core.auth.presentation.ui.signup
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
-import me.proton.core.humanverification.presentation.HumanVerificationManagerObserver
-import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.humanverification.presentation.utils.hasHumanVerificationFragment
 
 class CreatingUserFragment : SignupFragment(R.layout.fragment_creating_user) {
-
-    private val signupViewModel by activityViewModels<SignupViewModel>()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val humanVerificationObserver = signupViewModel.observeHumanVerification(requireActivity().lifecycle)
-        observeHumanVerificationFailed(humanVerificationObserver)
-    }
-
-    private fun observeHumanVerificationFailed(observer: HumanVerificationManagerObserver) {
-        // If we receive a HV failed state and HV screen is shown it means the user canceled it.
-        observer.onHumanVerificationFailed(initialState = false) {
-            if (parentFragmentManager.hasHumanVerificationFragment()) {
-                // Stop observing to avoid duplicate callback calls
-                signupViewModel.stopObservingHumanVerification(true)
-            }
-        }
-    }
-
     override fun onBackPressed() {
+        setFragmentResult(FRAGMENT_RESULT_REQUEST_KEY, bundleOf(KEY_CANCELLED to true))
         parentFragmentManager.popBackStack()
-        // Stop observing, the user went back so they want to cancel the registration and there's no point showing the
-        // HV screen in that case
-        signupViewModel.stopObservingHumanVerification(false)
+    }
+
+    internal companion object {
+        const val FRAGMENT_RESULT_REQUEST_KEY = "CreatingUserFragment.requestKey"
+        const val KEY_CANCELLED = "key.cancelled"
     }
 }

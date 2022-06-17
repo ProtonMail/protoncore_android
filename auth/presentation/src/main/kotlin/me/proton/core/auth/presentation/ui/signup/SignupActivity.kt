@@ -26,6 +26,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -49,6 +50,8 @@ import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.presentation.onHumanVerificationFailed
+import me.proton.core.humanverification.presentation.utils.hasHumanVerificationFragment
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -101,7 +104,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             .onEach {
                 when (it) {
                     is SignupViewModel.State.Idle -> Unit
-                    is SignupViewModel.State.Processing -> showLoading(true)
+                    is SignupViewModel.State.Processing -> onSignupProcessing()
                     is SignupViewModel.State.Error.HumanVerification -> Unit
                     is SignupViewModel.State.Error.Message -> onSignupError(it.message)
                     is SignupViewModel.State.Error.PlanChooserCancel -> Unit
@@ -135,7 +138,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     cycle = plan.cycle.toSubscriptionCycle()
                 )
                 signUpViewModel.startCreateUserWorkflow()
-                supportFragmentManager.showCreatingUser()
             } else {
                 supportFragmentManager.removePlansSignup()
                 signUpViewModel.onPlanChooserCancel()
@@ -153,6 +155,27 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             is PostLoginAccountSetup.Result.Need.SecondFactor,
             is PostLoginAccountSetup.Result.Need.TwoPassMode -> Unit // Ignored.
         }.exhaustive
+    }
+
+    private fun onSignupProcessing() {
+        showLoading(true)
+
+        signUpViewModel
+            .observeHumanVerification(lifecycle)
+            .onHumanVerificationFailed(initialState = false) {
+                if (supportFragmentManager.hasHumanVerificationFragment()) {
+                    // Stop observing to avoid duplicate callback calls
+                    signUpViewModel.stopObservingHumanVerification(true)
+                }
+            }
+
+        supportFragmentManager
+            .showCreatingUser()
+            .setFragmentResultListener(CreatingUserFragment.FRAGMENT_RESULT_REQUEST_KEY) { _, bundle ->
+                if (bundle.getBoolean(CreatingUserFragment.KEY_CANCELLED, false)) {
+                    signUpViewModel.stopObservingHumanVerification(false)
+                }
+            }
     }
 
     private fun onSignUpSuccess(loginUsername: String, encryptedPassword: EncryptedString) {

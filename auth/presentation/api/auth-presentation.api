@@ -1400,9 +1400,10 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/CreatingUserFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public static final field FRAGMENT_RESULT_REQUEST_KEY Ljava/lang/String;
+	public static final field KEY_CANCELLED Ljava/lang/String;
 	public fun <init> ()V
 	public fun onBackPressed ()V
-	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
