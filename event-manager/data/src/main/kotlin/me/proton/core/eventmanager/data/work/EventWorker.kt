@@ -37,8 +37,8 @@ import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
-import java.io.IOException
 import java.util.concurrent.TimeUnit
+import me.proton.core.network.domain.ApiException
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration
 
@@ -57,17 +57,18 @@ open class EventWorker @AssistedInject constructor(
                 Result.success()
             },
             onFailure = {
-                if (it is CancellationException) {
-                    // Worker was cancelled, so there's no point in retrying. Periodic job will launch the worker again.
-                    Result.failure()
-                } else {
-                    // We don't want to log IOExceptions as they are quite common and not something we can usually fix.
-                    if (it is IOException) {
-                        CoreLogger.d(LogTag.WORKER_ERROR, it, "EventManager non-critical error")
-                    } else {
-                        CoreLogger.e(LogTag.WORKER_ERROR, it)
+                when (it) {
+                    is CancellationException -> {
+                        Result.failure()
                     }
-                    Result.retry()
+                    is ApiException -> {
+                        CoreLogger.d(LogTag.WORKER_ERROR, it, "EventManager non-critical error")
+                        Result.retry()
+                    }
+                    else -> {
+                        CoreLogger.e(LogTag.WORKER_ERROR, it)
+                        Result.retry()
+                    }
                 }
             }
         )
