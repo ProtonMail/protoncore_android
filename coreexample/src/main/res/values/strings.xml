@@ -103,4 +103,9 @@
     <string name="proton_text_caption_strong">Proton.Text.Caption.Strong</string>
     <string name="proton_text_caption_weak">Proton.Text.Caption.Weak</string>
     <string name="proton_text_caption_hint">Proton.Text.Caption.Hint</string>
+
+    <plurals name="pushes_activity_title">
+        <item quantity="one">%d push</item>
+        <item quantity="other">%d pushes</item>
+    </plurals>
 </resources>

@@ -184,6 +184,15 @@
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="Labels" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/pushs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="Pushes" />
+
             </LinearLayout>
 
             <LinearLayout

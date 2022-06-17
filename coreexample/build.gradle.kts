@@ -26,6 +26,7 @@ import java.util.Properties
 plugins {
     protonAndroidApp
     protonDagger
+    kotlin("plugin.serialization")
 }
 
 protonDagger {
@@ -173,6 +174,7 @@ dependencies {
         `material`,
 
         // Other
+        `serialization-json`,
         `room-ktx`,
         `retrofit`,
         `timber`,

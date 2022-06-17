@@ -38,6 +38,7 @@ import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.LabelsActivity
+import me.proton.android.core.coreexample.ui.PushesActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.utils.ClientFeatureFlags
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
@@ -150,6 +151,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             bugReportWaiting.onClick { reportsViewModel.reportBugs(waitForServer = true) }
             contacts.onClick { startActivity(Intent(this@MainActivity, ContactsActivity::class.java)) }
             labels.onClick { startActivity(Intent(this@MainActivity, LabelsActivity::class.java)) }
+            pushs.onClick { startActivity(Intent(this@MainActivity, PushesActivity::class.java)) }
         }
 
         accountViewModel.state

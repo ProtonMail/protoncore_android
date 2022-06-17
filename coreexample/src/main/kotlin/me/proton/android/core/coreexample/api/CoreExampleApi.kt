@@ -18,9 +18,13 @@
 
 package me.proton.android.core.coreexample.api
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PUT
 
 interface CoreExampleApi : BaseRetrofitApi {
 
@@ -32,4 +36,13 @@ interface CoreExampleApi : BaseRetrofitApi {
 
     @GET("settings/mnemonic")
     suspend fun triggerConfirmPasswordForPasswordScope(): GenericResponse
+
+    @PUT("mail/v4/messages/read")
+    suspend fun markAsRead(@Body request: MarkAsReadRequest): GenericResponse
+
+    @Serializable
+    class MarkAsReadRequest(
+        @SerialName("IDs")
+        val ids: List<String>,
+    )
 }

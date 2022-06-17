@@ -45,4 +45,9 @@ class CoreExampleRepository(
         provider.get<CoreExampleApi>(userId).invoke {
             triggerConfirmPasswordForPasswordScope()
         }
+
+    suspend fun markAsRead(userId: UserId, messageId: String) =
+        provider.get<CoreExampleApi>(userId).invoke {
+            markAsRead(CoreExampleApi.MarkAsReadRequest(listOf(messageId)))
+        }.valueOrThrow
 }

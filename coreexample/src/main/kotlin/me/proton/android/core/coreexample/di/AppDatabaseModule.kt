@@ -36,6 +36,7 @@ import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.label.data.local.LabelDatabase
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
+import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
@@ -96,4 +97,7 @@ abstract class AppDatabaseBindsModule {
 
     @Binds
     abstract fun provideChallengeDatabase(appDatabase: AppDatabase): ChallengeDatabase
+
+    @Binds
+    abstract fun providePushDatabase(appDatabase: AppDatabase): PushDatabase
 }
