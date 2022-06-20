@@ -45,6 +45,7 @@ import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.user.domain.extension.hasNonMigratedKey
 import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -223,8 +224,8 @@ class UserManagerImpl(
             val userAddresses = userAddressRepository.getAddresses(sessionUserId, refresh = true)
             val userAddressesWithoutKeys = userAddresses.filter { it.keys.isEmpty() }
 
-            // If User have at least one migrated UserAddressKey (new key format), let's continue like this.
-            val generateOldAddressKeyFormat = !userAddresses.hasMigratedKey()
+            // If User have at least one non-migrated UserAddressKey (old key format), let's use the legacy format.
+            val generateOldAddressKeyFormat = userAddresses.hasNonMigratedKey()
 
             // Generate new address keys.
             val newAddressKeys = userAddressesWithoutKeys.map { address ->
