@@ -37,6 +37,7 @@
   <string name="presentation_menu_item_title_subscription">Prenumeration</string>
   <string name="presentation_menu_item_title_sign_out">Logga ut</string>
   <!-- Other -->
+  <string name="presentation_back">Tillbaka</string>
   <string name="presentation_close">Stäng</string>
   <string name="presentation_skip">Hoppa över</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

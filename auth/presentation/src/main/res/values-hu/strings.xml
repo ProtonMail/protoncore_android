@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Titkosított naptár, amelyben privát módon és biztonságosan tárolhatja eseményeit.</string>
   <string name="welcome_subtitle_calendar_alt">A végpontok közt titkosított naptár segíti, hogy rendezett maradjon és mindig képben legyen.</string>
   <string name="welcome_title_vpn">Védje a magánszféráját a Proton VPN-nel</string>
-  <string name="welcome_subtitle_vpn">Nagy sebességű svájci VPN, amely az internet kapcsolatának titkosításával védi az adatait.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">Nagy sebességű svájci VPN, amely védi a magánszféráját. Maximális biztonság, 1600+ szerver, nincs korlátozás.</string>
   <string name="welcome_privacy_by_default">Alapértelmezett adatvédelem</string>
   <string name="auth_password_label">Jelszó</string>

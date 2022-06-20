@@ -37,6 +37,7 @@
   <string name="presentation_menu_item_title_subscription">Abonelik</string>
   <string name="presentation_menu_item_title_sign_out">Oturumu kapat</string>
   <!-- Other -->
+  <string name="presentation_back">Geri</string>
   <string name="presentation_close">Kapat</string>
   <string name="presentation_skip">Atla</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

@@ -37,6 +37,7 @@
   <string name="presentation_menu_item_title_subscription">账户等级</string>
   <string name="presentation_menu_item_title_sign_out">退出账户</string>
   <!-- Other -->
+  <string name="presentation_back">Back</string>
   <string name="presentation_close">关闭</string>
   <string name="presentation_skip">跳过</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

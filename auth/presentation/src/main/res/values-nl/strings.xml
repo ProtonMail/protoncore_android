@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Gecodeerde agenda die uw levensgebeurtenissen privé, veilig en beveiligd houdt.</string>
   <string name="welcome_subtitle_calendar_alt">Onze end-to-end versleutelde agenda helpt u om georganiseerd, op schema en in controle te blijven.</string>
   <string name="welcome_title_vpn">Bescherm uw privacy met Proton VPN</string>
-  <string name="welcome_subtitle_vpn">Snelle Zwitserse VPN die uw privacy waarborgt door uw internetverbinding te versleutelen.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">Hogesnelheid Zwitserse VPN die uw privacy beschermt. Maximale beveiliging, 1600 servers en geen beperkingen.</string>
   <string name="welcome_privacy_by_default">Privacy als standaard</string>
   <string name="auth_password_label">Wachtwoord</string>

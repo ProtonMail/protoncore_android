@@ -103,7 +103,7 @@
   <string name="ad_blocker" comment="new_plans">內置廣告攔截程式 (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">全球性存取影音串流服務</string>
   <string name="secure_core" comment="new_plans">Secure Core 伺服器</string>
-  <string name="tor_vpn" comment="new_plans">透過 VPN 使用 Tor</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">隱私為先的電子郵件與行事曆解決方案，適合您的日常通訊需要。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>

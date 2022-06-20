@@ -37,6 +37,7 @@
   <string name="presentation_menu_item_title_subscription">Předplatné</string>
   <string name="presentation_menu_item_title_sign_out">Odhlásit se</string>
   <!-- Other -->
+  <string name="presentation_back">Zpět</string>
   <string name="presentation_close">Zavřít</string>
   <string name="presentation_skip">Přeskočit</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

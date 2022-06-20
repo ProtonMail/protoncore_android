@@ -25,7 +25,7 @@
   <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke %s. Jika Anda tidak menemukan surel di kotak masuk Anda, mohon periksa folder spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Masukkan kode verifikasi yang telah Anda miliki:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Surel</string>
+  <string name="human_verification_option_email">Email</string>
   <string name="human_verification_option_email_subtitle">Surel Anda hanya akan digunakan untuk verifikasi satu kali ini. Jika Anda tidak menemukan surel di kotak masuk Anda, mohon periksa folder spam.</string>
   <string name="human_verification_option_sms">Nomor telepon</string>
   <string name="human_verification_option_sms_subtitle">Nomor telepon Anda hanya akan digunakan untuk verifikasi satu kali ini saja.</string>
@@ -39,8 +39,8 @@
   <string name="human_verification_code_request_new_code_title">Minta kode baru?</string>
   <string name="human_verification_code_request_new_code_action">Minta kode baru</string>
   <string name="human_verification_code_request_new_code">Dapatkan kode pengganti yang dikirim ke %s.</string>
-  <string name="email">Surel</string>
-  <string name="email_hint">surel@contoh.com</string>
+  <string name="email">Email</string>
+  <string name="email_hint">email@contoh.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

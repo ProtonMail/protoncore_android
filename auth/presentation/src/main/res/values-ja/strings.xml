@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">暗号化されたカレンダーでイベントをプライベートかつ、安心安全に保ちます。</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Proton VPN でプライバシーを保護</string>
-  <string name="welcome_subtitle_vpn">インターネット接続を暗号化し、プライバシーを保護する高速スイス VPN。</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">高速なスイスの VPN でプライバシーを保護します。最大限のセキュリティを備えた制限のない 1,600 台以上のサーバーがあります。</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">パスワード</string>

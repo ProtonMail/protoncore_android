@@ -142,7 +142,7 @@
   <string name="ad_blocker" comment="new_plans">Wbudowana blokada reklam (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Dostęp do usług streamingu na całym świecie</string>
   <string name="secure_core" comment="new_plans">Serwery Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor przez VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P / BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Prywatna poczta i kalendarz do codziennej komunikacji.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Twoja prywatność i bezpieczeństwo są naszym priorytetem.</string>

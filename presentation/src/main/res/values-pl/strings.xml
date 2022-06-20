@@ -37,6 +37,7 @@
   <string name="presentation_menu_item_title_subscription">Subskrypcja</string>
   <string name="presentation_menu_item_title_sign_out">Wyloguj</string>
   <!-- Other -->
+  <string name="presentation_back">Wstecz</string>
   <string name="presentation_close">Zamknij</string>
   <string name="presentation_skip">Pomiń</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

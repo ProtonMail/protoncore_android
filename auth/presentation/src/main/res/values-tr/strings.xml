@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
   <string name="welcome_subtitle_calendar_alt">Uçtan uca şifrelenmiş takvimimiz, kontrolü size bırakarak planlarınızı uygulamanıza yardımcı olur.</string>
   <string name="welcome_title_vpn">Proton VPN ile kişisel gizliliğinizi koruyun</string>
-  <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">Kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN. En yüksek güvenlik, 1.600 üzerinde sunucu ve sınırlamasız.</string>
   <string name="welcome_privacy_by_default">Kişisel gizliliğe odaklanmış</string>
   <string name="auth_password_label">Parola</string>

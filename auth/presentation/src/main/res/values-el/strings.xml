@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Κρυπτογραφημένο ημερολόγιο που κρατά τις εκδηλώσεις σας ιδιωτικές, ασφαλείς και διασφαλισμένες.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Προστατέψτε την ιδιωτικότητά σας με το Proton VPN</string>
-  <string name="welcome_subtitle_vpn">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει το απόρρητό σας κρυπτογραφώντας τη σύνδεσή σας στο διαδίκτυο.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει την ιδιωτικότητά σας. Μέγιστη διασφάλιση, 1600+ διακομιστές, και χωρίς περιορισμούς.</string>
   <string name="welcome_privacy_by_default">Ιδιωτικότητα από προεπιλογή</string>
   <string name="auth_password_label">Κωδικός</string>

@@ -129,7 +129,7 @@
   <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
   <string name="secure_core" comment="new_plans">Secure Core servers</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>

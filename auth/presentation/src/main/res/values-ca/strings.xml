@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_subtitle_calendar_alt">El nostre calendari xifrat d\'extrem a extrem us ajuda a mantenir-vos organitzat, al dia i en control.</string>
   <string name="welcome_title_vpn">Protegiu la vostra privadesa amb Proton VPN</string>
-  <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat xifrant la vostra connexió a Internet.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que us protegeix la privadesa. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
   <string name="welcome_privacy_by_default">Privadesa per defecte</string>
   <string name="auth_password_label">Contrasenya</string>
@@ -106,9 +106,9 @@
   <string name="auth_signup_choose_password">Creeu la vostra contrasenya</string>
   <string name="auth_signup_repeat_password">Repetir contrasenya</string>
   <string name="auth_signup_recovery_method_title">Establiu el mètode de recuperació (opcional)</string>
-  <string name="auth_signup_recovery_method_title_mandatory">Set recovery method</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Establir un mètode de recuperació</string>
   <string name="auth_signup_recovery_method_subtitle">Enviarem instruccions de recuperació a aquest correu electrònic o número de telèfon si no podeu accedir al vostre compte.</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Enviarem instruccions de recuperació a aquest correu electrònic si no podeu accedir al vostre compte.</string>
   <string name="auth_signup_recovery_method_email">Correu electrònic</string>
   <string name="auth_signup_recovery_method_phone">Telèfon</string>
   <string name="auth_signup_recovery_method_email_hint">Correu electrònic de recuperació</string>

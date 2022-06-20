@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene i tuoi eventi della vita privati, protetti e protetti.</string>
   <string name="welcome_subtitle_calendar_alt">Il nostro calendario crittografato end-to-end ti aiuta a rimanere organizzato, in pista e sotto controllo.</string>
   <string name="welcome_title_vpn">Proteggi la tua privacy con Proton VPN</string>
-  <string name="welcome_subtitle_vpn">VPN svizzera ad alta velocità che salvaguarda la tua privacy crittografando la tua connessione Internet.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">VPN svizzera ad alta velocità che protegge la tua privacy. Massima sicurezza, oltre 1.600 server e nessuna restrizione.</string>
   <string name="welcome_privacy_by_default">Privacy per default</string>
   <string name="auth_password_label">Password</string>

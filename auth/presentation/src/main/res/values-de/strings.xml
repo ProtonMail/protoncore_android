@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Verschlüsselter Kalender, der deine Lebensereignisse privat, sicher und geschützt hält.</string>
   <string name="welcome_subtitle_calendar_alt">Unser Kalender mit Ende-zu-Ende-Verschlüsselung hilft dir dabei, organisiert zu bleiben, den Überblick und die Kontrolle zu behalten.</string>
   <string name="welcome_title_vpn">Schütze deine Privatsphäre mit Proton VPN</string>
-  <string name="welcome_subtitle_vpn">Schweizer Hochgeschwindigkeits-VPN, das Ihre Privatsphäre schützt, indem es Ihre Internetverbindung verschlüsselt.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">Schweizer Hochgeschwindigkeits-VPN, das deine Privatsphäre schützt. Maximale Sicherheit, über 1.600 Server und keine Einschränkungen.</string>
   <string name="welcome_privacy_by_default">Privatsphäre als Standard</string>
   <string name="auth_password_label">Passwort</string>

@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Calendario cifrado que mantiene sus eventos privados, seguros y protegidos.</string>
   <string name="welcome_subtitle_calendar_alt">Nuestro calendario cifrado de extremo a extremo le ayuda a organizarse, mantenerse al día y en control.</string>
   <string name="welcome_title_vpn">Protege tu privacidad con Proton VPN</string>
-  <string name="welcome_subtitle_vpn">VPN suizo de alta velocidad que salvaguarda su privacidad encriptando su conexión a internet.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suizo de alta velocidad que protege su privacidad. Máxima seguridad, más de 1,600 servidores sin restricciones.</string>
   <string name="welcome_privacy_by_default">Privacidad por defecto</string>
   <string name="auth_password_label">Contraseña</string>

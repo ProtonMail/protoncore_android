@@ -66,20 +66,20 @@
     <item quantity="other">%d adreces de #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Support for #proton_domains# custom email domain</item>
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="one">Suport per a #proton_domains# domini de correu electrònic personalitzat</item>
+    <item quantity="other">Suport per a #proton_domains# dominis de correu electrònic personalitzats</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# personal calendar</item>
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="one">#proton_calendars# calendari personal</item>
+    <item quantity="other">#proton_calendars# calendaris personals</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_calendars# calendar</item>
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="one">%d de #proton_calendars# calendari</item>
+    <item quantity="other">%d de #proton_calendars# calendaris</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Free VPN on a single device</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="one">VPN gratuïta en un sol dispositiu</item>
+    <item quantity="other">VPN d\'alta velocitat en #proton_vpn# dispositius</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# connexió VPN d\'alta velocitat</item>
@@ -115,12 +115,12 @@
   <string name="servers_in_countries" comment="new_plans">Més de 1500 servidors en 63 països</string>
   <string name="ad_blocker" comment="new_plans">Bloquejador d\'anuncis integrat (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Accediu a serveis de reproducció en línia globalment</string>
-  <string name="secure_core" comment="new_plans">Secure Core servers</string>
-  <string name="tor_vpn" comment="new_plans">TOR per VPN</string>
+  <string name="secure_core" comment="new_plans">Servidors Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">La solució de correu electrònic i calendari que prioritza la privadesa per a les vostres necessitats de comunicació diàries.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">La vostra privadesa i seguretat són la nostra prioritat.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">La vostra privadesa i seguretat són la nostra prioritat.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -129,7 +129,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Pagament mensual</item>
-    <item>Pay annually</item>
-    <item>Pay every 2 years</item>
+    <item>Pagar anualment</item>
+    <item>Pagar cada 2 anys</item>
   </string-array>
 </resources>

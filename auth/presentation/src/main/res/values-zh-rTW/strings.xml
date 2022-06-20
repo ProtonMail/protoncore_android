@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">讓您的生活大事維持隱密、安全且可靠的加密行事曆。</string>
   <string name="welcome_subtitle_calendar_alt">我們的端到端加密行事曆可協助您井然有序地步入正軌，一切都在掌控之中。</string>
   <string name="welcome_title_vpn">使用 Proton VPN 保護您的隱私</string>
-  <string name="welcome_subtitle_vpn">高速瑞士 VPN，透過加密您的網際網路連線來保護您的隱私。</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">高速的瑞士 VPN 保護您的隱私。最強的安全性，超過 1600 台伺服器，而且沒有限制。</string>
   <string name="welcome_privacy_by_default">預設即隱私</string>
   <string name="auth_password_label">密碼</string>

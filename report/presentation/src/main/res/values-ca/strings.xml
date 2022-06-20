@@ -32,10 +32,10 @@
   <string name="core_report_bug_discard_changes_cancel">Continuar escrivint</string>
   <string name="core_report_bug_discard_changes_confirm">Tanca sense desar</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">Màxim %d caràcter</item>
+    <item quantity="other">Màxim %d caràcters</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
+  <string name="core_report_bug_general_error">Alguna cosa ha anat malament. Si us plau, torna-ho a provar d\'aquí a uns minuts.</string>
   <string name="core_report_bug_send">Envia l\'informe</string>
   <string name="core_report_bug_success">Gràcies pel vostre informe d\'errors</string>
 </resources>

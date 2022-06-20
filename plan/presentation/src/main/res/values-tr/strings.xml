@@ -116,7 +116,7 @@
   <string name="ad_blocker" comment="new_plans">Yerleşik reklam engelleyici (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Tüm dünyadaki yayın akışı hizmetlerine erişim</string>
   <string name="secure_core" comment="new_plans">Secure Core sunucuları</string>
-  <string name="tor_vpn" comment="new_plans">VPN üzerinden Tor</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Günlük iletişim gereksinimleriniz için kişisel gizliliğe öncelik veren e-posta ve takvim çözümü.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Kişisel gizliliğinizi korumak ve güvenliğinizi sağlamak önceliğimizdir.</string>

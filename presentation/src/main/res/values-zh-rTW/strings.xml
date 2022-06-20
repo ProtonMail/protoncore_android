@@ -37,6 +37,7 @@
   <string name="presentation_menu_item_title_subscription">訂閲</string>
   <string name="presentation_menu_item_title_sign_out">登出</string>
   <!-- Other -->
+  <string name="presentation_back">上一步</string>
   <string name="presentation_close">關閉</string>
   <string name="presentation_skip">略過</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

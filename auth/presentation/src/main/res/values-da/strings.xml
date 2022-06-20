@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Krypteret kalender, der holder dine livsbegivenheder private, sikre og trygge.</string>
   <string name="welcome_subtitle_calendar_alt">Vores end-to-end-krypterede kalender hjælper dig med at holde dig organiseret, på sporet og have kontrol.</string>
   <string name="welcome_title_vpn">Beskyt dit privatliv med Proton VPN</string>
-  <string name="welcome_subtitle_vpn">Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">Højhastigheds schweizisk VPN, der beskytter dit privatliv. Maksimal sikkerhed, 1.600+ servere og ingen begrænsninger.</string>
   <string name="welcome_privacy_by_default">Fortrolighed som standard</string>
   <string name="auth_password_label">Adgangskode</string>
