@@ -92,7 +92,7 @@ class UserAddressRepositoryImpl(
         userRepository.addOnPassphraseChangedListener(this)
     }
 
-    private suspend fun invalidateMemCache(userId: UserId? = null) =
+    private suspend fun invalidateMemCache(userId: UserId? = null): Unit =
         if (userId != null) store.clear(userId) else store.clearAll()
 
     private suspend fun List<UserAddressKey>.updateIsActive(userId: UserId): List<UserAddressKey> =
@@ -109,7 +109,7 @@ class UserAddressRepositoryImpl(
     private fun observeAddressesLocal(userId: UserId): Flow<List<UserAddress>> =
         addressWithKeysDao.observeByUserId(userId).mapLatest { list -> list.map { it.toUserAddress() } }
 
-    private suspend fun insertOrUpdate(addresses: List<UserAddress>) =
+    private suspend fun insertOrUpdate(addresses: List<UserAddress>): Unit =
         db.inTransaction {
             // Group UserAddresses by userId.
             val addressesByUser = addresses.fold(mutableMapOf<UserId, MutableList<UserAddress>>()) { acc, address ->
@@ -122,6 +122,7 @@ class UserAddressRepositoryImpl(
                 // Insert in Database.
                 addressDao.insertOrUpdate(*addresses.map { it.toEntity() }.toTypedArray())
                 addressKeyDao.insertOrUpdate(*addressKeys.map { it.toEntity() }.toTypedArray())
+                invalidateMemCache(userId)
             }
         }
 
@@ -135,12 +136,10 @@ class UserAddressRepositoryImpl(
         invalidateMemCache(userId)
     }
 
-    override suspend fun onPassphraseChanged(userId: UserId) {
+    override suspend fun onPassphraseChanged(userId: UserId) =
         db.inTransaction {
             insertOrUpdate(getAddressesLocal(userId))
         }
-        invalidateMemCache(userId)
-    }
 
     override suspend fun addAddresses(addresses: List<UserAddress>) =
         insertOrUpdate(addresses)

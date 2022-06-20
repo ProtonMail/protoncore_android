@@ -103,7 +103,7 @@ class UserRepositoryImpl(
     private fun observeUserLocal(userId: UserId): Flow<User?> =
         userWithKeysDao.observeByUserId(userId).map { user -> user?.toUser() }
 
-    private suspend fun insertOrUpdate(user: User) =
+    private suspend fun insertOrUpdate(user: User): Unit =
         db.inTransaction {
             // Get current passphrase -> don't overwrite passphrase.
             val passphrase = userDao.getPassphrase(user.userId)
@@ -112,12 +112,13 @@ class UserRepositoryImpl(
             // Insert in Database.
             userDao.insertOrUpdate(user.toEntity(passphrase))
             userKeyDao.insertOrUpdate(*userKeys.toEntityList().toTypedArray())
+            invalidateMemCache(user.userId)
         }
 
-    override suspend fun addUser(user: User) =
+    override suspend fun addUser(user: User): Unit =
         insertOrUpdate(user)
 
-    override suspend fun updateUser(user: User) =
+    override suspend fun updateUser(user: User): Unit =
         insertOrUpdate(user)
 
     override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
@@ -224,21 +225,14 @@ class UserRepositoryImpl(
 
     // region PassphraseRepository
 
-    private suspend fun internalSetPassphrase(userId: UserId, passphrase: EncryptedByteArray?) {
-        val passphraseChanged = db.inTransaction {
-            if (passphrase == getPassphrase(userId)) {
-                false
-            } else {
+    private suspend fun internalSetPassphrase(userId: UserId, passphrase: EncryptedByteArray?): Unit =
+        db.inTransaction {
+            if (passphrase != getPassphrase(userId)) {
                 userDao.setPassphrase(userId, passphrase)
                 insertOrUpdate(requireNotNull(getUserLocal(userId)))
-                true
+                onPassphraseChangedListeners.forEach { it.onPassphraseChanged(userId) }
             }
         }
-        if (passphraseChanged) {
-            invalidateMemCache(userId)
-            onPassphraseChangedListeners.forEach { it.onPassphraseChanged(userId) }
-        }
-    }
 
     override suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray) =
         internalSetPassphrase(userId, passphrase)
