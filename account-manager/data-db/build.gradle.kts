@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    api(
+        project(Module.pushData),
+    )
 
     implementation(
         project(Module.kotlinUtil),
@@ -75,6 +78,7 @@ dependencies {
         project(Module.eventManagerDomain),
         project(Module.featureFlagData),
         project(Module.challengeData),
+        project(Module.pushDomain),
 
         // Kotlin
         `coroutines-core`,
