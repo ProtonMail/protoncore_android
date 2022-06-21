@@ -67,14 +67,17 @@ open class CoreRobot : Robot {
      * Clicks an element with [id] of class [clazz] (default: android.widget.Button)
      * @param T next Robot to be returned
      */
-    inline fun <reified T> clickElement(@IdRes id: Int, clazz: Class<*> = Button::class.java): T {
+    fun <T> clickElement(@IdRes id: Int, next: Class<T>, clazz: Class<*> = Button::class.java): T {
         view
             .instanceOf(clazz)
             .withId(id)
             .isEnabled()
             .click()
-        return T::class.java.newInstance()
+        return next.newInstance()
     }
+
+    inline fun <reified T> clickElement(@IdRes id: Int, clazz: Class<*> = Button::class.java): T =
+        clickElement(id, T::class.java, clazz)
 
     /**
      * Clicks provided [element]
@@ -89,27 +92,32 @@ open class CoreRobot : Robot {
      * Clicks close button
      * @param T next Robot to be returned
      */
-    inline fun <reified T> close(): T {
+    open fun <T> close(next: Class<T>): T {
         view
             .instanceOf(ImageButton::class.java)
             .withParent(
                 view.withId(R.id.toolbar)
             )
             .click()
-        return T::class.java.newInstance()
+        return next.newInstance()
     }
+
+    inline fun <reified T> close(): T = close(T::class.java)
 
     /**
      * Clicks an element with [text] of class [clazz] (default: android.widget.Button)
      * @param T next Robot to be returned
      */
-    inline fun <reified T> clickElement(text: String, clazz: Class<*> = Button::class.java): T {
+    fun <T> clickElement(text: String, next: Class<T>, clazz: Class<*> = Button::class.java): T {
         view
             .instanceOf(clazz)
             .withText(text)
             .click()
-        return T::class.java.newInstance()
+        return next.newInstance()
     }
+
+    inline fun <reified T> clickElement(text: String, clazz: Class<*> = Button::class.java): T =
+        clickElement(text, T::class.java, clazz)
 
     /**
      * Clicks Android 'Back' button

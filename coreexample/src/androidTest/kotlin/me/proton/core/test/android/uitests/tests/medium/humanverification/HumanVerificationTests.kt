@@ -50,7 +50,7 @@ class HumanVerificationTests : BaseTest() {
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .close<HumanVerificationRobot>()
+            .close(HumanVerificationRobot::class.java)
             .help()
             .close<HumanVerificationRobot>()
             .close<CoreexampleRobot>()
@@ -70,7 +70,7 @@ class HumanVerificationTests : BaseTest() {
             .setEmail(testAddress)
             .getVerificationCode()
             .setCode(defaultCode)
-            .verifyCode<CoreexampleRobot>()
+            .verifyCode(CoreexampleRobot::class.java)
             .verify {
                 accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)
@@ -87,11 +87,11 @@ class HumanVerificationTests : BaseTest() {
             .sms()
             .countryCodeList()
             .search(testCountry)
-            .selectCountry<HumanVerificationRobot>(testCountry)
+            .selectCountry(testCountry)
             .setPhone(testPhoneNo)
             .getVerificationCode()
             .setCode(defaultCode)
-            .verifyCode<CoreexampleRobot>()
+            .verifyCode(CoreexampleRobot::class.java)
             .verify {
                 accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)
@@ -102,7 +102,7 @@ class HumanVerificationTests : BaseTest() {
     fun captcha() {
         humanVerificationRobot
             .captcha()
-            .iAmHuman<CoreexampleRobot>()
+            .iAmHuman(CoreexampleRobot::class.java)
             .verify {
                 accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)

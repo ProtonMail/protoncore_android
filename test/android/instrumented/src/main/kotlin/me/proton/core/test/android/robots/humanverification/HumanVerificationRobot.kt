@@ -18,188 +18,90 @@
 
 package me.proton.core.test.android.robots.humanverification
 
-import android.webkit.WebView
-import android.widget.TextView
-import androidx.test.espresso.web.model.Atom
-import androidx.test.espresso.web.model.ElementReference
-import androidx.test.espresso.web.sugar.Web.onWebView
-import androidx.test.espresso.web.webdriver.DriverAtoms.clearElement
-import androidx.test.espresso.web.webdriver.DriverAtoms.findElement
-import androidx.test.espresso.web.webdriver.DriverAtoms.webClick
-import androidx.test.espresso.web.webdriver.DriverAtoms.webKeys
-import androidx.test.espresso.web.webdriver.Locator
-import me.proton.core.humanverification.R
-import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.entity.TokenType.CAPTCHA
-import me.proton.core.humanverification.domain.entity.TokenType.EMAIL
-import me.proton.core.humanverification.domain.entity.TokenType.SMS
+import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.test.android.robots.CoreRobot
-import me.proton.core.test.android.robots.CoreVerify
-import me.proton.core.test.android.robots.other.CountryRobot
 
 /**
- * [HumanVerificationRobot] base class contains human verification actions and verifications implementation.
+ * Base class for human verification actions and verifications.
+ * @see HumanVerificationRobot
  */
-open class HumanVerificationRobot : CoreRobot() {
+abstract class HVRobot : CoreRobot() {
+    abstract fun help(): HVRobot
 
-    /**
-     * Clicks 'help' button
-     * @return [HumanVerificationRobot]
-     */
-    fun help(): HumanVerificationRobot = clickElement(R.id.menu_help, TextView::class.java)
+    /** Selects 'captcha' human verification option. */
+    abstract fun captcha(): HVCaptchaRobot
 
-    /**
-     * Selects 'email' human verification option
-     * @return [HumanVerificationRobot]
-     */
-    fun email(): HumanVerificationRobot = hvOption(EMAIL)
+    /** Selects 'email' human verification option. */
+    abstract fun email(): HVEmailRobot
 
-    /**
-     * Selects 'sms' human verification option
-     * @return [HumanVerificationRobot]
-     */
-    fun sms(): HumanVerificationRobot = hvOption(SMS)
+    /** Selects 'sms' human verification option. */
+    abstract fun sms(): HVSmsRobot
 
-    /**
-     * Sets the value of phone number input to [number]
-     * @return [HumanVerificationRobot]
-     */
-    fun setPhone(number: String?): HumanVerificationRobot = setWebText(findElement(Locator.ID, "phone"), number)
+    abstract fun verify(block: Verify.() -> Unit)
 
-    /**
-     * Clicks country code list button
-     * @return [CountryRobot]
-     */
-    fun countryCodeList(): CountryWebRobot {
-        onWebView()
-            .withElement(findElement(Locator.CSS_SELECTOR, "button[data-testid=\"dropdown-button\"]"))
-            .perform(webClick())
-        return CountryWebRobot()
+    interface Verify {
+        fun hvElementsDisplayed()
+    }
+}
+
+class HumanVerificationRobot : HVRobot() {
+    private val delegate: HVRobot = when (version) {
+        HumanVerificationVersion.HV2 -> HV2Robot()
+        HumanVerificationVersion.HV3 -> HV3Robot()
     }
 
-    /**
-     * Sets the value of email input to [email]
-     * @return [HumanVerificationRobot]
-     */
-    fun setEmail(email: String): HumanVerificationRobot = setWebText(findElement(Locator.ID, "email"), email)
+    override fun help(): HVRobot = delegate.help()
+    override fun captcha(): HVCaptchaRobot = delegate.captcha()
+    override fun email(): HVEmailRobot = delegate.email()
+    override fun sms(): HVSmsRobot = delegate.sms()
+    override fun verify(block: Verify.() -> Unit) = delegate.verify(block)
 
-    /**
-     * Clicks 'get verification code' button
-     * @return [HumanVerificationRobot]
-     */
-    fun getVerificationCode(): HumanVerificationRobot {
-        onWebView()
-            .withElement(findElement(Locator.CSS_SELECTOR, "button.button-large"))
-            .perform(webClick())
-        return HumanVerificationRobot()
+    companion object {
+        var version: HumanVerificationVersion = HumanVerificationVersion.HV3
     }
+}
 
-    /**
-     * Selects 'captcha' human verification option
-     * @return [HumanVerificationRobot]
-     */
-    fun captcha(): HumanVerificationRobot = hvOption(CAPTCHA)
-
-    fun setCode(code: String): HumanVerificationRobot {
-        onWebView()
-            .withElement(findElement(Locator.ID, "verification"))
-            .perform(webClick())
-            .perform(webKeys(code))
-        return HumanVerificationRobot()
-    }
-
-    inline fun <reified T> verifyCode(): T {
-        onWebView()
-            .withElement(findElement(Locator.CLASS_NAME, "button-solid-norm"))
-            .perform(webClick())
-            .reset()
-        return T::class.java.newInstance()
-    }
-
-    /**
-     * Checks "I'm not a robot" checkbox. Only works with development reCAPTCHA enabled
-     * @param T next Robot to be returned
-     * @return an instance of [T]
-     */
-    inline fun <reified T> imNotARobot(): T = clickElement(R.id.humanVerificationWebView, WebView::class.java)
-
-    inline fun <reified T> setWebText(element: Atom<ElementReference>, text: String?): T {
-        onWebView()
-            .withElement(element)
-            .perform(clearElement())
-            .perform(webKeys(text))
-        return T::class.java.newInstance()
-    }
-
+interface HVCaptchaRobot {
     /**
      * Checks "I am human" checkbox. Only works with development hCAPTCHA enabled
      * @param T next Robot to be returned
      * @return an instance of [T]
      */
-    inline fun <reified T> iAmHuman(): T {
-        verify { hvElementsDisplayed() }
-        Thread.sleep(2000) // Special case
-        view.instanceOf(WebView::class.java).click()
-        return T::class.java.newInstance()
+    fun <T> iAmHuman(next: Class<T>): T
+
+    fun verify(block: Verify.() -> Unit)
+
+    interface Verify {
+        fun captchaDisplayed()
     }
-
-    /**
-     * Clicks text view with [option] text
-     * @return [HumanVerificationRobot]
-     */
-    private fun hvOption(option: TokenType): HumanVerificationRobot {
-        val testId = when (option) {
-            CAPTCHA -> "tab-header-CAPTCHA-button"
-            SMS -> "tab-header-SMS-button"
-            EMAIL -> "tab-header-Email-button"
-            else -> throw IllegalArgumentException("Only Captcha, SMS and Email are supported")
-        }
-        onWebView()
-            .withElement(findElement(Locator.CSS_SELECTOR, "button[data-testid=\"$testId\"]"))
-            .perform(webClick())
-            .reset()
-        return HumanVerificationRobot()
-    }
-
-    class Verify : CoreVerify() {
-        fun hvElementsDisplayed() {
-            view.withId(R.id.captchaWebView).checkDisplayed()
-        }
-
-        fun captchaDisplayed() = onWebView()
-            .withElement(findElement(Locator.CSS_SELECTOR, "iframe"))
-    }
-
-    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }
 
-class CountryWebRobot {
+interface HVEmailRobot {
+    /** Sets the value of email input to [email]. */
+    fun setEmail(email: String): HVEmailRobot
 
-    fun dialog() = onWebView()
-        .withElement(findElement(Locator.CSS_SELECTOR, "div[role=\"dialog\"]"))
+    /** Clicks 'get verification code' button. */
+    fun getVerificationCode(): HVCodeRobot
+}
 
-    fun search(text: String?): CountryWebRobot {
-        internalSearch(text)
-        return CountryWebRobot()
-    }
+interface HVSmsRobot {
+    /** Sets the value of phone number input to [number]. */
+    fun setPhone(number: String?): HVSmsRobot
 
-    fun internalSearch(text: String?) = dialog()
-        .withContextualElement(findElement(Locator.ID, "search-keyword"))
-        .perform(webClick())
-        .perform(webKeys(text))
+    /** Clicks country code list button. */
+    fun countryCodeList(): HVSmsCountryRobot
 
-    inline fun <reified T> selectCountry(country: String?): T {
-        internalSearch(country)
-            .withElement(findElement(Locator.CLASS_NAME, "dropdown-content"))
-            .withContextualElement(findElement(Locator.CLASS_NAME, "dropdown-item-button"))
-            .perform(webClick())
-        return T::class.java.newInstance()
-    }
+    /** Clicks 'get verification code' button. */
+    fun getVerificationCode(): HVCodeRobot
+}
 
-    inline fun <reified T> close(): T {
-        dialog()
-            .withContextualElement(findElement(Locator.CLASS_NAME, "dropdown-backdrop"))
-            .perform(webClick())
-        return T::class.java.newInstance()
-    }
+interface HVSmsCountryRobot {
+    fun search(text: String): HVSmsCountryRobot
+    fun selectCountry(country: String): HVSmsRobot
+    fun <T> close(next: Class<T>): T
+}
+
+interface HVCodeRobot {
+    fun setCode(code: String): HVCodeRobot
+    fun <T> verifyCode(next: Class<T>): T
 }

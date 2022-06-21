@@ -757,6 +757,11 @@ public final class me/proton/core/test/android/plugins/data/User$Users {
 
 public class me/proton/core/test/android/robots/CoreRobot : me/proton/core/test/android/instrumented/Robot {
 	public fun <init> ()V
+	public final fun clickElement (ILjava/lang/Class;Ljava/lang/Class;)Ljava/lang/Object;
+	public final fun clickElement (Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Class;)Ljava/lang/Object;
+	public static synthetic fun clickElement$default (Lme/proton/core/test/android/robots/CoreRobot;ILjava/lang/Class;Ljava/lang/Class;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun clickElement$default (Lme/proton/core/test/android/robots/CoreRobot;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Class;ILjava/lang/Object;)Ljava/lang/Object;
+	public fun close (Ljava/lang/Class;)Ljava/lang/Object;
 	public fun getDevice ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
 	public fun getIntent ()Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
 	public fun getListView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
@@ -947,31 +952,63 @@ public final class me/proton/core/test/android/robots/confirmpassword/ConfirmPas
 	public final fun confirmPasswordElementsDisplayed ()V
 }
 
-public final class me/proton/core/test/android/robots/humanverification/CountryWebRobot {
-	public fun <init> ()V
-	public final fun dialog ()Landroidx/test/espresso/web/sugar/Web$WebInteraction;
-	public final fun internalSearch (Ljava/lang/String;)Landroidx/test/espresso/web/sugar/Web$WebInteraction;
-	public final fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/CountryWebRobot;
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVCaptchaRobot {
+	public abstract fun iAmHuman (Ljava/lang/Class;)Ljava/lang/Object;
+	public abstract fun verify (Lkotlin/jvm/functions/Function1;)V
 }
 
-public class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot : me/proton/core/test/android/robots/CoreRobot {
-	public fun <init> ()V
-	public final fun captcha ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/CountryWebRobot;
-	public final fun email ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun help ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun setPhone (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun sms ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
-	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Verify;
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVCaptchaRobot$Verify {
+	public abstract fun captchaDisplayed ()V
 }
 
-public final class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVCodeRobot {
+	public abstract fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVCodeRobot;
+	public abstract fun verifyCode (Ljava/lang/Class;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVEmailRobot {
+	public abstract fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/HVCodeRobot;
+	public abstract fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVEmailRobot;
+}
+
+public abstract class me/proton/core/test/android/robots/humanverification/HVRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
-	public final fun captchaDisplayed ()Landroidx/test/espresso/web/sugar/Web$WebInteraction;
-	public final fun hvElementsDisplayed ()V
+	public abstract fun captcha ()Lme/proton/core/test/android/robots/humanverification/HVCaptchaRobot;
+	public abstract fun email ()Lme/proton/core/test/android/robots/humanverification/HVEmailRobot;
+	public abstract fun help ()Lme/proton/core/test/android/robots/humanverification/HVRobot;
+	public abstract fun sms ()Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
+	public abstract fun verify (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVRobot$Verify {
+	public abstract fun hvElementsDisplayed ()V
+}
+
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVSmsCountryRobot {
+	public abstract fun close (Ljava/lang/Class;)Ljava/lang/Object;
+	public abstract fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVSmsCountryRobot;
+	public abstract fun selectCountry (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
+}
+
+public abstract interface class me/proton/core/test/android/robots/humanverification/HVSmsRobot {
+	public abstract fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/HVSmsCountryRobot;
+	public abstract fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/HVCodeRobot;
+	public abstract fun setPhone (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot : me/proton/core/test/android/robots/humanverification/HVRobot {
+	public static final field Companion Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Companion;
+	public fun <init> ()V
+	public fun captcha ()Lme/proton/core/test/android/robots/humanverification/HVCaptchaRobot;
+	public fun email ()Lme/proton/core/test/android/robots/humanverification/HVEmailRobot;
+	public fun help ()Lme/proton/core/test/android/robots/humanverification/HVRobot;
+	public fun sms ()Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
+	public fun verify (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Companion {
+	public final fun getVersion ()Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
+	public final fun setVersion (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
 }
 
 public final class me/proton/core/test/android/robots/other/CountryRobot : me/proton/core/test/android/robots/CoreRobot {

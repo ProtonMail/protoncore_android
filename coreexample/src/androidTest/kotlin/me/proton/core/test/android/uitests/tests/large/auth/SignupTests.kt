@@ -39,14 +39,21 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Ignore("Cannot verify captcha with espresso")
     fun signupFreeWithCaptchaAndRecoveryEmail() {
         val user = User(recoveryEmail = "${randomString()}@example.lt")
-        AddAccountRobot()
+        val recoveryMethodsRobot = AddAccountRobot()
             .createAccount()
             .setUsername(user.name)
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .email(user.recoveryEmail)
-            .next<SelectPlanRobot>()
-            .selectPlan<HumanVerificationRobot>(user.plan)
-            .iAmHuman<CoreexampleRobot>()
+
+        val hvRobot: HumanVerificationRobot = if (features.paymentsAndroidDisabled) {
+            recoveryMethodsRobot.next()
+        } else {
+            recoveryMethodsRobot.next<SelectPlanRobot>().selectPlan(user.plan)
+        }
+
+        hvRobot
+            .captcha()
+            .iAmHuman(CoreexampleRobot::class.java)
             .verify { userStateIs(user, Ready, Authenticated) }
 
         CoreexampleRobot()
