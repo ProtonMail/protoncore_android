@@ -30,6 +30,7 @@ import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.domain.entity.Product
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
+import java.lang.IllegalStateException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,12 +51,12 @@ class AccountStateHandler @Inject constructor(
         }
         if (product != Product.Vpn) {
             onInvalidUserKey { userId ->
-                CoreLogger.i(LogTag.INVALID_USER_KEY, "$userId")
+                CoreLogger.e(LogTag.INVALID_USER_KEY, IllegalStateException("Account with invalid user key: user id = $userId"))
                 accountRepository.updateAccountState(userId, AccountState.UserKeyCheckFailed)
                 accountManager.disableAccount(userId)
             }
             onInvalidUserAddressKey { userId ->
-                CoreLogger.i(LogTag.INVALID_USER_ADDRESS_KEY, "$userId")
+                CoreLogger.e(LogTag.INVALID_USER_ADDRESS_KEY, IllegalStateException("Account with invalid address key: user id = $userId"))
                 accountRepository.updateAccountState(userId, AccountState.UserAddressKeyCheckFailed)
                 accountManager.disableAccount(userId)
             }
