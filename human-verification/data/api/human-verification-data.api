@@ -7,8 +7,6 @@ public final class me/proton/core/humanverification/data/BuildConfig {
 
 public final class me/proton/core/humanverification/data/HumanVerificationListenerImpl : me/proton/core/network/domain/humanverification/HumanVerificationListener {
 	public fun <init> (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
-	public fun awaitHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun notifyHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationInvalid (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationNeeded (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -16,12 +14,10 @@ public final class me/proton/core/humanverification/data/HumanVerificationListen
 public final class me/proton/core/humanverification/data/HumanVerificationManagerImpl : me/proton/core/humanverification/domain/HumanVerificationManager, me/proton/core/humanverification/domain/HumanVerificationWorkflowHandler, me/proton/core/network/domain/humanverification/HumanVerificationListener, me/proton/core/network/domain/humanverification/HumanVerificationProvider {
 	public fun <init> (Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
 	public fun addDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun awaitHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun handleHumanVerificationFailed (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun handleHumanVerificationSuccess (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun notifyHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationInvalid (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationNeeded (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationStateChanged (Z)Lkotlinx/coroutines/flow/Flow;

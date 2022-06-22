@@ -71,7 +71,7 @@ class HumanVerificationNeededHandler<Api>(
             backend(call)
         } else {
             error
-        }.also { humanVerificationListener.notifyHumanVerificationProcessFinished(clientId) }
+        }
     }
 
     // Must be called within sessionMutex.

@@ -440,8 +440,6 @@ public final class me/proton/core/network/domain/humanverification/HumanVerifica
 }
 
 public abstract interface class me/proton/core/network/domain/humanverification/HumanVerificationListener {
-	public abstract fun awaitHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun notifyHumanVerificationProcessFinished (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onHumanVerificationInvalid (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onHumanVerificationNeeded (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

@@ -29,7 +29,6 @@ import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
-import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import javax.inject.Inject
@@ -40,7 +39,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HV3ViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
-    private val humanVerificationListener: HumanVerificationListener,
     private val accountRepository: AccountRepository,
     private val getUserSettings: GetUserSettings,
     private val networkPrefs: NetworkPrefs,
@@ -70,7 +68,7 @@ class HV3ViewModel @Inject constructor(
     suspend fun onHumanVerificationResult(
         clientId: ClientId,
         token: HumanVerificationToken?
-    ): HumanVerificationListener.HumanVerificationResult = withContext(backgroundContext) {
+    ) = withContext(backgroundContext) {
         if (token != null) {
             humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
                 clientId = clientId,
@@ -80,7 +78,6 @@ class HV3ViewModel @Inject constructor(
         } else {
             humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
         }
-        humanVerificationListener.awaitHumanVerificationProcessFinished(clientId)
     }
 }
 

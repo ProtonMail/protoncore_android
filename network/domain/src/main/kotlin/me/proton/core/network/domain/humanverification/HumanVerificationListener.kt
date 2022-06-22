@@ -28,19 +28,6 @@ interface HumanVerificationListener {
     }
 
     /**
-     * Called when a Human Verification Workflow is completed for a [ClientId], along with the retry of the failed
-     * network request that caused it.
-     */
-    suspend fun notifyHumanVerificationProcessFinished(clientId: ClientId)
-
-    /**
-     * Can be called to suspend the current coroutine until a Human Verification Workflow is completed.
-     *
-     * @return the HumanVerificationResult of the HV workflow.
-     */
-    suspend fun awaitHumanVerificationProcessFinished(clientId: ClientId): HumanVerificationResult
-
-    /**
      * Called when a Human Verification Workflow is needed for a [ClientId].
      *
      * Implementation of this function should suspend until a [HumanVerificationResult] is returned.

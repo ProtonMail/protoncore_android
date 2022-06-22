@@ -36,7 +36,6 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
-import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -52,7 +51,6 @@ class HV3ViewModelTest : CoroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
     private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
-    private val humanVerificationListener = mockk<HumanVerificationListener>(relaxed = true)
     private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val getSettings = mockk<GetUserSettings>(relaxed = true)
     private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
@@ -69,7 +67,6 @@ class HV3ViewModelTest : CoroutinesTest {
     fun setup() {
         viewModel = HV3ViewModel(
             humanVerificationWorkflowHandler,
-            humanVerificationListener,
             accountRepository,
             getSettings,
             networkPrefs,
@@ -126,7 +123,6 @@ class HV3ViewModelTest : CoroutinesTest {
     fun `getHumanVerificationExtraParams returns useVPNTheme when product is Vpn`() = runBlocking {
         viewModel = HV3ViewModel(
             humanVerificationWorkflowHandler,
-            humanVerificationListener,
             accountRepository,
             getSettings,
             networkPrefs,

@@ -53,7 +53,6 @@ class HumanVerificationHandlerTest {
     @BeforeTest
     fun beforeTest() {
         coEvery { clientIdProvider.getClientId(any()) } returns clientId
-        coEvery { humanVerificationListener.notifyHumanVerificationProcessFinished(any()) } answers {}
         // Assume no token has been refreshed between each tests.
         runBlocking { HumanVerificationNeededHandler.reset(clientId) }
     }
