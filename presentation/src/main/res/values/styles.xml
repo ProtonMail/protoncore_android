@@ -236,6 +236,8 @@
     <style name="ProtonButton" parent="Widget.MaterialComponents.Button">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="android:textColor">@color/btn_text_selector</item>
+        <item name="backgroundTint">@color/btn_background_selector</item>
         <item name="cornerRadius">@dimen/default_corner_radius</item>
     </style>
 
@@ -259,6 +261,7 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:theme">@style/Proton.ThemeOverlay.ColorPrimaryAccent</item>
+        <item name="android:textColor">@color/btn_text_outlined_selector</item>
         <item name="textAllCaps">false</item>
         <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
         <item name="strokeColor">@color/btn_stroke_color_selector</item>

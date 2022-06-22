@@ -1,6 +1,6 @@
-<!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -17,6 +17,6 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?proton_interaction_norm_disabled" android:state_enabled="false" />
-    <item android:color="?proton_interaction_norm" />
+    <item android:color="@color/white" android:state_enabled="true" />
+    <item android:alpha="0.5" android:color="@color/white" />
 </selector>
