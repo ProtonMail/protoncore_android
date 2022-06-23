@@ -11,6 +11,77 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [8.3.0] - 2022-06-23
+
+### Features
+
+- crypto:
+  - Added the same KeyStore workaround as Tink `AndroidKeystoreAesGcm`.
+- user:
+  - Switched default User Address Key model generation to new format (ref: Key Migration Phase 2).
+
+### Bug Fixes
+
+- account-manager:
+  - Log invalid user and address keys events as errors
+
+    When the account-manager detects an account with invalid user or address keys
+    (they don't decrypt with the user password), we start logging these events as
+    errors instead of information.
+    Also improve the error message for clarity.
+- auth:
+  - Fix (potential) crash in `CreatingUserFragment`.
+
+    HV can be triggered also during the login process, and at
+    that moment, `CreatingUserFragment` will already be gone, so
+    it could crash when calling `parentFragmentManager`.
+  - Improved support for orientation changes.
+  - Prevent potential issues, when keyboard input is directed to a fragment which is not visible.
+
+    Previously, we were adding the fragments on top of each other.
+    The issue was, if keyboard was visible, and you rotated the screen,
+    the focus would go to the first fragment on the back stack
+    (which would not be visible).
+- auth-presentation:
+  - Fix crashes for `RecoveryEmailFragment`.
+- event-manager:
+  - Changed EventWorker Log Level for ApiException to Debug.
+- plan:
+  - Prevent potential issues, when keyboard input is directed to a fragment which is not visible.
+
+    Previously, we were adding the fragments on top of each other.
+    The issue was, if keyboard was visible, and you rotated the screen,
+    the focus would go to the first fragment on the back stack
+    (which would not be visible).
+- presentation:
+  - Make changes to support accessibility according to guidelines.
+- user:
+  - Invalidate User/UserAddress Memory Cache on insertOrUpdate.
+- user-settings:
+  - Prevent potential issues, when keyboard input is directed to a fragment which is not visible.
+
+    Previously, we were adding the fragments on top of each other.
+    The issue was, if keyboard was visible, and you rotated the screen,
+    the focus would go to the first fragment on the back stack
+    (which would not be visible).
+  - User input is not preserved after rotating.
+
+### Internationalization
+
+- Upgrade translations from crowdin (2f3a1326).
+
+### Refactoring
+
+- auth:
+  - No need to create `ChooseUsernameFragment` if we're recreating the activity.
+- presentation:
+  - Remove dependency on kotlin-reflect.
+
+### Theming
+
+- presentation:
+  - Updated Proton Button colors (background + text).
+
 ## [8.2.0] - 2022-06-14
 
 ### Features
