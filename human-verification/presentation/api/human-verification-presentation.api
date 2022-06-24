@@ -674,6 +674,10 @@ public final class me/proton/core/humanverification/presentation/utils/RequestCo
 	public static final fun registerRequestNewCodeDialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function0;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 }
 
+public final class me/proton/core/humanverification/presentation/utils/SSLCertificateExtensionsKt {
+	public static final fun getCompatX509Cert (Landroid/net/http/SslCertificate;)Ljava/security/cert/X509Certificate;
+}
+
 public final class me/proton/core/humanverification/presentation/utils/UiUtilsKt {
 	public static final field TAG_HUMAN_VERIFICATION_HELP Ljava/lang/String;
 	public static final field TOKEN_DEFAULT Ljava/lang/String;

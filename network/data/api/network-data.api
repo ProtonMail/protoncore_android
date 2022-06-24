@@ -30,6 +30,13 @@ public final class me/proton/core/network/data/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/network/data/LeafSPKIPinningTrustManager : javax/net/ssl/X509TrustManager {
+	public fun <init> (Ljava/util/List;)V
+	public fun checkClientTrusted ([Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+	public fun checkServerTrusted ([Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+	public fun getAcceptedIssuers ()[Ljava/security/cert/X509Certificate;
+}
+
 public final class me/proton/core/network/data/LogTag {
 	public static final field DEFAULT Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/network/data/LogTag;
@@ -53,6 +60,10 @@ public final class me/proton/core/network/data/NetworkPrefsImpl : me/proton/core
 }
 
 public final class me/proton/core/network/data/NetworkPrefsImpl$Companion {
+}
+
+public final class me/proton/core/network/data/PinningKt {
+	public static final fun initSPKIleafPinning (Lokhttp3/OkHttpClient$Builder;Ljava/util/List;)V
 }
 
 public final class me/proton/core/network/data/ProtonCookieStore : okhttp3/CookieJar {
@@ -138,10 +149,6 @@ public final class me/proton/core/network/data/doh/DnsOverHttpsProviderRFC8484$C
 
 public abstract interface class me/proton/core/network/data/doh/DnsOverHttpsRetrofitApi {
 	public abstract fun getServers (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/network/data/doh/ReadSelfSignedDoHCertsKt {
-	public static final fun readSelfSignedDoHCerts (Landroid/content/Context;)Ljava/security/KeyStore;
 }
 
 public final class me/proton/core/network/data/interceptor/CacheOverrideInterceptor : okhttp3/Interceptor {

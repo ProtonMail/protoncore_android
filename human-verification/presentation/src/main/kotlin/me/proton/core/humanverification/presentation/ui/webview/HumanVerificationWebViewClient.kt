@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.presentation.ui.webview
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.net.http.SslError
 import android.webkit.SslErrorHandler
@@ -26,8 +27,12 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.net.toUri
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.LogTag.HV_REQUEST_ERROR
+import me.proton.core.humanverification.presentation.utils.getCompatX509Cert
+import me.proton.core.network.data.LeafSPKIPinningTrustManager
+import me.proton.core.network.data.di.Constants
 import me.proton.core.util.kotlin.CoreLogger
 
 /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
@@ -44,6 +49,7 @@ class HumanVerificationWebViewClient(
         val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.host == apiHost
         val usesDoH = alternativeUrl != null && request.url.isAlternativeUrl()
         return when {
+            request.method != "GET" -> null
             usesDoH -> overrideForDoH(request, extraHeaders)
             needsExtraHeaderForAPI -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
@@ -67,10 +73,15 @@ class HumanVerificationWebViewClient(
         onResourceLoadingError(request, errorResponse?.let { WebResponseError.Http(it) })
     }
 
-    override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-        super.onReceivedSslError(view, handler, error)
+    @SuppressLint("WebViewClientOnReceivedSslError")
+    override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
         CoreLogger.log(HV_REQUEST_ERROR, "SSL error: ${error?.url} ${error?.primaryError}")
-        onResourceLoadingError(null, error?.let { WebResponseError.Ssl(it) })
+        if (tryAllowingSelfSignedDoHCert(error)) {
+            handler.proceed()
+        } else {
+            handler.cancel()
+            onResourceLoadingError(null, WebResponseError.Ssl(error))
+        }
     }
 
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
@@ -79,6 +90,18 @@ class HumanVerificationWebViewClient(
             "code ${error?.errorCode} ${error?.description}"
         CoreLogger.log(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, error?.let { WebResponseError.Resource(it) })
+    }
+
+    private fun tryAllowingSelfSignedDoHCert(error: SslError): Boolean {
+        return if (error.primaryError == SslError.SSL_UNTRUSTED && error.url.toUri().isAlternativeUrl()) {
+            val x509Certificate = error.certificate.getCompatX509Cert()
+            if (x509Certificate == null) {
+                false
+            } else {
+                val trustManager = LeafSPKIPinningTrustManager(Constants.ALTERNATIVE_API_SPKI_PINS)
+                runCatching { trustManager.checkServerTrusted(arrayOf(x509Certificate), "generic") }.isSuccess
+            }
+        } else false
     }
 
     private fun overrideWithExtraHeaders(
@@ -96,19 +119,13 @@ class HumanVerificationWebViewClient(
         request: WebResourceRequest,
         extraHeaders: List<Pair<String, String>>,
     ): WebResourceResponse? {
-        // TODO: remove when it's fixed in web frontend, needed to load captcha with DoH
-        val url = with(request.url) {
-            if (isLoadCaptchaUrl() && host?.contains("-api") == true) {
-                toString().replace("-api", "")
-            } else toString()
-        }
         // This allows a custom redirection to HumanVerificationApiHost Url from the DoH one
         // Must be skipped for the internal captcha request
         val dohHeader = if (!request.url.isLoadCaptchaUrl()) {
             "X-PM-DoH-Host" to "verify.protonmail.com"
         } else null
         return overrideRequest(
-            url,
+            request.url.toString(),
             request.method,
             headers = request.requestHeaders.toList() + extraHeaders + listOfNotNull(dohHeader),
             acceptSelfSignedCertificates = true,
@@ -126,33 +143,44 @@ class HumanVerificationWebViewClient(
         acceptSelfSignedCertificates: Boolean
     ): WebResourceResponse? = runCatching {
         val response = networkRequestOverrider.overrideRequest(url, method, headers, acceptSelfSignedCertificates)
+
         if (response.httpStatusCode !in 200 until 400) {
             val logMessage = "Request with override failed: $method $url with " +
                 "code ${response.httpStatusCode} ${response.reasonPhrase}"
             CoreLogger.log(HV_REQUEST_ERROR, logMessage)
+        }
+
+        // We need to remove the CSP header for DoH to work
+        val needsCspRemoval = Uri.parse(url).isAlternativeUrl() && response.responseHeaders.containsKey(CSP_HEADER)
+        val filteredHeaders = if (needsCspRemoval) {
+            response.responseHeaders.toMutableMap().also { it.remove(CSP_HEADER) }
+        } else {
+            response.responseHeaders
         }
         WebResourceResponse(
             response.mimeType,
             response.encoding,
             response.httpStatusCode,
             response.reasonPhrase,
-            response.responseHeaders,
+            filteredHeaders,
             response.contents
         )
     }.onFailure {
         CoreLogger.e(TAG, it)
     }.getOrNull()
 
-    private fun Uri.isLoadCaptchaUrl() = path == "/core/v4/captcha"
+    private fun Uri.isLoadCaptchaUrl() = path?.endsWith("/core/v4/captcha") == true
     private fun Uri.isAlternativeUrl() = host?.endsWith("compute.amazonaws.com") == true
 
     companion object {
         const val TAG = "HumanVerificationWebViewClient"
+
+        private const val CSP_HEADER = "content-security-policy"
     }
 }
 
 sealed class WebResponseError {
-    data class Http(val response: WebResourceResponse): WebResponseError()
-    data class Ssl(val error: SslError): WebResponseError()
-    data class Resource(val error: WebResourceError): WebResponseError()
+    data class Http(val response: WebResourceResponse) : WebResponseError()
+    data class Ssl(val error: SslError) : WebResponseError()
+    data class Resource(val error: WebResourceError) : WebResponseError()
 }

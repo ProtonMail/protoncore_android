@@ -39,6 +39,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
+        project(Module.networkData),
         project(Module.userDomain),
         project(Module.userSettingsDomain),
         project(Module.presentation),

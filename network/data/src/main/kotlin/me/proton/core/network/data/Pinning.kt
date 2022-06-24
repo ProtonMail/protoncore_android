@@ -51,7 +51,7 @@ internal fun initPinning(okBuilder: OkHttpClient.Builder, host: String, pins: Ar
  * @param pins list of pins (base64, SHA-256). When empty, pinning will be disabled and default
  *   certificate verification will be used (should be used only for testing).
  */
-internal fun initSPKIleafPinning(builder: OkHttpClient.Builder, pins: List<String>) {
+fun initSPKIleafPinning(builder: OkHttpClient.Builder, pins: List<String>) {
     if (pins.isNotEmpty()) {
         val trustManager = LeafSPKIPinningTrustManager(pins)
         val sslContext = SSLContext.getInstance("TLS")
@@ -64,7 +64,7 @@ internal fun initSPKIleafPinning(builder: OkHttpClient.Builder, pins: List<Strin
     }
 }
 
-internal class LeafSPKIPinningTrustManager(pinnedSPKIHashes: List<String>) : X509TrustManager {
+class LeafSPKIPinningTrustManager(pinnedSPKIHashes: List<String>) : X509TrustManager {
 
     private val pins: List<PublicKeyPin> = pinnedSPKIHashes.map { PublicKeyPin(it) }
 

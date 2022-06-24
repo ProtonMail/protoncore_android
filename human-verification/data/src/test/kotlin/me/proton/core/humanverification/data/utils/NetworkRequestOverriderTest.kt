@@ -47,7 +47,7 @@ class NetworkRequestOverriderTest {
         val context = mockk<Context> {
             every { getResources() } returns resources
         }
-        overrider = NetworkRequestOverriderImpl(OkHttpClient(), context)
+        overrider = NetworkRequestOverriderImpl(OkHttpClient())
         mockWebServer = MockWebServer().apply {
             enqueue(
                 MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody("Some response")
