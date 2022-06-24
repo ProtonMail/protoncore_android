@@ -11,6 +11,32 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [8.4.0] - 2022-06-24
+
+### Features
+
+- presentation:
+  - Add `ic_proton_verified_badge` drawable.
+
+### Bug Fixes
+
+- human-verification:
+  - User may be stuck on HV screen.
+  - Fixes for HV3 when DoH is active.
+
+    - Allow self-signed certificates for HV webview POST requests.
+    - Workaround for CSP header.
+
+    BREAKING-CHANGE: Removed `context` parameter from the constructor of `NetworkRequestOverriderImpl`.
+
+### Refactoring
+
+- human-verification:
+  - Avoid hard-coded values.
+
+    - Host value for `X-PM-DoH-Host` header.
+    - Host value when checking if we're using an alternative host.
+
 ## [8.3.0] - 2022-06-23
 
 ### Features
