@@ -66,7 +66,7 @@ class ChangelogCommand : CliktCommand() {
         val changes = getConventionalCommits(since = latestTag?.objectId)
             .map { it.second }
             .filter { commit ->
-                commit.type !in skipTypes && !commit.breaking
+                commit.type !in skipTypes || commit.breaking
             }
         val version = nextVersion?.takeIf { it.isNotBlank() } ?: ProposeNextVersion(
             getConventionalCommits,
