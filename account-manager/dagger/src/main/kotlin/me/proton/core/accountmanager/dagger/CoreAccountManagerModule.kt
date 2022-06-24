@@ -48,7 +48,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AccountManagerModule {
+object CoreAccountManagerModule {
 
     @Provides
     @Singleton

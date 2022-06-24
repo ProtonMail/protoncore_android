@@ -31,7 +31,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object ChallengeModule {
+public object CoreChallengeModule {
 
     @Provides
     @Singleton

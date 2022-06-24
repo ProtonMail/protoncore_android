@@ -29,7 +29,7 @@ import me.proton.core.metrics.domain.repository.MetricsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class MetricsModule {
+internal abstract class CoreMetricsModule {
     @Binds
     abstract fun provideMetricsRepository(impl: MetricsRepositoryImpl): MetricsRepository
 

@@ -39,7 +39,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class NetworkModule {
+internal class CoreNetworkModule {
     @Provides
     @Singleton
     fun provideCookieJar(@ApplicationContext context: Context): ProtonCookieStore = ProtonCookieStore(

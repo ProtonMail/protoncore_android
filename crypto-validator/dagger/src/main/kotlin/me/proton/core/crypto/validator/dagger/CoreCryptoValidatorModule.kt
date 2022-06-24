@@ -16,29 +16,41 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.hilt
+package me.proton.core.crypto.validator.dagger
 
+import android.app.Application
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.contact.data.api.ContactRemoteDataSourceImpl
-import me.proton.core.contact.data.local.db.ContactLocalDataSourceImpl
-import me.proton.core.contact.data.repository.ContactRepositoryImpl
-import me.proton.core.contact.domain.repository.ContactLocalDataSource
-import me.proton.core.contact.domain.repository.ContactRemoteDataSource
-import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.validator.data.prefs.CryptoPrefsImpl
+import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
+import me.proton.core.crypto.validator.presentation.CryptoValidator
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class ContactsModule {
+internal object CoreCryptoValidatorModule {
 
-    @Binds
-    abstract fun bindContactLocalDataSource(impl: ContactLocalDataSourceImpl): ContactLocalDataSource
+    @Provides
+    @Singleton
+    fun provideKeyStoreCryptoCheck(
+        application: Application,
+        keyStoreCrypto: KeyStoreCrypto,
+        cryptoPrefs: CryptoPrefs,
+    ): CryptoValidator =
+        CryptoValidator(
+            application,
+            keyStoreCrypto,
+            cryptoPrefs
+        )
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class CoreCryptoValidatorBindsModule {
     @Binds
-    abstract fun bindContactRemoteDataSource(impl: ContactRemoteDataSourceImpl): ContactRemoteDataSource
-
-    @Binds
-    abstract fun provideContactsRepository(impl: ContactRepositoryImpl): ContactRepository
+    abstract fun bindCryptoPrefs(cryptoPrefsImpl: CryptoPrefsImpl): CryptoPrefs
 }

@@ -31,7 +31,7 @@ import me.proton.core.label.domain.repository.LabelRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LabelModule {
+abstract class CoreLabelModule {
 
     @Binds
     abstract fun bindLabelLocalDataSource(impl: LabelLocalDataSourceImpl): LabelLocalDataSource

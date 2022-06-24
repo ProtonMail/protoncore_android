@@ -16,41 +16,42 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.validator.dagger
+package me.proton.core.report.dagger
 
-import android.app.Application
+import android.os.Build
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.validator.data.prefs.CryptoPrefsImpl
-import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
-import me.proton.core.crypto.validator.presentation.CryptoValidator
-import javax.inject.Singleton
+import me.proton.core.domain.entity.Product
+import me.proton.core.report.data.SendBugReportImpl
+import me.proton.core.report.data.repository.ReportRepositoryImpl
+import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.report.domain.repository.ReportRepository
+import me.proton.core.report.domain.usecase.SendBugReport
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object CryptoValidatorModule {
-
+internal class CoreReportModule {
     @Provides
-    @Singleton
-    fun provideKeyStoreCryptoCheck(
-        application: Application,
-        keyStoreCrypto: KeyStoreCrypto,
-        cryptoPrefs: CryptoPrefs,
-    ): CryptoValidator =
-        CryptoValidator(
-            application,
-            keyStoreCrypto,
-            cryptoPrefs
+    fun provideBugReportMeta(appUtils: AppUtils, product: Product): BugReportMeta {
+        return BugReportMeta(
+            appVersionName = appUtils.appVersionName(),
+            clientName = "Android " + appUtils.appName(),
+            osName = "Android",
+            osVersion = Build.VERSION.RELEASE,
+            product
         )
+    }
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class CryptoValidatorBindsModule {
+internal interface CoreReportBindModule {
     @Binds
-    abstract fun bindCryptoPrefs(cryptoPrefsImpl: CryptoPrefsImpl): CryptoPrefs
+    fun provideReportRepository(repository: ReportRepositoryImpl): ReportRepository
+
+    @Binds
+    fun provideSendBugReportUseCase(useCase: SendBugReportImpl): SendBugReport
 }

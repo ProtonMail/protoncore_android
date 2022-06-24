@@ -34,7 +34,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class FeatureFlagModule {
+internal abstract class CoreFeatureFlagModule {
 
     @Binds
     @Singleton
