@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">您的密保邮箱：</string>
   <string name="auth_create_address_create">创建地址</string>
   <string name="auth_create_address_creating">正在创建地址</string>
-  <string name="auth_create_address_terms">点击创建地址即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">服务条款</a>。</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">服务条款</a>。</string>
   <string name="auth_create_address_error_credentials">账号和密码不应为空。</string>
   <string name="auth_create_address_error_no_available_domain">没有可用的域名。</string>
   <string name="auth_create_address_error_private_key">生成私钥失败。</string>

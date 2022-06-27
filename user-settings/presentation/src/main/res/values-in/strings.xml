@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Alamat email pemulihan</string>
   <string name="settings_recovery_email_current">Alamat Email Sekarang untuk Atur Ulang/Notifikasi</string>
-  <string name="settings_recovery_email_new">Email Baru untuk Atur Ulang/Notifikasi</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Konfirmasi Email Atur Ulang/Notifikasi</string>
   <string name="settings_recovery_email_new_hint">Masukkan Alamat Email</string>
   <string name="settings_recovery_email_confirm_hint">Masukkan Ulang Alamat Email</string>

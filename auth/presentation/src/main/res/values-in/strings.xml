@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga hidup Anda tetap privat, aman, dan terkunci rapat.</string>
   <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi dari ujung ke ujung membantu Anda tetap teratur, berada dalam jalur, dan terkendali.</string>
   <string name="welcome_title_vpn">Lindungi privasi Anda dengan Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
   <string name="welcome_privacy_by_default">Berstandar privasi</string>
   <string name="auth_password_label">Kata Sandi</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>
-  <string name="auth_create_address_terms">Dengan mengklik Buat alamat, Anda menyetujui <a href="https://protonmail.com/terms-and-conditions">Syarat dan Ketentuan</a> Proton.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Syarat dan Ketentuan</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
   <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>

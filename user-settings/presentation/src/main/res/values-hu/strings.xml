@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Helyreállítási email</string>
   <string name="settings_recovery_email_current">Jelenlegi visszaállító és értesítési e-mail</string>
-  <string name="settings_recovery_email_new">Új visszaállító és értesítési e-mail</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Visszaállító és értesítési e-mail megerősítése</string>
   <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
   <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>

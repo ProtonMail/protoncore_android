@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
   <string name="welcome_subtitle_calendar_alt">Uçtan uca şifrelenmiş takvimimiz, kontrolü size bırakarak planlarınızı uygulamanıza yardımcı olur.</string>
   <string name="welcome_title_vpn">Proton VPN ile kişisel gizliliğinizi koruyun</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
   <string name="welcome_subtitle_vpn_alt">Kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN. En yüksek güvenlik, 1.600 üzerinde sunucu ve sınırlamasız.</string>
   <string name="welcome_privacy_by_default">Kişisel gizliliğe odaklanmış</string>
   <string name="auth_password_label">Parola</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Kurtarma e-posta adresiniz:</string>
   <string name="auth_create_address_create">Adres oluştur</string>
   <string name="auth_create_address_creating">Adres oluşturuluyor</string>
-  <string name="auth_create_address_terms">Adres oluştur üzerine tıklayarak, Proton <a href="https://protonmail.com/terms-and-conditions">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
   <string name="auth_create_address_error_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_error_no_available_domain">Kullanılabilecek bir etki alanı yok.</string>
   <string name="auth_create_address_error_private_key">Kişisel anahtar oluşturulamadı.</string>

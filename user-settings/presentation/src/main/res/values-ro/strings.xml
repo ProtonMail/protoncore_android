@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">E-mail de recuperare</string>
   <string name="settings_recovery_email_current">Adresa de e-mail de recuperare / notificare</string>
-  <string name="settings_recovery_email_new">E-mail nou de recuperare / notificare</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Confirmare adresă de recuperare / notificare</string>
   <string name="settings_recovery_email_new_hint">Introduceți adresa de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Reintroduceți adresa de e-mail</string>

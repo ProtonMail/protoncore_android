@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Din e-postadress för återställning är:</string>
   <string name="auth_create_address_create">Skapa adress</string>
   <string name="auth_create_address_creating">Skapar adress</string>
-  <string name="auth_create_address_terms">Genom att klicka på “Skapa adress“ godkänner du Protons <a href="https://protonmail.com/terms-and-conditions">användarvillkor.</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">användarvillkor.</a></string>
   <string name="auth_create_address_error_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_create_address_error_no_available_domain">Ingen tillgänglig domän.</string>
   <string name="auth_create_address_error_private_key">Misslyckades att generera privat nyckel.</string>

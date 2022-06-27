@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Sekundární e-mail</string>
   <string name="settings_recovery_email_current">Aktuální sekundární e-mailová adresa</string>
-  <string name="settings_recovery_email_new">Nová sekundární e-mailová adresa</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Potvrdit sekundární e-mailovou adresu</string>
   <string name="settings_recovery_email_new_hint">Zadejte e-mailovou adresu</string>
   <string name="settings_recovery_email_confirm_hint">Znovu zadejte e-mailovou adresu</string>

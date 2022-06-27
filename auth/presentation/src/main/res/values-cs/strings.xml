@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Šifrovaný kalendář, který udržuje Vaše životní události v soukromí, v bezpečí a chráněné.</string>
   <string name="welcome_subtitle_calendar_alt">Náš end-to-end šifrovaný kalendář vám pomůže udržet si pořádek, přehled a kontrolu.</string>
   <string name="welcome_title_vpn">Chraňte své soukromí pomocí Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí šifrováním internetového připojení.</string>
   <string name="welcome_subtitle_vpn_alt">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí. Maximální zabezpečení, více než 1 600 serverů a žádná omezení.</string>
   <string name="welcome_privacy_by_default">Soukromí především</string>
   <string name="auth_password_label">Heslo</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
   <string name="auth_create_address_creating">Vytváření adresy</string>
-  <string name="auth_create_address_terms">Kliknutím vytvořte adresu, souhlasíte s <a href="https://protonmail.com/terms-and-conditions">podmínkami a náležitostmi</a> Proton.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">podmínkami a náležitostmi</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Pověřovací listiny by neměly být prázdné.</string>
   <string name="auth_create_address_error_no_available_domain">Žádná dostupná doména.</string>
   <string name="auth_create_address_error_private_key">Generování soukromého klíče se nezdařilo.</string>

@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Szyfrowany kalendarz, który zapewnia Twoim wydarzeniom prywatność i bezpieczeństwo.</string>
   <string name="welcome_subtitle_calendar_alt">Szyfrowany kalendarz end-to-end pomaga organizować i kontrolować Twój harmonogram.</string>
   <string name="welcome_title_vpn">Chroń swoją prywatność z usługą Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">Szybka szwajcarska usługa VPN, która chroni Twoją prywatność, szyfrując Twoje połączenie internetowe.</string>
   <string name="welcome_subtitle_vpn_alt">Szybka szwajcarska usługa VPN, która chroni Twoją prywatność. Maksymalne bezpieczeństwo, 1600 serwerów i brak ograniczeń.</string>
   <string name="welcome_privacy_by_default">Prywatność to nasz standard</string>
   <string name="auth_password_label">Hasło</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Twój adres pomocniczy:</string>
   <string name="auth_create_address_create">Utwórz adres</string>
   <string name="auth_create_address_creating">Tworzenie adresu</string>
-  <string name="auth_create_address_terms">Klikając przycisk Utwórz adres, akceptujesz <a href="https://protonmail.com/terms-and-conditions">regulamin</a> usługi Proton.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">regulamin</a> usługi Proton.</string>
   <string name="auth_create_address_error_credentials">Dane logowania nie mogą być puste.</string>
   <string name="auth_create_address_error_no_available_domain">Brak dostępnej domeny.</string>
   <string name="auth_create_address_error_private_key">Generowanie klucza prywatnego nie powiodło się.</string>

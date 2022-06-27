@@ -116,7 +116,7 @@
   <string name="ad_blocker" comment="new_plans">Inbyggd annonsblockerare (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Åtkomst till streamingtjänster globalt</string>
   <string name="secure_core" comment="new_plans">Secure Core-servrar</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor över VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">E-post och kalender-lösningen för dina behov av vardagskommunikation som sätter integriteten i första rummet.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Din integritet och säkerhet är vår prioritet.</string>

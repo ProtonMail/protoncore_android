@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">Creant adreça</string>
-  <string name="auth_create_address_terms">En fer clic a Crea l\'adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i condicions</a> de Proton.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Termes i condicions</a> de Proton.</string>
   <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>

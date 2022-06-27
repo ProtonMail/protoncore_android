@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Kurtarma e-postası adresi</string>
   <string name="settings_recovery_email_current">Geçerli sıfırlama ve bildirim e-posta adresi</string>
-  <string name="settings_recovery_email_new">Yeni sıfırlama ve bildirim e-posta adresi</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Sıfırlama ve bildirim e-posta adresi onayı</string>
   <string name="settings_recovery_email_new_hint">E-posta adresini yazın</string>
   <string name="settings_recovery_email_confirm_hint">E-posta adresini yeniden yazın</string>

@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Adres pomocniczy</string>
   <string name="settings_recovery_email_current">Obecny adres odzyskiwania / powiadomień</string>
-  <string name="settings_recovery_email_new">Nowy adres odzyskiwania / powiadomień</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Potwierdź adres odzyskiwania / powiadomień</string>
   <string name="settings_recovery_email_new_hint">Wpisz adres e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Wpisz ponownie adres e-mail</string>

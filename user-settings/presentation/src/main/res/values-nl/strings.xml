@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Herstel-e-mailadres</string>
   <string name="settings_recovery_email_current">Huidig herstel-e-mailadres</string>
-  <string name="settings_recovery_email_new">Nieuwe Reset/Notificatie e-mail</string>
+  <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Bevestig Reset/Notificatie e-mail</string>
   <string name="settings_recovery_email_new_hint">E-mailadres invoeren</string>
   <string name="settings_recovery_email_confirm_hint">Voer e-mailadres opnieuw in</string>

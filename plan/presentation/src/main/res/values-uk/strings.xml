@@ -142,7 +142,7 @@
   <string name="ad_blocker" comment="new_plans">Вбудований блокувальник реклами (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Доступ до сервісів трансляції по всьому світу</string>
   <string name="secure_core" comment="new_plans">Secure Core сервери</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Створена для приватності електронна пошта й календар для ваших повсякденних потреб спілкування.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Ваша приватність і безпека — наш пріоритет.</string>

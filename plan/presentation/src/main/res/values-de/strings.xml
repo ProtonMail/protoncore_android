@@ -26,7 +26,7 @@
   <string name="plans_current_plan">Aktuelles Abonnement</string>
   <string name="plans_upgrade_plan">Abonnement wechseln</string>
   <string name="plans_subscription">Abonnement</string>
-  <string name="plans_renewal_date">Dein Abonnement wird automatisch am &lt;b&gt;%s&lt;/b&gt; verlängert</string>
+  <string name="plans_renewal_date">Dein Abonnement wird am &lt;b&gt;%s&lt;/b&gt; automatisch verlängert</string>
   <string name="plans_expiration_date">Dein Abonnement läuft am &lt;b&gt;%s&lt;/b&gt; ab</string>
   <string name="plans_billed_yearly">*Jährlich verrechnet zu %s</string>
   <string name="plans_billed_monthly">Monatliche Abrechnung</string>
@@ -116,7 +116,7 @@
   <string name="ad_blocker" comment="new_plans">Integrierter Werbeblocker (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Weltweiter Zugang zu Streaming-Diensten</string>
   <string name="secure_core" comment="new_plans">„Secure Core”‐Server</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor über VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Die datenschutzfreundliche E-Mail- und Kalenderlösung für deine täglichen Kommunikationsbedürfnisse.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>

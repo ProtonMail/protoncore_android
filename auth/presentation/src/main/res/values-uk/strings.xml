@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Зашифрований календар, який зберігає ваші події з життя приватними, безпечними та захищеними.</string>
   <string name="welcome_subtitle_calendar_alt">Наш календар з наскрізним шифруванням допоможе вам залишатися організованим, іти в ногу з часом і контролювати ситуацію.</string>
   <string name="welcome_title_vpn">Захистіть свою приватність за допомогою Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">Високошвидкісна швейцарська VPN, що захищає вашу приватність, шифруючи ваше інтернет-з\'єднання.</string>
   <string name="welcome_subtitle_vpn_alt">Високошвидкісна швейцарська VPN, що захищає вашу приватність. Максимальна безпека, понад 1600 серверів і ніяких обмежень.</string>
   <string name="welcome_privacy_by_default">Усталена приватність</string>
   <string name="auth_password_label">Пароль</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Ваша електронна пошта для відновлення:</string>
   <string name="auth_create_address_create">Створити адресу</string>
   <string name="auth_create_address_creating">Створення адреси</string>
-  <string name="auth_create_address_terms">Натискаючи створити адресу, ви погоджуєтеся з <a href="https://protonmail.com/terms-and-conditions">Умовами та положеннями Proton.</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Умовами та положеннями Proton.</a></string>
   <string name="auth_create_address_error_credentials">Поле з обліковими даними не повинне бути порожнім.</string>
   <string name="auth_create_address_error_no_available_domain">Немає доступного домену.</string>
   <string name="auth_create_address_error_private_key">Не вдалося згенерувати приватний ключ.</string>

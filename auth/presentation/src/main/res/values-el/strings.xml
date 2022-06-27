@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Η ηλ. διεύθυνσή σας ανάκτησης είναι:</string>
   <string name="auth_create_address_create">Δημιουργία διεύθυνσης</string>
   <string name="auth_create_address_creating">Δημιουργία διεύθυνσης</string>
-  <string name="auth_create_address_terms">Με κλικ στη Δημιουργία διεύθυνσης, συμφωνείτε με τους <a href="https://protonmail.com/terms-and-conditions">Όρους και Προϋποθέσεις</a> της Proton.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Όρους και Προϋποθέσεις</a> της Proton.</string>
   <string name="auth_create_address_error_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
   <string name="auth_create_address_error_no_available_domain">Μη διαθέσιμος τομέας.</string>
   <string name="auth_create_address_error_private_key">Αποτυχία παραγωγής ιδιωτικού κλειδιού.</string>
