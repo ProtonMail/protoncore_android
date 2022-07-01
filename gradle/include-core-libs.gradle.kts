@@ -72,7 +72,7 @@ fun includeProtonLibsBuild() {
             logger.warn("The ${protonLibsDir.name} submodule is expected to be at $requiredHash, but is at $currentHash.")
         }
 
-        includeBuild("proton-libs")
+        includeBuild(protonLibsDir)
         println("Core libs from git submodule `$protonLibsDir` at $currentHash")
     }
 }
