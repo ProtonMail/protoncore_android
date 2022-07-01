@@ -51,6 +51,9 @@ public final class me/proton/core/crypto/common/keystore/LogTag {
 	public static final field KEYSTORE_ENCRYPT Ljava/lang/String;
 	public static final field KEYSTORE_ENCRYPT_RETRY Ljava/lang/String;
 	public static final field KEYSTORE_INIT Ljava/lang/String;
+	public static final field KEYSTORE_INIT_ADD_KEY Ljava/lang/String;
+	public static final field KEYSTORE_INIT_DELETE_KEY Ljava/lang/String;
+	public static final field KEYSTORE_INIT_RETRY Ljava/lang/String;
 }
 
 public final class me/proton/core/crypto/common/keystore/PlainByteArray : java/io/Closeable {

@@ -47,7 +47,7 @@ import javax.crypto.spec.GCMParameterSpec
  * @see <a href="https://github.com/google/tink/blob/master/java_src/src/main/java/com/google/crypto/tink/integration/android/AndroidKeystoreAesGcm.java">Tink AndroidKeystoreAesGcm</a>
  */
 class AndroidKeyStoreCrypto private constructor(
-    masterKeyAlias: String = DEFAULT_MASTER_KEY_ALIAS
+    private val masterKeyAlias: String = DEFAULT_MASTER_KEY_ALIAS
 ) : KeyStoreCrypto {
 
     private val androidKeyStore = "AndroidKeyStore"
@@ -57,37 +57,56 @@ class AndroidKeyStoreCrypto private constructor(
     private val keySize = 256
 
     private val secretKey by lazy {
-        val keyStore = KeyStore.getInstance(androidKeyStore)
-        keyStore.load(null)
-        if (keyStore.containsAlias(masterKeyAlias)) {
-            keyStore.getKey(masterKeyAlias, null)
-        } else {
-            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, androidKeyStore).let {
-                it.init(
-                    KeyGenParameterSpec.Builder(
-                        masterKeyAlias,
-                        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-                    )
-                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                        .setKeySize(keySize)
-                        .build()
-                )
-                it.generateKey()
-            }
-        }.let { keyStoreKey ->
-            // Check if encrypt/decrypt is properly working (CP-1500).
-            runCatching {
-                val message = "message"
-                val encrypted = encryptOrRetry(message, keyStoreKey)
-                val decrypted = decryptOrRetry(encrypted, keyStoreKey)
-                check(message == decrypted)
-                keyStoreKey
-            }.getOrElse {
-                CoreLogger.e(LogTag.KEYSTORE_INIT, it)
-                null
+        val keyStore = KeyStore.getInstance(androidKeyStore).apply { load(null) }
+        val keyStoreKey = keyStore.getKeyOrRetryOrNull() ?: keyStore.generateNewKey()
+        keyStoreKey.checkedKeyOrNull()
+    }
+
+    private fun KeyStore.getKey(): Key? = when {
+        containsAlias(masterKeyAlias) -> getKey(masterKeyAlias, null)
+        else -> null
+    }
+
+    private fun KeyStore.getKeyOrRetryOrNull(): Key? {
+        return runCatching { runOrRetryOnce(LogTag.KEYSTORE_INIT_RETRY) { getKey() } }.getOrNull()
+    }
+
+    private fun KeyStore.generateNewKey(): Key {
+        if (containsAlias(masterKeyAlias)) {
+            deleteEntry(masterKeyAlias).also {
+                CoreLogger.i(LogTag.KEYSTORE_INIT_DELETE_KEY, "Deleted '$masterKeyAlias' entry from this keystore.")
             }
         }
+        return KeyGenerator.getInstance(
+            KeyProperties.KEY_ALGORITHM_AES,
+            androidKeyStore
+        ).run {
+            init(
+                KeyGenParameterSpec.Builder(
+                    masterKeyAlias,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                )
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .setKeySize(keySize)
+                    .build()
+            )
+            generateKey().also {
+                CoreLogger.i(LogTag.KEYSTORE_INIT_ADD_KEY, "Added '$masterKeyAlias' entry in this keystore.")
+            }
+        }
+    }
+
+    private fun Key.checkedKeyOrNull(): Key? = runCatching {
+        val message = "message"
+        // Check if encrypt/decrypt is properly working (CP-1500).
+        val encrypted = encryptOrRetry(message, this)
+        val decrypted = decryptOrRetry(encrypted, this)
+        check(message == decrypted)
+        this
+    }.getOrElse {
+        CoreLogger.e(LogTag.KEYSTORE_INIT, it)
+        null
     }
 
     private fun encryptInternal(value: PlainByteArray, key: Key): EncryptedByteArray {
@@ -105,42 +124,12 @@ class AndroidKeyStoreCrypto private constructor(
         return PlainByteArray(cipher.doFinal(cipherByteArray))
     }
 
-    private fun sleep() {
-        try {
-            Thread.sleep((Math.random() * MAX_WAIT_TIME_MILLISECONDS_BEFORE_RETRY).toLong())
-        } catch (e: InterruptedException) {
-            // Ignored.
-        }
-    }
-
     private fun encryptOrRetry(value: PlainByteArray, key: Key): EncryptedByteArray {
-        // If encountered a potentially transient KeyStore error, will wait and retry.
-        return runCatching { encryptInternal(value, key) }.getOrElse {
-            when (it) {
-                is ProviderException,
-                is GeneralSecurityException -> {
-                    CoreLogger.e(LogTag.KEYSTORE_ENCRYPT_RETRY, it)
-                    sleep()
-                    encryptInternal(value, key)
-                }
-                else -> throw it
-            }
-        }
+        return runOrRetryOnce(LogTag.KEYSTORE_ENCRYPT_RETRY) { encryptInternal(value, key) }
     }
 
     private fun decryptOrRetry(value: EncryptedByteArray, key: Key): PlainByteArray {
-        // If encountered a potentially transient KeyStore error, will wait and retry.
-        return runCatching { decryptInternal(value, key) }.getOrElse {
-            when (it) {
-                is ProviderException,
-                is GeneralSecurityException -> {
-                    CoreLogger.e(LogTag.KEYSTORE_DECRYPT_RETRY, it)
-                    sleep()
-                    decryptInternal(value, key)
-                }
-                else -> throw it
-            }
-        }
+        return runOrRetryOnce(LogTag.KEYSTORE_DECRYPT_RETRY) { decryptInternal(value, key) }
     }
 
     private fun encryptOrRetry(value: String, key: Key): EncryptedString {
@@ -153,6 +142,29 @@ class AndroidKeyStoreCrypto private constructor(
         val encryptedByteArray = Base64.decode(value, Base64.NO_WRAP)
         return decryptOrRetry(EncryptedByteArray(encryptedByteArray), key).use {
             it.array.decodeToString()
+        }
+    }
+
+    private fun <T> runOrRetryOnce(logTag: String, block: () -> T): T {
+        fun logAndRetry(error: Throwable): T {
+            CoreLogger.e(logTag, error)
+            sleep()
+            return block()
+        }
+        return try {
+            block()
+        } catch (error: ProviderException) {
+            logAndRetry(error)
+        } catch (error: GeneralSecurityException) {
+            logAndRetry(error)
+        }
+    }
+
+    private fun sleep() {
+        try {
+            Thread.sleep((Math.random() * MAX_WAIT_TIME_MILLISECONDS_BEFORE_RETRY).toLong())
+        } catch (e: InterruptedException) {
+            // Ignored.
         }
     }
 

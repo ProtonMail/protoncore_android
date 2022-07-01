@@ -115,6 +115,15 @@ object LogTag {
     /** Tag for KeyStore initialization check failure. */
     const val KEYSTORE_INIT = "core.crypto.common.keystore.init"
 
+    /** Tag for KeyStore initialization check failure retry. */
+    const val KEYSTORE_INIT_RETRY = "core.crypto.common.keystore.init.retry"
+
+    /** Tag for KeyStore initialization add key. */
+    const val KEYSTORE_INIT_ADD_KEY = "core.crypto.common.keystore.init.add.key"
+
+    /** Tag for KeyStore initialization delete key. */
+    const val KEYSTORE_INIT_DELETE_KEY = "core.crypto.common.keystore.init.delete.key"
+
     /** Tag for KeyStore encrypt failure. */
     const val KEYSTORE_ENCRYPT = "core.crypto.common.keystore.encrypt"
 
