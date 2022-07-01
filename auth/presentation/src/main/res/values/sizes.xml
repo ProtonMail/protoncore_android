@@ -29,7 +29,7 @@
     <dimen name="auth_view_items_top_margin">@dimen/default_text_top_margin</dimen>
     <dimen name="auth_subtitle_top_margin">@dimen/default_text_top_margin</dimen>
     <!-- add account sizes -->
-    <dimen name="add_account_header_percent">0.24</dimen>
+    <dimen name="add_account_header_percent">0.3</dimen>
     <dimen name="add_account_icon_size">108dp</dimen>
     <dimen name="add_account_icon_elevation">24dp</dimen>
     <dimen name="add_account_proton_logo_height_default">24dp</dimen>

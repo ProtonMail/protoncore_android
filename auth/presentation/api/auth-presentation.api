@@ -331,7 +331,7 @@ public final class me/proton/core/auth/presentation/databinding/ActivityAddAccou
 	public final field title Landroid/widget/TextView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public fun getRoot ()Landroid/widget/ScrollView;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 }
