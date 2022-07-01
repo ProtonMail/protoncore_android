@@ -1,3 +1,8 @@
+public final class me/proton/core/key/domain/ArmoredCryptoKt {
+	public static final fun toArmoredKey (Ljava/lang/String;Lme/proton/core/crypto/common/context/CryptoContext;ZZZZLme/proton/core/crypto/common/keystore/EncryptedByteArray;)Lme/proton/core/key/domain/entity/key/ArmoredKey;
+	public static synthetic fun toArmoredKey$default (Ljava/lang/String;Lme/proton/core/crypto/common/context/CryptoContext;ZZZZLme/proton/core/crypto/common/keystore/EncryptedByteArray;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/ArmoredKey;
+}
+
 public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static final fun decryptAndVerifyData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedData;
 	public static final fun decryptAndVerifyData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/crypto/common/pgp/SessionKey;Lme/proton/core/key/domain/entity/key/PublicKeyRing;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedData;
@@ -235,6 +240,37 @@ public final class me/proton/core/key/domain/UnlockedPrivateKeyCryptoKt {
 	public static synthetic fun verifyFileEncrypted$default (Lme/proton/core/key/domain/entity/key/UnlockedPrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;Ljava/io/File;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
 	public static final fun verifyTextEncrypted (Lme/proton/core/key/domain/entity/key/UnlockedPrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
 	public static synthetic fun verifyTextEncrypted$default (Lme/proton/core/key/domain/entity/key/UnlockedPrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
+}
+
+public abstract class me/proton/core/key/domain/entity/key/ArmoredKey {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getArmored ()Ljava/lang/String;
+}
+
+public final class me/proton/core/key/domain/entity/key/ArmoredKey$Private : me/proton/core/key/domain/entity/key/ArmoredKey {
+	public fun <init> (Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PrivateKey;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/key/domain/entity/key/PrivateKey;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PrivateKey;)Lme/proton/core/key/domain/entity/key/ArmoredKey$Private;
+	public static synthetic fun copy$default (Lme/proton/core/key/domain/entity/key/ArmoredKey$Private;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PrivateKey;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/ArmoredKey$Private;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getArmored ()Ljava/lang/String;
+	public final fun getKey ()Lme/proton/core/key/domain/entity/key/PrivateKey;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/key/domain/entity/key/ArmoredKey$Public : me/proton/core/key/domain/entity/key/ArmoredKey {
+	public fun <init> (Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKey;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/key/domain/entity/key/PublicKey;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKey;)Lme/proton/core/key/domain/entity/key/ArmoredKey$Public;
+	public static synthetic fun copy$default (Lme/proton/core/key/domain/entity/key/ArmoredKey$Public;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKey;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/ArmoredKey$Public;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getArmored ()Ljava/lang/String;
+	public final fun getKey ()Lme/proton/core/key/domain/entity/key/PublicKey;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/key/domain/entity/key/Key {

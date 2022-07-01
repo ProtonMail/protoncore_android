@@ -71,7 +71,7 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun generateNewSessionKey ()Lme/proton/core/crypto/common/pgp/SessionKey;
 	public fun generateNewToken (J)[B
 	public fun generateRandomBytes (J)[B
-	public fun getArmored ([B)Ljava/lang/String;
+	public fun getArmored ([BLme/proton/core/crypto/common/pgp/PGPHeader;)Ljava/lang/String;
 	public fun getBase64Decoded (Ljava/lang/String;)[B
 	public fun getBase64Encoded ([B)Ljava/lang/String;
 	public fun getEncryptedPackets (Ljava/lang/String;)Ljava/util/List;
@@ -82,6 +82,9 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun getUnarmored (Ljava/lang/String;)[B
 	public fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
 	public fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
+	public fun isPrivateKey (Ljava/lang/String;)Z
+	public fun isPublicKey (Ljava/lang/String;)Z
+	public fun isValidKey (Ljava/lang/String;)Z
 	public fun lock ([B[B)Ljava/lang/String;
 	public fun signData ([B[B)Ljava/lang/String;
 	public fun signDataEncrypted ([B[BLjava/util/List;)Ljava/lang/String;

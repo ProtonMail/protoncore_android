@@ -20,6 +20,7 @@ package me.proton.core.crypto.android.pgp
 
 import androidx.core.util.lruCache
 import com.google.crypto.tink.subtle.Base64
+import com.proton.gopenpgp.armor.Armor
 import com.proton.gopenpgp.constants.Constants
 import com.proton.gopenpgp.crypto.Crypto
 import com.proton.gopenpgp.crypto.Key
@@ -48,6 +49,7 @@ import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.PacketType
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
@@ -60,7 +62,6 @@ import me.proton.core.crypto.common.pgp.unlockOrNull
 import java.io.Closeable
 import java.io.File
 import java.security.SecureRandom
-
 import com.proton.gopenpgp.crypto.SessionKey as InternalSessionKey
 
 /**
@@ -115,6 +116,7 @@ class GOpenPGPCrypto : PGPCrypto {
         maxSize = KEY_CACHE_LRU_MAX_SIZE,
         create = { armored -> Crypto.newKeyFromArmored(armored) }
     )
+
     private fun Armored.key() = if (KEY_CACHE_ENABLED) cachedKeys.get(this) else Crypto.newKeyFromArmored(this)
     private fun Armored.keyRing() = Crypto.newKeyRing(key())
     private fun List<Armored>.keyRing() = Crypto.newKeyRing(null).apply { forEach { addKey(it.key()) } }
@@ -460,6 +462,14 @@ class GOpenPGPCrypto : PGPCrypto {
             }
         }
     }.isSuccess
+
+    // endregion
+
+    // region isPrivateKey/isPublicKey/isValidKey
+
+    override fun isPublicKey(key: Armored): Boolean = runCatching { key.key().isPrivate.not() }.getOrDefault(false)
+    override fun isPrivateKey(key: Armored): Boolean = runCatching { key.key().isPrivate }.getOrDefault(false)
+    override fun isValidKey(key: Armored): Boolean = runCatching { key.key(); true }.getOrDefault(false)
 
     // endregion
 
@@ -814,15 +824,24 @@ class GOpenPGPCrypto : PGPCrypto {
     // region Public Get
 
     override fun getArmored(
-        data: Unarmored
+        data: Unarmored,
+        header: PGPHeader,
     ): Armored = runCatching {
-        Crypto.newPGPMessage(data).armored
+        Armor.armorWithType(
+            /* bytes  */ data,
+            /* header */ when (header) {
+                PGPHeader.Message -> Constants.PGPMessageHeader
+                PGPHeader.Signature -> Constants.PGPSignatureHeader
+                PGPHeader.PublicKey -> Constants.PublicKeyHeader
+                PGPHeader.PrivateKey -> Constants.PrivateKeyHeader
+            }
+        )
     }.getOrElse { throw CryptoException("Armored cannot be extracted from Unarmored.", it) }
 
     override fun getUnarmored(
         data: Armored
     ): Unarmored = runCatching {
-        Crypto.newPGPMessageFromArmored(data).binary
+        Armor.unarmor(data)
     }.getOrElse { throw CryptoException("Unarmored cannot be extracted from Armored.", it) }
 
     override fun getEncryptedPackets(

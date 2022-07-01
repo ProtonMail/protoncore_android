@@ -16,25 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.common.pgp
+package me.proton.core.key.domain.entity.key
+
+import me.proton.core.crypto.common.pgp.Armored
 
 /**
- * Verification time for the signature.
+ * [Armored] key that can be either a [PublicKey] or a  [PrivateKey].
  */
-sealed class VerificationTime {
-
-    /**
-     * The signature time verification will be ignored.
-     */
-    object Ignore : VerificationTime()
-
-    /**
-     * The signature time verification will use the current/server time (last value from PGPCrypto.updateTime).
-     */
-    object Now : VerificationTime()
-
-    /**
-     * The signature time verification will use the UTC [seconds] provided.
-     */
-    data class Utc(val seconds: Long) : VerificationTime()
+sealed class ArmoredKey(
+    open val armored: Armored
+) {
+    data class Public(override val armored: Armored, val key: PublicKey) : ArmoredKey(armored)
+    data class Private(override val armored: Armored, val key: PrivateKey) : ArmoredKey(armored)
 }

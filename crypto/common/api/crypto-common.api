@@ -180,7 +180,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun generateNewSessionKey ()Lme/proton/core/crypto/common/pgp/SessionKey;
 	public abstract fun generateNewToken (J)[B
 	public abstract fun generateRandomBytes (J)[B
-	public abstract fun getArmored ([B)Ljava/lang/String;
+	public abstract fun getArmored ([BLme/proton/core/crypto/common/pgp/PGPHeader;)Ljava/lang/String;
 	public abstract fun getBase64Decoded (Ljava/lang/String;)[B
 	public abstract fun getBase64Encoded ([B)Ljava/lang/String;
 	public abstract fun getEncryptedPackets (Ljava/lang/String;)Ljava/util/List;
@@ -191,6 +191,9 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun getUnarmored (Ljava/lang/String;)[B
 	public abstract fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
 	public abstract fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
+	public abstract fun isPrivateKey (Ljava/lang/String;)Z
+	public abstract fun isPublicKey (Ljava/lang/String;)Z
+	public abstract fun isValidKey (Ljava/lang/String;)Z
 	public abstract fun lock ([B[B)Ljava/lang/String;
 	public abstract fun signData ([B[B)Ljava/lang/String;
 	public abstract fun signDataEncrypted ([B[BLjava/util/List;)Ljava/lang/String;
@@ -216,6 +219,7 @@ public final class me/proton/core/crypto/common/pgp/PGPCrypto$DefaultImpls {
 	public static synthetic fun decryptAndVerifyText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Lme/proton/core/crypto/common/pgp/DecryptedText;
 	public static synthetic fun generateNewToken$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;JILjava/lang/Object;)[B
 	public static synthetic fun generateRandomBytes$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;JILjava/lang/Object;)[B
+	public static synthetic fun getArmored$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLme/proton/core/crypto/common/pgp/PGPHeader;ILjava/lang/Object;)Ljava/lang/String;
 	public static synthetic fun getVerifiedTimestampOfData$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Ljava/lang/Long;
 	public static synthetic fun getVerifiedTimestampOfText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Ljava/lang/Long;
 	public static synthetic fun verifyData$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
@@ -263,6 +267,15 @@ public final class me/proton/core/crypto/common/pgp/PGPCryptoOrNullKt {
 	public static final fun signTextOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B)Ljava/lang/String;
 	public static final fun unlockOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B)Lme/proton/core/crypto/common/pgp/UnlockedKey;
 	public static final fun updatePrivateKeyPassphraseOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B[B)Ljava/lang/String;
+}
+
+public final class me/proton/core/crypto/common/pgp/PGPHeader : java/lang/Enum {
+	public static final field Message Lme/proton/core/crypto/common/pgp/PGPHeader;
+	public static final field PrivateKey Lme/proton/core/crypto/common/pgp/PGPHeader;
+	public static final field PublicKey Lme/proton/core/crypto/common/pgp/PGPHeader;
+	public static final field Signature Lme/proton/core/crypto/common/pgp/PGPHeader;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/crypto/common/pgp/PGPHeader;
+	public static fun values ()[Lme/proton/core/crypto/common/pgp/PGPHeader;
 }
 
 public final class me/proton/core/crypto/common/pgp/PacketType : java/lang/Enum {

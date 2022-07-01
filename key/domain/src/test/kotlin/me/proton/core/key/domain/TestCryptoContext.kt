@@ -36,6 +36,7 @@ import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.PacketType
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
@@ -48,7 +49,7 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import java.io.File
 
-class TestCryptoContext : CryptoContext {
+open class TestCryptoContext : CryptoContext {
 
     // Default key for SimpleCrypto.
     private val defaultKey = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
@@ -78,8 +79,7 @@ class TestCryptoContext : CryptoContext {
 
     // UnlockedKey = unlock(privateKey, passphrase) -> privateKey is encrypted using passphrase.
     // PrivateKey == PublicKey -> encrypt(publicKey, message) == encrypt(privateKey, message)
-    override val pgpCrypto: PGPCrypto = object : PGPCrypto {
-
+    open inner class TestPGPCrypto : PGPCrypto {
         private fun String.encryptMessage(key: Armored) = encryptMessage(unlockedKeys[key]!!)
         private fun String.encryptMessage(key: Unarmored) = toByteArray().encrypt(key).fromByteArray()
 
@@ -231,7 +231,7 @@ class TestCryptoContext : CryptoContext {
         ): Boolean =
             verifyDataEncrypted(file.readBytes(), encryptedSignature, privateKey, publicKeys, time)
 
-        override fun getArmored(data: Unarmored): Armored = data.fromByteArray()
+        override fun getArmored(data: Unarmored, header: PGPHeader): Armored = data.fromByteArray()
 
         override fun getUnarmored(data: Armored): Unarmored = data.toByteArray()
 
@@ -411,7 +411,13 @@ class TestCryptoContext : CryptoContext {
         ): Armored = "privateKey"
 
         override fun updateTime(epochSeconds: Long) = Unit
+
+        override fun isPublicKey(key: Armored): Boolean = key.contains("privateKey")
+        override fun isPrivateKey(key: Armored): Boolean = key.contains("privateKey")
+        override fun isValidKey(key: Armored): Boolean = key.contains("privateKey")
     }
+
+    override val pgpCrypto = TestPGPCrypto()
 
     override val srpCrypto = object : SrpCrypto {
         override fun generateSrpProofs(

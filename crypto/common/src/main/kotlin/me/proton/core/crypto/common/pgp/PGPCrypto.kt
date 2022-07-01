@@ -29,6 +29,21 @@ import java.io.File
 interface PGPCrypto {
 
     /**
+     * Check if an armored representation of [key] belongs to a public key.
+     */
+    fun isPublicKey(key: Armored): Boolean
+
+    /**
+     * Check if an armored representation of [key] belongs to a private key.
+     */
+    fun isPrivateKey(key: Armored): Boolean
+
+    /**
+     * Check if an armored representation of [key] is valid.
+     */
+    fun isValidKey(key: Armored): Boolean
+
+    /**
      * Lock [unlockedKey] using [passphrase].
      *
      * @throws [CryptoException] if [unlockedKey] cannot be locked using [passphrase].
@@ -499,9 +514,11 @@ interface PGPCrypto {
     /**
      * Get [Armored] from [data].
      *
+     * Note: By default, use [PGPHeader.Message].
+     *
      * @throws [CryptoException] if armored cannot be extracted from [data].
      */
-    fun getArmored(data: Unarmored): Armored
+    fun getArmored(data: Unarmored, header: PGPHeader = PGPHeader.Message): Armored
 
     /**
      * Get [Unarmored] from [data].
