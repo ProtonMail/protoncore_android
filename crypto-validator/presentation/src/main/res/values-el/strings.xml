@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Αυτή η συσκευή χρησιμοποιεί μια ελαττωματική εφαρμογή του Android Keystore, την οποία χρησιμοποιούμε για να διατηρήσουμε τα δεδομένα σας ασφαλή. Αυτό σημαίνει ότι τα δεδομένα σας μπορούν να διακυβευτούν εάν ένας εισβολέας αποκτήσει φυσική πρόσβαση σε αυτήν τη συσκευή. Τι θέλετε να κάνετε;</string>
   <string name="crypto_keystore_error_continue_action">Συνέχεια</string>
   <string name="crypto_keystore_error_more_info_action">Λάβετε περισσότερες πληροφορίες</string>
-  <string name="crypto_keystore_error_logout_action">Αποσύνδεση</string>
+  <string name="crypto_keystore_error_logout_action">Έξοδος</string>
   <string name="crypto_keystore_error_exit_action">Έξοδος</string>
 </resources>

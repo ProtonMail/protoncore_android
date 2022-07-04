@@ -24,7 +24,7 @@
   <string name="plan_price_monthly">ανά μήνα</string>
   <string name="plan_price_annually">ανά μήνα*</string>
   <string name="plans_current_plan">Τρέχων Πλάνο</string>
-  <string name="plans_upgrade_plan">Αναβαθμίστε το πλάνο σας</string>
+  <string name="plans_upgrade_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_subscription">Συνδρομή</string>
   <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
@@ -116,7 +116,7 @@
   <string name="ad_blocker" comment="new_plans">Ενσωματωμένη φραγή διαφημίσεων (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Πρόσβαση παγκοσμίως σε υπηρεσίες μετάδοσης</string>
   <string name="secure_core" comment="new_plans">Διακομιστές Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor μέσω VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Η κατά προτεραιότητα απόρρητη λύση ταχυδρομείου και ημερολογίου για τις καθημερινές ανάγκες επικοινωνίας σας.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Η ιδιωτικότητα και διασφάλισή σας είναι η προτεραιότητά μας.</string>

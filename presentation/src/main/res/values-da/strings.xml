@@ -37,7 +37,7 @@
   <string name="presentation_menu_item_title_subscription">Abonnement</string>
   <string name="presentation_menu_item_title_sign_out">Log ud</string>
   <!-- Other -->
-  <string name="presentation_back">Back</string>
+  <string name="presentation_back">Tilbage</string>
   <string name="presentation_close">Luk</string>
   <string name="presentation_skip">Spring over</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

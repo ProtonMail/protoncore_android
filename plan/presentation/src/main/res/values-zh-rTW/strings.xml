@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="plans_select_a_plan">選擇方案</string>
-  <string name="plans_select_a_plan_subtitle">一個方案，盡享所有 Proton 服務</string>
-  <string name="plans_fetching_general_error">擷取方案時發生錯誤。</string>
+  <string name="plans_select_a_plan_subtitle">單一方案，Proton 服務吃到飽</string>
+  <string name="plans_fetching_general_error">接收方案時發生錯誤。</string>
   <string name="plans_free_name">免費</string>
   <string name="plan_price_monthly">每月</string>
   <string name="plan_price_annually">每月*</string>
@@ -27,9 +27,9 @@
   <string name="plans_upgrade_plan">升級您的方案</string>
   <string name="plans_subscription">訂閲</string>
   <string name="plans_renewal_date">您的方案將於 &lt;b&gt;%s&lt;/b&gt; 自動續購</string>
-  <string name="plans_expiration_date">您的方案將會在 &lt;b&gt;%s&lt;/b&gt;到期</string>
-  <string name="plans_billed_yearly">* 以每年 %s 扣帳</string>
-  <string name="plans_billed_monthly">月費方案</string>
+  <string name="plans_expiration_date">您的方案將會在 &lt;b&gt;%s&lt;/b&gt; 到期</string>
+  <string name="plans_billed_yearly">* 年繳帳單金額為 %s</string>
+  <string name="plans_billed_monthly">每月出帳</string>
   <string name="plans_billing_monthly">為期1個月</string>
   <string name="plans_billing_yearly">為期1年</string>
   <string name="plans_billing_two_years">為期2年</string>
@@ -51,16 +51,16 @@
     <item quantity="other">#proton_storage# 儲存空間 / 使用者</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# 個電郵位址</item>
+    <item quantity="other">#proton_addresses# 組電郵位址</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# 個電子郵件地址 / 使用者</item>
+    <item quantity="other">#proton_addresses# 組電郵位址 / 使用者</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="other">%d 本 #proton_addresses# 通訊錄</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">支援 #proton_domains# 個自訂電子郵件網域</item>
+    <item quantity="other">支援 #proton_domains# 個自訂電郵網域</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# 本個人行事曆</item>
@@ -72,7 +72,7 @@
     <item quantity="other">配備 #proton_vpn# 裝置上進行飆速 VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="other">#proton_vpn# 個高速 VPN 連線</item>
+    <item quantity="other">#proton_vpn# 個極飆速 VPN 連線</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="other">#proton_users# 個使用者</item>
@@ -86,7 +86,7 @@
   <string name="plan_id_plus_header">全功能的郵件信箱，配備進階保護。</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 個國家</string>
-  <string name="plan_id_vpnbasic_high_speed">高速</string>
+  <string name="plan_id_vpnbasic_high_speed">極飆速</string>
   <string name="plan_id_vpnplus_adblock">廣告攔截程式 (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">支援影音串流服務</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
@@ -97,22 +97,22 @@
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">不限數的資料夾、標籤與過篩選器</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">不限數量的資料夾、標籤與篩選器</string>
   <string name="highest_vpn_speed" comment="new_plans">頂尖 VPN 速度</string>
-  <string name="servers_in_countries" comment="new_plans">1500 臺以上伺服器，遍布於 63 個國家</string>
-  <string name="ad_blocker" comment="new_plans">內置廣告攔截程式 (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">全球性存取影音串流服務</string>
+  <string name="servers_in_countries" comment="new_plans">超過 1500 臺伺服器，遍布於 63 個國家</string>
+  <string name="ad_blocker" comment="new_plans">內建廣告攔截程式 (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">無邊界存取影音串流服務</string>
   <string name="secure_core" comment="new_plans">Secure Core 伺服器</string>
   <string name="tor_vpn" comment="new_plans">透過 VPN 使用 Tor</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">隱私為先的電子郵件與行事曆解決方案，適合您的日常通訊需要。</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">隱私權為先的電郵與行事曆解決方案，適合您的日常通訊需要。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
+    <item>歐元</item>
+    <item>美金</item>
+    <item>瑞郎</item>
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>月繳制</item>

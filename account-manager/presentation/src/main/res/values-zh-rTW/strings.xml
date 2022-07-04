@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="account_switcher_section_switch_to">切換為</string>
-  <string name="account_switcher_action_add_account">新增帳號</string>
+  <string name="account_switcher_action_add_account">加入帳號</string>
   <string name="account_switcher_action_sign_in">登入</string>
   <string name="account_switcher_action_sign_out">登出</string>
   <string name="account_switcher_action_remove">移除</string>

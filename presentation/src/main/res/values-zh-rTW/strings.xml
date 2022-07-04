@@ -26,7 +26,7 @@
   <string name="presentation_market_missing">裝置上找不到市集應用程式。請前往商店更新應用程式。</string>
   <string name="presentation_authenticate">驗證</string>
   <string name="presentation_signin_to_continue">登入以繼續</string>
-  <string name="presentation_alert_title">警告</string>
+  <string name="presentation_alert_title">警示</string>
   <string name="presentation_alert_ok">確定</string>
   <string name="presentation_alert_enter">輸入</string>
   <string name="presentation_alert_cancel">取消</string>
