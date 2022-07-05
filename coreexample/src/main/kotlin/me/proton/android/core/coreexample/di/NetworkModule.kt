@@ -31,7 +31,6 @@ import kotlinx.coroutines.Job
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
@@ -158,14 +157,6 @@ class NetworkCallbacksModule {
     @Provides
     @Singleton
     fun provideDohAlternativesListener(): DohAlternativesListener? = null
-
-    @Provides
-    @Singleton
-    fun provideServerTimeListener(context: CryptoContext) = object : ServerTimeListener {
-        override fun onServerTimeUpdated(epochSeconds: Long) {
-            context.pgpCrypto.updateTime(epochSeconds)
-        }
-    }
 }
 
 @Module

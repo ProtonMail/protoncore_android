@@ -24,6 +24,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.NetworkManager
@@ -38,6 +39,7 @@ import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import okhttp3.HttpUrl
@@ -84,4 +86,16 @@ internal class CoreNetworkModule {
     @Singleton
     fun provideClientIdProvider(@BaseProtonApiUrl apiUrl: HttpUrl, cookieStore: ProtonCookieStore): ClientIdProvider =
         ClientIdProviderImpl(apiUrl, cookieStore)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+public class CoreNetworkCryptoModule {
+    @Provides
+    @Singleton
+    internal fun provideServerTimeListener(context: CryptoContext) = object : ServerTimeListener {
+        override fun onServerTimeUpdated(epochSeconds: Long) {
+            context.pgpCrypto.updateTime(epochSeconds)
+        }
+    }
 }

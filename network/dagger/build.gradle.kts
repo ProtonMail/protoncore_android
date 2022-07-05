@@ -27,6 +27,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
+        project(Module.cryptoCommon),
         project(Module.kotlinUtil),
         project(Module.networkDomain)
     )
