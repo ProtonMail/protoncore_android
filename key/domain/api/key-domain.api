@@ -77,7 +77,8 @@ public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static final fun generateNewHashKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)Lme/proton/core/crypto/common/pgp/HashKey;
 	public static final fun generateNewKeyPacket (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)[B
 	public static final fun generateNewSessionKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)Lme/proton/core/crypto/common/pgp/SessionKey;
-	public static final fun getArmored (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B)Ljava/lang/String;
+	public static final fun getArmored (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/crypto/common/pgp/PGPHeader;)Ljava/lang/String;
+	public static synthetic fun getArmored$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/crypto/common/pgp/PGPHeader;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun getBase64Decoded (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;)[B
 	public static final fun getBase64Encoded (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B)Ljava/lang/String;
 	public static final fun getEncryptedPackets (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;)Ljava/util/List;

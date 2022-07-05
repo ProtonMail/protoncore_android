@@ -33,6 +33,7 @@ import me.proton.core.crypto.common.pgp.EncryptedPacket
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
@@ -1020,10 +1021,12 @@ fun KeyHolderContext.decryptAndVerifyFileOrNull(
 /**
  * Get [Armored] from [Unarmored].
  *
+ * Note: By default, use [PGPHeader.Message].
+ *
  * @throws [CryptoException] if data cannot be extracted.
  */
-fun KeyHolderContext.getArmored(data: Unarmored): Armored =
-    context.pgpCrypto.getArmored(data)
+fun KeyHolderContext.getArmored(data: Unarmored, header: PGPHeader = PGPHeader.Message): Armored =
+    context.pgpCrypto.getArmored(data, header)
 
 /**
  * Get [Unarmored] from [Armored].
