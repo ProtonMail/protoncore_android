@@ -19,4 +19,5 @@
 
 <resources>
     <dimen name="account_list_item_height">64dp</dimen>
+    <dimen name="account_initial_box_size">32dp</dimen>
 </resources>
