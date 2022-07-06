@@ -39,6 +39,7 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
@@ -48,8 +49,11 @@ import javax.inject.Singleton
 internal class CoreNetworkModule {
     @Provides
     @Singleton
-    fun provideCookieJar(@ApplicationContext context: Context): ProtonCookieStore = ProtonCookieStore(
-        persistentStorage = DiskCookieStorage(context, ProtonCookieStore.DISK_COOKIE_STORAGE_NAME),
+    fun provideCookieJar(
+        @ApplicationContext context: Context,
+        scopeProvider: CoroutineScopeProvider
+    ): ProtonCookieStore = ProtonCookieStore(
+        persistentStorage = DiskCookieStorage(context, ProtonCookieStore.DISK_COOKIE_STORAGE_NAME, scopeProvider),
         sessionStorage = MemoryCookieStorage()
     )
 

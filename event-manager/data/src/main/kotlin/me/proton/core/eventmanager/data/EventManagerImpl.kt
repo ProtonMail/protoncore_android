@@ -21,7 +21,6 @@ package me.proton.core.eventmanager.data
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -54,6 +53,7 @@ import me.proton.core.network.domain.isRetryable
 import me.proton.core.network.domain.isUnauthorized
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.exhaustive
 
 @AssistedFactory
@@ -63,7 +63,7 @@ interface EventManagerFactory {
 
 @Suppress("UseIfInsteadOfWhen", "ClassOrdering", "ComplexMethod", "TooManyFunctions")
 class EventManagerImpl @AssistedInject constructor(
-    @EventManagerCoroutineScope private val coroutineScope: CoroutineScope,
+    private val scopeProvider: CoroutineScopeProvider,
     private val appLifecycleProvider: AppLifecycleProvider,
     private val accountManager: AccountManager,
     private val eventWorkerManager: EventWorkerManager,
@@ -358,7 +358,7 @@ class EventManagerImpl @AssistedInject constructor(
 
     private suspend fun internalStart() {
         if (isStarted) return
-        observeJob = coroutineScope.launch {
+        observeJob = scopeProvider.GlobalDefaultSupervisedScope.launch {
             launch { collectAccountChanges() }
             launch { collectAppStateChanges() }
         }

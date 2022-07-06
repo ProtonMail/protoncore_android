@@ -12,7 +12,6 @@ public final class me/proton/core/eventmanager/dagger/BuildConfig {
 public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule {
 	public static final field INSTANCE Lme/proton/core/eventmanager/dagger/CoreEventManagerModule;
 	public final fun provideEventManagerConfigProvider (Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
-	public final fun provideEventManagerCoroutineScope ()Lkotlinx/coroutines/CoroutineScope;
 	public final fun provideEventManagerProvider (Lme/proton/core/eventmanager/data/EventManagerFactory;Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;Ljava/util/Set;)Lme/proton/core/eventmanager/domain/EventManagerProvider;
 	public final fun provideEventMetadataRepository (Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
 	public final fun provideEventWorkManager (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)Lme/proton/core/eventmanager/domain/work/EventWorkerManager;
@@ -24,14 +23,6 @@ public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_Pro
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
 	public static fun provideEventManagerConfigProvider (Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
-}
-
-public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerCoroutineScopeFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerCoroutineScopeFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lkotlinx/coroutines/CoroutineScope;
-	public static fun provideEventManagerCoroutineScope ()Lkotlinx/coroutines/CoroutineScope;
 }
 
 public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerProviderFactory : dagger/internal/Factory {

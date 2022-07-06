@@ -23,14 +23,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.AccountMigratorImpl
 import me.proton.core.accountmanager.data.AccountStateHandler
-import me.proton.core.accountmanager.data.AccountStateHandlerCoroutineScope
 import me.proton.core.accountmanager.data.SessionListenerImpl
 import me.proton.core.accountmanager.data.SessionManagerImpl
 import me.proton.core.accountmanager.data.SessionProviderImpl
@@ -44,17 +40,12 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object CoreAccountManagerModule {
-
-    @Provides
-    @Singleton
-    @AccountStateHandlerCoroutineScope
-    fun provideAccountStateHandlerCoroutineScope(): CoroutineScope =
-        CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     @Provides
     @Singleton
@@ -79,15 +70,14 @@ object CoreAccountManagerModule {
     @Singleton
     @Suppress("LongParameterList")
     fun provideAccountStateHandler(
-        @AccountStateHandlerCoroutineScope
-        scope: CoroutineScope,
+        scopeProvider: CoroutineScopeProvider,
         userManager: UserManager,
         accountManager: AccountManager,
         accountRepository: AccountRepository,
         accountMigrator: AccountMigrator,
         product: Product,
     ): AccountStateHandler =
-        AccountStateHandler(scope, userManager, accountManager, accountRepository, accountMigrator, product)
+        AccountStateHandler(scopeProvider, userManager, accountManager, accountRepository, accountMigrator, product)
 
     @Provides
     @Singleton

@@ -23,11 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import me.proton.core.eventmanager.data.EventManagerConfigProviderImpl
-import me.proton.core.eventmanager.data.EventManagerCoroutineScope
 import me.proton.core.eventmanager.data.EventManagerFactory
 import me.proton.core.eventmanager.data.EventManagerProviderImpl
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
@@ -45,12 +41,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 public object CoreEventManagerModule {
-
-    @Provides
-    @Singleton
-    @EventManagerCoroutineScope
-    public fun provideEventManagerCoroutineScope(): CoroutineScope =
-        CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     @Provides
     @Singleton

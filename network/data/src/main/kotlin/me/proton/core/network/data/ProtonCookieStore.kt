@@ -29,6 +29,7 @@ import me.proton.core.network.data.cookie.CookieStorage
 import me.proton.core.network.data.cookie.DiskCookieStorage
 import me.proton.core.network.data.cookie.MemoryCookieStorage
 import me.proton.core.network.data.cookie.hasExpired
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -39,10 +40,10 @@ import okhttp3.HttpUrl
  */
 class ProtonCookieStore constructor(
     private val persistentStorage: CookieStorage,
-    private val sessionStorage: CookieStorage
+    private val sessionStorage: CookieStorage,
 ) : CookieJar {
-    constructor(context: Context) : this(
-        persistentStorage = DiskCookieStorage(context, DISK_COOKIE_STORAGE_NAME),
+    constructor(context: Context, scopeProvider: CoroutineScopeProvider) : this(
+        persistentStorage = DiskCookieStorage(context, DISK_COOKIE_STORAGE_NAME, scopeProvider),
         sessionStorage = MemoryCookieStorage()
     )
 

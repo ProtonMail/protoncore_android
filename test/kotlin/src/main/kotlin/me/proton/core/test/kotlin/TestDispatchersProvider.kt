@@ -18,14 +18,28 @@
 
 package me.proton.core.test.kotlin
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DispatcherProvider
 
 /**
  * Implementation of [DispatcherProvider] meant to be used for tests
  */
-val TestDispatcherProvider = object : DispatcherProvider {
-    override val Main: TestCoroutineDispatcher = TestCoroutineDispatcher()
-    override val Io = Main
-    override val Comp = Main
+object TestDispatcherProvider : DispatcherProvider {
+    private val testCoroutineDispatcher = TestCoroutineDispatcher()
+
+    override val Main = testCoroutineDispatcher
+    override val Io = testCoroutineDispatcher
+    override val Comp = testCoroutineDispatcher
+
+    fun cleanupTestCoroutines() {
+        testCoroutineDispatcher.cleanupTestCoroutines()
+    }
+}
+
+object TestCoroutineScopeProvider : CoroutineScopeProvider {
+    override val GlobalDefaultSupervisedScope = CoroutineScope(TestDispatcherProvider.Comp + SupervisorJob())
+    override val GlobalIOSupervisedScope = CoroutineScope(TestDispatcherProvider.Io + SupervisorJob())
 }

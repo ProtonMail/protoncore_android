@@ -34,11 +34,11 @@ public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideClient
 }
 
 public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideCookieJarFactory : dagger/internal/Factory {
-	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;)V
-	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideCookieJarFactory;
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideCookieJarFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/network/data/ProtonCookieStore;
-	public static fun provideCookieJar (Lme/proton/core/network/dagger/CoreNetworkModule;Landroid/content/Context;)Lme/proton/core/network/data/ProtonCookieStore;
+	public static fun provideCookieJar (Lme/proton/core/network/dagger/CoreNetworkModule;Landroid/content/Context;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/network/data/ProtonCookieStore;
 }
 
 public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideNetworkManagerFactory : dagger/internal/Factory {

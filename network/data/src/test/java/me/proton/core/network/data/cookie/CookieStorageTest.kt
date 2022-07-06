@@ -21,8 +21,9 @@ package me.proton.core.network.data.cookie
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
 import okhttp3.Cookie
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -40,25 +41,28 @@ class MemoryCookieStorageTest : CookieStorageTest<MemoryCookieStorage>() {
 class DiskCookieStorageTest : CookieStorageTest<DiskCookieStorage>() {
     override fun makeCookieStore(): DiskCookieStorage {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        return DiskCookieStorage(context, "test-prefs-cookie-store", scope = scope)
+        return DiskCookieStorage(context, "test-prefs-cookie-store", TestCoroutineScopeProvider)
+    }
+
+    override fun cleanup() {
+        TestDispatcherProvider.cleanupTestCoroutines()
     }
 }
 
 abstract class CookieStorageTest<C : CookieStorage> {
-    protected lateinit var scope: TestCoroutineScope
     private lateinit var tested: C
 
+    protected open fun cleanup() {}
     protected abstract fun makeCookieStore(): C
 
     @BeforeTest
     fun setUp() {
-        scope = TestCoroutineScope()
         tested = makeCookieStore()
     }
 
     @AfterTest
     fun tearDown() {
-        scope.cleanupTestCoroutines()
+        cleanup()
     }
 
     @Test

@@ -69,7 +69,7 @@ public final class me/proton/core/network/data/PinningKt {
 public final class me/proton/core/network/data/ProtonCookieStore : okhttp3/CookieJar {
 	public static final field Companion Lme/proton/core/network/data/ProtonCookieStore$Companion;
 	public static final field DISK_COOKIE_STORAGE_NAME Ljava/lang/String;
-	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun <init> (Lme/proton/core/network/data/cookie/CookieStorage;Lme/proton/core/network/data/cookie/CookieStorage;)V
 	public fun loadForRequest (Lokhttp3/HttpUrl;)Ljava/util/List;
 	public fun saveFromResponse (Lokhttp3/HttpUrl;Ljava/util/List;)V
@@ -117,8 +117,7 @@ public abstract interface class me/proton/core/network/data/cookie/CookieStorage
 }
 
 public final class me/proton/core/network/data/cookie/DiskCookieStorage : me/proton/core/network/data/cookie/CookieStorage {
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lkotlinx/coroutines/CoroutineScope;)V
-	public synthetic fun <init> (Landroid/content/Context;Ljava/lang/String;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun all ()Lkotlinx/coroutines/flow/Flow;
 	public fun remove (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun set (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
