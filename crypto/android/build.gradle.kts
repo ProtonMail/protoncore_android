@@ -41,13 +41,13 @@ dependencies {
         // Android
         `android-ktx`,
         `room-runtime`,
-
-        // Other
-        `bcrypt`,
-        `googleTink`
     )
 
     compileOnly(project(Module.gopenpgp))
+
+    testImplementation(
+        project(Module.kotlinTest),
+    )
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),

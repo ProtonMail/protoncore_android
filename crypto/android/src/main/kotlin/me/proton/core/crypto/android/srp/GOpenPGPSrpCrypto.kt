@@ -18,7 +18,7 @@
 
 package me.proton.core.crypto.android.srp
 
-import com.google.crypto.tink.subtle.Base64
+import android.util.Base64
 import com.proton.gopenpgp.srp.Auth
 import com.proton.gopenpgp.srp.Proofs
 import com.proton.gopenpgp.srp.Srp
@@ -83,7 +83,7 @@ class GOpenPGPSrpCrypto(
 }
 
 internal fun Proofs.toBase64SrpProofs(): SrpProofs = SrpProofs(
-    Base64.encode(clientEphemeral),
-    Base64.encode(clientProof),
-    Base64.encode(expectedServerProof)
+    Base64.encodeToString(clientEphemeral, Base64.NO_WRAP),
+    Base64.encodeToString(clientProof, Base64.NO_WRAP),
+    Base64.encodeToString(expectedServerProof, Base64.NO_WRAP)
 )

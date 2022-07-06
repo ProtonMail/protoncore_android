@@ -18,8 +18,8 @@
 
 package me.proton.core.crypto.android.pgp
 
+import android.util.Base64
 import androidx.core.util.lruCache
-import com.google.crypto.tink.subtle.Base64
 import com.proton.gopenpgp.armor.Armor
 import com.proton.gopenpgp.constants.Constants
 import com.proton.gopenpgp.crypto.Crypto
@@ -877,7 +877,7 @@ class GOpenPGPCrypto : PGPCrypto {
     }
 
     override fun getBase64Decoded(string: String): ByteArray {
-        return Base64.decode(string)
+        return Base64.decode(string, Base64.DEFAULT)
     }
 
     override fun getPassphrase(
