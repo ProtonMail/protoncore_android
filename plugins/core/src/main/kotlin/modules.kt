@@ -24,6 +24,7 @@ public object Module {
     private const val util = ":util"
     public const val kotlinUtil: String = "$util:util-kotlin"
     private const val androidUtil = "$util:android"
+    public const val androidUtilDagger: String = "$androidUtil:util-android-dagger"
     public const val sharedPreferencesUtil: String = "$androidUtil:util-android-shared-preferences"
     public const val workManagersUtil: String = "$androidUtil:util-android-work-manager"
     public const val gradleUtil: String = "$util:util-gradle"

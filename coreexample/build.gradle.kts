@@ -124,6 +124,7 @@ dependencies {
 
     implementation(
 
+        project(Module.androidUtilDagger),
         project(Module.kotlinUtil),
         project(Module.presentation),
         project(Module.network),
