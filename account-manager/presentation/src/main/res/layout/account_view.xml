@@ -19,20 +19,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/account_list_item_height"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_account"
     android:clickable="true"
     android:descendantFocusability="afterDescendants"
     android:focusable="true"
+    android:minHeight="@dimen/account_list_item_height"
     android:padding="@dimen/gap_large">
 
     <TextView
         android:id="@+id/account_initials_textview"
         style="@style/Proton.Text.DefaultSmall"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_account_initials"
         android:gravity="center"
+        android:minWidth="@dimen/account_initial_box_size"
+        android:minHeight="@dimen/account_initial_box_size"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
@@ -45,7 +48,7 @@
         android:id="@+id/account_name_textview"
         style="@style/Proton.Text.DefaultSmall"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/gap_large"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -62,7 +65,7 @@
         android:id="@+id/account_email_textview"
         style="@style/Proton.Text.Caption.Weak"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/gap_large"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -80,10 +83,10 @@
         style="@style/ProtonImage.ImageButton"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_proton_three_dots_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_proton_three_dots_vertical" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
