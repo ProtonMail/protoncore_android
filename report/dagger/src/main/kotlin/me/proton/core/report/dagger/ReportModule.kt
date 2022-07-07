@@ -38,7 +38,7 @@ internal class ReportModule {
     fun provideBugReportMeta(appUtils: AppUtils, product: Product): BugReportMeta {
         return BugReportMeta(
             appVersionName = appUtils.appVersionName(),
-            clientName = appUtils.appName(),
+            clientName = "Android " + appUtils.appName(),
             osName = "Android",
             osVersion = Build.VERSION.RELEASE,
             product
