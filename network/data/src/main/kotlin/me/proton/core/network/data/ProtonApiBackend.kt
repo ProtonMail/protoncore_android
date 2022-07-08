@@ -162,7 +162,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         invokeInternal(call.block)
 
     private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
-        api.safeCall(networkManager, block)
+        ApiResult.withTimeout(TimeUnit.SECONDS.toMillis(client.timeoutSeconds)) { api.safeCall(networkManager, block) }
 
     override suspend fun refreshSession(session: Session): ApiResult<Session> {
         val result = invokeInternal {
