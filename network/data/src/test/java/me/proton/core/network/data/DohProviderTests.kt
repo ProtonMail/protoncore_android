@@ -19,12 +19,20 @@ package me.proton.core.network.data
 
 import android.os.Build
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.takeRequestWithDefaultTimeout
+import me.proton.core.network.domain.DohProvider
+import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -96,5 +104,44 @@ internal class DohProviderTests {
         assertEquals(listOf("https://proxy.com/"), result)
         val acceptHeader = webServer.takeRequestWithDefaultTimeout()?.headers?.get("Accept")
         assertEquals("application/dns-message", acceptHeader)
+    }
+
+    @Test
+    fun `test services called in parallel`() = runBlockingTest {
+        val service1 = mockk<DohService>()
+        coEvery { service1.getAlternativeBaseUrls(any(), any()) } coAnswers {
+            delay(10_000)
+            null
+        }
+
+        val service2 = mockk<DohService>()
+        coEvery { service2.getAlternativeBaseUrls(any(), any()) } coAnswers {
+            delay(1000)
+            listOf("proxy.com")
+        }
+
+        val protonService = mockk<DohService>()
+        val prefs = MockNetworkPrefs()
+        val provider = DohProvider(
+            "https://test.com",
+            MockApiClient(),
+            listOf(service1, service2),
+            protonService,
+            this,
+            prefs,
+            { currentTime },
+            null,
+            null)
+
+        val start = currentTime
+        provider.refreshAlternatives()
+        val duration = currentTime - start
+
+        coVerify(exactly = 1) { service1.getAlternativeBaseUrls(any(), any()) }
+        coVerify(exactly = 1) { service2.getAlternativeBaseUrls(any(), any()) }
+        assertEquals(listOf("proxy.com"), prefs.alternativeBaseUrls)
+
+        // Make sure it finishes as soon as one service succeeds.
+        assertEquals(1000, duration)
     }
 }

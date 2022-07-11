@@ -19,6 +19,10 @@ package me.proton.core.network.domain
 
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
@@ -72,21 +76,25 @@ class DohProvider(
         return success ?: false
     }
 
-    private suspend fun tryDohServices(): Boolean {
+    private suspend fun tryDohServices(): Boolean = coroutineScope {
         var allServicesFailed = true
-        for (service in dohServices) {
-            val success = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
-                val result = service.getAlternativeBaseUrls(sessionId, baseUrl)
-                if (result != null)
-                    prefs.alternativeBaseUrls = result
-                result != null
-            } ?: false
-            if (success) {
-                allServicesFailed = false
-                break
+        val jobs = mutableListOf<Job>()
+        dohServices.mapTo(jobs) { service ->
+            launch {
+                val success = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
+                    val result = service.getAlternativeBaseUrls(sessionId, baseUrl)
+                    if (result != null)
+                        prefs.alternativeBaseUrls = result
+                    result != null
+                } ?: false
+                if (success) {
+                    allServicesFailed = false
+                    jobs.forEach { it.cancel() }
+                }
             }
         }
-        return allServicesFailed
+        jobs.joinAll()
+        allServicesFailed
     }
 
     companion object {
