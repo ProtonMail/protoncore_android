@@ -16,6 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Locale
 import groovy.xml.XmlSlurper
 import groovy.xml.slurpersupport.Node
 import jacoco.extensions.ProtonCoverageMultiModuleExtension
@@ -35,9 +38,6 @@ import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jetbrains.kotlin.gradle.utils.toSetOrEmpty
-import java.io.File
-import java.io.FileOutputStream
-import java.util.Locale
 
 class ProtonJacocoPlugin : Plugin<Project> {
 
@@ -53,19 +53,26 @@ class ProtonJacocoPlugin : Plugin<Project> {
         val defaultReportsDir = file("$buildDir/reports/jacoco/jacocoTestReport")
         val defaultReportFile = File(defaultReportsDir, "jacocoTestReport.xml")
         val defaultCoberturaOutputFile = File(buildDir, "reports").resolve(CoberturaFileName)
+        val defaultCoverageConversionScript = file("$rootDir/plugins/jacoco/scripts/cover2cover.py")
 
-        val generatesMergedXmlReports = multiModuleExtension.generatesMergedXmlReport(this)
-        val xmlReportFile = multiModuleExtension.getXmlReportFile(this, defaultReportFile)
+        afterEvaluate {
+            val generatesMergedXmlReports = multiModuleExtension.generatesMergedXmlReport(this)
+            val xmlReportFile = multiModuleExtension.getXmlReportFile(this, defaultReportFile)
 
-        val generatesMergedHtmlReports = multiModuleExtension.generatesMergedHtmlReport(this)
-        val htmlReportFile = multiModuleExtension.getHtmlReportFile(this, defaultReportFile.parentFile)
+            val generatesMergedHtmlReports = multiModuleExtension.generatesMergedHtmlReport(this)
+            val htmlReportFile = multiModuleExtension.getHtmlReportFile(this, defaultReportFile.parentFile)
 
-        val coberturaFile = multiModuleExtension.getCoberturaFile(project, defaultCoberturaOutputFile)
+            val coberturaFile = multiModuleExtension.getCoberturaFile(project, defaultCoberturaOutputFile)
+            val coverageConversationScriptPath = multiModuleExtension.getCoverageConversionScript(
+                project,
+                defaultCoverageConversionScript
+            ).absolutePath
 
-        applyJacocoPlugin()
-        registerMergeReportTask(generatesMergedXmlReports, xmlReportFile, generatesMergedHtmlReports, htmlReportFile)
-        registerLogCoverageReportTask(xmlReportFile)
-        registerCoberturaConversionTask(xmlReportFile, coberturaFile)
+            applyJacocoPlugin()
+            registerMergeReportTask(generatesMergedXmlReports, xmlReportFile, generatesMergedHtmlReports, htmlReportFile)
+            registerLogCoverageReportTask(xmlReportFile)
+            registerCoberturaConversionTask(xmlReportFile, coberturaFile, coverageConversationScriptPath)
+        }
     }
 
     private fun Project.applyJacocoPlugin() {
@@ -152,7 +159,11 @@ class ProtonJacocoPlugin : Plugin<Project> {
     /**
      * Used to convert from Jacoco XML report files to Cobertura ones, compatible with Gitlab
      */
-    private fun Project.registerCoberturaConversionTask(xmlReportFile: File, coberturaOutputFile: File) {
+    private fun Project.registerCoberturaConversionTask(
+        xmlReportFile: File,
+        coberturaOutputFile: File,
+        coverageConversationScriptPath: String
+    ) {
         tasks.register<Exec>(CoberturaReportConversionTaskName) {
             group = "Verification"
             description = "Converts Jacoco XML report to Cobertura"
@@ -173,7 +184,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
             // See: https://docs.gitlab.com/ee/user/project/merge_requests/test_coverage_visualization.html#java-and-kotlin-examples
             commandLine(
                 "python3",
-                "$rootDir/plugins/jacoco/scripts/cover2cover.py",
+                coverageConversationScriptPath,
                 xmlReportFile.absolutePath,
                 *sources.toTypedArray(),
             )
@@ -269,8 +280,11 @@ class ProtonJacocoPlugin : Plugin<Project> {
     private fun ProtonCoverageMultiModuleExtension.getCoberturaFile(project: Project, default: File) =
         coberturaReportPath?.invoke(project)?.let { project.file(it) } ?: default
 
+    private fun ProtonCoverageMultiModuleExtension.getCoverageConversionScript(project: Project, default: File) =
+        coverageConversionScript?.invoke(project)?.let { project.file(it) } ?: default
+
     companion object {
-        const val JacocoVersion = "0.8.7"
+        const val JacocoVersion = "0.8.8"
         const val MergeReportTaskName = "jacocoMergeReport"
         const val CoverageLogReportTaskName = "coverageReport"
         const val CoberturaReportConversionTaskName = "coberturaCoverageReport"
@@ -285,8 +299,6 @@ class ProtonJacocoPlugin : Plugin<Project> {
             "**/Manifest*.*",
             "**/*Test*.*",
             "android/**/*.*",
-            "ch.protonmail.android.utils.nativelib",
-            "**/ch/protonmail/**",
             // DI code, doesn't need testing
             "**/*Module.class",
             "**/*Module$*",

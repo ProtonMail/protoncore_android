@@ -52,6 +52,12 @@ open class ProtonCoverageMultiModuleExtension {
     /** Patterns to match files to be excluded from every submodule. */
     var sharedExcludes: List<String> = emptyList()
 
+    /**
+     * Path to `cover2cover.py` script used to convert from cobertura to gitlab format,
+     * based on the current project's setup. Should include file and extension.
+     */
+    var coverageConversionScript: (Project.() -> String)? = null
+
     companion object {
         fun Project.setupCoverageMultiModuleExtension(): ProtonCoverageMultiModuleExtension =
             extensions.create("protonCoverageMultiModuleOptions", ProtonCoverageMultiModuleExtension::class.java)
