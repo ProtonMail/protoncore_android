@@ -35,6 +35,7 @@ import me.proton.core.humanverification.presentation.utils.getCompatX509Cert
 import me.proton.core.network.data.LeafSPKIPinningTrustManager
 import me.proton.core.network.data.di.Constants
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.takeIfNotBlank
 
 /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
 class HumanVerificationWebViewClient(
@@ -158,11 +159,16 @@ class HumanVerificationWebViewClient(
         } else {
             response.responseHeaders
         }
+
+        // HTTP/2 removed Reason-Phrase from the spec, but the constructor
+        // for WebResourceResponse would throw if it received a blank string.
+        val reasonPhrase = response.reasonPhrase.takeIfNotBlank() ?: "UNKNOWN"
+
         WebResourceResponse(
             response.mimeType,
             response.encoding,
             response.httpStatusCode,
-            response.reasonPhrase,
+            reasonPhrase,
             filteredHeaders,
             response.contents
         )
