@@ -350,9 +350,9 @@ public abstract interface class me/proton/core/network/domain/client/ExtraHeader
 public final class me/proton/core/network/domain/handlers/DohApiHandler : me/proton/core/network/domain/ApiErrorHandler {
 	public static final field Companion Lme/proton/core/network/domain/handlers/DohApiHandler$Companion;
 	public fun <init> (Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/ApiBackend;Lme/proton/core/network/domain/DohProvider;Lme/proton/core/network/domain/NetworkPrefs;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
-	public final fun getActiveAltBackend ()Lme/proton/core/network/domain/ApiBackend;
+	public final fun getActiveAltBackend (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (Lme/proton/core/network/domain/ApiBackend;Lme/proton/core/network/domain/ApiResult$Error;Lme/proton/core/network/domain/ApiManager$Call;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun setActiveAltBackend (Lme/proton/core/network/domain/ApiBackend;)V
+	public final fun onBackendBlocked (Lme/proton/core/network/domain/ApiBackend;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/domain/handlers/DohApiHandler$Companion {

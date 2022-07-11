@@ -28,7 +28,7 @@ interface ApiErrorHandler<Api> {
      * Handles the API call error and returns new result or leaves error unhandled.
      *
      * @param T Api call result type
-     * @param backend [ApiBackend] instance that executes the [call]
+     * @param backend [ApiBackend] that handler should use to execute calls
      * @param error Error to be handled
      * @param call [ApiManager.Call] to be made.
      * @return new [ApiResult] or original [error] if not handled

@@ -47,13 +47,18 @@ class DohApiHandler<Api>(
     private val createAltBackend: (baseUrl: String) -> ApiBackend<Api>,
 ) : ApiErrorHandler<Api> {
 
+    suspend fun getActiveAltBackend(): ApiBackend<Api>? =
+        // If some other call is currently looking for a proxy just wait for it.
+        staticMutex.withLock {
+            activeAltBackend
+        }
+
     // Active proxy backend or null if we should use our primary backend.
-    var activeAltBackend: ApiBackend<Api>? = null
+    private var activeAltBackend: ApiBackend<Api>? = null
         get() {
             // If alt backend is outdated reset it so that primary backend is attempted.
             if (wallClockMs() - prefs.lastPrimaryApiFail >= apiClient.proxyValidityPeriodMs) {
-                field = null
-                prefs.activeAltBaseUrl = null
+                activeAltBackend = null
             } else if (field == null) {
                 val baseUrl = prefs.activeAltBaseUrl
                 if (baseUrl != null)
@@ -77,17 +82,15 @@ class DohApiHandler<Api>(
             error !is ApiResult.Error.Connection -> error
             else -> {
                 staticMutex.withLock {
-                    // Invalidate activeAltBackend to refresh alternatives and retry the flow fully
-                    // if connection failure occurred on DOH proxy already
-                    if (activeAltBackend == backend) {
-                        CoreLogger.log(LOG_TAG,"DOH failure on proxy, invalidating alt backend")
-                        activeAltBackend = null
-                    }
-
-                    if (shouldUseDoh())
+                    val altBackend = activeAltBackend
+                    if (altBackend != null) {
+                        CoreLogger.log(LOG_TAG, "Alt backend already established")
+                        altBackend.invoke(call)
+                    } else if (shouldUseDoh()) {
                         callWithAlternatives(call) ?: error
-                    else
+                    } else {
                         error
+                    }
                 }
             }
         }
@@ -95,12 +98,6 @@ class DohApiHandler<Api>(
 
     private suspend fun shouldUseDoh(): Boolean {
         return coroutineScope {
-            // Check if other call already refreshed and initialized DOH
-            if (activeAltBackend != null) {
-                CoreLogger.log(LOG_TAG,"Activate backend already established, unblock right away")
-                return@coroutineScope true
-            }
-
             // Ping primary backend (to make sure failure wasn't a random network error rather than
             // an actual block) parallel with refreshing proxy list
             val isPotentiallyBlockedAsync = async {
@@ -115,12 +112,6 @@ class DohApiHandler<Api>(
             val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
             if (isPotentiallyBlocked) {
                 dohRefresh.await()
-
-                if (activeAltBackend == null)
-                    prefs.lastPrimaryApiFail = wallClockMs()
-                else
-                    activeAltBackend = null
-
                 true
             } else {
                 dohRefresh.cancel()
@@ -146,6 +137,17 @@ class DohApiHandler<Api>(
             }
         }
         return null
+    }
+
+    suspend fun onBackendBlocked(failedBackend: ApiBackend<Api>) {
+        if (failedBackend == primaryBackend)
+            prefs.lastPrimaryApiFail = wallClockMs()
+        else staticMutex.withLock {
+            if (failedBackend == activeAltBackend) {
+                CoreLogger.log(LOG_TAG, "Invalidating alt backend after failure")
+                activeAltBackend = null
+            }
+        }
     }
 
     companion object {

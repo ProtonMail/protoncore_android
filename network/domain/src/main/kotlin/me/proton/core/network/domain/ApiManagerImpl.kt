@@ -46,9 +46,9 @@ class ApiManagerImpl<Api>(
 
     private val dohApiHandler = errorHandlers.firstNotNullOfOrNull { it as? DohApiHandler<Api> }
 
-    private val activeBackend
-        get() = if (client.shouldUseDoh)
-            dohApiHandler?.activeAltBackend ?: primaryBackend
+    private suspend fun activeBackend() =
+        if (client.shouldUseDoh)
+            dohApiHandler?.getActiveAltBackend() ?: primaryBackend
         else
             primaryBackend
 
@@ -93,7 +93,12 @@ class ApiManagerImpl<Api>(
     private suspend fun <T> handledCall(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        val backendResult = activeBackend.invoke(call)
+        val backendResult = activeBackend().let { backend ->
+            backend.invoke(call).also { result ->
+                if (result.isPotentialBlocking)
+                    dohApiHandler?.onBackendBlocked(backend)
+            }
+        }
         val handlersToRetry = mutableListOf<ApiErrorHandler<Api>>()
         var currentResult = backendResult
 
@@ -102,7 +107,7 @@ class ApiManagerImpl<Api>(
         // result of the retried api call
         for (handler in errorHandlers) {
             if (currentResult is ApiResult.Error) {
-                val result = handler.invoke(activeBackend, currentResult, call)
+                val result = handler.invoke(activeBackend(), currentResult, call)
                 // add the handler in the retry list only if it produced a different error than the initial error it
                 // has been dealing with
                 if (result is ApiResult.Error && currentResult != result) {
@@ -113,7 +118,7 @@ class ApiManagerImpl<Api>(
         }
         for (handler in handlersToRetry) {
             if (currentResult is ApiResult.Error) {
-                currentResult = handler.invoke(activeBackend, currentResult, call)
+                currentResult = handler.invoke(activeBackend(), currentResult, call)
             }
         }
         return currentResult

@@ -388,7 +388,7 @@ internal class ApiManagerTests {
 
         val result1 = apiManager.invoke { test() }
         assertTrue(result1 is ApiResult.Success)
-        assertEquals(altBackend1, dohApiHandler.activeAltBackend)
+        assertEquals(altBackend1, dohApiHandler.getActiveAltBackend())
 
         val result2 = apiManager.invoke { test() }
         assertTrue(result2 is ApiResult.Success)
@@ -399,7 +399,7 @@ internal class ApiManagerTests {
 
         // After proxy is no longer valid, attempt primary backend again
         wallTime += apiClient.proxyValidityPeriodMs
-        assertNull(dohApiHandler.activeAltBackend)
+        assertNull(dohApiHandler.getActiveAltBackend())
         apiManager.invoke { test() }
         coVerify(exactly = 2) {
             backend.invoke<TestResult>(any())
