@@ -279,6 +279,7 @@
         <item name="android:paddingRight">8dp</item>
         <item name="android:minWidth">48dp</item>
         <item name="android:minHeight">48dp</item>
+        <item name="strokeColor">@color/btn_stroke_toggle_color_selector</item>
     </style>
 
     <style name="ProtonButton.Secondary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
