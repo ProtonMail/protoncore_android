@@ -22,4 +22,5 @@
   <string name="account_switcher_action_sign_in">Masuk</string>
   <string name="account_switcher_action_sign_out">Keluar</string>
   <string name="account_switcher_action_remove">Hapus</string>
+  <string name="account_list_item_chevron_content_description">Buka pemindah akun</string>
 </resources>

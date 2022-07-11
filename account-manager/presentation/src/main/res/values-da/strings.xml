@@ -22,4 +22,5 @@
   <string name="account_switcher_action_sign_in">Log ind</string>
   <string name="account_switcher_action_sign_out">Log ud</string>
   <string name="account_switcher_action_remove">Fjern</string>
+  <string name="account_list_item_chevron_content_description">Open account switcher</string>
 </resources>

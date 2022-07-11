@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Correu electrònic de recuperació</string>
   <string name="settings_recovery_email_current">Adreça de correu electrònic de recuperació/notificació actual</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
+  <string name="settings_recovery_email_new">Correu electrònic de recuperació/notificació nou</string>
   <string name="settings_recovery_email_confirm">Confirmeu el correu electrònic de recuperació/notificació</string>
   <string name="settings_recovery_email_new_hint">Introduïu l\'adreça de correu electrònic</string>
   <string name="settings_recovery_email_confirm_hint">Torneu a introduir l\'adreça de correu electrònic</string>

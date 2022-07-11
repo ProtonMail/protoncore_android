@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Adresse électronique de récupération</string>
   <string name="settings_recovery_email_current">Adresse électronique de réinitialisation/notification actuelle</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
+  <string name="settings_recovery_email_new">Nouvelle adresse e-mail de récupération/notification</string>
   <string name="settings_recovery_email_confirm">Confirmer la nouvelle adresse électronique de réinitialisation/notification</string>
   <string name="settings_recovery_email_new_hint">Saisissez votre adresse électronique</string>
   <string name="settings_recovery_email_confirm_hint">Saisissez à nouveau votre adresse électronique</string>

@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">您的備援電子郵件地址為：</string>
   <string name="auth_create_address_create">建立電郵位址</string>
   <string name="auth_create_address_creating">正在創建電郵位址</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">合約條款。</a></string>
+  <string name="auth_create_address_terms">點擊「建立電子郵件地址」，即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">條款與細則。</a></string>
   <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>

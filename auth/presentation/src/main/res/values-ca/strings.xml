@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_subtitle_calendar_alt">El nostre calendari xifrat d\'extrem a extrem us ajuda a mantenir-vos organitzat, al dia i en control.</string>
   <string name="welcome_title_vpn">Protegiu la vostra privadesa amb Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privadesa xifrant la vostra connexió a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que us protegeix la privadesa. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
   <string name="welcome_privacy_by_default">Privadesa per defecte</string>
   <string name="auth_password_label">Contrasenya</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">Creant adreça</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Termes i condicions</a> de Proton.</string>
+  <string name="auth_create_address_terms">Clicant a Crear adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i Condicions</a> de Proton</string>
   <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>

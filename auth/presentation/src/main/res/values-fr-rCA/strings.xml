@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Calendrier chiffré qui préserve la confidentialité et la sécurité des événements de votre vie.</string>
   <string name="welcome_subtitle_calendar_alt">Notre calendrier chiffré de bout en bout vous aide à rester organisé, concentré et maître de la situation.</string>
   <string name="welcome_title_vpn">Protégez votre vie privée avec Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">RPV suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion internet.</string>
   <string name="welcome_subtitle_vpn_alt">Un RPV suisse à haut débit qui protège votre vie privée. Sécurité maximale, plus de 1 600 serveurs et aucune restriction.</string>
   <string name="welcome_privacy_by_default">La confidentialité par défaut</string>
   <string name="auth_password_label">Mot de passe</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Votre adresse électronique de récupération est:</string>
   <string name="auth_create_address_create">Créer une adresse</string>
   <string name="auth_create_address_creating">Création de l’adresse</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">conditions générales d\'utilisation</a> de Proton.</string>
+  <string name="auth_create_address_terms">En cliquant sur «créer une adresse», vous acceptez les <a href="https://protonmail.com/terms-and-conditions">conditions générales d\'utilisation</a> de Proton.</string>
   <string name="auth_create_address_error_credentials">Les identifiants ne doivent pas être vides.</string>
   <string name="auth_create_address_error_no_available_domain">Aucun domaine disponible.</string>
   <string name="auth_create_address_error_private_key">La génération de la clé privée a échoué.</string>

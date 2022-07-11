@@ -116,7 +116,7 @@
   <string name="ad_blocker" comment="new_plans">Bloquejador d\'anuncis integrat (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Accediu a serveis de reproducció en línia globalment</string>
   <string name="secure_core" comment="new_plans">Servidors Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">La solució de correu electrònic i calendari que prioritza la privadesa per a les vostres necessitats de comunicació diàries.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">La vostra privadesa i seguretat són la nostra prioritat.</string>

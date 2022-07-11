@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Ваша електронна пошта для відновлення:</string>
   <string name="auth_create_address_create">Створити адресу</string>
   <string name="auth_create_address_creating">Створення адреси</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Умовами та положеннями Proton.</a></string>
+  <string name="auth_create_address_terms">Натискаючи Створити адресу, ви погоджуєтеся з <a href="https://protonmail.com/terms-and-conditions">Умовами та положеннями</a> Proton</string>
   <string name="auth_create_address_error_credentials">Поле з обліковими даними не повинне бути порожнім.</string>
   <string name="auth_create_address_error_no_available_domain">Немає доступного домену.</string>
   <string name="auth_create_address_error_private_key">Не вдалося згенерувати приватний ключ.</string>

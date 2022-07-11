@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">Krypterad kalender som håller dina livshändelser privat, skyddad och säker.</string>
   <string name="welcome_subtitle_calendar_alt">Vår end-to-end-krypterade kalender hjälper dig att hålla ordning, på rätt spår och ha kontroll.</string>
   <string name="welcome_title_vpn">Skydda din integritet med Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">Schweizisk VPN med hög hastighet som skyddar din integritet genom att kryptera din Internetanslutning.</string>
   <string name="welcome_subtitle_vpn_alt">Höghastighets schweizisk VPN som skyddar din integritet. Maximal säkerhet, 1600+ servrar och inga begränsningar.</string>
   <string name="welcome_privacy_by_default">Integritet som standard</string>
   <string name="auth_password_label">Lösenord</string>
@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Din e-postadress för återställning är:</string>
   <string name="auth_create_address_create">Skapa adress</string>
   <string name="auth_create_address_creating">Skapar adress</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">användarvillkor.</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
   <string name="auth_create_address_error_no_available_domain">Ingen tillgänglig domän.</string>
   <string name="auth_create_address_error_private_key">Misslyckades att generera privat nyckel.</string>

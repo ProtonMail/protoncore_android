@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Adresa de e-mail de recuperare este:</string>
   <string name="auth_create_address_create">Creare adresă</string>
   <string name="auth_create_address_creating">Se creează adresa</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">termenii și condițiile</a> Proton.</string>
+  <string name="auth_create_address_terms">Făcând clic pe «Creare adresă», sunteți de acord cu <a href="https://protonmail.com/terms-and-conditions">Termenii și condițiile</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_create_address_error_no_available_domain">Nu sunt domenii disponibile.</string>
   <string name="auth_create_address_error_private_key">Generarea cheii private a eșuat.</string>

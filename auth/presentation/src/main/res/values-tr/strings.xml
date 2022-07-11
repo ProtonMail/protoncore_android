@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Kurtarma e-posta adresiniz:</string>
   <string name="auth_create_address_create">Adres oluştur</string>
   <string name="auth_create_address_creating">Adres oluşturuluyor</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
+  <string name="auth_create_address_terms">Adres oluştur üzerine tıklayarak, Proton <a href="https://protonmail.com/terms-and-conditions">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
   <string name="auth_create_address_error_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_error_no_available_domain">Kullanılabilecek bir etki alanı yok.</string>
   <string name="auth_create_address_error_private_key">Kişisel anahtar oluşturulamadı.</string>

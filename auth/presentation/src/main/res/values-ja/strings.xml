@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">回復用メールアドレス:</string>
   <string name="auth_create_address_create">アドレスの作成</string>
   <string name="auth_create_address_creating">アドレスの作成中</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">利用規約</a>に同意したことになります。</string>
+  <string name="auth_create_address_terms">アドレスを作成することで、Proton の<a href="https://protonmail.com/terms-and-conditions">利用規約</a>に同意したことになります。</string>
   <string name="auth_create_address_error_credentials">認証情報を空にできません。</string>
   <string name="auth_create_address_error_no_available_domain">利用可能なドメインがありません。</string>
   <string name="auth_create_address_error_private_key">プライベートキーの生成に失敗しました。</string>

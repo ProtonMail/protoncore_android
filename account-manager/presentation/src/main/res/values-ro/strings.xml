@@ -22,4 +22,5 @@
   <string name="account_switcher_action_sign_in">Autentificare</string>
   <string name="account_switcher_action_sign_out">Deconectare</string>
   <string name="account_switcher_action_remove">Eliminare</string>
+  <string name="account_list_item_chevron_content_description">Comutator creare cont</string>
 </resources>

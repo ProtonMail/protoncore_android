@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
   <string name="auth_create_address_creating">Vytváření adresy</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">podmínkami a náležitostmi</a> Proton.</string>
+  <string name="auth_create_address_terms">Kliknutím na Vytvořit adresu, souhlasíte s Proton <a href="https://protonmail.com/terms-and-conditions">smluvními podmínkami užívání.</a></string>
   <string name="auth_create_address_error_credentials">Pověřovací listiny by neměly být prázdné.</string>
   <string name="auth_create_address_error_no_available_domain">Žádná dostupná doména.</string>
   <string name="auth_create_address_error_private_key">Generování soukromého klíče se nezdařilo.</string>

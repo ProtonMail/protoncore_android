@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Twój adres pomocniczy:</string>
   <string name="auth_create_address_create">Utwórz adres</string>
   <string name="auth_create_address_creating">Tworzenie adresu</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">regulamin</a> usługi Proton.</string>
+  <string name="auth_create_address_terms">Klikając przycisk Utwórz adres, akceptujesz <a href="https://protonmail.com/terms-and-conditions">regulamin</a> usługi Proton.</string>
   <string name="auth_create_address_error_credentials">Dane logowania nie mogą być puste.</string>
   <string name="auth_create_address_error_no_available_domain">Brak dostępnej domeny.</string>
   <string name="auth_create_address_error_private_key">Generowanie klucza prywatnego nie powiodło się.</string>
