@@ -51,6 +51,7 @@ import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isForceUpdate
 import me.proton.core.network.domain.isRetryable
+import me.proton.core.network.domain.isUnauthorized
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
@@ -143,12 +144,13 @@ class EventManagerImpl @AssistedInject constructor(
             deserializedMetadata
         }.onFailure {
             when {
-                // throw it -> Use the WorkManager RETRY mechanism (backoff + network constraint).
+                // Note: throw it = Use the WorkManager RETRY mechanism (backoff + network constraint).
                 it is ApiException && it.isForceUpdate() -> throw it
+                it is ApiException && it.isUnauthorized() -> throw it
                 it is ApiException && it.isRetryable().not() -> permanentFetchFailure(metadata, it)
                 it is SerializationException -> permanentFetchFailure(metadata, it)
                 else -> throw it
-            }
+            }.exhaustive
         }.onSuccess {
             notify(it)
         }

@@ -171,6 +171,21 @@ open class ApiException(val error: ApiResult.Error) : Exception(
 )
 
 /**
+ * Return true if [ApiException.error] is an unauthorized error (401).
+ *
+ * @see ApiResult.isUnauthorized
+ */
+fun ApiException.isUnauthorized(): Boolean = error.isUnauthorized()
+
+/**
+ * Return true if [ApiResult] is an unauthorized error (401).
+ */
+fun <T> ApiResult<T>.isUnauthorized(): Boolean {
+    val httpError = this as? ApiResult.Error.Http
+    return httpError?.httpCode == HttpResponseCodes.HTTP_UNAUTHORIZED
+}
+
+/**
  * Return true if [ApiException.error] is a force update error (5003/5005).
  *
  * @see ApiResult.isForceUpdate

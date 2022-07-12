@@ -516,6 +516,20 @@ class EventManagerImplTest {
         )
         // WHEN
         user1Manager.process()
+        // THEN
+        // Worker will retry.
+    }
+
+    @Test(expected = ApiException::class)
+    fun fetchThrowApiExceptionIsUnauthorized() = runBlocking {
+        // GIVEN
+        coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
+            ApiResult.Error.Http(401, "Unauthorized")
+        )
+        // WHEN
+        user1Manager.process()
+        // THEN
+        // Worker handle it as a retry, but will be cancelled on user force logout.
     }
 
     @Test(expected = ApiException::class)
