@@ -28,6 +28,7 @@ import android.os.Parcelable
 import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import androidx.annotation.MainThread
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -37,7 +38,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.animation.AnimationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
@@ -53,8 +53,8 @@ import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.M
 import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.Type
 import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.utils.showHelp
-import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ViewModel
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ExtraParams
+import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ViewModel
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -149,9 +149,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
-            onResourceLoadingError = { _, _ ->
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { setLoading(false) }
-            },
+            onResourceLoadingError = { _, _ -> lifecycleScope.launch { handleResourceLoadingError() } },
             onWebLocationChanged = {},
             verifyAppUrl = verifyAppUrl
         )
@@ -210,7 +208,15 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         return "$baseURL?$parameters"
     }
 
+    @MainThread
+    private fun handleResourceLoadingError() {
+        this.view ?: return
+        setLoading(false)
+    }
+
+    @MainThread
     private fun handleVerificationResponse(response: HV3ResponseMessage) {
+        this.view ?: return
         when (response.type) {
             Type.Success -> {
                 val token = requireNotNull(response.payload?.token)
@@ -227,13 +233,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         }
     }
 
-    private fun setLoading(loading: Boolean) {
-        with(binding) {
-            humanVerificationWebView.isVisible = !loading
-            progress.isVisible = loading
-        }
-    }
-
+    @MainThread
     private fun handleNotification(message: String, messageType: MessageType) {
         val view = this.view ?: return
         when (messageType) {
@@ -243,8 +243,15 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         }
     }
 
+    private fun setLoading(loading: Boolean) {
+        with(binding) {
+            humanVerificationWebView.isVisible = !loading
+            progress.isVisible = loading
+        }
+    }
+
     override fun onBackPressed() {
-        with (binding.humanVerificationWebView) {
+        with(binding.humanVerificationWebView) {
             if (canGoBack()) goBack()
             else setResultAndDismiss(token = null)
         }
@@ -302,11 +309,8 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         /** Used as callback by all verification methods once the challenge is solved. */
         @JavascriptInterface
         fun dispatch(response: String) {
-            val verificationResponse = response.deserializeOrNull<HV3ResponseMessage>()
-            verificationResponse?.let {
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    handleVerificationResponse(it)
-                }
+            response.deserializeOrNull<HV3ResponseMessage>()?.let {
+                lifecycleScope.launch { handleVerificationResponse(it) }
             }
         }
     }
