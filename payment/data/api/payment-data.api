@@ -60,3 +60,8 @@ public final class me/proton/core/payment/data/repository/PaymentsRepositoryImpl
 	public fun validateSubscription (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/data/usecase/GooglePlayBillingLibraryImpl : me/proton/core/payment/domain/usecase/GooglePlayBillingLibrary {
+	public fun <init> ()V
+	public fun isAvailable ()Z
+}
+

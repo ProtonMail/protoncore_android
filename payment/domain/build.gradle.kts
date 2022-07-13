@@ -39,6 +39,7 @@ dependencies {
         // Features
         project(Module.humanVerificationDomain),
         project(Module.accountDomain),
+        project(Module.accountManagerDomain),
         project(Module.featureFlagDomain),
 
         // Kotlin

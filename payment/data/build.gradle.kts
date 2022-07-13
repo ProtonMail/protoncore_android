@@ -40,6 +40,7 @@ dependencies {
         project(Module.planDomain),
 
         // Other
+        `javax-inject`,
         `retrofit`,
         `retrofit-kotlin-serialization`
     )

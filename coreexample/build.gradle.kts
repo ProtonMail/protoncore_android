@@ -166,6 +166,7 @@ dependencies {
         `core-splashscreen`,
         `constraint-layout`,
         `fragment`,
+        googlePlayBilling,
         `lifecycle-extensions`,
         `lifecycle-viewModel`,
         `material`,

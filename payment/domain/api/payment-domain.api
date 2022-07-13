@@ -374,6 +374,15 @@ public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentMeth
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentProviders {
+	public static final field Companion Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders$Companion;
+	public final fun invoke (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentProviders$Companion {
+}
+
 public final class me/proton/core/payment/domain/usecase/GetCurrentSubscription {
 	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -382,6 +391,17 @@ public final class me/proton/core/payment/domain/usecase/GetCurrentSubscription 
 public final class me/proton/core/payment/domain/usecase/GetPaymentTokenStatus {
 	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/payment/domain/usecase/GooglePlayBillingLibrary {
+	public abstract fun isAvailable ()Z
+}
+
+public final class me/proton/core/payment/domain/usecase/PaymentProvider : java/lang/Enum {
+	public static final field GoogleInAppPurchase Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static final field ProtonPayment Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static fun values ()[Lme/proton/core/payment/domain/usecase/PaymentProvider;
 }
 
 public final class me/proton/core/payment/domain/usecase/PerformSubscribe {
