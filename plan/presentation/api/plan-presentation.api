@@ -640,7 +640,7 @@ public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewMod
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
-	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/domain/usecase/PurchaseEnabled;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_HiltModules {
@@ -667,7 +667,7 @@ public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewMo
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
-	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/domain/usecase/PurchaseEnabled;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_HiltModules {

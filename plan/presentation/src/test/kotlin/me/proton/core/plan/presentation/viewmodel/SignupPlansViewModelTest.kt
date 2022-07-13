@@ -24,7 +24,8 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.spyk
 import me.proton.core.domain.entity.Product
-import me.proton.core.payment.domain.usecase.PurchaseEnabled
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
@@ -43,11 +44,11 @@ import kotlin.test.assertTrue
 class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
+    private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>(relaxed = true)
     private val getPlansUseCase = mockk<GetPlans>()
     private lateinit var getPlanDefaultUseCaseSpy: GetPlanDefault
     private val plansRepository = mockk<PlansRepository>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
-    private val purchaseEnabled = mockk<PurchaseEnabled>(relaxed = true)
     // endregion
 
     // region test data
@@ -103,14 +104,14 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
     fun beforeEveryTest() {
         coEvery { plansRepository.getPlansDefault(null) } returns testDefaultPlan
         getPlanDefaultUseCaseSpy = spyk(GetPlanDefault(plansRepository))
-        coEvery { purchaseEnabled.invoke() } returns true
+        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.ProtonPayment)
 
         viewModel =
             SignupPlansViewModel(
+                getAvailablePaymentProviders = getAvailablePaymentProviders,
                 getPlans = getPlansUseCase,
                 getPlanDefault = getPlanDefaultUseCaseSpy,
                 supportPaidPlans = true,
-                purchaseEnabled = purchaseEnabled,
                 paymentsOrchestrator = paymentOrchestrator
             )
     }
@@ -170,17 +171,17 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get plans for signup payments off handled correctly`() = coroutinesTest {
-        coEvery { purchaseEnabled.invoke() } returns false
+        coEvery { getAvailablePaymentProviders.invoke() } returns emptySet()
         coEvery { getPlansUseCase.invoke(any()) } returns listOf(
             testPlan,
             testPlan.copy(id = "plan-name-2", name = "plan-name-2")
         )
         viewModel =
             SignupPlansViewModel(
+                getAvailablePaymentProviders,
                 getPlansUseCase,
                 getPlanDefaultUseCaseSpy,
                 true,
-                purchaseEnabled,
                 paymentOrchestrator
             )
         viewModel.availablePlansState.test {
@@ -206,10 +207,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel =
             SignupPlansViewModel(
+                getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
                 getPlanDefaultUseCaseSpy,
                 true,
-                purchaseEnabled,
                 paymentOrchestrator
             )
         viewModel.availablePlansState.test {
@@ -238,10 +239,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel =
             SignupPlansViewModel(
+                getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
                 getPlanDefaultUseCaseSpy,
                 true,
-                purchaseEnabled,
                 paymentOrchestrator
             )
         viewModel.availablePlansState.test {
@@ -272,10 +273,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel =
             SignupPlansViewModel(
+                getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),
                 getPlanDefaultUseCaseSpy,
                 true,
-                purchaseEnabled,
                 paymentOrchestrator
             )
         viewModel.availablePlansState.test {

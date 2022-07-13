@@ -26,8 +26,9 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.domain.usecase.PurchaseEnabled
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
@@ -50,6 +51,7 @@ import kotlin.test.assertTrue
 class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
+    private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>(relaxed = true)
     private val getPlansUseCase = mockk<GetPlans>()
     private val getPlanDefaultUseCase = mockk<GetPlanDefault>(relaxed = true)
     private val getOrganizationUseCase = mockk<GetOrganization>(relaxed = true)
@@ -57,7 +59,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     private val getPaymentMethodsUseCase = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getSubscriptionUseCase = mockk<GetCurrentSubscription>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
-    private val purchaseEnabled = mockk<PurchaseEnabled>(relaxed = true)
     // endregion
 
     // region test data
@@ -200,13 +201,14 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getOrganizationUseCase.invoke(any(), true) } returns testOrganization
         coEvery { getUserUseCase.invoke(any(), true) } returns testUser
         coEvery { getPaymentMethodsUseCase.invoke(any()) } returns emptyList()
-        coEvery { purchaseEnabled.invoke() } returns true
+        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.ProtonPayment)
 
         coEvery { getPlansUseCase.invoke(testUserId) } returns listOf(
             testPlan
         )
 
         viewModel = UpgradePlansViewModel(
+            getAvailablePaymentProviders,
             getPlansUseCase,
             getPlanDefaultUseCase,
             getSubscriptionUseCase,
@@ -214,7 +216,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             getUserUseCase,
             getPaymentMethodsUseCase,
             true,
-            purchaseEnabled,
             paymentOrchestrator,
         )
     }
@@ -257,7 +258,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `get plans for upgrade currently free payments off handled`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
-        coEvery { purchaseEnabled.invoke() } returns false
+        coEvery { getAvailablePaymentProviders.invoke() } returns emptySet()
         viewModel.availablePlansState.test {
             // WHEN
             viewModel.getCurrentSubscribedPlans(testUserId)
@@ -277,6 +278,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         val plansRepository = mockk<PlansRepository>(relaxed = true)
         coEvery { plansRepository.getPlans(testUserId) } returns listOf(testPlan.copy(enabled = false))
         viewModel = UpgradePlansViewModel(
+            getAvailablePaymentProviders,
             GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
             getPlanDefaultUseCase,
             getSubscriptionUseCase,
@@ -284,7 +286,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             getUserUseCase,
             getPaymentMethodsUseCase,
             true,
-            purchaseEnabled,
             paymentOrchestrator,
         )
         viewModel.availablePlansState.test {
@@ -309,6 +310,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 testPlan.copy(services = 5)
             )
             viewModel = UpgradePlansViewModel(
+                getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
                 getPlanDefaultUseCase,
                 getSubscriptionUseCase,
@@ -316,7 +318,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 getUserUseCase,
                 getPaymentMethodsUseCase,
                 true,
-                purchaseEnabled,
                 paymentOrchestrator,
             )
             viewModel.availablePlansState.test {
@@ -349,7 +350,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `get plans for upgrade currently paid payments off`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
-        coEvery { purchaseEnabled.invoke() } returns false
+        coEvery { getAvailablePaymentProviders.invoke() } returns emptySet()
         viewModel.availablePlansState.test {
             // WHEN
             viewModel.getCurrentSubscribedPlans(testUserId)
@@ -390,6 +391,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 testPlan.copy(services = 5)
             )
             viewModel = UpgradePlansViewModel(
+                getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),
                 getPlanDefaultUseCase,
                 getSubscriptionUseCase,
@@ -397,7 +399,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 getUserUseCase,
                 getPaymentMethodsUseCase,
                 true,
-                purchaseEnabled,
                 paymentOrchestrator,
             )
             viewModel.availablePlansState.test {

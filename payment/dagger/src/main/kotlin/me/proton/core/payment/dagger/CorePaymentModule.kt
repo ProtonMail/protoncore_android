@@ -18,29 +18,33 @@
 
 package me.proton.core.payment.dagger
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
+import me.proton.core.payment.data.usecase.GooglePlayBillingLibraryImpl
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.usecase.GooglePlayBillingLibrary
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CorePaymentModule {
+public interface CorePaymentModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun providePaymentsRepository(
-        apiProvider: ApiProvider
-    ): PaymentsRepository =
-        PaymentsRepositoryImpl(provider = apiProvider)
+    public fun providePaymentsRepository(impl: PaymentsRepositoryImpl): PaymentsRepository
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideSecureEndpoint(): SecureEndpoint = SecureEndpoint("secure.protonmail.com")
+    public fun provideGooglePlayBillingLibrary(impl: GooglePlayBillingLibraryImpl): GooglePlayBillingLibrary
 
+    public companion object {
+        @Provides
+        @Singleton
+        public fun provideSecureEndpoint(): SecureEndpoint = SecureEndpoint("secure.protonmail.com")
+    }
 }

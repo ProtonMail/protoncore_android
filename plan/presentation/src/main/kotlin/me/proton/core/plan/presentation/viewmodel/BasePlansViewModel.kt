@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.usecase.PurchaseEnabled
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PlanShortDetails
@@ -44,15 +43,10 @@ import me.proton.core.usersettings.domain.entity.Organization
 import java.util.Date
 import kotlin.math.roundToInt
 
-internal abstract class BasePlansViewModel(
-    private val purchaseEnabled: PurchaseEnabled,
-    private val paymentsOrchestrator: PaymentsOrchestrator
-) : ProtonViewModel() {
+internal abstract class BasePlansViewModel(private val paymentsOrchestrator: PaymentsOrchestrator) : ProtonViewModel() {
 
     protected val state = MutableStateFlow<PlanState>(PlanState.Idle)
     val availablePlansState = state.asStateFlow()
-
-    protected suspend fun getPurchaseStatus() = purchaseEnabled()
 
     sealed class PlanState {
         object Idle : PlanState()

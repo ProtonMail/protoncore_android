@@ -41,8 +41,9 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PlanQuantity
+import javax.inject.Inject
 
-class PaymentsRepositoryImpl(
+class PaymentsRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : PaymentsRepository {
 

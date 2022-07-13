@@ -24,7 +24,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.payment.domain.usecase.PurchaseEnabled
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
@@ -34,18 +35,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SignupPlansViewModel @Inject constructor(
+    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
     @SupportSignupPaidPlans val supportPaidPlans: Boolean,
-    purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
-) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
+) : BasePlansViewModel(paymentsOrchestrator) {
 
     fun getAllPlansForSignup() = flow {
         emit(PlanState.Processing)
         val plans: MutableList<PlanDetailsItem> = mutableListOf()
-        val purchaseStatus = getPurchaseStatus()
-        if (purchaseStatus && supportPaidPlans) {
+        val paymentProviders = getAvailablePaymentProviders()
+        val protonPaymentEnabled = PaymentProvider.ProtonPayment in paymentProviders
+        if (protonPaymentEnabled && supportPaidPlans) {
             plans.apply {
                 addAll(
                     getPlans(userId = null)
@@ -54,7 +56,7 @@ internal class SignupPlansViewModel @Inject constructor(
                 add(createFreePlan(getPlanDefault(userId = null)))
             }
         }
-        emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = purchaseStatus))
+        emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = protonPaymentEnabled))
     }.catch { error ->
         state.tryEmit(PlanState.Error(error))
     }.onEach { plans ->

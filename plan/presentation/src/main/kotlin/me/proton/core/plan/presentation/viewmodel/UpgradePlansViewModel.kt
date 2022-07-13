@@ -26,11 +26,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.domain.usecase.PurchaseEnabled
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
@@ -45,6 +45,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class UpgradePlansViewModel @Inject constructor(
+    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
     private val getCurrentSubscription: GetCurrentSubscription,
@@ -52,9 +53,8 @@ internal class UpgradePlansViewModel @Inject constructor(
     private val getUser: GetUser,
     private val getPaymentMethods: GetAvailablePaymentMethods,
     @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
-    purchaseEnabled: PurchaseEnabled,
     paymentsOrchestrator: PaymentsOrchestrator
-) : BasePlansViewModel(purchaseEnabled, paymentsOrchestrator) {
+) : BasePlansViewModel(paymentsOrchestrator) {
 
     private val _subscribedPlansState = MutableStateFlow<SubscribedPlansState>(SubscribedPlansState.Idle)
 
@@ -123,12 +123,14 @@ internal class UpgradePlansViewModel @Inject constructor(
 
     private fun getAvailablePlansForUpgrade(userId: UserId, isFreeUser: Boolean) = flow {
         emit(PlanState.Processing)
-        val purchaseStatus = getPurchaseStatus()
+
+        val paymentProviders = getAvailablePaymentProviders()
+        val protonPaymentEnabled = PaymentProvider.ProtonPayment in paymentProviders
 
         val availablePlans =
             when {
                 !supportPaidPlans -> emptyList()
-                !purchaseStatus -> emptyList()
+                !protonPaymentEnabled -> emptyList()
                 !isFreeUser -> emptyList()
                 else -> getPlans(
                     userId = userId
@@ -136,7 +138,7 @@ internal class UpgradePlansViewModel @Inject constructor(
                     .map { plan -> plan.toPaidPlanDetailsItem(false) }
             }
 
-        emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = purchaseStatus))
+        emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = protonPaymentEnabled))
     }.catch { error ->
         state.tryEmit(PlanState.Error(error))
     }.onEach { plans ->
