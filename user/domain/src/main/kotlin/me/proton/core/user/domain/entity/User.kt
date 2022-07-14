@@ -35,9 +35,9 @@ import me.proton.core.user.domain.extension.hasSubscriptionForVpn
  */
 data class User(
     val userId: UserId,
-    /** Optional email address. */
+    /** Optional email address. If null, [name] is not null. */
     val email: String?,
-    /** Optional name. */
+    /** Optional name. If null, [email] is not null.  */
     val name: String?,
     /** Optional display name. */
     val displayName: String?,

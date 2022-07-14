@@ -76,7 +76,7 @@ interface UserAddressManager {
      */
     suspend fun setupInternalAddress(
         sessionUserId: SessionUserId,
-        username: String,
+        displayName: String,
         domain: String
     ): UserAddress
 

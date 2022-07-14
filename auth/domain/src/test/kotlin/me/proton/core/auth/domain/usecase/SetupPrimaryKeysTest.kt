@@ -208,12 +208,14 @@ class SetupPrimaryKeysTest {
     private fun mockUser(
         userEmail: String? = null,
         username: String? = null,
+        userDisplayName: String? = null,
         withPrimaryPrivateKey: Boolean = false
     ): User {
         return mockk {
-            every { email } returns userEmail
-            every { name } returns username
-            every { keys } returns if (withPrimaryPrivateKey) {
+            every { this@mockk.email } returns userEmail
+            every { this@mockk.name } returns username
+            every { this@mockk.displayName } returns userDisplayName
+            every { this@mockk.keys } returns if (withPrimaryPrivateKey) {
                 val userPrivateKey = mockk<PrivateKey> { every { isPrimary } returns true }
                 val userKey = mockk<UserKey> { every { privateKey } returns userPrivateKey }
                 listOf(userKey)

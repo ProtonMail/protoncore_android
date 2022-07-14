@@ -32,6 +32,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.entity.emailSplit
+import me.proton.core.user.domain.extension.displayNameNotNull
 import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -57,14 +58,9 @@ class SetupPrimaryKeys @Inject constructor(
         val user = userManager.getUser(userId, refresh = true)
         if (user.keys.primary() != null) return
 
-        val username = when (accountType) {
-            AccountType.External -> checkNotNull(user.emailSplit?.username) { "User email username is needed." }
-            else -> checkNotNull(user.name) { "Username is needed." }
-        }
-
         val email = when (accountType) {
             AccountType.External -> checkNotNull(user.emailSplit) { "Email is needed." }
-            AccountType.Internal -> getOrCreateInternalAddress(userId, username).emailSplit
+            AccountType.Internal -> getOrCreateInternalAddress(userId, user.displayNameNotNull()).emailSplit
             AccountType.Username -> return
         }
 
@@ -78,7 +74,7 @@ class SetupPrimaryKeys @Inject constructor(
             )
             userManager.setupPrimaryKeys(
                 sessionUserId = userId,
-                username = username,
+                username = email.username,
                 domain = email.domain,
                 auth = auth,
                 password = decryptedPassword.array
@@ -88,11 +84,19 @@ class SetupPrimaryKeys @Inject constructor(
 
     private suspend fun getOrCreateInternalAddress(
         userId: UserId,
-        username: String,
-    ): UserAddress = userAddressRepository.getAddresses(userId, refresh = true).firstInternalOrNull()
-        ?: userAddressRepository.createAddress(
+        displayName: String,
+    ): UserAddress {
+        suspend fun getAddresses() = userAddressRepository.getAddresses(
             sessionUserId = userId,
-            displayName = username,
+            refresh = true
+        )
+
+        suspend fun createAddress() = userAddressRepository.createAddress(
+            sessionUserId = userId,
+            displayName = displayName,
             domain = domainRepository.getAvailableDomains().first()
         )
+
+        return getAddresses().firstInternalOrNull() ?: createAddress()
+    }
 }

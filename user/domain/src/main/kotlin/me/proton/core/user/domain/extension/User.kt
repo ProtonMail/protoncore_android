@@ -20,6 +20,23 @@ package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.emailSplit
+
+/**
+ * Return [User.email] or if null [User.name].
+ *
+ * Note: Auth endpoints infer user from email, and for sub-user [User.name] is not applicable.
+ *
+ * @return a non-null identifier for auth endpoints (e.g. SRP, Proof).
+ */
+fun User.nameNotNull() = requireNotNull(email ?: name)
+
+/**
+ * Return [User.displayName] or if null [User.name] or if null infer it from [User.emailSplit].
+ *
+ * @return a non-null displayName for any description (e.g. account list, internal address creation).
+ */
+fun User.displayNameNotNull() = requireNotNull(displayName ?: name ?: emailSplit?.username)
 
 /**
  * @return true if the user have at least 1 key.

@@ -65,20 +65,20 @@ class UserAddressManagerImpl(
 
     override suspend fun setupInternalAddress(
         sessionUserId: SessionUserId,
-        username: String,
+        displayName: String,
         domain: String
     ): UserAddress {
         // Check if internal UserAddress already exist, and if needed create remotely.
         val userAddresses = userAddressRepository.getAddresses(sessionUserId)
-        val userAddress = userAddresses.firstInternalOrNull() ?: createAddress(sessionUserId, username, domain)
+        val userAddress = userAddresses.firstInternalOrNull() ?: createAddress(sessionUserId, displayName, domain)
         return createAddressKey(sessionUserId, userAddress.addressId, isPrimary = true)
     }
 
     private suspend fun createAddress(
         sessionUserId: SessionUserId,
-        username: String,
+        displayName: String,
         domain: String
-    ) = userAddressRepository.createAddress(sessionUserId, username, domain)
+    ) = userAddressRepository.createAddress(sessionUserId, displayName, domain)
 
     private suspend fun createAddressKey(
         sessionUserId: SessionUserId,

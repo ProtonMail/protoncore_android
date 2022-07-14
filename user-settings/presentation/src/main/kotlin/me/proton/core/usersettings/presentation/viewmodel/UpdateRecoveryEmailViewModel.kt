@@ -30,7 +30,6 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail
 import javax.inject.Inject
@@ -39,7 +38,6 @@ import javax.inject.Inject
 class UpdateRecoveryEmailViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val getUserSettings: GetUserSettings,
-    private val userRepository: UserRepository,
     private val performUpdateRecoveryEmail: PerformUpdateRecoveryEmail
 ) : ProtonViewModel() {
 
@@ -83,13 +81,9 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
     ) = flow {
         emit(State.UpdatingCurrent)
         val encryptedPassword = password.encrypt(keyStoreCrypto)
-        val user = userRepository.getUser(userId)
-        val username = requireNotNull(user.name ?: user.email)
-
         val updateRecoveryEmailResult = performUpdateRecoveryEmail(
             sessionUserId = userId,
             newRecoveryEmail = newRecoveryEmail,
-            username = username,
             password = encryptedPassword,
             secondFactorCode = secondFactorCode
         )

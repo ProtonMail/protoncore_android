@@ -28,6 +28,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.isOrganizationAdmin
+import me.proton.core.user.domain.extension.nameNotNull
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.takeIfNotEmpty
@@ -52,7 +53,7 @@ class PerformUpdateUserPassword @Inject constructor(
         secondFactorCode: String = ""
     ): Boolean {
         val user = userRepository.getUser(userId)
-        val username = requireNotNull(user.name ?: user.email)
+        val username = user.nameNotNull()
 
         val loginInfo = authRepository.getLoginInfo(username, clientSecret)
         val modulus = authRepository.randomModulus()

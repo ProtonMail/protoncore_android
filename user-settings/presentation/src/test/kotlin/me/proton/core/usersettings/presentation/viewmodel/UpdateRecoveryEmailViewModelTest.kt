@@ -32,7 +32,6 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -50,7 +49,6 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
     private val getUserSettingsUseCase = mockk<GetUserSettings>()
     private val performUpdateRecoveryEmailUseCase = mockk<PerformUpdateRecoveryEmail>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
-    private val userRepository = mockk<UserRepository>(relaxed = true)
     // endregion
 
     // region test data
@@ -101,13 +99,11 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        coEvery { userRepository.getUser(any()) } returns testUser
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse
         viewModel =
             UpdateRecoveryEmailViewModel(
                 keyStoreCrypto,
                 getUserSettingsUseCase,
-                userRepository,
                 performUpdateRecoveryEmailUseCase
             )
     }
@@ -173,7 +169,6 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             performUpdateRecoveryEmailUseCase.invoke(
                 sessionUserId = testUserId,
                 newRecoveryEmail = "",
-                username = testUsername,
                 password = "encrypted-test-password",
                 secondFactorCode = ""
             )
@@ -200,7 +195,6 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             performUpdateRecoveryEmailUseCase.invoke(
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
-                username = testUsername,
                 password = "encrypted-test-password",
                 secondFactorCode = ""
             )
@@ -227,7 +221,6 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             performUpdateRecoveryEmailUseCase.invoke(
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
-                username = testUsername,
                 password = "encrypted-test-password",
                 secondFactorCode = "123456"
             )
@@ -254,7 +247,6 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             performUpdateRecoveryEmailUseCase.invoke(
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
-                username = testUsername,
                 password = "encrypted-test-password",
                 secondFactorCode = ""
             )

@@ -21,17 +21,17 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.user.domain.extension.displayNameNotNull
 import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 /**
- * Setup a new internal [UserAddress] and [UserAddressKey], using [User.name].
+ * Setup a new internal [UserAddress] and [UserAddressKey].
  *
  * Prerequisite: Primary [UserKey.privateKey] must be unlocked (`isLocked == false`).
  *
@@ -47,13 +47,12 @@ class SetupInternalAddress @Inject constructor(
         domain: String? = null
     ) {
         val user = userRepository.getUser(userId)
-        val username = checkNotNull(user.name) { "Username is needed to setup new internal address." }
 
         val finalDomain = domain ?: domainRepository.getAvailableDomains().first()
 
         val address = userAddressManager.getAddresses(userId).firstInternalOrNull()
         if (address == null || address.keys.isEmpty()) {
-            userAddressManager.setupInternalAddress(userId, username, finalDomain)
+            userAddressManager.setupInternalAddress(userId, user.displayNameNotNull(), finalDomain)
         }
     }
 }

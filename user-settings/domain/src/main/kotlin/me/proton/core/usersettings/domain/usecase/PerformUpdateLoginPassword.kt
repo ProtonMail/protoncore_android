@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.extension.nameNotNull
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
@@ -48,12 +49,9 @@ class PerformUpdateLoginPassword @Inject constructor(
         secondFactorCode: String = ""
     ): UserSettings {
         val user = userRepository.getUser(userId)
-        val username = requireNotNull(user.name ?: user.email)
+        val username = user.nameNotNull()
 
-        val loginInfo = authRepository.getLoginInfo(
-            username = username,
-            clientSecret = clientSecret
-        )
+        val loginInfo = authRepository.getLoginInfo(username, clientSecret)
         val modulus = authRepository.randomModulus()
 
         password.decrypt(keyStore).toByteArray().use { decryptedPassword ->

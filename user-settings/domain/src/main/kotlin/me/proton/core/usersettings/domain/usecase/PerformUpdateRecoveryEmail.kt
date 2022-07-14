@@ -27,12 +27,15 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.user.domain.extension.nameNotNull
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 class PerformUpdateRecoveryEmail @Inject constructor(
     private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     private val userSettingsRepository: UserSettingsRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
@@ -41,14 +44,14 @@ class PerformUpdateRecoveryEmail @Inject constructor(
     suspend operator fun invoke(
         sessionUserId: SessionUserId,
         newRecoveryEmail: String,
-        username: String,
         password: EncryptedString,
         secondFactorCode: String = ""
     ): UserSettings {
-        val loginInfo = authRepository.getLoginInfo(
-            username = username,
-            clientSecret = clientSecret
-        )
+        val user = userRepository.getUser(sessionUserId)
+        val username = user.nameNotNull()
+
+        val loginInfo = authRepository.getLoginInfo(username, clientSecret)
+
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
                 username = username,

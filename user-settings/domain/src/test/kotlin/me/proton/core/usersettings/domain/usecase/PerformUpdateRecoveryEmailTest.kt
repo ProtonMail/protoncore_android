@@ -29,6 +29,8 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -41,7 +43,8 @@ import kotlin.test.assertNotNull
 class PerformUpdateRecoveryEmailTest {
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
-    private val repository = mockk<UserSettingsRepository>(relaxed = true)
+    private val userRepository = mockk<UserRepository>(relaxed = true)
+    private val userSettingsRepository = mockk<UserSettingsRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     // endregion
@@ -62,6 +65,12 @@ class PerformUpdateRecoveryEmailTest {
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
     private val testSalt = "test-salt"
+
+    private val testUser = mockk<User> {
+        every { userId } returns testUserId
+        every { name } returns testUsername
+        every { email } returns null
+    }
 
     private val testUserSettingsResponse = UserSettings(
         userId = testUserId,
@@ -89,19 +98,21 @@ class PerformUpdateRecoveryEmailTest {
 
     @Before
     fun beforeEveryTest() {
+        coEvery { userRepository.getUser(any()) } returns testUser
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
         useCase = PerformUpdateRecoveryEmail(
             authRepository,
-            repository,
+            userRepository,
+            userSettingsRepository,
             srpCrypto,
             keyStoreCrypto,
             testClientSecret
         )
 
         coEvery {
-            repository.updateRecoveryEmail(
+            userSettingsRepository.updateRecoveryEmail(
                 testUserId,
                 any(),
                 any(),
@@ -138,12 +149,11 @@ class PerformUpdateRecoveryEmailTest {
         val result = useCase.invoke(
             sessionUserId = testUserId,
             newRecoveryEmail = "",
-            username = testUsername,
             password = keyStoreCrypto.encrypt(testPassword),
             secondFactorCode = testSecondFactor
         )
         coVerify(exactly = 1) {
-            repository.updateRecoveryEmail(
+            userSettingsRepository.updateRecoveryEmail(
                 sessionUserId = testUserId,
                 email = "",
                 srpProofs = testSrpProofs,
@@ -180,12 +190,11 @@ class PerformUpdateRecoveryEmailTest {
         val result = useCase.invoke(
             sessionUserId = testUserId,
             newRecoveryEmail = "",
-            username = testUsername,
             password = testPassword,
             secondFactorCode = testSecondFactor
         )
         coVerify(exactly = 1) {
-            repository.updateRecoveryEmail(
+            userSettingsRepository.updateRecoveryEmail(
                 sessionUserId = testUserId,
                 email = "",
                 srpProofs = testSrpProofs,

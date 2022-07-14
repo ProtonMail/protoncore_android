@@ -124,6 +124,8 @@ interface UserAddressRepository {
 
     /**
      * Create new [UserAddress] with [displayName] and [domain], remotely.
+     *
+     * Note: BE will infer the username itself for the address (where "username@domain").
      */
     suspend fun createAddress(
         sessionUserId: SessionUserId,
