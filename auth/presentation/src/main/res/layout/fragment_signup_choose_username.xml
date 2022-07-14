@@ -89,13 +89,15 @@
                 app:challengeFrame="username"
                 app:label="@string/auth_signup_username" />
 
+            <!-- Workaround: descendantFocusability="blocksDescendants" -->
+            <!-- See: https://issuetracker.google.com/issues/209938896 -->
             <me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
                 android:id="@+id/domainInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_large"
+                android:descendantFocusability="blocksDescendants"
                 android:inputType="none"
-                android:focusable="false"
                 android:visibility="gone"
                 app:label="@string/auth_signup_domain" />
 
