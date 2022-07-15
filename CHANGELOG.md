@@ -11,6 +11,99 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [8.5.0] - 2022-07-15
+
+### Features
+
+- crypto:
+  - Add ArmoredKey type to crypto
+- gopenpgp:
+  - Update to gopenpgp v2.4.8 and go-srp v0.0.5
+- key:
+  - Add getArmored with header to KeyHolderCrypto.
+- push:
+  - Added Push modules, to fetch and persist current PushEntities.
+
+    New DB migration: `PushDatabase.MIGRATION_0` for PushEntity.
+    New event listener: `PushEventListener`, to keep PushEntities in sync.
+    New FetchPushes[Remote|Worker] and DeletePush[Remote|Worker], for Repository offline action.
+    Use `PushRepository` to get and observe `Push` objects.
+
+### Bug Fixes
+
+- account-manager-presentation:
+  - Support different text sizes in account_view.xml.
+  - Support different text sizes in account_primary_view.xml.
+- auth:
+  - Added scrolling to Add Account screen.
+- auth-presentation:
+  - Fixed Domains dropdown focus issue.
+- crypto-android:
+  - Added retryOnce mechanism for Android KeyStore Key initialization.
+- event-manager:
+  - Filtered out ApiException HTTP 401 from CoreLogger error tag.
+- human-verification:
+  - Fixed HV3 Dialog Lifecycle and Main thread issues.
+  - Potential crash during HV (blank "reason phrase").
+- network:
+  - Fix invalidating alt. backend after the failure.
+
+    activeAltBackend == backend condition was incorrect to detect
+    failure of the alt. backend for scenarios involving concurrent
+    calls. Logic responsible for reacting to backend failures is
+    now called explicitly after original API attempt.
+  - Execute DoH services in parallel.
+  - Force respecting ApiClient.timeoutSeconds for calls taking longer in retrofit.
+
+    We noticed that sometimes retrofit can take longer to fail e.g. with
+
+    "SocketTimeoutException: SSL handshake timed out". If timeout is not respected alt. routing
+    calls will not have enough time to finish in a predefined window.
+- presentation:
+  - Add content description to the three dots button in account_view.xml.
+  - Fix "disabled" buttons in dark mode.
+
+    Color of disabled buttons is darker in dark mode and lighter in light
+    mode.
+  - Use "accent" color for outlined buttons.
+
+    Toggle buttons use regular color because they are filled when toggled.
+  - Stop overriding navigationBarColor and statusBarColor in Transparent themes.
+
+    This was overriding the initial fix for navigation bar theming, when
+    in fact there is no need for that. The same values that are used in
+    ProtonTheme should be used in the Transparent themes as well.
+  - Fix navigation bar theming.
+
+    There is an issue for API levels below 27 where handling of light/dark
+    navigation bar cannot be handled. In these cases we need to use the
+    default black navigation bar.
+- report:
+  - Adds OS indicator in `Client` for bug reports.
+
+    We use this field to label the subject of the tickets and CS relies on being able to spot Android tickets straight away.
+- user-settings:
+  - Fixed Username/DisplayName fallbacks (setup key/address, change password/recovery email).
+
+### Internationalization
+
+- Upgrade translations from crowdin (bc25dd06).
+- Upgrade translations from crowdin (8fb65c0b).
+- Upgrade translations from crowdin (690ded5a).
+
+### Reverted Changes
+
+- auth, plan, user-settings:
+  - Prevent potential issues, when keyboard input is directed to a fragment which is not visible.
+
+    This reverts commit 95892ccdca5fb009e95e5095ea6411d2535c9b34.
+    This commit is breaking some assumptions of SignUp/HV flows in some specific circumstances.
+
+### Theming
+
+- presentation:
+  - Changed TextInputLayout hint colors (end icon, helper text).
+
 ## [8.4.0] - 2022-06-24
 
 ### Features
