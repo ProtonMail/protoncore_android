@@ -88,7 +88,7 @@ internal fun FragmentManager.showUsernameChooser(
     val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType)
     inTransaction {
         setCustomAnimations(0, 0)
-        replace(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)
+        add(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)
         addToBackStack(TAG_USERNAME_CHOOSER)
     }
     chooserUsernameFragment
@@ -100,7 +100,7 @@ internal fun FragmentManager.showPasswordChooser(
     val chooserPasswordFragment = ChoosePasswordFragment()
     inTransaction {
         setCustomAnimations(0, 0)
-        replace(containerId, chooserPasswordFragment, TAG_PASSWORD_CHOOSER)
+        add(containerId, chooserPasswordFragment, TAG_PASSWORD_CHOOSER)
         addToBackStack(TAG_PASSWORD_CHOOSER)
     }
     chooserPasswordFragment
@@ -113,7 +113,7 @@ internal fun FragmentManager.showExternalAccountEnterCode(
     val enterCodeFragment = ExternalValidationTokenCodeFragment(destination)
     inTransaction {
         setCustomAnimations(0, 0)
-        replace(containerId, enterCodeFragment, TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
+        add(containerId, enterCodeFragment, TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
         addToBackStack(TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
     }
     enterCodeFragment
@@ -125,7 +125,7 @@ internal fun FragmentManager.showRecoveryMethodChooser(
     val recoveryMethodFragment = RecoveryMethodFragment()
     inTransaction {
         setCustomAnimations(0, 0)
-        replace(containerId, recoveryMethodFragment, TAG_RECOVERY_CHOOSER)
+        add(containerId, recoveryMethodFragment, TAG_RECOVERY_CHOOSER)
         addToBackStack(TAG_RECOVERY_CHOOSER)
     }
     recoveryMethodFragment

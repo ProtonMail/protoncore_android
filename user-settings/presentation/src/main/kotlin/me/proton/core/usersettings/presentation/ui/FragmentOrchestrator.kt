@@ -33,7 +33,7 @@ fun FragmentManager.showRecoveryEmail(
         val updateRecoveryEmailFragment = UpdateRecoveryEmailFragment(input)
         inTransaction {
             setCustomAnimations(0, 0)
-            replace(containerId, updateRecoveryEmailFragment, TAG_RECOVERY_EMAIL)
+            add(containerId, updateRecoveryEmailFragment, TAG_RECOVERY_EMAIL)
             addToBackStack(TAG_RECOVERY_EMAIL)
         }
     }
@@ -47,7 +47,7 @@ fun FragmentManager.showUpdatePassword(
         val updatePasswordFragment = PasswordManagementFragment(input)
         inTransaction {
             setCustomAnimations(0, 0)
-            replace(containerId, updatePasswordFragment, TAG_UPDATE_PASSWORD)
+            add(containerId, updatePasswordFragment, TAG_UPDATE_PASSWORD)
             addToBackStack(TAG_UPDATE_PASSWORD)
         }
     }

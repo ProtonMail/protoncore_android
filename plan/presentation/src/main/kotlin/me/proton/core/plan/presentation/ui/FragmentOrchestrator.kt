@@ -32,7 +32,7 @@ fun FragmentManager.showPlansSignup(
     val plansFragment = SignupPlansFragment(planInput)
     inTransaction {
         setCustomAnimations(0, 0)
-        replace(containerId, plansFragment, TAG_PLANS)
+        add(containerId, plansFragment, TAG_PLANS)
         addToBackStack(null)
     }
     plansFragment
@@ -55,7 +55,7 @@ fun FragmentManager.showPlansForUpgrade(
     val plansFragment = UpgradePlansFragment(planInput)
     inTransaction {
         setCustomAnimations(0, 0)
-        replace(containerId, plansFragment, TAG_PLANS_UPGRADE)
+        add(containerId, plansFragment, TAG_PLANS_UPGRADE)
         addToBackStack(null)
     }
     plansFragment
