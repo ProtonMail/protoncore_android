@@ -18,6 +18,8 @@
 
 package me.proton.core.compose.activity
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -41,10 +43,15 @@ fun rememberOpenDocumentLauncher(
 @Composable
 fun rememberOpenMultipleDocumentsLauncher(
     mimeTypes: Array<String> = arrayOf("*/*"),
+    modifyIntent: ((Intent) -> Unit)? = null,
     onFilesPicked: (List<Uri>) -> Unit,
 ) = rememberLauncherWithInput(
     input = mimeTypes,
-    contracts = ActivityResultContracts.OpenMultipleDocuments(),
+    contracts = object : ActivityResultContracts.OpenMultipleDocuments() {
+        override fun createIntent(context: Context, input: Array<String>) = super.createIntent(context, input).apply {
+            modifyIntent?.invoke(this)
+        }
+    },
     onResult = onFilesPicked
 )
 
