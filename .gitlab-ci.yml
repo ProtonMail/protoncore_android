@@ -391,7 +391,6 @@ publish-libs:
     - ./gradlew notifyNewRelease
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/ # stable release with notification
-    - if: $CI_COMMIT_BRANCH == 'main' # main-snapshot release without notification
 
 tag-libs-release:
   extends: .gradle-job
@@ -418,7 +417,6 @@ publish-gradle-plugins:
     - ./gradlew -p plugins publishToSonatype closeAndReleaseSonatypeStagingRepository
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/gradle-plugins\/.*/ # stable release with notification
-    - if: $CI_COMMIT_BRANCH == 'main' # main-snapshot release without notification
 
 tag-gradle-plugins-release:
   extends: .gradle-job
