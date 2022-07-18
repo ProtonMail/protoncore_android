@@ -67,3 +67,21 @@ fun rememberOpenDocumentTreeLauncher(
     contracts = ActivityResultContracts.OpenDocumentTree(),
     onResult = onDirectoryPicked
 )
+
+/**
+ * Register a request to prompt the user to create a document.
+ */
+@Composable
+fun rememberCreateDocumentLauncher(
+    mimeType: String,
+    onDocumentCreated: (Uri?) -> Unit,
+    modifyIntent: ((Intent) -> Unit)? = null,
+) = rememberLauncherWithInput(
+    input = mimeType,
+    contracts = object : ActivityResultContracts.CreateDocument(mimeType) {
+        override fun createIntent(context: Context, input: String) = super.createIntent(context, input).apply {
+            modifyIntent?.invoke(this)
+        }
+    },
+    onResult = onDocumentCreated
+)

@@ -22,9 +22,10 @@ public final class me/proton/core/compose/activity/Capture : java/lang/Enum {
 }
 
 public final class me/proton/core/compose/activity/DocumentLauncherKt {
+	public static final fun rememberCreateDocumentLauncher (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
 	public static final fun rememberOpenDocumentLauncher ([Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
 	public static final fun rememberOpenDocumentTreeLauncher (Landroid/net/Uri;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
-	public static final fun rememberOpenMultipleDocumentsLauncher ([Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
+	public static final fun rememberOpenMultipleDocumentsLauncher ([Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lme/proton/core/compose/activity/LauncherWithInput;
 }
 
 public final class me/proton/core/compose/activity/FilePickerLauncher {
