@@ -69,6 +69,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
+    private val product: Product,
+    private val accountType: AccountType,
     private val accountManager: AccountManager,
     private val userManager: UserManager,
     private val humanVerificationManager: HumanVerificationManager,
@@ -159,9 +161,9 @@ class AccountViewModel @Inject constructor(
     fun getPrimaryUserId() = accountManager.getPrimaryUserId()
 
     fun signIn(username: String? = null) =
-        authOrchestrator.startLoginWorkflow(AccountType.Internal, username = username)
+        authOrchestrator.startLoginWorkflow(accountType, username = username)
 
-    fun add() = authOrchestrator.startAddAccountWorkflow(AccountType.Internal, Product.Mail)
+    fun add() = authOrchestrator.startAddAccountWorkflow(accountType, product)
 
     fun onAccountClicked(userId: UserId) {
         viewModelScope.launch {
