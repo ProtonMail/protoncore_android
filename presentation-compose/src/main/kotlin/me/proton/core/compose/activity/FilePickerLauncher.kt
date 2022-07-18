@@ -28,6 +28,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
+@Deprecated(
+    message = "This composable is deprecated",
+    replaceWith = ReplaceWith(
+        """
+            rememberOpenMultipleDocumentsLauncher(
+                mimeTypes: Array<String> = arrayOf("*/*"),
+                modifyIntent: ((Intent) -> Unit)? = null,
+                onFilesPicked: (List<Uri>) -> Unit
+            )
+        """
+    )
+)
 @Composable
 fun rememberFilePickerLauncher(
     onFilesPicked: (List<Uri>) -> Unit,
