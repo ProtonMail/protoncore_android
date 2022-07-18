@@ -27,7 +27,7 @@ import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 
 class StartUpdateRecoveryEmail : ActivityResultContract<SettingsInput, UpdateRecoveryEmailResult?>() {
-    override fun createIntent(context: Context, input: SettingsInput?): Intent =
+    override fun createIntent(context: Context, input: SettingsInput): Intent =
         Intent(context, UpdateRecoveryEmailActivity::class.java).apply {
             putExtra(UpdateRecoveryEmailActivity.ARG_INPUT, input)
         }
@@ -39,7 +39,7 @@ class StartUpdateRecoveryEmail : ActivityResultContract<SettingsInput, UpdateRec
 }
 
 class StartPasswordManagement : ActivityResultContract<SettingsInput, PasswordManagementResult?>() {
-    override fun createIntent(context: Context, input: SettingsInput?): Intent =
+    override fun createIntent(context: Context, input: SettingsInput): Intent =
         Intent(context, PasswordManagementActivity::class.java).apply {
             putExtra(PasswordManagementActivity.ARG_INPUT, input)
         }

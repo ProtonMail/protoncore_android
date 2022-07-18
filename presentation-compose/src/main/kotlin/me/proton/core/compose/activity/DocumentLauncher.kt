@@ -30,7 +30,7 @@ import androidx.compose.runtime.Composable
 @Composable
 fun rememberOpenDocumentLauncher(
     mimeTypes: Array<String> = arrayOf("*/*"),
-    onFilePicked: (Uri) -> Unit,
+    onFilePicked: (Uri?) -> Unit,
 ) = rememberLauncherWithInput(
     input = mimeTypes,
     contracts = ActivityResultContracts.OpenDocument(),
@@ -61,7 +61,7 @@ fun rememberOpenMultipleDocumentsLauncher(
 @Composable
 fun rememberOpenDocumentTreeLauncher(
     initialLocation: Uri = Uri.EMPTY,
-    onDirectoryPicked: (Uri) -> Unit,
+    onDirectoryPicked: (Uri?) -> Unit,
 ) = rememberLauncherWithInput(
     input = initialLocation,
     contracts = ActivityResultContracts.OpenDocumentTree(),

@@ -121,7 +121,7 @@ class StartCreateAddress : ActivityResultContract<CreateAddressInput, CreateAddr
 // region signup
 class StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
 
-    override fun createIntent(context: Context, input: SignUpInput?) =
+    override fun createIntent(context: Context, input: SignUpInput) =
         Intent(context, SignupActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(SignupActivity.ARG_INPUT, input)

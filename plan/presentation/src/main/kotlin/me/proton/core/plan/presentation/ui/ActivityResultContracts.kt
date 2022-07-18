@@ -26,7 +26,7 @@ import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.UpgradeResult
 
 class StartPlanChooser : ActivityResultContract<PlanInput, UpgradeResult?>() {
-    override fun createIntent(context: Context, input: PlanInput?): Intent =
+    override fun createIntent(context: Context, input: PlanInput): Intent =
         Intent(context, UpgradeActivity::class.java).apply {
             putExtra(UpgradeActivity.ARG_INPUT, input)
         }
