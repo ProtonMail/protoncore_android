@@ -41,6 +41,7 @@ data class User(
     val plan: Plan = Plan.Free,
     val cards: List<Card> = emptyList(),
     val paypal: String = EMPTY_STRING,
+    val dataSetScenario: String = EMPTY_STRING,
 
     val recoveryEmail: String = ""
 ) {

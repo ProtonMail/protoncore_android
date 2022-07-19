@@ -41,7 +41,8 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         JAIL_UNBAN,
         USER_CREATE,
         PAYMENTS_SEED_PAYMENT_METHOD,
-        PAYMENTS_SEED_SUBSCRIBER
+        PAYMENTS_SEED_SUBSCRIBER,
+        DRIVE_POPULATE_USER_WITH_DATA
     }
 
     private val client = OkHttpClient
@@ -133,6 +134,18 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         )
 
         quarkRequest(internalApi.endpoints[InternalApiEndpoint.USER_CREATE]!!, args)
+        return user
+    }
+
+    fun populateUserWithData(
+        user: User,
+    ): User {
+        val args = arrayOf(
+            if (user.name.isNotEmpty()) "-u=${user.name}" else "",
+            if (user.password.isNotEmpty()) "-p=${user.password}" else "",
+            if (user.dataSetScenario.isNotEmpty()) "-S=${user.dataSetScenario}" else "",
+        )
+        quarkRequest(internalApi.endpoints[InternalApiEndpoint.DRIVE_POPULATE_USER_WITH_DATA]!!, args)
         return user
     }
 }
