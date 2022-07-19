@@ -40,6 +40,7 @@ dependencies {
 
         // Kotlin
         `serialization-json`,
+        `javax-inject`,
     )
 
     testImplementation(project(Module.kotlinTest))

@@ -19,6 +19,7 @@
 package me.proton.core.featureflag.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
@@ -30,12 +31,12 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
     private val repository: FeatureFlagRepository
 ) : FeatureFlagManager {
 
-    override fun observe(userId: UserId?, featureId: FeatureId): Flow<FeatureFlag?> =
-        repository.observe(userId, featureId)
+    override fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
+        repository.observe(userId, featureId, refresh).distinctUntilChanged()
 
     override suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean): FeatureFlag? =
         repository.get(userId, featureId, refresh)
 
-    override suspend fun prefetch(userId: UserId?, featureIds: List<FeatureId>): Unit =
+    override fun prefetch(userId: UserId?, featureIds: List<FeatureId>): Unit =
         repository.prefetch(userId, featureIds)
 }

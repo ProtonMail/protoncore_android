@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
- * This file is part of Proton AG and ProtonCore.
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.entity
+package me.proton.core.featureflag.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
+import javax.inject.Inject
 
-public data class FeatureFlag(
-    val featureId: FeatureId,
-    val value: Boolean,
-    val userId: UserId? = null,
-    val isGlobal: Boolean = true,
-    val defaultValue: Boolean = false,
-)
+public class FetchFeatureIdsRemote @Inject constructor(
+    private val repository: FeatureFlagRepository,
+) {
+    public suspend operator fun invoke(userId: UserId?, featureIds: List<FeatureId>) {
+        repository.get(userId = userId, featureIds = featureIds, refresh = true)
+    }
+}

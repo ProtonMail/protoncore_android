@@ -23,8 +23,12 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.featureflag.data.FeatureFlagManagerImpl
+import me.proton.core.featureflag.data.local.FeatureFlagLocalDataSourceImpl
+import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.repository.FeatureFlagRepositoryImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
+import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
+import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import javax.inject.Singleton
 
@@ -34,9 +38,17 @@ internal abstract class FeatureFlagModule {
 
     @Binds
     @Singleton
-    abstract fun provideRepository(featureFlagRepositoryImpl: FeatureFlagRepositoryImpl): FeatureFlagRepository
+    abstract fun bindFeatureFlagLocalDataSource(impl: FeatureFlagLocalDataSourceImpl): FeatureFlagLocalDataSource
 
     @Binds
     @Singleton
-    abstract fun provideManager(featureFlagManagerImpl: FeatureFlagManagerImpl): FeatureFlagManager
+    abstract fun bindFeatureFlagRemoteDataSource(impl: FeatureFlagRemoteDataSourceImpl): FeatureFlagRemoteDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindRepository(featureFlagRepositoryImpl: FeatureFlagRepositoryImpl): FeatureFlagRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindManager(featureFlagManagerImpl: FeatureFlagManagerImpl): FeatureFlagManager
 }

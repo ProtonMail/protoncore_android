@@ -16,37 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.data.api.response
+package me.proton.core.featureflag.data.local
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
+import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.FeatureId
 
-@Serializable
-internal data class FeaturesApiResponse(
-    @SerialName("Code")
-    val resultCode: Int,
-    @SerialName("Features")
-    val features: List<FeatureApiResponse>
+// If FeatureFlag.userId is null -> assume it's for all users / global.
+private val globalUserId = UserId("global")
+internal fun UserId?.orGlobal() = this ?: globalUserId
+internal fun UserId?.withGlobal() = listOfNotNull(this, globalUserId)
+
+internal fun FeatureFlag.toEntity() = FeatureFlagEntity(
+    userId = userId.orGlobal(),
+    featureId = featureId.id,
+    isGlobal = isGlobal,
+    defaultValue = defaultValue,
+    value = value
 )
 
-@Serializable
-internal data class FeatureApiResponse(
-    @SerialName("Code")
-    val featureId: String,
-    @SerialName("Global")
-    val isGlobal: Boolean,
-    @SerialName("DefaultValue")
-    val defaultValue: Boolean,
-    @SerialName("Value")
-    val value: Boolean
-) {
-    internal fun toEntity(userId: UserId?) = FeatureFlagEntity(
-        featureId = featureId,
-        userId = userId,
-        isGlobal = isGlobal,
-        defaultValue = defaultValue,
-        value = value
-    )
-}
+internal fun FeatureFlagEntity.toFeatureFlag() = FeatureFlag(
+    userId = if (userId == globalUserId) null else userId,
+    featureId = FeatureId(featureId),
+    isGlobal = isGlobal,
+    defaultValue = defaultValue,
+    value = value
+)

@@ -160,4 +160,10 @@ object AppDatabaseMigrations {
             PushDatabase.MIGRATION_0.migrate(database)
         }
     }
+
+    val MIGRATION_20_21 = object : Migration(20, 21) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            FeatureFlagDatabase.MIGRATION_2.migrate(database)
+        }
+    }
 }

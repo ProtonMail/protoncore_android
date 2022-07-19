@@ -24,6 +24,10 @@ plugins {
     kotlin("plugin.serialization")
 }
 
+protonDagger {
+    workManagerHiltIntegration = true
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {

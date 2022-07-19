@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,22 +21,18 @@ package me.proton.core.featureflag.data.entity
 import androidx.room.Entity
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.domain.entity.FeatureFlag
-import me.proton.core.featureflag.domain.entity.FeatureId
 
 @Entity(
-    primaryKeys = ["featureId"],
+    primaryKeys = ["userId", "featureId"],
     indices = [
         Index("userId"),
         Index("featureId")
     ]
 )
 public data class FeatureFlagEntity(
-    val userId: UserId?,
+    val userId: UserId,
     val featureId: String,
     val isGlobal: Boolean,
     val defaultValue: Boolean,
     val value: Boolean
-) {
-    internal fun toFeatureFlag() = FeatureFlag(FeatureId(featureId), value)
-}
+)

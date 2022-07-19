@@ -32,6 +32,7 @@ import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -52,7 +53,7 @@ class FeatureFlagManagerImplTest {
     fun observeReturnsValueFromRepository() = runBlockingTest {
         // Given
         val repositoryFeatureFlag = FeatureFlag(FeatureFlagTestData.featureId, true)
-        every { repository.observe(any(), any(), false) } returns flowOf(repositoryFeatureFlag)
+        every { repository.observe(any(), any<FeatureId>(), false) } returns flowOf(repositoryFeatureFlag)
 
         // When
         val actual = manager.observe(UserIdTestData.userId, FeatureFlagTestData.featureId).first()

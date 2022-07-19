@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.network.domain.ApiException
 
 /**
  * Repository to access [FeatureFlag]s which are local or remote
@@ -29,21 +30,46 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 public interface FeatureFlagRepository {
 
     /**
-     * Observe a feature flag's value from the local data source.
-     * @param refresh allows to trigger a background fetch of the value against the remote data source.
+     * Observe a feature flag value from the local source, if exist, or from remote source otherwise.
+     *
+     * @param refresh allows to force a background fetch of the value against the remote source.
+     *
+     * @throws ApiException on remote source error
      */
     public fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): Flow<FeatureFlag?>
 
     /**
-     * Get a feature flag's value from the local data source.
-     * @param refresh allows to trigger a background fetch of the value against the remote data source.
+     * Observe feature flags value from the local source, if exist, or from remote source otherwise.
+     *
+     * @param refresh allows to force a background fetch of the value against the remote source.
+     *
+     * @throws ApiException on remote source error
+     */
+    public fun observe(userId: UserId?, featureIds: List<FeatureId>, refresh: Boolean): Flow<List<FeatureFlag>>
+
+    /**
+     * Get a feature flag value from the local source, if exist, or from remote source otherwise.
+     *
+     * @param refresh allows to force a background fetch of the value against the remote source.
+     *
+     * @throws ApiException on remote source error
      */
     public suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
 
     /**
-     * Fetches the given featureIds from the remote data source and stores them in the local one.
-     * @param featureIds a list of features to be fetched. Passing any id that does not exist in the
-     * remote data source will not have no consequence (said ids will just be ignored).
+     * Get feature flags value from the local source, if exist, or from remote source otherwise.
+     *
+     * @param refresh allows to force a background fetch of the value against the remote source.
+     *
+     * @throws ApiException on remote source error
      */
-    public suspend fun prefetch(userId: UserId?, featureIds: List<FeatureId>)
+    public suspend fun get(userId: UserId?, featureIds: List<FeatureId>, refresh: Boolean): List<FeatureFlag>
+
+    /**
+     * Fetches the given featureIds from the remote source and stores them in the local one, in background.
+     *
+     * @param featureIds a list of features to be fetched. Passing any id that does not exist in the
+     * remote source will not have no consequence (said ids will just be ignored).
+     */
+    public fun prefetch(userId: UserId?, featureIds: List<FeatureId>)
 }

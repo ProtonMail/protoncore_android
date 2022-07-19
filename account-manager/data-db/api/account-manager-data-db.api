@@ -103,6 +103,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_18_19 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_19_20 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_1_2 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_20_21 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_2_3 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
@@ -127,7 +128,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun contactEmailDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailDao;
 	public fun contactEmailLabelDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailLabelDao;
 	public fun eventMetadataDao ()Lme/proton/core/eventmanager/data/db/dao/EventMetadataDao;
-	public fun featureFlagDao ()Lme/proton/core/featureflag/data/db/dao/FeatureFlagDao;
+	public fun featureFlagDao ()Lme/proton/core/featureflag/data/db/FeatureFlagDao;
 	public fun getAutoMigrations (Ljava/util/Map;)Ljava/util/List;
 	public fun getRequiredAutoMigrationSpecs ()Ljava/util/Set;
 	public fun humanVerificationDetailsDao ()Lme/proton/core/humanverification/data/db/HumanVerificationDetailsDao;
@@ -265,19 +266,17 @@ public final class me/proton/core/eventmanager/data/db/dao/EventMetadataDao_Impl
 	public fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/featureflag/data/db/dao/FeatureFlagDao_Impl : me/proton/core/featureflag/data/db/dao/FeatureFlagDao {
+public final class me/proton/core/featureflag/data/db/FeatureFlagDao_Impl : me/proton/core/featureflag/data/db/FeatureFlagDao {
 	public fun <init> (Landroidx/room/RoomDatabase;)V
 	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete ([Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun deleteAll$feature_flag_data_release (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun get$feature_flag_data_release (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll$feature_flag_data_release (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getRequiredConverters ()Ljava/util/List;
 	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertOrIgnore ([Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertOrUpdate ([Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun observeByUserId$feature_flag_data_release (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
-	public fun observeGlobal$feature_flag_data_release (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public fun observe$feature_flag_data_release (Ljava/util/List;Ljava/util/List;)Lkotlinx/coroutines/flow/Flow;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

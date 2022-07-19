@@ -18,8 +18,8 @@
 
 package me.proton.core.featureflag.data.testdata
 
-import me.proton.core.featureflag.data.api.response.FeatureApiResponse
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
+import me.proton.core.featureflag.data.remote.resource.FeatureResource
 import me.proton.core.featureflag.domain.entity.FeatureId
 
 internal object FeatureFlagTestData {
@@ -29,14 +29,14 @@ internal object FeatureFlagTestData {
     val featureId = FeatureId(RAW_FEATURE_ID)
     val featureId1 = FeatureId(RAW_FEATURE_ID_1)
 
-    val enabledFeatureApiResponse = FeatureApiResponse(
+    val enabledFeatureApiResponse = FeatureResource(
         featureId.id,
         isGlobal = false,
         defaultValue = true,
         value = true
     )
 
-    val disabledFeatureApiResponse = FeatureApiResponse(
+    val disabledFeatureApiResponse = FeatureResource(
         featureId1.id,
         isGlobal = false,
         defaultValue = false,

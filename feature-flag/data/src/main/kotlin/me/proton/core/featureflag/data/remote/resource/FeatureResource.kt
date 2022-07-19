@@ -16,14 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.entity
+package me.proton.core.featureflag.data.remote.resource
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.FeatureId
 
-public data class FeatureFlag(
-    val featureId: FeatureId,
-    val value: Boolean,
-    val userId: UserId? = null,
-    val isGlobal: Boolean = true,
-    val defaultValue: Boolean = false,
-)
+@Serializable
+internal data class FeatureResource(
+    @SerialName("Code")
+    val featureId: String,
+    @SerialName("Global")
+    val isGlobal: Boolean,
+    @SerialName("DefaultValue")
+    val defaultValue: Boolean,
+    @SerialName("Value")
+    val value: Boolean
+) {
+    internal fun toFeatureFlag(userId: UserId?) = FeatureFlag(
+        featureId = FeatureId(featureId),
+        userId = if (isGlobal) null else userId,
+        isGlobal = isGlobal,
+        defaultValue = defaultValue,
+        value = value
+    )
+}

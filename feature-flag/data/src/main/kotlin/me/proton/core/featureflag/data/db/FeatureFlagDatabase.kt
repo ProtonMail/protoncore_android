@@ -20,9 +20,9 @@ package me.proton.core.featureflag.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.dropTable
 import me.proton.core.data.room.db.extension.recreateTable
 import me.proton.core.data.room.db.migration.DatabaseMigration
-import me.proton.core.featureflag.data.db.dao.FeatureFlagDao
 
 public interface FeatureFlagDatabase : Database {
     public fun featureFlagDao(): FeatureFlagDao
@@ -68,6 +68,20 @@ public interface FeatureFlagDatabase : Database {
                     },
                     columns = listOf("userId", "featureId", "isGlobal", "defaultValue", "value")
                 )
+            }
+        }
+
+        /**
+         * Recreate FeatureFlagEntity table, discarding previous data.
+         *
+         * Note: UserId is now not null ("global" -> when userId is null).
+         */
+        public val MIGRATION_2: DatabaseMigration = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.dropTable(table = "FeatureFlagEntity")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` (`userId` TEXT NOT NULL, `featureId` TEXT NOT NULL, `isGlobal` INTEGER NOT NULL, `defaultValue` INTEGER NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`userId`, `featureId`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_userId` ON `FeatureFlagEntity` (`userId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_featureId` ON `FeatureFlagEntity` (`featureId`)")
             }
         }
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.data.api
+package me.proton.core.featureflag.data.remote
 
-import me.proton.core.featureflag.data.api.response.FeaturesApiResponse
+import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -28,8 +28,10 @@ internal interface FeaturesApi : BaseRetrofitApi {
     /**
      * @param code can be a single featureId or a comma-separated list of featureIds (eg. "feature1,feature2,[...]")
      */
-    @GET("core/v4/features?Type=boolean")
+    @GET("core/v4/features")
     suspend fun getFeatureFlags(
-        @Query("Code") code: String
-    ): FeaturesApiResponse
+        @Query("Code") code: String,
+        @Query("Type") type: String = "boolean"
+    ): GetFeaturesResponse
+
 }

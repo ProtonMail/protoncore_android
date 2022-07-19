@@ -45,7 +45,12 @@ class FeatureFlagViewModel @Inject constructor(
     private val mutableState = MutableStateFlow<ViewModelResult<FeatureFlag>>(ViewModelResult.Processing)
     val state = mutableState.asStateFlow()
 
-    fun prefetch() = accountManager.getPrimaryUserId().filterNotNull().mapLatest { userId ->
+    fun prefetchGlobal() {
+        val featureIds = ClientFeatureFlags.values().map { it.id }
+        featureFlagManager.prefetch(null, featureIds)
+    }
+
+    fun prefetchForCurrent() = accountManager.getPrimaryUserId().filterNotNull().mapLatest { userId ->
         val featureIds = ClientFeatureFlags.values().map { it.id }
         featureFlagManager.prefetch(userId, featureIds)
     }.launchIn(viewModelScope)

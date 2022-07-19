@@ -16,14 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.entity
+package me.proton.core.featureflag.domain.repository
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.FeatureId
 
-public data class FeatureFlag(
-    val featureId: FeatureId,
-    val value: Boolean,
-    val userId: UserId? = null,
-    val isGlobal: Boolean = true,
-    val defaultValue: Boolean = false,
-)
+public interface FeatureFlagRemoteDataSource {
+    public suspend fun get(userId: UserId?, ids: List<FeatureId>): List<FeatureFlag>
+}

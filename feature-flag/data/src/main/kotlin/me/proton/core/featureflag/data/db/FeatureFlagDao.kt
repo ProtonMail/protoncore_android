@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.data.db.dao
+package me.proton.core.featureflag.data.db
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -28,18 +28,9 @@ import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 @Dao
 public abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
 
-    internal fun observe(userId: UserId?, feature: String): Flow<FeatureFlagEntity?> =
-        if (userId != null) observeByUserId(userId, feature) else observeGlobal(feature)
+    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId IN (:featureIds) AND userId IN (:userIds) ORDER BY isGlobal")
+    internal abstract fun observe(userIds: List<UserId>, featureIds: List<String>): Flow<List<FeatureFlagEntity>>
 
-    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId = :userId")
-    internal abstract fun observeByUserId(userId: UserId, feature: String): Flow<FeatureFlagEntity?>
-
-    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId IS NULL")
-    internal abstract fun observeGlobal(feature: String): Flow<FeatureFlagEntity?>
-
-    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId = :userId")
-    internal abstract suspend fun get(userId: UserId?, feature: String): FeatureFlagEntity?
-
-    @Query("DELETE FROM FeatureFlagEntity WHERE userId = :userId")
-    internal abstract suspend fun deleteAll(userId: UserId)
+    @Query("DELETE FROM FeatureFlagEntity WHERE userId IN (:userIds)")
+    internal abstract suspend fun deleteAll(userIds: List<UserId>)
 }

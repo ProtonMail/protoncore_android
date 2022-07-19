@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_featureflag_data_remote_worker_FetchFeatureIdsWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/featureflag/data/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -7,8 +11,8 @@ public final class me/proton/core/featureflag/data/BuildConfig {
 
 public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Lkotlinx/coroutines/flow/Flow;
-	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;)V
 }
 
 public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factory : dagger/internal/Factory {
@@ -19,18 +23,19 @@ public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factor
 	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
 }
 
+public abstract class me/proton/core/featureflag/data/db/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+}
+
 public abstract interface class me/proton/core/featureflag/data/db/FeatureFlagDatabase : me/proton/core/data/room/db/Database {
 	public static final field Companion Lme/proton/core/featureflag/data/db/FeatureFlagDatabase$Companion;
-	public abstract fun featureFlagDao ()Lme/proton/core/featureflag/data/db/dao/FeatureFlagDao;
+	public abstract fun featureFlagDao ()Lme/proton/core/featureflag/data/db/FeatureFlagDao;
 }
 
 public final class me/proton/core/featureflag/data/db/FeatureFlagDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
-}
-
-public abstract class me/proton/core/featureflag/data/db/dao/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
-	public fun <init> ()V
+	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public final class me/proton/core/featureflag/data/entity/FeatureFlagEntity {
@@ -52,17 +57,66 @@ public final class me/proton/core/featureflag/data/entity/FeatureFlagEntity {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/featureflag/data/local/FeatureFlagLocalDataSourceImpl : me/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource {
+	public fun <init> (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;)V
+	public fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;)Lkotlinx/coroutines/flow/Flow;
+	public fun upsert (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/featureflag/data/local/FeatureFlagLocalDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/local/FeatureFlagLocalDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/local/FeatureFlagLocalDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;)Lme/proton/core/featureflag/data/local/FeatureFlagLocalDataSourceImpl;
+}
+
+public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;
+}
+
+public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory_Impl : me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker;
+	public static fun create (Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/featureflag/domain/usecase/FetchFeatureIdsRemote;)Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker;
+}
+
+public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository {
+	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/List;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
-	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/List;)V
 }
 
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Landroidx/work/WorkManager;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
 }
 
