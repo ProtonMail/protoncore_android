@@ -23,6 +23,11 @@ public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factor
 	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
 }
 
+public final class me/proton/core/featureflag/data/LogTag {
+	public static final field FEATURE_FLAG_NOT_FOUND Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/featureflag/data/LogTag;
+}
+
 public abstract class me/proton/core/featureflag/data/db/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 }
