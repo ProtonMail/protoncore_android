@@ -169,6 +169,8 @@ coroutines:
     active: true
   SleepInsteadOfDelay:
     active: true
+  SuspendFunWithCoroutineScopeReceiver:
+    active: true
   SuspendFunWithFlowReturnType:
     active: true
 
@@ -285,12 +287,23 @@ formatting:
   ArgumentListWrapping:
     active: false
     # autoCorrect: true
+  BlockCommentInitialStarAlignment:
+    active: true
+    autoCorrect: true
+  CommentWrapping:
+    active: true
+    autoCorrect: true
+  FunctionTypeReferenceSpacing:
+    active: true
+    autoCorrect: true
   ChainWrapping:
     active: true
     autoCorrect: true
   CommentSpacing:
     active: true
     autoCorrect: true
+  DiscouragedCommentLocation:
+    active: false
   EnumEntryNameCase:
     active: false
     # autoCorrect: true
@@ -300,6 +313,9 @@ formatting:
     active: true
     autoCorrect: true
     insertFinalNewLine: true
+  FunKeywordSpacing:
+    active: true
+    autoCorrect: true
   ImportOrdering:
     active: false
     # autoCorrect: true
@@ -309,10 +325,17 @@ formatting:
     autoCorrect: true
     indentSize: 4
     continuationIndentSize: 4
+  KdocWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
   # MaxLineLength is already enabled
   MaximumLineLength:
     active: false
     # maxLineLength: 120
+  ModifierListSpacing:
+    active: true
+    autoCorrect: true
   # ModifierOrder is already enabled
   ModifierOrdering:
     active: false
@@ -409,6 +432,21 @@ formatting:
   StringTemplate:
     active: true
     autoCorrect: true
+  TrailingComma:
+    active: true
+    autoCorrect: true
+    allowTrailingComma: false
+    allowTrailingCommaOnCallSite: false
+  TypeArgumentListSpacing:
+    active: true
+    autoCorrect: true
+  UnnecessaryParenthesesBeforeTrailingLambda:
+    active: true
+    autoCorrect: true
+  Wrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
 
 naming:
   active: true
@@ -529,6 +567,8 @@ potential-bugs:
     active: true
   DuplicateCaseInWhenExpression:
     active: true
+  ElseCaseInsteadOfExhaustiveWhen:
+    active: true
   EqualsAlwaysReturnsTrueOrFalse:
     active: true
   EqualsWithHashCodeExist:
@@ -595,6 +635,8 @@ potential-bugs:
     active: true
   NullableToStringCall:
     active: true
+  NullCheckOnMutableProperty:
+    active: false
   RedundantElseInWhen:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -800,6 +842,8 @@ style:
   UnnecessaryApply:
     active: true
   UnnecessaryInheritance:
+    active: true
+  UnnecessaryInnerClass:
     active: true
   UnnecessaryLet:
     active: true
