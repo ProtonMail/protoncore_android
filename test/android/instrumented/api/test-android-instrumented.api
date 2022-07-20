@@ -508,6 +508,7 @@ public final class me/proton/core/test/android/plugins/Quark {
 	public final fun getPlanDevName ()Ljava/lang/String;
 	public final fun getPlanDevText ()Ljava/lang/String;
 	public final fun jailUnban ()Ljava/lang/String;
+	public final fun populateUserWithData (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
 	public final fun seedPaypalPaymentMethod (Lme/proton/core/test/android/plugins/data/User;)V
 	public final fun seedSubscriber (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
 	public static synthetic fun seedSubscriber$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
@@ -550,6 +551,7 @@ public final class me/proton/core/test/android/plugins/Quark$InternalApi$Compani
 }
 
 public final class me/proton/core/test/android/plugins/Quark$InternalApiEndpoint : java/lang/Enum {
+	public static final field DRIVE_POPULATE_USER_WITH_DATA Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static final field JAIL_UNBAN Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static final field PAYMENTS_SEED_PAYMENT_METHOD Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static final field PAYMENTS_SEED_SUBSCRIBER Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
@@ -691,12 +693,13 @@ public final class me/proton/core/test/android/plugins/data/PlanKt {
 public final class me/proton/core/test/android/plugins/data/User {
 	public static final field Companion Lme/proton/core/test/android/plugins/data/User$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
@@ -705,11 +708,12 @@ public final class me/proton/core/test/android/plugins/data/User {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Lme/proton/core/test/android/plugins/data/Plan;
 	public final fun component9 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/User;
-	public static synthetic fun copy$default (Lme/proton/core/test/android/plugins/data/User;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun copy$default (Lme/proton/core/test/android/plugins/data/User;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCards ()Ljava/util/List;
 	public final fun getCountry ()Ljava/lang/String;
+	public final fun getDataSetScenario ()Ljava/lang/String;
 	public final fun getEmail ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPassphrase ()Ljava/lang/String;
