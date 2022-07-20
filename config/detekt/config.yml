@@ -162,6 +162,9 @@ coroutines:
   active: true
   GlobalCoroutineUsage:
     active: true
+  InjectDispatcher:
+    active: true
+    dispatcherNames: ['IO', 'Default', 'Unconfined']
   RedundantSuspendModifier:
     active: true
   SleepInsteadOfDelay:
@@ -409,6 +412,11 @@ formatting:
 
 naming:
   active: true
+  BooleanPropertyNaming:
+    active: true
+    autoCorrect: true
+    allowedPattern: '^(is|are|has|should)'
+    ignoreOverridden: true
   ClassNaming:
     active: true
     excludes: ['**/test/**', '**/**Test/**', '**/gradle/**', '**/buildSrc/**']
@@ -449,9 +457,9 @@ naming:
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
     ignoreOverridden: true
-  InvalidPackageDeclaration:
-    active: false
-    rootPackage: ''
+  LambdaParameterNaming:
+    active: true
+    parameterPattern: '[a-z][A-Za-z0-9]*|_'
   MatchingDeclarationName:
     active: false
     # mustBeFirst: true
@@ -510,6 +518,9 @@ performance:
 
 potential-bugs:
   active: true
+  AvoidReferentialEquality:
+    active: false
+    # forbiddenTypePatterns: ['kotlin.String']
   CastToNullableType:
     active: true
   Deprecation:
@@ -560,7 +571,7 @@ potential-bugs:
   # Example not compliant
   # `fun printHelloWorld() = println("hello world")`
   #
-  # allowExplicitReturnType says that the non compiant example would be compliant when the return type is explicit
+  # allowExplicitReturnType says that the non compliant example would be compliant when the return type is explicit
   ImplicitUnitReturnType:
     active: true
     allowExplicitReturnType: true
@@ -580,6 +591,8 @@ potential-bugs:
   MissingWhenCase:
     active: true
     allowElseExpression: false
+  MissingPackageDeclaration:
+    active: true
   NullableToStringCall:
     active: true
   RedundantElseInWhen:
