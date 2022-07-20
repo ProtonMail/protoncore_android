@@ -16,6 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.io.BufferedWriter
+import java.io.File
+import java.net.URL
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import format.GitlabQualityReport
 import format.SarifQualityReport
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
@@ -39,33 +44,37 @@ import org.gradle.kotlin.dsl.register
 import studio.forface.easygradle.dsl.`detekt version`
 import studio.forface.easygradle.dsl.`detekt-cli`
 import studio.forface.easygradle.dsl.`detekt-formatting`
-import java.io.BufferedWriter
-import java.io.File
-import java.net.URL
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
+@Suppress("unused")
 abstract class ProtonDetektPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val configuration = target.extensions.create<ProtonDetektConfiguration>("protonDetekt")
-        target.setupDetekt(configuration)
+        target.afterEvaluate { setupDetekt(configuration) }
     }
 }
 
 abstract class ProtonDetektConfiguration {
+
     abstract val _configFilePath: Property<File>
     var configFilePath: File
         get() = _configFilePath.get()
         set(value) = _configFilePath.set(value)
+
     abstract val _reportDir: Property<File>
     var reportDir: File
         get() = _reportDir.get()
         set(value) = _reportDir.set(value)
+
     abstract val _mergedReportName: Property<String>
     var mergedReportName: String
         get() = _mergedReportName.get()
         set(value) = _mergedReportName.set(value)
+
+    abstract val _threshold: Property<Int>
+    var threshold: Int?
+        get() = _threshold.orNull
+        set(value) = _threshold.set(value)
 }
 
 /**
@@ -77,63 +86,59 @@ abstract class ProtonDetektConfiguration {
  * * register [MergeDetektReports] Task, in order to generate an unique json report for all the
  *   module
  *
- * @param filter filter [Project.subprojects] to attach Detekt to
- *
- *
  * @author Davide Farella
  */
-private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter: (Project) -> Boolean = { true }) {
+private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
     `detekt version` = "1.19.0" // Released: May 15, 2021
 
-    val reportsDirPath = "config/detekt/reports"
-    val configFilePath = "config/detekt/config.yml"
+    val defaultConfigFilePath = "config/detekt/config.yml"
 
-    configuration._reportDir.convention(File(rootDir, reportsDirPath))
-    configuration._configFilePath.convention(File(rootDir, configFilePath))
+    configuration._reportDir.convention(File(rootDir, "config/detekt/reports"))
+    configuration._configFilePath.convention(File(rootDir, defaultConfigFilePath))
     configuration._mergedReportName.convention("mergedReport.json")
+    configuration._threshold.convention(null)
 
     val configFile = configuration.configFilePath
 
     if (rootProject.name != "Proton Core") {
-        downloadDetektConfig(configFilePath, configFile)
+        downloadDetektConfig(githubConfigFilePath = defaultConfigFilePath, to = configFile)
     }
+
+    applyCustomThresholdIfAvailable(thresholdProperty = configuration._threshold, configFile = configFile)
 
     if (!configFile.exists()) {
         println("Detekt configuration file not found!")
         return
     }
 
-    subprojects.filter(filter).forEach { sub ->
+    subprojects.forEach { sub ->
         sub.repositories.mavenCentral()
         sub.apply(plugin = "io.gitlab.arturbosch.detekt")
     }
 
-    afterEvaluate {
+    if (!configuration.reportDir.exists()) {
+        configuration.reportDir.mkdirs()
+    }
 
-        if (!configuration.reportDir.exists()) {
-            configuration.reportDir.mkdirs()
+    // Configure sub-projects
+    subprojects.forEach { sub ->
+
+        sub.extensions.configure<DetektExtension> {
+            failFast = false
+            config = files(configuration.configFilePath)
+            input = files(sub.projectDir.path + "/src/")
+
+            reports {
+                xml.enabled = false
+                html.enabled = false
+                txt.enabled = false
+                sarif.enabled = true
+            }
         }
-
-        // Configure sub-projects
-        subprojects.filter(filter).forEach { sub ->
-
-            sub.extensions.configure<DetektExtension> {
-                failFast = false
-                config = files(configuration.configFilePath)
-                input = files(sub.projectDir.path + "/src/")
-
-                reports {
-                    xml.enabled = false
-                    html.enabled = false
-                    txt.enabled = false
-                    sarif.enabled = true
-                }
-            }
-            sub.dependencies {
-                add("detekt", `detekt-cli`)
-                add("detektPlugins", `detekt-formatting`)
-            }
+        sub.dependencies {
+            add("detekt", `detekt-cli`)
+            add("detektPlugins", `detekt-formatting`)
         }
     }
 
@@ -266,9 +271,8 @@ internal open class MergeDetektReports : DefaultTask() {
     }
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 @Suppress("TooGenericExceptionCaught", "SameParameterValue")
-private fun downloadDetektConfig(path: String, to: File) {
+private fun downloadDetektConfig(githubConfigFilePath: String, to: File) {
 
     val dir = to.parentFile
     if (dir.exists().not() && dir.mkdirs().not()) {
@@ -280,7 +284,7 @@ private fun downloadDetektConfig(path: String, to: File) {
         return
     }
 
-    val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$path"
+    val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$githubConfigFilePath"
     println("Fetching Detekt rule-set from $url")
     try {
         val content = URL(url).openStream().bufferedReader().readText()
@@ -297,6 +301,19 @@ private fun downloadDetektConfig(path: String, to: File) {
     }
 }
 
+private fun applyCustomThresholdIfAvailable(thresholdProperty: Property<Int>, configFile: File) {
+    if (thresholdProperty.isPresent) {
+        val threshold = thresholdProperty.get()
+        println("Applying custom threshold of $threshold")
+        val newContent = configFile.readText()
+            .replace(Regex(" {2}maxIssues: \\d+"), "  maxIssues: $threshold")
+        configFile.writeText(newContent)
+
+    } else {
+        println("No custom threshold found, using default threshold.")
+    }
+}
+
 private val File.isLessThanADayOld: Boolean
     get() = exists() && useLines { lines -> lines.firstOrNull() }?.let { line ->
         try {
@@ -305,4 +322,3 @@ private val File.isLessThanADayOld: Boolean
             null
         }
     }?.isAfter(LocalDateTime.now().minusDays(1)) == true
-
