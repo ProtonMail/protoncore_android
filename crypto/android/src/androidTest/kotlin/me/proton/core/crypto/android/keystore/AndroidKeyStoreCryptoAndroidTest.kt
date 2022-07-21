@@ -197,9 +197,9 @@ internal class AndroidKeyStoreCryptoAndroidTest {
     }
 
     @Test
-    fun whenEncryptDecrypt2MBByteArray() {
+    fun whenEncryptDecrypt100KByteArray() {
         // GIVEN
-        Random.nextBytes(2 * 1000 * 1000).use { data ->
+        Random.nextBytes(100 * 1000).use { data ->
             // WHEN
             val encrypted = data.encrypt(crypto)
             val decrypted = encrypted.decrypt(crypto)
