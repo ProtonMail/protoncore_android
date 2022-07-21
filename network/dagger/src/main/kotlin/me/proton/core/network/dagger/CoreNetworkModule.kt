@@ -32,9 +32,12 @@ import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.cookie.DiskCookieStorage
 import me.proton.core.network.data.cookie.MemoryCookieStorage
+import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.session.SessionProvider
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Module
@@ -64,4 +67,9 @@ internal class CoreNetworkModule {
     @Singleton
     fun provideApiProvider(apiManagerFactory: ApiManagerFactory, sessionProvider: SessionProvider): ApiProvider =
         ApiProvider(apiManagerFactory, sessionProvider)
+
+    @Provides
+    @Singleton
+    @SharedOkHttpClient
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
 }

@@ -49,3 +49,11 @@ public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideNetwor
 	public static fun provideNetworkPrefs (Lme/proton/core/network/dagger/CoreNetworkModule;Landroid/content/Context;)Lme/proton/core/network/domain/NetworkPrefs;
 }
 
+public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideOkHttpClientFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideOkHttpClientFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lokhttp3/OkHttpClient;
+	public static fun provideOkHttpClient (Lme/proton/core/network/dagger/CoreNetworkModule;)Lokhttp3/OkHttpClient;
+}
+

@@ -36,6 +36,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
+import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
@@ -92,7 +93,8 @@ class NetworkModule {
         @BaseApiUrl baseApiUrl: String,
         @DohProviderUrls dohProviderUrls: Array<String>,
         @CertificatePins certificatePins: Array<String>,
-        @AlternativeApiPins alternativeApiPins: List<String>
+        @AlternativeApiPins alternativeApiPins: List<String>,
+        @SharedOkHttpClient okHttpClient: OkHttpClient
     ): ApiManagerFactory {
         return ApiManagerFactory(
             baseApiUrl,
@@ -119,7 +121,8 @@ class NetworkModule {
             extraHeaderProvider = extraHeaderProvider,
             clientVersionValidator = clientVersionValidator,
             dohAlternativesListener = dohAlternativesListener,
-            dohProviderUrls = dohProviderUrls
+            dohProviderUrls = dohProviderUrls,
+            okHttpClient = okHttpClient
         )
     }
 }
@@ -166,9 +169,6 @@ class NetworkCallbacksModule {
             context.pgpCrypto.updateTime(epochSeconds)
         }
     }
-
-    @Provides
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
 }
 
 @Module

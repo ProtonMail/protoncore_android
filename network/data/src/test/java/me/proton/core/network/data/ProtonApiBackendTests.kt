@@ -144,7 +144,8 @@ internal class ProtonApiBackendTests {
             scope,
             cache = { null },
             clientVersionValidator = clientVersionValidator,
-            dohAlternativesListener = null
+            dohAlternativesListener = null,
+            okHttpClient = OkHttpClient()
         )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable

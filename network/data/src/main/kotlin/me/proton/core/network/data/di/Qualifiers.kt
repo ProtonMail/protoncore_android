@@ -16,28 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.network.data.di
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import javax.inject.Qualifier
 
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    implementation(
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-        project(Module.networkData),
-        project(Module.networkDagger),
-        `room-ktx`,
-    )
-
-    api(
-        project(Module.humanVerificationDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation),
-    )
-}
+/** Qualifier for a shared (singleton) instance of [okhttp3.OkHttpClient].
+ * Whenever you need a custom [okhttp3.OkHttpClient], inject this instance,
+ * and use [okhttp3.OkHttpClient.newBuilder] to adjust to your own needs.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SharedOkHttpClient

@@ -67,6 +67,7 @@ import kotlin.reflect.KClass
  * @param cookieStore The storage for cookies.
  * @param cache [Cache] shared across all user, session, api or call.
  */
+@Suppress("LongParameterList")
 class ApiManagerFactory(
     baseUrl: String,
     private val apiClient: ApiClient,
@@ -87,7 +88,8 @@ class ApiManagerFactory(
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
     private val clientVersionValidator: ClientVersionValidator,
     private val dohAlternativesListener: DohAlternativesListener?,
-    private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS
+    private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS,
+    private val okHttpClient: OkHttpClient
 ) {
     private val baseUri = URI(baseUrl)
 
@@ -110,7 +112,7 @@ class ApiManagerFactory(
         require(clientVersionValidator.validate(apiClient.appVersionHeader)) {
             "Invalid app version code: ${apiClient.appVersionHeader}."
         }
-        OkHttpClient.Builder()
+        okHttpClient.newBuilder()
             .cache(cache())
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)

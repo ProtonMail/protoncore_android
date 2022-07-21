@@ -39,6 +39,7 @@ import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import okhttp3.OkHttpClient
@@ -56,7 +57,7 @@ public object CoreHumanVerificationModule {
 
     @Provides
     public fun provideNetworkRequestOverrider(
-        okHttpClient: OkHttpClient,
+        @SharedOkHttpClient okHttpClient: OkHttpClient,
     ): NetworkRequestOverrider =
         NetworkRequestOverriderImpl(okHttpClient)
 
