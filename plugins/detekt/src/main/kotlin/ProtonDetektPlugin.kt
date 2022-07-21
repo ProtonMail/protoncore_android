@@ -56,25 +56,31 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
 
 abstract class ProtonDetektConfiguration {
 
-    abstract val _configFilePath: Property<File>
+    abstract val configFileProperty: Property<File>
+    var configFile: File
+        get() = configFileProperty.get()
+        set(value) = configFileProperty.set(value)
+
     var configFilePath: File
-        get() = _configFilePath.get()
-        set(value) = _configFilePath.set(value)
+        @Deprecated("Use configFile instead", ReplaceWith("configFile"))
+        get() = configFileProperty.get()
+        @Deprecated("Use configFile instead", ReplaceWith("configFile = value"))
+        set(value) = configFileProperty.set(value)
 
-    abstract val _reportDir: Property<File>
+    abstract val reportDirProperty: Property<File>
     var reportDir: File
-        get() = _reportDir.get()
-        set(value) = _reportDir.set(value)
+        get() = reportDirProperty.get()
+        set(value) = reportDirProperty.set(value)
 
-    abstract val _mergedReportName: Property<String>
+    abstract val mergedReportNameProperty: Property<String>
     var mergedReportName: String
-        get() = _mergedReportName.get()
-        set(value) = _mergedReportName.set(value)
+        get() = mergedReportNameProperty.get()
+        set(value) = mergedReportNameProperty.set(value)
 
-    abstract val _threshold: Property<Int>
+    abstract val thresholdProperty: Property<Int>
     var threshold: Int?
-        get() = _threshold.orNull
-        set(value) = _threshold.set(value)
+        get() = thresholdProperty.orNull
+        set(value) = thresholdProperty.set(value)
 }
 
 /**
@@ -85,8 +91,6 @@ abstract class ProtonDetektConfiguration {
  * * add accessor Detekt dependencies
  * * register [MergeDetektReports] Task, in order to generate an unique json report for all the
  *   module
- *
- * @author Davide Farella
  */
 private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
@@ -94,18 +98,18 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
     val defaultConfigFilePath = "config/detekt/config.yml"
 
-    configuration._reportDir.convention(File(rootDir, "config/detekt/reports"))
-    configuration._configFilePath.convention(File(rootDir, defaultConfigFilePath))
-    configuration._mergedReportName.convention("mergedReport.json")
-    configuration._threshold.convention(null)
+    configuration.reportDirProperty.convention(File(rootDir, "config/detekt/reports"))
+    configuration.configFileProperty.convention(File(rootDir, defaultConfigFilePath))
+    configuration.mergedReportNameProperty.convention("mergedReport.json")
+    configuration.thresholdProperty.convention(null)
 
-    val configFile = configuration.configFilePath
+    val configFile = configuration.configFile
 
     if (rootProject.name != "Proton Core") {
         downloadDetektConfig(githubConfigFilePath = defaultConfigFilePath, to = configFile)
     }
 
-    applyCustomThresholdIfAvailable(thresholdProperty = configuration._threshold, configFile = configFile)
+    applyCustomThresholdIfAvailable(thresholdProperty = configuration.thresholdProperty, configFile = configFile)
 
     if (!configFile.exists()) {
         println("Detekt configuration file not found!")

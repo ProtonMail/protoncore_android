@@ -16,8 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.implementation
-
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
