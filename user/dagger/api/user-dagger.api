@@ -1,0 +1,78 @@
+public class hilt_aggregated_deps/_me_proton_core_user_dagger_CoreUserManagerModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_user_dagger_UserManagerBindsModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/user/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule {
+	public static final field INSTANCE Lme/proton/core/user/dagger/CoreUserManagerModule;
+	public final fun provideDomainRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/user/domain/repository/DomainRepository;
+	public final fun provideUserAddressKeyPassphraseProvider (Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/data/UserAddressKeySecretProvider;
+	public final fun provideUserAddressManager (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/domain/UserAddressManager;
+	public final fun provideUserAddressRepository (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/domain/repository/UserAddressRepository;
+	public final fun provideUserManager (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/domain/UserManager;
+	public final fun provideUserRepositoryImpl (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;)Lme/proton/core/user/domain/repository/UserRepository;
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule_ProvideDomainRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/user/dagger/CoreUserManagerModule_ProvideDomainRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/domain/repository/DomainRepository;
+	public static fun provideDomainRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/user/domain/repository/DomainRepository;
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule_ProvideUserAddressKeyPassphraseProviderFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/dagger/CoreUserManagerModule_ProvideUserAddressKeyPassphraseProviderFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/data/UserAddressKeySecretProvider;
+	public static fun provideUserAddressKeyPassphraseProvider (Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/data/UserAddressKeySecretProvider;
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule_ProvideUserAddressManagerFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/dagger/CoreUserManagerModule_ProvideUserAddressManagerFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/domain/UserAddressManager;
+	public static fun provideUserAddressManager (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/domain/UserAddressManager;
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule_ProvideUserAddressRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/dagger/CoreUserManagerModule_ProvideUserAddressRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/domain/repository/UserAddressRepository;
+	public static fun provideUserAddressRepository (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/domain/repository/UserAddressRepository;
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule_ProvideUserManagerFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/dagger/CoreUserManagerModule_ProvideUserManagerFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/domain/UserManager;
+	public static fun provideUserManager (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/domain/UserManager;
+}
+
+public final class me/proton/core/user/dagger/CoreUserManagerModule_ProvideUserRepositoryImplFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/dagger/CoreUserManagerModule_ProvideUserRepositoryImplFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/domain/repository/UserRepository;
+	public static fun provideUserRepositoryImpl (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;)Lme/proton/core/user/domain/repository/UserRepository;
+}
+
+public abstract class me/proton/core/user/dagger/UserManagerBindsModule {
+	public fun <init> ()V
+	public abstract fun providePassphraseRepository (Lme/proton/core/user/domain/repository/UserRepository;)Lme/proton/core/user/domain/repository/PassphraseRepository;
+}
+

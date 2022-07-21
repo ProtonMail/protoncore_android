@@ -1,0 +1,33 @@
+public class hilt_aggregated_deps/_me_proton_core_crypto_dagger_CoreCryptoModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/crypto/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/crypto/dagger/CoreCryptoModule {
+	public static final field INSTANCE Lme/proton/core/crypto/dagger/CoreCryptoModule;
+	public final fun provideCryptoContext (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/crypto/common/context/CryptoContext;
+	public final fun provideKeyStoreCrypto ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
+}
+
+public final class me/proton/core/crypto/dagger/CoreCryptoModule_ProvideCryptoContextFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/crypto/dagger/CoreCryptoModule_ProvideCryptoContextFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/crypto/common/context/CryptoContext;
+	public static fun provideCryptoContext (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/crypto/common/context/CryptoContext;
+}
+
+public final class me/proton/core/crypto/dagger/CoreCryptoModule_ProvideKeyStoreCryptoFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/crypto/dagger/CoreCryptoModule_ProvideKeyStoreCryptoFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
+	public static fun provideKeyStoreCrypto ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
+}
+

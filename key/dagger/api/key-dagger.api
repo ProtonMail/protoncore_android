@@ -1,0 +1,42 @@
+public class hilt_aggregated_deps/_me_proton_core_key_dagger_CoreKeyModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/key/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/key/dagger/CoreKeyModule {
+	public static final field INSTANCE Lme/proton/core/key/dagger/CoreKeyModule;
+	public final fun provideKeySaltRepository (Lme/proton/core/key/data/db/KeySaltDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/key/domain/repository/KeySaltRepository;
+	public final fun providePrivateKeyRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/key/domain/repository/PrivateKeyRepository;
+	public final fun providePublicAddressKeyRepository (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/key/domain/repository/PublicAddressRepository;
+}
+
+public final class me/proton/core/key/dagger/CoreKeyModule_ProvideKeySaltRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/key/dagger/CoreKeyModule_ProvideKeySaltRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/key/domain/repository/KeySaltRepository;
+	public static fun provideKeySaltRepository (Lme/proton/core/key/data/db/KeySaltDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/key/domain/repository/KeySaltRepository;
+}
+
+public final class me/proton/core/key/dagger/CoreKeyModule_ProvidePrivateKeyRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/key/dagger/CoreKeyModule_ProvidePrivateKeyRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/key/domain/repository/PrivateKeyRepository;
+	public static fun providePrivateKeyRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/key/domain/repository/PrivateKeyRepository;
+}
+
+public final class me/proton/core/key/dagger/CoreKeyModule_ProvidePublicAddressKeyRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/key/dagger/CoreKeyModule_ProvidePublicAddressKeyRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/key/domain/repository/PublicAddressRepository;
+	public static fun providePublicAddressKeyRepository (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/key/domain/repository/PublicAddressRepository;
+}
+

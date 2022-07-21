@@ -26,8 +26,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import me.proton.core.account.data.db.AccountDatabase
-import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.AccountMigratorImpl
@@ -37,14 +35,10 @@ import me.proton.core.accountmanager.data.SessionListenerImpl
 import me.proton.core.accountmanager.data.SessionManagerImpl
 import me.proton.core.accountmanager.data.SessionProviderImpl
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.crypto.android.context.AndroidCryptoContext
-import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -61,27 +55,6 @@ object AccountManagerModule {
     @AccountStateHandlerCoroutineScope
     fun provideAccountStateHandlerCoroutineScope(): CoroutineScope =
         CoroutineScope(Dispatchers.Default + SupervisorJob())
-
-    @Provides
-    @Singleton
-    fun provideKeyStoreCrypto(): KeyStoreCrypto =
-        AndroidKeyStoreCrypto.default
-
-    @Provides
-    @Singleton
-    fun provideCryptoContext(
-        keyStoreCrypto: KeyStoreCrypto
-    ): CryptoContext =
-        AndroidCryptoContext(keyStoreCrypto)
-
-    @Provides
-    @Singleton
-    fun provideAccountRepository(
-        product: Product,
-        db: AccountDatabase,
-        keyStoreCrypto: KeyStoreCrypto
-    ): AccountRepository =
-        AccountRepositoryImpl(product, db, keyStoreCrypto)
 
     @Provides
     @Singleton
@@ -104,6 +77,7 @@ object AccountManagerModule {
 
     @Provides
     @Singleton
+    @Suppress("LongParameterList")
     fun provideAccountStateHandler(
         @AccountStateHandlerCoroutineScope
         scope: CoroutineScope,

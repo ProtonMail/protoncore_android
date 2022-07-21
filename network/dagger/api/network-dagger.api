@@ -9,6 +9,14 @@ public final class me/proton/core/network/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/network/dagger/NetworkModule_ProvideApiProviderFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/NetworkModule_ProvideApiProviderFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/ApiProvider;
+	public static fun provideApiProvider (Lme/proton/core/network/dagger/NetworkModule;Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/network/data/ApiProvider;
+}
+
 public final class me/proton/core/network/dagger/NetworkModule_ProvideClientVersionValidatorFactory : dagger/internal/Factory {
 	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;)V
 	public static fun create (Lme/proton/core/network/dagger/NetworkModule;)Lme/proton/core/network/dagger/NetworkModule_ProvideClientVersionValidatorFactory;
@@ -23,5 +31,21 @@ public final class me/proton/core/network/dagger/NetworkModule_ProvideCookieJarF
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/network/data/ProtonCookieStore;
 	public static fun provideCookieJar (Lme/proton/core/network/dagger/NetworkModule;Landroid/content/Context;)Lme/proton/core/network/data/ProtonCookieStore;
+}
+
+public final class me/proton/core/network/dagger/NetworkModule_ProvideNetworkManagerFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/NetworkModule_ProvideNetworkManagerFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/NetworkManager;
+	public static fun provideNetworkManager (Lme/proton/core/network/dagger/NetworkModule;Landroid/content/Context;)Lme/proton/core/network/domain/NetworkManager;
+}
+
+public final class me/proton/core/network/dagger/NetworkModule_ProvideNetworkPrefsFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/NetworkModule_ProvideNetworkPrefsFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/NetworkPrefs;
+	public static fun provideNetworkPrefs (Lme/proton/core/network/dagger/NetworkModule;Landroid/content/Context;)Lme/proton/core/network/domain/NetworkPrefs;
 }
 

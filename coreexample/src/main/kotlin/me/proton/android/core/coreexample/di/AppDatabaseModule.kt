@@ -94,7 +94,6 @@ abstract class AppDatabaseBindsModule {
     @Binds
     abstract fun provideFeatureFlagDatabase(appDatabase: AppDatabase): FeatureFlagDatabase
 
-
     @Binds
     abstract fun provideChallengeDatabase(appDatabase: AppDatabase): ChallengeDatabase
 

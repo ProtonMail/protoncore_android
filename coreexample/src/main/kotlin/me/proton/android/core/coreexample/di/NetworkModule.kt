@@ -32,12 +32,7 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.humanverification.data.utils.NetworkRequestOverriderImpl
-import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.network.data.ApiManagerFactory
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.NetworkManager
-import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
@@ -64,15 +59,6 @@ import me.proton.core.network.data.di.Constants as NetWorkDataConstants
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-    @Provides
-    @Singleton
-    fun provideNetworkManager(@ApplicationContext context: Context): NetworkManager =
-        NetworkManager(context)
-
-    @Provides
-    @Singleton
-    fun provideNetworkPrefs(@ApplicationContext context: Context) =
-        NetworkPrefs(context)
 
     @Provides
     @Singleton
@@ -84,10 +70,6 @@ class NetworkModule {
     fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
         BuildConfig.PROXY_TOKEN?.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
     }
-
-    @Provides
-    fun provideNetworkRequestOverrider(): NetworkRequestOverrider =
-        NetworkRequestOverriderImpl(OkHttpClient())
 
     @Provides
     @Singleton
@@ -140,11 +122,6 @@ class NetworkModule {
             dohProviderUrls = dohProviderUrls
         )
     }
-
-    @Provides
-    @Singleton
-    fun provideApiProvider(apiManagerFactory: ApiManagerFactory, sessionProvider: SessionProvider): ApiProvider =
-        ApiProvider(apiManagerFactory, sessionProvider)
 }
 
 @Module
@@ -189,6 +166,9 @@ class NetworkCallbacksModule {
             context.pgpCrypto.updateTime(epochSeconds)
         }
     }
+
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
 }
 
 @Module

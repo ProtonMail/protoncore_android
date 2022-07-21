@@ -1,0 +1,24 @@
+public class hilt_aggregated_deps/_me_proton_core_account_dagger_CoreAccountModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/account/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/account/dagger/CoreAccountModule {
+	public static final field INSTANCE Lme/proton/core/account/dagger/CoreAccountModule;
+	public final fun provideAccountRepository (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/data/db/AccountDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/account/domain/repository/AccountRepository;
+}
+
+public final class me/proton/core/account/dagger/CoreAccountModule_ProvideAccountRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/account/dagger/CoreAccountModule_ProvideAccountRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/account/domain/repository/AccountRepository;
+	public static fun provideAccountRepository (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/data/db/AccountDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/account/domain/repository/AccountRepository;
+}
+

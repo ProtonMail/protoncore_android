@@ -24,11 +24,17 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.network.data.ApiManagerFactory
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.NetworkManager
+import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.cookie.DiskCookieStorage
 import me.proton.core.network.data.cookie.MemoryCookieStorage
+import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.client.ClientVersionValidator
+import me.proton.core.network.domain.session.SessionProvider
 import javax.inject.Singleton
 
 @Module
@@ -43,4 +49,19 @@ internal class NetworkModule {
 
     @Provides
     fun provideClientVersionValidator(): ClientVersionValidator = ClientVersionValidatorImpl()
+
+    @Provides
+    @Singleton
+    fun provideNetworkManager(@ApplicationContext context: Context): NetworkManager =
+        NetworkManager(context)
+
+    @Provides
+    @Singleton
+    fun provideNetworkPrefs(@ApplicationContext context: Context) =
+        NetworkPrefs(context)
+
+    @Provides
+    @Singleton
+    fun provideApiProvider(apiManagerFactory: ApiManagerFactory, sessionProvider: SessionProvider): ApiProvider =
+        ApiProvider(apiManagerFactory, sessionProvider)
 }

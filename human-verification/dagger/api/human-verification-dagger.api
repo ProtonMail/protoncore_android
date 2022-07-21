@@ -1,0 +1,87 @@
+public class hilt_aggregated_deps/_me_proton_core_humanverification_dagger_CoreHumanVerificationBindModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_humanverification_dagger_CoreHumanVerificationModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/humanverification/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/humanverification/dagger/CoreHumanVerificationBindModule {
+	public abstract fun bindHumanVerificationManager (Lme/proton/core/humanverification/data/HumanVerificationManagerImpl;)Lme/proton/core/humanverification/domain/HumanVerificationManager;
+	public abstract fun bindHumanVerificationWorkflowHandler (Lme/proton/core/humanverification/data/HumanVerificationManagerImpl;)Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule {
+	public static final field INSTANCE Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule;
+	public final fun provideHumanVerificationListener (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)Lme/proton/core/network/domain/humanverification/HumanVerificationListener;
+	public final fun provideHumanVerificationManagerImpl (Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)Lme/proton/core/humanverification/data/HumanVerificationManagerImpl;
+	public final fun provideHumanVerificationOrchestrator (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
+	public final fun provideHumanVerificationProvider (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;
+	public final fun provideHumanVerificationRepository (Lme/proton/core/humanverification/data/db/HumanVerificationDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;
+	public final fun provideNetworkRequestOverrider (Lokhttp3/OkHttpClient;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
+	public final fun provideUserVerificationRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationListenerFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationListenerFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/humanverification/HumanVerificationListener;
+	public static fun provideHumanVerificationListener (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)Lme/proton/core/network/domain/humanverification/HumanVerificationListener;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationManagerImplFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationManagerImplFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/data/HumanVerificationManagerImpl;
+	public static fun provideHumanVerificationManagerImpl (Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)Lme/proton/core/humanverification/data/HumanVerificationManagerImpl;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationOrchestratorFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationOrchestratorFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
+	public static fun provideHumanVerificationOrchestrator (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationProviderFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationProviderFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;
+	public static fun provideHumanVerificationProvider (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideHumanVerificationRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;
+	public static fun provideHumanVerificationRepository (Lme/proton/core/humanverification/data/db/HumanVerificationDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideNetworkRequestOverriderFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideNetworkRequestOverriderFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
+	public static fun provideNetworkRequestOverrider (Lokhttp3/OkHttpClient;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
+}
+
+public final class me/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideUserVerificationRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/dagger/CoreHumanVerificationModule_ProvideUserVerificationRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;
+	public static fun provideUserVerificationRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;
+}
+
