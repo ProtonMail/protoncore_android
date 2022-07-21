@@ -34,8 +34,8 @@ import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ProtonCookieStore
-import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
+import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
@@ -52,6 +52,8 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Cache
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Singleton
@@ -60,12 +62,6 @@ import me.proton.core.network.data.di.Constants as NetWorkDataConstants
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-
-    @Provides
-    @Singleton
-    fun provideClientIdProvider(@BaseApiUrl baseApiUrl: String, cookieStore: ProtonCookieStore): ClientIdProvider =
-        ClientIdProviderImpl(baseApiUrl, cookieStore)
-
     @Provides
     @Singleton
     fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
@@ -74,6 +70,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    @Suppress("LongParameterList")
     fun provideApiFactory(
         @ApplicationContext context: Context,
         apiClient: ApiClient,
@@ -90,14 +87,14 @@ class NetworkModule {
         extraHeaderProvider: ExtraHeaderProvider,
         clientVersionValidator: ClientVersionValidator,
         dohAlternativesListener: DohAlternativesListener? = null,
-        @BaseApiUrl baseApiUrl: String,
+        @BaseProtonApiUrl apiUrl: HttpUrl,
         @DohProviderUrls dohProviderUrls: Array<String>,
         @CertificatePins certificatePins: Array<String>,
         @AlternativeApiPins alternativeApiPins: List<String>,
         @SharedOkHttpClient okHttpClient: OkHttpClient
     ): ApiManagerFactory {
         return ApiManagerFactory(
-            baseApiUrl,
+            apiUrl,
             apiClient,
             clientIdProvider,
             serverTimeListener,
@@ -130,9 +127,9 @@ class NetworkModule {
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkConstantsModule {
-    @BaseApiUrl
     @Provides
-    fun provideBaseApiUrl(): String = Constants.BASE_URL
+    @BaseProtonApiUrl
+    fun provideProtonApiUrl(): HttpUrl = Constants.BASE_URL.toHttpUrl()
 
     @DohProviderUrls
     @Provides

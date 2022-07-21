@@ -54,9 +54,9 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.Cache
+import okhttp3.HttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
@@ -69,7 +69,7 @@ import kotlin.reflect.KClass
  */
 @Suppress("LongParameterList")
 class ApiManagerFactory(
-    baseUrl: String,
+    private val baseUrl: HttpUrl,
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
     private val serverTimeListener: ServerTimeListener,
@@ -91,14 +91,9 @@ class ApiManagerFactory(
     private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS,
     private val okHttpClient: OkHttpClient
 ) {
-    private val baseUri = URI(baseUrl)
 
     @OptIn(ObsoleteCoroutinesApi::class)
     private val mainScope = scope + newSingleThreadContext("core.network.main")
-
-    init {
-        requireNotNull(baseUri.host)
-    }
 
     internal val jsonConverter = ProtonCoreConfig
         .defaultJsonStringFormat
@@ -128,7 +123,7 @@ class ApiManagerFactory(
     }
 
     private val protonDohService by lazy {
-        val url = baseUri.resolve("/dns-query/").toString()
+        val url = requireNotNull(baseUrl.resolve("/dns-query/")?.toString())
         DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, url, apiClient, networkManager)
     }
 
@@ -177,10 +172,10 @@ class ApiManagerFactory(
         alternativeApiPins: List<String> = this@ApiManagerFactory.alternativeApiPins
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
-            initPinning(builder, baseUri.host, certificatePins)
+            initPinning(builder, baseUrl.host, certificatePins)
         }
         val primaryBackend = ProtonApiBackend(
-            baseUri.toString(),
+            baseUrl.toString(),
             apiClient,
             clientIdProvider,
             serverTimeListener,
@@ -203,7 +198,7 @@ class ApiManagerFactory(
         }
 
         val dohProvider = DohProvider(
-            baseUri.toString(),
+            baseUrl.toString(),
             apiClient,
             dohServices,
             protonDohService,

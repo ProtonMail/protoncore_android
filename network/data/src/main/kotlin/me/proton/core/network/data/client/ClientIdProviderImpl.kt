@@ -26,15 +26,15 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.session.SessionId
 import okhttp3.Cookie
-import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl
 
 class ClientIdProviderImpl constructor(
-    private val baseUrl: String,
+    private val baseUrl: HttpUrl,
     private val cookieStore: ProtonCookieStore
 ) : ClientIdProvider {
 
     override suspend fun getClientId(sessionId: SessionId?): ClientId? {
-        val cookieSessionId = cookieStore.get(baseUrl.toHttpUrl()).cookieSessionId()
+        val cookieSessionId = cookieStore.get(baseUrl).cookieSessionId()
         // When DoH is working, the Session-Id cookie might not be related to the current baseUrl
         val fallbackSessionId = suspend { cookieStore.all().cookieSessionId() } // lazy evaluation
         return ClientId.newClientId(sessionId, cookieSessionId ?: fallbackSessionId())

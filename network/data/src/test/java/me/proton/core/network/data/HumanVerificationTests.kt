@@ -59,6 +59,7 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.equalsNoCase
 import okhttp3.Cookie
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -160,7 +161,7 @@ internal class HumanVerificationTests {
 
         apiManagerFactory =
             ApiManagerFactory(
-                "https://example.com/",
+                "https://example.com/".toHttpUrl(),
                 client,
                 clientIdProvider,
                 serverTimeListener,

@@ -17,6 +17,14 @@ public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideApiPro
 	public static fun provideApiProvider (Lme/proton/core/network/dagger/CoreNetworkModule;Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/network/data/ApiProvider;
 }
 
+public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideClientIdProviderFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideClientIdProviderFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/client/ClientIdProvider;
+	public static fun provideClientIdProvider (Lme/proton/core/network/dagger/CoreNetworkModule;Lokhttp3/HttpUrl;Lme/proton/core/network/data/ProtonCookieStore;)Lme/proton/core/network/domain/client/ClientIdProvider;
+}
+
 public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideClientVersionValidatorFactory : dagger/internal/Factory {
 	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;)V
 	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideClientVersionValidatorFactory;

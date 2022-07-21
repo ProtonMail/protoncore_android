@@ -29,11 +29,14 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.cookie.DiskCookieStorage
 import me.proton.core.network.data.cookie.MemoryCookieStorage
+import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.session.SessionProvider
 import okhttp3.HttpUrl
@@ -72,4 +75,9 @@ internal class CoreNetworkModule {
     @Singleton
     @SharedOkHttpClient
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
+
+    @Provides
+    @Singleton
+    fun provideClientIdProvider(@BaseProtonApiUrl apiUrl: HttpUrl, cookieStore: ProtonCookieStore): ClientIdProvider =
+        ClientIdProviderImpl(apiUrl, cookieStore)
 }

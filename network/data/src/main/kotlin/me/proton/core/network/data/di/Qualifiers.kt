@@ -20,6 +20,13 @@ package me.proton.core.network.data.di
 
 import javax.inject.Qualifier
 
+/** Qualifier for the base URL for the Proton API.
+ * E.g. `https://api.proton-host.com`.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BaseProtonApiUrl
+
 /** Qualifier for a shared (singleton) instance of [okhttp3.OkHttpClient].
  * Whenever you need a custom [okhttp3.OkHttpClient], inject this instance,
  * and use [okhttp3.OkHttpClient.newBuilder] to adjust to your own needs.

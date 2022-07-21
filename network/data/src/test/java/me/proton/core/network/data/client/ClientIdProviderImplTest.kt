@@ -26,6 +26,7 @@ import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.test.kotlin.CoroutinesTest
 import okhttp3.Cookie
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -42,7 +43,7 @@ class ClientIdProviderImplTest : CoroutinesTest {
 
     @Before
     fun setup() {
-        provider = ClientIdProviderImpl("https://$domain", cookieJar)
+        provider = ClientIdProviderImpl("https://$domain".toHttpUrl(), cookieJar)
     }
 
     @Test
