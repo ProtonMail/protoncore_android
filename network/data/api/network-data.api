@@ -130,7 +130,13 @@ public final class me/proton/core/network/data/cookie/MemoryCookieStorage : me/p
 	public fun set (Lokhttp3/Cookie;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface annotation class me/proton/core/network/data/di/AlternativeApiPins : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class me/proton/core/network/data/di/BaseProtonApiUrl : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class me/proton/core/network/data/di/CertificatePins : java/lang/annotation/Annotation {
 }
 
 public final class me/proton/core/network/data/di/Constants {
@@ -138,6 +144,9 @@ public final class me/proton/core/network/data/di/Constants {
 	public final fun getALTERNATIVE_API_SPKI_PINS ()Ljava/util/List;
 	public final fun getDEFAULT_SPKI_PINS ()[Ljava/lang/String;
 	public final fun getDOH_PROVIDERS_URLS ()[Ljava/lang/String;
+}
+
+public abstract interface annotation class me/proton/core/network/data/di/DohProviderUrls : java/lang/annotation/Annotation {
 }
 
 public abstract interface annotation class me/proton/core/network/data/di/SharedOkHttpClient : java/lang/annotation/Annotation {

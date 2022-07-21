@@ -28,14 +28,14 @@ import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.api.CoreExampleRepository
-import me.proton.android.core.coreexample.di.AlternativeApiPins
-import me.proton.android.core.coreexample.di.CertificatePins
-import me.proton.android.core.coreexample.di.DohProviderUrls
 import me.proton.android.core.coreexample.di.NetworkBindsModule
 import me.proton.android.core.coreexample.di.NetworkCallbacksModule
 import me.proton.android.core.coreexample.di.NetworkConstantsModule
 import me.proton.core.network.dagger.CoreNetworkCryptoModule
+import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.data.di.CertificatePins
+import me.proton.core.network.data.di.DohProviderUrls
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohProvider

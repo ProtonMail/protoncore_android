@@ -20,6 +20,18 @@ package me.proton.core.network.data.di
 
 import javax.inject.Qualifier
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AlternativeApiPins
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CertificatePins
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class DohProviderUrls
+
 /** Qualifier for the base URL for the Proton API.
  * E.g. `https://api.proton-host.com`.
  */
