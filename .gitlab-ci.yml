@@ -166,8 +166,9 @@ unit-tests-and-coverage-report:
     paths:
       - ./build/reports/*
     reports:
-      cobertura:
-        - ./build/reports/cobertura-coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: ./build/reports/cobertura-coverage.xml
 
 start-review:
   image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
