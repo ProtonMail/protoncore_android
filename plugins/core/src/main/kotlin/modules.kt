@@ -113,7 +113,7 @@ public object Module {
     public const val contact: String = ":contact"
     public const val contactDomain: String = "$contact:contact-domain"
     public const val contactData: String = "$contact:contact-data"
-    public const val contactHilt: String = "$contact:contact-hilt"
+    public const val contactDagger: String = "$contact:contact-dagger"
 
     // User
     public const val user: String = ":user"

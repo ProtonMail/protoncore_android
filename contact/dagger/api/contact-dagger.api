@@ -1,15 +1,15 @@
-public class hilt_aggregated_deps/_me_proton_core_contact_hilt_CoreContactsModule {
+public class hilt_aggregated_deps/_me_proton_core_contact_dagger_CoreContactsModule {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/contact/hilt/BuildConfig {
+public final class me/proton/core/contact/dagger/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
 }
 
-public abstract class me/proton/core/contact/hilt/CoreContactsModule {
+public abstract class me/proton/core/contact/dagger/CoreContactsModule {
 	public fun <init> ()V
 	public abstract fun bindContactLocalDataSource (Lme/proton/core/contact/data/local/db/ContactLocalDataSourceImpl;)Lme/proton/core/contact/domain/repository/ContactLocalDataSource;
 	public abstract fun bindContactRemoteDataSource (Lme/proton/core/contact/data/api/ContactRemoteDataSourceImpl;)Lme/proton/core/contact/domain/repository/ContactRemoteDataSource;
