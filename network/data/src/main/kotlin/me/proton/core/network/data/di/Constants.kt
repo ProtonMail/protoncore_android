@@ -23,9 +23,15 @@ object Constants {
      * Certificate pins for Proton API (base64, SHA-256).
      */
     val DEFAULT_SPKI_PINS = arrayOf(
-        "drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=",
-        "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
-        "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw="
+        // api.[protonmail|protonvpn].ch
+        // [verify|verify-api].[protonmail|protonvpn].com
+        "drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=", // Current.
+        "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=", // Hot backup.
+        "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw=", // Cold backup.
+        // proton.me
+        "CT56BhOTmj5ZIPgb/xD5mH8rY3BLo/MlhP7oPyJUEDo=", // Current.
+        "35Dx28/uzN3LeltkCBQ8RHK0tlNSa2kCpCRGNp34Gxc=", // Hot backup
+        "qYIukVc63DEITct8sFT7ebIq5qsWmuscaIKeJx+5J5A=", // Cold backup.
     )
 
     /**
