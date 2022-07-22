@@ -23,8 +23,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import format.GitlabQualityReport
 import format.SarifQualityReport
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
-import kotlinx.serialization.ExperimentalSerializationApi
+import io.gitlab.arturbosch.detekt.Detekt
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -37,10 +36,10 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.withType
 import studio.forface.easygradle.dsl.`detekt version`
 import studio.forface.easygradle.dsl.`detekt-cli`
 import studio.forface.easygradle.dsl.`detekt-formatting`
@@ -66,6 +65,11 @@ abstract class ProtonDetektConfiguration {
         get() = configFileProperty.get()
         @Deprecated("Use configFile instead", ReplaceWith("configFile = value"))
         set(value) = configFileProperty.set(value)
+
+    abstract val customRulesConfigFileProperty: Property<File>
+    var customRulesConfigFile: File
+        get() = customRulesConfigFileProperty.get()
+        set(value) = customRulesConfigFileProperty.set(value)
 
     abstract val reportDirProperty: Property<File>
     var reportDir: File
@@ -98,12 +102,14 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
     val defaultConfigFilePath = "config/detekt/config.yml"
 
-    configuration.reportDirProperty.convention(File(rootDir, "config/detekt/reports"))
     configuration.configFileProperty.convention(File(rootDir, defaultConfigFilePath))
+    configuration.customRulesConfigFileProperty.convention(File(rootDir, "config/detekt/custom-rules.yml"))
     configuration.mergedReportNameProperty.convention("mergedReport.json")
+    configuration.reportDirProperty.convention(File(rootDir, "config/detekt/reports"))
     configuration.thresholdProperty.convention(null)
 
     val configFile = configuration.configFile
+    val customRulesConfigFile = configuration.customRulesConfigFile
 
     if (rootProject.name != "Proton Core") {
         downloadDetektConfig(githubConfigFilePath = defaultConfigFilePath, to = configFile)
@@ -125,21 +131,20 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
         configuration.reportDir.mkdirs()
     }
 
-    // Configure sub-projects
     subprojects.forEach { sub ->
 
-        sub.extensions.configure<DetektExtension> {
-            failFast = false
-            config = files(configuration.configFilePath)
-            input = files(sub.projectDir.path + "/src/")
-
+        sub.tasks.withType<Detekt> {
+            autoCorrect = true
+            if (customRulesConfigFile.exists()) config.from(customRulesConfigFile, configFile)
+            else config.from(configFile)
             reports {
-                xml.enabled = false
-                html.enabled = false
-                txt.enabled = false
-                sarif.enabled = true
+                xml.required.set(false)
+                html.required.set(false)
+                txt.required.set(false)
+                sarif.required.set(true)
             }
         }
+
         sub.dependencies {
             add("detekt", `detekt-cli`)
             add("detektPlugins", `detekt-formatting`)
@@ -173,7 +178,6 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
     @TaskAction
     fun run() = project.generateReport()
 
-    @OptIn(ExperimentalSerializationApi::class)
     private fun Project.generateReport() {
         subprojects.forEach { project ->
             project.generateReport()
