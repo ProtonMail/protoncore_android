@@ -23,7 +23,6 @@ object Constants {
      * Certificate pins for Proton API (base64, SHA-256).
      */
     val DEFAULT_SPKI_PINS = arrayOf(
-        "IEwk65VSaxv3s1/88vF/rM8PauJoIun3rzVCX5mLS3M",
         "drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=",
         "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
         "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw="
