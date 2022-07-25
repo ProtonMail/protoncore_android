@@ -299,10 +299,7 @@ private fun downloadDetektConfig(githubConfigFilePath: String, to: File) {
         // Checking start of the file is enough, if some part is missing we would not be able to decode it
         require(content.startsWith("# Integrity check *")) { "Integrity check not passed" }
 
-        to.bufferedWriter().use { writer ->
-            writer.write("# ${DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now())}\n")
-            writer.write(content)
-        }
+        to.writeText("# ${DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now())}\n$content")
 
     } catch (t: Throwable) {
         println("Cannot download Detekt configuration: ${t.message}")
