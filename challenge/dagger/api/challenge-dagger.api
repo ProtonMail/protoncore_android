@@ -9,25 +9,8 @@ public final class me/proton/core/challenge/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/challenge/dagger/CoreChallengeModule {
-	public static final field INSTANCE Lme/proton/core/challenge/dagger/CoreChallengeModule;
-	public final fun provideChallengeManager (Lme/proton/core/challenge/domain/repository/ChallengeRepository;)Lme/proton/core/challenge/domain/ChallengeManager;
-	public final fun provideChallengeRepository (Lme/proton/core/challenge/data/db/ChallengeDatabase;)Lme/proton/core/challenge/domain/repository/ChallengeRepository;
-}
-
-public final class me/proton/core/challenge/dagger/CoreChallengeModule_ProvideChallengeManagerFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/challenge/dagger/CoreChallengeModule_ProvideChallengeManagerFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/challenge/domain/ChallengeManager;
-	public static fun provideChallengeManager (Lme/proton/core/challenge/domain/repository/ChallengeRepository;)Lme/proton/core/challenge/domain/ChallengeManager;
-}
-
-public final class me/proton/core/challenge/dagger/CoreChallengeModule_ProvideChallengeRepositoryFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/challenge/dagger/CoreChallengeModule_ProvideChallengeRepositoryFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/challenge/domain/repository/ChallengeRepository;
-	public static fun provideChallengeRepository (Lme/proton/core/challenge/data/db/ChallengeDatabase;)Lme/proton/core/challenge/domain/repository/ChallengeRepository;
+public abstract interface class me/proton/core/challenge/dagger/CoreChallengeModule {
+	public abstract fun provideChallengeManager (Lme/proton/core/challenge/data/ChallengeManagerImpl;)Lme/proton/core/challenge/domain/ChallengeManager;
+	public abstract fun provideChallengeRepository (Lme/proton/core/challenge/data/repository/ChallengeRepositoryImpl;)Lme/proton/core/challenge/domain/repository/ChallengeRepository;
 }
 

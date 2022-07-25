@@ -45,8 +45,9 @@ import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
+import javax.inject.Inject
 
-class UserSettingsRepositoryImpl(
+class UserSettingsRepositoryImpl @Inject constructor(
     db: UserSettingsDatabase,
     private val apiProvider: ApiProvider
 ) : UserSettingsRepository {

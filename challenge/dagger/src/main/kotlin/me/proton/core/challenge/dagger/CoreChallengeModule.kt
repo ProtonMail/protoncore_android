@@ -18,6 +18,7 @@
 
 package me.proton.core.challenge.dagger
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,17 +32,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreChallengeModule {
+public interface CoreChallengeModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideChallengeRepository(
-        db: ChallengeDatabase
-    ): ChallengeRepository = ChallengeRepositoryImpl(db)
+    public fun provideChallengeRepository(impl: ChallengeRepositoryImpl): ChallengeRepository
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideChallengeManager(
-        challengeRepository: ChallengeRepository
-    ): ChallengeManager = ChallengeManagerImpl(challengeRepository)
+    public fun provideChallengeManager(impl: ChallengeManagerImpl): ChallengeManager
 }

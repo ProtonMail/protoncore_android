@@ -13,6 +13,7 @@ public final class me/proton/core/crypto/dagger/CoreCryptoModule {
 	public static final field INSTANCE Lme/proton/core/crypto/dagger/CoreCryptoModule;
 	public final fun provideCryptoContext (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/crypto/common/context/CryptoContext;
 	public final fun provideKeyStoreCrypto ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
+	public final fun provideSrpCrypto ()Lme/proton/core/crypto/common/srp/SrpCrypto;
 }
 
 public final class me/proton/core/crypto/dagger/CoreCryptoModule_ProvideCryptoContextFactory : dagger/internal/Factory {
@@ -29,5 +30,13 @@ public final class me/proton/core/crypto/dagger/CoreCryptoModule_ProvideKeyStore
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
 	public static fun provideKeyStoreCrypto ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
+}
+
+public final class me/proton/core/crypto/dagger/CoreCryptoModule_ProvideSrpCryptoFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/crypto/dagger/CoreCryptoModule_ProvideSrpCryptoFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/crypto/common/srp/SrpCrypto;
+	public static fun provideSrpCrypto ()Lme/proton/core/crypto/common/srp/SrpCrypto;
 }
 

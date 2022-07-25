@@ -9,16 +9,7 @@ public final class me/proton/core/plan/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/plan/dagger/CorePlanModule {
-	public static final field INSTANCE Lme/proton/core/plan/dagger/CorePlanModule;
-	public final fun providePlansRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/plan/domain/repository/PlansRepository;
-}
-
-public final class me/proton/core/plan/dagger/CorePlanModule_ProvidePlansRepositoryFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/dagger/CorePlanModule_ProvidePlansRepositoryFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/plan/domain/repository/PlansRepository;
-	public static fun providePlansRepository (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/plan/domain/repository/PlansRepository;
+public abstract interface class me/proton/core/plan/dagger/CorePlanModule {
+	public abstract fun providePlansRepository (Lme/proton/core/plan/data/repository/PlansRepositoryImpl;)Lme/proton/core/plan/domain/repository/PlansRepository;
 }
 

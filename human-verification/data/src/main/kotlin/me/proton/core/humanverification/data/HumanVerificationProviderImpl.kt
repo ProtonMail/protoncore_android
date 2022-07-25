@@ -22,8 +22,9 @@ import me.proton.core.humanverification.domain.repository.HumanVerificationRepos
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import javax.inject.Inject
 
-class HumanVerificationProviderImpl(
+class HumanVerificationProviderImpl @Inject constructor(
     private val humanVerificationRepository: HumanVerificationRepository
 ) : HumanVerificationProvider {
 

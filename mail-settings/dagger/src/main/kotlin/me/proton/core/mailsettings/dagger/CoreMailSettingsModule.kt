@@ -18,27 +18,20 @@
 
 package me.proton.core.mailsettings.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.repository.MailSettingsRepositoryImpl
-import me.proton.core.mailsettings.data.worker.UpdateSettingsWorker
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
-import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreMailSettingsModule {
+public interface CoreMailSettingsModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideMailSettingsRepositoryImpl(
-        db: MailSettingsDatabase,
-        provider: ApiProvider,
-        settingsWorker: UpdateSettingsWorker.Enqueuer,
-    ): MailSettingsRepository = MailSettingsRepositoryImpl(db, provider, settingsWorker)
+    public fun provideMailSettingsRepository(impl: MailSettingsRepositoryImpl): MailSettingsRepository
 
 }

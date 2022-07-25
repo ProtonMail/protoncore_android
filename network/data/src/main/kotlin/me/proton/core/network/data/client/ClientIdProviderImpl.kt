@@ -22,14 +22,16 @@ import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.session.SessionId
 import okhttp3.Cookie
 import okhttp3.HttpUrl
+import javax.inject.Inject
 
-class ClientIdProviderImpl constructor(
-    private val baseUrl: HttpUrl,
+class ClientIdProviderImpl @Inject constructor(
+    @BaseProtonApiUrl private val baseUrl: HttpUrl,
     private val cookieStore: ProtonCookieStore
 ) : ClientIdProvider {
 

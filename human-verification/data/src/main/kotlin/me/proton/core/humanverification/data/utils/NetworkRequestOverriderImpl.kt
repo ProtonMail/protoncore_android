@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.network.data.LogTag
 import me.proton.core.network.data.di.Constants
+import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.data.initSPKIleafPinning
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -30,9 +31,10 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.InputStream
+import javax.inject.Inject
 
-class NetworkRequestOverriderImpl constructor(
-    private val okHttpClient: OkHttpClient,
+class NetworkRequestOverriderImpl @Inject constructor(
+    @SharedOkHttpClient private val okHttpClient: OkHttpClient,
 ) : NetworkRequestOverrider {
 
     private val insecureClient: OkHttpClient by lazy {

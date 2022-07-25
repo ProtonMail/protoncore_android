@@ -191,6 +191,14 @@ public final class me/proton/core/auth/presentation/AuthOrchestratorKt {
 	public static final fun onTwoPassModeResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
 }
 
+public final class me/proton/core/auth/presentation/AuthOrchestrator_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/AuthOrchestrator_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/AuthOrchestrator;
+	public static fun newInstance ()Lme/proton/core/auth/presentation/AuthOrchestrator;
+}
+
 public final class me/proton/core/auth/presentation/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z

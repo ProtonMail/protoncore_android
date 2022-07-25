@@ -9,25 +9,8 @@ public final class me/proton/core/usersettings/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/usersettings/dagger/CoreUserSettingsModule {
-	public static final field INSTANCE Lme/proton/core/usersettings/dagger/CoreUserSettingsModule;
-	public final fun provideOrganizationRepository (Lme/proton/core/usersettings/data/db/OrganizationDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/usersettings/domain/repository/OrganizationRepository;
-	public final fun provideUserSettingsRepository (Lme/proton/core/usersettings/data/db/UserSettingsDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;
-}
-
-public final class me/proton/core/usersettings/dagger/CoreUserSettingsModule_ProvideOrganizationRepositoryFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/dagger/CoreUserSettingsModule_ProvideOrganizationRepositoryFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/usersettings/domain/repository/OrganizationRepository;
-	public static fun provideOrganizationRepository (Lme/proton/core/usersettings/data/db/OrganizationDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/usersettings/domain/repository/OrganizationRepository;
-}
-
-public final class me/proton/core/usersettings/dagger/CoreUserSettingsModule_ProvideUserSettingsRepositoryFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/dagger/CoreUserSettingsModule_ProvideUserSettingsRepositoryFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;
-	public static fun provideUserSettingsRepository (Lme/proton/core/usersettings/data/db/UserSettingsDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;
+public abstract interface class me/proton/core/usersettings/dagger/CoreUserSettingsModule {
+	public abstract fun provideOrganizationRepository (Lme/proton/core/usersettings/data/repository/OrganizationRepositoryImpl;)Lme/proton/core/usersettings/domain/repository/OrganizationRepository;
+	public abstract fun provideUserSettingsRepository (Lme/proton/core/usersettings/data/repository/UserSettingsRepositoryImpl;)Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;
 }
 

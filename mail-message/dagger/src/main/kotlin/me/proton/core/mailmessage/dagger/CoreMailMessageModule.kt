@@ -18,23 +18,19 @@
 
 package me.proton.core.mailmessage.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.mailmessage.data.repository.EmailMessageRepositoryImpl
 import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
-import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreMailMessageModule {
+public interface CoreMailMessageModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideEmailMessageRepositoryImpl(
-        provider: ApiProvider
-    ): EmailMessageRepository = EmailMessageRepositoryImpl(provider)
-
+    public fun provideEmailMessageRepositoryImpl(impl: EmailMessageRepositoryImpl): EmailMessageRepository
 }

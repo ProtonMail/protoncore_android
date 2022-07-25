@@ -29,8 +29,9 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
+import javax.inject.Inject
 
-class HumanVerificationOrchestrator(
+class HumanVerificationOrchestrator @Inject constructor(
     private val humanVerificationVersion: HumanVerificationVersion,
 ) {
 

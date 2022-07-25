@@ -19,6 +19,7 @@
 package me.proton.core.auth.dagger
 
 import android.content.Context
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,11 +28,6 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.usecase.LoginChallengeConfig
-import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
-import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
-import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -39,35 +35,18 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreAuthModule {
-
-    @Provides
+public interface CoreAuthModule {
+    @Binds
     @Singleton
-    public fun provideAuthRepository(
-        apiProvider: ApiProvider,
-        @ApplicationContext context: Context,
-        product: Product
-    ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
+    public fun provideMissingScopeListener(impl: MissingScopeListenerImpl): MissingScopeListener
 
-    @Provides
-    public fun provideAuthOrchestrator(): AuthOrchestrator = AuthOrchestrator()
-
-    @Provides
-    @Singleton
-    public fun provideSrpCrypto(): SrpCrypto = GOpenPGPSrpCrypto()
-
-    @Provides
-    @Singleton
-    public fun provideChallengeConfig(): SignupChallengeConfig = SignupChallengeConfig()
-
-    @Provides
-    @Singleton
-    public fun provideLoginChallengeConfig(): LoginChallengeConfig = LoginChallengeConfig()
-
-    // region missing scopes
-    @Provides
-    @Singleton
-    public fun provideMissingScopeListener(): MissingScopeListener = MissingScopeListenerImpl()
-    // endregion
-
+    public companion object {
+        @Provides
+        @Singleton
+        public fun provideAuthRepository(
+            apiProvider: ApiProvider,
+            @ApplicationContext context: Context,
+            product: Product
+        ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
+    }
 }

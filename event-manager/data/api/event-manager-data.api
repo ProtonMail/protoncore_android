@@ -35,6 +35,14 @@ public final class me/proton/core/eventmanager/data/EventManagerConfigProviderIm
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/eventmanager/data/EventManagerConfigProviderImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/EventManagerConfigProviderImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/eventmanager/data/EventManagerConfigProviderImpl;
+	public static fun newInstance (Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)Lme/proton/core/eventmanager/data/EventManagerConfigProviderImpl;
+}
+
 public abstract interface class me/proton/core/eventmanager/data/EventManagerFactory {
 	public abstract fun create (Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
 }
@@ -373,6 +381,14 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun updateRetry (Lme/proton/core/eventmanager/domain/EventManagerConfig;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;
 }
 
 public class me/proton/core/eventmanager/data/work/EventWorker : androidx/work/CoroutineWorker {

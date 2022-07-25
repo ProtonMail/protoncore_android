@@ -18,7 +18,7 @@
 
 package me.proton.core.eventmanager.dagger
 
-import androidx.work.WorkManager
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,6 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.eventmanager.data.EventManagerConfigProviderImpl
 import me.proton.core.eventmanager.data.EventManagerFactory
 import me.proton.core.eventmanager.data.EventManagerProviderImpl
-import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.eventmanager.data.repository.EventMetadataRepositoryImpl
 import me.proton.core.eventmanager.data.work.EventWorkerManagerImpl
 import me.proton.core.eventmanager.domain.EventListener
@@ -34,42 +33,33 @@ import me.proton.core.eventmanager.domain.EventManagerConfigProvider
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.presentation.app.AppLifecycleProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreEventManagerModule {
+public interface CoreEventManagerModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideEventManagerConfigProvider(
-        eventMetadataRepository: EventMetadataRepository
-    ): EventManagerConfigProvider = EventManagerConfigProviderImpl(eventMetadataRepository)
+    public fun provideEventManagerConfigProvider(impl: EventManagerConfigProviderImpl): EventManagerConfigProvider
 
-    @Provides
+    @Binds
     @Singleton
-    @JvmSuppressWildcards
-    public fun provideEventManagerProvider(
-        eventManagerFactory: EventManagerFactory,
-        eventManagerConfigProvider: EventManagerConfigProvider,
-        eventListeners: Set<EventListener<*, *>>
-    ): EventManagerProvider =
-        EventManagerProviderImpl(eventManagerFactory, eventManagerConfigProvider, eventListeners)
+    public fun provideEventMetadataRepository(impl: EventMetadataRepositoryImpl): EventMetadataRepository
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideEventMetadataRepository(
-        db: EventMetadataDatabase,
-        provider: ApiProvider
-    ): EventMetadataRepository = EventMetadataRepositoryImpl(db, provider)
+    public fun provideEventWorkManager(impl: EventWorkerManagerImpl): EventWorkerManager
 
-    @Provides
-    @Singleton
-    public fun provideEventWorkManager(
-        workManager: WorkManager,
-        appLifecycleProvider: AppLifecycleProvider
-    ): EventWorkerManager = EventWorkerManagerImpl(workManager, appLifecycleProvider)
-
+    public companion object {
+        @Provides
+        @Singleton
+        @JvmSuppressWildcards
+        public fun provideEventManagerProvider(
+            eventManagerFactory: EventManagerFactory,
+            eventManagerConfigProvider: EventManagerConfigProvider,
+            eventListeners: Set<EventListener<*, *>>
+        ): EventManagerProvider =
+            EventManagerProviderImpl(eventManagerFactory, eventManagerConfigProvider, eventListeners)
+    }
 }

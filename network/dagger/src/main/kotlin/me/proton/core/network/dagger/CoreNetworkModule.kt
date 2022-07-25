@@ -19,6 +19,7 @@
 package me.proton.core.network.dagger
 
 import android.content.Context
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.network.data.ApiManagerFactory
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
@@ -133,25 +133,19 @@ public class CoreNetworkModule {
     )
 
     @Provides
-    internal fun provideClientVersionValidator(): ClientVersionValidator = ClientVersionValidatorImpl()
-
-    @Provides
     @Singleton
     internal fun provideNetworkPrefs(@ApplicationContext context: Context) = NetworkPrefs(context)
+}
 
-    @Provides
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CoreNetworkBindsModule {
+    @Binds
     @Singleton
-    internal fun provideApiProvider(
-        apiManagerFactory: ApiManagerFactory,
-        sessionProvider: SessionProvider
-    ): ApiProvider = ApiProvider(apiManagerFactory, sessionProvider)
+    public fun provideClientIdProvider(impl: ClientIdProviderImpl): ClientIdProvider
 
-    @Provides
-    @Singleton
-    internal fun provideClientIdProvider(
-        @BaseProtonApiUrl apiUrl: HttpUrl,
-        cookieStore: ProtonCookieStore
-    ): ClientIdProvider = ClientIdProviderImpl(apiUrl, cookieStore)
+    @Binds
+    public fun provideClientVersionValidator(impl: ClientVersionValidatorImpl): ClientVersionValidator
 }
 
 @Module

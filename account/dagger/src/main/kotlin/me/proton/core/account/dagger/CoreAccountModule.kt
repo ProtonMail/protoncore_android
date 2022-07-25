@@ -18,28 +18,19 @@
 
 package me.proton.core.account.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.domain.entity.Product
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreAccountModule {
+public interface CoreAccountModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideAccountRepository(
-        product: Product,
-        db: AccountDatabase,
-        keyStoreCrypto: KeyStoreCrypto
-    ): AccountRepository =
-        AccountRepositoryImpl(product, db, keyStoreCrypto)
-
+    public fun provideAccountRepository(impl: AccountRepositoryImpl): AccountRepository
 }

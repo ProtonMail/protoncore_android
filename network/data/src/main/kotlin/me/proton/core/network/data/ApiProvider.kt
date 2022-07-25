@@ -27,11 +27,14 @@ import java.lang.ref.Reference
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Provide [ApiManager] instance bound to a specific [SessionId].
  */
-class ApiProvider(
+@Singleton
+class ApiProvider @Inject constructor(
     val apiManagerFactory: ApiManagerFactory,
     val sessionProvider: SessionProvider
 ) {

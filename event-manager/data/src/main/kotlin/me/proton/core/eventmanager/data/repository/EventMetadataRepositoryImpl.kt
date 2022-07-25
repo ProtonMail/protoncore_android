@@ -34,8 +34,9 @@ import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.eventmanager.domain.entity.State
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
+import javax.inject.Inject
 
-open class EventMetadataRepositoryImpl(
+open class EventMetadataRepositoryImpl @Inject constructor(
     db: EventMetadataDatabase,
     private val provider: ApiProvider
 ) : EventMetadataRepository {

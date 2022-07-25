@@ -18,43 +18,31 @@
 
 package me.proton.core.key.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.key.data.db.KeySaltDatabase
-import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.repository.KeySaltRepositoryImpl
 import me.proton.core.key.data.repository.PrivateKeyRepositoryImpl
 import me.proton.core.key.data.repository.PublicAddressRepositoryImpl
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreKeyModule {
+public interface CoreKeyModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideKeySaltRepository(
-        db: KeySaltDatabase,
-        provider: ApiProvider
-    ): KeySaltRepository = KeySaltRepositoryImpl(db, provider)
+    public fun provideKeySaltRepository(impl: KeySaltRepositoryImpl): KeySaltRepository
 
-    @Provides
+    @Binds
     @Singleton
-    public fun providePrivateKeyRepository(
-        provider: ApiProvider
-    ): PrivateKeyRepository = PrivateKeyRepositoryImpl(provider)
+    public fun providePrivateKeyRepository(impl: PrivateKeyRepositoryImpl): PrivateKeyRepository
 
-    @Provides
+    @Binds
     @Singleton
-    public fun providePublicAddressKeyRepository(
-        db: PublicAddressDatabase,
-        provider: ApiProvider
-    ): PublicAddressRepository = PublicAddressRepositoryImpl(db, provider)
-
+    public fun providePublicAddressKeyRepository(impl: PublicAddressRepositoryImpl): PublicAddressRepository
 }

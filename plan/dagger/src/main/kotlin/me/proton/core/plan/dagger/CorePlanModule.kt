@@ -18,22 +18,19 @@
 
 package me.proton.core.plan.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.repository.PlansRepositoryImpl
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CorePlanModule {
+public interface CorePlanModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun providePlansRepository(apiProvider: ApiProvider): PlansRepository =
-        PlansRepositoryImpl(provider = apiProvider)
-
+    public fun providePlansRepository(impl: PlansRepositoryImpl): PlansRepository
 }

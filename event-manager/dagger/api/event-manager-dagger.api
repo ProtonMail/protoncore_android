@@ -9,43 +9,22 @@ public final class me/proton/core/eventmanager/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule {
-	public static final field INSTANCE Lme/proton/core/eventmanager/dagger/CoreEventManagerModule;
-	public final fun provideEventManagerConfigProvider (Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
+public abstract interface class me/proton/core/eventmanager/dagger/CoreEventManagerModule {
+	public static final field Companion Lme/proton/core/eventmanager/dagger/CoreEventManagerModule$Companion;
+	public abstract fun provideEventManagerConfigProvider (Lme/proton/core/eventmanager/data/EventManagerConfigProviderImpl;)Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
+	public abstract fun provideEventMetadataRepository (Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;)Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
+	public abstract fun provideEventWorkManager (Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;)Lme/proton/core/eventmanager/domain/work/EventWorkerManager;
+}
+
+public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule$Companion {
 	public final fun provideEventManagerProvider (Lme/proton/core/eventmanager/data/EventManagerFactory;Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;Ljava/util/Set;)Lme/proton/core/eventmanager/domain/EventManagerProvider;
-	public final fun provideEventMetadataRepository (Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
-	public final fun provideEventWorkManager (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)Lme/proton/core/eventmanager/domain/work/EventWorkerManager;
 }
 
-public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerConfigProviderFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerConfigProviderFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
-	public static fun provideEventManagerConfigProvider (Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
-}
-
-public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerProviderFactory : dagger/internal/Factory {
+public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_Companion_ProvideEventManagerProviderFactory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventManagerProviderFactory;
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/dagger/CoreEventManagerModule_Companion_ProvideEventManagerProviderFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/eventmanager/domain/EventManagerProvider;
 	public static fun provideEventManagerProvider (Lme/proton/core/eventmanager/data/EventManagerFactory;Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;Ljava/util/Set;)Lme/proton/core/eventmanager/domain/EventManagerProvider;
-}
-
-public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventMetadataRepositoryFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventMetadataRepositoryFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
-	public static fun provideEventMetadataRepository (Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
-}
-
-public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventWorkManagerFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/dagger/CoreEventManagerModule_ProvideEventWorkManagerFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/eventmanager/domain/work/EventWorkerManager;
-	public static fun provideEventWorkManager (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)Lme/proton/core/eventmanager/domain/work/EventWorkerManager;
 }
 

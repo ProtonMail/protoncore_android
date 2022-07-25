@@ -48,8 +48,9 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
+import javax.inject.Inject
 
-class AuthOrchestrator {
+class AuthOrchestrator @Inject constructor() {
 
     // region result launchers
     private var addAccountWorkflowLauncher: ActivityResultLauncher<AddAccountInput>? = null

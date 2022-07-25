@@ -46,9 +46,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
-class AccountRepositoryImpl(
+class AccountRepositoryImpl @Inject constructor(
     private val product: Product,
     private val db: AccountDatabase,
     private val keyStoreCrypto: KeyStoreCrypto

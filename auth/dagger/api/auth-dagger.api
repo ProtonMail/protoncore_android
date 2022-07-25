@@ -9,61 +9,20 @@ public final class me/proton/core/auth/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/auth/dagger/CoreAuthModule {
-	public static final field INSTANCE Lme/proton/core/auth/dagger/CoreAuthModule;
-	public final fun provideAuthOrchestrator ()Lme/proton/core/auth/presentation/AuthOrchestrator;
+public abstract interface class me/proton/core/auth/dagger/CoreAuthModule {
+	public static final field Companion Lme/proton/core/auth/dagger/CoreAuthModule$Companion;
+	public abstract fun provideMissingScopeListener (Lme/proton/core/auth/data/MissingScopeListenerImpl;)Lme/proton/core/network/domain/scopes/MissingScopeListener;
+}
+
+public final class me/proton/core/auth/dagger/CoreAuthModule$Companion {
 	public final fun provideAuthRepository (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/domain/repository/AuthRepository;
-	public final fun provideChallengeConfig ()Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;
-	public final fun provideLoginChallengeConfig ()Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;
-	public final fun provideMissingScopeListener ()Lme/proton/core/network/domain/scopes/MissingScopeListener;
-	public final fun provideSrpCrypto ()Lme/proton/core/crypto/common/srp/SrpCrypto;
 }
 
-public final class me/proton/core/auth/dagger/CoreAuthModule_ProvideAuthOrchestratorFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/dagger/CoreAuthModule_ProvideAuthOrchestratorFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/auth/presentation/AuthOrchestrator;
-	public static fun provideAuthOrchestrator ()Lme/proton/core/auth/presentation/AuthOrchestrator;
-}
-
-public final class me/proton/core/auth/dagger/CoreAuthModule_ProvideAuthRepositoryFactory : dagger/internal/Factory {
+public final class me/proton/core/auth/dagger/CoreAuthModule_Companion_ProvideAuthRepositoryFactory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/dagger/CoreAuthModule_ProvideAuthRepositoryFactory;
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/dagger/CoreAuthModule_Companion_ProvideAuthRepositoryFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/domain/repository/AuthRepository;
 	public static fun provideAuthRepository (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/domain/repository/AuthRepository;
-}
-
-public final class me/proton/core/auth/dagger/CoreAuthModule_ProvideChallengeConfigFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/dagger/CoreAuthModule_ProvideChallengeConfigFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;
-	public static fun provideChallengeConfig ()Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;
-}
-
-public final class me/proton/core/auth/dagger/CoreAuthModule_ProvideLoginChallengeConfigFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/dagger/CoreAuthModule_ProvideLoginChallengeConfigFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;
-	public static fun provideLoginChallengeConfig ()Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;
-}
-
-public final class me/proton/core/auth/dagger/CoreAuthModule_ProvideMissingScopeListenerFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/dagger/CoreAuthModule_ProvideMissingScopeListenerFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/network/domain/scopes/MissingScopeListener;
-	public static fun provideMissingScopeListener ()Lme/proton/core/network/domain/scopes/MissingScopeListener;
-}
-
-public final class me/proton/core/auth/dagger/CoreAuthModule_ProvideSrpCryptoFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/dagger/CoreAuthModule_ProvideSrpCryptoFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/crypto/common/srp/SrpCrypto;
-	public static fun provideSrpCrypto ()Lme/proton/core/crypto/common/srp/SrpCrypto;
 }
 

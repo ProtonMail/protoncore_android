@@ -18,13 +18,10 @@
 
 package me.proton.core.usersettings.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.db.OrganizationDatabase
-import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.repository.OrganizationRepositoryImpl
 import me.proton.core.usersettings.data.repository.UserSettingsRepositoryImpl
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
@@ -33,21 +30,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreUserSettingsModule {
+public interface CoreUserSettingsModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideUserSettingsRepository(
-        db: UserSettingsDatabase,
-        apiProvider: ApiProvider
-    ): UserSettingsRepository =
-        UserSettingsRepositoryImpl(db, apiProvider)
+    public fun provideUserSettingsRepository(impl: UserSettingsRepositoryImpl): UserSettingsRepository
 
-    @Provides
+    @Binds
     @Singleton
-    public fun provideOrganizationRepository(
-        db: OrganizationDatabase,
-        apiProvider: ApiProvider
-    ): OrganizationRepository =
-        OrganizationRepositoryImpl(db, apiProvider)
+    public fun provideOrganizationRepository(impl: OrganizationRepositoryImpl): OrganizationRepository
 }

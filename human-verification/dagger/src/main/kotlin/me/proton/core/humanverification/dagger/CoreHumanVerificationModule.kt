@@ -23,11 +23,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
 import me.proton.core.humanverification.data.HumanVerificationProviderImpl
-import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.repository.HumanVerificationRepositoryImpl
 import me.proton.core.humanverification.data.repository.UserVerificationRepositoryImpl
 import me.proton.core.humanverification.data.utils.NetworkRequestOverriderImpl
@@ -36,81 +34,41 @@ import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
-import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
-import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
-import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreHumanVerificationModule {
-
-    @Provides
-    public fun provideHumanVerificationOrchestrator(
-        humanVerificationVersion: HumanVerificationVersion
-    ): HumanVerificationOrchestrator =
-        HumanVerificationOrchestrator(humanVerificationVersion)
-
-    @Provides
-    public fun provideNetworkRequestOverrider(
-        @SharedOkHttpClient okHttpClient: OkHttpClient,
-    ): NetworkRequestOverrider =
-        NetworkRequestOverriderImpl(okHttpClient)
-
-    @Provides
-    @Singleton
-    public fun provideHumanVerificationListener(
-        humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationListener =
-        HumanVerificationListenerImpl(humanVerificationRepository)
-
-    @Provides
-    @Singleton
-    public fun provideHumanVerificationProvider(
-        humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationProvider =
-        HumanVerificationProviderImpl(humanVerificationRepository)
-
-    @Provides
-    @Singleton
-    public fun provideHumanVerificationRepository(
-        db: HumanVerificationDatabase,
-        keyStoreCrypto: KeyStoreCrypto
-    ): HumanVerificationRepository =
-        HumanVerificationRepositoryImpl(db, keyStoreCrypto)
-
-    @Provides
-    @Singleton
-    public fun provideUserVerificationRepository(
-        apiProvider: ApiProvider
-    ): UserVerificationRepository =
-        UserVerificationRepositoryImpl(apiProvider)
-
-    @Provides
-    @Singleton
-    public fun provideHumanVerificationManagerImpl(
-        humanVerificationProvider: HumanVerificationProvider,
-        humanVerificationListener: HumanVerificationListener,
-        humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationManagerImpl =
-        HumanVerificationManagerImpl(humanVerificationProvider, humanVerificationListener, humanVerificationRepository)
-
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-public interface CoreHumanVerificationBindModule {
+public interface CoreHumanVerificationModule {
 
     @Binds
+    public fun provideNetworkRequestOverrider(impl: NetworkRequestOverriderImpl): NetworkRequestOverrider
+
+    @Binds
+    @Singleton
+    public fun provideHumanVerificationListener(impl: HumanVerificationListenerImpl): HumanVerificationListener
+
+    @Binds
+    @Singleton
+    public fun provideHumanVerificationProvider(impl: HumanVerificationProviderImpl): HumanVerificationProvider
+
+    @Binds
+    @Singleton
+    public fun provideHumanVerificationRepository(impl: HumanVerificationRepositoryImpl): HumanVerificationRepository
+
+    @Binds
+    @Singleton
+    public fun provideUserVerificationRepository(impl: UserVerificationRepositoryImpl): UserVerificationRepository
+
+    @Binds
+    @Singleton
     public fun bindHumanVerificationManager(
         humanVerificationManagerImpl: HumanVerificationManagerImpl
     ): HumanVerificationManager
 
     @Binds
+    @Singleton
     public fun bindHumanVerificationWorkflowHandler(
         humanVerificationManagerImpl: HumanVerificationManagerImpl
     ): HumanVerificationWorkflowHandler
