@@ -1,4 +1,16 @@
-public class hilt_aggregated_deps/_me_proton_core_network_dagger_NetworkModule {
+public class hilt_aggregated_deps/_me_proton_core_network_dagger_CoreBaseNetworkModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_network_dagger_CoreNetworkBindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_network_dagger_CoreNetworkCryptoModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_network_dagger_CoreNetworkModule {
 	public fun <init> ()V
 }
 
@@ -9,19 +21,68 @@ public final class me/proton/core/network/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/network/dagger/NetworkModule_ProvideClientVersionValidatorFactory : dagger/internal/Factory {
-	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;)V
-	public static fun create (Lme/proton/core/network/dagger/NetworkModule;)Lme/proton/core/network/dagger/NetworkModule_ProvideClientVersionValidatorFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/network/domain/client/ClientVersionValidator;
-	public static fun provideClientVersionValidator (Lme/proton/core/network/dagger/NetworkModule;)Lme/proton/core/network/domain/client/ClientVersionValidator;
+public final class me/proton/core/network/dagger/CoreBaseNetworkModule {
+	public fun <init> ()V
 }
 
-public final class me/proton/core/network/dagger/NetworkModule_ProvideCookieJarFactory : dagger/internal/Factory {
-	public fun <init> (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)V
-	public static fun create (Lme/proton/core/network/dagger/NetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/NetworkModule_ProvideCookieJarFactory;
+public final class me/proton/core/network/dagger/CoreBaseNetworkModule_ProvideNetworkManager$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreBaseNetworkModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreBaseNetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreBaseNetworkModule_ProvideNetworkManager$network_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/NetworkManager;
+	public static fun provideNetworkManager$network_dagger_release (Lme/proton/core/network/dagger/CoreBaseNetworkModule;Landroid/content/Context;)Lme/proton/core/network/domain/NetworkManager;
+}
+
+public final class me/proton/core/network/dagger/CoreBaseNetworkModule_ProvideOkHttpClient$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreBaseNetworkModule;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreBaseNetworkModule;)Lme/proton/core/network/dagger/CoreBaseNetworkModule_ProvideOkHttpClient$network_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lokhttp3/OkHttpClient;
+	public static fun provideOkHttpClient$network_dagger_release (Lme/proton/core/network/dagger/CoreBaseNetworkModule;)Lokhttp3/OkHttpClient;
+}
+
+public abstract interface class me/proton/core/network/dagger/CoreNetworkBindsModule {
+	public abstract fun provideClientIdProvider (Lme/proton/core/network/data/client/ClientIdProviderImpl;)Lme/proton/core/network/domain/client/ClientIdProvider;
+	public abstract fun provideClientVersionValidator (Lme/proton/core/network/data/client/ClientVersionValidatorImpl;)Lme/proton/core/network/domain/client/ClientVersionValidator;
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkCryptoModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerTimeListener$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerTimeListener$network_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/server/ServerTimeListener;
+	public static fun provideServerTimeListener$network_dagger_release (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/network/domain/server/ServerTimeListener;
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideApiFactory$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideApiFactory$network_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/ApiManagerFactory;
+	public static fun provideApiFactory$network_dagger_release (Lme/proton/core/network/dagger/CoreNetworkModule;Landroid/content/Context;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/network/domain/server/ServerTimeListener;Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/data/ProtonCookieStore;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/client/ClientVersionValidator;Lme/proton/core/network/domain/serverconnection/DohAlternativesListener;Lokhttp3/HttpUrl;[Ljava/lang/String;[Ljava/lang/String;Ljava/util/List;Lokhttp3/OkHttpClient;)Lme/proton/core/network/data/ApiManagerFactory;
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideCookieJar$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideCookieJar$network_dagger_releaseFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/network/data/ProtonCookieStore;
-	public static fun provideCookieJar (Lme/proton/core/network/dagger/NetworkModule;Landroid/content/Context;)Lme/proton/core/network/data/ProtonCookieStore;
+	public static fun provideCookieJar$network_dagger_release (Lme/proton/core/network/dagger/CoreNetworkModule;Landroid/content/Context;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/network/data/ProtonCookieStore;
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkModule_ProvideNetworkPrefs$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkModule_ProvideNetworkPrefs$network_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/NetworkPrefs;
+	public static fun provideNetworkPrefs$network_dagger_release (Lme/proton/core/network/dagger/CoreNetworkModule;Landroid/content/Context;)Lme/proton/core/network/domain/NetworkPrefs;
 }
 

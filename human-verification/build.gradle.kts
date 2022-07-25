@@ -27,6 +27,7 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     api(
+        project(Module.humanVerificationDagger),
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationData),
         project(Module.humanVerificationPresentation)

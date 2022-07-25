@@ -19,8 +19,9 @@
 package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.challenge.domain.ChallengeConfig
+import javax.inject.Inject
 
-class SignupChallengeConfig : ChallengeConfig {
+class SignupChallengeConfig @Inject constructor() : ChallengeConfig {
 
     override val flowName: String
         get() = "signup"

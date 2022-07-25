@@ -34,8 +34,9 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import javax.inject.Inject
 
-class HumanVerificationRepositoryImpl(
+class HumanVerificationRepositoryImpl @Inject constructor(
     private val db: HumanVerificationDatabase,
     private val keyStoreCrypto: KeyStoreCrypto
 ) : HumanVerificationRepository {

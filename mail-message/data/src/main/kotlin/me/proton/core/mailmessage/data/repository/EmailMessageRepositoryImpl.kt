@@ -29,8 +29,9 @@ import me.proton.core.mailmessage.domain.entity.EncryptedPackage
 import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toInt
+import javax.inject.Inject
 
-class EmailMessageRepositoryImpl(
+class EmailMessageRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : EmailMessageRepository {
 

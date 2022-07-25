@@ -26,8 +26,9 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
+import javax.inject.Inject
 
-class UserVerificationRepositoryImpl(
+class UserVerificationRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider
 ) : UserVerificationRepository {
 

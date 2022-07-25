@@ -26,7 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        // project(Module.accountPresentation),
+         project(Module.accountDagger),
         project(Module.accountDomain),
         project(Module.accountData)
     )

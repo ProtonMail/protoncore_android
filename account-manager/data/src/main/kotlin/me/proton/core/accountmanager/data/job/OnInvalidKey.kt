@@ -50,7 +50,7 @@ fun AccountStateHandler.onInvalidUserKey(
         }
     }
     .catch { CoreLogger.e(LogTag.DEFAULT, it) }
-    .launchIn(scope)
+    .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
 
 fun AccountStateHandler.onInvalidUserAddressKey(
     block: suspend (UserId) -> Unit
@@ -70,5 +70,5 @@ fun AccountStateHandler.onInvalidUserAddressKey(
         }
     }
     .catch { CoreLogger.e(LogTag.DEFAULT, it) }
-    .launchIn(scope)
+    .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
 

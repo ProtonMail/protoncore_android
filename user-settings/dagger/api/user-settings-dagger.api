@@ -1,0 +1,16 @@
+public class hilt_aggregated_deps/_me_proton_core_usersettings_dagger_CoreUserSettingsModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/usersettings/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/usersettings/dagger/CoreUserSettingsModule {
+	public abstract fun provideOrganizationRepository (Lme/proton/core/usersettings/data/repository/OrganizationRepositoryImpl;)Lme/proton/core/usersettings/domain/repository/OrganizationRepository;
+	public abstract fun provideUserSettingsRepository (Lme/proton/core/usersettings/data/repository/UserSettingsRepositoryImpl;)Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;
+}
+

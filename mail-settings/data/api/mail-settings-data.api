@@ -970,6 +970,14 @@ public final class me/proton/core/mailsettings/data/repository/MailSettingsRepos
 	public fun updateViewMode (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ViewMode;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;)Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl;
+}
+
 public abstract class me/proton/core/mailsettings/data/worker/SettingsProperty {
 	public static final field Companion Lme/proton/core/mailsettings/data/worker/SettingsProperty$Companion;
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V

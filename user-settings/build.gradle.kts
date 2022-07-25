@@ -26,6 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.userSettingsDagger),
         project(Module.userSettingsData),
         project(Module.userSettingsDomain),
         project(Module.userSettingsPresentation)

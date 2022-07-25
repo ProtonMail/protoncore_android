@@ -27,27 +27,12 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
     implementation(
-
-        project(Module.kotlinUtil),
         project(Module.crypto),
-
-        // Features
+    )
+    api(
         project(Module.cryptoValidatorData),
         project(Module.cryptoValidatorDomain),
         project(Module.cryptoValidatorPresentation),
-        project(Module.user),
-        project(Module.key),
-        project(Module.presentation),
-
-        // Kotlin
-        `coroutines-core`,
-
-        // Android
-        `android-ktx`,
-        `lifecycle-extensions`,
-        `lifecycle-runtime`,
-        `room-runtime`,
     )
 }

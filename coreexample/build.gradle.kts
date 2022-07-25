@@ -124,6 +124,7 @@ dependencies {
 
     implementation(
 
+        project(Module.androidUtilDagger),
         project(Module.kotlinUtil),
         project(Module.presentation),
         project(Module.network),
@@ -132,13 +133,10 @@ dependencies {
         project(Module.data),
         project(Module.dataRoom),
 
-        // Features
         project(Module.account),
         project(Module.accountManager),
-        project(Module.accountManagerDagger),
         project(Module.auth),
         project(Module.contact),
-        project(Module.contactHilt),
         project(Module.crypto),
         project(Module.cryptoValidator),
         project(Module.domain),
@@ -152,11 +150,10 @@ dependencies {
         project(Module.mailMessage),
         project(Module.mailSettings),
         project(Module.payment),
-        project(Module.reportPresentation),
-        project(Module.reportDagger),
+        project(Module.push),
+        project(Module.report),
         project(Module.country),
         project(Module.plan),
-        project(Module.push),
         project(Module.userSettings),
         project(Module.challenge),
 

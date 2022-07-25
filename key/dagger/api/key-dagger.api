@@ -1,0 +1,17 @@
+public class hilt_aggregated_deps/_me_proton_core_key_dagger_CoreKeyModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/key/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/key/dagger/CoreKeyModule {
+	public abstract fun provideKeySaltRepository (Lme/proton/core/key/data/repository/KeySaltRepositoryImpl;)Lme/proton/core/key/domain/repository/KeySaltRepository;
+	public abstract fun providePrivateKeyRepository (Lme/proton/core/key/data/repository/PrivateKeyRepositoryImpl;)Lme/proton/core/key/domain/repository/PrivateKeyRepository;
+	public abstract fun providePublicAddressKeyRepository (Lme/proton/core/key/data/repository/PublicAddressRepositoryImpl;)Lme/proton/core/key/domain/repository/PublicAddressRepository;
+}
+

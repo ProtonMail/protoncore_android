@@ -28,19 +28,22 @@ import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.api.CoreExampleRepository
-import me.proton.android.core.coreexample.di.AlternativeApiPins
-import me.proton.android.core.coreexample.di.BaseApiUrl
-import me.proton.android.core.coreexample.di.CertificatePins
-import me.proton.android.core.coreexample.di.DohProviderUrls
 import me.proton.android.core.coreexample.di.NetworkBindsModule
-import me.proton.android.core.coreexample.di.NetworkConstantsModule
 import me.proton.android.core.coreexample.di.NetworkCallbacksModule
+import me.proton.android.core.coreexample.di.NetworkConstantsModule
+import me.proton.core.network.dagger.CoreNetworkCryptoModule
+import me.proton.core.network.data.di.AlternativeApiPins
+import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.data.di.CertificatePins
+import me.proton.core.network.data.di.DohProviderUrls
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -67,6 +70,7 @@ import kotlin.test.assertIs
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @UninstallModules(
+    CoreNetworkCryptoModule::class,
     NetworkBindsModule::class,
     NetworkConstantsModule::class,
     NetworkCallbacksModule::class
@@ -78,9 +82,6 @@ class NetworkTests {
 
     @Inject
     internal lateinit var apiClient: FakeApiClient
-
-    @Inject
-    internal lateinit var alternativesListener: FakeDohAlternativesListener
 
     @Inject
     internal lateinit var repository: CoreExampleRepository
@@ -116,18 +117,21 @@ class NetworkTests {
 
     @Test
     fun error408() {
-        apiServer.enqueue(MockResponse()
-            .setHeadersDelay(100, TimeUnit.MILLISECONDS)
-            .setResponseCode(408)
-            .addHeader("Connection", "Close")
-            .apply {
-                socketPolicy = SocketPolicy.DISCONNECT_AT_END
-            })
+        apiServer.enqueue(
+            MockResponse()
+                .setHeadersDelay(100, TimeUnit.MILLISECONDS)
+                .setResponseCode(408)
+                .addHeader("Connection", "Close")
+                .apply {
+                    socketPolicy = SocketPolicy.DISCONNECT_AT_END
+                }
+        )
 
-        apiServer.enqueue(MockResponse().apply {
-            setHeadersDelay(100, TimeUnit.MILLISECONDS)
-            setResponseCode(200)
-        })
+        apiServer.enqueue(
+            MockResponse()
+                .setHeadersDelay(100, TimeUnit.MILLISECONDS)
+                .setResponseCode(200)
+        )
 
         val result = ping()
         assertIs<ApiResult.Success<Unit>>(result)
@@ -287,9 +291,9 @@ class NetworkTests {
     @Module
     @InstallIn(SingletonComponent::class)
     internal class TestNetworkModule {
-        @BaseApiUrl
+        @BaseProtonApiUrl
         @Provides
-        fun provideBaseApiUrl(): String = "http://localhost:$ApiPort"
+        fun provideBaseProtonApiUrl(): HttpUrl = "http://localhost:$ApiPort".toHttpUrl()
 
         @Provides
         @Singleton
@@ -302,12 +306,6 @@ class NetworkTests {
         @Provides
         @DohProviderUrls
         fun provideDohProviderUrls(): Array<String> = arrayOf("http://localhost:$DohPort/dns-query/")
-
-        @Provides
-        @Singleton
-        fun provideServerTimeListener() = object : ServerTimeListener {
-            override fun onServerTimeUpdated(epochSeconds: Long) {}
-        }
 
         @Provides
         @Singleton
@@ -324,6 +322,12 @@ class NetworkTests {
         @AlternativeApiPins
         @Provides
         fun provideAlternativeApiPins() = emptyList<String>()
+
+        @Provides
+        @Singleton
+        internal fun provideServerTimeListener() = object : ServerTimeListener {
+            override fun onServerTimeUpdated(epochSeconds: Long) {}
+        }
     }
 
     companion object {

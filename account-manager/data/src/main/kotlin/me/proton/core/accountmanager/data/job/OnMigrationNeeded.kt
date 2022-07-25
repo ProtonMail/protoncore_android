@@ -29,4 +29,4 @@ fun AccountStateHandler.onMigrationNeeded(
     block: suspend (UserId) -> Unit
 ) = accountManager.onAccountState(AccountState.MigrationNeeded)
     .onEach { account -> block(account.userId) }
-    .launchIn(scope)
+    .launchIn(scopeProvider.GlobalDefaultSupervisedScope)

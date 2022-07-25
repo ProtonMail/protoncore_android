@@ -18,12 +18,12 @@
 
 package me.proton.core.challenge.data
 
-import dagger.assisted.AssistedInject
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
+import javax.inject.Inject
 
-public class ChallengeManagerImpl @AssistedInject constructor(
+public class ChallengeManagerImpl @Inject constructor(
     private val challengeRepository: ChallengeRepository
 ) : ChallengeManager {
 

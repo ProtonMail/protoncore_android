@@ -21,7 +21,6 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidUiLibrary
-    protonDagger
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
 }
@@ -51,6 +50,7 @@ dependencies {
         `core-splashscreen`,
         `constraint-layout`,
         `fragment`,
+        `javax-inject`,
         `lifecycle-common`,
         `lifecycle-process`,
         `material`

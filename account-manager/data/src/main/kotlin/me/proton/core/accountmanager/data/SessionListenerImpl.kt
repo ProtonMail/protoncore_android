@@ -24,8 +24,9 @@ import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
+import javax.inject.Inject
 
-class SessionListenerImpl(
+class SessionListenerImpl @Inject constructor(
     private val accountRepository: AccountRepository
 ) : SessionListener {
 

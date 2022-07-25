@@ -36,6 +36,24 @@ public final class me/proton/core/util/kotlin/CoreLogger : me/proton/core/util/k
 	public fun v (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 }
 
+public abstract interface class me/proton/core/util/kotlin/CoroutineScopeProvider {
+	public abstract fun getGlobalDefaultSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+	public abstract fun getGlobalIOSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+}
+
+public final class me/proton/core/util/kotlin/DefaultCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {
+	public fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;)V
+	public fun getGlobalDefaultSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+	public fun getGlobalIOSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+}
+
+public final class me/proton/core/util/kotlin/DefaultDispatcherProvider : me/proton/core/util/kotlin/DispatcherProvider {
+	public fun <init> ()V
+	public fun getComp ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public fun getIo ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public fun getMain ()Lkotlinx/coroutines/CoroutineDispatcher;
+}
+
 public abstract interface class me/proton/core/util/kotlin/DispatcherProvider {
 	public abstract fun getComp ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public abstract fun getIo ()Lkotlinx/coroutines/CoroutineDispatcher;

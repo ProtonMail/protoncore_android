@@ -23,8 +23,9 @@ import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import javax.inject.Inject
 
-class SessionManagerImpl(
+class SessionManagerImpl @Inject constructor(
     private val sessionProvider: SessionProvider,
     private val sessionListener: SessionListener,
     private val authRepository: AuthRepository

@@ -33,6 +33,7 @@ dependencies {
 
     implementation(
         `coroutines-core`,
+        `javax-inject`,
         `serialization-json`
     )
 

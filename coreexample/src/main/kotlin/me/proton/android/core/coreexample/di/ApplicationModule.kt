@@ -20,7 +20,6 @@ package me.proton.android.core.coreexample.di
 
 import android.content.Context
 import androidx.work.WorkManager
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +30,6 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.presentation.app.AppLifecycleObserver
-import me.proton.core.presentation.app.AppLifecycleProvider
 import javax.inject.Singleton
 
 @Module
@@ -60,18 +57,6 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideAppLifecycleObserver(): AppLifecycleObserver =
-        AppLifecycleObserver()
-
-    @Provides
-    @Singleton
     fun provideWorkManager(@ApplicationContext context: Context): WorkManager =
         WorkManager.getInstance(context)
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class ApplicationBindsModule {
-    @Binds
-    abstract fun provideAppLifecycleStateProvider(observer: AppLifecycleObserver): AppLifecycleProvider
 }

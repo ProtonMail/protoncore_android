@@ -23,6 +23,7 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -60,13 +61,14 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepositoryImpl(
+class UserRepositoryImpl @Inject constructor(
     private val db: UserDatabase,
     private val provider: ApiProvider,
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val cryptoContext: CryptoContext,
     private val product: Product
 ) : UserRepository {

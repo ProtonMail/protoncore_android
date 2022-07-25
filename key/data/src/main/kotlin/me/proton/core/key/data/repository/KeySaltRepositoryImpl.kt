@@ -32,8 +32,9 @@ import me.proton.core.key.domain.entity.key.PrivateKeySalt
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.takeIfNotEmpty
+import javax.inject.Inject
 
-class KeySaltRepositoryImpl(
+class KeySaltRepositoryImpl @Inject constructor(
     db: KeySaltDatabase,
     private val provider: ApiProvider
 ) : KeySaltRepository {

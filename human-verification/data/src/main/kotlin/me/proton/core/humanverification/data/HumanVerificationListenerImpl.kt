@@ -28,8 +28,9 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener.HumanVerificationResult
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import javax.inject.Inject
 
-class HumanVerificationListenerImpl(
+class HumanVerificationListenerImpl @Inject constructor(
     private val humanVerificationRepository: HumanVerificationRepository
 ) : HumanVerificationListener {
 

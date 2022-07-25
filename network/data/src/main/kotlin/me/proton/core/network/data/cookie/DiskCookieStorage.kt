@@ -22,12 +22,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import okhttp3.Cookie
@@ -37,11 +35,11 @@ import java.io.OutputStream
 class DiskCookieStorage constructor(
     context: Context,
     storeName: String,
-    scope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    scopeProvider: CoroutineScopeProvider
 ) : CookieStorage {
     private val Context.dataStore by dataStore(
         storeName,
-        scope = scope,
+        scope = scopeProvider.GlobalIOSupervisedScope,
         serializer = SerializableCookiesSerializer()
     )
 

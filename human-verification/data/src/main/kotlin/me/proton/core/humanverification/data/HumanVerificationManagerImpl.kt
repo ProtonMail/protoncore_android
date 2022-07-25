@@ -27,8 +27,11 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HumanVerificationManagerImpl(
+@Singleton
+class HumanVerificationManagerImpl @Inject constructor(
     private val humanVerificationProvider: HumanVerificationProvider,
     private val humanVerificationListener: HumanVerificationListener,
     private val humanVerificationRepository: HumanVerificationRepository
