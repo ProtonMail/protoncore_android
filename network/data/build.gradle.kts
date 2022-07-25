@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
 }
 
@@ -63,7 +64,12 @@ dependencies {
     testImplementation(
         project(Module.kotlinTest),
         project(Module.androidTest),
+        project(Module.networkDagger),
+        project(Module.cryptoCommon),
         `retrofit-scalars-converter`,
-        `mockWebServer`
+        `mockWebServer`,
+        `hilt-android-testing`,
     )
+
+    kaptTest(`hilt-android-compiler`)
 }

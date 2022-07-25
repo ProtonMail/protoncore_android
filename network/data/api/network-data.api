@@ -19,6 +19,14 @@ public final class me/proton/core/network/data/ApiProvider {
 	public final fun getSessionProvider ()Lme/proton/core/network/domain/session/SessionProvider;
 }
 
+public final class me/proton/core/network/data/ApiProvider_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/data/ApiProvider_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/ApiProvider;
+	public static fun newInstance (Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/network/data/ApiProvider;
+}
+
 public final class me/proton/core/network/data/ApiResultUtilsKt {
 	public static final fun safeCall (Ljava/lang/Object;Lme/proton/core/network/domain/NetworkManager;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -96,9 +104,25 @@ public final class me/proton/core/network/data/client/ClientIdProviderImpl : me/
 	public fun getClientId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/network/data/client/ClientIdProviderImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/data/client/ClientIdProviderImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/client/ClientIdProviderImpl;
+	public static fun newInstance (Lokhttp3/HttpUrl;Lme/proton/core/network/data/ProtonCookieStore;)Lme/proton/core/network/data/client/ClientIdProviderImpl;
+}
+
 public final class me/proton/core/network/data/client/ClientVersionValidatorImpl : me/proton/core/network/domain/client/ClientVersionValidator {
 	public fun <init> ()V
 	public fun validate (Ljava/lang/String;)Z
+}
+
+public final class me/proton/core/network/data/client/ClientVersionValidatorImpl_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/network/data/client/ClientVersionValidatorImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/client/ClientVersionValidatorImpl;
+	public static fun newInstance ()Lme/proton/core/network/data/client/ClientVersionValidatorImpl;
 }
 
 public final class me/proton/core/network/data/client/ExtraHeaderProviderImpl : me/proton/core/network/domain/client/ExtraHeaderProvider {
