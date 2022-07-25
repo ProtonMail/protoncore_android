@@ -23,4 +23,5 @@
   <string name="account_switcher_action_sign_out">Wyloguj</string>
   <string name="account_switcher_action_remove">Usuń</string>
   <string name="account_list_item_chevron_content_description">Otwórz przełącznik konta</string>
+  <string name="account_view_three_dots_content_description">Opcje</string>
 </resources>

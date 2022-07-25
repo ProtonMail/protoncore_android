@@ -55,5 +55,5 @@
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Žádné připojení. CAPTCHA nelze načíst.</string>
   <string name="human_verification_action_retry">Opakovat</string>
-  <string name="human_verification_method_loading_failed">Nepodařilo se načíst aktuální metodu ověření. Pokud problém přetrvává, zkuste některou z dalších metod, jsou-li k dispozici, nebo se podívejte na obrazovku nápovědy.</string>
+  <string name="human_verification_method_loading_failed">Nepodařilo se načíst aktuální metodu ověření. Pokud problém přetrvává, zkuste některou z dalších metod, pokud jsou k dispozici, nebo se podívejte na obrazovku nápovědy.</string>
 </resources>

@@ -71,8 +71,8 @@
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Selanjutnya</string>
   <string name="auth_create_address_result_title">%s tersedia</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s akan menjadi alamat Proton Mail baru Anda.</string>
-  <string name="auth_create_address_result_subtitle">Anda akan menggunakan alamat ini untuk masuk ke semua layanan Proton.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s akan menjadi alamat email Proton Mail baru Anda.</string>
+  <string name="auth_create_address_result_subtitle">Anda akan menggunakan alamat ini untuk masuk ke seluruh layanan Proton.</string>
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>

@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Seu endereço de e-mail de recuperação é:</string>
   <string name="auth_create_address_create">Criar endereço</string>
   <string name="auth_create_address_creating">Criando endereço</string>
-  <string name="auth_create_address_terms">Ao clicar em Criar endereço, você concorda com <a href="https://protonmail.com/terms-and-conditions">Termos e Condições</a> do Proton</string>
+  <string name="auth_create_address_terms">Ao clicar em Criar endereço, você concorda com os <a href="https://protonmail.com/terms-and-conditions">Termos e Condições</a> da Proton</string>
   <string name="auth_create_address_error_credentials">Credenciais não deveriam ser vazias.</string>
   <string name="auth_create_address_error_no_available_domain">Sem domínios disponíveis.</string>
   <string name="auth_create_address_error_private_key">A geração da chave privada falhou.</string>

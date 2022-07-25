@@ -22,5 +22,6 @@
   <string name="account_switcher_action_sign_in">Logga in</string>
   <string name="account_switcher_action_sign_out">Logga ut</string>
   <string name="account_switcher_action_remove">Ta bort</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
+  <string name="account_list_item_chevron_content_description">Öppna kontoväxlare</string>
+  <string name="account_view_three_dots_content_description">Alternativ</string>
 </resources>

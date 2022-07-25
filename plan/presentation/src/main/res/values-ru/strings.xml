@@ -103,9 +103,9 @@
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# высокоскоростное подключение к VPN</item>
-    <item quantity="few">#proton_vpn# высокоскоростных подключения к VPN</item>
+    <item quantity="few">#proton_vpn# высокоскоростных подключений к VPN</item>
     <item quantity="many">#proton_vpn# высокоскоростных подключений к VPN</item>
-    <item quantity="other">#proton_vpn# высокоскоростных подключения к VPN</item>
+    <item quantity="other">#proton_vpn# высокоскоростных подключений к VPN</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# пользователь</item>

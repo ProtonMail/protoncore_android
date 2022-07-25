@@ -23,4 +23,5 @@
   <string name="account_switcher_action_sign_out">Deconectare</string>
   <string name="account_switcher_action_remove">Eliminare</string>
   <string name="account_list_item_chevron_content_description">Comutator creare cont</string>
+  <string name="account_view_three_dots_content_description">Opțiuni</string>
 </resources>

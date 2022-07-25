@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Адрес резервной эл. почты</string>
   <string name="settings_recovery_email_current">Текущий адрес эл. почты для сброса/уведомлений</string>
-  <string name="settings_recovery_email_new">Новый адрес эл. почты для сброса/уведомлений</string>
+  <string name="settings_recovery_email_new">Новая электронная почта для восстановления/уведомлений</string>
   <string name="settings_recovery_email_confirm">Подтвердите новый адрес эл. почты для сброса/уведомлений</string>
   <string name="settings_recovery_email_new_hint">Введите адрес эл. почты</string>
   <string name="settings_recovery_email_confirm_hint">Повторите адрес эл. почты</string>

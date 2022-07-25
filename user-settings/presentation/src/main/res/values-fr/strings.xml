@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non défini</string>
   <string name="settings_recovery_email_error_no_match">L’adresse électronique de récupération et sa confirmation ne correspondent pas.</string>
-  <string name="settings_validation_email">L’adresse électronique est invalide.</string>
+  <string name="settings_validation_email">L’adresse électronique n\'est pas valide.</string>
   <string name="settings_general_error">Une erreur est survenue.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Modifier le mot de passe</string>
@@ -40,9 +40,9 @@
   <string name="settings_login_password_hint_new_confirm">Confirmer le nouveau mot de passe de connexion</string>
   <string name="settings_mailbox_password_hint_new">Nouveau mot de passe de messagerie</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmer le nouveau de mot de passe de messagerie</string>
-  <string name="settings_change_password_error">Une erreur lors du changement de mot de passe s\'est produite.</string>
-  <string name="settings_recovery_email_success">Adresse électronique de récupération actualisée</string>
+  <string name="settings_change_password_error">Une erreur s\'est produite lors du changement de mot de passe.</string>
+  <string name="settings_recovery_email_success">Adresse électronique de récupération mise à jour</string>
   <string name="settings_password_management_success">Mot de passe mis à jour</string>
-  <string name="settings_password_management_login_password_success">Mot de passe de connexion actualisé</string>
-  <string name="settings_password_management_mailbox_password_success">Mot de passe de messagerie actualisé</string>
+  <string name="settings_password_management_login_password_success">Mot de passe de connexion mis à jour</string>
+  <string name="settings_password_management_mailbox_password_success">Mot de passe de messagerie mis à jour</string>
 </resources>

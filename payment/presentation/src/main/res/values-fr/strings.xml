@@ -22,14 +22,14 @@
   <string name="payments_no_connectivity">Aucune connexion pour afficher la page de confirmation 3DS.</string>
   <string name="payments_3ds_not_approved">L\'approbation 3DS a été rejetée.</string>
   <string name="payments_error_card_name">Nom du titulaire de la carte requis.</string>
-  <string name="payments_error_card_number">Numéro de carte invalide.</string>
+  <string name="payments_error_card_number">Numéro de carte non valide.</string>
   <string name="payments_error_cvc">Veuillez saisir le code de sécurité.</string>
   <string name="payments_error_session">Un identifiant de session valide est nécessaire lors de l\'abonnement d’un utilisateur connecté.</string>
-  <string name="payments_error_signup_paymentmethod">Impossible de s\'inscrire avec le mode de paiement existant.</string>
-  <string name="payments_error_invalid_session">Session invalide.</string>
+  <string name="payments_error_signup_paymentmethod">Impossible de s\'inscrire avec le mode de paiement actuel.</string>
+  <string name="payments_error_invalid_session">Session non valide.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Choisissez un mode de paiement</string>
+  <string name="payments_choose_payment_method">Choisissez votre mode de paiement</string>
   <string name="payments_add_credit_debit_card">Ajouter une nouvelle carte de crédit/débit</string>
   <string name="payments_billing_monthly">Pour 1 mois</string>
   <string name="payments_billing_yearly">Pour 1 an</string>
@@ -38,14 +38,14 @@
   <string name="payments_method_icon">Icône de mode de paiement.</string>
   <!-- endregion -->
   <!-- region billing -->
-  <string name="payments_payment_details">Détails du paiement</string>
+  <string name="payments_payment_details">Informations sur le paiement</string>
   <string name="payments_card_name">Titulaire de la carte</string>
   <string name="payments_card_number">Numéro de carte</string>
   <string name="payments_expiration_date">Date d’expiration</string>
   <string name="payments_security_code">Code de sécurité</string>
   <string name="payments_postal_code">Code postal</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">00/00</string>
+  <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Pays</string>
   <string name="payments_paying_in_process">Paiement en cours</string>

@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="crypto_keystore_error_title">Chyba šifrování</string>
-  <string name="crypto_keystore_error_message">Toto zařízení používá chybnou implementaci úložiště klíčů Android, které používáme k zabezpečení vašich dat. To znamená, že vaše data mohou být ohrožena, pokud útočník získá fyzický přístup k tomuto zařízení. Co byste chtěli dělat?</string>
+  <string name="crypto_keystore_error_message">Toto zařízení používá chybnou implementaci úložiště klíčů Android, které používáme k zabezpečení vašich dat. To znamená, že vaše data mohou být ohrožena, pokud útočník získá fyzický přístup k tomuto zařízení. Co byste chtěli udělat?</string>
   <string name="crypto_keystore_error_continue_action">Pokračovat</string>
   <string name="crypto_keystore_error_more_info_action">Získat více informací</string>
   <string name="crypto_keystore_error_logout_action">Odhlásit se</string>
