@@ -19,9 +19,8 @@
 package me.proton.core.network.data.client
 
 import me.proton.core.network.domain.client.ClientVersionValidator
-import javax.inject.Inject
 
-class ClientVersionValidatorImpl @Inject constructor() : ClientVersionValidator {
+class ClientVersionValidatorImpl : ClientVersionValidator {
 
     override fun validate(versionName: String?): Boolean {
         val components = versionName?.split("@").orEmpty()

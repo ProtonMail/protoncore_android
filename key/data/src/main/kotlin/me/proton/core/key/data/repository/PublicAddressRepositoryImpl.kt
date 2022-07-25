@@ -36,9 +36,8 @@ import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.CacheOverride
-import javax.inject.Inject
 
-class PublicAddressRepositoryImpl @Inject constructor(
+class PublicAddressRepositoryImpl(
     private val db: PublicAddressDatabase,
     private val provider: ApiProvider
 ) : PublicAddressRepository {

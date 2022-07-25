@@ -111,14 +111,6 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 	public final fun unregister (Landroidx/fragment/app/FragmentActivity;)V
 }
 
-public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
-	public static fun newInstance (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
-}
-
 public final class me/proton/core/humanverification/presentation/LogTag {
 	public static final field INSTANCE Lme/proton/core/humanverification/presentation/LogTag;
 	public final fun getHV_REQUEST_ERROR-WnFgrgw ()Ljava/lang/String;

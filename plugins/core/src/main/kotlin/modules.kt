@@ -24,7 +24,6 @@ public object Module {
     private const val util = ":util"
     public const val kotlinUtil: String = "$util:util-kotlin"
     private const val androidUtil = "$util:android"
-    public const val androidUtilDagger: String = "$androidUtil:util-android-dagger"
     public const val sharedPreferencesUtil: String = "$androidUtil:util-android-shared-preferences"
     public const val workManagersUtil: String = "$androidUtil:util-android-work-manager"
     public const val gradleUtil: String = "$util:util-gradle"
@@ -57,14 +56,12 @@ public object Module {
 
     // Authentication
     public const val auth: String = ":auth"
-    public const val authDagger: String = "$auth:auth-dagger"
     public const val authDomain: String = "$auth:auth-domain"
     public const val authPresentation: String = "$auth:auth-presentation"
     public const val authData: String = "$auth:auth-data"
 
     // Account
     public const val account: String = ":account"
-    public const val accountDagger: String = "$account:account-dagger"
     public const val accountDomain: String = "$account:account-domain"
     public const val accountPresentation: String = "$account:account-presentation"
     public const val accountData: String = "$account:account-data"
@@ -80,7 +77,6 @@ public object Module {
 
     // Crypto
     public const val crypto: String = ":crypto"
-    public const val cryptoDagger: String = "$crypto:crypto-dagger"
     public const val cryptoCommon: String = "$crypto:crypto-common"
     public const val cryptoAndroid: String = "$crypto:crypto-android"
 
@@ -93,13 +89,11 @@ public object Module {
 
     // Account
     public const val eventManager: String = ":event-manager"
-    public const val eventManagerDagger: String = "$eventManager:event-manager-dagger"
     public const val eventManagerDomain: String = "$eventManager:event-manager-domain"
     public const val eventManagerData: String = "$eventManager:event-manager-data"
 
     // Key
     public const val key: String = ":key"
-    public const val keyDagger: String = "$key:key-dagger"
     public const val keyDomain: String = "$key:key-domain"
     public const val keyData: String = "$key:key-data"
 
@@ -113,60 +107,53 @@ public object Module {
     public const val contact: String = ":contact"
     public const val contactDomain: String = "$contact:contact-domain"
     public const val contactData: String = "$contact:contact-data"
-    public const val contactDagger: String = "$contact:contact-dagger"
+    public const val contactHilt: String = "$contact:contact-hilt"
 
     // User
     public const val user: String = ":user"
-    public const val userDagger: String = "$user:user-dagger"
     public const val userDomain: String = "$user:user-domain"
     public const val userPresentation: String = "$user:user-presentation"
     public const val userData: String = "$user:user-data"
 
     // Payment
     public const val payment: String = ":payment"
-    public const val paymentDagger: String = "$payment:payment-dagger"
     public const val paymentDomain: String = "$payment:payment-domain"
     public const val paymentData: String = "$payment:payment-data"
     public const val paymentPresentation: String = "$payment:payment-presentation"
 
     // Countries
     public const val country: String = ":country"
-    public const val countryDagger: String = "$country:country-dagger"
-    public const val countryData: String = "$country:country-data"
     public const val countryDomain: String = "$country:country-domain"
+    public const val countryData: String = "$country:country-data"
     public const val countryPresentation: String = "$country:country-presentation"
 
     // Settings
     public const val userSettings: String = ":user-settings"
-    public const val userSettingsDagger: String = "$userSettings:user-settings-dagger"
     public const val userSettingsDomain: String = "$userSettings:user-settings-domain"
     public const val userSettingsPresentation: String = "$userSettings:user-settings-presentation"
     public const val userSettingsData: String = "$userSettings:user-settings-data"
 
     // Human Verification
     public const val humanVerification: String = ":human-verification"
-    public const val humanVerificationDagger: String = "$humanVerification:human-verification-dagger"
     public const val humanVerificationDomain: String = "$humanVerification:human-verification-domain"
     public const val humanVerificationPresentation: String = "$humanVerification:human-verification-presentation"
     public const val humanVerificationData: String = "$humanVerification:human-verification-data"
 
     // Mail Message
     public const val mailMessage: String = ":mail-message"
-    public const val mailMessageDagger: String = "$mailMessage:mail-message-dagger"
     public const val mailMessageDomain: String = "$mailMessage:mail-message-domain"
     public const val mailMessagePresentation: String = "$mailMessage:mail-message-presentation"
     public const val mailMessageData: String = "$mailMessage:mail-message-data"
 
     // Mail Settings
     public const val mailSettings: String = ":mail-settings"
-    public const val mailSettingsDagger: String = "$mailSettings:mail-settings-dagger"
     public const val mailSettingsDomain: String = "$mailSettings:mail-settings-domain"
     public const val mailSettingsPresentation: String = "$mailSettings:mail-settings-presentation"
     public const val mailSettingsData: String = "$mailSettings:mail-settings-data"
+    public const val mailSettingsDagger: String = "$mailSettings:mail-settings-dagger"
 
     // Plan
     public const val plan: String = ":plan"
-    public const val planDagger: String = "$plan:plan-dagger"
     public const val planDomain: String = "$plan:plan-domain"
     public const val planData: String = "$plan:plan-data"
     public const val planPresentation: String = "$plan:plan-presentation"

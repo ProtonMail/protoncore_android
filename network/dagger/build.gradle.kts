@@ -1,5 +1,3 @@
-import studio.forface.easygradle.dsl.*
-
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -27,8 +25,6 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
-        project(Module.cryptoCommon),
-        project(Module.kotlinUtil),
         project(Module.networkDomain)
     )
     api(

@@ -38,9 +38,8 @@ import me.proton.core.usersettings.data.extension.toEntity
 import me.proton.core.usersettings.domain.entity.Organization
 import me.proton.core.usersettings.domain.entity.OrganizationKeys
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
-import javax.inject.Inject
 
-class OrganizationRepositoryImpl @Inject constructor(
+class OrganizationRepositoryImpl(
     db: OrganizationDatabase,
     private val apiProvider: ApiProvider
 ) : OrganizationRepository {

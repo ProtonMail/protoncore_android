@@ -50,10 +50,9 @@ import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toInt
-import javax.inject.Inject
 
 @Suppress("TooManyFunctions", "ComplexInterface")
-class MailSettingsRepositoryImpl @Inject constructor(
+class MailSettingsRepositoryImpl(
     db: MailSettingsDatabase,
     private val apiProvider: ApiProvider,
     private val settingsWorker: UpdateSettingsWorker.Enqueuer

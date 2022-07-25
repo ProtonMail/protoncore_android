@@ -22,9 +22,8 @@ import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
-import javax.inject.Inject
 
-public class ChallengeRepositoryImpl @Inject constructor(
+public class ChallengeRepositoryImpl(
     private val db: ChallengeDatabase
 ) : ChallengeRepository {
 

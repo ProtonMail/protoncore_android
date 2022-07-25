@@ -48,7 +48,6 @@ dependencies {
         `coroutines-core`,
 
         // Other
-        `javax-inject`,
         `okHttp-logging`,
         `retrofit`,
         `retrofit-kotlin-serialization`,

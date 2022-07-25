@@ -52,11 +52,10 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserAddressRepositoryImpl @Inject constructor(
+class UserAddressRepositoryImpl(
     private val db: AddressDatabase,
     private val apiProvider: ApiProvider,
     private val userRepository: UserRepository,

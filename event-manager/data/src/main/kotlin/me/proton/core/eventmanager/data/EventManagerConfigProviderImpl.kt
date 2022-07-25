@@ -23,9 +23,8 @@ import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.EventManagerConfigProvider
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
-import javax.inject.Inject
 
-class EventManagerConfigProviderImpl @Inject constructor(
+class EventManagerConfigProviderImpl(
     private val eventMetadataRepository: EventMetadataRepository
 ) : EventManagerConfigProvider {
 

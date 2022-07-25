@@ -43,7 +43,6 @@ dependencies {
         `coroutines-core`,
 
         // Other
-        `javax-inject`,
         `room-ktx`
     )
 

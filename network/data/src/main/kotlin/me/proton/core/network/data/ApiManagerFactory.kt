@@ -54,9 +54,9 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.Cache
-import okhttp3.HttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
@@ -67,9 +67,8 @@ import kotlin.reflect.KClass
  * @param cookieStore The storage for cookies.
  * @param cache [Cache] shared across all user, session, api or call.
  */
-@Suppress("LongParameterList")
 class ApiManagerFactory(
-    private val baseUrl: HttpUrl,
+    baseUrl: String,
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
     private val serverTimeListener: ServerTimeListener,
@@ -88,12 +87,16 @@ class ApiManagerFactory(
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
     private val clientVersionValidator: ClientVersionValidator,
     private val dohAlternativesListener: DohAlternativesListener?,
-    private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS,
-    private val okHttpClient: OkHttpClient
+    private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS
 ) {
+    private val baseUri = URI(baseUrl)
 
     @OptIn(ObsoleteCoroutinesApi::class)
     private val mainScope = scope + newSingleThreadContext("core.network.main")
+
+    init {
+        requireNotNull(baseUri.host)
+    }
 
     internal val jsonConverter = ProtonCoreConfig
         .defaultJsonStringFormat
@@ -107,7 +110,7 @@ class ApiManagerFactory(
         require(clientVersionValidator.validate(apiClient.appVersionHeader)) {
             "Invalid app version code: ${apiClient.appVersionHeader}."
         }
-        okHttpClient.newBuilder()
+        OkHttpClient.Builder()
             .cache(cache())
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
@@ -123,7 +126,7 @@ class ApiManagerFactory(
     }
 
     private val protonDohService by lazy {
-        val url = requireNotNull(baseUrl.resolve("/dns-query/")?.toString())
+        val url = baseUri.resolve("/dns-query/").toString()
         DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, url, apiClient, networkManager)
     }
 
@@ -172,10 +175,10 @@ class ApiManagerFactory(
         alternativeApiPins: List<String> = this@ApiManagerFactory.alternativeApiPins
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
-            initPinning(builder, baseUrl.host, certificatePins)
+            initPinning(builder, baseUri.host, certificatePins)
         }
         val primaryBackend = ProtonApiBackend(
-            baseUrl.toString(),
+            baseUri.toString(),
             apiClient,
             clientIdProvider,
             serverTimeListener,
@@ -198,7 +201,7 @@ class ApiManagerFactory(
         }
 
         val dohProvider = DohProvider(
-            baseUrl.toString(),
+            baseUri.toString(),
             apiClient,
             dohServices,
             protonDohService,

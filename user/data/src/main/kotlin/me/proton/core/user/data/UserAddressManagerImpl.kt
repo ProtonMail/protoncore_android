@@ -33,11 +33,8 @@ import me.proton.core.user.domain.extension.hasNonMigratedKey
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.signKeyList
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class UserAddressManagerImpl @Inject constructor(
+class UserAddressManagerImpl(
     private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
     private val privateKeyRepository: PrivateKeyRepository,

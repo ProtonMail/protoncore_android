@@ -18,6 +18,7 @@
 
 package me.proton.core.accountmanager.data
 
+import kotlinx.coroutines.CoroutineScope
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.job.disableInitialNotReadyAccounts
@@ -29,14 +30,14 @@ import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.domain.entity.Product
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
-import me.proton.core.util.kotlin.CoroutineScopeProvider
 import java.lang.IllegalStateException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AccountStateHandler @Inject constructor(
-    internal val scopeProvider: CoroutineScopeProvider,
+    @AccountStateHandlerCoroutineScope
+    internal val scope: CoroutineScope,
     internal val userManager: UserManager,
     internal val accountManager: AccountManager,
     private val accountRepository: AccountRepository,

@@ -59,7 +59,6 @@ import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.lang.RuntimeException
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -147,7 +146,7 @@ internal class ApiManagerTests {
         val scope = CoroutineScope(TestCoroutineDispatcher())
         apiManagerFactory =
             ApiManagerFactory(
-                baseUrl.toHttpUrl(),
+                baseUrl,
                 apiClient,
                 clientIdProvider,
                 serverTimeListener,
@@ -162,8 +161,7 @@ internal class ApiManagerTests {
                 scope,
                 cache = { null },
                 clientVersionValidator = clientVersionValidator,
-                dohAlternativesListener = null,
-                okHttpClient = mockk(relaxed = true)
+                dohAlternativesListener = null
             )
 
         coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns listOf(proxy1url)

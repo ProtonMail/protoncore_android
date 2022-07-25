@@ -38,7 +38,6 @@ dependencies {
         project(Module.network),
 
         // Other
-        `javax-inject`,
         `retrofit`,
         `retrofit-kotlin-serialization`
     )

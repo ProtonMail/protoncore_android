@@ -36,9 +36,8 @@ import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toInt
-import javax.inject.Inject
 
-class PrivateKeyRepositoryImpl @Inject constructor(
+class PrivateKeyRepositoryImpl(
     private val provider: ApiProvider
 ) : PrivateKeyRepository {
 

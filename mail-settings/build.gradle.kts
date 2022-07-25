@@ -26,8 +26,9 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.mailSettingsDagger),
-        project(Module.mailSettingsData),
+        // project(Module.mailSettingsPresentation),
         project(Module.mailSettingsDomain),
+        project(Module.mailSettingsData),
+        project(Module.mailSettingsDagger)
     )
 }

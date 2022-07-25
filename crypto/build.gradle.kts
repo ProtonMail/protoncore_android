@@ -26,7 +26,6 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.cryptoDagger),
         project(Module.cryptoCommon),
         project(Module.cryptoAndroid),
     )

@@ -31,20 +31,7 @@ public final class me/proton/core/test/kotlin/CoroutinesTestRule : org/junit/rul
 	public final fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
 }
 
-public final class me/proton/core/test/kotlin/TestCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {
-	public static final field INSTANCE Lme/proton/core/test/kotlin/TestCoroutineScopeProvider;
-	public fun getGlobalDefaultSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
-	public fun getGlobalIOSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
-}
-
-public final class me/proton/core/test/kotlin/TestDispatcherProvider : me/proton/core/util/kotlin/DispatcherProvider {
-	public static final field INSTANCE Lme/proton/core/test/kotlin/TestDispatcherProvider;
-	public final fun cleanupTestCoroutines ()V
-	public synthetic fun getComp ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public fun getComp ()Lkotlinx/coroutines/test/TestCoroutineDispatcher;
-	public synthetic fun getIo ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public fun getIo ()Lkotlinx/coroutines/test/TestCoroutineDispatcher;
-	public synthetic fun getMain ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public fun getMain ()Lkotlinx/coroutines/test/TestCoroutineDispatcher;
+public final class me/proton/core/test/kotlin/TestDispatchersProviderKt {
+	public static final fun getTestDispatcherProvider ()Lme/proton/core/util/kotlin/DispatcherProvider;
 }
 

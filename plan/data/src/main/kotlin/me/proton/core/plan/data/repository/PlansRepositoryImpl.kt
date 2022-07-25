@@ -23,9 +23,8 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
-import javax.inject.Inject
 
-class PlansRepositoryImpl @Inject constructor(
+class PlansRepositoryImpl(
     private val provider: ApiProvider
 ) : PlansRepository {
 

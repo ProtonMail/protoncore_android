@@ -26,9 +26,8 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.reportDagger),
-        project(Module.reportData),
         project(Module.reportDomain),
+        project(Module.reportData),
         project(Module.reportPresentation)
     )
 }

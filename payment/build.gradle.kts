@@ -26,7 +26,6 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.paymentDagger),
         project(Module.paymentDomain),
         project(Module.paymentData),
         project(Module.paymentPresentation)

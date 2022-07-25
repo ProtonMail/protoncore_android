@@ -23,9 +23,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import javax.inject.Inject
 
-class SessionProviderImpl @Inject constructor(
+class SessionProviderImpl(
     private val accountRepository: AccountRepository,
 ) : SessionProvider {
 

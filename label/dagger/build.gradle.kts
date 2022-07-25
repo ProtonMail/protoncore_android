@@ -31,7 +31,7 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    api(
+    implementation(
         project(Module.labelData),
         project(Module.labelDomain)
     )

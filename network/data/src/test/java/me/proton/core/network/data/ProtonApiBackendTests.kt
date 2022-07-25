@@ -54,7 +54,6 @@ import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -130,7 +129,7 @@ internal class ProtonApiBackendTests {
         every { extraHeaderProvider.headers }.answers { emptyList() }
 
         apiManagerFactory = ApiManagerFactory(
-            "https://example.com/".toHttpUrl(),
+            "https://example.com/",
             client,
             clientIdProvider,
             serverTimeListener,
@@ -145,8 +144,7 @@ internal class ProtonApiBackendTests {
             scope,
             cache = { null },
             clientVersionValidator = clientVersionValidator,
-            dohAlternativesListener = null,
-            okHttpClient = OkHttpClient()
+            dohAlternativesListener = null
         )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable

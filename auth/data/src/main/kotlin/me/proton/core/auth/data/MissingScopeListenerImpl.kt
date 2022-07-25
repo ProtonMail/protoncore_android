@@ -30,11 +30,10 @@ import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.util.kotlin.exhaustive
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MissingScopeListenerImpl @Inject constructor() : MissingScopeListener {
+class MissingScopeListenerImpl : MissingScopeListener {
     private val _state = MutableSharedFlow<MissingScopeState>(extraBufferCapacity = 1)
 
     override val state: SharedFlow<MissingScopeState> = _state.asSharedFlow()

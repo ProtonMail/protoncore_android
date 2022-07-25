@@ -25,7 +25,7 @@ import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.data.AccountStateHandler
 import me.proton.core.accountmanager.domain.getAccounts
 
-fun AccountStateHandler.disableInitialNotReadyAccounts() = scopeProvider.GlobalDefaultSupervisedScope.launch {
+fun AccountStateHandler.disableInitialNotReadyAccounts() = scope.launch {
     // For all NotReady/Removed Accounts in the first/initial list.
     accountManager.getAccounts(AccountState.NotReady, AccountState.Removed).first().forEach {
         // Do not disable if SecondFactor is pending.

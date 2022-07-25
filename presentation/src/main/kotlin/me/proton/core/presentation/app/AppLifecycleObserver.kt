@@ -25,9 +25,8 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
-class AppLifecycleObserver @Inject constructor() : AppLifecycleProvider, DefaultLifecycleObserver {
+class AppLifecycleObserver : AppLifecycleProvider, DefaultLifecycleObserver {
 
     private val mutableState = MutableStateFlow(AppLifecycleProvider.State.Background)
 

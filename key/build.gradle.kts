@@ -26,7 +26,6 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.keyDagger),
         project(Module.keyDomain),
         project(Module.keyData)
     )

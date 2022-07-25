@@ -22,11 +22,8 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.DomainApi
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class DomainRepositoryImpl @Inject constructor(
+class DomainRepositoryImpl(
     private val provider: ApiProvider
 ) : DomainRepository {
 

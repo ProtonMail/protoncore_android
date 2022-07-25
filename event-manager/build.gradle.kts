@@ -26,8 +26,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.eventManagerDagger),
         project(Module.eventManagerDomain),
-        project(Module.eventManagerData),
+        project(Module.eventManagerData)
     )
 }

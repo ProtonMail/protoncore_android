@@ -29,6 +29,8 @@ import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.serialization.SerializationException
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -55,15 +57,18 @@ import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_BAD
+import me.proton.core.network.domain.isForceUpdate
 import me.proton.core.presentation.app.AppLifecycleProvider
-import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EventManagerImplTest {
+
+    private val coroutineScope = TestCoroutineScope()
 
     private lateinit var database: EventMetadataDatabase
 
@@ -141,7 +146,7 @@ class EventManagerImplTest {
             val deserializerSlot = slot<EventDeserializer>()
             every { create(capture(deserializerSlot)) } answers {
                 EventManagerImpl(
-                    TestCoroutineScopeProvider,
+                    coroutineScope,
                     appLifecycleProvider,
                     accountManager,
                     eventWorkerManager,

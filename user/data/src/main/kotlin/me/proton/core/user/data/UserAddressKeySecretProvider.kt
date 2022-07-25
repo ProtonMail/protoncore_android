@@ -35,14 +35,11 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.repository.PassphraseRepository
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Provide User Address secret according old vs new format.
  */
-@Singleton
-class UserAddressKeySecretProvider @Inject constructor(
+class UserAddressKeySecretProvider(
     private val passphraseRepository: PassphraseRepository,
     private val cryptoContext: CryptoContext,
 ) {

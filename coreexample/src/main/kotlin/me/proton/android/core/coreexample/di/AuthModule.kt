@@ -50,6 +50,22 @@ object AuthModule {
 
     @Provides
     @Singleton
+    fun provideAuthRepository(
+        apiProvider: ApiProvider,
+        @ApplicationContext context: Context,
+        product: Product
+    ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
+
+    @Provides
+    fun provideAuthOrchestrator(): AuthOrchestrator = AuthOrchestrator()
+
+    @Provides
+    @Singleton
+    fun provideSrpCrypto(): SrpCrypto =
+        GOpenPGPSrpCrypto()
+
+    @Provides
+    @Singleton
     fun provideUserCheck(
         @ApplicationContext context: Context,
         accountManager: AccountManager,
@@ -60,6 +76,20 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideLoginBlockingHelp(): LoginActivity.BlockingHelp? = null
+
+    // region missing scopes
+    @Provides
+    @Singleton
+    fun provideMissingScopeListener(): MissingScopeListener = MissingScopeListenerImpl()
+    // endregion
+
+    @Provides
+    @Singleton
+    fun provideChallengeConfig(): SignupChallengeConfig = SignupChallengeConfig()
+
+    @Provides
+    @Singleton
+    fun provideLoginChallengeConfig(): LoginChallengeConfig = LoginChallengeConfig()
 
     @Provides
     @Singleton

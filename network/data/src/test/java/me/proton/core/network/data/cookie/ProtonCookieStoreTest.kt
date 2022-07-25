@@ -21,10 +21,9 @@ package me.proton.core.network.data.cookie
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.ProtonCookieStore
-import me.proton.core.test.kotlin.TestCoroutineScopeProvider
-import me.proton.core.test.kotlin.TestDispatcherProvider
 import okhttp3.Cookie
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -39,19 +38,21 @@ import kotlin.test.assertContentEquals
 class ProtonCookieStoreTest {
     private lateinit var diskStorage: DiskCookieStorage
     private lateinit var memoryStorage: MemoryCookieStorage
+    private lateinit var scope: TestCoroutineScope
     private lateinit var tested: ProtonCookieStore
 
     @BeforeTest
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        diskStorage = DiskCookieStorage(context, "test-prefs-cookie-store", TestCoroutineScopeProvider)
+        scope = TestCoroutineScope()
+        diskStorage = DiskCookieStorage(context, "test-prefs-cookie-store", scope = scope)
         memoryStorage = MemoryCookieStorage()
         tested = ProtonCookieStore(persistentStorage = diskStorage, sessionStorage = memoryStorage)
     }
 
     @AfterTest
     fun tearDown() {
-        TestDispatcherProvider.cleanupTestCoroutines()
+        scope.cleanupTestCoroutines()
     }
 
     @Test

@@ -51,11 +51,8 @@ import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.signKeyList
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class UserManagerImpl @Inject constructor(
+class UserManagerImpl(
     private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
     private val passphraseRepository: PassphraseRepository,

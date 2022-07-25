@@ -59,7 +59,6 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.equalsNoCase
 import okhttp3.Cookie
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -161,7 +160,7 @@ internal class HumanVerificationTests {
 
         apiManagerFactory =
             ApiManagerFactory(
-                "https://example.com/".toHttpUrl(),
+                "https://example.com/",
                 client,
                 clientIdProvider,
                 serverTimeListener,
@@ -176,8 +175,7 @@ internal class HumanVerificationTests {
                 scope,
                 cache = { null },
                 clientVersionValidator = clientVersionValidator,
-                dohAlternativesListener = null,
-                okHttpClient = OkHttpClient()
+                dohAlternativesListener = null
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 

@@ -50,7 +50,6 @@ dependencies {
         `android-annotation`,
         `apacheCommon-codec`,
         datastore,
-        `javax-inject`,
         `miniDns`,
         `okHttp-logging`,
         `retrofit`,
