@@ -836,7 +836,7 @@ style:
     acceptableDecimalLength: 5
   UnnecessaryAbstractClass:
     active: true
-    excludeAnnotatedClasses: ['dagger.Module']
+    excludeAnnotatedClasses: ['dagger.Module', 'androidx.room.Database']
   UnnecessaryAnnotationUseSiteTarget:
     active: false
   UnnecessaryApply:
