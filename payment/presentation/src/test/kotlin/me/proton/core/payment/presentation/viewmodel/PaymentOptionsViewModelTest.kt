@@ -39,6 +39,7 @@ import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
@@ -104,13 +105,14 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         couponCode = null,
         currency = "EUR",
         amount = 5,
-        plans = listOf(testSubscribedPlan)
+        plans = listOf(testSubscribedPlan),
+        external = SubscriptionManagement.PROTON_MANAGED
     )
 
     // endregion
     private lateinit var viewModel: PaymentOptionsViewModel
     private val subscriptionStatus = SubscriptionStatus(
-        1, 1, 1, 0, null, 0, Currency.EUR, SubscriptionCycle.MONTHLY, null
+        1, 1, 1, 0, null, 0, Currency.EUR, SubscriptionCycle.YEARLY, null
     )
 
     @Before

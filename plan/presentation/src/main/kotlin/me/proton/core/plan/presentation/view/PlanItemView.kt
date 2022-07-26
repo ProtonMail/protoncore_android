@@ -54,7 +54,12 @@ class PlanItemView @JvmOverloads constructor(
     private lateinit var cycle: PlanCycle
     private lateinit var planDetailsItem: PlanDetailsItem
 
-    fun setData(plan: PlanDetailsItem, cycle: PlanCycle, currency: PlanCurrency?, collapsible: Boolean = true) {
+    fun setData(
+        plan: PlanDetailsItem,
+        cycle: PlanCycle = PlanCycle.YEARLY,
+        currency: PlanCurrency?,
+        collapsible: Boolean = true
+    ) {
         this.planDetailsItem = plan
         this.cycle = cycle
         this.currency = currency ?: PlanCurrency.EUR
@@ -116,11 +121,11 @@ class PlanItemView @JvmOverloads constructor(
             it.recycle()
         }
 
-        when (cycle) {
-            PlanCycle.FREE -> planCycleText.visibility = GONE
+        when (plan.cycle) {
             PlanCycle.MONTHLY -> planCycleText.text = context.getString(R.string.plans_billing_monthly)
             PlanCycle.YEARLY -> planCycleText.text = context.getString(R.string.plans_billing_yearly)
             PlanCycle.TWO_YEARS -> planCycleText.text = context.getString(R.string.plans_billing_two_years)
+            null, PlanCycle.FREE -> planCycleText.visibility = GONE
         }.exhaustive
         val renewalInfoText = if (plan.isAutoRenewal) R.string.plans_renewal_date else R.string.plans_expiration_date
         plan.endDate?.let {
@@ -137,7 +142,7 @@ class PlanItemView @JvmOverloads constructor(
             separator.visibility = View.VISIBLE
         }
 
-        val amount = plan.price?.let { price -> cycle.getPrice(price) } ?: PRICE_ZERO
+        val amount = plan.price?.let { price -> plan.cycle?.getPrice(price) } ?: PRICE_ZERO
         billableAmount = amount
         planPriceText.text = amount.formatCentsPriceDefaultLocale(currency.name)
     }
@@ -194,19 +199,12 @@ class PlanItemView @JvmOverloads constructor(
             featureIcons?.recycle()
         }
 
-        val maxMonthlyPrice = PlanCycle.MONTHLY.getPrice(plan.price) ?: PRICE_ZERO
-        when (cycle) {
-            PlanCycle.MONTHLY,
-            PlanCycle.FREE -> planPriceDescriptionText.visibility = GONE
-            PlanCycle.YEARLY,
-            PlanCycle.TWO_YEARS -> planPriceDescriptionText.visibility = VISIBLE
-        }.exhaustive
-        calculatePaidPlanPrice(plan = plan, maxMonthlyPrice = maxMonthlyPrice)
+        val maxPrice = cycle.getPrice(plan.price) ?: PRICE_ZERO
+        calculatePaidPlanPrice(plan = plan, maxPrice = maxPrice)
 
         if (!plan.purchaseEnabled) {
             select.visibility = GONE
             priceCycleLayout.visibility = GONE
-            planPriceDescriptionText.visibility = GONE
         }
         select.onClick {
             planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount, plan.services, plan.type)
@@ -229,37 +227,27 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
-    private fun calculatePaidPlanPrice(plan: PlanDetailsItem.PaidPlanDetailsItem, maxMonthlyPrice: Double) =
+    private fun calculatePaidPlanPrice(plan: PlanDetailsItem.PaidPlanDetailsItem, maxPrice: Double) =
         with(binding) {
-            val amount = plan.price.let { price -> cycle.getPrice(price) } ?: PRICE_ZERO
+            val amount =
+                when (planDetailsItem) {
+                    is PlanDetailsItem.FreePlanDetailsItem -> PRICE_ZERO
+                    else -> plan.price.let { price -> cycle.getPrice(price) } ?: PRICE_ZERO
+                }.exhaustive
 
-            val monthlyPrice = calculateMonthlyPrice(amount)
             if (amount != PRICE_ZERO) {
-                val discount = (maxMonthlyPrice - monthlyPrice) / maxMonthlyPrice * 100
+                val discount = (maxPrice - amount) / maxPrice * 100
                 planPercentageText.visibility = if (discount > 0) VISIBLE else GONE
                 planPercentageText.text = "(-${discount.toInt()}%)"
             }
-            val price = monthlyPrice.formatCentsPriceDefaultLocale(currency.name)
+            val price = amount.formatCentsPriceDefaultLocale(currency.name)
             planPriceText.text = price
 
             planCycleText.visibility = VISIBLE
-            planPriceDescriptionText.text = String.format(
-                context.getString(R.string.plans_billed_yearly),
-                (monthlyPrice * MONTHS_IN_YEAR).formatCentsPriceDefaultLocale(currency.name, fractionDigits = 2)
-            )
             billableAmount = amount
         }
 
-    private fun calculateMonthlyPrice(amount: Double) = when (cycle) {
-        PlanCycle.MONTHLY -> amount
-        PlanCycle.YEARLY -> amount / MONTHS_IN_YEAR
-        PlanCycle.TWO_YEARS -> amount / MONTHS_IN_2YEARS
-        PlanCycle.FREE -> PRICE_ZERO
-    }.exhaustive.toDouble()
-
     companion object {
-        private const val MONTHS_IN_YEAR = 12
-        private const val MONTHS_IN_2YEARS = 24
         private const val RENEWAL_DATE_FORMAT = "MMM dd, yyyy"
     }
 }

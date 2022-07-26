@@ -102,7 +102,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             price = PlanPricing.fromPlan(plan),
             isAutoRenewal = autoRenewal,
             endDate = endDate,
-            cycle = plan.cycle?.let { PlanCycle.map[it] } ?: PlanCycle.FREE,
+            cycle = plan.cycle?.let { PlanCycle.map[it] },
             storage = plan.maxSpace,
             members = plan.maxMembers,
             addresses = plan.maxAddresses,
@@ -123,7 +123,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
         PlanDetailsItem.PaidPlanDetailsItem(
             name = name,
             displayName = title,
-            cycle = cycle?.let { PlanCycle.map[it] } ?: PlanCycle.FREE,
+            cycle = cycle?.let { PlanCycle.map[it] },
             price = PlanPricing.fromPlan(this),
             storage = maxSpace,
             members = maxMembers,

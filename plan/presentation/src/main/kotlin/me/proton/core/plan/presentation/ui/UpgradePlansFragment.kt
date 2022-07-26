@@ -24,6 +24,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -35,6 +36,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
@@ -79,15 +81,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                 toolbar.setNavigationOnClickListener {
                     setResult()
                 }
-                manageSubscriptionText.apply {
-                    setText(
-                        if (product == Product.Vpn)
-                            R.string.plans_manage_your_subscription_vpn
-                        else
-                            R.string.plans_manage_your_subscription
-                    )
-                    movementMethod = LinkMovementMethod.getInstance()
-                }
                 input.user?.let {
                     if (input.showSubscription) {
                         toolbar.title = getString(R.string.plans_subscription)
@@ -111,13 +104,18 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
                         val plan = it.subscribedPlans[0]
-                        val cycle = plan.cycle
                         val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.userCurrency
+
+                        binding.manageSubscriptionText.apply {
+                            setText(it.subscriptionManagement.subscriptionManagementText())
+                            movementMethod = LinkMovementMethod.getInstance()
+                        }
+
                         binding.manageSubscriptionText.visibility = VISIBLE
                         binding.currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
-                            setData(plan = plan, cycle = cycle, currency = currency, collapsible = false)
+                            setData(plan = plan, currency = currency, collapsible = false)
                         }
                     }
                 }.exhaustive
@@ -141,8 +139,11 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                                             // proceed with result return
                                             setResult(selectedPlan)
                                         } else {
-                                            val cycle = selectedPlan.cycle.toSubscriptionCycle()
-                                            upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                            upgradePlanViewModel.startBillingForPaidPlan(
+                                                userId,
+                                                selectedPlan,
+                                                selectedPlan.cycle.toSubscriptionCycle()
+                                            )
                                         }
                                     }
                                     visibility = if (it.plans.isEmpty()) GONE else VISIBLE
@@ -169,6 +170,15 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
         }
     }
+
+    @StringRes
+    private fun SubscriptionManagement?.subscriptionManagementText(): Int =
+        when (this) {
+            null -> R.string.plans_manage_your_subscription_other
+            SubscriptionManagement.PROTON_MANAGED -> R.string.plans_manage_your_subscription_other
+            SubscriptionManagement.GOOGLE_MANAGED -> R.string.plans_manage_your_subscription_google
+        }
+
 
     private fun showLoading(loading: Boolean) = with(binding) {
         progressParent.visibility = if (loading) VISIBLE else GONE

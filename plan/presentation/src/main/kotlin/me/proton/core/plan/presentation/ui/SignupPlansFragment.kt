@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
 import me.proton.core.plan.presentation.entity.PlanInput
@@ -84,8 +85,11 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                                         // proceed with result return
                                         setResult(selectedPlan)
                                     } else {
-                                        val cycle = selectedPlan.cycle.toSubscriptionCycle()
-                                        signupPlansViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                        signupPlansViewModel.startBillingForPaidPlan(
+                                            userId,
+                                            selectedPlan,
+                                            selectedPlan.cycle.toSubscriptionCycle()
+                                        )
                                     }
                                 }
                                 if (it.plans.isNotEmpty()) {
@@ -95,7 +99,10 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                                 }
                             }
                         }
-                        is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
+                        is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(
+                            it.selectedPlan,
+                            it.billing
+                        )
                     }.exhaustive
                 }.launchIn(viewLifecycleOwner.lifecycleScope)
 

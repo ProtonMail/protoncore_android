@@ -18,8 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
-import me.proton.core.test.android.plugins.data.BillingCycle
-import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -62,26 +60,5 @@ class UpgradePlanTests : BaseTest() {
         coreExampleRobot
             .plansUpgrade()
             .verify { planDetailsNotDisplayed(paidUser.plan) }
-    }
-
-    @Test
-    fun changeBillingCycleAndCurrency() {
-
-        login(freeUser)
-
-        coreExampleRobot
-            .plansUpgrade()
-            .scrollToPlan(Plan.Dev)
-
-        BillingCycle.values().forEach { cycle ->
-            selectPlanRobot.changeBillingCycle(cycle)
-            Currency.values().forEach { currency ->
-                selectPlanRobot
-                    .changeCurrency(currency)
-                    .verify {
-                        billingCycleIs(Plan.Dev, cycle, currency)
-                    }
-            }
-        }
     }
 }

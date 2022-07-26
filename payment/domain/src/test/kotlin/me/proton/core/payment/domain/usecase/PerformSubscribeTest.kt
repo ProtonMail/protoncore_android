@@ -31,6 +31,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
@@ -59,7 +60,8 @@ class PerformSubscribeTest {
         couponCode = null,
         currency = "EUR",
         amount = 5L,
-        plans = listOf(mockk())
+        plans = listOf(mockk()),
+        external = SubscriptionManagement.PROTON_MANAGED
     )
     // endregion
 

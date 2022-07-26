@@ -44,6 +44,7 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
@@ -373,7 +374,8 @@ class PaymentsRepositoryImplTest {
             couponCode = null,
             currency = "EUR",
             amount = 5L,
-            plans = listOf(mockk())
+            plans = listOf(mockk()),
+            external = SubscriptionManagement.PROTON_MANAGED
         )
         coEvery { apiManager.invoke<Subscription>(any(), any()) } returns ApiResult.Success(subscription)
         // WHEN

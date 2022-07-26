@@ -45,8 +45,6 @@ enum class PlanCycle(val value: Int) {
 
     companion object {
         val map = values().associateBy { it.value }
-
-        fun getPlanCycleByPositionIgnoreFree(position: Int) = values()[position + 1]
     }
 }
 

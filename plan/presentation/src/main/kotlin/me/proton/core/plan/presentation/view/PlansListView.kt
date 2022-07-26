@@ -48,7 +48,7 @@ internal class PlansListView @JvmOverloads constructor(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
             planDetails.apply {
-                setData(plan = plan, cycle = selectedCycle, currency = selectedCurrency, collapsible = plansSize != 1)
+                setData(plan = plan, currency = selectedCurrency, collapsible = plansSize != 1)
 
                 planSelectionListener = { planId, planName, amount, services, type ->
                     selectPlanListener(
@@ -76,8 +76,8 @@ internal class PlansListView @JvmOverloads constructor(
     private var selectedCycle: PlanCycle
 
     init {
-        selectedCycle = PlanCycle.YEARLY
         selectedCurrency = PlanCurrency.EUR
+        selectedCycle = PlanCycle.YEARLY
 
         binding.apply {
             planListRecyclerView.apply {
@@ -88,11 +88,6 @@ internal class PlansListView @JvmOverloads constructor(
                 selectedCurrency = PlanCurrency.values()[currencyPosition]
                 plansAdapter.notifyDataSetChanged()
             }
-
-            billingCycleSpinner.selected { cyclePosition ->
-                selectedCycle = PlanCycle.getPlanCycleByPositionIgnoreFree(cyclePosition)
-                plansAdapter.notifyDataSetChanged()
-            }
         }
 
         ArrayAdapter.createFromResource(
@@ -101,15 +96,6 @@ internal class PlansListView @JvmOverloads constructor(
             R.layout.plan_spinner_item
         ).also { adapter ->
             binding.currencySpinner.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            context,
-            R.array.supported_billing_cycle,
-            R.layout.plan_spinner_item
-        ).also { adapter ->
-            binding.billingCycleSpinner.adapter = adapter
-            binding.billingCycleSpinner.setSelection(1)
         }
     }
 
@@ -152,6 +138,5 @@ internal class PlansListView @JvmOverloads constructor(
 
     private fun setSpinnersVisibility(visibility: Int) = with(binding) {
         currencySpinner.visibility = visibility
-        billingCycleSpinner.visibility = visibility
     }
 }

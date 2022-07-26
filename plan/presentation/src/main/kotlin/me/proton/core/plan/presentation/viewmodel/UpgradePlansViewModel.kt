@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
@@ -69,7 +70,8 @@ internal class UpgradePlansViewModel @Inject constructor(
         sealed class Success : SubscribedPlansState() {
             data class SubscribedPlans(
                 val subscribedPlans: List<PlanDetailsItem>,
-                val userCurrency: PlanCurrency?
+                val userCurrency: PlanCurrency?,
+                val subscriptionManagement: SubscriptionManagement? = null
             ) : Success()
         }
 
@@ -114,7 +116,8 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
         getAvailablePlansForUpgrade(userId, isFree)
-        emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans, PlanCurrency.map[user.currency]))
+        val external = currentSubscription?.external
+        emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans, PlanCurrency.map[user.currency], external))
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
     }.onEach {

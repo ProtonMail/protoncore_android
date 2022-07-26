@@ -561,8 +561,6 @@ public final class me/proton/core/test/android/plugins/Quark$InternalApiEndpoint
 }
 
 public final class me/proton/core/test/android/plugins/data/BillingCycle : java/lang/Enum {
-	public static final field Monthly Lme/proton/core/test/android/plugins/data/BillingCycle;
-	public static final field TwoYear Lme/proton/core/test/android/plugins/data/BillingCycle;
 	public static final field Yearly Lme/proton/core/test/android/plugins/data/BillingCycle;
 	public final fun getMonthlyPrice ()D
 	public final fun getValue ()Ljava/lang/String;
@@ -686,7 +684,6 @@ public final class me/proton/core/test/android/plugins/data/Plan$Companion {
 }
 
 public final class me/proton/core/test/android/plugins/data/PlanKt {
-	public static final fun getSupportedBillingCycles ()[Ljava/lang/String;
 	public static final fun randomPaidPlan ()Lme/proton/core/test/android/plugins/data/Plan;
 }
 

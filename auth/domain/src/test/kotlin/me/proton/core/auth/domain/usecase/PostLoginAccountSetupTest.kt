@@ -189,7 +189,7 @@ class PostLoginAccountSetupTest {
         val billingDetails = BillingDetails(
             amount = 99,
             currency = Currency.EUR,
-            cycle = SubscriptionCycle.MONTHLY,
+            cycle = SubscriptionCycle.YEARLY,
             planName = "test-plan-name",
             token = "test-token"
         )
@@ -233,7 +233,7 @@ class PostLoginAccountSetupTest {
         assertEquals(testUserId, userId.captured)
         assertEquals(99, amount.captured)
         assertEquals(Currency.EUR, currency.captured)
-        assertEquals(SubscriptionCycle.MONTHLY, cycle.captured)
+        assertEquals(SubscriptionCycle.YEARLY, cycle.captured)
         assertEquals(listOf("test-plan-name"), planNames.captured)
         assertEquals("test-token", paymentToken.captured)
     }

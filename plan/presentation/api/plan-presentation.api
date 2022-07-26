@@ -129,7 +129,6 @@ public final class me/proton/core/plan/presentation/databinding/PlanItemBinding 
 	public final field planItemParent Landroidx/constraintlayout/widget/ConstraintLayout;
 	public final field planNameText Landroid/widget/TextView;
 	public final field planPercentageText Landroid/widget/TextView;
-	public final field planPriceDescriptionText Landroid/widget/TextView;
 	public final field planPriceText Landroid/widget/TextView;
 	public final field planRenewalText Landroid/widget/TextView;
 	public final field priceCycleLayout Landroid/widget/LinearLayout;
@@ -164,7 +163,6 @@ public final class me/proton/core/plan/presentation/databinding/PlanSpinnerItemB
 }
 
 public final class me/proton/core/plan/presentation/databinding/PlansListViewBinding : androidx/viewbinding/ViewBinding {
-	public final field billingCycleSpinner Landroid/widget/Spinner;
 	public final field currencySpinner Landroid/widget/Spinner;
 	public final field planListRecyclerView Landroidx/recyclerview/widget/RecyclerView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
@@ -204,16 +202,14 @@ public final class me/proton/core/plan/presentation/entity/PlanCycle : java/lang
 
 public final class me/proton/core/plan/presentation/entity/PlanCycle$Companion {
 	public final fun getMap ()Ljava/util/Map;
-	public final fun getPlanCycleByPositionIgnoreFree (I)Lme/proton/core/plan/presentation/entity/PlanCycle;
 }
 
 public abstract class me/proton/core/plan/presentation/entity/PlanDetailsItem : android/os/Parcelable {
 	public static final field Companion Lme/proton/core/plan/presentation/entity/PlanDetailsItem$Companion;
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIIILme/proton/core/plan/presentation/entity/PlanCycle;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAddresses ()I
 	public fun getCalendars ()I
 	public fun getConnections ()I
-	public fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public fun getDisplayName ()Ljava/lang/String;
 	public fun getDomains ()I
 	public fun getMembers ()I
@@ -254,7 +250,7 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$Curre
 	public fun getAddresses ()I
 	public fun getCalendars ()I
 	public fun getConnections ()I
-	public fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
+	public final fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public fun getDisplayName ()Ljava/lang/String;
 	public fun getDomains ()I
 	public final fun getEndDate ()Ljava/util/Date;
@@ -330,7 +326,7 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidP
 	public fun getCalendars ()I
 	public fun getConnections ()I
 	public final fun getCurrency ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
-	public fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
+	public final fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public fun getDisplayName ()Ljava/lang/String;
 	public fun getDomains ()I
 	public fun getMembers ()I

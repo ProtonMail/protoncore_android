@@ -69,7 +69,7 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [T]
      */
     inline fun <reified T> upgradeToPlan(plan: Plan): T =
-            toggleExpandPlan(plan)
+        toggleExpandPlan(plan)
             .scrollToPlan(plan)
             .clickPlanButtonWithText(plan)
 
@@ -93,7 +93,6 @@ class SelectPlanRobot : CoreRobot() {
      */
     fun changeBillingCycle(billingCycle: BillingCycle): SelectPlanRobot {
         view.instanceOf(NestedScrollView::class.java).swipeDown()
-        view.withId(R.id.billingCycleSpinner).click()
         view.withText(billingCycle.value).click()
         return this
     }
@@ -149,24 +148,6 @@ class SelectPlanRobot : CoreRobot() {
         fun billingCycleIs(plan: Plan, billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
             toggleExpandPlan(plan)
             view.withId(R.id.planPriceText).withText("${currency.symbol}${billingCycle.monthlyPrice}")
-            val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
-            val billedAsString =
-                stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}$yearlyPriceString")
-            if (billingCycle == BillingCycle.Monthly) {
-                view.withId(R.id.planPriceDescriptionText)
-                    .isDescendantOf(
-                        view.withId(R.id.planGroup).hasSibling(
-                            view.withText(plan.text)
-                        )
-                    ).checkNotDisplayed()
-            } else {
-                view.withId(R.id.planPriceDescriptionText).withText(billedAsString)
-                    .isDescendantOf(
-                        view.withId(R.id.planGroup).hasSibling(
-                            view.withText(plan.text)
-                        )
-                    ).checkDisplayed()
-            }
         }
     }
 

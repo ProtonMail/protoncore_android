@@ -52,6 +52,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
 import me.proton.core.humanverification.presentation.utils.hasHumanVerificationFragment
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan

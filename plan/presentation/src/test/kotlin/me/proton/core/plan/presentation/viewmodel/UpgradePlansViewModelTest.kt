@@ -25,6 +25,7 @@ import io.mockk.mockk
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
@@ -189,7 +190,8 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         amount = 5,
         plans = listOf(
             testSubscribedPlan
-        )
+        ),
+        external = SubscriptionManagement.PROTON_MANAGED
     )
     // endregion
 

@@ -19,27 +19,20 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
-import me.proton.core.plan.presentation.R
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
 
 @Serializable
 enum class Plan(var planName: String, var text: String) {
     Free("free", "Proton Free"),
     Professional("pro", "Proton Mail Professional"),
     Visionary("visionary", "Visionary"),
-    Plus("plus", "Proton Mail Plus"),
+    Plus("plus", "Mail Plus"),
     Dev("", "")
 }
 
 fun randomPaidPlan(): Plan = Plan.values().filter { it != Plan.Free }.random()
 
-val supportedBillingCycles: Array<String> =
-    getTargetContext().resources.getStringArray(R.array.supported_billing_cycle)
-
 enum class BillingCycle(val value: String, val monthlyPrice: Double, val yearlyPrice: Number) {
-    Monthly(supportedBillingCycles[0], 5.00, 0.00),
-    Yearly(supportedBillingCycles[1], 4.00, 48.00),
-    TwoYear(supportedBillingCycles[2], 3.29, 39.50)
+    Yearly("Pay annually", 4.00, 48.00),
 }
 
 enum class Currency(val symbol: String, val code: String) {

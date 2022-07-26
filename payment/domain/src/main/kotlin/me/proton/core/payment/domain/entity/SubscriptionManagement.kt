@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,10 @@
 
 package me.proton.core.payment.domain.entity
 
-import me.proton.core.plan.domain.entity.Plan
+enum class SubscriptionManagement(val value: Int) {
+    PROTON_MANAGED(0), GOOGLE_MANAGED(1);
 
-data class Subscription(
-    val id: String,
-    val invoiceId: String,
-    val cycle: Int,
-    val periodStart: Long,
-    val periodEnd: Long,
-    val couponCode: String?,
-    val currency: String,
-    val amount: Long,
-    val external: SubscriptionManagement?,
-    val plans: List<Plan>
-)
+    companion object {
+        val map = values().associateBy { it.value }
+    }
+}

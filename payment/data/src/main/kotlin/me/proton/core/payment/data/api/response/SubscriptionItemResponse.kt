@@ -21,6 +21,7 @@ package me.proton.core.payment.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 
 @Serializable
 internal data class SubscriptionItemResponse(
@@ -40,10 +41,21 @@ internal data class SubscriptionItemResponse(
     val currency: String,
     @SerialName("Amount")
     val amount: Long,
+    @SerialName("External")
+    val external: Int? = null,
     @SerialName("Plans")
     val plans: List<PlanResponse>
 ) {
     fun toSubscription(): Subscription = Subscription(
-        id, invoiceId, cycle, periodStart, periodEnd, couponCode, currency, amount, plans.map { it.toPlan() }
+        id = id,
+        invoiceId = invoiceId,
+        cycle = cycle,
+        periodStart = periodStart,
+        periodEnd = periodEnd,
+        couponCode = couponCode,
+        currency = currency,
+        amount = amount,
+        external = SubscriptionManagement.map[external],
+        plans = plans.map { it.toPlan() }
     )
 }

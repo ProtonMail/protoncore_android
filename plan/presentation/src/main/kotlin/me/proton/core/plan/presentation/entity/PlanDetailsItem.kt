@@ -34,8 +34,7 @@ sealed class PlanDetailsItem(
     open val connections: Int,
     open val domains: Int,
     open val members: Int,
-    open val calendars: Int,
-    open val cycle: PlanCycle
+    open val calendars: Int
 ) : Parcelable {
 
     @Parcelize
@@ -48,7 +47,7 @@ sealed class PlanDetailsItem(
         override val domains: Int,
         override val members: Int,
         override val calendars: Int,
-        override val cycle: PlanCycle,
+        val cycle: PlanCycle?,
         val price: PlanPricing?,
         val isAutoRenewal: Boolean,
         val endDate: Date?,
@@ -67,8 +66,7 @@ sealed class PlanDetailsItem(
         connections,
         domains,
         members,
-        calendars,
-        cycle
+        calendars
     )
 
     @Parcelize
@@ -89,8 +87,7 @@ sealed class PlanDetailsItem(
         connections,
         domains,
         members,
-        calendars,
-        PlanCycle.FREE
+        calendars
     )
 
     @Parcelize
@@ -103,7 +100,7 @@ sealed class PlanDetailsItem(
         override val calendars: Int,
         override val domains: Int,
         override val connections: Int,
-        override val cycle: PlanCycle,
+        val cycle: PlanCycle?,
         val price: PlanPricing,
         val currency: PlanCurrency,
         val starred: Boolean,
@@ -118,8 +115,7 @@ sealed class PlanDetailsItem(
         connections,
         domains,
         members,
-        calendars,
-        cycle
+        calendars
     )
 
     companion object {
@@ -153,4 +149,3 @@ data class PlanPricing(
             }
     }
 }
-

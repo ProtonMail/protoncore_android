@@ -26,6 +26,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
@@ -50,7 +51,8 @@ class GetCurrentSubscriptionTest {
         couponCode = null,
         currency = "EUR",
         amount = 5,
-        plans = listOf(mockk())
+        plans = listOf(mockk()),
+        external = SubscriptionManagement.PROTON_MANAGED
     )
     // endregion
 
