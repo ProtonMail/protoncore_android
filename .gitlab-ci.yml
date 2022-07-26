@@ -11,9 +11,7 @@ include:
     ref: master
     file: '/jobs/commit-locales.gitlab-ci.yml'
 
-  - project: 'ProtonVPN/android/android-app-new'
-    ref: development
-    file: '/appetize-integration.yml'
+  - local: '/ci/templates-shared/appetize-integration.yml'
 
   - local: '/ci/templates/git.gitlab-ci.yml'
 
