@@ -21,13 +21,15 @@ package me.proton.core.test.android.uitests.tests
 import android.app.Application
 import android.util.Log
 import androidx.test.core.app.ApplicationProvider
+import dagger.hilt.android.EntryPointAccessors
+import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
-import me.proton.core.test.android.plugins.Features
 import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
@@ -58,10 +60,16 @@ open class BaseTest(
     }
 
     companion object {
-        val features = Features(Constants.API_HOST, BuildConfig.PROXY_TOKEN)
         val users = Users("sensitive/users.json")
         val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
-        val authHelper = ProtonTestEntryPoint.provide(ApplicationProvider.getApplicationContext<Application>())
+        val authHelper by lazy { protonTestEntryPoint.loginTestHelper }
+
+        private val protonTestEntryPoint by lazy {
+            EntryPointAccessors.fromApplication(
+                ApplicationProvider.getApplicationContext<Application>(),
+                ProtonTestEntryPoint::class.java
+            )
+        }
 
         @JvmStatic
         @BeforeClass
@@ -70,6 +78,11 @@ open class BaseTest(
             authHelper.logoutAll()
             Plan.Dev.text = Plan.Plus.text
             Plan.Dev.planName = Plan.Plus.planName
+        }
+
+        @JvmStatic
+        protected fun isProtonPaymentEnabled(): Boolean = runBlocking {
+            PaymentProvider.ProtonPayment in protonTestEntryPoint.getAvailablePaymentProviders()
         }
     }
 }

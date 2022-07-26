@@ -502,11 +502,6 @@ public final class me/proton/core/test/android/instrumented/utils/WaitUntilKt {
 	public static synthetic fun waitUntil$default (JJLkotlin/jvm/functions/Function0;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/test/android/plugins/Features {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public final fun getPaymentsAndroidDisabled ()Z
-}
-
 public final class me/proton/core/test/android/plugins/Quark {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;

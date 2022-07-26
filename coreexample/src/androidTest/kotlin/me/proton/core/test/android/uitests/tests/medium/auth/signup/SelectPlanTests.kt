@@ -51,10 +51,10 @@ class SelectPlanTests : BaseTest() {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
 
-        if (features.paymentsAndroidDisabled) {
-            humanVerificationRobot = skipRecoveryRobot.skipConfirm<HumanVerificationRobot>()
-        } else {
+        if (isProtonPaymentEnabled()) {
             selectPlanRobot = skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
+        } else {
+            humanVerificationRobot = skipRecoveryRobot.skipConfirm<HumanVerificationRobot>()
         }
     }
 

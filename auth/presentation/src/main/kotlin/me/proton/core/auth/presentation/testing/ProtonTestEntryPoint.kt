@@ -18,30 +18,17 @@
 
 package me.proton.core.auth.presentation.testing
 
-import android.content.Context
 import androidx.annotation.RestrictTo
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.auth.domain.testing.LoginTestHelper
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 @RestrictTo(RestrictTo.Scope.TESTS)
 interface ProtonTestEntryPoint {
+    val getAvailablePaymentProviders: GetAvailablePaymentProviders
     val loginTestHelper: LoginTestHelper
-
-    /** Provides an instance of [LoginTestHelper].
-     * Usage from instrumented tests:
-     * ```
-     * val helper = ProtonTestEntryPoint.provide(ApplicationProvider.getApplicationContext<Application>())
-     * helper.login(...)
-     * ```
-     */
-    @RestrictTo(RestrictTo.Scope.TESTS)
-    companion object {
-        fun provide(context: Context): LoginTestHelper =
-            EntryPointAccessors.fromApplication(context, ProtonTestEntryPoint::class.java).loginTestHelper
-    }
 }

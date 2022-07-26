@@ -78,14 +78,14 @@ class ExternalSetupTests : BaseTest() {
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)
             .setCode(defaultCode)
 
-        if (features.paymentsAndroidDisabled) {
-            codeVerificationRobot.verifyCode<SignupFinishedRobot>().verify {
-                signupFinishedDisplayed()
-            }
-        } else {
+        if (isProtonPaymentEnabled()) {
             codeVerificationRobot.verifyCode<SelectPlanRobot>()
                 .toggleExpandPlan(Dev)
                 .verify { canSelectPlan(Dev) }
+        } else {
+            codeVerificationRobot.verifyCode<SignupFinishedRobot>().verify {
+                signupFinishedDisplayed()
+            }
         }
     }
 }

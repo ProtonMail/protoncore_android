@@ -72,34 +72,34 @@ class RecoveryMethodsSetupTests : BaseTest() {
     @Test
     fun skipRecoveryMethods() {
         val skipRecoveryRobot = recoveryMethodsRobot.skip()
-        if (features.paymentsAndroidDisabled) {
-            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
-                hvElementsDisplayed()
-            }
-        } else {
+        if (isProtonPaymentEnabled()) {
             skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
                 .toggleExpandPlan(Dev)
                 .verify {
                     planDetailsDisplayedInsideRecyclerView(Dev)
                     canSelectPlan(Dev)
                 }
+        } else {
+            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+                hvElementsDisplayed()
+            }
         }
     }
 
     @Test
     fun emptyFieldsTriggerSkip() {
         val skipRecoveryRobot = recoveryMethodsRobot.next<RecoveryMethodsRobot.SkipRecoveryRobot>()
-        if (features.paymentsAndroidDisabled) {
-            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
-                hvElementsDisplayed()
-            }
-        } else {
+        if (isProtonPaymentEnabled()) {
             skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
                 .toggleExpandPlan(Dev)
                 .verify {
                     planDetailsDisplayedInsideRecyclerView(Dev)
                     canSelectPlan(Dev)
                 }
+        } else {
+            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+                hvElementsDisplayed()
+            }
         }
     }
 }

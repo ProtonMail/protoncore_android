@@ -45,10 +45,10 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .email(user.recoveryEmail)
 
-        val hvRobot: HumanVerificationRobot = if (features.paymentsAndroidDisabled) {
-            recoveryMethodsRobot.next()
-        } else {
+        val hvRobot: HumanVerificationRobot = if (isProtonPaymentEnabled()) {
             recoveryMethodsRobot.next<SelectPlanRobot>().selectPlan(user.plan)
+        } else {
+            recoveryMethodsRobot.next()
         }
 
         hvRobot
@@ -73,15 +73,15 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
 
-        if (features.paymentsAndroidDisabled) {
-            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
-                hvElementsDisplayed()
-            }
-        } else {
+        if (isProtonPaymentEnabled()) {
             skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
                 .selectPlan<AddCreditCardRobot>(user.plan)
                 .payWithCreditCard<CoreexampleRobot>(Card.default)
                 .verify { userStateIs(user, Ready, Authenticated) }
+        } else {
+            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+                hvElementsDisplayed()
+            }
         }
     }
 }

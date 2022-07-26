@@ -1053,12 +1053,8 @@ public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDe
 }
 
 public abstract interface class me/proton/core/auth/presentation/testing/ProtonTestEntryPoint {
-	public static final field Companion Lme/proton/core/auth/presentation/testing/ProtonTestEntryPoint$Companion;
+	public abstract fun getGetAvailablePaymentProviders ()Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;
 	public abstract fun getLoginTestHelper ()Lme/proton/core/auth/domain/testing/LoginTestHelper;
-}
-
-public final class me/proton/core/auth/presentation/testing/ProtonTestEntryPoint$Companion {
-	public final fun provide (Landroid/content/Context;)Lme/proton/core/auth/domain/testing/LoginTestHelper;
 }
 
 public final class me/proton/core/auth/presentation/ui/AddAccountActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
