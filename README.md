@@ -41,6 +41,11 @@ while the first one is suitable for multi-module projects, the latter is the sug
 
 <sup>*</sup> Commits with those types, will be *skipped* when generating changelog.
 
+# Gradle tasks
+
+- `:my_module:projectHealth` or `buildHealth` - Runs dependency analysis on a single module or the whole project.
+- `generateChangelog` - Generates a changelog since the last release (tag). Output is written to `CHANGELOG.md` file.
+
 # Release
 
 ## Core libraries
