@@ -160,10 +160,12 @@ unit-tests-and-coverage-report:
   coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
   interruptible: true
   artifacts:
+    when: always
     expire_in: 1 week
     paths:
       - ./build/reports/*
     reports:
+      junit: ./**/test-results/*/TEST-*.xml
       coverage_report:
         coverage_format: cobertura
         path: ./build/reports/cobertura-coverage.xml
