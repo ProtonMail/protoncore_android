@@ -31,30 +31,31 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    api(`android-annotation`)
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
+    api(
         project(Module.accountDomain),
         project(Module.accountManagerDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-        project(Module.paymentDomain),
         project(Module.challengeDomain),
-
-        // Kotlin
-        `coroutines-core`,
-
-        // Other
-        `javax-inject`
+        project(Module.cryptoCommon),
+        project(Module.domain),
+        project(Module.networkDomain),
+        project(Module.paymentDomain),
+        project(Module.userDomain),
+        `javax-inject`,
     )
 
-    testImplementation(project(Module.kotlinTest))
+    compileOnly(`android-annotation`)
+
+    implementation(
+        project(Module.keyDomain),
+        project(Module.kotlinUtil),
+        `coroutines-core`,
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+    )
 }

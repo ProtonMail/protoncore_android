@@ -20,28 +20,23 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonKotlinLibrary
-    kotlin("plugin.serialization")
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
+    api(
         project(Module.domain),
-
-        // Features
-        project(Module.networkDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-        `serialization-json`,
-
-        // Android
-        `dagger`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(
+        project(Module.kotlinUtil)
+    )
+
+    testImplementation(
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

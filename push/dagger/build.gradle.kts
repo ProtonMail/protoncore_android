@@ -27,12 +27,8 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    api(
-        project(Module.pushDomain),
-        `coroutines-core`,
-    )
-
     implementation(
-        project(Module.pushData)
+        project(Module.pushData),
+        project(Module.pushDomain),
     )
 }

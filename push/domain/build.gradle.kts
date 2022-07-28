@@ -28,13 +28,9 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     api(
         project(Module.domain),
-        `coroutines-core`
-    )
-
-    implementation(
         project(Module.eventManagerDomain),
-
+        `coroutines-core`,
         `javax-inject`,
-        `serialization-json`
+        `serialization-core`,
     )
 }

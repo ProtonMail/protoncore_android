@@ -30,27 +30,18 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.domain),
+        project(Module.mailMessageDomain),
+        project(Module.networkData),
+        `javax-inject`,
+        retrofit,
+        `serialization-core`
+    )
 
     implementation(
         project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.crypto),
-        project(Module.network),
-        project(Module.mailMessageDomain),
         project(Module.mailSettingsDomain),
-
-        // Kotlin
-        `serialization-json`,
-        `coroutines-core`,
-
-        // Other
-        `javax-inject`,
-        `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`
+        project(Module.networkDomain),
     )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

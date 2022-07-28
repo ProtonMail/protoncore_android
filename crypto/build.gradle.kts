@@ -31,3 +31,5 @@ dependencies {
         project(Module.cryptoAndroid),
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

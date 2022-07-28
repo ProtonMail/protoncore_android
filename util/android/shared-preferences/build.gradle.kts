@@ -31,19 +31,21 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(`coroutines-core`)
 
     implementation(
-
         project(Module.kotlinUtil),
-
-        // Kotlin
-        `coroutines-core`,
-        `serialization-json`,
-
-        // Android
-        `android-ktx`
+        `android-ktx`,
+        serialization("core")
     )
 
-    testImplementation(project(Module.androidTest))
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `android-test-core`,
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        robolectric
+    )
 }
-

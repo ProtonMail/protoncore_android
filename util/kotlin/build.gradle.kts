@@ -30,12 +30,19 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
+    api(
         `coroutines-core`,
         `javax-inject`,
-        `serialization-json`
+        serialization("core")
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(`serialization-json`)
+
+    testImplementation(
+        junit,
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
+        turbine
+    )
 }

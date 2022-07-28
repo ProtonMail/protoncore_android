@@ -29,7 +29,7 @@ import androidx.test.espresso.web.webdriver.DriverAtoms.selectFrameByIndex
 import androidx.test.espresso.web.webdriver.DriverAtoms.webClick
 import androidx.test.espresso.web.webdriver.DriverAtoms.webKeys
 import androidx.test.espresso.web.webdriver.Locator
-import me.proton.core.humanverification.R
+import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.TokenType.CAPTCHA
 import me.proton.core.humanverification.domain.entity.TokenType.EMAIL

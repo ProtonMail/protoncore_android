@@ -27,30 +27,39 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.accountDomain),
+    api(
         project(Module.accountManagerDomain),
-        project(Module.crypto),
-        project(Module.cryptoValidatorData),
-        project(Module.domain),
+        project(Module.cryptoCommon),
+        project(Module.cryptoValidatorDomain),
         project(Module.kotlinUtil),
-        project(Module.presentation),
-
-        // Kotlin
-        `coroutines-android`,
-
-        // Android
-        `android-ktx`,
-        `activity`,
-        `hilt-androidx-annotations`,
-        `lifecycle-runtime`,
-        `lifecycle-viewModel`,
-        `material`,
-        `startup-runtime`,
+        appcompat,
+        `hilt-android`,
+        `startup-runtime`
     )
 
-    testImplementation(project(Module.androidTest), project(Module.networkDomain))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    implementation(
+        project(Module.accountDomain),
+        project(Module.domain),
+        project(Module.presentation),
+
+        activity,
+        `coroutines-core`,
+        `hilt-androidx-annotations`,
+        `lifecycle-common`,
+        `lifecycle-runtime`,
+        `lifecycle-viewModel`,
+        material,
+    )
+
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.networkDomain),
+        project(Module.kotlinTest),
+        `android-arch-testing`,
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
+    )
 }

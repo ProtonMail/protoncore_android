@@ -28,11 +28,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
-        project(Module.crypto),
-    )
-    api(
         project(Module.cryptoValidatorData),
         project(Module.cryptoValidatorDomain),
-        project(Module.cryptoValidatorPresentation),
     )
 }

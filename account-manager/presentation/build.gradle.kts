@@ -31,30 +31,31 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.accountDomain),
+        project(Module.accountManagerDomain),
+        project(Module.authPresentation),
+        project(Module.domain),
+        project(Module.userDomain),
+        appcompat,
+        `constraint-layout`,
+        `coroutines-core`,
+        `lifecycle-common`,
+        recyclerview
+    )
 
     implementation(
-
+        project(Module.challengePresentation),
+        project(Module.humanVerificationPresentation),
         project(Module.kotlinUtil),
-        project(Module.domain),
+        project(Module.paymentPresentation),
+        project(Module.planPresentation),
         project(Module.presentation),
-        project(Module.authPresentation),
-        project(Module.accountManagerDomain),
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
 
-        // Kotlin
-        `coroutines-android`,
-
-        // Android
         `android-ktx`,
-        `constraint-layout`,
         `hilt-androidx-annotations`,
         `lifecycle-viewModel`,
         `lifecycle-runtime`,
-        `material`
+        material
     )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

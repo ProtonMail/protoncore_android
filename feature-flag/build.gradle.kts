@@ -31,3 +31,5 @@ dependencies {
         project(Module.featureFlagDomain)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

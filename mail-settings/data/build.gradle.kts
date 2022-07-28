@@ -15,15 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.`coroutines-core`
-import studio.forface.easygradle.dsl.`serialization-json`
-import studio.forface.easygradle.dsl.android.`android-work-runtime`
-import studio.forface.easygradle.dsl.android.`retrofit-kotlin-serialization`
-import studio.forface.easygradle.dsl.android.`room-ktx`
-import studio.forface.easygradle.dsl.android.androidTestImplementation
-import studio.forface.easygradle.dsl.android.retrofit
-import studio.forface.easygradle.dsl.implementation
-import studio.forface.easygradle.dsl.testImplementation
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
@@ -42,31 +35,39 @@ protonDagger {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.dataRoom),
+        project(Module.domain),
+        project(Module.eventManagerDomain),
+        project(Module.mailSettingsDomain),
+        project(Module.networkData),
+        `android-work-runtime`,
+        guavaListenableFuture,
+        `javax-inject`,
+        retrofit,
+        `serialization-core`,
+    )
 
     implementation(
         project(Module.kotlinUtil),
         project(Module.data),
-        project(Module.dataRoom),
-        project(Module.domain),
-        project(Module.network),
-        project(Module.mailSettingsDomain),
+        project(Module.networkDomain),
         project(Module.userData),
-        project(Module.eventManagerDomain),
 
         // Kotlin
-        `serialization-json`,
         `coroutines-core`,
 
         // Other
-        `android-work-runtime`,
-        `javax-inject`,
-        `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
         `room-ktx`,
-        `store4`
+        store4
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

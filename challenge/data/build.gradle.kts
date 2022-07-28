@@ -26,26 +26,25 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.challengeDomain),
+        project(Module.dataRoom),
+    )
 
     implementation(
-        project(Module.challengeDomain),
-        project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.data),
-        project(Module.domain),
-
-        // Features
-        project(Module.dataRoom),
-
         // Kotlin
         `coroutines-core`,
-        `serialization-json`,
 
         // Other
+        `android-ktx`,
         `hilt-android`,
         `room-ktx`
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    testImplementation(
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

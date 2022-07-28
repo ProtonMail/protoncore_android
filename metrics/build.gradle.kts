@@ -31,3 +31,5 @@ dependencies {
         project(Module.metricsDomain)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

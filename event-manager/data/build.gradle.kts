@@ -35,35 +35,38 @@ protonDagger {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
+    api(
+        project(Module.accountManagerDomain),
         project(Module.dataRoom),
         project(Module.domain),
-        project(Module.network),
         project(Module.eventManagerDomain),
+        project(Module.kotlinUtil),
+        project(Module.networkData),
         project(Module.presentation),
+        `android-work-runtime`,
+        `serialization-core`,
+        `hilt-androidx-workManager`,
+        retrofit
+    )
 
-        project(Module.account),
-        project(Module.accountManager),
-        project(Module.user), // UserEntity
+    implementation(
+        project(Module.accountDomain),
+        project(Module.accountManagerPresentation),
+        project(Module.networkDomain),
+        project(Module.userData),
 
         `android-work-runtime`,
-        `serialization-json`,
         `coroutines-core`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
+        `lifecycle-common`,
         `room-ktx`
     )
 
     testImplementation(
-        project(Module.androidTest),
-        project(Module.crypto),
-        project(Module.account),
-        project(Module.accountManager),
-        project(Module.contact),
-        project(Module.key),
+        project(Module.contactData),
+        project(Module.keyData),
+        project(Module.kotlinTest),
+        junit,
+        `kotlin-test`,
+        mockk
     )
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

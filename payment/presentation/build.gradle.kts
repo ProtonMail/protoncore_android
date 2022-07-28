@@ -32,30 +32,48 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.countryDomain),
+        project(Module.domain),
+        project(Module.humanVerificationDomain),
+        project(Module.networkDomain),
+        project(Module.paymentDomain),
+        project(Module.planDomain),
+        project(Module.presentation),
+        `activity-noktx`,
+        `constraint-layout`,
+        coordinatorlayout,
+        `coroutines-core`,
+        `hilt-android`,
+        material,
+        recyclerview
+    )
 
     implementation(
         // Core
-        project(Module.presentation),
         project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.humanVerificationDomain),
 
         // Features
-        project(Module.planDomain),
-        project(Module.paymentDomain),
-        project(Module.country),
+        project(Module.countryPresentation),
 
         // Android
+        activity,
         `android-ktx`,
-        `appcompat`,
-        `constraint-layout`,
-        `fragment`,
+        appcompat,
+        fragment,
+        `lifecycle-common`,
         `lifecycle-runtime`,
         `lifecycle-viewModel`,
-        `material`
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `android-arch-testing`,
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
+    )
 }

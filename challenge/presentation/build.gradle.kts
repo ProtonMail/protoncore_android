@@ -28,26 +28,14 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        // Core
-        project(Module.presentation),
-        project(Module.kotlinUtil),
-        project(Module.domain),
-
-        // Features
+    api(
         project(Module.challengeDomain),
-        project(Module.networkDomain),
-
-        // Android
-        `android-ktx`,
-        `appcompat`,
-        `constraint-layout`,
-        `fragment`,
-        `lifecycle-viewModel`,
-        `material`
+        project(Module.presentation),
+        `hilt-android`,
+        material
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    implementation(
+        `android-ktx`,
+    )
 }

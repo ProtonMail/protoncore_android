@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
-import me.proton.core.network.domain.ApiException
 
 /**
  * Repository to access [FeatureFlag]s which are local or remote
@@ -34,7 +33,7 @@ public interface FeatureFlagRepository {
      *
      * @param refresh allows to force a background fetch of the value against the remote source.
      *
-     * @throws ApiException on remote source error
+     * @throws me.proton.core.network.domain.ApiException on remote source error
      */
     public fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): Flow<FeatureFlag?>
 
@@ -43,7 +42,7 @@ public interface FeatureFlagRepository {
      *
      * @param refresh allows to force a background fetch of the value against the remote source.
      *
-     * @throws ApiException on remote source error
+     * @throws me.proton.core.network.domain.ApiException on remote source error
      */
     public fun observe(userId: UserId?, featureIds: List<FeatureId>, refresh: Boolean): Flow<List<FeatureFlag>>
 
@@ -52,7 +51,7 @@ public interface FeatureFlagRepository {
      *
      * @param refresh allows to force a background fetch of the value against the remote source.
      *
-     * @throws ApiException on remote source error
+     * @throws me.proton.core.network.domain.ApiException on remote source error
      */
     public suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
 
@@ -61,7 +60,7 @@ public interface FeatureFlagRepository {
      *
      * @param refresh allows to force a background fetch of the value against the remote source.
      *
-     * @throws ApiException on remote source error
+     * @throws me.proton.core.network.domain.ApiException on remote source error
      */
     public suspend fun get(userId: UserId?, featureIds: List<FeatureId>, refresh: Boolean): List<FeatureFlag>
 

@@ -27,11 +27,6 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-        project(Module.networkData),
-        project(Module.presentation),
-        `android-work-runtime`,
-    )
     api(
         project(Module.eventManagerData),
         project(Module.eventManagerDomain),

@@ -26,22 +26,9 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-
-        // Kotlin
-        `coroutines-core`,
-
-        // Android
-        `hilt-android`,
-    )
-
     api(
         project(Module.cryptoValidatorDomain),
         project(Module.sharedPreferencesUtil),
+        `hilt-android`
     )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

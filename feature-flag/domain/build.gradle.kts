@@ -26,22 +26,9 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
     api(
         project(Module.domain),
-        `coroutines-core`
+        `coroutines-core`,
+        `javax-inject`
     )
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-        project(Module.networkDomain),
-
-        // Kotlin
-        `serialization-json`,
-        `javax-inject`,
-    )
-
-    testImplementation(project(Module.kotlinTest))
 }

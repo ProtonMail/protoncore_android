@@ -27,12 +27,6 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        project(Module.cryptoCommon),
-        project(Module.domain),
-    )
-
     api(
         project(Module.accountDomain),
         project(Module.accountData),

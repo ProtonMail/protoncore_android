@@ -33,3 +33,5 @@ dependencies {
         project(Module.humanVerificationPresentation)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

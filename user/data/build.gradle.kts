@@ -32,44 +32,47 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.networkData),
-        project(Module.data),
+    api(
+        project(Module.authData),
+        project(Module.challengeDomain),
+        project(Module.cryptoCommon),
         project(Module.dataRoom),
         project(Module.domain),
-        project(Module.userDomain),
         project(Module.eventManagerDomain),
-        project(Module.cryptoCommon),
-        project(Module.authData),
+        project(Module.keyData),
+        project(Module.keyDomain),
+        project(Module.networkData),
+        project(Module.userDomain),
+        `javax-inject`,
+        `serialization-core`,
+        retrofit
+    )
+
+    implementation(
+        project(Module.accountData),
         project(Module.authDomain),
         project(Module.challengeData),
-        project(Module.challengeDomain),
-
-        // Features
-        project(Module.key),
-        project(Module.account),
+        project(Module.data),
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
 
         // Kotlin
-        `serialization-json`,
         `coroutines-core`,
 
         // Other
-        `javax-inject`,
-        `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
+        appcompat, // TODO appcompat..
+        material, // TODO ..and material libraries are only needed, so that libraries are compatible with the ones in androidTest; otherwise, the `implementation` would use old versions of those
         `room-ktx`,
-        `store4`,
-        `googleTink`
+        store4
     )
+
+    androidTestImplementation(project(Module.androidTest)) {
+        exclude(mockk) // We're including `mock-android` instead.
+    }
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
-        project(Module.domain),
         project(Module.auth),
-        project(Module.account),
         project(Module.accountManager),
         project(Module.accountManagerDataDb),
         project(Module.cryptoAndroid),
@@ -77,7 +80,9 @@ dependencies {
         project(Module.userSettings),
         project(Module.contact),
         project(Module.eventManager),
-        project(Module.label),
-        project(Module.featureFlag),
+        project(Module.kotlinTest),
+        `kotlin-test`,
+        `mockk-android`,
+        turbine
     )
 }

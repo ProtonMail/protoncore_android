@@ -26,16 +26,12 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
+    api(
         project(Module.domain),
-
-        // Kotlin
-        `serialization-json`,
-        `coroutines-core`,
-        `javax-inject`
+        `serialization-core`,
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(
+        `serialization-json`,
+    )
 }

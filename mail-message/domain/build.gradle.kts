@@ -29,26 +29,17 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.keyDomain),
-        project(Module.userDomain),
+    api(
         project(Module.cryptoCommon),
+        project(Module.domain),
+        project(Module.keyDomain),
         project(Module.mailSettingsDomain),
-
-        // Android
-        `dagger`,
-
-        // Other
-        `googleTink`,
-
-        // Kotlin
-        `coroutines-core`
+        project(Module.userDomain),
+        `javax-inject`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(
+        project(Module.kotlinUtil),
+        googleTink,
+    )
 }

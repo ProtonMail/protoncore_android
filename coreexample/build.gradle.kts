@@ -149,17 +149,20 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.presentation),
         project(Module.network),
-        project(Module.networkDagger),
         project(Module.domain),
-        project(Module.data),
         project(Module.dataRoom),
+        project(Module.proguardRules),
 
         project(Module.account),
         project(Module.accountManager),
         project(Module.auth),
+        project(Module.challenge),
         project(Module.contact),
         project(Module.crypto),
+        project(Module.country),
         project(Module.cryptoValidator),
+        project(Module.cryptoAndroid),
+        project(Module.cryptoCommon),
         project(Module.domain),
         project(Module.eventManager),
         project(Module.featureFlag),
@@ -167,37 +170,40 @@ dependencies {
         project(Module.humanVerification),
         project(Module.key),
         project(Module.label),
-        project(Module.user),
         project(Module.mailMessage),
         project(Module.mailSettings),
         project(Module.payment),
+        project(Module.plan),
         project(Module.push),
         project(Module.report),
-        project(Module.country),
-        project(Module.plan),
+        project(Module.user),
         project(Module.userSettings),
-        project(Module.challenge),
-        project(Module.proguardRules),
-
-        `coroutines-android`,
 
         // Android
-        `activity`,
-        `appcompat`,
+        activity,
+        `android-ktx`,
+        `androidx-collection`,
+        appcompat,
         `android-work-runtime`,
         `core-splashscreen`,
         `constraint-layout`,
-        `fragment`,
+        `coroutines-android`,
+        `coroutines-core`,
+        fragment,
         googlePlayBilling,
-        `lifecycle-extensions`,
+        `lifecycle-common`,
+        `lifecycle-runtime`,
+        `lifecycle-savedState`,
         `lifecycle-viewModel`,
-        `material`,
+        material,
+        recyclerview,
+        `startup-runtime`,
 
         // Other
         `serialization-json`,
         `room-ktx`,
-        `retrofit`,
-        `timber`,
+        retrofit,
+        timber,
         `ez-vcard`
     )
 
@@ -211,8 +217,11 @@ dependencies {
     testImplementation(
         project(Module.androidTest),
         `hilt-android-testing`,
+        junit,
+        `kotlin-test`,
         miniDns,
         mockWebServer,
+        robolectric,
         squareup("okhttp3", "okhttp-tls") version `okHttp version`
     )
 
@@ -222,7 +231,8 @@ dependencies {
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
-        `hilt-android-testing`
+        `hilt-android-testing`,
+        `kotlin-test-junit`
     )
 
     // Lint - off temporary

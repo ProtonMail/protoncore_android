@@ -35,28 +35,31 @@ android {
 dependencies {
     api(
         project(Module.presentation),
-        activity,
-        `javax-inject`,
-    )
-
-    implementation(
-        // Core
-        project(Module.kotlinUtil),
-        project(Module.domain),
-
-        // Features
-        project(Module.keyDomain),
         project(Module.reportDomain),
-        project(Module.userDomain),
-
-        // Android
-        `android-ktx`,
-        appcompat,
-        `lifecycle-runtime`,
-        `lifecycle-viewModel`,
+        coordinatorlayout,
+        `hilt-android`,
+        `javax-inject`,
         material
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    implementation(
+        project(Module.kotlinUtil),
+        activity,
+        `android-ktx`,
+        appcompat,
+        `coroutines-core`,
+        fragment,
+        `lifecycle-common`,
+        `lifecycle-runtime`,
+        `lifecycle-viewModel`
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
+    )
 }

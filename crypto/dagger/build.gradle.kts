@@ -17,7 +17,6 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
@@ -28,7 +27,10 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.cryptoAndroid),
         project(Module.cryptoCommon),
+    )
+
+    implementation(
+        project(Module.cryptoAndroid),
     )
 }

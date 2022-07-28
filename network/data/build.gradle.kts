@@ -33,42 +33,41 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
+        project(Module.sharedPreferencesUtil),
         `coroutines-core`,
-        okhttp
+        `javax-inject`,
+        miniDns,
+        okhttp,
+        retrofit,
+        `serialization-core`,
     )
 
+    compileOnly(`android-annotation`)
+
     implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.sharedPreferencesUtil),
-        project(Module.networkDomain),
         project(Module.domain),
-
-        // Kotlin
-        `serialization-json`,
-
-        // Other
-        `android-annotation`,
         `apacheCommon-codec`,
         datastore,
-        `javax-inject`,
-        `miniDns`,
         `okHttp-logging`,
-        `retrofit`,
         `retrofit-kotlin-serialization`,
-        `trustKit`,
-        preference /* trustKit depends on preference. Not having preference breaks processDebugAndroidTestResources
-        task on modules relying on network module. */
+        trustKit,
     )
 
     testImplementation(
-        project(Module.kotlinTest),
-        project(Module.androidTest),
-        project(Module.networkDagger),
         project(Module.cryptoCommon),
-        `retrofit-scalars-converter`,
-        `mockWebServer`,
+        project(Module.kotlinTest),
+        project(Module.networkDagger),
+        `android-test-core`,
+        `coroutines-test`,
         `hilt-android-testing`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        mockWebServer,
+        `retrofit-scalars-converter`,
+        robolectric
     )
 
     kaptTest(`hilt-android-compiler`)

@@ -43,54 +43,39 @@ android {
 
 dependencies {
     api(
-        project(Module.pushData),
-    )
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.domain),
-        project(Module.data),
-        project(Module.dataRoom),
-        project(Module.crypto),
-
-        // Features
-        project(Module.accountManagerDomain),
-        project(Module.authData),
-        project(Module.authDomain),
         project(Module.accountData),
         project(Module.accountDomain),
-        project(Module.userData),
-        project(Module.userDomain),
-        project(Module.keyData),
-        project(Module.keyDomain),
-        project(Module.labelData),
-        project(Module.labelDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationDomain),
-        project(Module.mailSettingsData),
-        project(Module.mailSettingsDomain),
-        project(Module.userSettingsData),
-        project(Module.userSettingsDomain),
+        project(Module.challengeData),
         project(Module.contactData),
         project(Module.contactDomain),
+        project(Module.cryptoCommon),
+        project(Module.dataRoom),
+        project(Module.domain),
         project(Module.eventManagerData),
         project(Module.eventManagerDomain),
         project(Module.featureFlagData),
-        project(Module.challengeData),
+        project(Module.humanVerificationData),
+        project(Module.keyData),
+        project(Module.labelData),
+        project(Module.mailSettingsData),
+        project(Module.networkDomain),
+        project(Module.pushData),
         project(Module.pushDomain),
+        project(Module.userData),
+        project(Module.userDomain),
+        project(Module.userSettingsData),
+    )
 
-        // Kotlin
+    implementation(
+        project(Module.cryptoAndroid),
+        project(Module.keyDomain),
+        project(Module.labelDomain),
+        `androidx-collection`,
         `coroutines-core`,
-
-        // Other
         `room-ktx`
     )
 
     kapt(
         `room-compiler`
     )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

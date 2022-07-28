@@ -36,38 +36,42 @@ protonDagger {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.data),
+    api(
         project(Module.dataRoom),
         project(Module.domain),
-        project(Module.labelDomain),
-        project(Module.userData),
         project(Module.eventManagerDomain),
+        project(Module.labelDomain),
+        project(Module.networkData),
+        retrofit,
+        `serialization-core`
+    )
+
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.data),
+        project(Module.networkDomain),
+        project(Module.userData),
 
         // Kotlin
-        `serialization-json`,
         `coroutines-core`,
 
         // Other
         `android-work-runtime`,
-        `okHttp-logging`,
-        retrofit,
-        `retrofit-kotlin-serialization`,
-        `room-ktx`,
         store4,
     )
 
     kaptTest(`room-compiler`)
 
     testImplementation(
-        project(Module.androidTest),
         project(Module.cryptoCommon),
         project(Module.cryptoAndroid),
         project(Module.accountData),
         project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain)
+        project(Module.keyDomain),
+        `android-test-core`,
+        `androidx-collection`,
+        junit,
+        robolectric,
+        `room-ktx`,
     )
 }

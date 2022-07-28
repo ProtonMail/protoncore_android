@@ -32,3 +32,5 @@ dependencies {
         project(Module.accountManagerData)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

@@ -16,13 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.`android-annotation`
-import studio.forface.easygradle.dsl.android.`lifecycle-runtime`
-import studio.forface.easygradle.dsl.android.androidTestImplementation
-import studio.forface.easygradle.dsl.android.appcompat
-import studio.forface.easygradle.dsl.compileOnly
-import studio.forface.easygradle.dsl.implementation
-import studio.forface.easygradle.dsl.testImplementation
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonComposeUiLibrary
@@ -35,40 +30,48 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.presentation),
-
-        // Android
-        `lifecycle-runtime`,
-        appcompat,
-
-        // Compose
+    api(
+        activity,
         `activity-compose`,
-        `compose-animation`,
+        `androidx-navigation-common`,
         `compose-foundation`,
         `compose-foundation-layout`,
         `compose-material`,
-        `compose-material3`,
         `compose-runtime`,
         `compose-ui`,
+        `compose-ui-graphics`,
+        `compose-ui-text`,
+        `coroutines-core`,
+        `lifecycle-common`,
+        `lifecycle-viewModel`,
+    )
+
+    implementation(
+        project(Module.presentation),
+        `android-ktx`,
+        appcompat,
+        `compose-animation-core`,
+        `compose-material-icons-core`,
+        `compose-material3`,
+        `compose-ui-tooling-preview`,
+        `compose-ui-unit`,
+        `lifecycle-runtime`,
+    )
+
+    debugImplementation(
         `compose-ui-tooling`,
-        `navigation-compose`
     )
 
     // Android
     compileOnly(`android-annotation`)
 
-    // Test
-    testImplementation(project(Module.androidTest))
     androidTestImplementation(
-        project(Module.androidInstrumentedTest),
+        `android-test-runner`,
         `compose-ui-test`,
-        `compose-ui-test-junit`
-    )
-    debugImplementation(
+        `compose-ui-test-junit`,
         `compose-ui-test-manifest`,
+        junit,
+        `junit-ktx`,
+        `kotlin-test`
     )
 }

@@ -31,3 +31,5 @@ dependencies {
         project(Module.eventManagerData),
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

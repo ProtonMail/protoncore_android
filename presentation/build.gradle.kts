@@ -32,36 +32,43 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.network),
-        project(Module.challengeDomain),
-
-        // Kotlin
-        `coroutines-android`,
-
-        // Android
-        `android-ktx`,
-        `activity`,
-        `appcompat`,
-        `core-splashscreen`,
+    api(
+        activity,
+        appcompat,
         `constraint-layout`,
-        `fragment`,
+        `coroutines-core`,
+        fragment,
         `javax-inject`,
         `lifecycle-common`,
+        `lifecycle-savedState`,
+        `lifecycle-viewModel`,
+        material,
+        recyclerview,
+    )
+
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.networkData),
+        project(Module.networkDomain),
+        `android-ktx`,
+        `core-splashscreen`,
+        `lifecycle-livedata-core`,
         `lifecycle-process`,
-        `material`
     )
 
     // Android
     compileOnly(`android-annotation`)
 
     // Test
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    testImplementation(
+        project(Module.androidTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        robolectric,
+        turbine
+    )
 
     // Lint - off temporary
     // lintChecks(project(Module.lint))

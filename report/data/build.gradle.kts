@@ -32,9 +32,9 @@ protonDagger {
 
 dependencies {
     api(
-        project(Module.network),
+        project(Module.networkData),
         project(Module.reportDomain),
-        `android-work-runtime`,
+        androidxWork("runtime"),
         `coroutines-core`,
         `javax-inject`,
     )
@@ -42,19 +42,25 @@ dependencies {
     implementation(
         project(Module.domain),
         project(Module.kotlinUtil),
+        project(Module.networkDomain),
 
+        `android-work-runtime`,
+        guavaListenableFuture,
+        `lifecycle-livedata-core`,
         `lifecycle-liveData`,
         serialization("core"),
-        retrofit
+        retrofit,
     )
 
     testImplementation(
         project(Module.kotlinTest),
         `android-arch-testing`,
         `android-work-testing`,
+        `android-test-core`,
         `coroutines-test`,
+        `hilt-android`,
         `hilt-android-testing`,
-        `junit-ktx`,
+        junit,
         `kotlin-test`,
         mockk,
         robolectric,
@@ -62,4 +68,12 @@ dependencies {
     )
 
     kaptTest(`hilt-android-compiler`)
+}
+
+dependencyAnalysis {
+    issues {
+        onUsedTransitiveDependencies {
+            exclude("com.google.guava:guava")
+        }
+    }
 }

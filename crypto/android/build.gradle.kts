@@ -30,15 +30,12 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
+    api(
         project(Module.cryptoCommon),
+    )
 
-        // Kotlin
-        `coroutines-core`,
-
-        // Android
+    implementation(
+        project(Module.kotlinUtil),
         `android-ktx`,
         `room-runtime`,
     )
@@ -46,11 +43,28 @@ dependencies {
     compileOnly(project(Module.gopenpgp))
 
     testImplementation(
-        project(Module.kotlinTest),
+        junit,
+        `kotlin-test`,
+        mockk
     )
+
+    androidTestImplementation(project(Module.androidTest)) {
+        exclude(mockk) // We're including `mock-android` instead.
+    }
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
-        project(Module.gopenpgp)
+        project(Module.androidTest),
+        project(Module.gopenpgp),
+        `kotlin-test`,
+        `mockk-android`,
     )
+}
+
+dependencyAnalysis {
+    issues {
+        onUnusedDependencies {
+            exclude(Module.gopenpgp)
+        }
+    }
 }

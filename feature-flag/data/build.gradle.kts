@@ -33,28 +33,32 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     api(
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.featureFlagDomain),
-        project(Module.network)
+        project(Module.networkData),
     )
 
     implementation(
-        project(Module.kotlinUtil),
         project(Module.data),
-        project(Module.dataRoom),
-        project(Module.user),
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
 
         `android-work-runtime`,
-        `serialization-json`,
         `coroutines-core`,
         retrofit,
-        `retrofit-kotlin-serialization`,
         `room-ktx`,
+        `serialization-core`,
         store4
     )
 
     testImplementation(
-        project(Module.androidTest)
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
     )
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

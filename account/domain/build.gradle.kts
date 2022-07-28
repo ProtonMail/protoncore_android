@@ -29,17 +29,25 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
+    api(
         project(Module.cryptoCommon),
+        project(Module.domain),
         project(Module.networkDomain),
-
-        // Kotlin
-        `coroutines-core`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(
+        `coroutines-core`
+    )
+}
+
+dependencyAnalysis {
+    issues {
+        onUnusedDependencies {
+            exclude(
+                // typealias (used in cryptoCommon) is not supported:
+                // https://github.com/autonomousapps/dependency-analysis-android-gradle-plugin/issues/389
+                Module.cryptoCommon
+            )
+        }
+    }
 }

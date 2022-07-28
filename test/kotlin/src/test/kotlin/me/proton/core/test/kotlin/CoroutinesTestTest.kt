@@ -24,8 +24,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.util.kotlin.DispatcherProvider
+import org.junit.Test
 import kotlin.system.measureTimeMillis
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

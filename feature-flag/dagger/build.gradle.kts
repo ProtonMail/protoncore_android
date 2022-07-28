@@ -26,7 +26,7 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    api(
+    implementation(
         project(Module.featureFlagData),
         project(Module.featureFlagDomain)
     )

@@ -29,20 +29,11 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.userDomain),
-
-        // Other
-        `googleTink`,
-
-        // Kotlin
-        `coroutines-core`
+    api(
+        project(Module.domain)
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(
+        `coroutines-core`
+    )
 }

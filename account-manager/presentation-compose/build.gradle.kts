@@ -30,26 +30,20 @@ proton {
 }
 
 dependencies {
-
-    implementation(
-
-        project(Module.account),
+    api(
         project(Module.accountManagerPresentation),
         project(Module.domain),
-
-        // Android
-        `constraint-layout`,
-
-        // Compose
-        `compose-animation`,
-        `compose-foundation`,
-        `compose-foundation-layout`,
-        `compose-material`,
+        `compose-runtime`,
         `compose-ui`,
-        `compose-ui-tooling`,
-        `hilt-navigation-compose`,
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    implementation(
+        project(Module.accountDomain),
+
+        // Compose
+        `coroutines-core`,
+        `hilt-navigation-compose`,
+        `lifecycle-viewModel`,
+        `lifecycle-viewModel-compose`
+    )
 }

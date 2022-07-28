@@ -30,28 +30,38 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        project(Module.domain),
-        project(Module.userSettingsDomain),
-        project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.data),
-        project(Module.dataRoom),
-        project(Module.userData),
+    api(
         project(Module.cryptoCommon),
-        project(Module.key),
+        project(Module.dataRoom),
+        project(Module.domain),
         project(Module.eventManagerDomain),
-        project(Module.authDomain),
-
-        // Other
+        project(Module.keyData),
+        project(Module.networkData),
+        project(Module.userSettingsDomain),
+        `coroutines-core`,
         `javax-inject`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
-        `room-ktx`,
-        `store4`
+        retrofit,
+        `serialization-core`
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    implementation(
+        project(Module.authDomain),
+        project(Module.data),
+        project(Module.networkDomain),
+        project(Module.kotlinUtil),
+        project(Module.userData),
+
+        // Other
+        `room-ktx`,
+        store4
+    )
+
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

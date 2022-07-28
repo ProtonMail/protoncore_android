@@ -26,12 +26,15 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
+    api(
         project(Module.cryptoCommon),
         project(Module.kotlinUtil),
-        project(Module.networkDomain)
+        project(Module.networkData),
+        project(Module.networkDomain),
+        okhttp
     )
-    api(
-        project(Module.networkData)
+
+    implementation(
+        `coroutines-core`
     )
 }

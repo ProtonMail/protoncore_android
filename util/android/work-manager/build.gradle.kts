@@ -31,26 +31,22 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        `lifecycle-common`,
+    )
 
     implementation(
-
         project(Module.kotlinUtil),
-
-        // Kotlin
-        `serialization-json`,
-
-        // Android
-        `android-ktx`,
-        `fragment`,
-        `android-work-runtime`
+        `android-work-runtime`,
+        fragment,
+        `lifecycle-livedata-core`,
+        `serialization-core`,
     )
 
     testImplementation(
-        project(Module.androidTest)
-    )
-
-    androidTestImplementation(
-        project(Module.androidInstrumentedTest)
+        junit,
+        `kotlin-test`,
+        mockk
     )
 }
 

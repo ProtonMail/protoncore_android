@@ -26,8 +26,10 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-         project(Module.accountDagger),
+        project(Module.accountDagger),
         project(Module.accountDomain),
         project(Module.accountData)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

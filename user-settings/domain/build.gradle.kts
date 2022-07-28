@@ -29,28 +29,24 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.authDomain),
+        project(Module.cryptoCommon),
+        project(Module.domain),
+        project(Module.userDomain),
+        `coroutines-core`,
+        `javax-inject`,
+    )
 
     implementation(
         project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-        project(Module.authDomain),
-
-        // Kotlin
-        `coroutines-core`,
-
-        // Android
-        `javax-inject`,
-
-        // Other
-        `googleTink`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    testImplementation(
+        project(Module.networkDomain),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

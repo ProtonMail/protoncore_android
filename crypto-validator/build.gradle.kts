@@ -32,3 +32,5 @@ dependencies {
         project(Module.cryptoValidatorPresentation)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

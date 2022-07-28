@@ -31,33 +31,30 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.cryptoCommon),
+        project(Module.dataRoom),
+        project(Module.humanVerificationDomain),
+        project(Module.networkData),
+        project(Module.networkDomain),
+        `javax-inject`,
+        retrofit,
+        `serialization-core`,
+    )
 
     implementation(
         project(Module.kotlinUtil),
-        project(Module.humanVerificationDomain),
-        project(Module.network),
-        project(Module.data),
-        project(Module.dataRoom),
-        project(Module.crypto),
-        project(Module.authData),
-        project(Module.authDomain),
-        project(Module.userDomain),
-
-        // Kotlin
-        `serialization-json`,
         `coroutines-core`,
-
-        // Other
-        `javax-inject`,
         `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
         `room-ktx`
     )
 
     testImplementation(
-        project(Module.androidTest),
-        `mockWebServer`
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        mockWebServer
     )
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

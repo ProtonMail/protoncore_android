@@ -33,40 +33,37 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.userDomain),
         project(Module.contactDomain),
-        project(Module.eventManagerDomain),
-    )
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.data),
         project(Module.dataRoom),
         project(Module.domain),
+        project(Module.eventManagerDomain),
+        project(Module.networkData),
+        `javax-inject`,
+        retrofit,
+        `serialization-core`
+    )
+
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.data),
+        project(Module.networkDomain),
         project(Module.userData),
 
-        // Kotlin
-        `serialization-json`,
         `coroutines-core`,
-
-        // Other
-        `okHttp-logging`,
-        retrofit,
-        `retrofit-kotlin-serialization`,
-        `room-ktx`,
         store4,
-        `javax-inject`,
     )
 
     kaptTest(`room-compiler`)
 
     testImplementation(
-        project(Module.androidTest),
         project(Module.cryptoCommon),
         project(Module.cryptoAndroid),
         project(Module.accountData),
         project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain)
+        project(Module.keyDomain),
+        `android-test-core`,
+        junit,
+        robolectric,
+        `room-ktx`
     )
 }

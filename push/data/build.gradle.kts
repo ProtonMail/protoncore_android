@@ -34,39 +34,41 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     api(
         project(Module.dataRoom),
+        project(Module.domain),
         project(Module.eventManagerDomain),
+        project(Module.networkData),
         project(Module.pushDomain),
-        `coroutines-core`
+        `coroutines-core`,
+        `javax-inject`,
     )
 
     implementation(
-        project(Module.domain),
-        project(Module.network),
         project(Module.userData),
         project(Module.data),
         project(Module.kotlinUtil),
-        `javax-inject`,
+        project(Module.networkDomain),
         retrofit,
-        `serialization-json`,
         `room-ktx`,
+        `serialization-core`,
         store4,
         `android-work-runtime`,
     )
 
     testImplementation(
-        project(Module.androidTest),
         project(Module.accountData),
         project(Module.accountDomain),
         project(Module.cryptoAndroid),
         project(Module.cryptoCommon),
         project(Module.keyDomain),
-        project(Module.userData),
-        project(Module.userDomain),
+        `android-test-core`,
         `android-work-testing`,
         `coroutines-test`,
         `hilt-android-testing`,
+        junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        robolectric,
+        turbine
     )
 
     kaptTest(`hilt-android-compiler`)

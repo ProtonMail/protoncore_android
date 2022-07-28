@@ -19,7 +19,7 @@
 package me.proton.core.test.android.robots.other
 
 import com.google.android.material.textview.MaterialTextView
-import me.proton.core.humanverification.R
+import me.proton.core.humanverification.presentation.R
 import me.proton.core.test.android.robots.CoreRobot
 
 /**

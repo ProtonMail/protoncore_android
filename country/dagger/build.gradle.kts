@@ -26,11 +26,11 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
+    api(
         project(Module.countryDomain),
         `coroutines-core`,
     )
-    api(
+    implementation(
         project(Module.countryData),
     )
 }

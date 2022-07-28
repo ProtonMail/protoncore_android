@@ -25,10 +25,11 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
     api(
         project(Module.networkDagger),
         project(Module.networkData),
         project(Module.networkDomain)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

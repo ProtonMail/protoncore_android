@@ -29,21 +29,14 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    // Base dependencies
-    implementation(
-        `coroutines-core`
-    )
-    compileOnly(project(Module.kotlinUtil))
-    testImplementation(project(Module.kotlinUtil))
-
-    // Test dependencies
     api(
-        `kotlin-test`,
-        `kotlin-test-junit`,
+        project(Module.kotlinUtil),
         `coroutines-test`,
-        `turbine`,
+        junit,
+    )
 
-        `mockk`
+    implementation(
+        `coroutines-core`,
+        `kotlin-test`,
     )
 }

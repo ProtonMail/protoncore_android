@@ -31,3 +31,5 @@ dependencies {
         project(Module.labelDomain)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

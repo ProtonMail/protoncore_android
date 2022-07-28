@@ -31,3 +31,5 @@ dependencies {
         project(Module.mailSettingsDomain),
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

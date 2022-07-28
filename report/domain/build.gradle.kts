@@ -32,5 +32,8 @@ dependencies {
         serialization("core")
     )
 
-    testImplementation(`kotlin-test`)
+    testImplementation(
+        junit,
+        `kotlin-test`
+    )
 }

@@ -35,7 +35,10 @@ dependencies {
 
     api(
         project(Module.domain),
-        project(Module.reportDomain),
+        project(Module.reportDomain)
+    )
+
+    implementation(
         project(Module.reportData)
     )
 }

@@ -31,9 +31,8 @@ android {
 }
 
 dependencies {
-    api(
+    implementation(
         project(Module.kotlinUtil),
         project(Module.presentation),
-        `coroutines-android`,
     )
 }

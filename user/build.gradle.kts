@@ -31,3 +31,5 @@ dependencies {
         project(Module.userData),
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

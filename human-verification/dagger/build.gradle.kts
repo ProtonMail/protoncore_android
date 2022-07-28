@@ -27,17 +27,9 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-        project(Module.networkData),
-        project(Module.networkDagger),
-        `room-ktx`,
-    )
-
     api(
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation),
+        project(Module.networkDomain),
     )
 }

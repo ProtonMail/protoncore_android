@@ -45,15 +45,7 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    androidTestImplementation(
-        `android-test-core`,
-        `android-test-runner`,
-        `kotlin-test-junit`,
-    )
-
     api(
-        project(Module.domain),
-        project(Module.networkDomain),
         project(Module.challengeDomain),
         project(Module.challengeData)
     )

@@ -31,34 +31,10 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-        project(Module.account),
-        project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.crypto),
-        project(Module.domain),
-        project(Module.data),
-        project(Module.dataRoom),
-
-        // Features
-        project(Module.authDomain),
-        project(Module.user),
-        project(Module.key),
-        project(Module.humanVerification),
-        project(Module.mailSettings),
-
-        // Kotlin
-        `coroutines-core`,
-
-        // Android
-        `android-ktx`,
-        `room-runtime`
-    )
-
     api(
         project(Module.accountManagerData),
         project(Module.accountManagerDomain),
-        project(Module.accountManagerPresentation),
+        project(Module.authDomain),
+        project(Module.networkDomain),
     )
 }

@@ -32,3 +32,5 @@ dependencies {
         project(Module.challengePresentation),
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

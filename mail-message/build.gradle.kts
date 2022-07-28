@@ -31,3 +31,5 @@ dependencies {
         project(Module.mailMessageDagger),
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

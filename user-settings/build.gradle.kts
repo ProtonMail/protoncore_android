@@ -32,3 +32,5 @@ dependencies {
         project(Module.userSettingsPresentation)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

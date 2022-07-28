@@ -29,15 +29,14 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
+    api(
         project(Module.cryptoCommon),
-
-        // Kotlin
-        `coroutines-core`
+        project(Module.domain),
     )
 
-    testImplementation(project(Module.kotlinTest))
+    testImplementation(
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

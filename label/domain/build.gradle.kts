@@ -30,21 +30,14 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
+    api(
         project(Module.domain),
-        project(Module.cryptoCommon),
-        project(Module.userDomain),
-        project(Module.keyDomain),
         project(Module.eventManagerDomain),
-
-        // Kotlin
-        `serialization-json`,
-        `coroutines-core`,
-        `ez-vcard`,
         `javax-inject`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    implementation(
+        `coroutines-core`,
+        `serialization-core`
+    )
 }

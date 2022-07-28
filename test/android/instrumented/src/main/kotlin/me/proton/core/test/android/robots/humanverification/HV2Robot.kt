@@ -22,7 +22,7 @@ import android.webkit.WebView
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import com.google.android.material.textview.MaterialTextView
-import me.proton.core.humanverification.R
+import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.TokenType.CAPTCHA
 import me.proton.core.humanverification.domain.entity.TokenType.EMAIL

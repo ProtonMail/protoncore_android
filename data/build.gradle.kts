@@ -29,19 +29,21 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
+    api(
+        project(Module.domain),
+        project(Module.networkDomain),
+        `coroutines-core`,
+        store4
+    )
 
     implementation(
         project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    testImplementation(
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
+    )
 }

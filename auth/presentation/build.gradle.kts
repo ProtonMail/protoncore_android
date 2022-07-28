@@ -33,47 +33,54 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.presentation),
-        project(Module.crypto),
-
-        // Features
-        project(Module.authDomain),
+    api(
         project(Module.accountDomain),
         project(Module.accountManagerDomain),
-        project(Module.humanVerificationDomain),
-        project(Module.userSettingsDomain),
-        project(Module.humanVerificationPresentation),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-        project(Module.countryPresentation),
-        project(Module.countryDomain),
-        project(Module.planPresentation),
-        project(Module.paymentDomain),
-        project(Module.paymentPresentation),
+        project(Module.authDomain),
         project(Module.challengeDomain),
         project(Module.challengePresentation),
-
-        // Kotlin
-        `coroutines-android`,
-
-        // Android
-        `android-ktx`,
-        `appcompat`,
+        project(Module.countryDomain),
+        project(Module.cryptoCommon),
+        project(Module.domain),
+        project(Module.humanVerificationDomain),
+        project(Module.humanVerificationPresentation),
+        project(Module.networkDomain),
+        project(Module.paymentDomain),
+        project(Module.paymentPresentation),
+        project(Module.planPresentation),
+        project(Module.presentation),
+        project(Module.userDomain),
+        project(Module.userSettingsDomain),
+        `activity-noktx`,
+        appcompat,
         `constraint-layout`,
-        `fragment`,
-        `lifecycle-viewModel`,
-        `material`,
-
-        // Other
-        `lottie`
+        coordinatorlayout,
+        `coroutines-core`,
+        `hilt-android`,
+        `lifecycle-common`,
+        `lifecycle-savedState`,
+        lottie,
+        material
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    implementation(
+        project(Module.countryPresentation),
+        project(Module.kotlinUtil),
+        activity,
+        `android-ktx`,
+        fragment,
+        `lifecycle-runtime`,
+        `lifecycle-viewModel`,
+    )
+
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `android-arch-testing`,
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
+    )
 }

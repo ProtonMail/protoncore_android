@@ -30,25 +30,17 @@ proton {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    // Base dependencies
     implementation(
-        // Kotlin
-        `coroutines-android`,
-        project(Module.network),
-
-        // Android
         `lifecycle-runtime`,
-        `lifecycle-liveData`,
-        `lifecycle-viewModel`
+        mockk,
     )
 
-    // Test dependencies
     api(
-        project(Module.kotlinTest),
-
-        // Android
+        project(Module.networkData),
+        project(Module.networkDomain),
         `android-arch-testing`,
-        `android-test-core`,
-        robolectric
+        `coroutines-core`,
+        junit,
+        `lifecycle-common`,
     )
 }

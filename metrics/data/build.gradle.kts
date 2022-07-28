@@ -32,23 +32,31 @@ protonDagger {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.network),
+    api(
         project(Module.domain),
         project(Module.metricsDomain),
+        project(Module.networkData),
+    )
+
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
 
         // Kotlin
+        `serialization-core`,
         `serialization-json`,
-        `coroutines-core`,
 
         // Other
         `android-work-runtime`,
-        `okHttp-logging`,
         retrofit,
-        `retrofit-kotlin-serialization`,
     )
-    testImplementation(project(Module.androidTest))
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        mockk
+    )
 
     kaptTest(`room-compiler`)
 }

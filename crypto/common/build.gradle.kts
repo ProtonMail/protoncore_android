@@ -30,12 +30,6 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     implementation(
-
-        project(Module.kotlinUtil),
-
-        // Kotlin
-        `kotlin-jdk8`
+        project(Module.kotlinUtil)
     )
-
-    testImplementation(project(Module.kotlinTest))
 }

@@ -32,3 +32,5 @@ dependencies {
         project(Module.authData)
     )
 }
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }
