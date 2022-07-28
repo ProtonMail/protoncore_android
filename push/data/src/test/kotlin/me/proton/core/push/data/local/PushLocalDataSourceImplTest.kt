@@ -22,9 +22,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
 import me.proton.core.push.data.local.db.toPush
@@ -164,14 +162,10 @@ internal class PushLocalDataSourceImplTest {
     fun `delete push by id`() = runBlocking {
         tested.upsertPushes(*allTestPushes.toTypedArray())
 
-        val job = launch(start = CoroutineStart.UNDISPATCHED) {
-            tested.observeAllPushes(testUserId, PushObjectType.Messages).test {
-                assertTrue(awaitItem().contains(testPush2))
-                assertFalse(awaitItem().contains(testPush2))
-            }
+        tested.observeAllPushes(testUserId, PushObjectType.Messages).test {
+            assertTrue(awaitItem().contains(testPush2))
+            tested.deletePushesById(testUserId, testPush2.pushId)
+            assertFalse(awaitItem().contains(testPush2))
         }
-
-        tested.deletePushesById(testUserId, testPush2.pushId)
-        job.join()
     }
 }
