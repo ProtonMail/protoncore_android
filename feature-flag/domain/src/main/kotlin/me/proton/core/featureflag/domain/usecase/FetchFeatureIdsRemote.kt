@@ -26,7 +26,7 @@ import javax.inject.Inject
 public class FetchFeatureIdsRemote @Inject constructor(
     private val repository: FeatureFlagRepository,
 ) {
-    public suspend operator fun invoke(userId: UserId?, featureIds: List<FeatureId>) {
+    public suspend operator fun invoke(userId: UserId?, featureIds: Set<FeatureId>) {
         repository.get(userId = userId, featureIds = featureIds, refresh = true)
     }
 }

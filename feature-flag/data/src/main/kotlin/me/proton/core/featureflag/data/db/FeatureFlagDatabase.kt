@@ -18,6 +18,7 @@
 
 package me.proton.core.featureflag.data.db
 
+import androidx.room.RoomMasterTable.TABLE_NAME
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.extension.dropTable
@@ -80,6 +81,20 @@ public interface FeatureFlagDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.dropTable(table = "FeatureFlagEntity")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` (`userId` TEXT NOT NULL, `featureId` TEXT NOT NULL, `isGlobal` INTEGER NOT NULL, `defaultValue` INTEGER NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`userId`, `featureId`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_userId` ON `FeatureFlagEntity` (`userId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_featureId` ON `FeatureFlagEntity` (`featureId`)")
+            }
+        }
+
+        /**
+         * Recreate FeatureFlagEntity table, discarding previous data.
+         *
+         * Added Scope property. Removed isGlobal.
+         */
+        public val MIGRATION_3: DatabaseMigration = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.dropTable(table = "FeatureFlagEntity")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` (`userId` TEXT NOT NULL, `featureId` TEXT NOT NULL, `scope` TEXT NOT NULL, `defaultValue` INTEGER NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`userId`, `featureId`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_userId` ON `FeatureFlagEntity` (`userId`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_featureId` ON `FeatureFlagEntity` (`featureId`)")
             }

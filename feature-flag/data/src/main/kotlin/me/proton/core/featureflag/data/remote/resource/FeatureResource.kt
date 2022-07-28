@@ -23,6 +23,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 
 @Serializable
 internal data class FeatureResource(
@@ -38,7 +39,7 @@ internal data class FeatureResource(
     internal fun toFeatureFlag(userId: UserId?) = FeatureFlag(
         featureId = FeatureId(featureId),
         userId = if (isGlobal) null else userId,
-        isGlobal = isGlobal,
+        scope = if (isGlobal) Scope.Global else Scope.User,
         defaultValue = defaultValue,
         value = value
     )

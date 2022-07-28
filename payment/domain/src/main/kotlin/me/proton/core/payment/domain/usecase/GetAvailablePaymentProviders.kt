@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
-import me.proton.core.featureflag.domain.entity.FeatureId
 import javax.inject.Inject
 
 class GetAvailablePaymentProviders @Inject internal constructor(
@@ -49,17 +48,17 @@ class GetAvailablePaymentProviders @Inject internal constructor(
         }
     }
 
-    private suspend fun getFeatureFlagValue(defaultFeatureFlag: FeatureFlag, refresh: Boolean): Boolean {
+    private suspend fun getFeatureFlagValue(default: FeatureFlag, refresh: Boolean): Boolean {
         val userId = accountManager.getPrimaryUserId().first()
-        val featureFlag = featureFlagManager.get(userId, defaultFeatureFlag.featureId, refresh = refresh)
-        return featureFlag?.value ?: defaultFeatureFlag.value
+        val flag = featureFlagManager.getOrDefault(userId, default.featureId, default, refresh)
+        return flag.value
     }
 
     companion object {
         // Note: the flags below define a default value, in case we cannot obtain the actual value from the server.
-        internal val AllPaymentsDisabled get() = FeatureFlag(FeatureId("PaymentsAndroidDisabled"), false)
-        internal val GoogleIAPEnabled get() = FeatureFlag(FeatureId("EnableAndroidIAP"), false)
-        internal val ProtonCardPaymentsEnabled get() = FeatureFlag(FeatureId("EnableAndroidCardPayments"), false)
+        internal val AllPaymentsDisabled get() = FeatureFlag.default("PaymentsAndroidDisabled", false)
+        internal val GoogleIAPEnabled get() = FeatureFlag.default("EnableAndroidIAP", false)
+        internal val ProtonCardPaymentsEnabled get() = FeatureFlag.default("EnableAndroidCardPayments", false)
     }
 }
 

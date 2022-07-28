@@ -28,7 +28,7 @@ import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 @Dao
 public abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
 
-    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId IN (:featureIds) AND userId IN (:userIds) ORDER BY isGlobal")
+    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId IN (:featureIds) AND userId IN (:userIds)")
     internal abstract fun observe(userIds: List<UserId>, featureIds: List<String>): Flow<List<FeatureFlagEntity>>
 
     @Query("DELETE FROM FeatureFlagEntity WHERE userId IN (:userIds)")

@@ -31,7 +31,7 @@ public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider,
 ) : FeatureFlagRemoteDataSource {
 
-    override suspend fun get(userId: UserId?, ids: List<FeatureId>): List<FeatureFlag> =
+    override suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag> =
         apiProvider.get<FeaturesApi>(userId).invoke {
             getFeatureFlags(
                 code = ids.joinToString(separator = ",") { it.id }

@@ -20,6 +20,7 @@ package me.proton.core.featureflag.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
@@ -31,12 +32,34 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
     private val repository: FeatureFlagRepository
 ) : FeatureFlagManager {
 
-    override fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
-        repository.observe(userId, featureId, refresh).distinctUntilChanged()
+    override fun observe(
+        userId: UserId?,
+        featureId: FeatureId,
+        refresh: Boolean
+    ): Flow<FeatureFlag?> = repository.observe(userId, featureId, refresh).distinctUntilChanged()
 
-    override suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean): FeatureFlag? =
-        repository.get(userId, featureId, refresh)
+    override fun observeOrDefault(
+        userId: UserId?,
+        featureId: FeatureId,
+        default: FeatureFlag,
+        refresh: Boolean
+    ): Flow<FeatureFlag> = observe(userId, featureId, refresh).map { it ?: default }
 
-    override fun prefetch(userId: UserId?, featureIds: List<FeatureId>): Unit =
-        repository.prefetch(userId, featureIds)
+    override suspend fun get(
+        userId: UserId?,
+        featureId: FeatureId,
+        refresh: Boolean
+    ): FeatureFlag? = repository.get(userId, featureId, refresh)
+
+    override suspend fun getOrDefault(
+        userId: UserId?,
+        featureId: FeatureId,
+        default: FeatureFlag,
+        refresh: Boolean
+    ): FeatureFlag = runCatching { get(userId, featureId, refresh) }.getOrNull() ?: default
+
+    override fun prefetch(
+        userId: UserId?,
+        featureIds: Set<FeatureId>
+    ): Unit = repository.prefetch(userId, featureIds)
 }

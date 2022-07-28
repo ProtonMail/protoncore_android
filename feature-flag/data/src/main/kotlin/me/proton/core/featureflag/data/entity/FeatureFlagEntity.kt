@@ -21,6 +21,7 @@ package me.proton.core.featureflag.data.entity
 import androidx.room.Entity
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.entity.Scope
 
 @Entity(
     primaryKeys = ["userId", "featureId"],
@@ -32,7 +33,7 @@ import me.proton.core.domain.entity.UserId
 public data class FeatureFlagEntity(
     val userId: UserId,
     val featureId: String,
-    val isGlobal: Boolean,
+    val scope: Scope,
     val defaultValue: Boolean,
-    val value: Boolean
+    val value: Boolean,
 )

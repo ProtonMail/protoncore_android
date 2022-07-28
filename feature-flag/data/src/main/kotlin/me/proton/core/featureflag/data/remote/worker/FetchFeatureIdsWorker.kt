@@ -47,7 +47,7 @@ internal class FetchFeatureIdsWorker @AssistedInject constructor(
         val userId = inputData.getString(INPUT_USER_ID)?.let { UserId(it) }
         val featureIds = inputData.getStringArray(INPUT_FEATURE_IDS)?.map { FeatureId(it) }
         return runCatching {
-            fetchFeatureIdsRemote(userId, featureIds.orEmpty())
+            fetchFeatureIdsRemote(userId, featureIds.orEmpty().toSet())
             Result.success()
         }.getOrElse {
             if (it is ApiException && it.isRetryable()) {
@@ -62,14 +62,14 @@ internal class FetchFeatureIdsWorker @AssistedInject constructor(
         private const val INPUT_USER_ID = "arg.userId"
         private const val INPUT_FEATURE_IDS = "arg.featureIds"
 
-        private fun makeInputData(userId: UserId?, featureIds: List<FeatureId>): Data {
+        private fun makeInputData(userId: UserId?, featureIds: Set<FeatureId>): Data {
             return workDataOf(
                 INPUT_USER_ID to userId?.id,
                 INPUT_FEATURE_IDS to featureIds.map { it.id }.toTypedArray(),
             )
         }
 
-        fun getRequest(userId: UserId?, featureIds: List<FeatureId>): OneTimeWorkRequest {
+        fun getRequest(userId: UserId?, featureIds: Set<FeatureId>): OneTimeWorkRequest {
             val inputData = makeInputData(userId, featureIds)
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)

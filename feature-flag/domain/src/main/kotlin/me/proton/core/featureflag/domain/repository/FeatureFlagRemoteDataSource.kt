@@ -23,5 +23,5 @@ import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 
 public interface FeatureFlagRemoteDataSource {
-    public suspend fun get(userId: UserId?, ids: List<FeatureId>): List<FeatureFlag>
+    public suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag>
 }

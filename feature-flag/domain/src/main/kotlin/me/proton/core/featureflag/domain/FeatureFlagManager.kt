@@ -38,26 +38,58 @@ public interface FeatureFlagManager {
     /**
      * Observe a feature flag value from the local source, if exist, or from remote source otherwise.
      *
-     * @param refresh allows to force a background fetch of the value against the remote source.
+     * @param refresh allows to force refresh against the remote source.
+     *
+     * @return [FeatureFlag] or `null` if it is unknown remotely.
      *
      * @throws me.proton.core.network.domain.ApiException on remote source error
      */
     public fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): Flow<FeatureFlag?>
 
     /**
-     * Get a feature flag's value from the local source, if exist, or from remote source otherwise.
+     * Observe a feature flag value from the local source, if exist, or from remote source otherwise.
      *
-     * @param refresh allows to force a background fetch of the value against the remote source.
+     * @param refresh allows to force refresh against the remote source.
+     *
+     * @return [FeatureFlag] or [default] if it is unknown remotely or on error.
+     */
+    public fun observeOrDefault(
+        userId: UserId?,
+        featureId: FeatureId,
+        default: FeatureFlag,
+        refresh: Boolean = false
+    ): Flow<FeatureFlag>
+
+    /**
+     * Get a feature flag value from the local source, if exist, or from remote source otherwise.
+     *
+     * @param refresh allows to force refresh against the remote source.
+     *
+     * @return [FeatureFlag] or `null` if it is unknown remotely.
      *
      * @throws me.proton.core.network.domain.ApiException on remote source error
      */
     public suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
 
     /**
+     * Get a feature flag value from the local source, if exist, or from remote source otherwise.
+     *
+     * @param refresh allows to force refresh against the remote source.
+     *
+     * @return [FeatureFlag] or [default] if it is unknown remotely or on error.
+     */
+    public suspend fun getOrDefault(
+        userId: UserId?,
+        featureId: FeatureId,
+        default: FeatureFlag,
+        refresh: Boolean = false
+    ): FeatureFlag
+
+    /**
      * Fetches the given featureIds from the remote source and stores them in the local one, in background.
      *
-     * @param featureIds a list of features to be fetched. Passing any id that does not exist in the
+     * @param featureIds a set of features to be fetched. Passing any id that does not exist in the
      * remote source will not have no consequence (said ids will just be ignored).
      */
-    public fun prefetch(userId: UserId?, featureIds: List<FeatureId>)
+    public fun prefetch(userId: UserId?, featureIds: Set<FeatureId>)
 }

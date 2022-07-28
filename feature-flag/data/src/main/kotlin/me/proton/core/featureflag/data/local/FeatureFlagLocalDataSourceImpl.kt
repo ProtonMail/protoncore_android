@@ -33,8 +33,9 @@ public class FeatureFlagLocalDataSourceImpl @Inject constructor(
 
     private val dao = db.featureFlagDao()
 
-    override fun observe(userId: UserId?, featureIds: List<FeatureId>): Flow<List<FeatureFlag>> =
-        dao.observe(userId.withGlobal(), featureIds.map { it.id }).map { list -> list.map { it.toFeatureFlag() } }
+    override fun observe(userId: UserId?, featureIds: Set<FeatureId>): Flow<List<FeatureFlag>> =
+        dao.observe(userId.withGlobal(), featureIds.map { it.id })
+            .map { list -> list.sortedBy { flag -> flag.scope.value }.map { it.toFeatureFlag() } }
 
     override suspend fun upsert(flags: List<FeatureFlag>): Unit =
         dao.insertOrUpdate(*flags.map { it.toEntity() }.toTypedArray())

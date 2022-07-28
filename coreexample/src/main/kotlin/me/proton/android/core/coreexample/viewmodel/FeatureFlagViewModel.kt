@@ -46,12 +46,12 @@ class FeatureFlagViewModel @Inject constructor(
     val state = mutableState.asStateFlow()
 
     fun prefetchGlobal() {
-        val featureIds = ClientFeatureFlags.values().map { it.id }
+        val featureIds = ClientFeatureFlags.values().map { it.id }.toSet()
         featureFlagManager.prefetch(null, featureIds)
     }
 
     fun prefetchForCurrent() = accountManager.getPrimaryUserId().filterNotNull().mapLatest { userId ->
-        val featureIds = ClientFeatureFlags.values().map { it.id }
+        val featureIds = ClientFeatureFlags.values().map { it.id }.toSet()
         featureFlagManager.prefetch(userId, featureIds)
     }.launchIn(viewModelScope)
 
@@ -64,9 +64,8 @@ class FeatureFlagViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun defaultValueOf(featureId: FeatureId) =
-        FeatureFlag(
-            featureId,
-            ClientFeatureFlags.values().first { it.id == featureId }.defaultLocalValue
-        )
+    private fun defaultValueOf(featureId: FeatureId) = FeatureFlag.default(
+        featureId = featureId.id,
+        defaultValue = ClientFeatureFlags.values().first { it.id == featureId }.defaultLocalValue
+    )
 }

@@ -165,4 +165,10 @@ object AccountManagerDatabaseMigrations {
             FeatureFlagDatabase.MIGRATION_2.migrate(database)
         }
     }
+
+    val MIGRATION_21_22 = object : Migration(21, 22) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            FeatureFlagDatabase.MIGRATION_3.migrate(database)
+        }
+    }
 }

@@ -20,7 +20,10 @@ package me.proton.core.featureflag.data.testdata
 
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.featureflag.data.remote.resource.FeatureResource
+import me.proton.core.featureflag.data.testdata.UserIdTestData.userId
+import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 
 internal object FeatureFlagTestData {
     private const val RAW_FEATURE_ID = "featureId"
@@ -30,31 +33,47 @@ internal object FeatureFlagTestData {
     val featureId1 = FeatureId(RAW_FEATURE_ID_1)
 
     val enabledFeatureApiResponse = FeatureResource(
-        featureId.id,
+        featureId = featureId.id,
         isGlobal = false,
         defaultValue = true,
         value = true
     )
 
     val disabledFeatureApiResponse = FeatureResource(
-        featureId1.id,
+        featureId = featureId1.id,
         isGlobal = false,
         defaultValue = false,
         value = false
     )
 
+    val enabledFeature = FeatureFlag(
+        featureId = featureId,
+        value = true,
+        userId = userId,
+        scope = Scope.User,
+        defaultValue = true
+    )
+
+    val disabledFeature = FeatureFlag(
+        featureId = featureId1,
+        value = false,
+        userId = userId,
+        scope = Scope.User,
+        defaultValue = false
+    )
+
     val enabledFeatureEntity = FeatureFlagEntity(
-        UserIdTestData.userId,
-        featureId.id,
-        isGlobal = false,
+        userId = userId,
+        featureId = featureId.id,
+        scope = Scope.User,
         defaultValue = true,
         value = true
     )
 
     val disabledFeatureEntity = FeatureFlagEntity(
-        UserIdTestData.userId,
-        featureId1.id,
-        isGlobal = false,
+        userId = userId,
+        featureId = featureId1.id,
+        scope = Scope.User,
         defaultValue = false,
         value = false
     )

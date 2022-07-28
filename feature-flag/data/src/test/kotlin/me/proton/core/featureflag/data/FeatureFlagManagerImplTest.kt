@@ -29,10 +29,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId
 import me.proton.core.featureflag.data.testdata.UserIdTestData
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -44,6 +46,14 @@ class FeatureFlagManagerImplTest {
 
     private lateinit var manager: FeatureFlagManager
 
+    private fun newFlag(featureId: FeatureId, value: Boolean) = FeatureFlag(
+        userId = null,
+        featureId = featureId,
+        scope = Scope.Global,
+        defaultValue = value,
+        value = value,
+    )
+
     @Before
     fun setUp() {
         manager = FeatureFlagManagerImpl(repository)
@@ -52,28 +62,28 @@ class FeatureFlagManagerImplTest {
     @Test
     fun observeReturnsValueFromRepository() = runBlockingTest {
         // Given
-        val repositoryFeatureFlag = FeatureFlag(FeatureFlagTestData.featureId, true)
+        val repositoryFeatureFlag = newFlag(featureId, true)
         every { repository.observe(any(), any<FeatureId>(), false) } returns flowOf(repositoryFeatureFlag)
 
         // When
-        val actual = manager.observe(UserIdTestData.userId, FeatureFlagTestData.featureId).first()
+        val actual = manager.observe(UserIdTestData.userId, featureId).first()
 
         // Then
-        verify { repository.observe(UserIdTestData.userId, FeatureFlagTestData.featureId, false) }
+        verify { repository.observe(UserIdTestData.userId, featureId, false) }
         assertEquals(repositoryFeatureFlag, actual)
     }
 
     @Test
     fun getReturnsValueFromRepository() = runBlockingTest {
         // Given
-        val repositoryFeatureFlag = FeatureFlag(FeatureFlagTestData.featureId, true)
-        coEvery { repository.get(any(), any()) } returns repositoryFeatureFlag
+        val repositoryFeatureFlag = newFlag(featureId, true)
+        coEvery { repository.get(any(), any<FeatureId>()) } returns repositoryFeatureFlag
 
         // When
-        val actual = manager.get(UserIdTestData.userId, FeatureFlagTestData.featureId)
+        val actual = manager.get(UserIdTestData.userId, featureId)
 
         // Then
-        coVerify { repository.get(UserIdTestData.userId, FeatureFlagTestData.featureId) }
+        coVerify { repository.get(UserIdTestData.userId, featureId) }
         assertEquals(repositoryFeatureFlag, actual)
     }
 
@@ -83,7 +93,7 @@ class FeatureFlagManagerImplTest {
         coEvery { repository.prefetch(any(), any()) } just Runs
 
         // When
-        val featureIds = listOf(FeatureFlagTestData.featureId, FeatureFlagTestData.featureId1)
+        val featureIds = setOf(featureId, FeatureFlagTestData.featureId1)
         manager.prefetch(UserIdTestData.userId, featureIds)
 
         // Then

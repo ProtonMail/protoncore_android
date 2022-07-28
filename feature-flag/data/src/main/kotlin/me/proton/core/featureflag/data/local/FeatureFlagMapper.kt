@@ -31,7 +31,7 @@ internal fun UserId?.withGlobal() = listOfNotNull(this, globalUserId)
 internal fun FeatureFlag.toEntity() = FeatureFlagEntity(
     userId = userId.orGlobal(),
     featureId = featureId.id,
-    isGlobal = isGlobal,
+    scope = scope,
     defaultValue = defaultValue,
     value = value
 )
@@ -39,7 +39,7 @@ internal fun FeatureFlag.toEntity() = FeatureFlagEntity(
 internal fun FeatureFlagEntity.toFeatureFlag() = FeatureFlag(
     userId = if (userId == globalUserId) null else userId,
     featureId = FeatureId(featureId),
-    isGlobal = isGlobal,
+    scope = scope,
     defaultValue = defaultValue,
     value = value
 )

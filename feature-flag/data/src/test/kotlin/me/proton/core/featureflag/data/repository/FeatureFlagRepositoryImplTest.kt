@@ -23,12 +23,14 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import app.cash.turbine.test
 import io.mockk.Called
+import io.mockk.Ordering
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -40,14 +42,26 @@ import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.featureflag.data.local.FeatureFlagLocalDataSourceImpl
 import me.proton.core.featureflag.data.local.orGlobal
+import me.proton.core.featureflag.data.local.toFeatureFlag
 import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
-import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureApiResponse
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureEntity
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.enabledFeature
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.enabledFeatureApiResponse
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.enabledFeatureEntity
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId1
 import me.proton.core.featureflag.data.testdata.SessionIdTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData.userId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
+import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
+import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -75,8 +89,8 @@ class FeatureFlagRepositoryImplTest {
     }
     private val featuresApi = mockk<FeaturesApi> {
         coEvery { this@mockk.getFeatureFlags(any()) } returns GetFeaturesResponse(
-            1000,
-            listOf(FeatureFlagTestData.enabledFeatureApiResponse)
+            resultCode = 1000,
+            features = listOf(enabledFeatureApiResponse)
         )
     }
     private val apiManagerFactory = mockk<ApiManagerFactory> {
@@ -84,38 +98,30 @@ class FeatureFlagRepositoryImplTest {
     }
     private val workManager = mockk<WorkManager>(relaxed = true)
 
+    private lateinit var apiProvider: ApiProvider
+    private lateinit var local: FeatureFlagLocalDataSource
+    private lateinit var remote: FeatureFlagRemoteDataSource
     private lateinit var repository: FeatureFlagRepository
 
     @Before
     fun setUp() {
-        repository = FeatureFlagRepositoryImpl(
-            FeatureFlagLocalDataSourceImpl(database),
-            FeatureFlagRemoteDataSourceImpl(ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)),
-            workManager,
-        )
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        local = spyk(FeatureFlagLocalDataSourceImpl(database))
+        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider))
+        repository = FeatureFlagRepositoryImpl(local, remote, workManager)
     }
 
     @Test
     fun featureFlagIsReturnedFromDbWhenAvailable() = runBlockingTest {
         // Given
-        coEvery {
-            featureFlagDao.observe(
-                userId.withGlobal(),
-                listOf(FeatureFlagTestData.featureId.id)
-            )
-        } returns flowOf(listOf(FeatureFlagTestData.enabledFeatureEntity))
+        val dbFlow = flowOf(listOf(enabledFeatureEntity))
+        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
 
         // When
-        val actual = repository.get(userId, FeatureFlagTestData.featureId)
+        val actual = repository.get(userId, featureId)
 
         // Then
-        val expected = FeatureFlag(
-            featureId = FeatureFlagTestData.featureId,
-            value = true,
-            userId = userId,
-            isGlobal = false,
-            defaultValue = true
-        )
+        val expected = enabledFeature
         assertEquals(expected, actual)
         verify { featuresApi wasNot Called }
     }
@@ -124,35 +130,23 @@ class FeatureFlagRepositoryImplTest {
     fun getUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runBlockingTest {
         // Given
         val nullUserId: UserId? = null
-        coEvery {
-            featureFlagDao.observe(
-                userId.withGlobal(),
-                listOf(FeatureFlagTestData.featureId.id)
-            )
-        } returns flowOf(
+        val dbFlow = flowOf(
             listOf(
-                FeatureFlagTestData.enabledFeatureEntity.copy(
-                    userId = userId,
-                    isGlobal = false,
-                    value = false
-                ),
-                FeatureFlagTestData.enabledFeatureEntity.copy(
-                    userId = nullUserId.orGlobal(),
-                    isGlobal = true,
-                    value = true
-                )
+                enabledFeatureEntity.copy(userId = userId, scope = Scope.User, value = false),
+                enabledFeatureEntity.copy(userId = nullUserId.orGlobal(), scope = Scope.Global, value = true)
             )
         )
+        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
 
         // When
-        val actual = repository.get(userId, FeatureFlagTestData.featureId)
+        val actual = repository.get(userId, featureId)
 
         // Then
         val expected = FeatureFlag(
-            featureId = FeatureFlagTestData.featureId,
+            featureId = featureId,
             value = false,
             userId = userId,
-            isGlobal = false,
+            scope = Scope.User,
             defaultValue = true
         )
         assertEquals(expected, actual)
@@ -163,35 +157,23 @@ class FeatureFlagRepositoryImplTest {
     fun observeUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runBlockingTest {
         // Given
         val nullUserId: UserId? = null
-        coEvery {
-            featureFlagDao.observe(
-                userId.withGlobal(),
-                listOf(FeatureFlagTestData.featureId.id)
-            )
-        } returns flowOf(
+        val dbFlow = flowOf(
             listOf(
-                FeatureFlagTestData.enabledFeatureEntity.copy(
-                    userId = userId,
-                    isGlobal = false,
-                    value = false
-                ),
-                FeatureFlagTestData.enabledFeatureEntity.copy(
-                    userId = nullUserId.orGlobal(),
-                    isGlobal = true,
-                    value = true
-                )
+                enabledFeatureEntity.copy(userId = userId, scope = Scope.User, value = false),
+                enabledFeatureEntity.copy(userId = nullUserId.orGlobal(), scope = Scope.Global, value = true)
             )
         )
+        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
 
         // When
-        repository.observe(userId, FeatureFlagTestData.featureId).test {
+        repository.observe(userId, featureId).test {
             // Then
             assertEquals(
                 expected = FeatureFlag(
-                    featureId = FeatureFlagTestData.featureId,
+                    featureId = featureId,
                     value = false,
                     userId = userId,
-                    isGlobal = false,
+                    scope = Scope.User,
                     defaultValue = true
                 ),
                 actual = awaitItem(),
@@ -203,39 +185,23 @@ class FeatureFlagRepositoryImplTest {
     @Test
     fun featureFlagValueIsObservedInDb() = runBlockingTest {
         // Given
-        val mutableDbFlow = MutableStateFlow(listOf(FeatureFlagTestData.enabledFeatureEntity))
-        coEvery {
-            featureFlagDao.observe(
-                userId.withGlobal(),
-                listOf(FeatureFlagTestData.featureId.id)
-            )
-        } returns mutableDbFlow
+        val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
+        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
 
         // When
-        repository.observe(userId, FeatureFlagTestData.featureId).test {
+        repository.observe(userId, featureId).test {
             // Then
             assertEquals(
-                expected = FeatureFlag(
-                    featureId = FeatureFlagTestData.featureId,
-                    value = true,
-                    userId = userId,
-                    isGlobal = false,
-                    defaultValue = true
-                ),
+                expected = enabledFeature,
                 actual = awaitItem(),
             )
 
             // simulate this feature flag's value changes in the DB
-            val disabledFeatures = listOf(FeatureFlagTestData.enabledFeatureEntity.copy(value = false))
+            val disabledFeatures = listOf(enabledFeatureEntity.copy(value = false))
             mutableDbFlow.emit(disabledFeatures)
+
             assertEquals(
-                expected = FeatureFlag(
-                    featureId = FeatureFlagTestData.featureId,
-                    value = false,
-                    userId = userId,
-                    isGlobal = false,
-                    defaultValue = true
-                ),
+                expected = enabledFeature.copy(value = false),
                 actual = awaitItem()
             )
         }
@@ -248,44 +214,111 @@ class FeatureFlagRepositoryImplTest {
     fun featureFlagValueIsFetchedFromApiAndObservedInDbWhenNotAlreadyAvailableLocally() = runBlocking {
         // Given
         val mutableDbFlow = MutableStateFlow<List<FeatureFlagEntity>>(emptyList())
-        coEvery {
-            featureFlagDao.observe(
-                userId.withGlobal(),
-                listOf(FeatureFlagTestData.featureId.id)
-            )
-        } returns mutableDbFlow
+        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
 
         // When
-        repository.observe(userId, FeatureFlagTestData.featureId).test(timeout = 2000.milliseconds) {
+        repository.observe(userId, featureId).test(timeout = 2000.milliseconds) {
+            // Then
             // First item is emitted from DB is null
             assertNull(awaitItem())
 
             // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
-            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(FeatureFlagTestData.enabledFeatureEntity) }
+            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(enabledFeatureEntity) }
 
             // Inserting the API response into DB causes it to be emitted
-            mutableDbFlow.emit(listOf(FeatureFlagTestData.enabledFeatureEntity))
+            mutableDbFlow.emit(listOf(enabledFeatureEntity))
 
-            val expectedFlag = FeatureFlag(
-                featureId = FeatureFlagTestData.featureId,
-                value = true,
-                userId = userId,
-                isGlobal = false,
-                defaultValue = true
-            )
-            assertEquals(expectedFlag, awaitItem())
+            val expected = enabledFeature
+            assertEquals(expected, awaitItem())
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalTime::class)
+    fun featureFlagValuesAreFetchedFromApiWhenNotAllAvailableLocally() = runBlocking {
+        // Given
+        val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
+        coEvery { featureFlagDao.observe(userId.withGlobal(), any()) } returns mutableDbFlow
+        coEvery { featuresApi.getFeatureFlags(any()) } returns GetFeaturesResponse(
+            resultCode = 1000,
+            features = listOf(enabledFeatureApiResponse, disabledFeatureApiResponse)
+        )
+
+        // When
+        val featureIds = setOf(featureId, featureId1)
+        repository.observe(userId, featureIds).test {
+            // Then
+            // First item is emitted from DB is empty.
+            assert(awaitItem().isEmpty())
+
+            // Corresponding entities that the mocked API response.
+            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(enabledFeatureEntity, disabledFeatureEntity) }
+
+            // Inserting the API response into DB causes it to be emitted.
+            mutableDbFlow.emit(listOf(enabledFeatureEntity, disabledFeatureEntity))
+
+            val expected = listOf(enabledFeature, disabledFeature)
+            assertEquals(expected, awaitItem())
+        }
+        coVerify(Ordering.ORDERED) {
+            remote.get(userId, featureIds)
+            local.upsert(any())
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalTime::class)
+    fun upsertUnknownRequestedFlagsInDbAsUnknown() = runBlocking {
+        // Given
+        val nullUserId: UserId? = null
+        val unknownId = FeatureId("unknown")
+        val unknownFlagEntity = FeatureFlagEntity(
+            userId = nullUserId.orGlobal(), // Unknown are global by default.
+            featureId = unknownId.id,
+            scope = Scope.Unknown, // Unknown.
+            defaultValue = false, // Unknown default is false.
+            value = false // Unknown default is false.
+        )
+
+        val mutableDbFlow = MutableStateFlow(emptyList<FeatureFlagEntity>())
+        coEvery { featureFlagDao.observe(userId.withGlobal(), any()) } returns mutableDbFlow
+
+        // When
+        val featureIds = setOf(featureId, unknownId)
+        repository.observe(userId, featureIds).test {
+            // First item is emitted from DB is empty.
+            assert(awaitItem().isEmpty())
+
+            // Corresponding entities that the mocked API response.
+            coVerify(timeout = 500) {
+                featureFlagDao.insertOrUpdate(
+                    enabledFeatureEntity,
+                    unknownFlagEntity
+                )
+            }
+
+            // Inserting the API response into DB causes it to be emitted.
+            mutableDbFlow.emit(listOf(enabledFeatureEntity, unknownFlagEntity))
+
+            // Unknown flag is filtered out.
+            val expected = listOf(enabledFeature)
+            assertEquals(expected, awaitItem())
+        }
+        coVerify(Ordering.ORDERED) {
+            remote.get(userId, featureIds)
+            local.upsert(any())
         }
     }
 
     @Test
     fun prefetchFeatureFlagsEnqueueFetchWorker() = runBlockingTest {
-        val featureIdsString = "${FeatureFlagTestData.featureId.id},${FeatureFlagTestData.featureId1.id}"
+        val featureIdsString = "${featureId.id},${featureId1.id}"
         coEvery { featuresApi.getFeatureFlags(featureIdsString) } returns GetFeaturesResponse(
-            1000,
-            listOf(FeatureFlagTestData.enabledFeatureApiResponse, FeatureFlagTestData.disabledFeatureApiResponse)
+            resultCode = 1000,
+            features = listOf(enabledFeatureApiResponse, disabledFeatureApiResponse)
         )
 
-        val featureIds = listOf(FeatureFlagTestData.featureId, FeatureFlagTestData.featureId1)
+        val featureIds = setOf(featureId, featureId1)
         repository.prefetch(userId, featureIds)
 
         val name = "${FeatureFlagRepositoryImpl::class.simpleName}-prefetch-$userId"

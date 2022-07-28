@@ -21,9 +21,33 @@ package me.proton.core.featureflag.domain.entity
 import me.proton.core.domain.entity.UserId
 
 public data class FeatureFlag(
+    val userId: UserId?,
     val featureId: FeatureId,
+    val scope: Scope,
+    val defaultValue: Boolean,
     val value: Boolean,
-    val userId: UserId? = null,
-    val isGlobal: Boolean = true,
-    val defaultValue: Boolean = false,
-)
+) {
+    public companion object {
+        public fun default(featureId: String, defaultValue: Boolean): FeatureFlag = FeatureFlag(
+            userId = null,
+            featureId = FeatureId(featureId),
+            scope = Scope.Unknown,
+            defaultValue = defaultValue,
+            value = defaultValue
+        )
+    }
+}
+
+public enum class Scope(public val value: Int) {
+    /* Requested but unknown. */
+    Unknown(0),
+
+    /* For this device. */
+    Local(1),
+
+    /* For this User. */
+    User(2),
+
+    /* For all Users. */
+    Global(3),
+}

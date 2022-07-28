@@ -26,6 +26,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders.Companion.AllPaymentsDisabled
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders.Companion.GoogleIAPEnabled
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders.Companion.ProtonCardPaymentsEnabled
@@ -48,21 +49,10 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `feature flags not available`() = runBlockingTest {
-        coEvery { featureFlagManager.get(any(), any(), any()) } returns null
-        mockGoogleIAP(true)
-
-        assertEquals(
-            emptySet(),
-            tested()
-        )
-    }
-
-    @Test
     fun `all payments disabled`() = runBlockingTest {
         mockFeature(AllPaymentsDisabled, true)
-        mockFeature(GoogleIAPEnabled, null)
-        mockFeature(ProtonCardPaymentsEnabled, null)
+        mockFeature(GoogleIAPEnabled, true)
+        mockFeature(ProtonCardPaymentsEnabled, true)
         mockGoogleIAP(false)
 
         assertEquals(
@@ -149,9 +139,15 @@ class GetAvailablePaymentProvidersTest {
         )
     }
 
-    private fun mockFeature(defaultFeatureFlag: FeatureFlag, value: Boolean?) {
-        val featureFlag = value?.let { FeatureFlag(defaultFeatureFlag.featureId, value) }
-        coEvery { featureFlagManager.get(any(), defaultFeatureFlag.featureId, any()) } returns featureFlag
+    private fun mockFeature(flag: FeatureFlag, value: Boolean) {
+        val featureFlag = FeatureFlag(
+            userId = null,
+            featureId = flag.featureId,
+            scope = Scope.Global,
+            defaultValue = value,
+            value = value
+        )
+        coEvery { featureFlagManager.getOrDefault(any(), flag.featureId, any()) } returns featureFlag
     }
 
     private fun mockGoogleIAP(available: Boolean) {

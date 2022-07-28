@@ -31,6 +31,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
@@ -44,43 +45,49 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val workManager: WorkManager,
 ) : FeatureFlagRepository {
 
-    private data class StoreKey(val userId: UserId?, val featureIds: List<FeatureId>)
+    private data class StoreKey(val userId: UserId?, val featureIds: Set<FeatureId>)
 
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey -> remoteDataSource.get(key.userId, key.featureIds) },
         sourceOfTruth = SourceOfTruth.of(
             reader = { key: StoreKey ->
                 localDataSource.observe(key.userId, key.featureIds).map { list ->
-                    list.takeIf { it.isNotEmpty() }
+                    val localFlags = list.associateBy { it.featureId }
+                    list.takeIf { key.featureIds.all { it in localFlags } }
                 }
             },
-            writer = { _, list: List<FeatureFlag> -> localDataSource.upsert(list) },
+            writer = { key: StoreKey, fetched: List<FeatureFlag> ->
+                val unknownIds = key.featureIds - fetched.map { it.featureId }.toSet()
+                val unknownFlags = unknownIds.map { FeatureFlag.default(it.id, false) }
+                localDataSource.upsert(fetched + unknownFlags)
+            },
         )
     ).buildProtonStore()
 
     override fun observe(
         userId: UserId?,
-        featureIds: List<FeatureId>,
+        featureIds: Set<FeatureId>,
         refresh: Boolean
     ): Flow<List<FeatureFlag>> = StoreKey(userId = userId, featureIds = featureIds).let { key ->
-        store.stream(StoreRequest.cached(key, refresh)).map { it.dataOrNull().orEmpty() }
+        store.stream(StoreRequest.cached(key, refresh))
+            .map { it.dataOrNull().orEmpty().filterNot { flag -> flag.scope == Scope.Unknown } }
     }
 
     override suspend fun get(
         userId: UserId?,
-        featureIds: List<FeatureId>,
+        featureIds: Set<FeatureId>,
         refresh: Boolean
     ): List<FeatureFlag> = StoreKey(userId = userId, featureIds = featureIds).let { key ->
         if (refresh) store.fresh(key) else store.get(key)
-    }
+    }.filterNot { flag -> flag.scope == Scope.Unknown }
 
     override fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
-        observe(userId, listOf(featureId), refresh).map { it.firstOrNull() }
+        observe(userId, setOf(featureId), refresh).map { it.firstOrNull() }
 
     override suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean): FeatureFlag? =
-        get(userId, listOf(featureId), refresh).firstOrNull()
+        get(userId, setOf(featureId), refresh).firstOrNull()
 
-    override fun prefetch(userId: UserId?, featureIds: List<FeatureId>) {
+    override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {
         // Replace any existing FetchFeatureIdsWorker.
         workManager.enqueueUniqueWork(
             getUniqueWorkName(userId),
