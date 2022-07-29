@@ -292,7 +292,7 @@ private fun downloadDetektConfig(githubConfigFilePath: String, to: File) {
         return
     }
 
-    val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$githubConfigFilePath"
+    val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/main/$githubConfigFilePath"
     println("Fetching Detekt rule-set from $url")
     try {
         val content = URL(url).openStream().bufferedReader().readText()
