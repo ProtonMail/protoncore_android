@@ -448,10 +448,10 @@ formatting:
 naming:
   active: true
   BooleanPropertyNaming:
-    active: true
-    autoCorrect: true
-    allowedPattern: '^(is|are|has|should)'
-    ignoreOverridden: true
+    active: false
+    # autoCorrect: true
+    # allowedPattern: '^(is|are|has|should)'
+    # ignoreOverridden: true
   ClassNaming:
     active: true
     excludes: ['**/gradle/**', '**/buildSrc/**']
