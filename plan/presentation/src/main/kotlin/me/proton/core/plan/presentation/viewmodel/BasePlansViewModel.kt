@@ -114,7 +114,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             progressValue = user.calculateUsedSpacePercentage().roundToInt(),
             usedAddresses = if (usedAddresses > 0) usedAddresses else defaultPlan?.maxAddresses ?: 1, // by design
             usedDomains = usedDomains,
-            usedMembers = usedMembers,
+            usedMembers = if (usedMembers > 0) usedMembers else 1, // by design
             usedCalendars = usedCalendars
         )
     }
