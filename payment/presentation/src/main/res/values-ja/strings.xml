@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">支払方法を選択してください</string>
   <string name="payments_add_credit_debit_card">新しいクレジットカードまたはデビットカードを追加</string>
-  <string name="payments_billing_monthly">1 か月間</string>
   <string name="payments_billing_yearly">1 年間</string>
-  <string name="payments_billing_two_years">2 年間</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">%s を支払う</string>
   <string name="payments_method_icon">支払い手段のアイコン。</string>
   <!-- endregion -->

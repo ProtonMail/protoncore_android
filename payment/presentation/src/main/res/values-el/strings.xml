@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Διαλέξτε τη μέθοδο πληρωμής σας</string>
   <string name="payments_add_credit_debit_card">Προσθήκη νέας πιστωτικής/χρεωστικής κάρτας</string>
-  <string name="payments_billing_monthly">Για 1 μήνα</string>
   <string name="payments_billing_yearly">Για 1 χρόνο</string>
-  <string name="payments_billing_two_years">Για 2 χρόνια</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Πληρωμή %s</string>
   <string name="payments_method_icon">Εικονίδιο τρόπου πληρωμής.</string>
   <!-- endregion -->

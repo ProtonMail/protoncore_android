@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">获取账户等级失败。</string>
   <string name="plans_free_name">免费版</string>
   <string name="plan_price_monthly">每月</string>
-  <string name="plan_price_annually">每月*</string>
+  <string name="plan_price_annually">per year*</string>
   <string name="plans_current_plan">当前等级</string>
   <string name="plans_upgrade_plan">升级您的账户</string>
   <string name="plans_subscription">账户等级</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Get %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
-  <string name="plans_manage_your_subscription_vpn">Manage your subscription at <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -113,10 +114,5 @@
     <item>欧元</item>
     <item>美元</item>
     <item>瑞士法郎</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>月付</item>
-    <item>Pay annually</item>
-    <item>Pay every 2 years</item>
   </string-array>
 </resources>

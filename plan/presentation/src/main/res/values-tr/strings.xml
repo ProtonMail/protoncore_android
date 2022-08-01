@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">Tarifeler alınırken bir sorun çıktı.</string>
   <string name="plans_free_name">Ücretsiz</string>
   <string name="plan_price_monthly">aylık</string>
-  <string name="plan_price_annually">aylık*</string>
+  <string name="plan_price_annually">yıllık*</string>
   <string name="plans_current_plan">Geçerli tarife</string>
   <string name="plans_upgrade_plan">Tarifenizi yükseltin</string>
   <string name="plans_subscription">Abonelik</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">%s alın</string>
   <string name="plans_manage_your_subscription">Aboneliğinizi <a href="https://account.protonmail.com">account.protonmail.com</a> adresinden yönetin</string>
   <string name="plans_used_space">%s / %s</string>
-  <string name="plans_manage_your_subscription_vpn">Aboneliğinizi <a href="https://protonvpn.com/pricing">protonvpn.com</a> adresinden yönetin</string>
+  <string name="plans_manage_your_subscription_google">Aboneliğiniz Google Play tarafından yönetilmektedir.</string>
+  <string name="plans_manage_your_subscription_other">Aboneliğiniz mobil uygulama içinden yönetilemez.</string>
   <string name="plans_can_not_upgrade_from_mobile">Mobil uygulamadan yükseltme yapamazsınız.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Aylık ödeme</item>
-    <item>Yıllık ödeme</item>
-    <item>İki yılda bir ödeme</item>
   </string-array>
 </resources>

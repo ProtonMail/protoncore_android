@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Ödeme yönteminizi seçin</string>
   <string name="payments_add_credit_debit_card">Yeni, kredi/banka kartı ekle</string>
-  <string name="payments_billing_monthly">Bir aylık</string>
   <string name="payments_billing_yearly">Bir yıllık</string>
-  <string name="payments_billing_two_years">İki yıllık</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">%s öde</string>
   <string name="payments_method_icon">Ödeme yöntemi simgesi.</string>
   <!-- endregion -->

@@ -17,17 +17,17 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Vyberte plán</string>
-  <string name="plans_select_a_plan_subtitle">Jeden plán pro všechny Proton služby</string>
-  <string name="plans_fetching_general_error">Při načítání plánů došlo k chybě.</string>
+  <string name="plans_select_a_plan">Vyberte tarif</string>
+  <string name="plans_select_a_plan_subtitle">Jeden tarif pro všechny Proton služby</string>
+  <string name="plans_fetching_general_error">Při načítání tarifů došlo k chybě.</string>
   <string name="plans_free_name">Zdarma</string>
   <string name="plan_price_monthly">za měsíc</string>
-  <string name="plan_price_annually">za měsíc*</string>
-  <string name="plans_current_plan">Aktuální plán</string>
+  <string name="plan_price_annually">za rok*</string>
+  <string name="plans_current_plan">Současný tarif</string>
   <string name="plans_upgrade_plan">Přejít na vyšší tarif</string>
   <string name="plans_subscription">Předplatné</string>
-  <string name="plans_renewal_date">Váš plán se automaticky obnoví &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Váš plán vyprší &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_renewal_date">Váš tarif bude automaticky obnoven &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Váš tarif vyprší &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Účtováno ročně %s</string>
   <string name="plans_billed_monthly">Účtováno měsíčně</string>
   <string name="plans_billing_monthly">Na měsíc</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Získejte %s</string>
   <string name="plans_manage_your_subscription">Spravujte své předplatné na <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s z %s</string>
-  <string name="plans_manage_your_subscription_vpn">Spravujte své předplatné na <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Vaše předplatné spravuje služba Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Vaše předplatné nelze spravovat v mobilní aplikaci.</string>
   <string name="plans_can_not_upgrade_from_mobile">Není možné navýšit tarif pomocí mobilní aplikace.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -152,10 +153,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Platit měsíčně</item>
-    <item>Platit ročně</item>
-    <item>Platit každé 2 roky</item>
   </string-array>
 </resources>

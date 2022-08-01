@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Välj din betalningsmetod</string>
   <string name="payments_add_credit_debit_card">Lägg till ett nytt kredit-/betalkort</string>
-  <string name="payments_billing_monthly">För 1 månad</string>
   <string name="payments_billing_yearly">För 1 år</string>
-  <string name="payments_billing_two_years">För 2 år</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Betala %s</string>
   <string name="payments_method_icon">Ikon för betalningsmetod.</string>
   <!-- endregion -->

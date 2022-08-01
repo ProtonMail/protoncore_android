@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>
   <string name="payments_add_credit_debit_card">Додати нову кредитну/платіжну картку</string>
-  <string name="payments_billing_monthly">На 1 місяць</string>
   <string name="payments_billing_yearly">На 1 рік</string>
-  <string name="payments_billing_two_years">На 2 роки</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Сплатити %s</string>
   <string name="payments_method_icon">Піктограма способу оплати.</string>
   <!-- endregion -->

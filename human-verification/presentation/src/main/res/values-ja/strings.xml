@@ -26,7 +26,7 @@
   <string name="human_verification_enter_code_subtitle_already_have_code">すでに持っている検証コードを入力:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">メールアドレス</string>
-  <string name="human_verification_option_email_subtitle">Your email will only be used for this one-time verification. If you don\'t find the email in your inbox, please check your spam folder.</string>
+  <string name="human_verification_option_email_subtitle">メールは 1 回限りの検証のために使用されます。受信トレイにメールが見当たらない場合は迷惑メールフォルダーを確認してください。</string>
   <string name="human_verification_option_sms">電話番号</string>
   <string name="human_verification_option_sms_subtitle">電話番号は、この一度限りの認証にのみ使用されます。</string>
   <string name="human_verification_get_verification_code">検証コードを取得</string>

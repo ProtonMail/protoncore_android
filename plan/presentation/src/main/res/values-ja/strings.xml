@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">プランの読み込み時にエラーが発生しました。</string>
   <string name="plans_free_name">無料</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
-  <string name="plan_price_annually">1 ヶ月あたり*</string>
+  <string name="plan_price_annually">年あたり*</string>
   <string name="plans_current_plan">現在のプラン</string>
   <string name="plans_upgrade_plan">プランをアップグレード</string>
   <string name="plans_subscription">サブスクリプション</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">%s を入手</string>
   <string name="plans_manage_your_subscription"><a href="https://account.protonmail.com">account.protonmail.com</a> からサブスクリプションを管理</string>
   <string name="plans_used_space">%s / %s</string>
-  <string name="plans_manage_your_subscription_vpn"><a href="https://protonvpn.com/pricing">protonvpn.com</a> からサブスクリプションを管理</string>
+  <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
+  <string name="plans_manage_your_subscription_other">モバイルアプリではサブスクリプションを管理できません。</string>
   <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードできません。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -113,10 +114,5 @@
     <item>ユーロ</item>
     <item>米ドル</item>
     <item>スイス フラン</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>月払い</item>
-    <item>年間払い</item>
-    <item>2 年ごとの支払い</item>
   </string-array>
 </resources>

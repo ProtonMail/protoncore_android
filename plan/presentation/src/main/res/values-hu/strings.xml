@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">Hiba történt a csomagok letöltése közben.</string>
   <string name="plans_free_name">Ingyenes</string>
   <string name="plan_price_monthly">havonta</string>
-  <string name="plan_price_annually">havonta*</string>
+  <string name="plan_price_annually">per year*</string>
   <string name="plans_current_plan">Jelenlegi előfizetés</string>
   <string name="plans_upgrade_plan">Váltás nagyobb csomagra</string>
   <string name="plans_subscription">Előfizetés</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">%s beszerzése</string>
   <string name="plans_manage_your_subscription">Az elfizetését az <a href="https://account.protonmail.com">account.protonmail.com</a> címen kezelheti</string>
   <string name="plans_used_space">%s / %s</string>
-  <string name="plans_manage_your_subscription_vpn">Az elfizetését a <a href="https://protonvpn.com/pricing">protonvpn.com</a> címen kezelheti</string>
+  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_can_not_upgrade_from_mobile">A mobil alkalmazásból a csomag nem változtatható.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Fizetés havonta</item>
-    <item>Fizetés évente</item>
-    <item>Fizetés két évente</item>
   </string-array>
 </resources>

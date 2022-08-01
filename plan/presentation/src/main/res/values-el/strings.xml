@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">Παρουσιάστηκε σφάλμα κατά τη λήψη πλάνων.</string>
   <string name="plans_free_name">Δωρεάν</string>
   <string name="plan_price_monthly">ανά μήνα</string>
-  <string name="plan_price_annually">ανά μήνα*</string>
+  <string name="plan_price_annually">per year*</string>
   <string name="plans_current_plan">Τρέχων Πλάνο</string>
   <string name="plans_upgrade_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_subscription">Συνδρομή</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Αποκτήστε %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s από %s</string>
-  <string name="plans_manage_your_subscription_vpn">Manage your subscription at <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Δεν γίνεται να αναβαθμίσετε από την εφαρμογή κινητού.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Μηνιαία πληρωμή</item>
-    <item>Ετήσια πληρωμή</item>
-    <item>Πληρωμή κάθε 2 χρόνια</item>
   </string-array>
 </resources>

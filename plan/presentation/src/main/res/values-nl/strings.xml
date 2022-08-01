@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">Er is een fout opgetreden bij het ophalen van de abonnementen.</string>
   <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">maandelijks</string>
-  <string name="plan_price_annually">maandelijks*</string>
+  <string name="plan_price_annually">per year*</string>
   <string name="plans_current_plan">Huidig abonnement</string>
   <string name="plans_upgrade_plan">Upgrade uw abonnement</string>
   <string name="plans_subscription">Abonnement</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Krijg %s</string>
   <string name="plans_manage_your_subscription">Beheer uw abonnement op <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s van %s</string>
-  <string name="plans_manage_your_subscription_vpn">Beheer uw abonnement op <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_can_not_upgrade_from_mobile">U kan niet upgraden vanuit de mobiele app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Betaal maandelijks</item>
-    <item>Jaarlijks betalen</item>
-    <item>Betaal elke 2 jaar</item>
   </string-array>
 </resources>

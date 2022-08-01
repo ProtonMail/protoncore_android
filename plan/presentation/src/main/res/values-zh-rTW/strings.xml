@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">接收方案時發生錯誤。</string>
   <string name="plans_free_name">免費</string>
   <string name="plan_price_monthly">每月</string>
-  <string name="plan_price_annually">每月*</string>
+  <string name="plan_price_annually">每年*</string>
   <string name="plans_current_plan">目前方案</string>
   <string name="plans_upgrade_plan">升級您的方案</string>
   <string name="plans_subscription">訂閲</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">取得 %s</string>
   <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
   <string name="plans_used_space">%s 中的 %s</string>
-  <string name="plans_manage_your_subscription_vpn">在 <a href="https://protonvpn.com/pricing">protonvpn.com</a> 管理您的訂閱</string>
+  <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
+  <string name="plans_manage_your_subscription_other">您的訂閱無法在行動裝置應用程式內管理。</string>
   <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置應用程式升級。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -113,10 +114,5 @@
     <item>歐元</item>
     <item>美金</item>
     <item>瑞郎</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>月繳制</item>
-    <item>年繳制</item>
-    <item>雙年繳制</item>
   </string-array>
 </resources>

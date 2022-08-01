@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Kies uw betaalmethode</string>
   <string name="payments_add_credit_debit_card">Nieuwe krediet/debietkaart toevoegen</string>
-  <string name="payments_billing_monthly">Voor 1 maand</string>
   <string name="payments_billing_yearly">Voor 1 jaar</string>
-  <string name="payments_billing_two_years">Voor 2 jaar</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Betaal %s</string>
   <string name="payments_method_icon">Pictogram betaalmethode.</string>
   <!-- endregion -->

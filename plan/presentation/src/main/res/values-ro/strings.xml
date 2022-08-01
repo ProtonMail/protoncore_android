@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">A apărut o eroare în timpul preluării planurilor.</string>
   <string name="plans_free_name">Gratuit</string>
   <string name="plan_price_monthly">pe lună</string>
-  <string name="plan_price_annually">pe lună*</string>
+  <string name="plan_price_annually">pe an*</string>
   <string name="plans_current_plan">Plan actual</string>
   <string name="plans_upgrade_plan">Upgrade plan</string>
   <string name="plans_subscription">Abonament</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Luați %s</string>
   <string name="plans_manage_your_subscription">Gestionați abonamentul la <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s din %s</string>
-  <string name="plans_manage_your_subscription_vpn">Gestionați abonamentul la <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Abonamentul este gestionat de către Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Abonamentul nu poate fi gestionat din aplicația mobilă.</string>
   <string name="plans_can_not_upgrade_from_mobile">Nu puteți schimba abonamentul din aplicația mobilă.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -139,10 +140,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Plată lunară</item>
-    <item>Plată anuală</item>
-    <item>Plată la doi ani</item>
   </string-array>
 </resources>

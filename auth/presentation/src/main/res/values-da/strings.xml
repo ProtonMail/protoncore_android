@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Din e-mailadresse til gendannelse er:</string>
   <string name="auth_create_address_create">Opret adresse</string>
   <string name="auth_create_address_creating">Opretter adresse</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Ved at klikke på Opret adresse, accepterer du Proton\'s <a href="https://protonmail.com/terms-and-conditions">Vilkår og Betingelser.</a></string>
   <string name="auth_create_address_error_credentials">Brugeroplysninger må ikke stå tomt.</string>
   <string name="auth_create_address_error_no_available_domain">Intet tilgængeligt domæne.</string>
   <string name="auth_create_address_error_private_key">Generering af privat nøgle mislykkedes.</string>

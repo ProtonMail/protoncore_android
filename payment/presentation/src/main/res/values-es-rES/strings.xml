@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Elije el método de pago</string>
   <string name="payments_add_credit_debit_card">Añadir tarjeta de crédito/débito</string>
-  <string name="payments_billing_monthly">Para 1 mes</string>
   <string name="payments_billing_yearly">Durante 1 año</string>
-  <string name="payments_billing_two_years">Durante 2 años</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Pagar %s</string>
   <string name="payments_method_icon">Ícono de método de pago.</string>
   <!-- endregion -->

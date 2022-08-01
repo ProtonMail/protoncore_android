@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Válasszon fizetési módot</string>
   <string name="payments_add_credit_debit_card">Új bankkártya hozzáadása</string>
-  <string name="payments_billing_monthly">1 hónapra</string>
   <string name="payments_billing_yearly">1 évre</string>
-  <string name="payments_billing_two_years">2 évre</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">%s fizetése</string>
   <string name="payments_method_icon">Fizetési mód ikon.</string>
   <!-- endregion -->

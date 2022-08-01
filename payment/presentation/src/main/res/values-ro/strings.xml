@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Alegeți metoda de plată</string>
   <string name="payments_add_credit_debit_card">Adăugare card de credit / debit</string>
-  <string name="payments_billing_monthly">Pentru o lună</string>
   <string name="payments_billing_yearly">Pentru un an</string>
-  <string name="payments_billing_two_years">Pentru doi ani</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Plătiți %s</string>
   <string name="payments_method_icon">Pictograma metodei de plată.</string>
   <!-- endregion -->

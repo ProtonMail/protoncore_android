@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Pilih metode pembayaran Anda</string>
   <string name="payments_add_credit_debit_card">Tambah kartu kredit/debit baru</string>
-  <string name="payments_billing_monthly">Untuk 1 bulan</string>
   <string name="payments_billing_yearly">Untuk 1 tahun</string>
-  <string name="payments_billing_two_years">Untuk 2 tahun</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Bayar %s</string>
   <string name="payments_method_icon">Ikon metode pembayaran.</string>
   <!-- endregion -->

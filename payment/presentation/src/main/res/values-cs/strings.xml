@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Zvolte způsob platby</string>
   <string name="payments_add_credit_debit_card">Přidat novou kreditní/debetní kartu</string>
-  <string name="payments_billing_monthly">Na měsíc</string>
   <string name="payments_billing_yearly">Na rok</string>
-  <string name="payments_billing_two_years">Na dva roky</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Zaplatit %s</string>
   <string name="payments_method_icon">Ikona platební metody.</string>
   <!-- endregion -->

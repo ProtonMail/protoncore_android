@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">Ett fel uppstod vid hämtning av paket.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per månad</string>
-  <string name="plan_price_annually">per månad*</string>
+  <string name="plan_price_annually">per år*</string>
   <string name="plans_current_plan">Nuvarande paket</string>
   <string name="plans_upgrade_plan">Uppgradera ditt paket</string>
   <string name="plans_subscription">Prenumeration</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Skaffa %s</string>
   <string name="plans_manage_your_subscription">Hantera din prenumeration på <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s av %s</string>
-  <string name="plans_manage_your_subscription_vpn">Hantera din prenumeration på <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Din prenumeration är hanterad av Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Du kan inte uppgradera från mobilappen.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Betala månadsvis</item>
-    <item>Betala årligen</item>
-    <item>Betala vartannat år</item>
   </string-array>
 </resources>

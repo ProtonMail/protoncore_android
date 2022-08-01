@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des abonnements.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">par mois</string>
-  <string name="plan_price_annually">par mois*</string>
+  <string name="plan_price_annually">par an*</string>
   <string name="plans_current_plan">Abonnement actuel</string>
   <string name="plans_upgrade_plan">Changez d\'abonnement</string>
   <string name="plans_subscription">Abonnement</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Obtenir %s</string>
   <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s sur %s</string>
-  <string name="plans_manage_your_subscription_vpn">Gérez votre abonnement sur <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Votre abonnement est géré par Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Votre abonnement ne peut pas être géré dans l\'application mobile.</string>
   <string name="plans_can_not_upgrade_from_mobile">Vous ne pouvez pas passer à l\'abonnement supérieur depuis l\'application mobile.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Paiement mensuel</item>
-    <item>Paiement annuel</item>
-    <item>Paiement tous les 2 ans</item>
   </string-array>
 </resources>

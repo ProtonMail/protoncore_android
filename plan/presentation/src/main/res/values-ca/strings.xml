@@ -22,7 +22,7 @@
   <string name="plans_fetching_general_error">S\'ha produït un error al carregar els plans.</string>
   <string name="plans_free_name">Gratuït</string>
   <string name="plan_price_monthly">al mes</string>
-  <string name="plan_price_annually">al mes*</string>
+  <string name="plan_price_annually">per year*</string>
   <string name="plans_current_plan">Pla actual</string>
   <string name="plans_upgrade_plan">Milloreu-vos el pla</string>
   <string name="plans_subscription">Subscripció</string>
@@ -38,7 +38,8 @@
   <string name="plans_get_proton">Obtingueu %s</string>
   <string name="plans_manage_your_subscription">Gestioneu la subscripció en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
-  <string name="plans_manage_your_subscription_vpn">Gestioneu la subscripció en <a href="https://protonvpn.com/pricing">protonvpn.com</a></string>
+  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_can_not_upgrade_from_mobile">No podeu millorar el pla des de l\'aplicació mòbil.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -126,10 +127,5 @@
     <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
-  </string-array>
-  <string-array name="supported_billing_cycle">
-    <item>Pagament mensual</item>
-    <item>Pagar anualment</item>
-    <item>Pagar cada 2 anys</item>
   </string-array>
 </resources>

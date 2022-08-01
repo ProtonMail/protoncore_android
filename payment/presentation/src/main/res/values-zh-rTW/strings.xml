@@ -31,9 +31,7 @@
   <!-- region payment options -->
   <string name="payments_choose_payment_method">選擇您的繳款方式</string>
   <string name="payments_add_credit_debit_card">加入信用卡／簽帳金融卡</string>
-  <string name="payments_billing_monthly">為期1個月</string>
   <string name="payments_billing_yearly">為期1年</string>
-  <string name="payments_billing_two_years">為期2年</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">支付 %s</string>
   <string name="payments_method_icon">繳款方法圖示。</string>
   <!-- endregion -->

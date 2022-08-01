@@ -20,7 +20,7 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">E-mail til gendannelse</string>
   <string name="settings_recovery_email_current">Nuværende e-mail til nulstilling / notifikation</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
+  <string name="settings_recovery_email_new">Ny e-mail til gendannelse/notifikation</string>
   <string name="settings_recovery_email_confirm">Bekræft e-mail til nulstilling / notifikation</string>
   <string name="settings_recovery_email_new_hint">Indtast e-mailadresse</string>
   <string name="settings_recovery_email_confirm_hint">Indtast e-mailadresse igen</string>

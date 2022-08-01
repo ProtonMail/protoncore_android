@@ -17,16 +17,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">Schützen Sie Ihre Privatsphäre mit Proton</string>
-  <string name="welcome_subtitle">Das Verschlüsseln hält Ihre Daten privat. Ihre Daten gehören ausschließlich Ihnen.</string>
+  <string name="welcome_title">Schütze deine Privatsphäre mit Proton</string>
+  <string name="welcome_subtitle">Das Verschlüsseln hält deine Daten privat. Deine Daten gehören ausschließlich dir.</string>
   <string name="welcome_title_mail">Schütze deine Privatsphäre mit Proton Mail</string>
   <string name="welcome_subtitle_mail">Verschlüsselte E-Mails halten Ihre Konversationen privat. Ihr Posteingang gehört ausschließlich Ihnen.</string>
   <string name="welcome_subtitle_mail_alt">Privatsphäre. Sicherheit. Komfort. Verschlüsselte E-Mail, mit der du die volle Kontrolle über deine persönlichen Daten hast.</string>
-  <string name="welcome_title_drive">Schützen Sie Ihre Privatsphäre mit Proton Drive</string>
+  <string name="welcome_title_drive">Schütze deine Privatsphäre mit Proton Drive</string>
   <string name="welcome_subtitle_drive">Der Komfort von Cloud-Speicher und die Sicherheit der Verschlüsselungstechnologie. Endlich eine Cloud-Speicherlösung, der Sie vertrauen können.</string>
   <string name="welcome_subtitle_drive_alt">Die sicherste Art, deine Dateien zu speichern. Hochladen, Synchronisieren und Teilen mit der stärksten verfügbaren Verschlüsselung.</string>
-  <string name="welcome_title_calendar">Schützen Sie Ihre Privatsphäre mit Proton Calendar</string>
-  <string name="welcome_subtitle_calendar">Verschlüsselter Kalender, der deine Lebensereignisse privat, sicher und geschützt hält.</string>
+  <string name="welcome_title_calendar">Schütze deine Privatsphäre mit Proton Calendar</string>
+  <string name="welcome_subtitle_calendar">Verschlüsselter Kalender, der deine Termine privat, sicher und geschützt hält.</string>
   <string name="welcome_subtitle_calendar_alt">Unser Kalender mit Ende-zu-Ende-Verschlüsselung hilft dir dabei, organisiert zu bleiben, den Überblick und die Kontrolle zu behalten.</string>
   <string name="welcome_title_vpn">Schütze deine Privatsphäre mit Proton VPN</string>
   <string name="welcome_subtitle_vpn">Schweizer Hochgeschwindigkeits-VPN, das deine Privatsphäre schützt, indem es deine Internetverbindung verschlüsselt.</string>
