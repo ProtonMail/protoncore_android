@@ -33,7 +33,7 @@ import me.proton.core.network.domain.scopes.Scope
 fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
     HumanVerificationAvailableMethods(
         verificationMethods = verificationMethods.orEmpty(),
-        verificationToken = verificationToken
+        verificationToken = requireNotNull(verificationToken)
     )
 
 fun Details.toMissingScopes(): MissingScopes =

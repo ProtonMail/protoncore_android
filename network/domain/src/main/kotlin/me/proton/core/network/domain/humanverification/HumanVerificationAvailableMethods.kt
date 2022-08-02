@@ -24,5 +24,5 @@ package me.proton.core.network.domain.humanverification
  */
 data class HumanVerificationAvailableMethods(
     val verificationMethods: List<String>,
-    val verificationToken: String? = null
+    val verificationToken: String
 )

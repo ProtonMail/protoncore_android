@@ -80,7 +80,7 @@ class HumanVerificationListenerImplTest {
     fun `on onHumanVerificationNeeded success`() = runBlockingTest {
         val humanVerificationApiDetails = HumanVerificationAvailableMethods(
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            verificationToken = null
+            verificationToken = "token"
         )
 
         coEvery { humanVerificationRepository.onHumanVerificationStateChanged(any()) } returns flowOf(
@@ -99,7 +99,7 @@ class HumanVerificationListenerImplTest {
     fun `on onHumanVerificationNeeded failed`() = runBlockingTest {
         val humanVerificationApiDetails = HumanVerificationAvailableMethods(
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            verificationToken = null
+            verificationToken = "token"
         )
 
         coEvery { humanVerificationRepository.onHumanVerificationStateChanged(any()) } returns flowOf(

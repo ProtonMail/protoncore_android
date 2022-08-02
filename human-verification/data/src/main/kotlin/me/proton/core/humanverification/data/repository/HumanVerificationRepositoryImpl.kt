@@ -59,6 +59,10 @@ class HumanVerificationRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
 
     override suspend fun insertHumanVerificationDetails(details: HumanVerificationDetails) {
+        if (details.state == HumanVerificationState.HumanVerificationNeeded) {
+            requireNotNull(details.verificationToken)
+        }
+
         val clientId = details.clientId
         db.inTransaction {
             humanVerificationDetailsDao.insertOrUpdate(

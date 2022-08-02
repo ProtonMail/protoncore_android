@@ -44,6 +44,7 @@ import me.proton.core.network.domain.session.SessionId
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 class HumanVerificationRepositoryImplTest {
 
@@ -88,11 +89,24 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
+    fun `cannot insert invalid entity`() = runBlockingTest {
+        val details = HumanVerificationDetails(
+            mockk(),
+            listOf("captcha"),
+            verificationToken = null,
+            state = HumanVerificationState.HumanVerificationNeeded
+        )
+        assertFailsWith<IllegalArgumentException> {
+            humanVerificationRepository.insertHumanVerificationDetails(details)
+        }
+    }
+
+    @Test
     fun `set human verification details`() = runBlockingTest {
         val humanVerificationDetails = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            verificationToken = null,
+            verificationToken = "token-123",
             state = HumanVerificationState.HumanVerificationNeeded,
             tokenType = null,
             tokenCode = null
@@ -102,7 +116,7 @@ class HumanVerificationRepositoryImplTest {
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            captchaVerificationToken = "token-123",
             state = HumanVerificationState.HumanVerificationNeeded,
             humanHeaderTokenType = null,
             humanHeaderTokenCode = null
@@ -193,9 +207,21 @@ class HumanVerificationRepositoryImplTest {
         coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
         coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
 
-        humanVerificationRepository.updateHumanVerificationState(clientId = clientId, state = state, tokenType = tokenType, tokenCode = tokenCode)
+        humanVerificationRepository.updateHumanVerificationState(
+            clientId = clientId,
+            state = state,
+            tokenType = tokenType,
+            tokenCode = tokenCode
+        )
 
-        coVerify(exactly = 1) { humanVerificationDetailsDao.updateStateAndToken(clientId.id, state, "encrypted-$tokenType", "encrypted-$tokenCode") }
+        coVerify(exactly = 1) {
+            humanVerificationDetailsDao.updateStateAndToken(
+                clientId.id,
+                state,
+                "encrypted-$tokenType",
+                "encrypted-$tokenCode"
+            )
+        }
         coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id) }
     }
 }
