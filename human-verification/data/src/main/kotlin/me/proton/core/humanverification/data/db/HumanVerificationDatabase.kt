@@ -21,6 +21,7 @@ package me.proton.core.humanverification.data.db
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
+import me.proton.core.network.domain.humanverification.HumanVerificationState
 
 interface HumanVerificationDatabase : Database {
     fun humanVerificationDetailsDao(): HumanVerificationDetailsDao
@@ -33,6 +34,16 @@ interface HumanVerificationDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Added Table HumanVerificationEntity.
                 database.execSQL("CREATE TABLE IF NOT EXISTS `HumanVerificationEntity` (`clientId` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, `state` TEXT NOT NULL, `humanHeaderTokenType` TEXT, `humanHeaderTokenCode` TEXT, PRIMARY KEY(`clientId`))")
+            }
+        }
+
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.delete(
+                    "HumanVerificationEntity",
+                    "state != ?",
+                    arrayOf(HumanVerificationState.HumanVerificationSuccess.name)
+                )
             }
         }
     }
