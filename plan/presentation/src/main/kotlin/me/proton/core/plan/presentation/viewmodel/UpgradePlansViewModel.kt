@@ -80,8 +80,8 @@ internal class UpgradePlansViewModel @Inject constructor(
     fun getCurrentSubscribedPlans(userId: UserId) = flow {
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
-        val organization = getOrganization(userId, true)
-        val user = getUser(userId, true)
+        val organization = getOrganization(userId, refresh = true)
+        val user = getUser(userId, refresh = false)
         val paymentMethods = getPaymentMethods(userId)
 
         val subscribedPlans: MutableList<PlanDetailsItem> = currentSubscription?.plans?.filter {
@@ -91,7 +91,6 @@ internal class UpgradePlansViewModel @Inject constructor(
             calendar.timeInMillis = currentSubscription.periodEnd * 1000
             createCurrentPlan(
                 plan = it,
-                defaultPlan = getPlanDefault(userId),
                 endDate = calendar.time,
                 user = user,
                 paymentMethods = paymentMethods,
@@ -104,7 +103,6 @@ internal class UpgradePlansViewModel @Inject constructor(
             subscribedPlans.add(
                 createCurrentPlan(
                     plan = getPlanDefault(userId),
-                    defaultPlan = null,
                     endDate = null,
                     user = user,
                     paymentMethods = paymentMethods,

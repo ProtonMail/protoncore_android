@@ -48,6 +48,7 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.User
 import me.proton.core.usersettings.domain.entity.Organization
 import java.util.Date
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 internal abstract class BasePlansViewModel(private val paymentsOrchestrator: PaymentsOrchestrator) : ProtonViewModel() {
@@ -93,18 +94,25 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
 
     protected fun createCurrentPlan(
         plan: Plan,
-        defaultPlan: Plan?,
         user: User,
         paymentMethods: List<PaymentMethod>,
         organization: Organization?, // there can be no organization for free plans
         endDate: Date?
     ): PlanDetailsItem {
         val autoRenewal = paymentMethods.isNotEmpty() || user.credit >= plan.amount
-        val usedAddresses = organization?.usedAddresses ?: 0
-        val usedMembers = organization?.usedMembers ?: 0
-        val usedDomains = organization?.usedDomains ?: 0
-        val usedCalendars = organization?.usedCalendars ?: 0
-        val connections = organization?.maxVPN ?: 0
+
+        val usedMembers = organization?.usedMembers ?: 1
+        val usedDomains = organization?.usedDomains ?: 1
+        val usedCalendars = organization?.usedCalendars ?: 1
+
+        val usedAddresses = max(organization?.usedAddresses ?: 1, 1)
+        val usedVpn = max(organization?.usedVPN ?: 1, 1)
+
+        val maxAddresses = max(organization?.maxAddresses ?: 1, 1)
+        val maxMembers = max(organization?.maxMembers ?: 1, 1)
+        val maxDomains = max(organization?.maxDomains ?: 1, 1)
+        val maxCalendars = max(organization?.maxCalendars ?: 1, 1)
+        val maxVpn = max(organization?.maxVPN ?: 1, 1)
 
         return PlanDetailsItem.CurrentPlanDetailsItem(
             name = plan.name,
@@ -114,17 +122,17 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             endDate = endDate,
             cycle = plan.cycle?.let { PlanCycle.map[it] },
             storage = plan.maxSpace,
-            members = plan.maxMembers,
-            addresses = plan.maxAddresses,
-            calendars = plan.maxCalendars,
-            domains = plan.maxDomains,
-            connections = if (connections > 0) connections else defaultPlan?.maxVPN ?: 1,
+            members = maxMembers,
+            addresses = maxAddresses,
+            calendars = maxCalendars,
+            domains = maxDomains,
+            connections = max(usedVpn, maxVpn),
             usedSpace = user.usedSpace,
             maxSpace = user.maxSpace,
             progressValue = user.calculateUsedSpacePercentage().roundToInt(),
-            usedAddresses = if (usedAddresses > 0) usedAddresses else defaultPlan?.maxAddresses ?: 1, // by design
+            usedAddresses = usedAddresses,
             usedDomains = usedDomains,
-            usedMembers = if (usedMembers > 0) usedMembers else 1, // by design
+            usedMembers = usedMembers,
             usedCalendars = usedCalendars
         )
     }

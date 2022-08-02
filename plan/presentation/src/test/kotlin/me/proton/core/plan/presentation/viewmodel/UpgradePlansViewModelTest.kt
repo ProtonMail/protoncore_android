@@ -200,8 +200,8 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         coEvery { getPlanDefaultUseCase.invoke(any()) } returns testDefaultPlan
-        coEvery { getOrganizationUseCase.invoke(any(), true) } returns testOrganization
-        coEvery { getUserUseCase.invoke(any(), true) } returns testUser
+        coEvery { getOrganizationUseCase.invoke(any(), any()) } returns testOrganization
+        coEvery { getUserUseCase.invoke(any(), any()) } returns testUser
         coEvery { getPaymentMethodsUseCase.invoke(any()) } returns emptyList()
         coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.CardPayment)
 
@@ -362,7 +362,6 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             val plansStatus = awaitItem()
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             assertEquals(0, plansStatus.plans.size)
-            coVerify(exactly = 1) { getPlanDefaultUseCase.invoke(any()) }
         }
     }
 
