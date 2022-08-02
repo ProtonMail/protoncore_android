@@ -80,14 +80,17 @@ open class BaseTest(
             Plan.Dev.planName = Plan.Plus.planName
         }
 
+        /** Generally available payment providers, which are at least partially supported by Core Android. */
         @JvmStatic
-        protected fun isProtonPaymentEnabled(): Boolean = runBlocking {
-            PaymentProvider.ProtonPayment in protonTestEntryPoint.getAvailablePaymentProviders()
+        protected fun availablePaymentProviders(): Set<PaymentProvider> = runBlocking {
+            protonTestEntryPoint.getAvailablePaymentProviders()
         }
 
+        /** Payment providers that can be used during the signup. */
         @JvmStatic
-        protected fun isGoogleIAPPaymentEnabled(): Boolean = runBlocking {
-            PaymentProvider.GoogleInAppPurchase in protonTestEntryPoint.getAvailablePaymentProviders()
-        }
+        protected fun paymentProvidersForSignup(): Set<PaymentProvider> =
+            availablePaymentProviders().filter {
+                it != PaymentProvider.PayPal
+            }.toSet()
     }
 }

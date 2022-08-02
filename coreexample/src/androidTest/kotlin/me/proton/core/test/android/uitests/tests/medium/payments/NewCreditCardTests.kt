@@ -19,6 +19,7 @@
 package me.proton.core.test.android.uitests.tests.medium.payments
 
 import me.proton.core.payment.presentation.R
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
@@ -50,19 +51,20 @@ class NewCreditCardTests : BaseTest() {
                 view.withId(R.id.selectedPlanDetailsLayout).withAncestor(view.withId(R.id.scrollContent)).scrollTo()
             }
             .verify {
-                if (isGoogleIAPPaymentEnabled()) {
+                val paymentProviders = availablePaymentProviders()
+                if (PaymentProvider.GoogleInAppPurchase in paymentProviders) {
                     googleIAPOptionDisplayed(
                         plan = Plan.Dev,
                         billingCycle = BillingCycle.Yearly,
                         currency = Currency.CHF.symbol,
-                        anotherPaymentProviderAvailable = isProtonPaymentEnabled()
+                        anotherPaymentProviderAvailable = PaymentProvider.CardPayment in paymentProviders
                     )
                 } else {
                     billingDetailsDisplayed(
                         plan = Plan.Dev,
                         billingCycle = BillingCycle.Yearly,
                         currency = Currency.CHF.symbol,
-                        googleIAPAvailable = isGoogleIAPPaymentEnabled())
+                        googleIAPAvailable = PaymentProvider.GoogleInAppPurchase in paymentProviders)
                 }
             }
     }

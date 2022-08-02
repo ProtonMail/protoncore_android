@@ -72,7 +72,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
     @Test
     fun skipRecoveryMethods() {
         val skipRecoveryRobot = recoveryMethodsRobot.skip()
-        if (isProtonPaymentEnabled()) {
+        if (paymentProvidersForSignup().isNotEmpty()) {
             skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
                 .toggleExpandPlan(Dev)
                 .verify {
@@ -89,7 +89,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
     @Test
     fun emptyFieldsTriggerSkip() {
         val skipRecoveryRobot = recoveryMethodsRobot.next<RecoveryMethodsRobot.SkipRecoveryRobot>()
-        if (isProtonPaymentEnabled()) {
+        if (paymentProvidersForSignup().isNotEmpty()) {
             skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
                 .toggleExpandPlan(Dev)
                 .verify {

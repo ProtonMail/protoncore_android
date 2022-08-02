@@ -78,7 +78,7 @@ class ExternalSetupTests : BaseTest() {
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)
             .setCode(defaultCode)
 
-        if (isProtonPaymentEnabled()) {
+        if (paymentProvidersForSignup().isNotEmpty()) {
             codeVerificationRobot.verifyCode<SelectPlanRobot>()
                 .toggleExpandPlan(Dev)
                 .verify { canSelectPlan(Dev) }

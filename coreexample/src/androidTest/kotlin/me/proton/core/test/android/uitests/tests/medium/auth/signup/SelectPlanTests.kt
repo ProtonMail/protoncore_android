@@ -51,7 +51,7 @@ class SelectPlanTests : BaseTest() {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()
 
-        if (isProtonPaymentEnabled()) {
+        if (paymentProvidersForSignup().isNotEmpty()) {
             selectPlanRobot = skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
         } else {
             humanVerificationRobot = skipRecoveryRobot.skipConfirm<HumanVerificationRobot>()
