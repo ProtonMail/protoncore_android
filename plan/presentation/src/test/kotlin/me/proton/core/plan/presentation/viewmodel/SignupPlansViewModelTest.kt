@@ -104,7 +104,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
     fun beforeEveryTest() {
         coEvery { plansRepository.getPlansDefault(null) } returns testDefaultPlan
         getPlanDefaultUseCaseSpy = spyk(GetPlanDefault(plansRepository))
-        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.ProtonPayment)
+        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.CardPayment)
 
         viewModel =
             SignupPlansViewModel(

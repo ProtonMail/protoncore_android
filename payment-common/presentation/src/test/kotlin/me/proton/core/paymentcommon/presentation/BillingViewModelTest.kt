@@ -730,7 +730,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `observing payment returns proton and GIAP`() = coroutinesTest {
         coEvery { getAvailablePaymentProviders.invoke(true) } returns setOf(
-            PaymentProvider.ProtonPayment, PaymentProvider.GoogleInAppPurchase
+            PaymentProvider.CardPayment, PaymentProvider.GoogleInAppPurchase, PaymentProvider.PayPal
         )
         coEvery { activePaymentProvider.getActivePaymentProvider() } returns PaymentProvider.GoogleInAppPurchase
         billingViewModel = BillingViewModel(billingCommonViewModel, activePaymentProvider)
@@ -758,7 +758,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `switching payment providers works correctly`() = coroutinesTest {
         coEvery { getAvailablePaymentProviders.invoke(true) } returns setOf(
-            PaymentProvider.ProtonPayment, PaymentProvider.GoogleInAppPurchase
+            PaymentProvider.CardPayment, PaymentProvider.GoogleInAppPurchase, PaymentProvider.PayPal
         )
         val activePaymentProvider = ActivePaymentProviderImpl(getAvailablePaymentProviders)
         billingViewModel = BillingViewModel(billingCommonViewModel, activePaymentProvider)
@@ -774,7 +774,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             val stateAfterSwitch = awaitItem()
             assertTrue(stateAfterSwitch is BillingViewModel.PaymentProvidersState.Success)
 
-            assertEquals(stateAfterSwitch.activeProvider, PaymentProvider.ProtonPayment)
+            assertEquals(stateAfterSwitch.activeProvider, PaymentProvider.CardPayment)
             assertEquals(stateAfterSwitch.nextPaymentProviderTextResource, R.string.payment_use_google_pay_instead)
         }
     }

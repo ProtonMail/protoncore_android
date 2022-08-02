@@ -38,6 +38,8 @@ import me.proton.core.paymentcommon.domain.entity.Details
 import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
 import me.proton.core.paymentcommon.domain.entity.PaymentType
 import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel.Companion.createSubscriptionPlansList
 import me.proton.core.plan.domain.entity.Plan
@@ -54,6 +56,7 @@ class PaymentOptionsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     val billingCommonViewModel: BillingCommonViewModel,
     private val availablePaymentMethods: GetAvailablePaymentMethods,
+    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getCurrentSubscription: GetCurrentSubscription
 ) : ProtonViewModel() {
 
@@ -94,7 +97,14 @@ class PaymentOptionsViewModel @Inject constructor(
             emit(State.Error.SubscriptionInRecoverableError)
         }
 
-        val paymentMethods = availablePaymentMethods(userId).map {
+        val paymentProviders = getAvailablePaymentProviders()
+
+        val paymentMethods = availablePaymentMethods(userId).filter {
+            when (it.type) {
+                PaymentMethodType.CARD -> PaymentProvider.CardPayment in paymentProviders
+                PaymentMethodType.PAYPAL -> PaymentProvider.PayPal in paymentProviders
+            }
+        }.map {
             when (it.type) {
                 PaymentMethodType.CARD -> {
                     val card = (it.details as Details.CardDetails).cardDetails

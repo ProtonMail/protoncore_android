@@ -20,49 +20,40 @@ package me.proton.core.paymentcommon.domain.usecase
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.featureflag.domain.FeatureFlagManager
-import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.domain.entity.AppStore
+import me.proton.core.network.domain.ApiException
 import javax.inject.Inject
 
 public class GetAvailablePaymentProviders @Inject internal constructor(
     private val accountManager: AccountManager,
-    private val featureFlagManager: FeatureFlagManager,
+    private val appStore: AppStore,
+    private val getPaymentStatus: GetPaymentStatus,
     private val protonIAPBillingLibrary: ProtonIAPBillingLibrary
 ) {
     /** Returns a set of [payment providers][PaymentProvider] which can be offered to the user.
-     * @throws me.proton.core.network.domain.ApiException
+     * In case it's not possible to fetch current payment status, an empty set is returned.
      */
     public suspend operator fun invoke(refresh: Boolean = false): Set<PaymentProvider> {
-        if (getFeatureFlagValue(AllPaymentsDisabled, refresh)) {
-            return emptySet()
+        val userId = accountManager.getPrimaryUserId().first()
+        val paymentStatus = try {
+            getPaymentStatus(userId, refresh)
+        } catch (_: ApiException) {
+            null
         }
 
         return buildSet {
-            if (protonIAPBillingLibrary.isAvailable() && getFeatureFlagValue(GoogleIAPEnabled, refresh)) {
-                add(PaymentProvider.GoogleInAppPurchase)
-            }
-
-            if (getFeatureFlagValue(ProtonCardPaymentsEnabled, refresh)) {
-                add(PaymentProvider.ProtonPayment)
-            }
+            if (paymentStatus?.card == true) add(PaymentProvider.CardPayment)
+            if (paymentStatus?.paypal == true) add(PaymentProvider.PayPal)
+            if (paymentStatus?.inApp == true && isBuiltForGooglePlay()) add(PaymentProvider.GoogleInAppPurchase)
         }
     }
 
-    private suspend fun getFeatureFlagValue(default: FeatureFlag, refresh: Boolean): Boolean {
-        val userId = accountManager.getPrimaryUserId().first()
-        val flag = featureFlagManager.getOrDefault(userId, default.featureId, default, refresh)
-        return flag.value
-    }
-
-    public companion object {
-        // Note: the flags below define a default value, in case we cannot obtain the actual value from the server.
-        internal val AllPaymentsDisabled get() = FeatureFlag.default("PaymentsAndroidDisabled", false)
-        internal val GoogleIAPEnabled get() = FeatureFlag.default("EnableAndroidIAP", false)
-        internal val ProtonCardPaymentsEnabled get() = FeatureFlag.default("EnableAndroidCardPayments", false)
-    }
+    private fun isBuiltForGooglePlay(): Boolean =
+        appStore == AppStore.GooglePlay && protonIAPBillingLibrary.isAvailable()
 }
 
 public enum class PaymentProvider {
+    CardPayment,
     GoogleInAppPurchase,
-    ProtonPayment
+    PayPal
 }

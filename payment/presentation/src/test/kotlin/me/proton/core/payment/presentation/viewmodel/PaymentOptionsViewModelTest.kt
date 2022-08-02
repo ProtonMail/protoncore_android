@@ -43,6 +43,8 @@ import me.proton.core.paymentcommon.domain.entity.Subscription
 import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
 import me.proton.core.paymentcommon.domain.entity.SubscriptionManagement
 import me.proton.core.paymentcommon.domain.entity.SubscriptionStatus
+import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.paymentcommon.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.plan.domain.entity.PLAN_ADDON
@@ -64,6 +66,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     private val billingViewModelHelper = mockk<BillingCommonViewModel>(relaxed = true)
     private val getCountryCode = mockk<GetCountry>(relaxed = true)
     private val getAvailablePaymentMethods = mockk<GetAvailablePaymentMethods>(relaxed = true)
+    private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>()
     private val getCurrentSubscription = mockk<GetCurrentSubscription>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
     // endregion
@@ -124,11 +127,13 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
 
         every { context.getString(any()) } returns "test-string"
         coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
+        coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.values().toSet()
         viewModel =
             PaymentOptionsViewModel(
                 context,
                 billingViewModelHelper,
                 getAvailablePaymentMethods,
+                getAvailablePaymentProviders,
                 getCurrentSubscription
             )
     }

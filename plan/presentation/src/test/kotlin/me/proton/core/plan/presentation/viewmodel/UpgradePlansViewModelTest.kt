@@ -203,7 +203,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getOrganizationUseCase.invoke(any(), true) } returns testOrganization
         coEvery { getUserUseCase.invoke(any(), true) } returns testUser
         coEvery { getPaymentMethodsUseCase.invoke(any()) } returns emptyList()
-        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.ProtonPayment)
+        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.CardPayment)
 
         coEvery { getPlansUseCase.invoke(testUserId) } returns listOf(
             testPlan

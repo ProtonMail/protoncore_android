@@ -21,39 +21,36 @@ package me.proton.core.paymentcommon.domain.usecase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.featureflag.domain.FeatureFlagManager
-import me.proton.core.featureflag.domain.entity.FeatureFlag
-import me.proton.core.featureflag.domain.entity.Scope
-import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders.Companion.AllPaymentsDisabled
-import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders.Companion.GoogleIAPEnabled
-import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders.Companion.ProtonCardPaymentsEnabled
+import me.proton.core.domain.entity.AppStore
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.paymentcommon.domain.entity.PaymentStatus
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class GetAvailablePaymentProvidersTest {
     private lateinit var accountManager: AccountManager
-    private lateinit var featureFlagManager: FeatureFlagManager
+    private lateinit var getPaymentStatus: GetPaymentStatus
     private lateinit var protonIAPBillingLibrary: ProtonIAPBillingLibrary
     private lateinit var tested: GetAvailablePaymentProviders
 
     @BeforeTest
     fun setUp() {
         accountManager = mockk { every { getPrimaryUserId() } returns flowOf(null) }
-        featureFlagManager = mockk()
+        getPaymentStatus = mockk()
         protonIAPBillingLibrary = mockk()
-        tested = GetAvailablePaymentProviders(accountManager, featureFlagManager, protonIAPBillingLibrary)
     }
 
     @Test
-    fun `all payments disabled`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, true)
-        mockFeature(GoogleIAPEnabled, true)
-        mockFeature(ProtonCardPaymentsEnabled, true)
-        mockGoogleIAP(false)
+    fun `payments status unknown`() = runBlockingTest {
+        tested = makeTested(AppStore.GooglePlay)
+        mockPaymentStatus(PaymentStatus(null, null, null))
 
         assertEquals(
             emptySet(),
@@ -62,24 +59,10 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `payments enabled but payment providers disabled`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, false)
-        mockFeature(GoogleIAPEnabled, false)
-        mockFeature(ProtonCardPaymentsEnabled, false)
+    fun `all payment status disabled`() = runBlockingTest {
+        tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
-
-        assertEquals(
-            emptySet(),
-            tested()
-        )
-    }
-
-    @Test
-    fun `payments are disabled even though all providers are available`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, true)
-        mockFeature(GoogleIAPEnabled, true)
-        mockFeature(ProtonCardPaymentsEnabled, true)
-        mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = false, inApp = false, paypal = false))
 
         assertEquals(
             emptySet(),
@@ -89,49 +72,45 @@ class GetAvailablePaymentProvidersTest {
 
     @Test
     fun `payments enabled and all providers available`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, false)
-        mockFeature(GoogleIAPEnabled, true)
-        mockFeature(ProtonCardPaymentsEnabled, true)
+        tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = true))
 
         assertEquals(
-            setOf(PaymentProvider.GoogleInAppPurchase, PaymentProvider.ProtonPayment),
+            setOf(PaymentProvider.GoogleInAppPurchase, PaymentProvider.CardPayment, PaymentProvider.PayPal),
             tested()
         )
     }
 
     @Test
     fun `all payments enabled but missing Google IAP library`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, false)
-        mockFeature(GoogleIAPEnabled, true)
-        mockFeature(ProtonCardPaymentsEnabled, true)
+        tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(false)
+        mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = true))
 
         assertEquals(
-            setOf(PaymentProvider.ProtonPayment),
+            setOf(PaymentProvider.CardPayment, PaymentProvider.PayPal),
             tested()
         )
     }
 
     @Test
     fun `only Proton Card payments enabled`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, false)
-        mockFeature(GoogleIAPEnabled, false)
-        mockFeature(ProtonCardPaymentsEnabled, true)
+        tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = true, inApp = false, paypal = false))
 
         assertEquals(
-            setOf(PaymentProvider.ProtonPayment),
+            setOf(PaymentProvider.CardPayment),
             tested()
         )
     }
 
     @Test
     fun `only Google IAP enabled`() = runBlockingTest {
-        mockFeature(AllPaymentsDisabled, false)
-        mockFeature(GoogleIAPEnabled, true)
-        mockFeature(ProtonCardPaymentsEnabled, false)
+        tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = false, inApp = true, paypal = false))
 
         assertEquals(
             setOf(PaymentProvider.GoogleInAppPurchase),
@@ -139,18 +118,39 @@ class GetAvailablePaymentProvidersTest {
         )
     }
 
-    private fun mockFeature(flag: FeatureFlag, value: Boolean) {
-        val featureFlag = FeatureFlag(
-            userId = null,
-            featureId = flag.featureId,
-            scope = Scope.Global,
-            defaultValue = value,
-            value = value
+    @Test
+    fun `Google IAP is not available on F-Droid builds`() = runBlockingTest {
+        tested = makeTested(AppStore.FDroid)
+        mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = true))
+
+        assertEquals(
+            setOf(PaymentProvider.CardPayment, PaymentProvider.PayPal),
+            tested()
         )
-        coEvery { featureFlagManager.getOrDefault(any(), flag.featureId, any()) } returns featureFlag
+        verify(exactly = 0) { protonIAPBillingLibrary.isAvailable() }
+    }
+
+    @Test
+    fun `does not throw an API exception`() = runBlockingTest {
+        tested = makeTested(AppStore.GooglePlay)
+        coEvery { getPaymentStatus.invoke(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+
+        assertTrue(tested().isEmpty())
     }
 
     private fun mockGoogleIAP(available: Boolean) {
         every { protonIAPBillingLibrary.isAvailable() } returns available
     }
+
+    private fun mockPaymentStatus(paymentStatus: PaymentStatus) {
+        coEvery { getPaymentStatus.invoke(any(), any()) } returns paymentStatus
+    }
+
+    private fun makeTested(appStore: AppStore): GetAvailablePaymentProviders =
+        GetAvailablePaymentProviders(
+            accountManager,
+            appStore,
+            getPaymentStatus,
+            protonIAPBillingLibrary
+        )
 }

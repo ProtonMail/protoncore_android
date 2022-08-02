@@ -140,9 +140,10 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                                     supportFragmentManager.showBillingIAPFragment(R.id.fragment_container)
                                     nextPaymentProviderButton.visibility = View.VISIBLE
                                 }
-                                PaymentProvider.ProtonPayment -> {
+                                PaymentProvider.CardPayment -> {
                                     supportFragmentManager.showBillingFragment(R.id.fragment_container)
                                 }
+                                PaymentProvider.PayPal -> error("PayPal is not supported")
                             }.exhaustive
 
                             it.nextPaymentProviderTextResource?.let { textResource ->

@@ -32,7 +32,6 @@ import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.paymentcommon.domain.entity.SubscriptionManagement
 import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -128,12 +127,11 @@ internal class UpgradePlansViewModel @Inject constructor(
         emit(PlanState.Processing)
 
         val paymentProviders = getAvailablePaymentProviders()
-        val protonPaymentEnabled = PaymentProvider.ProtonPayment in paymentProviders
-
+        val anyPaymentEnabled = paymentProviders.isNotEmpty()
         val availablePlans =
             when {
                 !supportPaidPlans -> emptyList()
-                !protonPaymentEnabled -> emptyList()
+                !anyPaymentEnabled -> emptyList()
                 !isFreeUser -> emptyList()
                 else -> getPlans(
                     userId = userId
@@ -141,7 +139,7 @@ internal class UpgradePlansViewModel @Inject constructor(
                     .map { plan -> plan.toPaidPlanDetailsItem(false) }
             }
 
-        emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = protonPaymentEnabled))
+        emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = anyPaymentEnabled))
     }.catch { error ->
         state.tryEmit(PlanState.Error.Exception(error))
     }.onEach { plans ->

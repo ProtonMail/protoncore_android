@@ -39,7 +39,10 @@ public class ActivePaymentProviderImpl @Inject constructor(
             return
         }
 
-        val availablePaymentProviders = getAvailablePaymentProviders(true)
+        val availablePaymentProviders = getAvailablePaymentProviders(true).filter {
+            // Adding PayPal is currently not supported.
+            it != PaymentProvider.PayPal
+        }
         currentlyAvailablePaymentProviders = when {
             !availablePaymentProviders.contains(PaymentProvider.GoogleInAppPurchase) ->
                 availablePaymentProviders.associateWith {
@@ -84,7 +87,7 @@ public class ActivePaymentProviderImpl @Inject constructor(
         }
         return when (nextProvider) {
             PaymentProvider.GoogleInAppPurchase -> R.string.payment_use_google_pay_instead
-            PaymentProvider.ProtonPayment -> R.string.payment_use_credit_card_instead
+            PaymentProvider.CardPayment -> R.string.payment_use_credit_card_instead
             else -> null
         }.exhaustive
     }

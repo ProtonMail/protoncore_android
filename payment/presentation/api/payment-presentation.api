@@ -460,7 +460,7 @@ public final class me/proton/core/payment/presentation/ui/UtilsKt {
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;)V
+	public fun <init> (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;)V
 	public final fun getAvailablePaymentMethods (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun getAvailablePaymentMethodsState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getBillingCommonViewModel ()Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;
@@ -516,11 +516,11 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsV
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_HiltModules {

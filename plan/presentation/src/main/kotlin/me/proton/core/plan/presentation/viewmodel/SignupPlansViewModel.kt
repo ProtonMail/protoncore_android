@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -44,7 +45,10 @@ internal class SignupPlansViewModel @Inject constructor(
     fun getAllPlansForSignup() = flow {
         emit(PlanState.Processing)
         val plans: MutableList<PlanDetailsItem> = mutableListOf()
-        val paymentProviders = getAvailablePaymentProviders()
+        val paymentProviders = getAvailablePaymentProviders().filter {
+            // It's not possible to setup PayPal during signup, from mobile app.
+            it != PaymentProvider.PayPal
+        }
         val anyPaymentEnabled = paymentProviders.isNotEmpty()
         if (anyPaymentEnabled && supportPaidPlans) {
             plans.apply {
