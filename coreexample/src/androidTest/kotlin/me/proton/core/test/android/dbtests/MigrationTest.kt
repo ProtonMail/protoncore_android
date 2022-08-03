@@ -18,13 +18,19 @@
 
 package me.proton.core.test.android.dbtests
 
+import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
 import androidx.room.Room
 import androidx.room.testing.MigrationTestHelper
+import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.db.AppDatabase
+import me.proton.core.network.domain.humanverification.HumanVerificationState
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertContentEquals
 
 class MigrationTest {
     private val testDb = "migration-test"
@@ -54,5 +60,40 @@ class MigrationTest {
             openHelper.writableDatabase
             close()
         }
+    }
+
+    @Test
+    fun migrateHVEntities_22_23() = runBlocking {
+        val db = helper.createDatabase(testDb, 22)
+        db.insertHVEntity_v22("c-1", HumanVerificationState.HumanVerificationNeeded)
+        db.insertHVEntity_v22("c-2", HumanVerificationState.HumanVerificationFailed)
+        db.insertHVEntity_v22("c-3", HumanVerificationState.HumanVerificationSuccess)
+        db.close()
+
+        val appDb = Room.databaseBuilder(
+            InstrumentationRegistry.getInstrumentation().targetContext,
+            AppDatabase::class.java,
+            testDb
+        ).addMigrations(*AppDatabase.migrations.toTypedArray()).build()
+
+        val clientIds = mutableListOf<String>()
+        appDb.openHelper.writableDatabase.query("SELECT clientId FROM HumanVerificationEntity").use {
+            while (it.moveToNext()) {
+                clientIds.add(it.getString(it.getColumnIndex("clientId")))
+            }
+        }
+        appDb.close()
+
+        assertContentEquals(listOf("c-3"), clientIds)
+    }
+
+    private fun SupportSQLiteDatabase.insertHVEntity_v22(clientId: String, state: HumanVerificationState) {
+        val values = ContentValues().apply {
+            put("clientId", clientId)
+            put("clientIdType", "session")
+            put("verificationMethods", "captcha")
+            put("state", state.name)
+        }
+        insert("HumanVerificationEntity", SQLiteDatabase.CONFLICT_FAIL, values)
     }
 }
