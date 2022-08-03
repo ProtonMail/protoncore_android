@@ -151,7 +151,7 @@ abstract class AccountManagerDatabase :
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 22
+        const val version = 23
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -175,6 +175,7 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_19_20,
             AccountManagerDatabaseMigrations.MIGRATION_20_21,
             AccountManagerDatabaseMigrations.MIGRATION_21_22,
+            AccountManagerDatabaseMigrations.MIGRATION_22_23
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

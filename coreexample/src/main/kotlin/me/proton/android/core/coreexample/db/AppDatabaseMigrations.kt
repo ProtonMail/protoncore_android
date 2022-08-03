@@ -172,4 +172,10 @@ object AppDatabaseMigrations {
             FeatureFlagDatabase.MIGRATION_3.migrate(database)
         }
     }
+
+    val MIGRATION_22_23 = object : Migration(22, 23) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            HumanVerificationDatabase.MIGRATION_1.migrate(database)
+        }
+    }
 }
