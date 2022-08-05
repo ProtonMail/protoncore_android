@@ -18,9 +18,9 @@
 
 package me.proton.core.auth.presentation.ui.signup
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -32,6 +32,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentTermsConditionsBinding
 import me.proton.core.auth.presentation.viewmodel.signup.TermsConditionsViewModel
 import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 
@@ -43,45 +44,43 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.setNavigationOnClickListener {
-            dismissAllowingStateLoss()
-        }
 
-        viewModel.networkConnectionState
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-            .onEach {
-                it?.let { networkState ->
-                    if (networkState) {
-                        binding.termsConditionsWebView.apply {
-                            webChromeClient = CaptchaWebChromeClient()
-                            loadUrl(TERMS_CONDITIONS_URL)
-                        }
-                    } else {
-                        binding.root.errorSnack(R.string.auth_signup_no_connectivity)
-                    }
-                }
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
-        viewModel.watchNetwork()
-
+        binding.toolbar.setNavigationOnClickListener { dismissAllowingStateLoss() }
         binding.termsConditionsWebView.setAllowForceDark()
+
+        viewModel.networkState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { connected ->
+                if (connected) {
+                    binding.termsConditionsWebView.apply {
+                        webViewClient = CustomWebViewClient()
+                        loadUrl(TERMS_CONDITIONS_URL)
+                    }
+                } else {
+                    binding.root.errorSnack(R.string.auth_signup_no_connectivity)
+                }
+            }
+            .launchIn(lifecycleScope)
     }
 
     override fun onBackPressed() {
         dismissAllowingStateLoss()
     }
 
-    inner class CaptchaWebChromeClient : WebChromeClient() {
-        override fun onProgressChanged(view: WebView, newProgress: Int) {
-            if (isAdded) {
-                with(binding.progress) {
-                    visibility = if (newProgress == MAX_PROGRESS && isAdded) View.GONE else View.VISIBLE
-                }
-            }
+    inner class CustomWebViewClient : ProtonWebViewClient() {
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            binding.progress.visibility = View.VISIBLE
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            binding.progress.visibility = View.GONE
         }
     }
 
     companion object {
         const val TERMS_CONDITIONS_URL = "https://protonmail.com/ios-terms-and-conditions.html"
-        private const val MAX_PROGRESS = 100
     }
 }

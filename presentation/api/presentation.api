@@ -479,6 +479,15 @@ public final class me/proton/core/presentation/ui/webview/ProtonWebView : androi
 public final class me/proton/core/presentation/ui/webview/ProtonWebView$Companion {
 }
 
+public class me/proton/core/presentation/ui/webview/ProtonWebViewClient : android/webkit/WebViewClient {
+	public fun <init> ()V
+	public final fun isFinished ()Z
+	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
+	public final fun setFinished (Z)V
+	public fun shouldKeepInWebView (Ljava/lang/String;)Z
+	public fun shouldOverrideUrlLoading (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Z
+}
+
 public final class me/proton/core/presentation/utils/ActivityScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {
 	public fun <init> (Landroidx/activity/ComponentActivity;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
 	public fun getValue (Landroidx/activity/ComponentActivity;Lkotlin/reflect/KProperty;)Lme/proton/core/presentation/utils/ScreenContentProtector;

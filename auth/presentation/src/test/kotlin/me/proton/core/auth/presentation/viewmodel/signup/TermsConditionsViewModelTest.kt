@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.test.android.ArchTest
@@ -29,39 +30,39 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class TermsConditionsViewModelTest : ArchTest, CoroutinesTest {
-    // region mocks
-    private val networkManager = mockk<NetworkManager>()
-    // endregion
+
+    private val networkManager = mockk<NetworkManager>(relaxed = true)
+    private val networkStatus = MutableStateFlow<NetworkStatus>(NetworkStatus.Metered)
 
     private lateinit var viewModel: TermsConditionsViewModel
 
     @Before
     fun beforeEveryTest() {
-        every { networkManager.observe() } returns flowOf(NetworkStatus.Metered)
+        every { networkManager.observe() } returns networkStatus
         viewModel = TermsConditionsViewModel(networkManager)
     }
 
     @Test
     fun `network manager returns has connection`() = coroutinesTest {
-        viewModel.networkConnectionState.test {
-            viewModel.watchNetwork()
-            assertNull(awaitItem())
-            assertTrue(awaitItem()!!)
+        networkStatus.emit(NetworkStatus.Metered)
+
+        viewModel.networkState.test {
+            assertTrue(awaitItem())
         }
     }
 
     @Test
     fun `network manager returns different flow of has and has not connection`() = coroutinesTest {
-        every { networkManager.observe() } returns flowOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered)
-        viewModel.networkConnectionState.test {
-            viewModel.watchNetwork()
-            assertNull(awaitItem())
-            assertFalse(awaitItem()!!)
-            assertTrue(awaitItem()!!)
+        networkStatus.emit(NetworkStatus.Disconnected)
+
+        viewModel.networkState.test {
+            assertFalse(awaitItem())
+
+            networkStatus.emit(NetworkStatus.Unmetered)
+            assertTrue(awaitItem())
         }
     }
 }

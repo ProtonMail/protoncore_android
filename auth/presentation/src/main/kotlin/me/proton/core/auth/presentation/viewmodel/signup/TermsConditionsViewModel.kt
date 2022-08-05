@@ -18,12 +18,10 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -31,27 +29,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TermsConditionsViewModel @Inject constructor(
-    private val networkManager: NetworkManager
+    networkManager: NetworkManager
 ) : ProtonViewModel() {
 
-    private val _networkConnectionState = MutableStateFlow<Boolean?>(null)
-
-    val networkConnectionState = _networkConnectionState.asStateFlow()
-
-    /**
-     * Watches for any network changes and informs the UI for any state change so that it can act
-     * accordingly for any network dependent tasks.
-     */
-    fun watchNetwork() {
-        viewModelScope.launch {
-            networkManager.observe().collect { status ->
-                _networkConnectionState.tryEmit(
-                    when (status) {
-                        NetworkStatus.Metered, NetworkStatus.Unmetered -> true
-                        else -> false
-                    }
-                )
+    val networkState: Flow<Boolean> = networkManager.observe()
+        .mapLatest {
+            when (it) {
+                NetworkStatus.Disconnected -> false
+                NetworkStatus.Metered -> true
+                NetworkStatus.Unmetered -> true
             }
         }
-    }
+        .distinctUntilChanged()
 }

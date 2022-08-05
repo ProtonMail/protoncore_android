@@ -1629,12 +1629,13 @@ public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDia
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$CaptchaWebChromeClient : android/webkit/WebChromeClient {
-	public fun <init> (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
-	public fun onProgressChanged (Landroid/webkit/WebView;I)V
+public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion {
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion {
+public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$CustomWebViewClient : me/proton/core/presentation/ui/webview/ProtonWebViewClient {
+	public fun <init> (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
+	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
+	public fun onPageStarted (Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_GeneratedInjector {
