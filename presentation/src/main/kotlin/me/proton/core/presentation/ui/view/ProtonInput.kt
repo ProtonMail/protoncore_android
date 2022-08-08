@@ -357,6 +357,20 @@ open class ProtonInput : LinearLayout {
     fun setOnDoneActionListener(block: () -> Unit) = setOnActionListener(EditorInfo.IME_ACTION_DONE, block)
 
     /**
+     * If true, sets the properties of this field to be for a single-line input.
+     * If false, restores these to the default conditions.
+     *
+     * Note that the default conditions are not necessarily those that were in effect prior this
+     * method, and you may want to reset these properties to your custom values.
+     *
+     * Note that due to performance reasons, by setting single line for the TextInputEditText, the maximum
+     * text length is set to 5000 if no other character limitation are applied.
+     */
+    fun setSingleLine(enabled: Boolean) {
+        input.isSingleLine = enabled
+    }
+
+    /**
      * Set the enabled state of this view.
      *
      * The interpretation of the enabled state varies by subclass.
