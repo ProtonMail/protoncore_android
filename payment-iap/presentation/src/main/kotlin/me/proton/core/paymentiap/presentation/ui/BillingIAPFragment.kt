@@ -69,5 +69,9 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
     private fun setPlan(plan: PlanShortDetails) {
         // the plan price should come from the Billing Library
         binding.selectedPlanDetailsLayout.plan = plan
+
+        // To obtain plan name for Google Play:
+        // val googlePlanName :String? = plan.vendorNames[AppStore.GooglePlay]
+        // if (googlePlanName == null) { displayError(...); return }
     }
 }

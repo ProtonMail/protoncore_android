@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.plan.domain.entity.PlanVendorName
 import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
@@ -65,7 +66,9 @@ internal data class PlanResponse(
     @SerialName("Pricing")
     val pricing: Pricing? = null,
     @SerialName("State")
-    val state: Int? = null
+    val state: Int? = null,
+    @SerialName("VendorNames")
+    val vendorNames: List<VendorName> = emptyList()
 ) {
     fun toPlan(): Plan = Plan(
         id = id,
@@ -86,7 +89,8 @@ internal data class PlanResponse(
         quantity = quantity,
         maxTier = maxTier,
         enabled = state?.toBoolean() ?: true,
-        pricing = pricing?.toPlanPricing()
+        pricing = pricing?.toPlanPricing(),
+        vendorNames = vendorNames.map { it.toPlanVendorName() }
     )
 }
 
@@ -100,4 +104,13 @@ internal data class Pricing(
     val twoYearly: Int? = null
 ) {
     fun toPlanPricing() = PlanPricing(monthly, yearly, twoYearly)
+}
+
+@Serializable
+internal data class VendorName(
+    @SerialName("name") val name: String,
+    @SerialName("cycle") val cycle: Int,
+    @SerialName("vendorName") val vendorName: String
+) {
+    fun toPlanVendorName() = PlanVendorName(name, cycle, vendorName)
 }

@@ -19,11 +19,13 @@
 package me.proton.core.plan.presentation.viewmodel
 
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -31,10 +33,13 @@ import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.paymentcommon.domain.entity.PaymentMethod
 import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
 import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
+import me.proton.core.plan.domain.entity.PLAN_VENDOR_GOOGLE
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.PlanVendorName
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanCycle.Companion.toPlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -139,7 +144,8 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             currency = PlanCurrency.valueOf(currency!!), // paid plan has to have currency
             starred = starred,
             services = services ?: 0,
-            type = type
+            type = type,
+            vendorNames = vendorNames.groupByVendorAndCycle()
         )
 
     fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
@@ -165,10 +171,32 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
                     subscriptionCycle = cycle,
                     currency = selectedPlan.currency.toSubscriptionCurrency(),
                     services = selectedPlan.services,
-                    type = selectedPlan.type
+                    type = selectedPlan.type,
+                    vendorNames = selectedPlan.vendorNames.filterByCycle(cycle.toPlanCycle())
                 ),
                 codes = null
             )
         }
     }
+}
+
+@VisibleForTesting
+internal fun Map<AppStore, Map<PlanCycle, String>>.filterByCycle(planCycle: PlanCycle): Map<AppStore, String> {
+    return mapNotNull { (appVendor, names: Map<PlanCycle, String>) ->
+        val vendorPlanName = names[planCycle] ?: return@mapNotNull null
+        appVendor to vendorPlanName
+    }.toMap()
+}
+
+@VisibleForTesting
+internal fun List<PlanVendorName>.groupByVendorAndCycle(): Map<AppStore, Map<PlanCycle, String>> {
+    return groupBy { it.vendorName }.mapNotNull { (vendorName, planVendorNames) ->
+        val planCycleToName = planVendorNames.mapNotNull { planVendorName ->
+            PlanCycle.map[planVendorName.cycle]?.let { it to planVendorName.name }
+        }.toMap()
+        when (vendorName) {
+            PLAN_VENDOR_GOOGLE -> AppStore.GooglePlay to planCycleToName
+            else -> null
+        }
+    }.toMap()
 }

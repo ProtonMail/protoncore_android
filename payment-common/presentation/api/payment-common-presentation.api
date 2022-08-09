@@ -92,8 +92,8 @@ public final class me/proton/core/paymentcommon/presentation/entity/CurrentSubsc
 
 public final class me/proton/core/paymentcommon/presentation/entity/PlanShortDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;II)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;IILjava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;IILjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
@@ -101,8 +101,9 @@ public final class me/proton/core/paymentcommon/presentation/entity/PlanShortDet
 	public final fun component5 ()Lme/proton/core/paymentcommon/domain/entity/Currency;
 	public final fun component6 ()I
 	public final fun component7 ()I
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;II)Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;
-	public static synthetic fun copy$default (Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;IIILjava/lang/Object;)Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;
+	public final fun component8 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;IILjava/util/Map;)Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;
+	public static synthetic fun copy$default (Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/paymentcommon/domain/entity/Currency;IILjava/util/Map;ILjava/lang/Object;)Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()Ljava/lang/Long;
@@ -112,6 +113,7 @@ public final class me/proton/core/paymentcommon/presentation/entity/PlanShortDet
 	public final fun getServices ()I
 	public final fun getSubscriptionCycle ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
 	public final fun getType ()I
+	public final fun getVendorNames ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V

@@ -21,6 +21,7 @@ package me.proton.core.plan.presentation.entity
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.parcelize.Parcelize
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
@@ -106,7 +107,8 @@ sealed class PlanDetailsItem(
         val starred: Boolean,
         val purchaseEnabled: Boolean = true,
         val services: Int,
-        val type: Int
+        val type: Int,
+        val vendorNames: Map<AppStore, Map<PlanCycle, String>>
     ) : PlanDetailsItem(
         name,
         displayName,

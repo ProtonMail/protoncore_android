@@ -45,6 +45,13 @@ enum class PlanCycle(val value: Int) {
 
     companion object {
         val map = values().associateBy { it.value }
+
+        fun SubscriptionCycle.toPlanCycle(): PlanCycle = when (this) {
+            SubscriptionCycle.FREE -> FREE
+            SubscriptionCycle.MONTHLY -> MONTHLY
+            SubscriptionCycle.YEARLY -> YEARLY
+            SubscriptionCycle.TWO_YEARS -> TWO_YEARS
+        }
     }
 }
 

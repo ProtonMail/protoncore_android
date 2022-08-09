@@ -19,10 +19,14 @@
 package me.proton.core.paymentcommon.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.paymentcommon.domain.entity.Currency
 import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
 
+/**
+ * @param vendorNames Map of plan names for app vendors (the plan names are for the given [subscriptionCycle]).
+ */
 @Parcelize
 public data class PlanShortDetails(
     val name: String,
@@ -31,5 +35,6 @@ public data class PlanShortDetails(
     val amount: Long? = null,
     val currency: Currency = Currency.EUR,
     val services: Int,
-    val type: Int
+    val type: Int,
+    val vendorNames: Map<AppStore, String>
 ) : Parcelable

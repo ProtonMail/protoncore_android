@@ -27,6 +27,8 @@ const val MASK_CALENDAR = MASK_MAIL // bitmap
 const val MASK_DRIVE = 2 // bitmap
 const val MASK_VPN = 4 // bitmap
 
+const val PLAN_VENDOR_GOOGLE = "google"
+
 data class Plan(
     val id: String?,
     val type: Int,
@@ -47,7 +49,8 @@ data class Plan(
     val quantity: Int,
     val maxTier: Int?,
     val enabled: Boolean,
-    val pricing: PlanPricing? = null
+    val pricing: PlanPricing? = null,
+    val vendorNames: List<PlanVendorName> = emptyList()
 )
 
 data class PlanPricing(
@@ -56,4 +59,8 @@ data class PlanPricing(
     val twoYearly: Int? = null
 )
 
-
+data class PlanVendorName(
+    val name: String,
+    val cycle: Int,
+    val vendorName: String
+)

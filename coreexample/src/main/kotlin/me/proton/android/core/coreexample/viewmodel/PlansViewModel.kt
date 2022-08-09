@@ -109,7 +109,8 @@ class PlansViewModel @Inject constructor(
                     displayName = "Proton Plus",
                     subscriptionCycle = SubscriptionCycle.YEARLY,
                     services = MASK_MAIL,
-                    type = PLAN_PRODUCT
+                    type = PLAN_PRODUCT,
+                    vendorNames = emptyMap()
                 )
             )
         }
@@ -131,7 +132,8 @@ class PlansViewModel @Inject constructor(
                             displayName = "Proton Visionary",
                             subscriptionCycle = SubscriptionCycle.YEARLY,
                             services = MASK_MAIL + MASK_VPN,
-                            type = PLAN_PRODUCT
+                            type = PLAN_PRODUCT,
+                            vendorNames = emptyMap()
                         ),
                         codes = null
                     )

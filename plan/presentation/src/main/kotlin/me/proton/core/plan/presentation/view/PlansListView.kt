@@ -60,7 +60,8 @@ internal class PlansListView @JvmOverloads constructor(
                             selectedCurrency,
                             amount,
                             services,
-                            type
+                            type,
+                            vendorNames = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.vendorNames ?: emptyMap()
                         )
                     )
                 }
