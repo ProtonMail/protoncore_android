@@ -28,6 +28,7 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
@@ -35,6 +36,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApplicationModule {
+
+    @Provides
+    fun provideAppStore(): AppStore = AppStore.GooglePlay
 
     @Provides
     @Singleton

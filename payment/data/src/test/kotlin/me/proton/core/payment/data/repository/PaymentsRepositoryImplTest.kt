@@ -22,6 +22,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
@@ -418,46 +419,38 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment status success android true`() = runBlockingTest {
+    fun `payment status success google play`() = runBlockingTest {
         // GIVEN
         coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
             PaymentStatus(
                 card = true,
-                paypal = true,
-                apple = true,
-                bitcoin = true,
-                stripe = true,
-                paymentWall = true,
-                blockchainInfo = true
+                inApp = true,
+                paypal = true
             )
         )
         // WHEN
-        val paymentStatusResponse = repository.getPaymentStatus(sessionUserId = SessionUserId(testUserId))
+        val paymentStatusResponse = repository.getPaymentStatus(SessionUserId(testUserId), AppStore.GooglePlay)
         // THEN
         assertNotNull(paymentStatusResponse)
-        assertTrue(paymentStatusResponse.card)
-        assertTrue(paymentStatusResponse.paypal)
+        assertTrue(paymentStatusResponse.card == true)
+        assertTrue(paymentStatusResponse.paypal == true)
     }
 
     @Test
-    fun `payment status success android false`() = runBlockingTest {
+    fun `payment status success f-droid`() = runBlockingTest {
         // GIVEN
         coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
             PaymentStatus(
                 card = true,
-                paypal = true,
-                apple = true,
-                bitcoin = true,
-                stripe = true,
-                paymentWall = true,
-                blockchainInfo = true
+                inApp = false,
+                paypal = true
             )
         )
         // WHEN
-        val paymentStatusResponse = repository.getPaymentStatus(sessionUserId = SessionUserId(testUserId))
+        val paymentStatusResponse = repository.getPaymentStatus(SessionUserId(testUserId), AppStore.FDroid)
         // THEN
         assertNotNull(paymentStatusResponse)
-        assertTrue(paymentStatusResponse.card)
-        assertTrue(paymentStatusResponse.paypal)
+        assertTrue(paymentStatusResponse.card == true)
+        assertTrue(paymentStatusResponse.paypal == true)
     }
 }

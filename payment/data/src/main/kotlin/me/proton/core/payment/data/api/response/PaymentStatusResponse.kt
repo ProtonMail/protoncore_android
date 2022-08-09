@@ -21,31 +21,20 @@ package me.proton.core.payment.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.paymentcommon.domain.entity.PaymentStatus
+import me.proton.core.util.kotlin.toBooleanOrFalse
 
 @Serializable
 internal data class PaymentStatusResponse(
     @SerialName("Card")
-    val card: Boolean,
+    val card: Int?,
+    @SerialName("InApp")
+    val inApp: Int?,
     @SerialName("Paypal")
-    val paypal: Boolean,
-    @SerialName("Apple")
-    val apple: Boolean,
-    @SerialName("Bitcoin")
-    val bitcoin: Boolean,
-    @SerialName("Stripe")
-    val stripe: Boolean,
-    @SerialName("Paymentwall")
-    val paymentWall: Boolean,
-    @SerialName("Blockchain.info")
-    val blockchainInfo: Boolean
+    val paypal: Int?
 ) {
     fun toPaymentStatus(): PaymentStatus = PaymentStatus(
-        card = card,
-        paypal = paypal,
-        apple = apple,
-        bitcoin = bitcoin,
-        stripe = stripe,
-        paymentWall = paymentWall,
-        blockchainInfo = blockchainInfo
+        card = card?.toBooleanOrFalse(),
+        inApp = inApp?.toBooleanOrFalse(),
+        paypal = paypal?.toBooleanOrFalse()
     )
 }

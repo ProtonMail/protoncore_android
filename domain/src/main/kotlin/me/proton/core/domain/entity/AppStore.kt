@@ -16,10 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.paymentcommon.domain.entity
+package me.proton.core.domain.entity
 
-public data class PaymentStatus(
-    val card: Boolean?,
-    val inApp: Boolean?,
-    val paypal: Boolean?
-)
+enum class AppStore {
+    FDroid,
+    GooglePlay
+}

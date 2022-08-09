@@ -82,8 +82,9 @@ internal interface PaymentsApi : BaseRetrofitApi {
     suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
 
     /**
-     * Returns the payment processor status.
+     * Returns the status of payment processors.
+     * @param appVendor The app vendor for the app (e.g. "google" or "fdroid").
      */
-    @GET("payments/status")
-    suspend fun paymentStatus(): PaymentStatusResponse
+    @GET("payments/v4/status/{appVendor}")
+    suspend fun paymentStatus(@Path("appVendor") appVendor: String): PaymentStatusResponse
 }

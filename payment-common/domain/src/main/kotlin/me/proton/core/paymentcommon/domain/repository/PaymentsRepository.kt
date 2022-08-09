@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentcommon.domain.repository
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.paymentcommon.domain.entity.Currency
 import me.proton.core.paymentcommon.domain.entity.PaymentBody
@@ -130,5 +131,5 @@ public interface PaymentsRepository {
     /**
      * These are the global values for all platforms indicating what payment methods are being supported.
      */
-    public suspend fun getPaymentStatus(sessionUserId: SessionUserId?): PaymentStatus
+    public suspend fun getPaymentStatus(sessionUserId: SessionUserId?, appStore: AppStore): PaymentStatus
 }
