@@ -21,8 +21,10 @@ package me.proton.core.user.data.repository
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlinx.coroutines.runBlocking
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
@@ -58,6 +60,9 @@ import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.data.db.dao.AddressWithKeysDao
+import me.proton.core.user.data.extension.toUserAddress
+import me.proton.core.user.data.repository.UserAddressRepositoryImpl.Companion.isFetchedTag
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
@@ -90,7 +95,7 @@ class UserAddressRepositoryImplTests {
             override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())
             override fun decrypt(value: EncryptedByteArray): PlainByteArray = PlainByteArray(value.array.copyOf())
         },
-        pgpCrypto = GOpenPGPCrypto(),
+        pgpCrypto = GOpenPGPCrypto()
     )
 
     private lateinit var apiProvider: ApiProvider
@@ -98,6 +103,7 @@ class UserAddressRepositoryImplTests {
     private lateinit var accountManager: AccountManager
 
     private lateinit var db: AccountManagerDatabase
+    private lateinit var addressWithKeysDao: AddressWithKeysDao
     private lateinit var userRepository: UserRepository
     private lateinit var userAddressRepository: UserAddressRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
@@ -110,6 +116,7 @@ class UserAddressRepositoryImplTests {
 
         // Build a new fresh in memory Database, for each test.
         db = TestAccountManagerDatabase.buildMultiThreaded()
+        addressWithKeysDao = spyk(db.addressWithKeysDao())
 
         coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
@@ -330,7 +337,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddressesBlocking_useKeys_userLocked_token_signature() = runBlockingWithTimeout {
+    fun getAddressesBlocking_useKeys_userLocked_token_signature(): Unit = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User2.response)
@@ -350,7 +357,6 @@ class UserAddressRepositoryImplTests {
             // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
             assertFailsWith(CryptoException::class) { encryptText(message) }
         }
-        Unit
     }
 
     @Test
@@ -489,5 +495,36 @@ class UserAddressRepositoryImplTests {
 
         assertTrue(key6.active)
         assertFalse(key6.privateKey.isActive)
+    }
+
+    @Test
+    fun assert_remote_api_called_only_the_first_time_then_rely_on_db() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(emptyList())
+        }
+
+        // Fetch User (add to cache/DB).
+        userRepository.getUser(TestUsers.User1.id)
+
+        // THEN
+
+        // Nothing in DB.
+        assertTrue(addressWithKeysDao.getByUserId(TestUsers.User1.id).isEmpty())
+        assertTrue(userAddressRepository.getAddresses(TestUsers.User1.id).isEmpty())
+        coVerify(exactly = 1) { addressApi.getAddresses() }
+
+        // FetchedTag in DB.
+        assertTrue(addressWithKeysDao.getByUserId(TestUsers.User1.id).all { it.toUserAddress().isFetchedTag() })
+
+        // Still no addresses, no api call.
+        assertTrue(userAddressRepository.getAddresses(TestUsers.User1.id).isEmpty())
+        coVerify(exactly = 1) { addressApi.getAddresses() } // Still only 1.
+
+        // Still FetchedTag in DB.
+        assertTrue(addressWithKeysDao.getByUserId(TestUsers.User1.id).all { it.toUserAddress().isFetchedTag() })
     }
 }

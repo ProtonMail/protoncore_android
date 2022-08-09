@@ -211,7 +211,7 @@ class UserAddressRepositoryImpl @Inject constructor(
     }
 
     companion object {
-        private fun UserAddress.isFetchedTag() = email == "fetched"
+        internal fun UserAddress.isFetchedTag() = email == "fetched"
         // Fake Address tagging the repo the addresses have been fetched once.
         private fun UserId.getFetchedTagAddress() = UserAddress(
             userId = this,
