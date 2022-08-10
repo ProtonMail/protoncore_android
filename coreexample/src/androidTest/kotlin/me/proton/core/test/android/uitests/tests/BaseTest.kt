@@ -27,7 +27,7 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
-import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
 import me.proton.core.test.android.plugins.Quark
@@ -83,6 +83,11 @@ open class BaseTest(
         @JvmStatic
         protected fun isProtonPaymentEnabled(): Boolean = runBlocking {
             PaymentProvider.ProtonPayment in protonTestEntryPoint.getAvailablePaymentProviders()
+        }
+
+        @JvmStatic
+        protected fun isGoogleIAPPaymentEnabled(): Boolean = runBlocking {
+            PaymentProvider.GoogleInAppPurchase in protonTestEntryPoint.getAvailablePaymentProviders()
         }
     }
 }

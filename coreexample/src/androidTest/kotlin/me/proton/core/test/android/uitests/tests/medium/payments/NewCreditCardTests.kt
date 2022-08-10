@@ -49,7 +49,22 @@ class NewCreditCardTests : BaseTest() {
             .apply {
                 view.withId(R.id.selectedPlanDetailsLayout).withAncestor(view.withId(R.id.scrollContent)).scrollTo()
             }
-            .verify { billingDetailsDisplayed(Plan.Dev, BillingCycle.Yearly, Currency.CHF.symbol) }
+            .verify {
+                if (isGoogleIAPPaymentEnabled()) {
+                    googleIAPOptionDisplayed(
+                        plan = Plan.Dev,
+                        billingCycle = BillingCycle.Yearly,
+                        currency = Currency.CHF.symbol,
+                        anotherPaymentProviderAvailable = isProtonPaymentEnabled()
+                    )
+                } else {
+                    billingDetailsDisplayed(
+                        plan = Plan.Dev,
+                        billingCycle = BillingCycle.Yearly,
+                        currency = Currency.CHF.symbol,
+                        googleIAPAvailable = isGoogleIAPPaymentEnabled())
+                }
+            }
     }
 
     @Test

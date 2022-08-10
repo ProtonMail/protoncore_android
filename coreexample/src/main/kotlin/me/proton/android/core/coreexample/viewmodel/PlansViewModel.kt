@@ -27,14 +27,13 @@ import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.PLAN_PLUS_ID
 import me.proton.android.core.coreexample.PLAN_VISIONARY_ID
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
-import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.presentation.utils.showToast
