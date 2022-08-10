@@ -19,10 +19,10 @@
 package me.proton.android.core.coreexample.init
 
 import android.content.Context
-import android.os.Build
 import android.os.StrictMode
 import androidx.startup.Initializer
 import me.proton.android.core.coreexample.BuildConfig
+import me.proton.core.util.android.strictmode.detectCommon
 
 class StrictModeInitializer : Initializer<Unit> {
     override fun create(context: Context) {
@@ -45,30 +45,7 @@ class StrictModeInitializer : Initializer<Unit> {
 
         StrictMode.setVmPolicy(
             StrictMode.VmPolicy.Builder()
-                .detectActivityLeaks()
-                .detectCleartextNetwork()
-                .detectFileUriExposure()
-                .detectLeakedClosableObjects()
-                .detectLeakedRegistrationObjects()
-                .detectLeakedSqlLiteObjects()
-                // .detectUntaggedSockets() // Not needed (unless we want to use `android.net.TrafficStats`).
-                // .detectNonSdkApiUsage() // Skip: some androidx libraries violate this.
-                .apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        detectContentUriWithoutPermission()
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        detectCredentialProtectedWhileLocked()
-                        detectImplicitDirectBoot()
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        detectIncorrectContextUse()
-                        detectUnsafeIntentLaunch()
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        penaltyDeathOnFileUriExposure()
-                    }
-                }
+                .detectCommon()
                 .penaltyLog()
                 .build()
         )

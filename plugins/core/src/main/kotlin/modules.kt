@@ -28,6 +28,7 @@ public object Module {
     public const val sharedPreferencesUtil: String = "$androidUtil:util-android-shared-preferences"
     public const val workManagersUtil: String = "$androidUtil:util-android-work-manager"
     public const val gradleUtil: String = "$util:util-gradle"
+    public const val strictModeUtil: String = "$androidUtil:util-android-strict-mode"
 
     // Test
     private const val test = ":test"

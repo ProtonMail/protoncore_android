@@ -180,6 +180,7 @@ dependencies {
         project(Module.report),
         project(Module.user),
         project(Module.userSettings),
+        project(Module.strictModeUtil),
 
         // Android
         activity,
