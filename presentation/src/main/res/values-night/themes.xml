@@ -21,7 +21,9 @@
     <style name="ProtonTheme" parent="ProtonThemeBase">
         <item name="proton_text_accent">?attr/brand_lighten_20</item>
         <item name="proton_icon_accent">?attr/brand_lighten_20</item>
-        <item name="proton_interaction_norm_pressed">?attr/brand_lighten_40</item>
-        <item name="proton_interaction_norm_disabled">?attr/brand_darken_20</item>
+
+        <item name="proton_interaction_norm">?attr/brand_norm</item>
+        <item name="proton_interaction_norm_pressed">?attr/brand_lighten_20</item>
+        <item name="proton_interaction_norm_disabled">?attr/brand_darken_40</item>
     </style>
 </resources>

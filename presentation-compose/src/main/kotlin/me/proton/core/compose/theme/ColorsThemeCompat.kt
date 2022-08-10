@@ -35,6 +35,7 @@ fun colorsFromXml(
             shade50 = Color(context.getColor(R.color.shade_50)),
             shade40 = Color(context.getColor(R.color.shade_40)),
             shade20 = Color(context.getColor(R.color.shade_20)),
+            shade15 = Color(context.getColor(R.color.shade_15)),
             shade10 = Color(context.getColor(R.color.shade_10)),
             shade0 = Color(context.getColor(R.color.shade_0)),
 
@@ -59,6 +60,7 @@ fun colorsFromXml(
 
             backgroundNorm = typedArray.getColor(R.styleable.AppTheme_proton_background_norm),
             backgroundSecondary = typedArray.getColor(R.styleable.AppTheme_proton_background_secondary),
+            backgroundDeep = typedArray.getColor(R.styleable.AppTheme_proton_background_deep),
 
             separatorNorm = typedArray.getColor(R.styleable.AppTheme_proton_separator_norm),
 

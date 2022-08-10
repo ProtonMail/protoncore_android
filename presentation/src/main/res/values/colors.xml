@@ -37,6 +37,7 @@
     <color name="cotton_seed">#C2BFBC</color>
     <color name="cloud">#D1CFCD</color>
     <color name="ebb">#EAE7E4</color>
+    <color name="pampas">#F1EEEB</color>
     <color name="cararra">#F5F4F2</color>
 
     <color name="port_gore">#1c223d</color>
@@ -125,6 +126,7 @@
     <color name="shade_50">@color/cotton_seed</color>
     <color name="shade_40">@color/cloud</color>
     <color name="shade_20">@color/ebb</color>
+    <color name="shade_15">@color/pampas</color>
     <color name="shade_10">@color/cararra</color>
     <color name="shade_0">@color/white</color>
 
@@ -156,6 +158,7 @@
     -->
     <color name="background_norm">@color/shade_0</color>
     <color name="background_secondary">@color/shade_10</color>
+    <color name="background_deep">@color/shade_15</color>
 
     <color name="separator_norm">@color/shade_20</color>
 

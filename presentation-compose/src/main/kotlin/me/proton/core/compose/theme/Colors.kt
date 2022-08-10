@@ -54,6 +54,7 @@ private object ProtonPalette {
     val CottonSeed = Color(0xFFC2BFBC)
     val Cloud = Color(0xFFD1CFCD)
     val Ebb = Color(0xFFEAE7E4)
+    val Pampas = Color(0xFFF1EEEB)
     val Carrara = Color(0xFFF5F4F2)
     val White = Color(0xFFFFFFFF)
 
@@ -104,6 +105,7 @@ class ProtonColors(
     shade50: Color,
     shade40: Color,
     shade20: Color,
+    shade15: Color,
     shade10: Color,
     shade0: Color,
 
@@ -128,6 +130,7 @@ class ProtonColors(
 
     backgroundNorm: Color = shade0,
     backgroundSecondary: Color = shade10,
+    backgroundDeep: Color = shade15,
 
     separatorNorm: Color = shade20,
 
@@ -173,6 +176,8 @@ class ProtonColors(
         internal set
     var shade20: Color by mutableStateOf(shade20, structuralEqualityPolicy())
         internal set
+    var shade15: Color by mutableStateOf(shade15, structuralEqualityPolicy())
+        internal set
     var shade10: Color by mutableStateOf(shade10, structuralEqualityPolicy())
         internal set
     var shade0: Color by mutableStateOf(shade0, structuralEqualityPolicy())
@@ -215,6 +220,8 @@ class ProtonColors(
     var backgroundNorm: Color by mutableStateOf(backgroundNorm, structuralEqualityPolicy())
         internal set
     var backgroundSecondary: Color by mutableStateOf(backgroundSecondary, structuralEqualityPolicy())
+        internal set
+    var backgroundDeep: Color by mutableStateOf(backgroundDeep, structuralEqualityPolicy())
         internal set
 
     var separatorNorm: Color by mutableStateOf(separatorNorm, structuralEqualityPolicy())
@@ -275,6 +282,7 @@ class ProtonColors(
         shade50: Color = this.shade50,
         shade40: Color = this.shade40,
         shade20: Color = this.shade20,
+        shade15: Color = this.shade15,
         shade10: Color = this.shade10,
         shade0: Color = this.shade0,
 
@@ -299,6 +307,7 @@ class ProtonColors(
 
         backgroundNorm: Color = this.backgroundNorm,
         backgroundSecondary: Color = this.backgroundSecondary,
+        backgroundDeep: Color = this.backgroundDeep,
 
         separatorNorm: Color = this.separatorNorm,
 
@@ -337,6 +346,7 @@ class ProtonColors(
         shade50 = shade50,
         shade40 = shade40,
         shade20 = shade20,
+        shade15 = shade15,
         shade10 = shade10,
         shade0 = shade0,
 
@@ -361,6 +371,7 @@ class ProtonColors(
 
         backgroundNorm = backgroundNorm,
         backgroundSecondary = backgroundSecondary,
+        backgroundDeep = backgroundDeep,
 
         separatorNorm = separatorNorm,
 
@@ -419,6 +430,7 @@ class ProtonColors(
             shade50 = ProtonPalette.CottonSeed,
             shade40 = ProtonPalette.Cloud,
             shade20 = ProtonPalette.Ebb,
+            shade15 = ProtonPalette.Pampas,
             shade10 = ProtonPalette.Carrara,
             shade0 = Color.White,
             shadowNorm = Color.Black.copy(alpha = 0.1f),
@@ -449,13 +461,23 @@ class ProtonColors(
             shade50 = ProtonPalette.Smoky,
             shade40 = ProtonPalette.GunPowder,
             shade20 = ProtonPalette.BlackCurrant,
-            shade10 = ProtonPalette.Bastille,
-            shade0 = ProtonPalette.BalticSea,
+            shade15 = ProtonPalette.Bastille,
+            shade10 = ProtonPalette.BalticSea,
+            shade0 = ProtonPalette.Cinder,
             shadowNorm = Color.Black.copy(alpha = 0.8f),
             shadowRaised = Color.Black.copy(alpha = 0.8f),
             shadowLifted = Color.Black.copy(alpha = 0.86f),
             blenderNorm = Color.Black.copy(alpha = 0.52f),
-        )
+        ).let {
+            it.copy(
+                interactionWeakNorm = it.shade20,
+                interactionWeakPressed = it.shade40,
+                interactionWeakDisabled = it.shade15,
+                backgroundNorm = it.shade10,
+                backgroundSecondary = it.shade15,
+                backgroundDeep = it.shade0,
+            )
+        }
 
         private fun sidebarLight(
             brandDarken40: Color = ProtonPalette.Chambray,
@@ -494,7 +516,7 @@ class ProtonColors(
             brandLighten20 = brandLighten20,
             brandLighten40 = brandLighten40,
         ).copy(
-            backgroundNorm = ProtonPalette.BalticSea,
+            backgroundNorm = ProtonPalette.Cinder,
             interactionWeakNorm = ProtonPalette.BlackCurrant,
             interactionWeakPressed = ProtonPalette.GunPowder,
             separatorNorm = ProtonPalette.BlackCurrant,
@@ -581,6 +603,7 @@ internal fun ProtonColors.updateColorsFrom(other: ProtonColors) {
     shade50 = other.shade50
     shade40 = other.shade40
     shade20 = other.shade20
+    shade15 = other.shade15
     shade10 = other.shade10
     shade0 = other.shade0
 
@@ -605,6 +628,7 @@ internal fun ProtonColors.updateColorsFrom(other: ProtonColors) {
 
     backgroundNorm = other.backgroundNorm
     backgroundSecondary = other.backgroundSecondary
+    backgroundDeep = other.backgroundDeep
 
     separatorNorm = other.separatorNorm
 

@@ -110,6 +110,7 @@
         <item name="proton_interaction_norm_disabled">?attr/brand_lighten_40</item>
         <item name="proton_background_norm">@color/background_norm</item>
         <item name="proton_background_secondary">@color/background_secondary</item>
+        <item name="proton_background_deep">@color/background_deep</item>
         <item name="proton_separator_norm">@color/separator_norm</item>
         <item name="proton_notification_norm">@color/notification_norm</item>
         <item name="proton_notification_error">@color/notification_error</item>
@@ -138,12 +139,16 @@
     <style name="ProtonTheme" parent="ProtonThemeBase">
         <item name="proton_text_accent">?attr/brand_norm</item>
         <item name="proton_icon_accent">?attr/brand_norm</item>
+
+        <item name="proton_interaction_norm">?attr/brand_norm</item>
+        <item name="proton_interaction_norm_pressed">?attr/brand_darken_20</item>
+        <item name="proton_interaction_norm_disabled">?attr/brand_lighten_40</item>
     </style>
 
     <style name="ProtonTheme.Calendar" parent="ProtonTheme" />
     <style name="ProtonTheme.Drive" parent="ProtonTheme" />
     <style name="ProtonTheme.Mail" parent="ProtonTheme" />
-    <style name="ProtonTheme.Vpn" parent="ProtonTheme"/>
+    <style name="ProtonTheme.Vpn" parent="ProtonTheme" />
 
     <style name="ProtonTheme.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/background_norm</item>
