@@ -32,9 +32,9 @@ import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.usecase.PerformSubscribe
+import me.proton.core.paymentcommon.domain.entity.Currency
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import org.junit.Assert.assertEquals

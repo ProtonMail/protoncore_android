@@ -20,6 +20,7 @@ package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -29,9 +30,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
@@ -74,35 +75,15 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                 .distinctUntilChanged()
                 .onEach {
                     when (it) {
-                        is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
+                        is BasePlansViewModel.PlanState.Error -> onError(it)
                         is BasePlansViewModel.PlanState.Idle -> Unit
                         is BasePlansViewModel.PlanState.Processing -> showLoading(true)
                         is BasePlansViewModel.PlanState.Success.Plans -> {
                             showLoading(false)
-                            with(binding) {
-                                plansView.selectPlanListener = { selectedPlan ->
-                                    if (selectedPlan.free) {
-                                        // proceed with result return
-                                        setResult(selectedPlan)
-                                    } else {
-                                        signupPlansViewModel.startBillingForPaidPlan(
-                                            userId,
-                                            selectedPlan,
-                                            selectedPlan.cycle.toSubscriptionCycle()
-                                        )
-                                    }
-                                }
-                                if (it.plans.isNotEmpty()) {
-                                    plansView.plans = it.plans
-                                } else {
-                                    onFreeSelected()
-                                }
-                            }
+                            onSuccess(it.plans)
                         }
-                        is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(
-                            it.selectedPlan,
-                            it.billing
-                        )
+                        is BasePlansViewModel.PlanState.Success.PaidPlanPayment ->
+                            setResult(it.selectedPlan, it.billing)
                     }.exhaustive
                 }.launchIn(viewLifecycleOwner.lifecycleScope)
 
@@ -122,9 +103,48 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
         progressParent.visibility = if (loading) View.VISIBLE else View.GONE
     }
 
+    private fun onSuccess(plans: List<PlanDetailsItem>) {
+        with(binding) {
+            plansView.selectPlanListener = { selectedPlan ->
+                if (selectedPlan.free) {
+                    // proceed with result return
+                    setResult(selectedPlan)
+                } else {
+                    signupPlansViewModel.startBillingForPaidPlan(
+                        userId,
+                        selectedPlan,
+                        selectedPlan.cycle.toSubscriptionCycle()
+                    )
+                }
+            }
+            if (plans.isNotEmpty()) {
+                plansView.plans = plans
+            } else {
+                onFreeSelected()
+            }
+        }
+    }
+
+    private fun onError(errorState: BasePlansViewModel.PlanState.Error) {
+        when (errorState) {
+            is BasePlansViewModel.PlanState.Error.Exception -> {
+                onError(errorState.error.getUserMessage(resources))
+                binding.connectivityIssueView.visibility = View.VISIBLE
+            }
+            is BasePlansViewModel.PlanState.Error.Message -> onError(errorState.message)
+        }.exhaustive
+    }
+
+    private fun onError(@StringRes message: Int?) {
+        if (message != null) {
+            onError(getString(message))
+        } else {
+            binding.root.errorSnack(message = getString(R.string.plans_fetching_general_error))
+        }
+    }
+
     private fun onError(message: String?) = with(binding) {
         showLoading(false)
-        connectivityIssueView.visibility = View.VISIBLE
         binding.root.errorSnack(message = message ?: getString(R.string.plans_fetching_general_error))
     }
 

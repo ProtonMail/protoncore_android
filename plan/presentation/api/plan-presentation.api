@@ -164,6 +164,7 @@ public final class me/proton/core/plan/presentation/databinding/PlanSpinnerItemB
 
 public final class me/proton/core/plan/presentation/databinding/PlansListViewBinding : androidx/viewbinding/ViewBinding {
 	public final field currencySpinner Landroid/widget/Spinner;
+	public final field manageSubscriptionText Landroid/widget/TextView;
 	public final field planListRecyclerView Landroidx/recyclerview/widget/RecyclerView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
@@ -178,7 +179,7 @@ public final class me/proton/core/plan/presentation/entity/PlanCurrency : java/l
 	public static final field EUR Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public static final field USD Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public final fun getSign ()Ljava/lang/String;
-	public final fun toSubscriptionCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun toSubscriptionCurrency ()Lme/proton/core/paymentcommon/domain/entity/Currency;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public static fun values ()[Lme/proton/core/plan/presentation/entity/PlanCurrency;
 }
@@ -195,7 +196,7 @@ public final class me/proton/core/plan/presentation/entity/PlanCycle : java/lang
 	public static final field YEARLY Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public final fun getPrice (Lme/proton/core/plan/presentation/entity/PlanPricing;)Ljava/lang/Double;
 	public final fun getValue ()I
-	public final fun toSubscriptionCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun toSubscriptionCycle ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static fun values ()[Lme/proton/core/plan/presentation/entity/PlanCycle;
 }
@@ -386,13 +387,13 @@ public final class me/proton/core/plan/presentation/entity/PlanPricing$Companion
 }
 
 public final class me/proton/core/plan/presentation/entity/PlanSubscription {
-	public fun <init> (Lme/proton/core/payment/domain/entity/Subscription;Z)V
-	public final fun component1 ()Lme/proton/core/payment/domain/entity/Subscription;
+	public fun <init> (Lme/proton/core/paymentcommon/domain/entity/Subscription;Z)V
+	public final fun component1 ()Lme/proton/core/paymentcommon/domain/entity/Subscription;
 	public final fun component2 ()Z
-	public final fun copy (Lme/proton/core/payment/domain/entity/Subscription;Z)Lme/proton/core/plan/presentation/entity/PlanSubscription;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanSubscription;Lme/proton/core/payment/domain/entity/Subscription;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanSubscription;
+	public final fun copy (Lme/proton/core/paymentcommon/domain/entity/Subscription;Z)Lme/proton/core/plan/presentation/entity/PlanSubscription;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanSubscription;Lme/proton/core/paymentcommon/domain/entity/Subscription;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanSubscription;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSubscription ()Lme/proton/core/payment/domain/entity/Subscription;
+	public final fun getSubscription ()Lme/proton/core/paymentcommon/domain/entity/Subscription;
 	public final fun getSubscriptionPlanSupportedFromCore ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -636,7 +637,7 @@ public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewMod
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
-	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
+	public static fun newInstance (Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_HiltModules {
@@ -663,7 +664,7 @@ public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewMo
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
-	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
+	public static fun newInstance (Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_HiltModules {

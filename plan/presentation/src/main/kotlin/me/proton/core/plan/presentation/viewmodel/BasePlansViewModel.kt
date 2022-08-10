@@ -18,19 +18,21 @@
 
 package me.proton.core.plan.presentation.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.PaymentMethod
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.paymentcommon.domain.entity.PaymentMethod
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
@@ -60,7 +62,10 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             data class PaidPlanPayment(val selectedPlan: SelectedPlan, val billing: BillingResult) : Success()
         }
 
-        data class Error(val error: Throwable) : PlanState()
+        sealed class Error : PlanState() {
+            data class Exception(val error: Throwable) : Error()
+            data class Message(@StringRes val message: Int) : Error()
+        }
     }
 
     fun register(context: Fragment) {
@@ -140,11 +145,15 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
     fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
         with(paymentsOrchestrator) {
             onPaymentResult { result ->
-                result.let { billingResult ->
-                    if (billingResult?.paySuccess == true) {
+                result?.let { billingResult ->
+                    if (billingResult.paySuccess) {
                         viewModelScope.launch {
                             state.emit(PlanState.Success.PaidPlanPayment(selectedPlan, billingResult))
                         }
+                    }
+                } ?: run {
+                    viewModelScope.launch {
+                        state.emit(PlanState.Error.Message(message = R.string.plans_payment_error))
                     }
                 }
             }

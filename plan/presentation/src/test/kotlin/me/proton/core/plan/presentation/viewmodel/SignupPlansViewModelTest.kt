@@ -24,9 +24,9 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.spyk
 import me.proton.core.domain.entity.Product
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing

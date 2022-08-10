@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.paymentcommon.domain.entity.SubscriptionManagement
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
@@ -98,8 +98,10 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             upgradePlanViewModel.subscribedPlansState.onEach {
                 @Suppress("IMPLICIT_CAST_TO_ANY")
                 when (it) {
-                    is UpgradePlansViewModel.SubscribedPlansState.Error ->
+                    is UpgradePlansViewModel.SubscribedPlansState.Error -> {
                         onError(it.error.getUserMessage(resources))
+                        binding.connectivityIssueView.visibility = VISIBLE
+                    }
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
@@ -127,7 +129,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                 .onEach {
                     @Suppress("IMPLICIT_CAST_TO_ANY")
                     when (it) {
-                        is BasePlansViewModel.PlanState.Error -> onError(it.error.getUserMessage(resources))
+                        is BasePlansViewModel.PlanState.Error -> onError(it)
                         is BasePlansViewModel.PlanState.Idle -> Unit
                         is BasePlansViewModel.PlanState.Processing -> showLoading(true)
                         is BasePlansViewModel.PlanState.Success.Plans -> {
@@ -184,9 +186,15 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         progressParent.visibility = if (loading) VISIBLE else GONE
     }
 
+    private fun onError(errorState: BasePlansViewModel.PlanState.Error) {
+        when (errorState) {
+            is BasePlansViewModel.PlanState.Error.Exception -> onError(errorState.error.getUserMessage(resources))
+            is BasePlansViewModel.PlanState.Error.Message -> onError(getString(errorState.message))
+        }.exhaustive
+    }
+
     private fun onError(message: String?) = with(binding) {
         showLoading(false)
-        connectivityIssueView.visibility = VISIBLE
         root.errorSnack(message = message ?: getString(R.string.plans_fetching_general_error))
     }
 

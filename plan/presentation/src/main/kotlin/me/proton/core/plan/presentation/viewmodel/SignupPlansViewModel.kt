@@ -24,9 +24,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -46,8 +45,8 @@ internal class SignupPlansViewModel @Inject constructor(
         emit(PlanState.Processing)
         val plans: MutableList<PlanDetailsItem> = mutableListOf()
         val paymentProviders = getAvailablePaymentProviders()
-        val protonPaymentEnabled = PaymentProvider.ProtonPayment in paymentProviders
-        if (protonPaymentEnabled && supportPaidPlans) {
+        val anyPaymentEnabled = paymentProviders.isNotEmpty()
+        if (anyPaymentEnabled && supportPaidPlans) {
             plans.apply {
                 addAll(
                     getPlans(userId = null)
@@ -56,9 +55,9 @@ internal class SignupPlansViewModel @Inject constructor(
                 add(createFreePlan(getPlanDefault(userId = null)))
             }
         }
-        emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = protonPaymentEnabled))
+        emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = anyPaymentEnabled))
     }.catch { error ->
-        state.tryEmit(PlanState.Error(error))
+        state.tryEmit(PlanState.Error.Exception(error))
     }.onEach { plans ->
         state.tryEmit(plans)
     }.launchIn(viewModelScope)

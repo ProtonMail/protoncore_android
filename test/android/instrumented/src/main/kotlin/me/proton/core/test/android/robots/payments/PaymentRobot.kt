@@ -40,13 +40,36 @@ open class PaymentRobot : CoreRobot() {
         fun billingDetailsDisplayed(
             plan: Plan,
             billingCycle: BillingCycle,
-            currency: String
+            currency: String,
+            googleIAPAvailable: Boolean
         ) {
             val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
             view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
             view.withId(R.id.billingPeriodText).withText(R.string.payments_billing_yearly)
                 .checkDisplayed()
             view.withId(R.id.amountText).withText("$currency$yearlyPriceString").checkDisplayed()
+            view.withId(R.id.payButton).checkDisplayed()
+            if (googleIAPAvailable) {
+                view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
+            }
+        }
+
+        fun googleIAPOptionDisplayed(
+            plan: Plan,
+            billingCycle: BillingCycle,
+            currency: String,
+            anotherPaymentProviderAvailable: Boolean
+        ) {
+            val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
+            view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
+            view.withId(R.id.billingPeriodText).withText(R.string.payments_billing_yearly)
+                .checkDisplayed()
+            view.withId(R.id.amountText).withText("$currency$yearlyPriceString").checkDisplayed()
+            view.withId(R.id.priceSurchargeInfoText).checkDisplayed()
+            view.withId(R.id.termsConditionsInfoText).checkDisplayed()
+            if (anotherPaymentProviderAvailable) {
+                view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
+            }
         }
 
         fun paymentMethodDisplayed(title: String, details: String) {

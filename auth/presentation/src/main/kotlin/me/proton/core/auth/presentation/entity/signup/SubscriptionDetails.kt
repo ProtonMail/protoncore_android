@@ -20,8 +20,8 @@ package me.proton.core.auth.presentation.entity.signup
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
 
 @Parcelize
 data class SubscriptionDetails(

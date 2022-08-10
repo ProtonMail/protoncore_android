@@ -1034,17 +1034,17 @@ public final class me/proton/core/auth/presentation/entity/signup/SignUpResult :
 
 public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component3 ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
 	public final fun component4 ()Lme/proton/core/payment/presentation/entity/BillingResult;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;)Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;)Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBillingResult ()Lme/proton/core/payment/presentation/entity/BillingResult;
-	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getCycle ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
 	public final fun getPlanDisplayName ()Ljava/lang/String;
 	public final fun getPlanName ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -1053,7 +1053,7 @@ public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDe
 }
 
 public abstract interface class me/proton/core/auth/presentation/testing/ProtonTestEntryPoint {
-	public abstract fun getGetAvailablePaymentProviders ()Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;
+	public abstract fun getGetAvailablePaymentProviders ()Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;
 	public abstract fun getLoginTestHelper ()Lme/proton/core/auth/domain/testing/LoginTestHelper;
 }
 

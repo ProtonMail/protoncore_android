@@ -49,8 +49,7 @@
             android:layout_height="wrap_content"
             android:background="?android:windowBackground"
             android:paddingStart="@dimen/default_gap"
-            android:paddingEnd="@dimen/default_gap"
-            android:paddingBottom="@dimen/double_top_margin">
+            android:paddingEnd="@dimen/default_gap">
 
             <TextView
                 android:id="@+id/plansTitle"
@@ -122,8 +121,7 @@
             <me.proton.core.plan.presentation.view.PlansListView
                 android:id="@+id/plansView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/gap_large_plus"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

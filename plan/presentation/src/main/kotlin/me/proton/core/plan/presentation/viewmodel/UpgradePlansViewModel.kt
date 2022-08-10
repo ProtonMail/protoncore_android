@@ -27,12 +27,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.paymentcommon.domain.entity.SubscriptionManagement
+import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -143,7 +143,7 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = protonPaymentEnabled))
     }.catch { error ->
-        state.tryEmit(PlanState.Error(error))
+        state.tryEmit(PlanState.Error.Exception(error))
     }.onEach { plans ->
         state.tryEmit(plans)
     }.launchIn(viewModelScope)
