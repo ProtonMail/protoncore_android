@@ -20,6 +20,7 @@ package me.proton.core.payment.presentation.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.flowWithLifecycle
@@ -28,25 +29,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.country.presentation.entity.CountryUIModel
-import me.proton.core.country.presentation.ui.CountryPickerFragment
-import me.proton.core.country.presentation.ui.showCountryPicker
-import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentType
-import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
-import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
-import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
-import me.proton.core.payment.presentation.viewmodel.BillingViewModel
-import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.paymentcommon.domain.entity.Currency
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
+import me.proton.core.paymentcommon.presentation.entity.BillingInput
+import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel
+import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.getUserMessage
-import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.onTextChange
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -76,26 +73,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                 }
             }
             payButton.onClick(::onPayClicked)
-
-            cardNumberInput.apply {
-                endIconMode = ProtonInput.EndIconMode.CUSTOM_ICON
-                endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_proton_credit_card)
-                onTextChange(afterTextChangeListener = CardNumberWatcher().watcher)
-            }
-
-            expirationDateInput.apply {
-                onTextChange(afterTextChangeListener = ExpirationDateWatcher().watcher)
-            }
-
-            countriesText.onClick {
-                supportFragmentManager.showCountryPicker(false)
-            }
-            supportFragmentManager.setFragmentResultListener(
-                CountryPickerFragment.KEY_COUNTRY_SELECTED, this@BillingActivity
-            ) { _, bundle ->
-                val country = bundle.getParcelable<CountryUIModel>(CountryPickerFragment.BUNDLE_KEY_COUNTRY)
-                countriesText.text = country?.name
-            }
+            nextPaymentProviderButton.onClick(::onNextPaymentProviderClicked)
         }
         observeViewModel()
     }
@@ -108,13 +86,12 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                 when (it) {
                     is BillingCommonViewModel.PlansValidationState.Success -> {
                         val amountDue = it.subscription.amountDue
-                        with(binding) {
-                            selectedPlanDetailsLayout.plan = input.plan.copy(amount = amountDue)
-                            payButton.text = String.format(
-                                getString(R.string.payments_pay),
-                                selectedPlanDetailsLayout.userReadablePlanAmount
-                            )
-                        }
+                        val plan = input.plan.copy(amount = amountDue)
+                        viewModel.setPlan(plan)
+                        binding.payButton.text = String.format(
+                            getString(R.string.payments_pay),
+                            plan.amount?.toDouble()?.formatCentsPriceDefaultLocale(plan.currency.name) ?: ""
+                        )
                     }
                     is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
                     else -> Unit
@@ -148,6 +125,45 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                     }
                 }
             }.launchIn(lifecycleScope)
+
+        viewModel.paymentProvidersResult
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is BillingViewModel.PaymentProvidersState.Error.Message -> showError(it.error)
+                    is BillingViewModel.PaymentProvidersState.Success -> {
+                        with(binding) {
+                            val currentProvider = it.activeProvider
+                            when (currentProvider) {
+                                PaymentProvider.GoogleInAppPurchase -> {
+                                    supportFragmentManager.showBillingIAPFragment(R.id.fragment_container)
+                                    nextPaymentProviderButton.visibility = View.VISIBLE
+                                }
+                                PaymentProvider.ProtonPayment -> {
+                                    supportFragmentManager.showBillingFragment(R.id.fragment_container)
+                                }
+                            }.exhaustive
+
+                            it.nextPaymentProviderTextResource?.let { textResource ->
+                                nextPaymentProviderButton.text = getString(textResource)
+                            } ?: run {
+                                nextPaymentProviderButton.visibility = View.GONE
+                            }
+                        }
+                    }
+                    BillingViewModel.PaymentProvidersState.PaymentProvidersEmpty -> {
+                        val message = getString(R.string.payments_no_payment_provider)
+                        CoreLogger.i(LogTag.NO_ACTIVE_PAYMENT_PROVIDER, message)
+                        setResult(RESULT_CANCELED, intent)
+                        finish()
+                    }
+                    is BillingViewModel.PaymentProvidersState.Idle,
+                    is BillingViewModel.PaymentProvidersState.Processing -> {
+                        // do nothing
+                    }
+                }.exhaustive
+            }.launchIn(lifecycleScope)
     }
 
     private fun onBillingSuccess(token: String? = null, amount: Long, currency: Currency, cycle: SubscriptionCycle) {
@@ -171,11 +187,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
         if (plan.amount == null) {
             viewModel.validatePlan(user, listOf(plan.name), codes, plan.currency, plan.subscriptionCycle)
         }
-        with(binding) {
-            selectedPlanDetailsLayout.plan = plan
-            payButton.text =
-                String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
-        }
+        viewModel.setPlan(plan)
     }
 
     override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
@@ -191,56 +203,26 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
         }
     }
 
-    private fun onPayClicked() = with(binding) {
-        hideKeyboard()
-        val numberOfInvalidFields = billingInputFieldsValidationList(this@BillingActivity).filter {
-            !it.isValid
-        }.size
-
-        if (numberOfInvalidFields > 0) {
-            return@with
-        }
-
-        val expirationDate = expirationDateInput.text.toString().split(EXP_DATE_SEPARATOR)
-
-        viewModel.subscribe(
-            input.user,
-            input.existingPlans.buildPlansList(input.plan.name, input.plan.services, input.plan.type),
-            input.codes,
-            input.plan.currency,
-            input.plan.subscriptionCycle,
-            PaymentType.CreditCard(
-                Card.CardWithPaymentDetails(
-                    number = cardNumberInput.text.toString(),
-                    cvc = cvcInput.text.toString(),
-                    expirationMonth = expirationDate[0],
-                    expirationYear = expirationDate[1],
-                    name = cardNameInput.text.toString(),
-                    country = countriesText.text.toString(),
-                    zip = postalCodeInput.text.toString()
-                )
-            )
-        )
+    private fun onPayClicked() {
+        viewModel.onPay(input)
     }
 
-    override fun showLoading(loading: Boolean) = with(binding) {
+    private fun onNextPaymentProviderClicked() {
+        viewModel.switchNextPaymentProvider()
+    }
+
+    override fun showLoading(loading: Boolean) {
         if (loading) {
-            payButton.setLoading()
+            binding.payButton.setLoading()
         } else {
-            payButton.setIdle()
+            binding.payButton.setIdle()
         }
-        inputState(enabled = !loading)
+        viewModel.onLoadingStateChange(loading)
     }
 
-    private fun inputState(enabled: Boolean) {
-        with(binding) {
-            cardNameInput.isEnabled = enabled
-            cardNumberInput.isEnabled = enabled
-            expirationDateInput.isEnabled = enabled
-            cvcInput.isEnabled = enabled
-            postalCodeInput.isEnabled = enabled
-            countriesText.isEnabled = enabled
-        }
+    override fun showError(message: String?) {
+        showLoading(false)
+        binding.root.errorSnack(message = message ?: getString(R.string.payments_general_error))
     }
 
     companion object {

@@ -21,12 +21,12 @@ package me.proton.core.payment.presentation
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
-import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.ui.StartBilling
 import me.proton.core.payment.presentation.ui.StartPaymentOptions
+import me.proton.core.paymentcommon.presentation.entity.BillingInput
+import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import javax.inject.Inject
 
 @Suppress("UseIfInsteadOfWhen")

@@ -1,0 +1,53 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package me.proton.core.paymentcommon.domain.usecase
+
+import me.proton.core.domain.entity.UserId
+import me.proton.core.paymentcommon.domain.MAX_PLAN_QUANTITY
+import me.proton.core.paymentcommon.domain.entity.Currency
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.domain.entity.SubscriptionStatus
+import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
+import javax.inject.Inject
+
+/**
+ * Use case that validates a subscription before it is made for a given plans.
+ * Will return the amount than needs to be charged along with other details.
+ * Can be used for upgrade and for signups as well.
+ */
+public class ValidateSubscriptionPlan @Inject constructor(
+    private val paymentsRepository: PaymentsRepository
+) {
+    public suspend operator fun invoke(
+        userId: UserId?,
+        codes: List<String>? = null,
+        plans: List<String>,
+        currency: Currency,
+        cycle: SubscriptionCycle
+    ): SubscriptionStatus {
+        require(plans.isNotEmpty())
+        return paymentsRepository.validateSubscription(
+            userId,
+            codes,
+            plans.map { it to MAX_PLAN_QUANTITY }.toMap(),
+            currency,
+            cycle
+        )
+    }
+}

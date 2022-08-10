@@ -27,11 +27,11 @@
     <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
     <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
     <string name="payments_error_invalid_session">Invalid session.</string>
+    <string name="payments_no_payment_provider">No active payment provider found.</string>
     <!-- endregion -->
     <!-- region payment options -->
     <string name="payments_choose_payment_method">Choose your payment method</string>
     <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
-    <string name="payments_billing_yearly">For 1 year</string>
     <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
     <string name="payments_method_icon">Payment method icon.</string>
     <!-- endregion -->
@@ -48,7 +48,6 @@
     <string name="payments_country">Country</string>
     <string name="payments_paying_in_process">Paying</string>
     <string name="payments_choose_country">Select country</string>
-    <string name="payments_info_not_available">n/a</string>
     <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
     <string name="payment_paypal_list_item">PayPal</string>
     <!-- endregion -->

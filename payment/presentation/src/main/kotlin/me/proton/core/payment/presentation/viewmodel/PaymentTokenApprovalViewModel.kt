@@ -32,9 +32,9 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
+import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 

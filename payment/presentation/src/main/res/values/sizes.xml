@@ -20,5 +20,4 @@
 <resources>
     <!-- general dimensions gaps -->
     <dimen name="payment_option_horizontal_padding">4dp</dimen>
-    <dimen name="payment_amount_progress">16dp</dimen>
 </resources>

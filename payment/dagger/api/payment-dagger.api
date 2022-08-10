@@ -11,8 +11,7 @@ public final class me/proton/core/payment/dagger/BuildConfig {
 
 public abstract interface class me/proton/core/payment/dagger/CorePaymentModule {
 	public static final field Companion Lme/proton/core/payment/dagger/CorePaymentModule$Companion;
-	public abstract fun provideGooglePlayBillingLibrary (Lme/proton/core/payment/data/usecase/GooglePlayBillingLibraryImpl;)Lme/proton/core/payment/domain/usecase/GooglePlayBillingLibrary;
-	public abstract fun providePaymentsRepository (Lme/proton/core/payment/data/repository/PaymentsRepositoryImpl;)Lme/proton/core/payment/domain/repository/PaymentsRepository;
+	public abstract fun providePaymentsRepository (Lme/proton/core/payment/data/repository/PaymentsRepositoryImpl;)Lme/proton/core/paymentcommon/domain/repository/PaymentsRepository;
 }
 
 public final class me/proton/core/payment/dagger/CorePaymentModule$Companion {

@@ -22,8 +22,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.PAYMENTS_SUBSCRIPTION_NOT_EXISTS
-import me.proton.core.payment.domain.entity.Subscription
-import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.paymentcommon.domain.entity.Subscription
+import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
 /**

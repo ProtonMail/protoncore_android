@@ -34,6 +34,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkData),
         project(Module.paymentDomain),
+        project(Module.paymentCommonDomain),
         `javax-inject`,
         `serialization-core`
     )

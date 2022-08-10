@@ -28,19 +28,19 @@ import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
 import me.proton.core.payment.data.api.request.TokenDetails
 import me.proton.core.payment.data.api.request.TokenTypePaymentBody
-import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentBody
-import me.proton.core.payment.domain.entity.PaymentMethod
-import me.proton.core.payment.domain.entity.PaymentMethodType
-import me.proton.core.payment.domain.entity.PaymentStatus
-import me.proton.core.payment.domain.entity.PaymentToken
-import me.proton.core.payment.domain.entity.PaymentType
-import me.proton.core.payment.domain.entity.Subscription
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.repository.PaymentsRepository
-import me.proton.core.payment.domain.repository.PlanQuantity
+import me.proton.core.paymentcommon.domain.entity.Card
+import me.proton.core.paymentcommon.domain.entity.Currency
+import me.proton.core.paymentcommon.domain.entity.PaymentBody
+import me.proton.core.paymentcommon.domain.entity.PaymentMethod
+import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
+import me.proton.core.paymentcommon.domain.entity.PaymentStatus
+import me.proton.core.paymentcommon.domain.entity.PaymentToken
+import me.proton.core.paymentcommon.domain.entity.PaymentType
+import me.proton.core.paymentcommon.domain.entity.Subscription
+import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.paymentcommon.domain.entity.SubscriptionStatus
+import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
+import me.proton.core.paymentcommon.domain.repository.PlanQuantity
 import javax.inject.Inject
 
 class PaymentsRepositoryImpl @Inject constructor(

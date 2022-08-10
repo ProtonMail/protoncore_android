@@ -20,8 +20,8 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Details
+import me.proton.core.paymentcommon.domain.entity.Card
+import me.proton.core.paymentcommon.domain.entity.Details
 import me.proton.core.util.kotlin.exhaustive
 
 @Serializable

@@ -38,7 +38,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
         project(Module.paymentDomain),
-        project(Module.planDomain),
+        project(Module.paymentCommonPresentation),
         project(Module.presentation),
         `activity-noktx`,
         `constraint-layout`,
@@ -65,6 +65,8 @@ dependencies {
         `lifecycle-runtime`,
         `lifecycle-viewModel`,
     )
+
+    compileOnly(project(Module.paymentIapPresentation))
 
     testImplementation(
         project(Module.androidTest),

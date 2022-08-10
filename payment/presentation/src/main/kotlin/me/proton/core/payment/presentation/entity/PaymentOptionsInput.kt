@@ -20,6 +20,7 @@ package me.proton.core.payment.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 
 @Parcelize
 data class PaymentOptionsInput(

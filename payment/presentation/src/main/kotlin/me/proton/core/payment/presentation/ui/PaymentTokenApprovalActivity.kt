@@ -35,12 +35,12 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityPaymentTokenApprovalBinding
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalResult
 import me.proton.core.payment.presentation.viewmodel.PaymentTokenApprovalViewModel
+import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick

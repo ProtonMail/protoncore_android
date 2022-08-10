@@ -22,12 +22,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
 import me.proton.core.payment.presentation.entity.PaymentOptionsResult
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalResult
+import me.proton.core.paymentcommon.presentation.entity.BillingInput
 
 class StartPaymentOptions : ActivityResultContract<PaymentOptionsInput, PaymentOptionsResult?>() {
     override fun createIntent(context: Context, input: PaymentOptionsInput?): Intent =

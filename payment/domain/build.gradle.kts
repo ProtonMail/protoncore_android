@@ -34,6 +34,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
         project(Module.planDomain),
+        project(Module.paymentCommonDomain),
         `javax-inject`
     )
 

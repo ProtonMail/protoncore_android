@@ -19,9 +19,8 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.payment.domain.entity.PaymentToken
-import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.paymentcommon.domain.entity.PaymentToken
+import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
 /**
