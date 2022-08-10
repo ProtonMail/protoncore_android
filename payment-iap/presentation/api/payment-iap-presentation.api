@@ -1,0 +1,54 @@
+public class hilt_aggregated_deps/_me_proton_core_paymentiap_presentation_ui_BillingIAPFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/presentation/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/presentation/databinding/FragmentBillingIapBinding : androidx/viewbinding/ViewBinding {
+	public final field priceSurchargeInfoText Landroid/widget/TextView;
+	public final field selectedPlanDetailsLayout Lme/proton/core/paymentiap/presentation/view/PlanShortDetailsView;
+	public final field termsConditionsInfoText Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/paymentiap/presentation/databinding/FragmentBillingIapBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/paymentiap/presentation/databinding/FragmentBillingIapBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/paymentiap/presentation/databinding/FragmentBillingIapBinding;
+}
+
+public final class me/proton/core/paymentiap/presentation/databinding/PlanShortDetailsBinding : androidx/viewbinding/ViewBinding {
+	public final field amountProgress Landroid/widget/ProgressBar;
+	public final field amountText Landroid/widget/TextView;
+	public final field billingPeriodText Landroid/widget/TextView;
+	public final field planNameText Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/paymentiap/presentation/databinding/PlanShortDetailsBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/paymentiap/presentation/databinding/PlanShortDetailsBinding;
+}
+
+public final class me/proton/core/paymentiap/presentation/ui/BillingIAPFragment : me/proton/core/presentation/ui/ProtonFragment {
+	public fun <init> ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+}
+
+public abstract interface class me/proton/core/paymentiap/presentation/ui/BillingIAPFragment_GeneratedInjector {
+	public abstract fun injectBillingIAPFragment (Lme/proton/core/paymentiap/presentation/ui/BillingIAPFragment;)V
+}
+
+public abstract class me/proton/core/paymentiap/presentation/ui/Hilt_BillingIAPFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
