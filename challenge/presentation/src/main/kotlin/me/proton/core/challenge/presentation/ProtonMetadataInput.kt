@@ -179,7 +179,7 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
     }
 
     override fun onPasteHappened() {
-        keys.removeLast()
+        keys.removeLastOrNull()
         keys.add(PASTE)
     }
 
