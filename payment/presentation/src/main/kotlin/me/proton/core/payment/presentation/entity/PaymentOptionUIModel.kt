@@ -22,13 +22,24 @@ import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class PaymentOptionUIModel(
-    val id: String,
-    val type: Int, // enum, ordinal
-    val title: String,
-    val subtitle: String
+sealed class PaymentOptionUIModel(
+    open val id: String
 ) : Parcelable {
+
+    @Parcelize
+    data class PaymentMethod(
+        override val id: String,
+        val type: String, // enum, value
+        val title: String,
+        val subtitle: String
+    ) : PaymentOptionUIModel(id = id)
+
+    @Parcelize
+    data class InAppPurchase(
+        override val id: String,
+        val provider: String
+    ) : PaymentOptionUIModel(id = id)
+
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<PaymentOptionUIModel>() {
             override fun areItemsTheSame(oldItem: PaymentOptionUIModel, newItem: PaymentOptionUIModel) =

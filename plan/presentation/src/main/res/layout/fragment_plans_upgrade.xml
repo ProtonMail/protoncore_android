@@ -70,7 +70,6 @@
                 style="@style/ProtonTextView.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/gap_large_plus"
                 android:maxLines="1"
                 android:text="@string/plans_upgrade_your_plan"
                 android:visibility="gone"
@@ -83,7 +82,7 @@
             <me.proton.core.plan.presentation.view.PlansListView
                 android:id="@+id/plansView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginTop="@dimen/gap_large_plus"
                 android:layout_marginBottom="@dimen/gap_small"
                 android:visibility="gone"

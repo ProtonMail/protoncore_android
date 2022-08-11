@@ -76,9 +76,12 @@ public final class me/proton/core/payment/presentation/databinding/ActivityBilli
 
 public final class me/proton/core/payment/presentation/databinding/ActivityPaymentOptionsBinding : androidx/viewbinding/ViewBinding {
 	public final field addCreditCardButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field gPayButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field payButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field paymentMethodsList Landroidx/recyclerview/widget/RecyclerView;
-	public final field paymentOptionsDetails Landroid/widget/LinearLayout;
+	public final field paymentOptionsDetails Landroidx/constraintlayout/widget/ConstraintLayout;
+	public final field paymentOptionsIap Landroid/widget/TextView;
+	public final field paymentOptionsIapTerms Landroid/widget/TextView;
 	public final field paymentOptionsTitle Landroid/widget/TextView;
 	public final field progressLayout Landroid/widget/FrameLayout;
 	public final field selectedPlanDetailsLayout Lme/proton/core/payment/presentation/view/PlanShortDetailsView;
@@ -170,29 +173,50 @@ public final class me/proton/core/payment/presentation/entity/BillingResult$Comp
 	public final fun paymentDetails (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;)Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;
 }
 
-public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
+public abstract class me/proton/core/payment/presentation/entity/PaymentOptionUIModel : android/os/Parcelable {
 	public static final field Companion Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$Companion;
-	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getId ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$Companion {
+	public final fun getDiffCallback ()Landroidx/recyclerview/widget/DiffUtil$ItemCallback;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase : me/proton/core/payment/presentation/entity/PaymentOptionUIModel {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()I
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getId ()Ljava/lang/String;
-	public final fun getSubtitle ()Ljava/lang/String;
-	public final fun getTitle ()Ljava/lang/String;
-	public final fun getType ()I
+	public fun getId ()Ljava/lang/String;
+	public final fun getProvider ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$Companion {
-	public final fun getDiffCallback ()Landroidx/recyclerview/widget/DiffUtil$ItemCallback;
+public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod : me/proton/core/payment/presentation/entity/PaymentOptionUIModel {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getId ()Ljava/lang/String;
+	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
 public final class me/proton/core/payment/presentation/entity/PaymentOptionsInput : android/os/Parcelable {

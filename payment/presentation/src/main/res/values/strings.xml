@@ -33,7 +33,11 @@
     <string name="payments_choose_payment_method">Choose your payment method</string>
     <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
     <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
+    <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
     <string name="payments_method_icon">Payment method icon.</string>
+    <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
+    <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+    <string name="payments_method_google">Google</string>
     <!-- endregion -->
     <!-- region billing -->
     <string name="payments_payment_details">Payment details</string>

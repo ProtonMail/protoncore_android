@@ -65,22 +65,36 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
     private val paymentOptionsAdapter = selectableProtonAdapter(
         getView = { parent, inflater -> ItemPaymentMethodBinding.inflate(inflater, parent, false) },
         onBind = { paymentMethod, selected, position ->
-            paymentMethodTitleText.text = paymentMethod.title
-            paymentMethodSubtitleText.text = paymentMethod.subtitle
-            val paymentOptionType = PaymentMethodType.values()[paymentMethod.type]
-            val drawable = when (paymentOptionType) {
-                PaymentMethodType.CARD -> ContextCompat.getDrawable(
-                    this@PaymentOptionsActivity,
-                    R.drawable.ic_proton_credit_card
-                )
-                PaymentMethodType.PAYPAL -> ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_paypal)
+            when (paymentMethod) {
+                is PaymentOptionUIModel.InAppPurchase -> {
+                    paymentMethodTitleText.text = paymentMethod.provider
+                    val drawable = ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_g_mark_1)
+                    paymentMethodIcon.setImageDrawable(drawable)
+                    paymentMethodRadio.isChecked = selected
+                }
+                is PaymentOptionUIModel.PaymentMethod -> {
+                    paymentMethodTitleText.text = paymentMethod.title
+                    paymentMethodSubtitleText.text = paymentMethod.subtitle
+                    val paymentOptionType = PaymentMethodType.map[paymentMethod.type]
+                    val drawable = when (paymentOptionType) {
+                        PaymentMethodType.CARD -> ContextCompat.getDrawable(
+                            this@PaymentOptionsActivity,
+                            R.drawable.ic_proton_credit_card
+                        )
+                        PaymentMethodType.PAYPAL ->
+                            ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_paypal)
+                        null -> ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_proton_credit_card)
+                    }.exhaustive
+                    paymentMethodIcon.setImageDrawable(drawable)
+                    paymentMethodRadio.isChecked = selected
+                    if (position == 0 && selectedPaymentMethodId == null) {
+                        paymentMethodRadio.isChecked = true
+                        selectedPaymentMethodId = paymentMethod.id
+                    } else {
+                        // do nothing
+                    }
+                }
             }.exhaustive
-            paymentMethodIcon.setImageDrawable(drawable)
-            paymentMethodRadio.isChecked = selected
-            if (position == 0 && selectedPaymentMethodId == null) {
-                paymentMethodRadio.isChecked = true
-                selectedPaymentMethodId = paymentMethod.id
-            }
         },
         onItemClick = ::onPaymentMethodClicked,
         diffCallback = PaymentOptionUIModel.DiffCallback
@@ -139,9 +153,11 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
+                    is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess ->
+                        onSuccess(it.availablePaymentMethods)
                     is PaymentOptionsViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
                     else -> {
+                        // do nothing
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
@@ -195,6 +211,18 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
     }
 
     private fun onPaymentMethodClicked(paymentMethod: PaymentOptionUIModel) {
+        val googleProviderId = getString(R.string.payments_method_google).lowercase()
+        with(binding) {
+            if (paymentMethod.id == googleProviderId) {
+                paymentOptionsIapTerms.visibility = View.VISIBLE
+                gPayButton.visibility = View.VISIBLE
+                payButton.visibility = View.INVISIBLE
+            } else {
+                paymentOptionsIapTerms.visibility = View.INVISIBLE
+                gPayButton.visibility = View.GONE
+                payButton.visibility = View.VISIBLE
+            }
+        }
         selectedPaymentMethodId = paymentMethod.id
         paymentOptionsAdapter.notifyItemChanged(0) // invalidate the first option
     }

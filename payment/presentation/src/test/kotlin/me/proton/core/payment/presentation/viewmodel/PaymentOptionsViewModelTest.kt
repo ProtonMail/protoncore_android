@@ -141,6 +141,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
+        every { context.getString(any()) } returns "google"
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
         viewModel.availablePaymentMethodsState.test {
             // WHEN
@@ -150,13 +151,42 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
             val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
-            assertEquals(2, paymentMethodsStatus.availablePaymentMethods.size)
+            assertEquals(3, paymentMethodsStatus.availablePaymentMethods.size)
+            assertEquals("google", paymentMethodsStatus.availablePaymentMethods[2].id)
         }
     }
 
     @Test
-    fun `no available payment methods success handled correctly`() = coroutinesTest {
+    fun `available payment methods no IAP provider success handled correctly`() = coroutinesTest {
         // GIVEN
+        every { context.getString(any()) } returns "google"
+        coEvery { getAvailablePaymentProviders.invoke(true) } returns setOf(PaymentProvider.CardPayment)
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
+        viewModel.availablePaymentMethodsState.test {
+            // WHEN
+            viewModel.getAvailablePaymentMethods(testUserId)
+            // THEN
+            assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
+            val paymentMethodsStatus = awaitItem()
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
+            assertEquals(3, paymentMethodsStatus.availablePaymentMethods.size)
+            assertEquals("google", paymentMethodsStatus.availablePaymentMethods[2].id)
+        }
+    }
+
+    @Test
+    fun `no available payment methods and no providers success handled correctly`() = coroutinesTest {
+        // GIVEN
+        coEvery { getAvailablePaymentProviders.invoke() } returns emptySet()
+        viewModel =
+            PaymentOptionsViewModel(
+                context,
+                billingViewModelHelper,
+                getAvailablePaymentMethods,
+                getAvailablePaymentProviders,
+                getCurrentSubscription
+            )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
         viewModel.availablePaymentMethodsState.test {
             // WHEN
@@ -168,6 +198,60 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
             assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
+        }
+    }
+
+    @Test
+    fun `no available payment methods and card provider success handled correctly`() = coroutinesTest {
+        // GIVEN
+        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.CardPayment)
+        viewModel =
+            PaymentOptionsViewModel(
+                context,
+                billingViewModelHelper,
+                getAvailablePaymentMethods,
+                getAvailablePaymentProviders,
+                getCurrentSubscription
+            )
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
+        viewModel.availablePaymentMethodsState.test {
+            // WHEN
+            viewModel.getAvailablePaymentMethods(testUserId)
+            // THEN
+            coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
+            assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
+            val paymentMethodsStatus = awaitItem()
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
+            assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
+        }
+    }
+
+    @Test
+    fun `no available payment methods and card and IAP provider success handled correctly`() = coroutinesTest {
+        // GIVEN
+        every { context.getString(any()) } returns "google"
+        coEvery { getAvailablePaymentProviders.invoke() } returns setOf(PaymentProvider.CardPayment, PaymentProvider.GoogleInAppPurchase)
+        viewModel =
+            PaymentOptionsViewModel(
+                context,
+                billingViewModelHelper,
+                getAvailablePaymentMethods,
+                getAvailablePaymentProviders,
+                getCurrentSubscription
+            )
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
+        viewModel.availablePaymentMethodsState.test {
+            // WHEN
+            viewModel.getAvailablePaymentMethods(testUserId)
+            // THEN
+            coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
+            assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
+            val paymentMethodsStatus = awaitItem()
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
+            assertEquals(1, paymentMethodsStatus.availablePaymentMethods.size)
+            assertEquals("google", paymentMethodsStatus.availablePaymentMethods[0].id)
         }
     }
 

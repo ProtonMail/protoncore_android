@@ -104,17 +104,17 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     }
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
-                    is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
+                    is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> with (binding) {
                         val plan = it.subscribedPlans[0]
                         val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.userCurrency
 
-                        binding.manageSubscriptionText.apply {
+                        manageSubscriptionText.apply {
                             setText(it.subscriptionManagement.subscriptionManagementText())
                             movementMethod = LinkMovementMethod.getInstance()
                         }
 
-                        binding.manageSubscriptionText.visibility = VISIBLE
-                        binding.currentPlan.apply {
+                        manageSubscriptionText.visibility = VISIBLE
+                        currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
                             setData(plan = plan, currency = currency, collapsible = false)
