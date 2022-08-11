@@ -646,9 +646,11 @@ public final class me/proton/core/compose/theme/TypographyKt {
 	public static final fun getHeadlineSmall (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getOverline (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getOverlineStrong (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public static final fun getOverlineWeak (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getSubheadline (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun overline (Lme/proton/core/compose/theme/ProtonTypography;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/text/TextStyle;
 	public static final fun overlineStrong (Lme/proton/core/compose/theme/ProtonTypography;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/text/TextStyle;
+	public static final fun overlineWeak (Lme/proton/core/compose/theme/ProtonTypography;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class me/proton/core/compose/viewmodel/ConstantPropertyKt {

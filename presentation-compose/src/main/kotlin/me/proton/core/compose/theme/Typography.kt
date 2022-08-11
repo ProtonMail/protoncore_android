@@ -137,6 +137,13 @@ fun ProtonTypography.captionWeak(enabled: Boolean = true): TextStyle =
 val ProtonTypography.captionHint: TextStyle
     @Composable get() = captionRegular.copy(color = ProtonTheme.colors.textHint)
 
+val ProtonTypography.overlineWeak: TextStyle
+    @Composable get() = overlineWeak()
+
+@Composable
+fun ProtonTypography.overlineWeak(enabled: Boolean = true): TextStyle =
+    overlineRegular.copy(color = ProtonTheme.colors.textWeak(enabled))
+
 val ProtonTypography.overline: TextStyle
     @Composable get() = overline()
 
