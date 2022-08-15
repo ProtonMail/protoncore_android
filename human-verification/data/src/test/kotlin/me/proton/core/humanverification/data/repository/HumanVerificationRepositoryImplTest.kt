@@ -116,7 +116,7 @@ class HumanVerificationRepositoryImplTest {
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = "token-123",
+            verificationToken = "token-123",
             state = HumanVerificationState.HumanVerificationNeeded,
             humanHeaderTokenType = null,
             humanHeaderTokenCode = null
@@ -146,7 +146,7 @@ class HumanVerificationRepositoryImplTest {
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = state,
             humanHeaderTokenType = null,
             humanHeaderTokenCode = null
@@ -176,7 +176,7 @@ class HumanVerificationRepositoryImplTest {
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = state,
             humanHeaderTokenType = "encrypted-$tokenType",
             humanHeaderTokenCode = "encrypted-$tokenCode"
@@ -199,7 +199,7 @@ class HumanVerificationRepositoryImplTest {
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = state,
             humanHeaderTokenType = null,
             humanHeaderTokenCode = null

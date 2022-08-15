@@ -36,7 +36,7 @@ data class HumanVerificationEntity(
     val clientId: String,
     val clientIdType: ClientIdType,
     val verificationMethods: List<String>,
-    val captchaVerificationToken: String? = null,
+    val verificationToken: String? = null,
     val state: HumanVerificationState,
     val humanHeaderTokenType: EncryptedString? = null,
     val humanHeaderTokenCode: EncryptedString? = null
@@ -47,7 +47,7 @@ data class HumanVerificationEntity(
             ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
         },
         verificationMethods = verificationMethods,
-        verificationToken = captchaVerificationToken,
+        verificationToken = verificationToken,
         state = state,
         // Fall back to an invalid captcha to force delete token on decryption failure.
         // See HumanVerificationInvalidHandler and HumanVerificationListener.onHumanVerificationInvalid.

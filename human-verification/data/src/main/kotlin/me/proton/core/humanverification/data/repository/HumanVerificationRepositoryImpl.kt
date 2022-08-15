@@ -70,7 +70,7 @@ class HumanVerificationRepositoryImpl @Inject constructor(
                     clientId = clientId.id,
                     clientIdType = clientId.getType(),
                     verificationMethods = details.verificationMethods,
-                    captchaVerificationToken = details.verificationToken,
+                    verificationToken = details.verificationToken,
                     state = details.state,
                     humanHeaderTokenType = details.tokenType?.encrypt(keyStoreCrypto),
                     humanHeaderTokenCode = details.tokenCode?.encrypt(keyStoreCrypto)

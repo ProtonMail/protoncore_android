@@ -20,6 +20,7 @@ package me.proton.core.humanverification.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.recreateTable
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 
@@ -43,6 +44,23 @@ interface HumanVerificationDatabase : Database {
                     "HumanVerificationEntity",
                     "state != ?",
                     arrayOf(HumanVerificationState.HumanVerificationSuccess.name)
+                )
+            }
+        }
+
+        /**
+         * Renamed captchaVerificationToken to verificationToken.
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.recreateTable(
+                    table = "HumanVerificationEntity",
+                    createTable = {
+                        database.execSQL("CREATE TABLE IF NOT EXISTS `HumanVerificationEntity` (`clientId` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `verificationToken` TEXT, `state` TEXT NOT NULL, `humanHeaderTokenType` TEXT, `humanHeaderTokenCode` TEXT, PRIMARY KEY(`clientId`))")
+                    },
+                    createIndices = {},
+                    oldColumns = listOf("clientId","clientIdType","verificationMethods", "captchaVerificationToken", "state", "humanHeaderTokenType", "humanHeaderTokenCode"),
+                    newColumns = listOf("clientId","clientIdType","verificationMethods", "verificationToken", "state", "humanHeaderTokenType", "humanHeaderTokenCode"),
                 )
             }
         }

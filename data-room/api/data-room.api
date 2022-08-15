@@ -69,6 +69,7 @@ public final class me/proton/core/data/room/db/extension/SupportSQLiteDatabaseKt
 	public static final fun getTableColumns (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;)Ljava/util/List;
 	public static final fun recreateTable (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
 	public static final fun recreateTable (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/util/List;)V
+	public static final fun recreateTable (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/List;)V
 }
 
 public abstract interface class me/proton/core/data/room/db/migration/DatabaseMigration {

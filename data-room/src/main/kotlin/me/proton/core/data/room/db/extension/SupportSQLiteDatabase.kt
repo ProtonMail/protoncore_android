@@ -28,20 +28,35 @@ fun SupportSQLiteDatabase.getTableColumns(table: String): List<String> {
 }
 
 /**
+ * Recreate [table] with [newColumns] using [createTable] and [createIndices], and then copy the old table [oldColumns].
+ */
+fun SupportSQLiteDatabase.recreateTable(
+    table: String,
+    createTable: SupportSQLiteDatabase.() -> Unit,
+    createIndices: SupportSQLiteDatabase.() -> Unit,
+    oldColumns: List<String>,
+    newColumns: List<String>,
+) {
+    check(oldColumns.size == newColumns.size)
+    val oldColumnsSeparated = oldColumns.joinToString(",")
+    val newColumnsSeparated = newColumns.joinToString(",")
+    execSQL("ALTER TABLE $table RENAME TO ${table}_old")
+    createTable.invoke(this)
+    execSQL("INSERT INTO $table($newColumnsSeparated) SELECT $oldColumnsSeparated FROM ${table}_old")
+    execSQL("DROP TABLE ${table}_old")
+    createIndices.invoke(this)
+}
+
+/**
  * Recreate [table] with [columns] using [createTable] and [createIndices], and then copy the old table data to it.
  */
 fun SupportSQLiteDatabase.recreateTable(
     table: String,
     createTable: SupportSQLiteDatabase.() -> Unit,
     createIndices: SupportSQLiteDatabase.() -> Unit,
-    columns: List<String>
+    columns: List<String>,
 ) {
-    val columnsSeparated = columns.joinToString(",")
-    execSQL("ALTER TABLE $table RENAME TO ${table}_old")
-    createTable.invoke(this)
-    execSQL("INSERT INTO $table($columnsSeparated) SELECT $columnsSeparated FROM ${table}_old")
-    execSQL("DROP TABLE ${table}_old")
-    createIndices.invoke(this)
+    recreateTable(table, createTable, createIndices, columns, columns)
 }
 
 /**
@@ -51,7 +66,10 @@ fun SupportSQLiteDatabase.recreateTable(
     table: String,
     createTable: SupportSQLiteDatabase.() -> Unit,
     createIndices: SupportSQLiteDatabase.() -> Unit
-) = recreateTable(table, createTable, createIndices, getTableColumns(table))
+) {
+    val columns = getTableColumns(table)
+    recreateTable(table, createTable, createIndices, columns, columns)
+}
 
 /**
  * Add [column] to [table] with [type] and [defaultValue].
@@ -86,7 +104,10 @@ fun SupportSQLiteDatabase.dropTableColumn(
     createTable: SupportSQLiteDatabase.() -> Unit,
     createIndices: SupportSQLiteDatabase.() -> Unit,
     columns: List<String>
-) = recreateTable(table, createTable, createIndices, getTableColumns(table) - columns)
+) {
+    val newColumns = getTableColumns(table) - columns
+    recreateTable(table, createTable, createIndices, newColumns, newColumns)
+}
 
 /**
  * Drop [column] from [table].
