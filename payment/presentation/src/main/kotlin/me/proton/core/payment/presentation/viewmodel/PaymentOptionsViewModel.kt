@@ -35,6 +35,7 @@ import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
 import me.proton.core.paymentcommon.domain.entity.Currency
 import me.proton.core.paymentcommon.domain.entity.Details
+import me.proton.core.paymentcommon.domain.entity.PaymentMethod
 import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
 import me.proton.core.paymentcommon.domain.entity.PaymentType
 import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
@@ -98,49 +99,19 @@ class PaymentOptionsViewModel @Inject constructor(
         }
 
         val paymentProviders = getAvailablePaymentProviders()
-
         val paymentMethods = availablePaymentMethods(userId).filter {
             when (it.type) {
                 PaymentMethodType.CARD -> PaymentProvider.CardPayment in paymentProviders
                 PaymentMethodType.PAYPAL -> PaymentProvider.PayPal in paymentProviders
             }
-        }.map {
-            when (it.type) {
-                PaymentMethodType.CARD -> {
-                    val card = (it.details as Details.CardDetails).cardDetails
-                    PaymentOptionUIModel.PaymentMethod(
-                        id = it.id,
-                        type = it.type.value,
-                        title = context.getString(
-                            R.string.payment_cc_list_item,
-                            card.brand,
-                            card.last4,
-                            card.expirationMonth,
-                            card.expirationYear
-                        ),
-                        subtitle = card.name
-                    )
-                }
-                PaymentMethodType.PAYPAL -> {
-                    val payPalDetails = it.details as Details.PayPalDetails
-                    PaymentOptionUIModel.PaymentMethod(
-                        id = it.id,
-                        type = it.type.value,
-                        title = context.getString(R.string.payment_paypal_list_item),
-                        subtitle = payPalDetails.payer
-                    )
-                }
-            }.exhaustive
-        }
-        val methods = if (paymentProviders.contains(PaymentProvider.GoogleInAppPurchase)) {
-            val providerName = context.getString(R.string.payments_method_google)
-            paymentMethods.toMutableList() +
-                PaymentOptionUIModel.InAppPurchase(
-                    id = providerName.lowercase(),
-                    provider = "$providerName*"
-                )
-        } else paymentMethods
-        emit(State.Success.PaymentMethodsSuccess(methods))
+        }.mapPaymentMethods()
+        val giapPaymentMethod = paymentProviders.createGIAPPaymentMethod()
+        emit(
+            State.Success.PaymentMethodsSuccess(
+                if (giapPaymentMethod != null) paymentMethods + giapPaymentMethod
+                else paymentMethods
+            )
+        )
     }.catch { error ->
         _availablePaymentMethodsState.tryEmit(State.Error.General(error))
     }.onEach { methods ->
@@ -200,4 +171,43 @@ class PaymentOptionsViewModel @Inject constructor(
         currency,
         cycle
     )
+
+    private fun Set<PaymentProvider>.createGIAPPaymentMethod() =
+        if (contains(PaymentProvider.GoogleInAppPurchase)) {
+            val providerName = context.getString(R.string.payments_method_google)
+            PaymentOptionUIModel.InAppPurchase(
+                id = providerName.lowercase(),
+                provider = "$providerName*"
+            )
+        } else null
+
+    private fun List<PaymentMethod>.mapPaymentMethods() =
+        map {
+            when (it.type) {
+                PaymentMethodType.CARD -> {
+                    val card = (it.details as Details.CardDetails).cardDetails
+                    PaymentOptionUIModel.PaymentMethod(
+                        id = it.id,
+                        type = it.type.value,
+                        title = context.getString(
+                            R.string.payment_cc_list_item,
+                            card.brand,
+                            card.last4,
+                            card.expirationMonth,
+                            card.expirationYear
+                        ),
+                        subtitle = card.name
+                    )
+                }
+                PaymentMethodType.PAYPAL -> {
+                    val payPalDetails = it.details as Details.PayPalDetails
+                    PaymentOptionUIModel.PaymentMethod(
+                        id = it.id,
+                        type = it.type.value,
+                        title = context.getString(R.string.payment_paypal_list_item),
+                        subtitle = payPalDetails.payer
+                    )
+                }
+            }.exhaustive
+        }
 }

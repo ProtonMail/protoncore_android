@@ -35,7 +35,6 @@ public sealed class Details {
 public enum class PaymentMethodType(public val value: String) {
     CARD("card"),
     PAYPAL("paypal");
-    // TODO add google iap option here
 
     public companion object {
         public val map: Map<String, PaymentMethodType> = values().associateBy { it.value }

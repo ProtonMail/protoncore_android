@@ -24,11 +24,11 @@
         <item name="android:paddingEnd">@dimen/default_gap</item>
     </style>
     <!--  region Buttons -->
-    <style name="ProtonGPayButton" parent="Widget.MaterialComponents.Button">
+    <style name="ProtonButton.GPay" parent="ProtonButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:textColor">@color/btn_text_selector</item>
-        <item name="backgroundTint">@color/btn_gpay_background_selectior</item>
+        <item name="backgroundTint">@color/btn_gpay_background_selector</item>
         <item name="cornerRadius">@dimen/default_corner_radius</item>
     </style>
 </resources>

@@ -68,23 +68,20 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             when (paymentMethod) {
                 is PaymentOptionUIModel.InAppPurchase -> {
                     paymentMethodTitleText.text = paymentMethod.provider
-                    val drawable = ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_g_mark_1)
+                    val drawable = ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_gpay)
                     paymentMethodIcon.setImageDrawable(drawable)
                     paymentMethodRadio.isChecked = selected
                 }
                 is PaymentOptionUIModel.PaymentMethod -> {
                     paymentMethodTitleText.text = paymentMethod.title
                     paymentMethodSubtitleText.text = paymentMethod.subtitle
-                    val paymentOptionType = PaymentMethodType.map[paymentMethod.type]
-                    val drawable = when (paymentOptionType) {
-                        PaymentMethodType.CARD -> ContextCompat.getDrawable(
-                            this@PaymentOptionsActivity,
-                            R.drawable.ic_proton_credit_card
-                        )
-                        PaymentMethodType.PAYPAL ->
-                            ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_paypal)
-                        null -> ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_proton_credit_card)
-                    }.exhaustive
+
+                    val drawableRes = when (PaymentMethodType.map[paymentMethod.type]) {
+                        PaymentMethodType.CARD -> R.drawable.ic_proton_credit_card
+                        PaymentMethodType.PAYPAL -> R.drawable.ic_paypal
+                        null -> R.drawable.ic_proton_credit_card
+                    }
+                    val drawable = ContextCompat.getDrawable(this@PaymentOptionsActivity, drawableRes)
                     paymentMethodIcon.setImageDrawable(drawable)
                     paymentMethodRadio.isChecked = selected
                     if (position == 0 && selectedPaymentMethodId == null) {

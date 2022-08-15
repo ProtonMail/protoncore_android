@@ -59,7 +59,7 @@
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/gPayButton"
-            style="@style/ProtonGPayButton"
+            style="@style/ProtonButton.GPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_gap"
