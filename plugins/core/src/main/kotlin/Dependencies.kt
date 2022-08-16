@@ -113,7 +113,7 @@ public val DependencyHandler.datastore: Any
 public val DependencyHandler.drawerLayout: Any
     get() = androidx("drawerlayout") version `drawerLayout version`
 public val DependencyHandler.googlePlayBilling: Any
-    get() = dependency("com.android.billingclient", module = "billing") version `googlePlayBilling version`
+    get() = dependency("com.android.billingclient", module = "billing-ktx") version `googlePlayBilling version`
 public val DependencyHandler.googleTink: Any
     get() = google("crypto.tink", module = "tink-android") version `googleTink version`
 public val DependencyHandler.guavaListenableFuture: Any

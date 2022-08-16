@@ -140,6 +140,7 @@ public object Module {
 
     // Payment-IAP
     public const val paymentIap: String = ":payment-iap"
+    public const val paymentIapDagger: String = "$paymentIap:payment-iap-dagger"
     public const val paymentIapPresentation: String = "$paymentIap:payment-iap-presentation"
 
     // Countries

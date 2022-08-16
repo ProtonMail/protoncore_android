@@ -155,6 +155,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:payment-domain|
 |me.proton.core:payment-presentation|
 |me.proton.core:payment-iap|
+|me.proton.core:payment-iap-dagger|
 |me.proton.core:payment-iap-presentation|
 |me.proton.core:payment-common|
 |me.proton.core:payment-common-dagger|

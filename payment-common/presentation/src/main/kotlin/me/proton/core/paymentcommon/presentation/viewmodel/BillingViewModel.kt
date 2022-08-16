@@ -92,6 +92,7 @@ public class BillingViewModel @Inject constructor(
     }
 
     public fun setPlan(plan: PlanShortDetails) {
+
         _userInteractionState.tryEmit(UserInteractionState.PlanValidated(plan))
     }
 

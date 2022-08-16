@@ -25,10 +25,12 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBinding
+import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
@@ -40,6 +42,7 @@ import me.proton.core.util.kotlin.exhaustive
 public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) {
 
     private val viewModel: BillingViewModel by viewModels({ requireActivity() })
+    private val billingIAPViewModel by viewModels<BillingIAPViewModel>()
     private val binding by viewBinding(FragmentBillingIapBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +74,11 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
         binding.selectedPlanDetailsLayout.plan = plan
 
         // To obtain plan name for Google Play:
-        // val googlePlanName :String? = plan.vendorNames[AppStore.GooglePlay]
-        // if (googlePlanName == null) { displayError(...); return }
+        val googlePlanName :String? = plan.vendorNames[AppStore.GooglePlay]
+        if (googlePlanName == null) {
+//            displayError(...); return
+        } else {
+            billingIAPViewModel.queryProductDetails(googlePlanName)
+        }
     }
 }

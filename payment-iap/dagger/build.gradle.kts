@@ -17,58 +17,20 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    protonAndroidUiLibrary
+    protonAndroidLibrary
     protonDagger
-    id("kotlin-parcelize")
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.countryDomain),
-        project(Module.domain),
-        project(Module.humanVerificationDomain),
-        project(Module.networkDomain),
-        project(Module.presentation),
-        project(Module.paymentCommonPresentation),
-        `activity-noktx`,
-        `constraint-layout`,
-        coordinatorlayout,
-        `coroutines-core`,
-        `hilt-android`,
-        material,
-        recyclerview
+        project(Module.paymentIapPresentation)
     )
-
     implementation(
-        // Core
         project(Module.kotlinUtil),
-
-        // Android
-        activity,
-        `android-ktx`,
-        appcompat,
-        fragment,
-        `lifecycle-common`,
-        `lifecycle-runtime`,
-        `lifecycle-viewModel`,
-
-        // Other
         `googlePlayBilling`
-    )
-
-    testImplementation(
-        project(Module.androidTest),
-        project(Module.kotlinTest),
-        `android-arch-testing`,
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk,
-        turbine
     )
 }
