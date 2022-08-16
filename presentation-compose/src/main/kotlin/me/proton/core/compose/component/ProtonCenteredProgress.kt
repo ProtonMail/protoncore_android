@@ -19,6 +19,7 @@
 package me.proton.core.compose.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +35,9 @@ fun ProtonCenteredProgress(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.testTag(PROTON_PROGRESS_TEST_TAG)
+        modifier = modifier
+            .fillMaxSize()
+            .testTag(PROTON_PROGRESS_TEST_TAG)
     ) {
         CircularProgressIndicator()
     }
