@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.ui.hv2.verification
+package me.proton.core.humanverification.presentation.ui.hv2.method
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
-import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
+import me.proton.core.humanverification.presentation.ui.hv2.HumanVerificationCode
 import me.proton.core.presentation.ui.view.Loadable
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive

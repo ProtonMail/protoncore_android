@@ -25,6 +25,7 @@ import io.mockk.mockk
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest

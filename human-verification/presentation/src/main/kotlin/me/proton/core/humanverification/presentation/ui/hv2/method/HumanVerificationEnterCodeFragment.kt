@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.ui.verification
+package me.proton.core.humanverification.presentation.ui.hv2.method
 
 import android.os.Bundle
 import android.view.View
@@ -37,7 +37,7 @@ import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment.Co
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment.Companion.KEY_VERIFICATION_DONE
 import me.proton.core.humanverification.presentation.utils.registerRequestNewCodeDialogResultLauncher
 import me.proton.core.humanverification.presentation.utils.showHelp
-import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher

@@ -23,11 +23,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class HumanVerificationInput(
-    val clientId: String, // this is the value from the ClientId
-    val captchaUrl: String? = null,
+    val clientId: String,
     val clientIdType: String,
-    val verificationMethods: List<String>?,
+    val verificationMethods: List<String>,
     val verificationToken: String,
-    val recoveryEmailAddress: String? = null,
-    val isPartOfFlow: Boolean = false,
 ) : Parcelable

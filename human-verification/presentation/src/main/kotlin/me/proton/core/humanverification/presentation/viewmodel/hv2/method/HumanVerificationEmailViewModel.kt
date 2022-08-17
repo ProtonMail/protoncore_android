@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.viewmodel.hv2.verification
+package me.proton.core.humanverification.presentation.viewmodel.hv2.method
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
-import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
+import me.proton.core.humanverification.presentation.ui.hv2.HumanVerificationCode
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult

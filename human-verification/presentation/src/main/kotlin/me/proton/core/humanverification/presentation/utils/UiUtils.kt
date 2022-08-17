@@ -23,13 +23,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
+import me.proton.core.humanverification.presentation.ui.common.HumanVerificationHelpFragment
+import me.proton.core.humanverification.presentation.ui.common.VALID_METHODS_HV2
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
-import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
-import me.proton.core.humanverification.presentation.ui.VALID_METHODS_HV2
-import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationCaptchaFragment
-import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationEmailFragment
-import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
-import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationSMSFragment
+import me.proton.core.humanverification.presentation.ui.hv2.method.HumanVerificationCaptchaFragment
+import me.proton.core.humanverification.presentation.ui.hv2.method.HumanVerificationEmailFragment
+import me.proton.core.humanverification.presentation.ui.hv2.method.HumanVerificationEnterCodeFragment
+import me.proton.core.humanverification.presentation.ui.hv2.method.HumanVerificationSMSFragment
 import me.proton.core.humanverification.presentation.ui.hv3.HV3DialogFragment
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
@@ -46,13 +46,10 @@ const val TOKEN_DEFAULT = "signup"
 fun FragmentManager.showHumanVerification(
     humanVerificationVersion: HumanVerificationVersion,
     clientId: String,
-    captchaUrl: String? = null,
     clientIdType: String,
-    availableVerificationMethods: List<String> = emptyList(),
     verificationToken: String,
-    recoveryEmailAddress: String? = null,
-    largeLayout: Boolean,
-    isPartOfFlow: Boolean = false,
+    verificationMethods: List<String> = emptyList(),
+    recoveryEmail: String? = null
 ) {
     if (findFragmentByTag(TAG_HUMAN_VERIFICATION_DIALOG) != null) return
 
@@ -60,33 +57,23 @@ fun FragmentManager.showHumanVerification(
         HV3DialogFragment(
             clientId = clientId,
             clientIdType = clientIdType,
-            baseUrl = captchaUrl,
-            verificationMethods = availableVerificationMethods,
+            verificationMethods = verificationMethods,
             startToken = verificationToken,
-            recoveryEmail = recoveryEmailAddress,
-            isPartOfFlow = isPartOfFlow,
+            recoveryEmail = recoveryEmail
         )
     } else {
-        val validMethods = availableVerificationMethods.filter { it in VALID_METHODS_HV2 }
+        val validMethods = verificationMethods.filter { it in VALID_METHODS_HV2 }
         HV2DialogFragment(
             clientId = clientId,
             clientIdType = clientIdType,
-            captchaUrl = captchaUrl,
             availableVerificationMethods = validMethods,
             captchaToken = verificationToken,
-            recoveryEmailAddress = recoveryEmailAddress,
-            isPartOfFlow = isPartOfFlow,
+            recoveryEmail = recoveryEmail
         )
     }
-    if (largeLayout) {
-        // For large screens (tablets), we show the fragment as a dialog
-        newFragment.show(this, TAG_HUMAN_VERIFICATION_DIALOG)
-    } else {
-        // The smaller screens (phones), we show the fragment fullscreen
-        inTransaction {
-            setCustomAnimations(0, 0)
-            add(newFragment, TAG_HUMAN_VERIFICATION_DIALOG)
-        }
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(newFragment, TAG_HUMAN_VERIFICATION_DIALOG)
     }
 }
 

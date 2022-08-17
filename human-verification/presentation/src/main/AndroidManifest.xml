@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="me.proton.core.humanverification.presentation" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.proton.core.humanverification.presentation">
+
+    <application>
+        <activity
+            android:name=".ui.HumanVerificationActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+    </application>
+</manifest>
+

@@ -33,7 +33,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupValidationTokenCodeBinding
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEnterCodeViewModel
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -114,15 +114,16 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
             }.exhaustive
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        signupViewModel.userCreationState.onEach {
-            // this fragment is only interested in HV and error states, all other are handled by the activity
+        signupViewModel.state.onEach {
+            // this fragment is only interested in error states, all other are handled by the activity
             when (it) {
-                is SignupViewModel.State.Error.HumanVerification,
-                is SignupViewModel.State.Error.PlanChooserCancel,
+                is SignupViewModel.State.Error.CreateUserCanceled,
+                is SignupViewModel.State.Error.PlanChooserCanceled,
                 is SignupViewModel.State.Error.Message -> showLoading(false)
                 is SignupViewModel.State.Idle,
-                is SignupViewModel.State.Processing,
-                is SignupViewModel.State.Success -> Unit
+                is SignupViewModel.State.CreateUserInputReady,
+                is SignupViewModel.State.CreateUserProcessing,
+                is SignupViewModel.State.CreateUserSuccess -> Unit
             }.exhaustive
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

@@ -73,8 +73,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.register(this)
-        viewModel.observeHumanVerification(this)
         binding.apply {
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
@@ -122,7 +120,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     is LoginViewModel.State.Error -> onError(true, it.error.getUserMessage(resources), it.isPotentialBlocking)
                     is LoginViewModel.State.InvalidPassword -> onWrongPassword(it.error.getUserMessage(resources))
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }
+            .launchIn(lifecycleScope)
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {

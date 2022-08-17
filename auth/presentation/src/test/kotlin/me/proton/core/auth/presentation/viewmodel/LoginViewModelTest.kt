@@ -32,8 +32,6 @@ import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
@@ -54,8 +52,6 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
-    private val humanVerificationManager = mockk<HumanVerificationManager>()
-    private val humanVerificationOrchestrator = mockk<HumanVerificationOrchestrator>()
 
     private val createLoginSession = mockk<CreateLoginSession>()
     private val postLoginAccountSetup = mockk<PostLoginAccountSetup>()
@@ -77,8 +73,6 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             createLoginSession,
             keyStoreCrypto,
             postLoginAccountSetup,
-            humanVerificationManager,
-            humanVerificationOrchestrator
         )
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
     }

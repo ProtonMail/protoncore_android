@@ -18,12 +18,9 @@
 
 package me.proton.core.humanverification.presentation
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.HumanVerificationManager
@@ -32,69 +29,61 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 
 class HumanVerificationManagerObserver(
-    private val lifecycle: Lifecycle,
-    private val minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
     internal val humanVerificationManager: HumanVerificationManager,
-    internal val scope: CoroutineScope = lifecycle.coroutineScope,
+    internal val lifecycle: Lifecycle,
+    internal val minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
 ) {
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val observerJobs = mutableListOf<Job>()
+    internal val scope = lifecycle.coroutineScope
 
     internal fun addHumanVerificationStateListener(
         state: HumanVerificationState,
         initialState: Boolean,
-        block: suspend (HumanVerificationDetails) -> Unit
+        block: suspend (HumanVerificationDetails) -> Unit,
     ) {
-        observerJobs += humanVerificationManager.onHumanVerificationState(state, initialState = initialState)
+        humanVerificationManager.onHumanVerificationState(state, initialState = initialState)
             .flowWithLifecycle(lifecycle, minActiveState)
             .onEach { block(it) }
             .launchIn(scope)
-    }
-
-    fun cancelAllObservers() {
-        observerJobs.forEach { it.cancel() }
-        observerJobs.clear()
     }
 }
 
 fun HumanVerificationManager.observe(
     lifecycle: Lifecycle,
-    minActiveState: Lifecycle.State = Lifecycle.State.CREATED
-) = HumanVerificationManagerObserver(lifecycle, minActiveState, this)
+    minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
+) = HumanVerificationManagerObserver(this, lifecycle, minActiveState)
 
 fun HumanVerificationManagerObserver.onHumanVerificationNeeded(
     initialState: Boolean = false,
-    block: suspend (HumanVerificationDetails) -> Unit
+    block: suspend (HumanVerificationDetails) -> Unit,
 ): HumanVerificationManagerObserver {
     addHumanVerificationStateListener(
         state = HumanVerificationState.HumanVerificationNeeded,
         initialState = initialState,
-        block = block
+        block = block,
     )
     return this
 }
 
 fun HumanVerificationManagerObserver.onHumanVerificationFailed(
     initialState: Boolean = true,
-    block: suspend (HumanVerificationDetails) -> Unit
+    block: suspend (HumanVerificationDetails) -> Unit,
 ): HumanVerificationManagerObserver {
     addHumanVerificationStateListener(
         state = HumanVerificationState.HumanVerificationFailed,
         initialState = initialState,
-        block = block
+        block = block,
     )
     return this
 }
 
-fun HumanVerificationManagerObserver.onHumanVerificationSucceeded(
+fun HumanVerificationManagerObserver.onHumanVerificationSuccess(
     initialState: Boolean = true,
-    block: suspend (HumanVerificationDetails) -> Unit
+    block: suspend (HumanVerificationDetails) -> Unit,
 ): HumanVerificationManagerObserver {
     addHumanVerificationStateListener(
         state = HumanVerificationState.HumanVerificationSuccess,
         initialState = initialState,
-        block = block
+        block = block,
     )
     return this
 }

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.ui.hv2.verification
+package me.proton.core.humanverification.presentation.ui.hv2.method
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -43,11 +43,11 @@ import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.LogTag
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
+import me.proton.core.humanverification.presentation.ui.common.HumanVerificationWebViewClient
+import me.proton.core.humanverification.presentation.ui.common.WebResponseError
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
-import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
-import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
-import me.proton.core.humanverification.presentation.ui.webview.WebResponseError
-import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationCaptchaViewModel
+import me.proton.core.humanverification.presentation.ui.hv2.method.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
@@ -68,21 +68,17 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
     lateinit var captchaApiHost: String
 
     @Inject
+    @HumanVerificationApiHost
+    internal lateinit var verifyAppUrl: String
+
+    @Inject
     lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     @Inject
     lateinit var networkRequestOverrider: NetworkRequestOverrider
 
-    @Inject
-    @HumanVerificationApiHost
-    internal lateinit var verifyAppUrl: String
-
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
     private val binding by viewBinding(FragmentHumanVerificationCaptchaBinding::bind)
-
-    private val captchaUrl: String by lazy {
-        requireArguments().getString(ARG_CAPTCHA_URL) ?: "https://$captchaApiHost/core/v4/captcha"
-    }
 
     private var retrySnackBar: Snackbar? = null
 
@@ -98,7 +94,9 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val captchaUrl = "https://$captchaApiHost/core/v4/captcha"
         val baseUrl = viewModel.activeAltUrlForDoH ?: captchaUrl
+        val apiHost = requireNotNull(Uri.parse(baseUrl).host)
 
         CoreLogger.log(LogTag.HV_REQUEST_INFO, "loading captcha from $baseUrl")
 
@@ -114,7 +112,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
             settings.domStorageEnabled = true
             addJavascriptInterface(WebAppInterface(), "AndroidInterface")
             webViewClient = HumanVerificationWebViewClient(
-                Uri.parse(baseUrl).host!!,
+                apiHost,
                 extraHeaderProvider.headers,
                 viewModel.activeAltUrlForDoH,
                 networkRequestOverrider,

@@ -20,7 +20,6 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.account.domain.entity.AccountType

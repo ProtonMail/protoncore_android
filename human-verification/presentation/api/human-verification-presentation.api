@@ -1,24 +1,28 @@
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_HumanVerificationActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_HV2DialogFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_verification_HumanVerificationCaptchaFragment_GeneratedInjector {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_method_HumanVerificationCaptchaFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_verification_HumanVerificationEmailFragment_GeneratedInjector {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_method_HumanVerificationEmailFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_verification_HumanVerificationSMSFragment_GeneratedInjector {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_method_HumanVerificationEnterCodeFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv2_method_HumanVerificationSMSFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
 public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_hv3_HV3DialogFragment_GeneratedInjector {
-	public fun <init> ()V
-}
-
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_verification_HumanVerificationEnterCodeFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
@@ -30,27 +34,35 @@ public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_verification_HumanVerificationCaptchaViewModel_HiltModules_BindsModule {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationCaptchaViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_verification_HumanVerificationCaptchaViewModel_HiltModules_KeyModule {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationCaptchaViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_verification_HumanVerificationEmailViewModel_HiltModules_BindsModule {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationEmailViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_verification_HumanVerificationEmailViewModel_HiltModules_KeyModule {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationEmailViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_verification_HumanVerificationSMSViewModel_HiltModules_BindsModule {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationEnterCodeViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_verification_HumanVerificationSMSViewModel_HiltModules_KeyModule {
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationEnterCodeViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationSMSViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv2_method_HumanVerificationSMSViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -59,14 +71,6 @@ public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation
 }
 
 public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_hv3_HV3ViewModel_HiltModules_KeyModule {
-	public fun <init> ()V
-}
-
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_verification_HumanVerificationEnterCodeViewModel_HiltModules_BindsModule {
-	public fun <init> ()V
-}
-
-public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_viewmodel_verification_HumanVerificationEnterCodeViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -84,9 +88,8 @@ public abstract interface annotation class me/proton/core/humanverification/pres
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationManagerObserver {
-	public fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lkotlinx/coroutines/CoroutineScope;)V
-	public synthetic fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun cancelAllObservers ()V
+	public fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;)V
+	public synthetic fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationManagerObserverKt {
@@ -96,27 +99,28 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 	public static synthetic fun onHumanVerificationFailed$default (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
 	public static final fun onHumanVerificationNeeded (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
 	public static synthetic fun onHumanVerificationNeeded$default (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
-	public static final fun onHumanVerificationSucceeded (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
-	public static synthetic fun onHumanVerificationSucceeded$default (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
+	public static final fun onHumanVerificationSuccess (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
+	public static synthetic fun onHumanVerificationSuccess$default (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator {
-	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
-	public final fun register (Landroidx/fragment/app/FragmentActivity;Z)V
-	public static synthetic fun register$default (Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Landroidx/fragment/app/FragmentActivity;ZILjava/lang/Object;)V
+	public fun <init> ()V
+	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnHumanVerificationResult (Lkotlin/jvm/functions/Function1;)V
-	public final fun startHumanVerificationWorkflow (Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;)V
-	public final fun startHumanVerificationWorkflow (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Ljava/lang/String;Ljava/lang/String;Z)V
-	public static synthetic fun startHumanVerificationWorkflow$default (Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)V
-	public final fun unregister (Landroidx/fragment/app/FragmentActivity;)V
+	public final fun startHumanVerificationWorkflow (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;)V
+	public final fun unregister ()V
+}
+
+public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestratorKt {
+	public static final fun onHumanVerificationResult (Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory;
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
-	public static fun newInstance (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
+	public static fun newInstance ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
 }
 
 public final class me/proton/core/humanverification/presentation/LogTag {
@@ -236,27 +240,20 @@ public final class me/proton/core/humanverification/presentation/databinding/Fra
 
 public final class me/proton/core/humanverification/presentation/entity/HumanVerificationInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Z)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/util/List;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Z)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
-	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCaptchaUrl ()Ljava/lang/String;
 	public final fun getClientId ()Ljava/lang/String;
 	public final fun getClientIdType ()Ljava/lang/String;
-	public final fun getRecoveryEmailAddress ()Ljava/lang/String;
 	public final fun getVerificationMethods ()Ljava/util/List;
 	public final fun getVerificationToken ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun isPartOfFlow ()Z
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
@@ -295,41 +292,137 @@ public final class me/proton/core/humanverification/presentation/entity/HumanVer
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/humanverification/presentation/exception/NotEnoughVerificationOptions : java/lang/IllegalArgumentException {
-	public fun <init> (Ljava/lang/String;)V
+public abstract class me/proton/core/humanverification/presentation/ui/Hilt_HumanVerificationActivity : androidx/fragment/app/FragmentActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
 }
 
-public final class me/proton/core/humanverification/presentation/exception/VerificationCodeSendingException : java/lang/RuntimeException {
+public final class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity : androidx/fragment/app/FragmentActivity {
+	public static final field ARG_INPUT Ljava/lang/String;
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity$Companion;
+	public field humanVerificationVersion Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
+	public field humanverificationExternalInput Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
+	public final fun getHumanVerificationVersion ()Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
+	public final fun getHumanverificationExternalInput ()Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;
+	public final fun setHumanVerificationVersion (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public final fun setHumanverificationExternalInput (Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;)V
 }
 
-public final class me/proton/core/humanverification/presentation/ui/HumanVerificationHelpFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
+public final class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity$Companion {
+}
+
+public abstract interface class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity_GeneratedInjector {
+	public abstract fun injectHumanVerificationActivity (Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity;)V
+}
+
+public final class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectHumanVerificationVersion (Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public static fun injectHumanverificationExternalInput (Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity;Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity;)V
+}
+
+public final class me/proton/core/humanverification/presentation/ui/StartHumanVerification : androidx/activity/result/contract/ActivityResultContract {
+	public fun <init> ()V
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;)Landroid/content/Intent;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationResult;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/common/HumanVerificationHelpFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
 	public fun <init> ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
+public final class me/proton/core/humanverification/presentation/ui/common/HumanVerificationWebViewClient : android/webkit/WebViewClient {
+	public static final field Companion Lme/proton/core/humanverification/presentation/ui/common/HumanVerificationWebViewClient$Companion;
+	public static final field TAG Ljava/lang/String;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Ljava/lang/String;)V
+	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
+	public fun onReceivedError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceError;)V
+	public fun onReceivedHttpError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceResponse;)V
+	public fun onReceivedSslError (Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
+	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/common/HumanVerificationWebViewClient$Companion {
+}
+
+public abstract class me/proton/core/humanverification/presentation/ui/common/WebResponseError {
+}
+
+public final class me/proton/core/humanverification/presentation/ui/common/WebResponseError$Http : me/proton/core/humanverification/presentation/ui/common/WebResponseError {
+	public fun <init> (Landroid/webkit/WebResourceResponse;)V
+	public final fun component1 ()Landroid/webkit/WebResourceResponse;
+	public final fun copy (Landroid/webkit/WebResourceResponse;)Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Http;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Http;Landroid/webkit/WebResourceResponse;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Http;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResponse ()Landroid/webkit/WebResourceResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/common/WebResponseError$Resource : me/proton/core/humanverification/presentation/ui/common/WebResponseError {
+	public fun <init> (Landroid/webkit/WebResourceError;)V
+	public final fun component1 ()Landroid/webkit/WebResourceError;
+	public final fun copy (Landroid/webkit/WebResourceError;)Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Resource;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Resource;Landroid/webkit/WebResourceError;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Resource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Landroid/webkit/WebResourceError;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/common/WebResponseError$Ssl : me/proton/core/humanverification/presentation/ui/common/WebResponseError {
+	public fun <init> (Landroid/net/http/SslError;)V
+	public final fun component1 ()Landroid/net/http/SslError;
+	public final fun copy (Landroid/net/http/SslError;)Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Ssl;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Ssl;Landroid/net/http/SslError;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/common/WebResponseError$Ssl;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Landroid/net/http/SslError;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
 	public static final field ARG_DESTINATION Ljava/lang/String;
-	public static final field ARG_IS_PART_OF_FLOW Ljava/lang/String;
 	public static final field ARG_TOKEN_CODE Ljava/lang/String;
 	public static final field ARG_TOKEN_TYPE Ljava/lang/String;
 	public static final field ARG_VERIFICATION_OPTIONS Ljava/lang/String;
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment$Companion;
 	public static final field KEY_PHASE_TWO Ljava/lang/String;
 	public static final field KEY_VERIFICATION_DONE Ljava/lang/String;
+	public field captchaBaseUrl Ljava/lang/String;
 	public fun <init> ()V
+	public final fun getCaptchaBaseUrl ()Ljava/lang/String;
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setCaptchaBaseUrl (Ljava/lang/String;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment$Companion {
-	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Z)Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment;
-	public static synthetic fun invoke$default (Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment;
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment;
 }
 
 public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment_GeneratedInjector {
 	public abstract fun injectHV2DialogFragment (Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment;)V
+}
+
+public final class me/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectCaptchaBaseUrl (Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment;Ljava/lang/String;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/hv2/HV2DialogFragment;)V
 }
 
 public abstract class me/proton/core/humanverification/presentation/ui/hv2/Hilt_HV2DialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -345,7 +438,7 @@ public abstract class me/proton/core/humanverification/presentation/ui/hv2/Hilt_
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public abstract class me/proton/core/humanverification/presentation/ui/hv2/verification/Hilt_HumanVerificationCaptchaFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/humanverification/presentation/ui/hv2/method/Hilt_HumanVerificationCaptchaFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
@@ -358,7 +451,7 @@ public abstract class me/proton/core/humanverification/presentation/ui/hv2/verif
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public abstract class me/proton/core/humanverification/presentation/ui/hv2/verification/Hilt_HumanVerificationEmailFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/humanverification/presentation/ui/hv2/method/Hilt_HumanVerificationEmailFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
@@ -371,7 +464,7 @@ public abstract class me/proton/core/humanverification/presentation/ui/hv2/verif
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public abstract class me/proton/core/humanverification/presentation/ui/hv2/verification/Hilt_HumanVerificationSMSFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/humanverification/presentation/ui/hv2/method/Hilt_HumanVerificationEnterCodeFragment : me/proton/core/presentation/ui/ProtonDialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
@@ -384,27 +477,54 @@ public abstract class me/proton/core/humanverification/presentation/ui/hv2/verif
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment_GeneratedInjector {
-	public abstract fun injectHumanVerificationCaptchaFragment (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;)V
+public abstract class me/proton/core/humanverification/presentation/ui/hv2/method/Hilt_HumanVerificationSMSFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public final class me/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment_MembersInjector : dagger/MembersInjector {
+public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment_GeneratedInjector {
+	public abstract fun injectHumanVerificationCaptchaFragment (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment;)V
+}
+
+public final class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment_MembersInjector : dagger/MembersInjector {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
-	public static fun injectCaptchaApiHost (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Ljava/lang/String;)V
-	public static fun injectExtraHeaderProvider (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public static fun injectCaptchaApiHost (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment;Ljava/lang/String;)V
+	public static fun injectExtraHeaderProvider (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
-	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;)V
-	public static fun injectNetworkRequestOverrider (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
-	public static fun injectVerifyAppUrl (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Ljava/lang/String;)V
+	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment;)V
+	public static fun injectNetworkRequestOverrider (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
+	public static fun injectVerifyAppUrl (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationCaptchaFragment;Ljava/lang/String;)V
 }
 
-public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationEmailFragment_GeneratedInjector {
-	public abstract fun injectHumanVerificationEmailFragment (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationEmailFragment;)V
+public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEmailFragment_GeneratedInjector {
+	public abstract fun injectHumanVerificationEmailFragment (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEmailFragment;)V
 }
 
-public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationSMSFragment_GeneratedInjector {
-	public abstract fun injectHumanVerificationSMSFragment (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationSMSFragment;)V
+public final class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEnterCodeFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
+	public static final field Companion Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEnterCodeFragment$Companion;
+	public fun <init> ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+}
+
+public final class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEnterCodeFragment$Companion {
+	public final fun invoke (Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEnterCodeFragment;
+}
+
+public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEnterCodeFragment_GeneratedInjector {
+	public abstract fun injectHumanVerificationEnterCodeFragment (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationEnterCodeFragment;)V
+}
+
+public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationSMSFragment_GeneratedInjector {
+	public abstract fun injectHumanVerificationSMSFragment (Lme/proton/core/humanverification/presentation/ui/hv2/method/HumanVerificationSMSFragment;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
@@ -424,32 +544,28 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Dialo
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Z)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/util/List;
-	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Z)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;
-	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getClientId ()Ljava/lang/String;
 	public final fun getClientIdType ()Ljava/lang/String;
 	public final fun getRecoveryEmail ()Ljava/lang/String;
 	public final fun getStartToken ()Ljava/lang/String;
 	public final fun getVerificationMethods ()Ljava/util/List;
 	public fun hashCode ()I
-	public final fun isPartOfFlow ()Z
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Companion {
-	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Z)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$VerificationJSInterface {
@@ -462,14 +578,13 @@ public abstract interface class me/proton/core/humanverification/presentation/ui
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
 	public static fun injectExtraHeaderProvider (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
 	public static fun injectHumanVerificationBaseUrl (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Ljava/lang/String;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;)V
 	public static fun injectNetworkRequestOverrider (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
-	public static fun injectVerifyAppUrl (Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment;Ljava/lang/String;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage {
@@ -596,83 +711,6 @@ public abstract class me/proton/core/humanverification/presentation/ui/hv3/Hilt_
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public abstract class me/proton/core/humanverification/presentation/ui/verification/Hilt_HumanVerificationEnterCodeFragment : me/proton/core/presentation/ui/ProtonDialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getContext ()Landroid/content/Context;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-	public fun onAttach (Landroid/app/Activity;)V
-	public fun onAttach (Landroid/content/Context;)V
-	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
-}
-
-public final class me/proton/core/humanverification/presentation/ui/verification/HumanVerificationEnterCodeFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
-	public static final field Companion Lme/proton/core/humanverification/presentation/ui/verification/HumanVerificationEnterCodeFragment$Companion;
-	public fun <init> ()V
-	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
-}
-
-public final class me/proton/core/humanverification/presentation/ui/verification/HumanVerificationEnterCodeFragment$Companion {
-	public final fun invoke (Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/verification/HumanVerificationEnterCodeFragment;
-}
-
-public abstract interface class me/proton/core/humanverification/presentation/ui/verification/HumanVerificationEnterCodeFragment_GeneratedInjector {
-	public abstract fun injectHumanVerificationEnterCodeFragment (Lme/proton/core/humanverification/presentation/ui/verification/HumanVerificationEnterCodeFragment;)V
-}
-
-public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient : android/webkit/WebViewClient {
-	public static final field Companion Lme/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion;
-	public static final field TAG Ljava/lang/String;
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Ljava/lang/String;)V
-	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
-	public fun onReceivedError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceError;)V
-	public fun onReceivedHttpError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceResponse;)V
-	public fun onReceivedSslError (Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
-	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
-}
-
-public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion {
-}
-
-public abstract class me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
-}
-
-public final class me/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http : me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
-	public fun <init> (Landroid/webkit/WebResourceResponse;)V
-	public final fun component1 ()Landroid/webkit/WebResourceResponse;
-	public final fun copy (Landroid/webkit/WebResourceResponse;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http;
-	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http;Landroid/webkit/WebResourceResponse;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Http;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getResponse ()Landroid/webkit/WebResourceResponse;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource : me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
-	public fun <init> (Landroid/webkit/WebResourceError;)V
-	public final fun component1 ()Landroid/webkit/WebResourceError;
-	public final fun copy (Landroid/webkit/WebResourceError;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource;
-	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource;Landroid/webkit/WebResourceError;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Resource;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getError ()Landroid/webkit/WebResourceError;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl : me/proton/core/humanverification/presentation/ui/webview/WebResponseError {
-	public fun <init> (Landroid/net/http/SslError;)V
-	public final fun component1 ()Landroid/net/http/SslError;
-	public final fun copy (Landroid/net/http/SslError;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl;
-	public static synthetic fun copy$default (Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl;Landroid/net/http/SslError;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/ui/webview/WebResponseError$Ssl;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getError ()Landroid/net/http/SslError;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class me/proton/core/humanverification/presentation/utils/HumanVerificationVersion : java/lang/Enum {
 	public static final field HV2 Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
 	public static final field HV3 Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
@@ -692,8 +730,8 @@ public final class me/proton/core/humanverification/presentation/utils/UiUtilsKt
 	public static final field TAG_HUMAN_VERIFICATION_HELP Ljava/lang/String;
 	public static final field TOKEN_DEFAULT Ljava/lang/String;
 	public static final fun hasHumanVerificationFragment (Landroidx/fragment/app/FragmentManager;)Z
-	public static final fun showHumanVerification (Landroidx/fragment/app/FragmentManager;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZZ)V
-	public static synthetic fun showHumanVerification$default (Landroidx/fragment/app/FragmentManager;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZZILjava/lang/Object;)V
+	public static final fun showHumanVerification (Landroidx/fragment/app/FragmentManager;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)V
+	public static synthetic fun showHumanVerification$default (Landroidx/fragment/app/FragmentManager;Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)V
 	public static final fun showRequestNewCodeDialog (Landroidx/fragment/app/FragmentManager;Landroid/content/Context;Ljava/lang/String;Z)V
 	public static synthetic fun showRequestNewCodeDialog$default (Landroidx/fragment/app/FragmentManager;Landroid/content/Context;Ljava/lang/String;ZILjava/lang/Object;)V
 }
@@ -734,82 +772,118 @@ public final class me/proton/core/humanverification/presentation/viewmodel/hv2/H
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_Factory : dagger/internal/Factory {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_Factory;
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel;
-	public static fun newInstance (Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel;
+	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel;
+	public static fun newInstance (Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_HiltModules {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_HiltModules {
 }
 
-public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel;)Landroidx/lifecycle/ViewModel;
+public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel;)Landroidx/lifecycle/ViewModel;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_HiltModules$KeyModule {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_HiltModules$KeyModule {
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
-	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_HiltModules_KeyModule_ProvideFactory;
+	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationCaptchaViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_Factory : dagger/internal/Factory {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_Factory;
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel;
-	public static fun newInstance (Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel;
+	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_HiltModules {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_HiltModules {
 }
 
-public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel;)Landroidx/lifecycle/ViewModel;
+public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel;)Landroidx/lifecycle/ViewModel;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_HiltModules$KeyModule {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_HiltModules$KeyModule {
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
-	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationEmailViewModel_HiltModules_KeyModule_ProvideFactory;
+	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEmailViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_Factory : dagger/internal/Factory {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public fun <init> (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)V
+	public final fun getToken (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+	public final fun getValidationState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun getVerificationCodeResendState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun resendCode (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
+	public final fun validateToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_Factory;
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel;
-	public static fun newInstance (Lme/proton/core/country/domain/usecase/DefaultCountry;Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToPhoneDestination;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel;
+	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_HiltModules {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_HiltModules {
 }
 
-public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel;)Landroidx/lifecycle/ViewModel;
+public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel;)Landroidx/lifecycle/ViewModel;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_HiltModules$KeyModule {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_HiltModules$KeyModule {
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
-	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationSMSViewModel_HiltModules_KeyModule_ProvideFactory;
+	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationEnterCodeViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel;
+	public static fun newInstance (Lme/proton/core/country/domain/usecase/DefaultCountry;Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToPhoneDestination;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel;
+}
+
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/method/HumanVerificationSMSViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
@@ -861,42 +935,6 @@ public final class me/proton/core/humanverification/presentation/viewmodel/hv3/H
 public final class me/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_HiltModules_KeyModule_ProvideFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Ljava/lang/String;
-	public static fun provide ()Ljava/lang/String;
-}
-
-public final class me/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)V
-	public final fun getToken (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-	public final fun getValidationState ()Lkotlinx/coroutines/flow/SharedFlow;
-	public final fun getVerificationCodeResendState ()Lkotlinx/coroutines/flow/SharedFlow;
-	public final fun resendCode (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
-	public final fun validateToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
-}
-
-public final class me/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel;
-	public static fun newInstance (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)Lme/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel;
-}
-
-public final class me/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_HiltModules {
-}
-
-public abstract class me/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel;)Landroidx/lifecycle/ViewModel;
-}
-
-public final class me/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_HiltModules$KeyModule {
-	public static fun provide ()Ljava/lang/String;
-}
-
-public final class me/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/humanverification/presentation/viewmodel/verification/HumanVerificationEnterCodeViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

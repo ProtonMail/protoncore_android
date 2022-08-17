@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import androidx.activity.ComponentActivity
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -41,8 +41,6 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
@@ -58,10 +56,8 @@ internal class LoginViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val createLoginSession: CreateLoginSession,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val postLoginAccountSetup: PostLoginAccountSetup,
-    humanVerificationManager: HumanVerificationManager,
-    humanVerificationOrchestrator: HumanVerificationOrchestrator,
-) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
+    private val postLoginAccountSetup: PostLoginAccountSetup
+) : ViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
@@ -75,14 +71,9 @@ internal class LoginViewModel @Inject constructor(
         data class InvalidPassword(val error: Throwable) : State()
     }
 
-    override val recoveryEmailAddress: String?
-        get() = null
-
     fun stopLoginWorkflow(): Job = viewModelScope.launch {
         savedStateHandle.get<String>(STATE_USER_ID)?.let { accountWorkflow.handleAccountDisabled(UserId(it)) }
     }
-
-    fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context.lifecycle)
 
     fun startLoginWorkflow(
         username: String,

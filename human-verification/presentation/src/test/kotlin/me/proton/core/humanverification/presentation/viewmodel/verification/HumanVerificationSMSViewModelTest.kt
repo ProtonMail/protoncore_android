@@ -25,7 +25,7 @@ import io.mockk.mockk
 import me.proton.core.country.domain.entity.Country
 import me.proton.core.country.domain.usecase.DefaultCountry
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
-import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationSMSViewModel
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationSMSViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest

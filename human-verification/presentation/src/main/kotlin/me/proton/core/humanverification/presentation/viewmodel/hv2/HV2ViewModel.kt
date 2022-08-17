@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
-import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel

@@ -50,8 +50,6 @@ import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.humanverification.presentation.utils.hasHumanVerificationFragment
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -88,32 +86,21 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
         }
 
-        signUpViewModel.inputState
-            .flowWithLifecycle(lifecycle)
-            .onEach {
-                when (it) {
-                    is SignupViewModel.InputState.Ready -> {
-                        if (!supportFragmentManager.hasPlanSignupFragment()) {
-                            supportFragmentManager.showPlansSignup(planInput = PlanInput())
-                        }
-                        Unit
-                    }
-                }.exhaustive
-            }.launchIn(lifecycleScope)
-
-        signUpViewModel.userCreationState
+        signUpViewModel.state
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
             .onEach {
                 when (it) {
                     is SignupViewModel.State.Idle -> Unit
-                    is SignupViewModel.State.Processing -> onSignupProcessing()
-                    is SignupViewModel.State.Error.HumanVerification -> Unit
-                    is SignupViewModel.State.Error.Message -> onSignupError(it.message)
-                    is SignupViewModel.State.Error.PlanChooserCancel -> Unit
-                    is SignupViewModel.State.Success -> onSignUpSuccess(it.loginUsername, it.password)
+                    is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady()
+                    is SignupViewModel.State.CreateUserProcessing -> onCreateUserProcessing()
+                    is SignupViewModel.State.CreateUserSuccess -> onCreateUserSuccess(it.username, it.password)
+                    is SignupViewModel.State.Error.CreateUserCanceled -> Unit
+                    is SignupViewModel.State.Error.PlanChooserCanceled -> Unit
+                    is SignupViewModel.State.Error.Message -> onCreateUserError(it.message)
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }
+            .launchIn(lifecycleScope)
 
         loginViewModel.state
             .flowWithLifecycle(lifecycle)
@@ -126,7 +113,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
                     is LoginViewModel.State.InvalidPassword -> onLoginError(it.error.getUserMessage(resources))
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }
+            .launchIn(lifecycleScope)
 
         supportFragmentManager.setFragmentResultListener(
             KEY_PLAN_SELECTED, this
@@ -160,28 +148,25 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }.exhaustive
     }
 
-    private fun onSignupProcessing() {
-        showLoading(true)
+    private fun onCreateUserInputReady() {
+        if (!supportFragmentManager.hasPlanSignupFragment()) {
+            supportFragmentManager.showPlansSignup(planInput = PlanInput())
+        }
+    }
 
-        signUpViewModel
-            .observeHumanVerification(lifecycle)
-            .onHumanVerificationFailed(initialState = false) {
-                if (supportFragmentManager.hasHumanVerificationFragment()) {
-                    // Stop observing to avoid duplicate callback calls
-                    signUpViewModel.stopObservingHumanVerification(true)
-                }
-            }
+    private fun onCreateUserProcessing() {
+        showLoading(true)
 
         supportFragmentManager
             .showCreatingUser()
             .setFragmentResultListener(CreatingUserFragment.FRAGMENT_RESULT_REQUEST_KEY) { _, bundle ->
                 if (bundle.getBoolean(CreatingUserFragment.KEY_CANCELLED, false)) {
-                    signUpViewModel.stopObservingHumanVerification(false)
+                    signUpViewModel.onCreateUserCancelled()
                 }
             }
     }
 
-    private fun onSignUpSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
+    private fun onCreateUserSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
         supportFragmentManager.popAllBackStackFragments()
 
         binding.lottieProgress.visibility = View.VISIBLE
@@ -207,7 +192,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         signUpViewModel.onSignupCompleted()
     }
 
-    private fun onSignupError(message: String?) {
+    private fun onCreateUserError(message: String?) {
         supportFragmentManager.removeCreatingUser()
         showError(message)
     }

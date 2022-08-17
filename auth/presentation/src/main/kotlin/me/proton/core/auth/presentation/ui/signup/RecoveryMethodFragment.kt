@@ -112,7 +112,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
             }.exhaustive
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        observeForHumanVerificationFailed()
+        observeProcessingStates()
     }
 
     /** Adjusts the UI, depending on the current account type. */
@@ -199,19 +199,16 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun observeForHumanVerificationFailed() {
-        signupViewModel.userCreationState.onEach {
+    private fun observeProcessingStates() {
+        signupViewModel.state.onEach {
             when (it) {
-                is SignupViewModel.State.Idle -> Unit
-                is SignupViewModel.State.Error.HumanVerification,
-                is SignupViewModel.State.Error.PlanChooserCancel,
-                is SignupViewModel.State.Error.Message -> {
-                    showLoading(false)
-                }
-                is SignupViewModel.State.Success,
-                is SignupViewModel.State.Processing -> {
-                    showLoading(true)
-                }
+                is SignupViewModel.State.Idle,
+                is SignupViewModel.State.CreateUserInputReady -> Unit
+                is SignupViewModel.State.CreateUserSuccess,
+                is SignupViewModel.State.CreateUserProcessing -> showLoading(true)
+                is SignupViewModel.State.Error.CreateUserCanceled,
+                is SignupViewModel.State.Error.PlanChooserCanceled,
+                is SignupViewModel.State.Error.Message -> showLoading(false)
             }.exhaustive
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

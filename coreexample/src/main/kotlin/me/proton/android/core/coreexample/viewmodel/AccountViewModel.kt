@@ -128,7 +128,7 @@ class AccountViewModel @Inject constructor(
         }
 
         with(humanVerificationOrchestrator) {
-            humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.RESUMED)
+            humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
                 .onHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
         }
 

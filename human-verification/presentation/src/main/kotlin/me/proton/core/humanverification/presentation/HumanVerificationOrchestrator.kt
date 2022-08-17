@@ -19,109 +19,74 @@
 package me.proton.core.humanverification.presentation
 
 import androidx.activity.ComponentActivity
-import androidx.fragment.app.FragmentActivity
+import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
-import me.proton.core.humanverification.presentation.ui.REQUEST_KEY
-import me.proton.core.humanverification.presentation.ui.RESULT_HUMAN_VERIFICATION
-import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
-import me.proton.core.humanverification.presentation.utils.showHumanVerification
+import me.proton.core.humanverification.presentation.ui.StartHumanVerification
 import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import javax.inject.Inject
 
-class HumanVerificationOrchestrator @Inject constructor(
-    private val humanVerificationVersion: HumanVerificationVersion,
-) {
+class HumanVerificationOrchestrator @Inject constructor() {
 
-    // region result launchers
-    private var humanWorkflowLauncher: FragmentDialogResultLauncher<HumanVerificationInput>? = null
-    // endregion
+    private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
 
-    private var onHumanVerificationResultListener: ((result: HumanVerificationResult) -> Unit)? = null
+    private var onHumanVerificationResultListener: ((result: HumanVerificationResult?) -> Unit)? = {}
 
-    // region private functions
+    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {
+        onHumanVerificationResultListener = block
+    }
 
-    private fun <T> checkRegistered(launcher: FragmentDialogResultLauncher<T>?) =
-        checkNotNull(launcher) { "You must call register(context) before starting workflow!" }
+    private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
+        checkNotNull(launcher) { "You must call register before starting workflow!" }
 
-    // endregion
+    private fun registerHumanVerificationResult(
+        caller: ActivityResultCaller
+    ): ActivityResultLauncher<HumanVerificationInput> =
+        caller.registerForActivityResult(
+            StartHumanVerification()
+        ) {
+            onHumanVerificationResultListener?.invoke(it)
+        }
 
-    // region public API
     /**
      * Register all needed workflow for internal usage.
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
-    fun register(context: FragmentActivity, largeLayout: Boolean = false) {
-        context.supportFragmentManager.setFragmentResultListener(
-            REQUEST_KEY,
-            context
-        ) { _, bundle ->
-            val hvResult = bundle.getParcelable<HumanVerificationResult>(
-                RESULT_HUMAN_VERIFICATION
-            ) ?: error("HumanVerificationDialogFragment did not return a result")
-            onHumanVerificationResultListener?.invoke(hvResult)
-        }
-        humanWorkflowLauncher = FragmentDialogResultLauncher(REQUEST_KEY) { input ->
-            context.supportFragmentManager.showHumanVerification(
-                humanVerificationVersion = humanVerificationVersion,
-                clientId = input.clientId,
-                captchaUrl = input.captchaUrl,
-                clientIdType = input.clientIdType,
-                availableVerificationMethods = input.verificationMethods.orEmpty(),
-                verificationToken = input.verificationToken,
-                largeLayout = largeLayout,
-                recoveryEmailAddress = input.recoveryEmailAddress,
-                isPartOfFlow = input.isPartOfFlow,
-            )
-        }
+    fun register(caller: ActivityResultCaller) {
+        humanWorkflowLauncher = registerHumanVerificationResult(caller)
     }
 
     /**
      * Unregister all workflow activity launcher and listener.
      */
-    fun unregister(context: FragmentActivity) {
-        context.supportFragmentManager.clearFragmentResultListener(REQUEST_KEY)
+    fun unregister() {
+        humanWorkflowLauncher?.unregister()
         onHumanVerificationResultListener = null
     }
 
     /**
      * Start a Human Verification workflow.
-     *
-     * @param captchaUrl use this one if you want to provide per instance different captcha URL.
-     * Otherwise the one from the DI annotated with [HumanVerificationApiHost] will be used.
-     * [HumanVerificationApiHost] is only the host, Core is responsible to create the full URL.
-     * [captchaUrl] should not be only a base Url, but you are responsible to create it full, up to the
-     * query params section.
-     * If both provided, this parameter takes the precedence.
      */
     fun startHumanVerificationWorkflow(
-        details: HumanVerificationDetails,
-        captchaUrl: String? = null,
-        recoveryEmailAddress: String? = null,
-        isPartOfFlow: Boolean = false,
+        details: HumanVerificationDetails
     ) {
-        startHumanVerificationWorkflow(
+        checkRegistered(humanWorkflowLauncher).launch(
             HumanVerificationInput(
                 clientId = details.clientId.id,
                 clientIdType = details.clientId.getType().value,
                 verificationMethods = details.verificationMethods,
-                verificationToken = requireNotNull(details.verificationToken),
-                captchaUrl = captchaUrl,
-                recoveryEmailAddress = recoveryEmailAddress,
-                isPartOfFlow = isPartOfFlow,
+                verificationToken = requireNotNull(details.verificationToken)
             )
         )
     }
+}
 
-    fun startHumanVerificationWorkflow(humanVerificationInput: HumanVerificationInput) {
-        checkRegistered(humanWorkflowLauncher).show(humanVerificationInput)
-    }
-
-    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult) -> Unit) {
-        onHumanVerificationResultListener = block
-    }
-    // endregion
+fun HumanVerificationOrchestrator.onHumanVerificationResult(
+    block: (result: HumanVerificationResult?) -> Unit
+): HumanVerificationOrchestrator {
+    setOnHumanVerificationResult { block(it) }
+    return this
 }

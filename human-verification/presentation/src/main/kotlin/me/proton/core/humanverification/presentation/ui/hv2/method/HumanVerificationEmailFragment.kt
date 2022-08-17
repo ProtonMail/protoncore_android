@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.ui.hv2.verification
+package me.proton.core.humanverification.presentation.ui.hv2.method
 
 import android.os.Bundle
 import android.view.View
@@ -26,8 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
-import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
-import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationEmailViewModel
+import me.proton.core.humanverification.presentation.ui.hv2.method.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEmailViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack

@@ -1897,11 +1897,11 @@ public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_HiltModules {
@@ -2159,11 +2159,11 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/RecoverySMS
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/signup/PerformCreateUser;Lme/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/auth/domain/usecase/PerformLogin;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Landroidx/lifecycle/SavedStateHandle;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;Lme/proton/core/auth/domain/usecase/signup/PerformCreateUser;Lme/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/auth/domain/usecase/PerformLogin;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Landroidx/lifecycle/SavedStateHandle;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_HiltModules {

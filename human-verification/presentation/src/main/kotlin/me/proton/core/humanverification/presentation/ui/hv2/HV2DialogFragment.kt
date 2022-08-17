@@ -30,12 +30,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.presentation.CaptchaApiHost
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
-import me.proton.core.humanverification.presentation.ui.REQUEST_KEY
-import me.proton.core.humanverification.presentation.ui.RESULT_HUMAN_VERIFICATION
+import me.proton.core.humanverification.presentation.ui.common.REQUEST_KEY
+import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERIFICATION
 import me.proton.core.humanverification.presentation.utils.showEnterCode
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationCaptchaContent
@@ -49,12 +50,18 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 /**
  * Shows the dialog for the Human Verification options and option procedures.
  */
 @AndroidEntryPoint
 class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_main) {
+
+    @Inject
+    @CaptchaApiHost
+    lateinit var captchaBaseUrl: String
+
     private val viewModel by viewModels<HV2ViewModel>()
     private val binding by viewBinding(DialogHumanVerificationMainBinding::bind)
 
@@ -78,12 +85,8 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         requireArguments().getString(ARG_CAPTCHA_TOKEN)
     }
 
-    private val captchaUrl: String? by lazy {
-        requireArguments().getString(ARG_CAPTCHA_URL)
-    }
-
     private val recoveryEmailAddress: String? by lazy {
-        requireArguments().getString(ARG_RECOVERY_EMAIL_ADDRESS)
+        requireArguments().getString(ARG_RECOVERY_EMAIL)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,9 +123,7 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         binding.toolbar.apply {
-            val useBackArrow = arguments?.getBoolean(ARG_IS_PART_OF_FLOW) ?: false
-            val navigationIconId = if (useBackArrow) R.drawable.ic_proton_arrow_back else R.drawable.ic_proton_close
-            navigationIcon = AppCompatResources.getDrawable(requireContext(), navigationIconId)
+            navigationIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_proton_close)
             setNavigationOnClickListener {
                 setResultAndDismiss(token = null)
             }
@@ -193,7 +194,7 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         when (verificationMethod) {
             TokenType.CAPTCHA -> {
                 childFragmentManager.showHumanVerificationCaptchaContent(
-                    captchaUrl = captchaUrl,
+                    captchaUrl = captchaBaseUrl,
                     token = captchaToken,
                     containerId = binding.fragmentOptionsContainer.id
                 )
@@ -234,13 +235,11 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         private const val ARG_CLIENT_ID = "arg.clientId"
         private const val ARG_CLIENT_ID_TYPE = "arg.clientIdType"
         private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
-        private const val ARG_RECOVERY_EMAIL_ADDRESS = "arg.recoveryEmailAddress"
-        private const val ARG_CAPTCHA_URL = "arg.captchaUrl"
+        private const val ARG_RECOVERY_EMAIL = "arg.recoveryEmail"
         const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         const val ARG_DESTINATION = "arg.destination"
         const val ARG_TOKEN_CODE = "arg.token-code"
         const val ARG_TOKEN_TYPE = "arg.token-type"
-        const val ARG_IS_PART_OF_FLOW = "arg.part-of-flow"
         const val KEY_PHASE_TWO = "key.phase_two"
         const val KEY_VERIFICATION_DONE = "key.verification_done"
 
@@ -253,22 +252,18 @@ class HV2DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
          */
         operator fun invoke(
             clientId: String,
-            captchaUrl: String? = null,
             clientIdType: String,
             availableVerificationMethods: List<String>,
             captchaToken: String?,
-            recoveryEmailAddress: String?,
-            isPartOfFlow: Boolean,
+            recoveryEmail: String?,
         ): HV2DialogFragment {
             return HV2DialogFragment().apply {
                 arguments = bundleOf(
                     ARG_CLIENT_ID to clientId,
-                    ARG_CAPTCHA_URL to captchaUrl,
                     ARG_CLIENT_ID_TYPE to clientIdType,
                     ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
                     ARG_CAPTCHA_TOKEN to captchaToken,
-                    ARG_RECOVERY_EMAIL_ADDRESS to recoveryEmailAddress,
-                    ARG_IS_PART_OF_FLOW to isPartOfFlow,
+                    ARG_RECOVERY_EMAIL to recoveryEmail,
                 )
             }
         }

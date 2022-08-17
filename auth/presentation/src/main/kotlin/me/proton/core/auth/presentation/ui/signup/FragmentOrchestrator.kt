@@ -49,7 +49,6 @@ fun FragmentManager.registerSkipRecoveryDialogResultLauncher(
     )
 }
 
-
 internal fun FragmentManager.showEmailRecoveryMethodFragment(
     containerId: Int = android.R.id.content,
 ) = findFragmentByTag(TAG_EMAIL_RECOVERY_FRAGMENT) ?: run {

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.ui.webview
+package me.proton.core.humanverification.presentation.ui.common
 
 import android.annotation.SuppressLint
 import android.net.Uri

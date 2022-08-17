@@ -28,5 +28,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class HumanVerificationToken(
     val code: String,
-    val type: String
+    val type: String,
 ) : Parcelable

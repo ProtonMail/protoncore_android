@@ -16,11 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.exception
+package me.proton.core.humanverification.presentation.ui.common
 
-/**
- * Indicates that the Human Verification flow is initialized with 0 verification options (methods).
- *
- * @author Dino Kadrikj.
- */
-class NotEnoughVerificationOptions(message: String) : IllegalArgumentException(message)
+internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
+internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
+internal val VALID_METHODS_HV2 = setOf("sms", "email", "captcha")

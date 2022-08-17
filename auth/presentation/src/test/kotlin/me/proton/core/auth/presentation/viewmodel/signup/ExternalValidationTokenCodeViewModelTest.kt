@@ -26,7 +26,7 @@ import io.mockk.slot
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
-import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
+import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.presentation.viewmodel.ViewModelResult

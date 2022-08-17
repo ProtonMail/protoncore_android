@@ -47,11 +47,11 @@ import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationV3Binding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
-import me.proton.core.humanverification.presentation.ui.REQUEST_KEY
-import me.proton.core.humanverification.presentation.ui.RESULT_HUMAN_VERIFICATION
+import me.proton.core.humanverification.presentation.ui.common.REQUEST_KEY
+import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERIFICATION
 import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.MessageType
 import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.Type
-import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
+import me.proton.core.humanverification.presentation.ui.common.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ExtraParams
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ViewModel
@@ -73,6 +73,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_v3) {
 
+    @Inject
+    @HumanVerificationApiHost
+    lateinit var humanVerificationBaseUrl: String
+
+    @Inject
+    lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    lateinit var networkRequestOverrider: NetworkRequestOverrider
+
     private val viewModel by viewModels<HV3ViewModel>()
     private val binding by viewBinding(DialogHumanVerificationV3Binding::bind)
 
@@ -87,26 +97,8 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         }.exhaustive
     }
 
-    @Inject
-    @HumanVerificationApiHost
-    lateinit var humanVerificationBaseUrl: String
-
-    @Inject
-    lateinit var extraHeaderProvider: ExtraHeaderProvider
-
-    @Inject
-    lateinit var networkRequestOverrider: NetworkRequestOverrider
-
-    @Inject
-    @HumanVerificationApiHost
-    internal lateinit var verifyAppUrl: String
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navigationIconId = if (parsedArgs.isPartOfFlow)
-            R.drawable.ic_proton_arrow_back
-        else
-            R.drawable.ic_proton_close
 
         if (savedInstanceState == null) {
             setLoading(true)
@@ -114,7 +106,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
         with(binding) {
             toolbar.apply {
-                navigationIcon = AppCompatResources.getDrawable(requireContext(), navigationIconId)
+                setNavigationIcon(R.drawable.ic_proton_close)
                 setNavigationOnClickListener {
                     setResultAndDismiss(token = null)
                 }
@@ -141,17 +133,18 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             domStorageEnabled = true
         }
 
-        val overriddenUrl = viewModel.activeAltUrlForDoH ?: parsedArgs.baseUrl
+        val overriddenUrl = viewModel.activeAltUrlForDoH
         val baseUrl = overriddenUrl ?: humanVerificationBaseUrl
+        val apiHost = requireNotNull(Uri.parse(baseUrl).host)
 
         webView.webViewClient = HumanVerificationWebViewClient(
-            Uri.parse(baseUrl).host!!,
+            apiHost,
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
             onResourceLoadingError = { _, _ -> lifecycleScope.launch { handleResourceLoadingError() } },
             onWebLocationChanged = {},
-            verifyAppUrl = verifyAppUrl
+            verifyAppUrl = humanVerificationBaseUrl
         )
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
         // Workaround to get transparent webview background
@@ -319,11 +312,9 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     data class Args(
         val clientId: String,
         val clientIdType: String,
-        val baseUrl: String?,
         val startToken: String,
         val verificationMethods: List<String>,
         val recoveryEmail: String?,
-        val isPartOfFlow: Boolean,
     ) : Parcelable
 
     companion object {
@@ -335,21 +326,17 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         operator fun invoke(
             clientId: String,
             clientIdType: String,
-            baseUrl: String?,
             startToken: String,
             verificationMethods: List<String>,
             recoveryEmail: String?,
-            isPartOfFlow: Boolean,
         ) = HV3DialogFragment().apply {
             arguments = bundleOf(
                 ARGS_KEY to Args(
                     clientId,
                     clientIdType,
-                    baseUrl,
                     startToken,
                     verificationMethods,
                     recoveryEmail,
-                    isPartOfFlow,
                 )
             )
         }
