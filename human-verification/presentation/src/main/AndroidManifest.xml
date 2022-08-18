@@ -5,8 +5,6 @@
     <application>
         <activity
             android:name=".ui.HumanVerificationActivity"
-            android:theme="@style/ProtonTheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/ProtonTheme.DialogWhenLarge" />
     </application>
 </manifest>
-
