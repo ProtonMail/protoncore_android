@@ -27,6 +27,7 @@ import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
 import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.PlanShortDetailsBinding
+import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 
 internal class PlanShortDetailsView @JvmOverloads constructor(
@@ -43,7 +44,7 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
 
     var userReadablePlanAmount: String? = null
 
-    var plan: PlanShortDetails? = null
+    var plan: GooglePlanShortDetails? = null
         set(value) = with(binding) {
             val notAvailable = context.getString(R.string.payments_info_not_available)
             planNameText.text = value?.displayName ?: notAvailable
@@ -53,10 +54,10 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
             }
             value?.amount?.let {
                 amountProgress.visibility = View.GONE
-                userReadablePlanAmount = it.toDouble().formatCentsPriceDefaultLocale(value.currency.name)
-                amountText.text = userReadablePlanAmount
+                amountText.text = value.formattedPriceAndCurrency
             } ?: run {
                 amountProgress.visibility = View.VISIBLE
             }
+            field = value
         }
 }

@@ -64,7 +64,7 @@ android {
                 arguments["room.incremental"] = "true"
             }
         }
-        version = Version(1, 18, 4)
+        version = Version(1, 18, 10)
         versionName = version.toString()
     }
     setupFlavors(this)
@@ -99,7 +99,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
         productFlavors.register("dev") {
             dimension = flavorDimensions.env
             applicationIdSuffix = ".dev"
-            buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.payments.proton.black".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.proton.black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.proton.black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "proton.black".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())

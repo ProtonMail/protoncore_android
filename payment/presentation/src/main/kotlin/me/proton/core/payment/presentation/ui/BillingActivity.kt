@@ -69,7 +69,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                     navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_proton_arrow_back)
                 }
                 setNavigationOnClickListener {
-                    onBackPressed()
+                    finish()
                 }
             }
             payButton.onClick(::onPayClicked)

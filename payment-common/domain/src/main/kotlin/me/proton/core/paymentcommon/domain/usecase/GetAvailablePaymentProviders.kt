@@ -42,10 +42,10 @@ public class GetAvailablePaymentProviders @Inject internal constructor(
         }
 
         return buildSet {
-//            if (paymentStatus?.card == true)
+            if (paymentStatus?.card == true)
                 add(PaymentProvider.CardPayment)
-//            if (paymentStatus?.paypal == true) add(PaymentProvider.PayPal)
-//            if (paymentStatus?.inApp == true && isBuiltForGooglePlay())
+            if (paymentStatus?.paypal == true) add(PaymentProvider.PayPal)
+            if (paymentStatus?.inApp == true && isBuiltForGooglePlay())
                 add(PaymentProvider.GoogleInAppPurchase)
         }
     }

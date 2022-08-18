@@ -23,16 +23,14 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
-import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.ProductDetailsResult
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.queryProductDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
@@ -49,64 +47,77 @@ public class BillingIAPViewModel @Inject constructor(
         public object Unavailable : State()
         public object Initialized : State()
         public object Disconnected : State()
-        public object Querying : State()
-        public data class ProductList(
-            val details: List<ProductDetails>?,
+        public object QueryingProductDetails : State()
+        public data class GoogleProductDetails(
+            val amount: Long,
+            val currency: String,
+            val formattedPriceAndCurrency: String,
             val billingResult: BillingResult
         ) : State()
 
-        public data class Flowing(@BillingClient.BillingResponseCode val responseCode: Int) : State()
-        public sealed class PurchaseResult : State() {
-            public data class Success(val purchase: Purchase) : PurchaseResult()
-            public data class Error(@BillingClient.BillingResponseCode val responseCode: Int) : PurchaseResult()
-        }
+        public object PlanDetailsError : State()
     }
 
+    private lateinit var googlePlanName: String
 
     private val billingClientStateListener = object : BillingClientStateListener {
 
         override fun onBillingSetupFinished(billingResult: BillingResult) {
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                mutableState.value = State.Initialized
+            val state = if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                queryProductDetails()
+                State.Initialized
             } else {
-                mutableState.value = State.Unavailable
+                State.Unavailable
             }
+            mutableState.tryEmit(state)
         }
 
         override fun onBillingServiceDisconnected() {
-            mutableState.value = State.Disconnected
+            mutableState.tryEmit(State.Disconnected)
             billingClient.startConnection(this)
         }
     }
 
-
-    init {
-        initialize()
-    }
-
-    private fun initialize() = viewModelScope.launch {
-        mutableState.emit(State.Initializing)
+    private fun initialize() {
+        mutableState.tryEmit(State.Initializing)
         billingClient.startConnection(billingClientStateListener)
     }
 
     public fun queryProductDetails(planName: String) {
-        viewModelScope.launch {
-            mutableState.emit(State.Querying)
+        googlePlanName = planName
+        initialize()
+    }
 
-            val product = QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(planName)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build()
+    private fun queryProductDetails() = viewModelScope.launch {
+        mutableState.tryEmit(State.QueryingProductDetails)
+        val product = QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(googlePlanName)
+            .setProductType(BillingClient.ProductType.SUBS)
+            .build()
 
-            val productList = QueryProductDetailsParams.newBuilder()
-                .setProductList(listOf(product))
-                .build()
+        val productList = QueryProductDetailsParams.newBuilder()
+            .setProductList(listOf(product))
+            .build()
 
-            val result = withContext(Dispatchers.IO) {
-                billingClient.queryProductDetails(productList)
-            }
+        val result = billingClient.queryProductDetails(productList)
+        val price = result.getProductPrice()
 
-            mutableState.emit(State.ProductList(result.productDetailsList, result.billingResult))
+        if (price == null) {
+            mutableState.tryEmit(State.PlanDetailsError)
+        } else {
+            mutableState.tryEmit(
+                State.GoogleProductDetails(
+                    amount = price.priceAmountMicros,
+                    currency = price.priceCurrencyCode,
+                    formattedPriceAndCurrency = price.formattedPrice,
+                    result.billingResult
+                )
+            )
         }
+    }
+
+    private fun ProductDetailsResult.getProductPrice(): ProductDetails.PricingPhase? {
+        val offerDetails = productDetailsList?.getOrNull(0)?.subscriptionOfferDetails
+        return offerDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)
     }
 }

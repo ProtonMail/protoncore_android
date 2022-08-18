@@ -20,18 +20,23 @@ package me.proton.core.paymentiap.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
+import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBinding
+import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
 import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
@@ -59,10 +64,34 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
+
+        billingIAPViewModel.state
+            .onEach {
+                @Suppress("IMPLICIT_CAST_TO_ANY")
+                when (it) {
+                    is BillingIAPViewModel.State.Disconnected,
+                    is BillingIAPViewModel.State.Unavailable -> onError(R.string.payments_iap_general_error)
+                    is BillingIAPViewModel.State.GoogleProductDetails -> {
+                        val currentPlan = binding.selectedPlanDetailsLayout.plan ?: return@onEach
+                        binding.selectedPlanDetailsLayout.plan = currentPlan.copy(
+                            amount = it.amount,
+                            currency = it.currency,
+                            formattedPriceAndCurrency = it.formattedPriceAndCurrency
+                        )
+                    }
+                    else -> {
+                        // do nothing
+                    }
+                }.exhaustive
+            }.launchIn(lifecycleScope)
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
     }
 
     private fun onLoading(loading: Boolean) {
-        // TODO
+        // no operation
     }
 
     private fun onPay() {
@@ -71,14 +100,18 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
 
     private fun setPlan(plan: PlanShortDetails) {
         // the plan price should come from the Billing Library
-        binding.selectedPlanDetailsLayout.plan = plan
-
-        // To obtain plan name for Google Play:
-        val googlePlanName :String? = plan.vendorNames[AppStore.GooglePlay]
+        binding.selectedPlanDetailsLayout.plan = GooglePlanShortDetails.fromPlanShortDetails(plan)
+        val googlePlanName: String? = plan.vendorNames[AppStore.GooglePlay]
         if (googlePlanName == null) {
-//            displayError(...); return
+            onError(R.string.payments_iap_invalid_google_plan)
         } else {
-            billingIAPViewModel.queryProductDetails(googlePlanName)
+            lifecycleScope.launch {
+                billingIAPViewModel.queryProductDetails(googlePlanName)
+            }
         }
+    }
+
+    private fun onError(@StringRes error: Int) {
+        binding.root.errorSnack(getString(error))
     }
 }

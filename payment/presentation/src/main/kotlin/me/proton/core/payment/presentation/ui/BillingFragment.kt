@@ -20,6 +20,7 @@ package me.proton.core.payment.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -90,6 +91,10 @@ class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
     }
 
     private fun setPlan(plan: PlanShortDetails) {
