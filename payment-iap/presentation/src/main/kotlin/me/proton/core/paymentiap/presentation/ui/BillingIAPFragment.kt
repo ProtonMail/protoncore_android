@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
+import me.proton.core.paymentiap.presentation.LogTag.DEFAULT
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBinding
 import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
@@ -38,6 +39,7 @@ import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -69,8 +71,10 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
             .onEach {
                 @Suppress("IMPLICIT_CAST_TO_ANY")
                 when (it) {
-                    is BillingIAPViewModel.State.Disconnected,
-                    is BillingIAPViewModel.State.Unavailable -> onError(R.string.payments_iap_general_error)
+                    is BillingIAPViewModel.State.Error.BillingClientDisconnected,
+                    is BillingIAPViewModel.State.Error.BillingClientUnavailable -> {
+                        onError(R.string.payments_iap_general_error)
+                    }
                     is BillingIAPViewModel.State.GoogleProductDetails -> {
                         val currentPlan = binding.selectedPlanDetailsLayout.plan ?: return@onEach
                         binding.selectedPlanDetailsLayout.plan = currentPlan.copy(
@@ -79,8 +83,22 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                             formattedPriceAndCurrency = it.formattedPriceAndCurrency
                         )
                     }
-                    else -> {
-                        // do nothing
+                    is BillingIAPViewModel.State.Error.ProductDetailsError.Message -> {
+                        CoreLogger.i(DEFAULT, getString(R.string.payments_iap_invalid_google_plan))
+                        onError(R.string.payments_iap_invalid_google_plan)
+                    }
+                    is BillingIAPViewModel.State.Error.ProductDetailsError.Price -> {
+                        CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_google_plan_price))
+                        onError(R.string.payments_iap_error_google_plan_price)
+                    }
+                    is BillingIAPViewModel.State.Error.ProductDetailsError.ResponseCode -> {
+                        CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_fetching_google_plan))
+                        onError(R.string.payments_iap_error_fetching_google_plan)
+                    }
+                    is BillingIAPViewModel.State.Initialized,
+                    is BillingIAPViewModel.State.Initializing,
+                    is BillingIAPViewModel.State.QueryingProductDetails -> {
+                        // do nothing currently. maybe spinner?
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)

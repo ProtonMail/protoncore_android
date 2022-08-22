@@ -27,9 +27,14 @@ import com.android.billingclient.api.ProductDetailsResult
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.queryProductDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
@@ -44,9 +49,7 @@ public class BillingIAPViewModel @Inject constructor(
 
     public sealed class State {
         public object Initializing : State()
-        public object Unavailable : State()
         public object Initialized : State()
-        public object Disconnected : State()
         public object QueryingProductDetails : State()
         public data class GoogleProductDetails(
             val amount: Long,
@@ -55,7 +58,15 @@ public class BillingIAPViewModel @Inject constructor(
             val billingResult: BillingResult
         ) : State()
 
-        public object PlanDetailsError : State()
+        public sealed class Error : State() {
+            public object BillingClientUnavailable : State()
+            public object BillingClientDisconnected : State()
+            public sealed class ProductDetailsError : State() {
+                public object ResponseCode : ProductDetailsError()
+                public object Price : ProductDetailsError()
+                public data class Message(val error: String? = null) : ProductDetailsError()
+            }
+        }
     }
 
     private lateinit var googlePlanName: String
@@ -64,16 +75,18 @@ public class BillingIAPViewModel @Inject constructor(
 
         override fun onBillingSetupFinished(billingResult: BillingResult) {
             val state = if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                queryProductDetails()
+                viewModelScope.launch(Dispatchers.IO) {
+                    queryProductDetails()
+                }
                 State.Initialized
             } else {
-                State.Unavailable
+                State.Error.BillingClientUnavailable
             }
             mutableState.tryEmit(state)
         }
 
         override fun onBillingServiceDisconnected() {
-            mutableState.tryEmit(State.Disconnected)
+            mutableState.tryEmit(State.Error.BillingClientDisconnected)
             billingClient.startConnection(this)
         }
     }
@@ -88,8 +101,8 @@ public class BillingIAPViewModel @Inject constructor(
         initialize()
     }
 
-    private fun queryProductDetails() = viewModelScope.launch {
-        mutableState.tryEmit(State.QueryingProductDetails)
+    private fun queryProductDetails() = flow {
+        emit(State.QueryingProductDetails)
         val product = QueryProductDetailsParams.Product.newBuilder()
             .setProductId(googlePlanName)
             .setProductType(BillingClient.ProductType.SUBS)
@@ -100,20 +113,31 @@ public class BillingIAPViewModel @Inject constructor(
             .build()
 
         val result = billingClient.queryProductDetails(productList)
-        val price = result.getProductPrice()
-
-        if (price == null) {
-            mutableState.tryEmit(State.PlanDetailsError)
+        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            emit(State.Error.ProductDetailsError.ResponseCode)
         } else {
-            mutableState.tryEmit(
-                State.GoogleProductDetails(
-                    amount = price.priceAmountMicros,
-                    currency = price.priceCurrencyCode,
-                    formattedPriceAndCurrency = price.formattedPrice,
-                    result.billingResult
+            val price = result.getProductPrice()
+            if (price == null) {
+                emit(State.Error.ProductDetailsError.Price)
+            } else {
+                emit(
+                    State.GoogleProductDetails(
+                        amount = price.priceAmountMicros,
+                        currency = price.priceCurrencyCode,
+                        formattedPriceAndCurrency = price.formattedPrice,
+                        result.billingResult
+                    )
                 )
-            )
+            }
         }
+    }.catch { error ->
+        mutableState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
+    }.onEach { subscriptionState ->
+        mutableState.tryEmit(subscriptionState)
+    }.launchIn(viewModelScope)
+
+    override fun onCleared() {
+        billingClient.endConnection()
     }
 
     private fun ProductDetailsResult.getProductPrice(): ProductDetails.PricingPhase? {

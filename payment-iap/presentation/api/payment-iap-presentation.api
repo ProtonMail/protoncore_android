@@ -110,8 +110,39 @@ public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPVi
 public abstract class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
 }
 
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Disconnected : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Disconnected;
+public abstract class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
+}
+
+public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientDisconnected : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
+	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientDisconnected;
+}
+
+public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientUnavailable : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
+	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientUnavailable;
+}
+
+public abstract class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
+}
+
+public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message;
+	public static synthetic fun copy$default (Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Price : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError {
+	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Price;
+}
+
+public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$ResponseCode : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError {
+	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$ResponseCode;
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$GoogleProductDetails : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
@@ -139,16 +170,8 @@ public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPVi
 	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Initializing;
 }
 
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$PlanDetailsError : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$PlanDetailsError;
-}
-
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$QueryingProductDetails : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
 	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$QueryingProductDetails;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Unavailable : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Unavailable;
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory : dagger/internal/Factory {
