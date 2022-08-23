@@ -25,8 +25,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans

@@ -32,12 +32,3 @@ internal data class CreatePaymentToken(
     @SerialName("PaymentMethodID")
     val paymentMethodId: String?
 )
-
-@Serializable
-internal sealed class PaymentTypeEntity(@SerialName("Type") val type: String) {
-    @Serializable
-    object PayPal : PaymentTypeEntity("paypal")
-
-    @Serializable
-    data class Card(@SerialName("Details") val details: CardDetailsBody) : PaymentTypeEntity("card")
-}

@@ -25,27 +25,30 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 
 @Parcelize
-data class BillingResult(
+public data class BillingResult(
     val paySuccess: Boolean,
     val token: String?,
     val subscriptionCreated: Boolean,
     val amount: Long,
     val currency: Currency,
-    val cycle: SubscriptionCycle
+    val cycle: SubscriptionCycle,
+    val subscriptionManagement: SubscriptionManagement
 ) : Parcelable {
 
-    companion object {
-        fun paymentDetails(clientId: ClientId, token: String) = HumanVerificationDetails(
-            clientId = clientId,
-            verificationMethods = listOf(VerificationMethod.PAYMENT),
-            verificationToken = null,
-            state = HumanVerificationState.HumanVerificationSuccess,
-            tokenType = TokenType.PAYMENT.value,
-            tokenCode = token
-        )
+    public companion object {
+        public fun paymentDetails(clientId: ClientId, token: String): HumanVerificationDetails =
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = listOf(VerificationMethod.PAYMENT),
+                verificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = TokenType.PAYMENT.value,
+                tokenCode = token
+            )
     }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,20 +33,20 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.data.api.PaymentsApi
-import me.proton.core.paymentcommon.domain.entity.Card
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.Details
-import me.proton.core.paymentcommon.domain.entity.PaymentBody
-import me.proton.core.paymentcommon.domain.entity.PaymentMethod
-import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
-import me.proton.core.paymentcommon.domain.entity.PaymentStatus
-import me.proton.core.paymentcommon.domain.entity.PaymentToken
-import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
-import me.proton.core.paymentcommon.domain.entity.PaymentType
-import me.proton.core.paymentcommon.domain.entity.Subscription
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.domain.entity.SubscriptionManagement
-import me.proton.core.paymentcommon.domain.entity.SubscriptionStatus
+import me.proton.core.payment.domain.entity.Card
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.Details
+import me.proton.core.payment.domain.entity.PaymentBody
+import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.entity.PaymentMethodType
+import me.proton.core.payment.domain.entity.PaymentStatus
+import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
@@ -387,7 +387,8 @@ class PaymentsRepositoryImplTest {
             codes = null,
             plans = mapOf("test-plan-id" to 1),
             cycle = SubscriptionCycle.YEARLY,
-            payment = PaymentBody.TokenPaymentBody("test-token-id")
+            payment = PaymentBody.TokenPaymentBody("test-token-id"),
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         // THEN
         assertNotNull(createSubscriptionResult)
@@ -408,7 +409,8 @@ class PaymentsRepositoryImplTest {
                 codes = null,
                 plans = mapOf("test-plan-id" to 1),
                 cycle = SubscriptionCycle.YEARLY,
-                payment = PaymentBody.TokenPaymentBody("test-token-id")
+                payment = PaymentBody.TokenPaymentBody("test-token-id"),
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         }
         // THEN

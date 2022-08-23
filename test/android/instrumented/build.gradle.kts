@@ -55,6 +55,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.kotlinUtil),
         project(Module.paymentPresentation),
+        project(Module.paymentIapPresentation),
         project(Module.planPresentation),
         project(Module.presentation),
         project(Module.reportPresentation),

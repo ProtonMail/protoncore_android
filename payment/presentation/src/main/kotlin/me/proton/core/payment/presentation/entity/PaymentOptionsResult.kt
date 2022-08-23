@@ -22,7 +22,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PaymentOptionsResult(
+internal data class PaymentOptionsResult(
     val result: Boolean,
     val billing: BillingResult? = null
 ) : Parcelable

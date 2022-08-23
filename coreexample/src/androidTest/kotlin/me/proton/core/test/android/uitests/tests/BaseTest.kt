@@ -27,7 +27,7 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
-import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
 import me.proton.core.test.android.plugins.Quark

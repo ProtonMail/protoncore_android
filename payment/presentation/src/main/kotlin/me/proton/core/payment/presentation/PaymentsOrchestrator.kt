@@ -21,16 +21,16 @@ package me.proton.core.payment.presentation
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.ui.StartBilling
 import me.proton.core.payment.presentation.ui.StartPaymentOptions
-import me.proton.core.paymentcommon.presentation.entity.BillingInput
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import javax.inject.Inject
 
 @Suppress("UseIfInsteadOfWhen")
-class PaymentsOrchestrator @Inject constructor() {
+public class PaymentsOrchestrator @Inject constructor() {
 
     // region result launchers
     private var billingLauncher: ActivityResultLauncher<BillingInput>? = null
@@ -43,12 +43,12 @@ class PaymentsOrchestrator @Inject constructor() {
         checkNotNull(launcher) { "You must call PaymentsOrchestrator.register(context) before starting workflow!" }
 
     // region public api
-    fun register(caller: ActivityResultCaller) {
+    public fun register(caller: ActivityResultCaller) {
         billingLauncher = registerBillingResult(caller)
         paymentOptionsLauncher = registerPaymentOptionsResult(caller)
     }
 
-    fun setOnPaymentResult(block: (result: BillingResult?) -> Unit) {
+    public fun setOnPaymentResult(block: (result: BillingResult?) -> Unit) {
         onPaymentResultListener = block
     }
 
@@ -59,7 +59,7 @@ class PaymentsOrchestrator @Inject constructor() {
      * @param selectedPlan the selected plan ID
      * @param codes the coupon codes (if any)
      */
-    fun startBillingWorkFlow(
+    public fun startBillingWorkFlow(
         userId: UserId? = null,
         selectedPlan: PlanShortDetails,
         codes: List<String>? = null
@@ -97,7 +97,7 @@ class PaymentsOrchestrator @Inject constructor() {
         }
 }
 
-fun PaymentsOrchestrator.onPaymentResult(
+public fun PaymentsOrchestrator.onPaymentResult(
     block: (result: BillingResult?) -> Unit
 ): PaymentsOrchestrator {
     setOnPaymentResult { block(it) }

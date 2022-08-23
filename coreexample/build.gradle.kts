@@ -172,7 +172,6 @@ dependencies {
         project(Module.label),
         project(Module.mailMessage),
         project(Module.mailSettings),
-        project(Module.paymentCommon),
         project(Module.payment),
         project(Module.paymentIap),
         project(Module.plan),

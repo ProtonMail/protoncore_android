@@ -30,16 +30,19 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
+import me.proton.core.payment.domain.entity.Card
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.FragmentBillingBinding
-import me.proton.core.paymentcommon.domain.entity.Card
-import me.proton.core.paymentcommon.domain.entity.PaymentType
-import me.proton.core.paymentcommon.presentation.entity.BillingInput
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
+import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
+import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onTextChange
@@ -50,10 +53,13 @@ import me.proton.core.util.kotlin.exhaustive
  * Fragment that handles Billing Credit/Debit card input.
  */
 @AndroidEntryPoint
-class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
+internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
 
     private val viewModel: BillingViewModel by viewModels({ requireActivity() })
     private val binding by viewBinding(FragmentBillingBinding::bind)
+
+    private var amount: Long? = null
+    private lateinit var currency: Currency
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -97,8 +103,25 @@ class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        updatePayButtonText()
+    }
+
     private fun setPlan(plan: PlanShortDetails) {
         binding.selectedPlanDetailsLayout.plan = plan
+        amount = plan.amount
+        currency = plan.currency
+        updatePayButtonText()
+    }
+
+    private fun updatePayButtonText() {
+        viewModel.setPayButtonStateEnabled(
+            String.format(
+                getString(R.string.payments_pay),
+                amount?.toDouble()?.formatCentsPriceDefaultLocale(currency.name) ?: ""
+            )
+        )
     }
 
     private fun onPayClicked(input: BillingInput) = with(binding) {
@@ -129,7 +152,8 @@ class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                     country = countriesText.text.toString(),
                     zip = postalCodeInput.text.toString()
                 )
-            )
+            ),
+            SubscriptionManagement.PROTON_MANAGED
         )
     }
 
@@ -143,9 +167,5 @@ class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
             postalCodeInput.isEnabled = enabled
             countriesText.isEnabled = enabled
         }
-    }
-
-    companion object {
-        operator fun invoke() = BillingFragment()
     }
 }

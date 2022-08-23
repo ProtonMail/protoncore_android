@@ -34,20 +34,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 public object PaymentIapModule {
-    @Provides
-    @Singleton
-    public fun providePurchasesUpdatedListener(): PurchasesUpdatedListener =
-        PurchasesUpdatedListener { billingResult: BillingResult, purchaseList: List<Purchase>? ->
-            CoreLogger.d("IAP", "$billingResult -> $purchaseList")
-        }
 
     @Provides
     @Singleton
     public fun provideBillingClient(
-        @ApplicationContext context: Context,
-        purchasesUpdatedListener: PurchasesUpdatedListener,
-    ): BillingClient = BillingClient.newBuilder(context)
-        .setListener(purchasesUpdatedListener)
-        .enablePendingPurchases()
-        .build()
+        @ApplicationContext context: Context
+    ): BillingClient.Builder = BillingClient.newBuilder(context).enablePendingPurchases()
 }

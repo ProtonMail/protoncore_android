@@ -22,10 +22,6 @@ plugins {
     protonKotlinLibrary
 }
 
-proton {
-    apiModeDisabled()
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -33,8 +29,8 @@ dependencies {
         project(Module.domain),
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
+        project(Module.userDomain),
         project(Module.planDomain),
-        project(Module.paymentCommonDomain),
         `javax-inject`
     )
 

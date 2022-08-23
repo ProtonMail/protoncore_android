@@ -44,6 +44,27 @@ internal interface PaymentsApi : BaseRetrofitApi {
     suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
     /**
+     * Creates new or updates the current active subscription.
+     * Authorized.
+     */
+    @POST("payments/v4/subscription")
+    suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
+
+    /**
+     * Returns current active subscription.
+     * Authorized.
+     */
+    @GET("payments/v4/subscription")
+    suspend fun getCurrentSubscription(): SubscriptionResponse
+
+    /**
+     * Returns the status of payment processors.
+     * @param appVendor The app vendor for the app (e.g. "google" or "fdroid").
+     */
+    @GET("payments/v4/status/{appVendor}")
+    suspend fun paymentStatus(@Path("appVendor") appVendor: String): PaymentStatusResponse
+
+    /**
      * Could be used during account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Check payment token status (usually with polling).
      * Unauthorized.
@@ -59,20 +80,6 @@ internal interface PaymentsApi : BaseRetrofitApi {
     suspend fun getPaymentMethods(): PaymentMethodsResponse
 
     /**
-     * Returns current active subscription.
-     * Authorized.
-     */
-    @GET("payments/v4/subscription")
-    suspend fun getCurrentSubscription(): SubscriptionResponse
-
-    /**
-     * Creates new or updates the current active subscription.
-     * Authorized.
-     */
-    @POST("payments/v4/subscription")
-    suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
-
-    /**
      * It checks given a particular plans and cycles how much a user should pay.
      * It also takes into an account any special coupon or gift codes.
      * Should be called upon a user selected any plan, duration and entered a code.
@@ -80,11 +87,4 @@ internal interface PaymentsApi : BaseRetrofitApi {
      */
     @POST("payments/v4/subscription/check")
     suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
-
-    /**
-     * Returns the status of payment processors.
-     * @param appVendor The app vendor for the app (e.g. "google" or "fdroid").
-     */
-    @GET("payments/v4/status/{appVendor}")
-    suspend fun paymentStatus(@Path("appVendor") appVendor: String): PaymentStatusResponse
 }

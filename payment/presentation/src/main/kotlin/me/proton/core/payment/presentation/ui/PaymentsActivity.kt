@@ -23,19 +23,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
 import androidx.viewbinding.ViewBinding
+import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsResult
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
-import me.proton.core.paymentcommon.domain.entity.PaymentToken
-import me.proton.core.paymentcommon.presentation.entity.BillingInput
-import me.proton.core.paymentcommon.presentation.entity.CurrentSubscribedPlanDetails
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.showToast
 
-abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
+internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
     bindingInflater: (LayoutInflater) -> ViewBindingT
 ) : ProtonViewBindingActivity<ViewBindingT>(bindingInflater) {
 

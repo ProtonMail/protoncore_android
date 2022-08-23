@@ -30,9 +30,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.onPaymentResult
-import me.proton.core.paymentcommon.domain.entity.PaymentMethod
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
+import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.plan.domain.entity.PLAN_VENDOR_GOOGLE
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanVendorName

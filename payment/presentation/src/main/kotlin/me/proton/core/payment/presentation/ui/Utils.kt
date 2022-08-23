@@ -22,10 +22,10 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.FragmentBillingBinding
-import me.proton.core.paymentiap.presentation.ui.BillingIAPFragment
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.CardType
 import me.proton.core.presentation.utils.InputValidationResult
@@ -39,12 +39,12 @@ import me.proton.core.util.kotlin.exhaustive
 private const val TAG_BILLING_FRAGMENT = "billing_fragment"
 private const val TAG_BILLING_IAP_FRAGMENT = "billing_iap_fragment"
 
-const val MAX_CARD_LENGTH = 16
-const val CARD_NUMBER_CHUNKS_LENGTH = 4
-const val MAX_EXP_DATE_LENGTH = 4
-const val EXP_DATE_CHUNKS_LENGTH = 2
+internal const val MAX_CARD_LENGTH = 16
+internal const val CARD_NUMBER_CHUNKS_LENGTH = 4
+internal const val MAX_EXP_DATE_LENGTH = 4
+internal const val EXP_DATE_CHUNKS_LENGTH = 2
 
-class CardNumberWatcher(
+internal class CardNumberWatcher(
     var cardNumber: String = ""
 ) {
     val watcher: ProtonInput.(Editable) -> Unit = { editable ->
@@ -65,7 +65,7 @@ class CardNumberWatcher(
     }
 }
 
-class ExpirationDateWatcher(
+internal class ExpirationDateWatcher(
     var expirationDate: String = ""
 ) {
     val watcher: ProtonInput.(Editable) -> Unit = { editable ->
@@ -80,7 +80,7 @@ class ExpirationDateWatcher(
     }
 }
 
-fun InputValidationResult.setCardIcon(context: Context, block: (Drawable?) -> Unit) {
+internal fun InputValidationResult.setCardIcon(context: Context, block: (Drawable?) -> Unit) {
     if (!isValid) {
         return
     }
@@ -98,7 +98,7 @@ fun InputValidationResult.setCardIcon(context: Context, block: (Drawable?) -> Un
  * Returns the list of billing input fields (views) validation result.
  * Every validation also marks the appropriate field as invalid.
  */
-fun FragmentBillingBinding.billingInputFieldsValidationList(context: Context): List<InputValidationResult> =
+internal fun FragmentBillingBinding.billingInputFieldsValidationList(context: Context): List<InputValidationResult> =
     listOf(
         cardNameInput.validate().also {
             if (!it.isValid) cardNameInput.setInputError(context.getString(R.string.payments_error_card_name))
@@ -124,6 +124,7 @@ fun FragmentBillingBinding.billingInputFieldsValidationList(context: Context): L
 internal fun FragmentManager.showBillingFragment(
     containerId: Int = android.R.id.content
 ) {
+    removeBillingIAPFragment()
     val fragment = findFragmentByTag(TAG_BILLING_FRAGMENT) ?: run { BillingFragment() }
     inTransaction {
         setCustomAnimations(0, 0)
@@ -135,10 +136,34 @@ internal fun FragmentManager.showBillingFragment(
 internal fun FragmentManager.showBillingIAPFragment(
     containerId: Int = android.R.id.content
 ) {
-    val fragment = findFragmentByTag(TAG_BILLING_IAP_FRAGMENT) ?: run { BillingIAPFragment() }
+    removeBillingFragment()
+    val fragment = findFragmentByTag(TAG_BILLING_IAP_FRAGMENT) ?: run {
+        Class.forName(
+            "me.proton.core.paymentiap.presentation.ui.BillingIAPFragment",
+            false,
+            this::class.java.classLoader
+        ).newInstance() as Fragment
+    }
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, fragment, TAG_BILLING_IAP_FRAGMENT)
         addToBackStack(TAG_BILLING_IAP_FRAGMENT)
     }
 }
+
+internal fun FragmentManager.removeBillingFragment() = findFragmentByTag(TAG_BILLING_FRAGMENT)?.let { billing ->
+    inTransaction {
+        setCustomAnimations(0, 0)
+        remove(billing)
+    }
+    popBackStack()
+}
+
+internal fun FragmentManager.removeBillingIAPFragment() =
+    findFragmentByTag(TAG_BILLING_IAP_FRAGMENT)?.let { billingIAP ->
+        inTransaction {
+            setCustomAnimations(0, 0)
+            remove(billingIAP)
+        }
+        popBackStack()
+    }

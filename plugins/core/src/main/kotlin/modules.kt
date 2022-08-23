@@ -124,18 +124,11 @@ public object Module {
     public const val userPresentation: String = "$user:user-presentation"
     public const val userData: String = "$user:user-data"
 
-    // Payment-Common
-    public const val paymentCommon: String = ":payment-common"
-    public const val paymentCommonDagger: String = "$paymentCommon:payment-common-dagger"
-    public const val paymentCommonData: String = "$paymentCommon:payment-common-data"
-    public const val paymentCommonDomain: String = "$paymentCommon:payment-common-domain"
-    public const val paymentCommonPresentation: String = "$paymentCommon:payment-common-presentation"
-
     // Payment
     public const val payment: String = ":payment"
     public const val paymentDagger: String = "$payment:payment-dagger"
-    public const val paymentDomain: String = "$payment:payment-domain"
     public const val paymentData: String = "$payment:payment-data"
+    public const val paymentDomain: String = "$payment:payment-domain"
     public const val paymentPresentation: String = "$payment:payment-presentation"
 
     // Payment-IAP

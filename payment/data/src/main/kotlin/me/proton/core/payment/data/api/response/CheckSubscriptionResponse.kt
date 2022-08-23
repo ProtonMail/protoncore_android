@@ -20,9 +20,9 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.domain.entity.SubscriptionStatus
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionStatus
 
 @Serializable
 internal data class CheckSubscriptionResponse(

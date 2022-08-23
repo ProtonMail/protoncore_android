@@ -14,6 +14,14 @@ public class hilt_aggregated_deps/_me_proton_core_payment_presentation_ui_Paymen
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_BillingViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_BillingViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_PaymentOptionsViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -30,6 +38,27 @@ public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel
 	public fun <init> ()V
 }
 
+public abstract interface class me/proton/core/payment/presentation/ActivePaymentProvider {
+	public abstract fun getActivePaymentProvider (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getNextPaymentProviderText ()Ljava/lang/Integer;
+	public abstract fun switchNextPaymentProvider ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+}
+
+public final class me/proton/core/payment/presentation/ActivePaymentProviderImpl : me/proton/core/payment/presentation/ActivePaymentProvider {
+	public fun <init> (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public fun getActivePaymentProvider (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getNextPaymentProviderText ()Ljava/lang/Integer;
+	public fun switchNextPaymentProvider ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+}
+
+public final class me/proton/core/payment/presentation/ActivePaymentProviderImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/ActivePaymentProviderImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/payment/presentation/ActivePaymentProviderImpl;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)Lme/proton/core/payment/presentation/ActivePaymentProviderImpl;
+}
+
 public final class me/proton/core/payment/presentation/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -38,16 +67,16 @@ public final class me/proton/core/payment/presentation/BuildConfig {
 }
 
 public final class me/proton/core/payment/presentation/LogTag {
+	public static final field EMPTY_ACTIVE_PAYMENT_PROVIDER Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/payment/presentation/LogTag;
-	public static final field NO_ACTIVE_PAYMENT_PROVIDER Ljava/lang/String;
 }
 
 public final class me/proton/core/payment/presentation/PaymentsOrchestrator {
 	public fun <init> ()V
 	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnPaymentResult (Lkotlin/jvm/functions/Function1;)V
-	public final fun startBillingWorkFlow (Lme/proton/core/domain/entity/UserId;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;)V
-	public static synthetic fun startBillingWorkFlow$default (Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/domain/entity/UserId;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;ILjava/lang/Object;)V
+	public final fun startBillingWorkFlow (Lme/proton/core/domain/entity/UserId;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;)V
+	public static synthetic fun startBillingWorkFlow$default (Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/domain/entity/UserId;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;ILjava/lang/Object;)V
 }
 
 public final class me/proton/core/payment/presentation/PaymentsOrchestratorKt {
@@ -64,6 +93,7 @@ public final class me/proton/core/payment/presentation/PaymentsOrchestrator_Fact
 
 public final class me/proton/core/payment/presentation/databinding/ActivityBillingBinding : androidx/viewbinding/ViewBinding {
 	public final field fragmentContainer Landroid/widget/FrameLayout;
+	public final field gPayButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field nextPaymentProviderButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field payButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
@@ -144,25 +174,51 @@ public final class me/proton/core/payment/presentation/databinding/PlanShortDeta
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/payment/presentation/databinding/PlanShortDetailsBinding;
 }
 
+public final class me/proton/core/payment/presentation/entity/BillingInput : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/BillingInput;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingInput;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingInput;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCodes ()Ljava/util/List;
+	public final fun getExistingPlans ()Ljava/util/List;
+	public final fun getPaymentMethodId ()Ljava/lang/String;
+	public final fun getPlan ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public final fun getUser ()Lme/proton/core/domain/entity/UserId;
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
 public final class me/proton/core/payment/presentation/entity/BillingResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/payment/presentation/entity/BillingResult$Companion;
-	public fun <init> (ZLjava/lang/String;ZJLme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;)V
+	public fun <init> (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Z
 	public final fun component4 ()J
-	public final fun component5 ()Lme/proton/core/paymentcommon/domain/entity/Currency;
-	public final fun component6 ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
-	public final fun copy (ZLjava/lang/String;ZJLme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;)Lme/proton/core/payment/presentation/entity/BillingResult;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingResult;ZLjava/lang/String;ZJLme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingResult;
+	public final fun component5 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun component6 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component7 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun copy (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/entity/BillingResult;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingResult;ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingResult;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
-	public final fun getCurrency ()Lme/proton/core/paymentcommon/domain/entity/Currency;
-	public final fun getCycle ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
+	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getPaySuccess ()Z
 	public final fun getSubscriptionCreated ()Z
+	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -173,123 +229,48 @@ public final class me/proton/core/payment/presentation/entity/BillingResult$Comp
 	public final fun paymentDetails (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;)Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;
 }
 
-public abstract class me/proton/core/payment/presentation/entity/PaymentOptionUIModel : android/os/Parcelable {
-	public static final field Companion Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$Companion;
-	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getId ()Ljava/lang/String;
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$Companion {
-	public final fun getDiffCallback ()Landroidx/recyclerview/widget/DiffUtil$ItemCallback;
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase : me/proton/core/payment/presentation/entity/PaymentOptionUIModel {
+public final class me/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;I)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()I
+	public final fun copy (Ljava/lang/String;Ljava/lang/Integer;I)Lme/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails;Ljava/lang/String;Ljava/lang/Integer;IILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getServices ()Ljava/lang/Integer;
+	public final fun getType ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/payment/presentation/entity/PlanShortDetails : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/payment/domain/entity/Currency;IILjava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/payment/domain/entity/Currency;IILjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component4 ()Ljava/lang/Long;
+	public final fun component5 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun component6 ()I
+	public final fun component7 ()I
+	public final fun component8 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/payment/domain/entity/Currency;IILjava/util/Map;)Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Lme/proton/core/payment/domain/entity/Currency;IILjava/util/Map;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PlanShortDetails;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getId ()Ljava/lang/String;
-	public final fun getProvider ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod : me/proton/core/payment/presentation/entity/PaymentOptionUIModel {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getId ()Ljava/lang/String;
-	public final fun getSubtitle ()Ljava/lang/String;
-	public final fun getTitle ()Ljava/lang/String;
-	public final fun getType ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentOptionsInput : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;
-	public final fun component3 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;)Lme/proton/core/payment/presentation/entity/PaymentOptionsInput;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionsInput;Ljava/lang/String;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionsInput;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCodes ()Ljava/util/List;
-	public final fun getPlan ()Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;
-	public final fun getUserId ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentOptionsResult : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (ZLme/proton/core/payment/presentation/entity/BillingResult;)V
-	public synthetic fun <init> (ZLme/proton/core/payment/presentation/entity/BillingResult;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Z
-	public final fun component2 ()Lme/proton/core/payment/presentation/entity/BillingResult;
-	public final fun copy (ZLme/proton/core/payment/presentation/entity/BillingResult;)Lme/proton/core/payment/presentation/entity/PaymentOptionsResult;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentOptionsResult;ZLme/proton/core/payment/presentation/entity/BillingResult;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentOptionsResult;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBilling ()Lme/proton/core/payment/presentation/entity/BillingResult;
-	public final fun getResult ()Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentTokenApprovalInput : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()J
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalInput;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalInput;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalInput;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAmount ()J
-	public final fun getApprovalUrl ()Ljava/lang/String;
-	public final fun getPaymentToken ()Ljava/lang/String;
-	public final fun getReturnHost ()Ljava/lang/String;
-	public final fun getUserId ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/payment/presentation/entity/PaymentTokenApprovalResult : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (ZJLjava/lang/String;)V
-	public final fun component1 ()Z
-	public final fun component2 ()J
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (ZJLjava/lang/String;)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalResult;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalResult;ZJLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalResult;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAmount ()J
-	public final fun getApproved ()Z
-	public final fun getToken ()Ljava/lang/String;
+	public final fun getAmount ()Ljava/lang/Long;
+	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getServices ()I
+	public final fun getSubscriptionCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getType ()I
+	public final fun getVendorNames ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -306,63 +287,24 @@ public final class me/proton/core/payment/presentation/entity/SecureEndpoint {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/payment/presentation/ui/BillingActivity : me/proton/core/payment/presentation/ui/PaymentsActivity {
-	public static final field ARG_BILLING_INPUT Ljava/lang/String;
-	public static final field ARG_BILLING_RESULT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/BillingActivity$Companion;
-	public static final field EXP_DATE_SEPARATOR Ljava/lang/String;
-	public fun <init> ()V
-	public fun onThreeDSApprovalResult (JLjava/lang/String;Z)V
-	public fun showError (Ljava/lang/String;)V
-	public fun showLoading (Z)V
-}
-
-public final class me/proton/core/payment/presentation/ui/BillingActivity$Companion {
-}
-
 public abstract interface class me/proton/core/payment/presentation/ui/BillingActivity_GeneratedInjector {
 	public abstract fun injectBillingActivity (Lme/proton/core/payment/presentation/ui/BillingActivity;)V
-}
-
-public final class me/proton/core/payment/presentation/ui/BillingFragment : me/proton/core/presentation/ui/ProtonFragment {
-	public static final field Companion Lme/proton/core/payment/presentation/ui/BillingFragment$Companion;
-	public fun <init> ()V
-	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
-}
-
-public final class me/proton/core/payment/presentation/ui/BillingFragment$Companion {
-	public final fun invoke ()Lme/proton/core/payment/presentation/ui/BillingFragment;
 }
 
 public abstract interface class me/proton/core/payment/presentation/ui/BillingFragment_GeneratedInjector {
 	public abstract fun injectBillingFragment (Lme/proton/core/payment/presentation/ui/BillingFragment;)V
 }
 
-public final class me/proton/core/payment/presentation/ui/CardNumberWatcher {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getCardNumber ()Ljava/lang/String;
-	public final fun getWatcher ()Lkotlin/jvm/functions/Function2;
-	public final fun setCardNumber (Ljava/lang/String;)V
-}
-
-public final class me/proton/core/payment/presentation/ui/ExpirationDateWatcher {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getExpirationDate ()Ljava/lang/String;
-	public final fun getWatcher ()Lkotlin/jvm/functions/Function2;
-	public final fun setExpirationDate (Ljava/lang/String;)V
-}
-
-public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingActivity : me/proton/core/payment/presentation/ui/PaymentsActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -378,173 +320,365 @@ public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingFragmen
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentOptionsActivity : me/proton/core/payment/presentation/ui/PaymentsActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentOptionsActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
-public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentTokenApprovalActivity : me/proton/core/payment/presentation/ui/PaymentsActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentTokenApprovalActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
-}
-
-public final class me/proton/core/payment/presentation/ui/PaymentOptionsActivity : me/proton/core/payment/presentation/ui/PaymentsActivity {
-	public static final field ARG_INPUT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentOptionsActivity$Companion;
-	public fun <init> ()V
-	public fun onThreeDSApprovalResult (JLjava/lang/String;Z)V
-	public fun showLoading (Z)V
-}
-
-public final class me/proton/core/payment/presentation/ui/PaymentOptionsActivity$Companion {
+	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public abstract interface class me/proton/core/payment/presentation/ui/PaymentOptionsActivity_GeneratedInjector {
 	public abstract fun injectPaymentOptionsActivity (Lme/proton/core/payment/presentation/ui/PaymentOptionsActivity;)V
 }
 
-public final class me/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity : me/proton/core/payment/presentation/ui/PaymentsActivity {
-	public static final field ARG_INPUT Ljava/lang/String;
-	public static final field ARG_RESULT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity$Companion;
-	public static final field MAX_PROGRESS I
-	public fun <init> ()V
-	public fun onError (Ljava/lang/String;)V
-}
-
-public final class me/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity$Companion {
-}
-
-public final class me/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity$LoadingWebChromeClient : android/webkit/WebChromeClient {
-	public fun <init> (Lme/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity;I)V
-	public fun onProgressChanged (Landroid/webkit/WebView;I)V
-}
-
 public abstract interface class me/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity_GeneratedInjector {
 	public abstract fun injectPaymentTokenApprovalActivity (Lme/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity;)V
 }
 
-public abstract class me/proton/core/payment/presentation/ui/PaymentsActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
-	public static final field ARG_RESULT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	protected fun onCreate (Landroid/os/Bundle;)V
-	public fun onError (Ljava/lang/String;)V
-	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
-	protected final fun onPaymentResult (Lme/proton/core/payment/presentation/entity/BillingResult;)V
-	public fun onThreeDSApprovalResult (JLjava/lang/String;Z)V
-	protected final fun onTokenApprovalNeeded (Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/PaymentToken$CreatePaymentTokenResult;J)V
-	public fun showError (Ljava/lang/String;)V
-	public fun showLoading (Z)V
-	protected final fun startBilling (Ljava/lang/String;Ljava/util/List;Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;Ljava/util/List;)V
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public static final field Companion Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion;
+	public fun <init> (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)V
+	public final fun getPlansValidationState ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getSubscriptionResult ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun onThreeDSTokenApproved (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onThreeDSTokenApproved$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun subscribe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
+	public static synthetic fun subscribe$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun validatePlan (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;)Lkotlinx/coroutines/Job;
+	public static synthetic fun validatePlan$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
-public final class me/proton/core/payment/presentation/ui/PaymentsActivity$Companion {
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion {
+	public final fun buildPlansList (Ljava/util/List;Ljava/lang/String;II)Ljava/util/List;
+	public final fun createSubscriptionPlansList (Ljava/util/List;Ljava/lang/String;II)Ljava/util/List;
 }
 
-public final class me/proton/core/payment/presentation/ui/StartBilling : androidx/activity/result/contract/ActivityResultContract {
-	public fun <init> ()V
-	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
-	public fun createIntent (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/entity/BillingInput;)Landroid/content/Intent;
-	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
-	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/payment/presentation/entity/BillingResult;
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState {
 }
 
-public final class me/proton/core/payment/presentation/ui/StartPaymentOptions : androidx/activity/result/contract/ActivityResultContract {
-	public fun <init> ()V
-	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
-	public fun createIntent (Landroid/content/Context;Lme/proton/core/payment/presentation/entity/PaymentOptionsInput;)Landroid/content/Intent;
-	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
-	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/payment/presentation/entity/PaymentOptionsResult;
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Error : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState {
 }
 
-public final class me/proton/core/payment/presentation/ui/StartPaymentTokenApproval : androidx/activity/result/contract/ActivityResultContract {
-	public fun <init> ()V
-	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
-	public fun createIntent (Landroid/content/Context;Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalInput;)Landroid/content/Intent;
-	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
-	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalResult;
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Error$Message : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Error {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Error$Message;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Error$Message;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/payment/presentation/ui/UtilsKt {
-	public static final field CARD_NUMBER_CHUNKS_LENGTH I
-	public static final field EXP_DATE_CHUNKS_LENGTH I
-	public static final field MAX_CARD_LENGTH I
-	public static final field MAX_EXP_DATE_LENGTH I
-	public static final fun billingInputFieldsValidationList (Lme/proton/core/payment/presentation/databinding/FragmentBillingBinding;Landroid/content/Context;)Ljava/util/List;
-	public static final fun setCardIcon (Lme/proton/core/presentation/utils/InputValidationResult;Landroid/content/Context;Lkotlin/jvm/functions/Function1;)V
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Idle : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Idle;
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;)V
-	public final fun getAvailablePaymentMethods (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
-	public final fun getAvailablePaymentMethodsState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun getBillingCommonViewModel ()Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;
-	public final fun onThreeDSTokenApproved (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;IILjava/util/List;JLme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/String;)Lkotlinx/coroutines/Job;
-	public static synthetic fun onThreeDSTokenApproved$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;IILjava/util/List;JLme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/String;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
-	public final fun subscribe (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;IILjava/util/List;Lme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Lme/proton/core/paymentcommon/domain/entity/PaymentType;)Lkotlinx/coroutines/Job;
-	public static synthetic fun subscribe$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;IILjava/util/List;Lme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Lme/proton/core/paymentcommon/domain/entity/PaymentType;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
-	public final fun validatePlan (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;IILjava/util/List;Lme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;)Lkotlinx/coroutines/Job;
-	public static synthetic fun validatePlan$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;IILjava/util/List;Lme/proton/core/paymentcommon/domain/entity/Currency;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Processing : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Processing;
 }
 
-public abstract class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State {
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Success : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState {
+	public fun <init> (Lme/proton/core/payment/domain/entity/SubscriptionStatus;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/SubscriptionStatus;
+	public final fun copy (Lme/proton/core/payment/domain/entity/SubscriptionStatus;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Success;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Success;Lme/proton/core/payment/domain/entity/SubscriptionStatus;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$PlansValidationState$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSubscription ()Lme/proton/core/payment/domain/entity/SubscriptionStatus;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State {
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error {
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error {
 	public fun <init> (Ljava/lang/Throwable;)V
 	public final fun component1 ()Ljava/lang/Throwable;
-	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$SubscriptionInRecoverableError : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error {
-	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$SubscriptionInRecoverableError;
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$SignUpWithPaymentMethodUnsupported : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$SignUpWithPaymentMethodUnsupported;
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Idle : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State {
-	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Idle;
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Idle : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Idle;
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Processing : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State {
-	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Processing;
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
 }
 
-public abstract class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Success : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State {
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Success$PaymentMethodsSuccess : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Success {
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Success$PaymentMethodsSuccess;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Success$PaymentMethodsSuccess;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Success$PaymentMethodsSuccess;
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete {
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;J)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;J)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;JILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAvailablePaymentMethods ()Ljava/util/List;
+	public final fun getAmount ()J
+	public final fun getPaymentToken ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Processing : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Processing;
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
+	public fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)V
+	public final fun component1 ()J
+	public final fun component2 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun copy (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getPaymentToken ()Ljava/lang/String;
+	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
+	public fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)V
+	public final fun component1 ()J
+	public final fun component2 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component4 ()Lme/proton/core/payment/domain/entity/Subscription;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun copy (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getPaymentToken ()Ljava/lang/String;
+	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun getSubscriptionStatus ()Lme/proton/core/payment/domain/entity/Subscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionPlanValidated : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
+	public fun <init> (Lme/proton/core/payment/domain/entity/SubscriptionStatus;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/SubscriptionStatus;
+	public final fun copy (Lme/proton/core/payment/domain/entity/SubscriptionStatus;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionPlanValidated;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionPlanValidated;Lme/proton/core/payment/domain/entity/SubscriptionStatus;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionPlanValidated;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSubscriptionStatus ()Lme/proton/core/payment/domain/entity/SubscriptionStatus;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPaymentToken ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel {
+	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)V
+	public final fun announcePlan ()V
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getUserInteractionState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun onLoadingStateChange (Z)V
+	public final fun onPay (Lme/proton/core/payment/presentation/entity/BillingInput;)V
+	public final fun setGPayButtonState (Z)V
+	public final fun setPayButtonStateEnabled (Ljava/lang/String;)V
+	public final fun setPayButtonsState (Z)V
+	public final fun setPlan (Lme/proton/core/payment/presentation/entity/PlanShortDetails;)V
+	public final fun switchNextPaymentProvider ()V
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$Idle : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$Idle;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$Loading : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$Loading;
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$GPayDisabled : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$GPayDisabled;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$GPayEnabled : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$GPayEnabled;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$Idle : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$Idle;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$Loading : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$Loading;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$ProtonPayDisabled : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$ProtonPayDisabled;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$ProtonPayEnabled : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$ProtonPayEnabled;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$ProtonPayEnabled;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PayButtonsState$ProtonPayEnabled;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersEmpty : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersEmpty;
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersError : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersError$Message : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersError {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersError$Message;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersError$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersError$Message;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersSuccess : me/proton/core/payment/presentation/viewmodel/BillingViewModel$State {
+	public fun <init> (Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/Integer;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/Integer;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersSuccess;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersSuccess;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$State$PaymentProvidersSuccess;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActiveProvider ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun getNextPaymentProviderTextResource ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState {
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$Idle : me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState {
+	public static final field INSTANCE Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$Idle;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnLoadingStateChange : me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState {
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnLoadingStateChange;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnLoadingStateChange;ZILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnLoadingStateChange;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLoading ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnPay : me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState {
+	public fun <init> (Lme/proton/core/payment/presentation/entity/BillingInput;)V
+	public final fun component1 ()Lme/proton/core/payment/presentation/entity/BillingInput;
+	public final fun copy (Lme/proton/core/payment/presentation/entity/BillingInput;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnPay;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnPay;Lme/proton/core/payment/presentation/entity/BillingInput;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$OnPay;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInput ()Lme/proton/core/payment/presentation/entity/BillingInput;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$PlanValidated : me/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState {
+	public fun <init> (Lme/proton/core/payment/presentation/entity/PlanShortDetails;)V
+	public final fun component1 ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public final fun copy (Lme/proton/core/payment/presentation/entity/PlanShortDetails;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$PlanValidated;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$PlanValidated;Lme/proton/core/payment/presentation/entity/PlanShortDetails;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel$UserInteractionState$PlanValidated;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPlan ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
+	public static fun newInstance (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/paymentcommon/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_HiltModules {
@@ -567,16 +701,11 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsV
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public static final field CANCEL_QUERY_PARAM_VALUE Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$Companion;
 	public fun <init> (Lme/proton/core/payment/domain/usecase/GetPaymentTokenStatus;Lme/proton/core/payment/presentation/entity/SecureEndpoint;Lme/proton/core/network/domain/NetworkManager;)V
 	public final fun getApprovalState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getNetworkConnectionState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun handleRedirection (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Landroid/net/Uri;Ljava/lang/String;)Z
 	public final fun watchNetwork ()V
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$Companion {
 }
 
 public abstract class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State {
@@ -602,12 +731,12 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApp
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success : me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State {
-	public fun <init> (Lme/proton/core/paymentcommon/domain/entity/PaymentTokenStatus;)V
-	public final fun component1 ()Lme/proton/core/paymentcommon/domain/entity/PaymentTokenStatus;
-	public final fun copy (Lme/proton/core/paymentcommon/domain/entity/PaymentTokenStatus;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success;Lme/proton/core/paymentcommon/domain/entity/PaymentTokenStatus;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success;
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Success;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getPaymentTokenStatus ()Lme/proton/core/paymentcommon/domain/entity/PaymentTokenStatus;
+	public final fun getPaymentTokenStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

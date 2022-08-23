@@ -22,7 +22,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PaymentTokenApprovalInput(
+internal data class PaymentTokenApprovalInput(
     val userId: String?,
     val paymentToken: String,
     val returnHost: String,

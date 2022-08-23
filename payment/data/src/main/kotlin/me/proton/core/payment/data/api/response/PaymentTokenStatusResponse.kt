@@ -20,8 +20,8 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.paymentcommon.domain.entity.PaymentToken
-import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
 
 @Serializable
 internal data class PaymentTokenStatusResponse(

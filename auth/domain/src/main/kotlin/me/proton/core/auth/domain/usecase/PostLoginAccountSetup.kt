@@ -24,7 +24,7 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.paymentcommon.domain.usecase.PerformSubscribe
+import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import javax.inject.Inject
@@ -91,7 +91,8 @@ class PostLoginAccountSetup @Inject constructor(
                     currency = billingDetails.currency,
                     cycle = billingDetails.cycle,
                     planNames = listOf(billingDetails.planName),
-                    paymentToken = billingDetails.token
+                    paymentToken = billingDetails.token,
+                    subscriptionManagement = billingDetails.subscriptionManagement
                 )
             }
         }

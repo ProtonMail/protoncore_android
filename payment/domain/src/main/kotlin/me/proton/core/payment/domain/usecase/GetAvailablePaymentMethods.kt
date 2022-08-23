@@ -19,8 +19,8 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.paymentcommon.domain.entity.PaymentMethod
-import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
 /**
@@ -28,9 +28,9 @@ import javax.inject.Inject
  * Only upgrade for existing logged in user.
  * Could not be used during sign-up.
  */
-class GetAvailablePaymentMethods @Inject constructor(
+public class GetAvailablePaymentMethods @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
-    suspend operator fun invoke(userId: UserId): List<PaymentMethod> =
+    public suspend operator fun invoke(userId: UserId): List<PaymentMethod> =
         paymentsRepository.getAvailablePaymentMethods(userId)
 }

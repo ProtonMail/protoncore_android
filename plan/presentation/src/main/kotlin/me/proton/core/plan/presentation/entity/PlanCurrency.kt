@@ -18,7 +18,7 @@
 
 package me.proton.core.plan.presentation.entity
 
-import me.proton.core.paymentcommon.domain.entity.Currency
+import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.util.kotlin.exhaustive
 
 enum class PlanCurrency(val sign: String) {

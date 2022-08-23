@@ -25,10 +25,6 @@ plugins {
     id("kotlin-parcelize")
 }
 
-proton {
-    apiModeDisabled()
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -38,7 +34,6 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
         project(Module.paymentDomain),
-        project(Module.paymentCommonPresentation),
         project(Module.presentation),
         `activity-noktx`,
         `constraint-layout`,
@@ -65,8 +60,6 @@ dependencies {
         `lifecycle-runtime`,
         `lifecycle-viewModel`,
     )
-
-    compileOnly(project(Module.paymentIapPresentation))
 
     testImplementation(
         project(Module.androidTest),

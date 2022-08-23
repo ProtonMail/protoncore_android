@@ -34,7 +34,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
         project(Module.presentation),
-        project(Module.paymentCommonPresentation),
+        project(Module.paymentPresentation),
         `activity-noktx`,
         `constraint-layout`,
         coordinatorlayout,

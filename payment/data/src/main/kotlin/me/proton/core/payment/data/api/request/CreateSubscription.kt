@@ -34,5 +34,7 @@ internal data class CreateSubscription(
     @SerialName("Plans")
     val plans: Map<String, Int>,
     @SerialName("Cycle")
-    val cycle: Int
+    val cycle: Int,
+    @SerialName("External")
+    val external: Int
 )

@@ -1,15 +1,444 @@
+public final class me/proton/core/payment/domain/ConstKt {
+	public static final field MAX_PLAN_QUANTITY I
+}
+
+public abstract interface class me/proton/core/payment/domain/PaymentManager {
+	public abstract fun getPaymentProviders (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun isSubscriptionAvailable (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun isUpgradeAvailable (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/PaymentManager$DefaultImpls {
+	public static synthetic fun getPaymentProviders$default (Lme/proton/core/payment/domain/PaymentManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun isSubscriptionAvailable$default (Lme/proton/core/payment/domain/PaymentManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun isUpgradeAvailable$default (Lme/proton/core/payment/domain/PaymentManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/payment/domain/entity/Card {
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getCountry ()Ljava/lang/String;
+	public fun getExpirationMonth ()Ljava/lang/String;
+	public fun getExpirationYear ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getZip ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/Card$CardReadOnly : me/proton/core/payment/domain/entity/Card {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Card$CardReadOnly;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Card$CardReadOnly;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Card$CardReadOnly;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBrand ()Ljava/lang/String;
+	public fun getCountry ()Ljava/lang/String;
+	public fun getExpirationMonth ()Ljava/lang/String;
+	public fun getExpirationYear ()Ljava/lang/String;
+	public final fun getLast4 ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getZip ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/Card$CardWithPaymentDetails : me/proton/core/payment/domain/entity/Card {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Card$CardWithPaymentDetails;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Card$CardWithPaymentDetails;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Card$CardWithPaymentDetails;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCountry ()Ljava/lang/String;
+	public final fun getCvc ()Ljava/lang/String;
+	public fun getExpirationMonth ()Ljava/lang/String;
+	public fun getExpirationYear ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public final fun getNumber ()Ljava/lang/String;
+	public fun getZip ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/Coupon {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Coupon;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Coupon;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Coupon;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public final fun getDescription ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/Currency : java/lang/Enum {
+	public static final field CHF Lme/proton/core/payment/domain/entity/Currency;
+	public static final field EUR Lme/proton/core/payment/domain/entity/Currency;
+	public static final field USD Lme/proton/core/payment/domain/entity/Currency;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Currency;
+	public static fun values ()[Lme/proton/core/payment/domain/entity/Currency;
+}
+
+public abstract class me/proton/core/payment/domain/entity/Details {
+}
+
+public final class me/proton/core/payment/domain/entity/Details$CardDetails : me/proton/core/payment/domain/entity/Details {
+	public fun <init> (Lme/proton/core/payment/domain/entity/Card$CardReadOnly;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/Card$CardReadOnly;
+	public final fun copy (Lme/proton/core/payment/domain/entity/Card$CardReadOnly;)Lme/proton/core/payment/domain/entity/Details$CardDetails;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Details$CardDetails;Lme/proton/core/payment/domain/entity/Card$CardReadOnly;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Details$CardDetails;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCardDetails ()Lme/proton/core/payment/domain/entity/Card$CardReadOnly;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/Details$PayPalDetails : me/proton/core/payment/domain/entity/Details {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Details$PayPalDetails;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Details$PayPalDetails;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Details$PayPalDetails;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBillingAgreementId ()Ljava/lang/String;
+	public final fun getPayer ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/payment/domain/entity/PaymentBody {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getType ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentBody$TokenPaymentBody : me/proton/core/payment/domain/entity/PaymentBody {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentBody$TokenPaymentBody;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentBody$TokenPaymentBody;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentBody$TokenPaymentBody;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentMethod {
+	public fun <init> (Ljava/lang/String;Lme/proton/core/payment/domain/entity/PaymentMethodType;Lme/proton/core/payment/domain/entity/Details;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/payment/domain/entity/PaymentMethodType;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/Details;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/payment/domain/entity/PaymentMethodType;Lme/proton/core/payment/domain/entity/Details;)Lme/proton/core/payment/domain/entity/PaymentMethod;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentMethod;Ljava/lang/String;Lme/proton/core/payment/domain/entity/PaymentMethodType;Lme/proton/core/payment/domain/entity/Details;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentMethod;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDetails ()Lme/proton/core/payment/domain/entity/Details;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getType ()Lme/proton/core/payment/domain/entity/PaymentMethodType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentMethodType : java/lang/Enum {
+	public static final field CARD Lme/proton/core/payment/domain/entity/PaymentMethodType;
+	public static final field Companion Lme/proton/core/payment/domain/entity/PaymentMethodType$Companion;
+	public static final field PAYPAL Lme/proton/core/payment/domain/entity/PaymentMethodType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentMethodType;
+	public static fun values ()[Lme/proton/core/payment/domain/entity/PaymentMethodType;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentMethodType$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentStatus {
+	public fun <init> (Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public final fun component1 ()Ljava/lang/Boolean;
+	public final fun component2 ()Ljava/lang/Boolean;
+	public final fun component3 ()Ljava/lang/Boolean;
+	public final fun copy (Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/payment/domain/entity/PaymentStatus;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentStatus;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentStatus;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCard ()Ljava/lang/Boolean;
+	public final fun getInApp ()Ljava/lang/Boolean;
+	public final fun getPaypal ()Ljava/lang/Boolean;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/payment/domain/entity/PaymentToken {
+	public synthetic fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult : me/proton/core/payment/domain/entity/PaymentToken {
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApprovalUrl ()Ljava/lang/String;
+	public final fun getReturnHost ()Ljava/lang/String;
+	public fun getStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public final fun getToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult : me/proton/core/payment/domain/entity/PaymentToken {
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)Lme/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentTokenStatus : java/lang/Enum {
+	public static final field CHARGEABLE Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static final field CONSUMED Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static final field Companion Lme/proton/core/payment/domain/entity/PaymentTokenStatus$Companion;
+	public static final field FAILED Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static final field NOT_SUPPORTED Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static final field PENDING Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static fun values ()[Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentTokenStatus$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public abstract class me/proton/core/payment/domain/entity/PaymentType {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getType ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentType$CreditCard : me/proton/core/payment/domain/entity/PaymentType {
+	public fun <init> (Lme/proton/core/payment/domain/entity/Card;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/Card;
+	public final fun copy (Lme/proton/core/payment/domain/entity/Card;)Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lme/proton/core/payment/domain/entity/Card;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCard ()Lme/proton/core/payment/domain/entity/Card;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentType$GoogleIAP : me/proton/core/payment/domain/entity/PaymentType {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOrderId ()Ljava/lang/String;
+	public final fun getPackageName ()Ljava/lang/String;
+	public final fun getProductId ()Ljava/lang/String;
+	public final fun getPurchaseToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentType$PayPal : me/proton/core/payment/domain/entity/PaymentType {
+	public static final field INSTANCE Lme/proton/core/payment/domain/entity/PaymentType$PayPal;
+}
+
+public final class me/proton/core/payment/domain/entity/PaymentType$PaymentMethod : me/proton/core/payment/domain/entity/PaymentType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentType$PaymentMethod;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentType$PaymentMethod;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentType$PaymentMethod;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPaymentMethodId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/Subscription {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()J
+	public final fun component5 ()J
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()J
+	public final fun component9 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;)Lme/proton/core/payment/domain/entity/Subscription;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Subscription;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getCouponCode ()Ljava/lang/String;
+	public final fun getCurrency ()Ljava/lang/String;
+	public final fun getCycle ()I
+	public final fun getExternal ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getInvoiceId ()Ljava/lang/String;
+	public final fun getPeriodEnd ()J
+	public final fun getPeriodStart ()J
+	public final fun getPlans ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/SubscriptionCycle : java/lang/Enum {
+	public static final field Companion Lme/proton/core/payment/domain/entity/SubscriptionCycle$Companion;
+	public static final field FREE Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public static final field MONTHLY Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public static final field TWO_YEARS Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public static final field YEARLY Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public static fun values ()[Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+}
+
+public final class me/proton/core/payment/domain/entity/SubscriptionCycle$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/payment/domain/entity/SubscriptionManagement : java/lang/Enum {
+	public static final field Companion Lme/proton/core/payment/domain/entity/SubscriptionManagement$Companion;
+	public static final field GOOGLE_MANAGED Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public static final field PROTON_MANAGED Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public static fun values ()[Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+}
+
+public final class me/proton/core/payment/domain/entity/SubscriptionManagement$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/payment/domain/entity/SubscriptionStatus {
+	public fun <init> (JJIJLme/proton/core/payment/domain/entity/Coupon;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;)V
+	public final fun component1 ()J
+	public final fun component2 ()J
+	public final fun component3 ()I
+	public final fun component4 ()J
+	public final fun component5 ()Lme/proton/core/payment/domain/entity/Coupon;
+	public final fun component6 ()J
+	public final fun component7 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun component8 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component9 ()Ljava/lang/Long;
+	public final fun copy (JJIJLme/proton/core/payment/domain/entity/Coupon;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;)Lme/proton/core/payment/domain/entity/SubscriptionStatus;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/SubscriptionStatus;JJIJLme/proton/core/payment/domain/entity/Coupon;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/SubscriptionStatus;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getAmountDue ()J
+	public final fun getCoupon ()Lme/proton/core/payment/domain/entity/Coupon;
+	public final fun getCouponDiscount ()J
+	public final fun getCredit ()J
+	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getGift ()Ljava/lang/Long;
+	public final fun getProration ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/payment/domain/repository/PaymentsRepository {
+	public abstract fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentBody;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createPaymentTokenExistingPaymentMethod (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createPaymentTokenGoogleIAP (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createPaymentTokenNewCreditCard (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createPaymentTokenNewPayPal (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAvailablePaymentMethods (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPaymentStatus (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPaymentTokenStatus (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSubscription (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun validateSubscription (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/repository/PaymentsRepository$DefaultImpls {
+	public static synthetic fun createOrUpdateSubscription$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentBody;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createPaymentTokenExistingPaymentMethod$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createPaymentTokenGoogleIAP$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createPaymentTokenNewCreditCard$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createPaymentTokenNewPayPal$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun validateSubscription$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentMethods {
-	public fun <init> (Lme/proton/core/paymentcommon/domain/repository/PaymentsRepository;)V
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentProviders {
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/payment/domain/usecase/GetCurrentSubscription {
-	public fun <init> (Lme/proton/core/paymentcommon/domain/repository/PaymentsRepository;)V
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/domain/usecase/GetPaymentTokenStatus {
-	public fun <init> (Lme/proton/core/paymentcommon/domain/repository/PaymentsRepository;)V
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/PaymentProvider : java/lang/Enum {
+	public static final field CardPayment Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static final field GoogleInAppPurchase Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static final field PayPal Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static fun values ()[Lme/proton/core/payment/domain/usecase/PaymentProvider;
+}
+
+public final class me/proton/core/payment/domain/usecase/PerformSubscribe {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/payment/domain/usecase/ProtonIAPBillingLibrary {
+	public abstract fun isAvailable ()Z
+}
+
+public final class me/proton/core/payment/domain/usecase/ValidateSubscriptionPlan {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

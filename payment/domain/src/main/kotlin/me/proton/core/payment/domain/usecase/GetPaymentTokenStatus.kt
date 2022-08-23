@@ -19,8 +19,9 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.paymentcommon.domain.entity.PaymentToken
-import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.repository.PaymentsRepository
+
 import javax.inject.Inject
 
 /**
@@ -28,10 +29,10 @@ import javax.inject.Inject
  * A payment token in it's lifecycle can go through various states and the client should use this use case
  * (usually with polling) in order to be able to act on a status change.
  */
-class GetPaymentTokenStatus @Inject constructor(
+public class GetPaymentTokenStatus @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
-    suspend operator fun invoke(userId: UserId?, paymentToken: String): PaymentToken.PaymentTokenStatusResult {
+    public suspend operator fun invoke(userId: UserId?, paymentToken: String): PaymentToken.PaymentTokenStatusResult {
         require(paymentToken.isNotBlank())
         return paymentsRepository.getPaymentTokenStatus(userId, paymentToken)
     }

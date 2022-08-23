@@ -28,23 +28,30 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.Details
+import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.entity.PaymentMethodType
+import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
+import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.payment.domain.usecase.PerformSubscribe
+import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.Details
-import me.proton.core.paymentcommon.domain.entity.PaymentMethod
-import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
-import me.proton.core.paymentcommon.domain.entity.PaymentType
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel.Companion.createSubscriptionPlansList
 import me.proton.core.plan.domain.entity.Plan
-import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -53,13 +60,31 @@ import javax.inject.Inject
  * This one should not be used during sign up. In that case, only a new Credit Card input is available.
  */
 @HiltViewModel
-class PaymentOptionsViewModel @Inject constructor(
+internal class PaymentOptionsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    val billingCommonViewModel: BillingCommonViewModel,
     private val availablePaymentMethods: GetAvailablePaymentMethods,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
-    private val getCurrentSubscription: GetCurrentSubscription
-) : ProtonViewModel() {
+    private val getCurrentSubscription: GetCurrentSubscription,
+    validatePlanSubscription: ValidateSubscriptionPlan,
+    createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
+    createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
+    createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
+    createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
+    performSubscribe: PerformSubscribe,
+    getCountry: GetCountry,
+    humanVerificationManager: HumanVerificationManager,
+    clientIdProvider: ClientIdProvider
+) : BillingCommonViewModel(
+    validatePlanSubscription,
+    createPaymentTokenWithNewCreditCard,
+    createPaymentTokenWithNewPayPal,
+    createPaymentTokenWithExistingPaymentMethod,
+    createPaymentTokenWithGoogleIAP,
+    performSubscribe,
+    getCountry,
+    humanVerificationManager,
+    clientIdProvider
+) {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
     internal var currentPlans = mutableListOf<Plan>()
@@ -126,14 +151,16 @@ class PaymentOptionsViewModel @Inject constructor(
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
-        paymentType: PaymentType
-    ) = billingCommonViewModel.subscribe(
+        paymentType: PaymentType,
+        subscriptionManagement: SubscriptionManagement
+    ) = super.subscribe(
         userId,
         currentPlans.createSubscriptionPlansList(planName, planServices, planType),
         codes,
         currency,
         cycle,
-        paymentType
+        paymentType,
+        subscriptionManagement
     )
 
     fun onThreeDSTokenApproved(
@@ -145,15 +172,17 @@ class PaymentOptionsViewModel @Inject constructor(
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
-        token: String
-    ) = billingCommonViewModel.onThreeDSTokenApproved(
+        token: String,
+        external: SubscriptionManagement
+    ) = super.onThreeDSTokenApproved(
         userId,
         currentPlans.createSubscriptionPlansList(planName, planServices, planType),
         codes,
         amount,
         currency,
         cycle,
-        token
+        token,
+        external
     )
 
     fun validatePlan(
@@ -164,7 +193,7 @@ class PaymentOptionsViewModel @Inject constructor(
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
-    ) = billingCommonViewModel.validatePlan(
+    ) = super.validatePlan(
         userId,
         currentPlans.createSubscriptionPlansList(planName, planServices, planType),
         codes,

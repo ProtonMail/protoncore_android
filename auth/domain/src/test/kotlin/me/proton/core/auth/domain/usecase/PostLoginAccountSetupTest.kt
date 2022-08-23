@@ -32,9 +32,10 @@ import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.domain.usecase.PerformSubscribe
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import org.junit.Assert.assertEquals
@@ -191,11 +192,12 @@ class PostLoginAccountSetupTest {
             currency = Currency.EUR,
             cycle = SubscriptionCycle.YEARLY,
             planName = "test-plan-name",
-            token = "test-token"
+            token = "test-token",
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
-        coJustRun { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+        coJustRun { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
@@ -227,7 +229,8 @@ class PostLoginAccountSetupTest {
                 capture(cycle),
                 capture(planNames),
                 codes = null,
-                paymentToken = capture(paymentToken)
+                paymentToken = capture(paymentToken),
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         }
         assertEquals(testUserId, userId.captured)

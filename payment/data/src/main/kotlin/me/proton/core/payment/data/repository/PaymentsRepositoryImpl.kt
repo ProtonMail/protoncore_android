@@ -26,25 +26,27 @@ import me.proton.core.payment.data.api.request.CardDetailsBody
 import me.proton.core.payment.data.api.request.CheckSubscription
 import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.CreateSubscription
+import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
 import me.proton.core.payment.data.api.request.TokenDetails
 import me.proton.core.payment.data.api.request.TokenTypePaymentBody
-import me.proton.core.paymentcommon.domain.entity.Card
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.PaymentBody
-import me.proton.core.paymentcommon.domain.entity.PaymentMethod
-import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
-import me.proton.core.paymentcommon.domain.entity.PaymentStatus
-import me.proton.core.paymentcommon.domain.entity.PaymentToken
-import me.proton.core.paymentcommon.domain.entity.PaymentType
-import me.proton.core.paymentcommon.domain.entity.Subscription
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.domain.entity.SubscriptionStatus
-import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
-import me.proton.core.paymentcommon.domain.repository.PlanQuantity
+import me.proton.core.payment.domain.entity.Card
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.PaymentBody
+import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.entity.PaymentMethodType
+import me.proton.core.payment.domain.entity.PaymentStatus
+import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.SubscriptionStatus
+import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.repository.PlanQuantity
 import javax.inject.Inject
 
-class PaymentsRepositoryImpl @Inject constructor(
+public class PaymentsRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : PaymentsRepository {
 
@@ -106,6 +108,25 @@ class PaymentsRepositoryImpl @Inject constructor(
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
+    override suspend fun createPaymentTokenGoogleIAP(
+        sessionUserId: SessionUserId?,
+        amount: Long,
+        currency: Currency,
+        paymentType: PaymentType.GoogleIAP
+    ): PaymentToken.CreatePaymentTokenResult =
+        provider.get<PaymentsApi>(sessionUserId).invoke {
+            val payment = PaymentTypeEntity.GoogleIAP(
+                IAPDetailsBody(
+                    productId = paymentType.productId,
+                    purchaseToken = paymentType.purchaseToken,
+                    orderId = paymentType.orderId,
+                    packageName = paymentType.packageName
+                )
+            )
+            val request = CreatePaymentToken(amount, currency.name, payment, null)
+            createPaymentToken(request).toCreatePaymentTokenResult()
+        }.valueOrThrow
+
     override suspend fun getPaymentTokenStatus(
         sessionUserId: SessionUserId?,
         paymentToken: String
@@ -146,7 +167,8 @@ class PaymentsRepositoryImpl @Inject constructor(
         payment: PaymentBody?,
         codes: List<String>?,
         plans: PlanQuantity,
-        cycle: SubscriptionCycle
+        cycle: SubscriptionCycle,
+        subscriptionManagement: SubscriptionManagement
     ): Subscription =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val paymentBodyEntity = if (payment is PaymentBody.TokenPaymentBody) {
@@ -159,7 +181,8 @@ class PaymentsRepositoryImpl @Inject constructor(
                     paymentBodyEntity,
                     codes,
                     plans,
-                    cycle.value
+                    cycle.value,
+                    subscriptionManagement.value
                 )
             ).subscription.toSubscription()
         }.valueOrThrow

@@ -40,7 +40,7 @@ import me.proton.core.payment.presentation.databinding.ActivityPaymentTokenAppro
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalResult
 import me.proton.core.payment.presentation.viewmodel.PaymentTokenApprovalViewModel
-import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick
@@ -52,7 +52,7 @@ import me.proton.core.util.kotlin.exhaustive
  */
 @SuppressLint("SetJavaScriptEnabled")
 @AndroidEntryPoint
-class PaymentTokenApprovalActivity :
+internal  class PaymentTokenApprovalActivity :
     PaymentsActivity<ActivityPaymentTokenApprovalBinding>(ActivityPaymentTokenApprovalBinding::inflate) {
 
     private val viewModel by viewModels<PaymentTokenApprovalViewModel>()
@@ -135,7 +135,7 @@ class PaymentTokenApprovalActivity :
         finish()
     }
 
-    inner class LoadingWebChromeClient(
+    private inner class LoadingWebChromeClient(
         private val maxProgress: Int
     ) : WebChromeClient() {
         override fun onProgressChanged(view: WebView, newProgress: Int) {
@@ -147,8 +147,8 @@ class PaymentTokenApprovalActivity :
     }
 
     companion object {
-        const val ARG_INPUT = "arg.paymentTokenApprovalInput"
-        const val ARG_RESULT = "arg.paymentTokenApprovalResult"
-        const val MAX_PROGRESS = 100
+        const val ARG_INPUT: String = "arg.paymentTokenApprovalInput"
+        const val ARG_RESULT: String = "arg.paymentTokenApprovalResult"
+        const val MAX_PROGRESS: Int = 100
     }
 }

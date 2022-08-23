@@ -178,7 +178,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                 currency = it.currency,
                 cycle = it.cycle,
                 planName = subscriptionDetails.planName,
-                token = it.token
+                token = it.token,
+                subscriptionManagement = it.subscriptionManagement
             )
         }
 

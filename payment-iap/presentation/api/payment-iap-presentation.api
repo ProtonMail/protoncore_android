@@ -46,19 +46,19 @@ public final class me/proton/core/paymentiap/presentation/databinding/PlanShortD
 public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun component4 ()Ljava/lang/Long;
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Ljava/lang/String;
 	public final fun component7 ()I
 	public final fun component8 ()I
 	public final fun component9 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
-	public static synthetic fun copy$default (Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;ILjava/lang/Object;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
+	public static synthetic fun copy$default (Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;IILjava/util/Map;ILjava/lang/Object;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()Ljava/lang/Long;
@@ -67,7 +67,7 @@ public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShort
 	public final fun getFormattedPriceAndCurrency ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getServices ()I
-	public final fun getSubscriptionCycle ()Lme/proton/core/paymentcommon/domain/entity/SubscriptionCycle;
+	public final fun getSubscriptionCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getType ()I
 	public final fun getVendorNames ()Ljava/util/Map;
 	public fun hashCode ()I
@@ -76,7 +76,7 @@ public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShort
 }
 
 public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails$Companion {
-	public final fun fromPlanShortDetails (Lme/proton/core/paymentcommon/presentation/entity/PlanShortDetails;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
+	public final fun fromPlanShortDetails (Lme/proton/core/payment/presentation/entity/PlanShortDetails;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
 }
 
 public final class me/proton/core/paymentiap/presentation/ui/BillingIAPFragment : me/proton/core/presentation/ui/ProtonFragment {
@@ -101,85 +101,12 @@ public abstract class me/proton/core/paymentiap/presentation/ui/Hilt_BillingIAPF
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lcom/android/billingclient/api/BillingClient;)V
-	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun queryProductDetails (Ljava/lang/String;)V
-}
-
-public abstract class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-}
-
-public abstract class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientDisconnected : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientDisconnected;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientUnavailable : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$BillingClientUnavailable;
-}
-
-public abstract class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message;
-	public static synthetic fun copy$default (Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Message;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getError ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Price : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$Price;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$ResponseCode : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Error$ProductDetailsError$ResponseCode;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$GoogleProductDetails : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public fun <init> (JLjava/lang/String;Ljava/lang/String;Lcom/android/billingclient/api/BillingResult;)V
-	public final fun component1 ()J
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Lcom/android/billingclient/api/BillingResult;
-	public final fun copy (JLjava/lang/String;Ljava/lang/String;Lcom/android/billingclient/api/BillingResult;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$GoogleProductDetails;
-	public static synthetic fun copy$default (Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$GoogleProductDetails;JLjava/lang/String;Ljava/lang/String;Lcom/android/billingclient/api/BillingResult;ILjava/lang/Object;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$GoogleProductDetails;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAmount ()J
-	public final fun getBillingResult ()Lcom/android/billingclient/api/BillingResult;
-	public final fun getCurrency ()Ljava/lang/String;
-	public final fun getFormattedPriceAndCurrency ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Initialized : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Initialized;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Initializing : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$Initializing;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$QueryingProductDetails : me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State {
-	public static final field INSTANCE Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel$State$QueryingProductDetails;
-}
-
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
-	public static fun newInstance (Lcom/android/billingclient/api/BillingClient;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
+	public static fun newInstance (Lcom/android/billingclient/api/BillingClient$Builder;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_HiltModules {

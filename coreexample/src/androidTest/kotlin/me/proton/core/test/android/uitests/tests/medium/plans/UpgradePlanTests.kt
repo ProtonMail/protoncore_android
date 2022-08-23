@@ -18,11 +18,13 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
+import org.junit.After
 import org.junit.Test
 
 class UpgradePlanTests : BaseTest() {
@@ -32,10 +34,16 @@ class UpgradePlanTests : BaseTest() {
     private val freeUser = quark.userCreate()
     private val paidUser = users.getUser { it.isPaid }
 
+    @After
+    fun setDefaults() {
+        quark.setDefaultPaymentMethods()
+    }
+
     @Test
     @SmokeTest
     fun userWithFreePlan() {
         quark.jailUnban()
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
         login(freeUser)
 
         coreExampleRobot
@@ -53,8 +61,18 @@ class UpgradePlanTests : BaseTest() {
     }
 
     @Test
-    fun userWithPaidPlan() {
+    fun userWithPaidPlanCardPayment() {
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
+        login(paidUser)
 
+        coreExampleRobot
+            .plansUpgrade()
+            .verify { planDetailsNotDisplayed(paidUser.plan) }
+    }
+
+    @Test
+    fun userWithPaidPlanCardAndIAPPayment() {
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
         login(paidUser)
 
         coreExampleRobot

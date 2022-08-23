@@ -29,8 +29,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
+import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
+import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.paymentiap.presentation.LogTag.DEFAULT
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBinding
@@ -52,6 +56,8 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
     private val billingIAPViewModel by viewModels<BillingIAPViewModel>()
     private val binding by viewBinding(FragmentBillingIapBinding::bind)
 
+    private var billingInput: BillingInput? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,7 +65,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
             .onEach {
                 when (it) {
                     is BillingViewModel.UserInteractionState.OnLoadingStateChange -> onLoading(it.loading)
-                    is BillingViewModel.UserInteractionState.OnPay -> onPay()
+                    is BillingViewModel.UserInteractionState.OnPay -> onPay(it.input)
                     is BillingViewModel.UserInteractionState.PlanValidated -> setPlan(it.plan)
                     else -> {
                         // no operation, not interested in other events
@@ -67,26 +73,26 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-        billingIAPViewModel.state
+        billingIAPViewModel.billingIAPState
             .onEach {
                 @Suppress("IMPLICIT_CAST_TO_ANY")
                 when (it) {
+                    is BillingIAPViewModel.State.Initialized,
+                    is BillingIAPViewModel.State.Initializing,
+                    is BillingIAPViewModel.State.PurchaseStarted,
+                    is BillingIAPViewModel.State.QueryingProductDetails -> {
+                        // do nothing currently. maybe spinner?
+                    }
                     is BillingIAPViewModel.State.Error.BillingClientDisconnected,
                     is BillingIAPViewModel.State.Error.BillingClientUnavailable -> {
-                        onError(R.string.payments_iap_general_error)
-                    }
-                    is BillingIAPViewModel.State.GoogleProductDetails -> {
-                        val currentPlan = binding.selectedPlanDetailsLayout.plan ?: return@onEach
-                        binding.selectedPlanDetailsLayout.plan = currentPlan.copy(
-                            amount = it.amount,
-                            currency = it.currency,
-                            formattedPriceAndCurrency = it.formattedPriceAndCurrency
-                        )
+                        CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_billing_client_unavailable))
+                        onError(R.string.payments_iap_error_billing_client_unavailable)
                     }
                     is BillingIAPViewModel.State.Error.ProductDetailsError.Message -> {
                         CoreLogger.i(DEFAULT, getString(R.string.payments_iap_invalid_google_plan))
                         onError(R.string.payments_iap_invalid_google_plan)
                     }
+                    is BillingIAPViewModel.State.Error.ProductDetailsError.ProductMismatch,
                     is BillingIAPViewModel.State.Error.ProductDetailsError.Price -> {
                         CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_google_plan_price))
                         onError(R.string.payments_iap_error_google_plan_price)
@@ -95,16 +101,36 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                         CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_fetching_google_plan))
                         onError(R.string.payments_iap_error_fetching_google_plan)
                     }
-                    is BillingIAPViewModel.State.Initialized,
-                    is BillingIAPViewModel.State.Initializing,
-                    is BillingIAPViewModel.State.QueryingProductDetails -> {
-                        // do nothing currently. maybe spinner?
+                    is BillingIAPViewModel.State.Success.GoogleProductDetails -> {
+                        val currentPlan = binding.selectedPlanDetailsLayout.plan ?: return@onEach
+                        binding.selectedPlanDetailsLayout.plan = currentPlan.copy(
+                            amount = it.amount,
+                            currency = it.currency,
+                            formattedPriceAndCurrency = it.formattedPriceAndCurrency
+                        )
+                        viewModel.setGPayButtonState(true)
+                    }
+                    is BillingIAPViewModel.State.Success.PurchaseSuccess -> {
+                        onPurchaseSuccess(it.productId, it.purchaseToken, it.orderID)
+                    }
+                    is BillingIAPViewModel.State.Error.ProductPurchaseError.Message -> {
+                        onError(it.error ?: R.string.payments_iap_general_error)
+                    }
+                    is BillingIAPViewModel.State.Success.PurchaseFlowLaunched,
+                    is BillingIAPViewModel.State.Error.ProductPurchaseError.UserCancelled -> {
+                        onError()
+                    }
+                    is BillingIAPViewModel.State.Error.ProductPurchaseError.ItemAlreadyOwned -> {
+                        CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_already_owned))
+                        onError(R.string.payments_iap_error_already_owned)
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-        requireActivity().onBackPressedDispatcher.addCallback {
-            requireActivity().finish()
+        activity?.apply {
+            onBackPressedDispatcher.addCallback {
+                finish()
+            }
         }
     }
 
@@ -112,8 +138,29 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
         // no operation
     }
 
-    private fun onPay() {
-        // TODO
+    private fun onPay(input: BillingInput?) {
+        this.billingInput = input
+        billingIAPViewModel.launchBillingFlow(input?.userId, requireActivity())
+    }
+
+    private fun onPurchaseSuccess(productId: String, purchaseToken: String, orderId: String) {
+        requireNotNull(billingInput)
+        billingInput?.let {
+            viewModel.subscribe(
+                userId = it.user,
+                planNames = it.existingPlans.buildPlansList(it.plan.name, it.plan.services, it.plan.type),
+                codes = it.codes,
+                currency = it.plan.currency,
+                cycle = it.plan.subscriptionCycle,
+                PaymentType.GoogleIAP(
+                    productId = productId,
+                    purchaseToken = purchaseToken,
+                    orderId = orderId,
+                    packageName = requireContext().packageName
+                ),
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            )
+        }
     }
 
     private fun setPlan(plan: PlanShortDetails) {
@@ -127,9 +174,13 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                 billingIAPViewModel.queryProductDetails(googlePlanName)
             }
         }
+        viewModel.setGPayButtonState(false)
     }
 
-    private fun onError(@StringRes error: Int) {
-        binding.root.errorSnack(getString(error))
+    private fun onError(@StringRes error: Int? = null) {
+        if (error != null) {
+            binding.root.errorSnack(getString(error))
+        }
+        viewModel.setPayButtonsState(false)
     }
 }

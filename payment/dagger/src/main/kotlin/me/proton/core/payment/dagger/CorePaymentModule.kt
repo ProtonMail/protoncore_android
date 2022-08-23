@@ -23,9 +23,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
+import me.proton.core.payment.data.PaymentManagerImpl
 import me.proton.core.payment.presentation.entity.SecureEndpoint
-import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
+import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
+import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
+import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.usecase.ProtonIAPBillingLibrary
+import me.proton.core.payment.presentation.ActivePaymentProvider
+import me.proton.core.payment.presentation.ActivePaymentProviderImpl
+import me.proton.core.payment.domain.PaymentManager
 import javax.inject.Singleton
 
 @Module
@@ -34,7 +40,18 @@ public interface CorePaymentModule {
 
     @Binds
     @Singleton
+    public fun providePaymentManager(impl: PaymentManagerImpl): PaymentManager
+
+    @Binds
+    @Singleton
     public fun providePaymentsRepository(impl: PaymentsRepositoryImpl): PaymentsRepository
+
+    @Binds
+    @Singleton
+    public fun provideGooglePlayBillingLibrary(impl: ProtonIAPBillingLibraryImpl): ProtonIAPBillingLibrary
+
+    @Binds
+    public fun provideActivePaymentProvider(impl: ActivePaymentProviderImpl): ActivePaymentProvider
 
     public companion object {
         @Provides

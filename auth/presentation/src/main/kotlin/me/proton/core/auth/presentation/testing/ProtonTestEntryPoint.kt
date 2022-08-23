@@ -23,7 +23,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.auth.domain.testing.LoginTestHelper
-import me.proton.core.paymentcommon.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)

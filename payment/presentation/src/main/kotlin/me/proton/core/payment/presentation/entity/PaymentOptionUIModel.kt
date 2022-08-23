@@ -22,7 +22,7 @@ import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.parcelize.Parcelize
 
-sealed class PaymentOptionUIModel(
+internal sealed class PaymentOptionUIModel(
     open val id: String
 ) : Parcelable {
 

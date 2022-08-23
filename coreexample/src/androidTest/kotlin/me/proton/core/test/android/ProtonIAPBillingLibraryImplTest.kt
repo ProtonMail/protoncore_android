@@ -18,7 +18,7 @@
 
 package me.proton.core.test.android
 
-import me.proton.core.paymentcommon.data.ProtonIAPBillingLibraryImpl
+import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue

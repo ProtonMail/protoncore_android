@@ -18,7 +18,7 @@
 
 package me.proton.core.test.android.robots.payments
 
-import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.instrumented.R
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
@@ -83,6 +83,16 @@ open class PaymentRobot : CoreRobot() {
                 R.id.cardNumberInput,
                 R.id.expirationDateInput,
                 R.id.cvcInput
+            ).forEach {
+                view.withId(it).checkDisplayed()
+            }
+        }
+
+        fun googleIAPElementsDisplayed() {
+            arrayOf(
+                R.id.termsConditionsInfoText,
+                R.id.priceSurchargeInfoText,
+                R.id.nextPaymentProviderButton
             ).forEach {
                 view.withId(it).checkDisplayed()
             }

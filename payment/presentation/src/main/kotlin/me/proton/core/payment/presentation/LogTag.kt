@@ -18,6 +18,6 @@
 
 package me.proton.core.payment.presentation
 
-object LogTag {
-    const val NO_ACTIVE_PAYMENT_PROVIDER = "core.payment.presentation.billingactivity"
+public object LogTag {
+    public const val EMPTY_ACTIVE_PAYMENT_PROVIDER: String = "core.payment.provider.active.empty"
 }

@@ -18,7 +18,7 @@
 
 package me.proton.core.plan.presentation.entity
 
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import me.proton.core.util.kotlin.exhaustive

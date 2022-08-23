@@ -24,9 +24,9 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.paymentcommon.domain.entity.PaymentToken
-import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
-import me.proton.core.paymentcommon.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals

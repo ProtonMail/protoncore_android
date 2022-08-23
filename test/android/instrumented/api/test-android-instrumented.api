@@ -1051,6 +1051,10 @@ public final class me/proton/core/test/android/robots/payments/ExistingPaymentMe
 	public final fun paymentMethod (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
+public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
+	public fun <init> ()V
+}
+
 public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/PaymentRobot$Verify;
@@ -1060,6 +1064,7 @@ public final class me/proton/core/test/android/robots/payments/PaymentRobot$Veri
 	public fun <init> ()V
 	public final fun addCreditCardElementsDisplayed ()V
 	public final fun billingDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Ljava/lang/String;Z)V
+	public final fun googleIAPElementsDisplayed ()V
 	public final fun googleIAPOptionDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Ljava/lang/String;Z)V
 	public final fun paymentMethodDisplayed (Ljava/lang/String;Ljava/lang/String;)V
 }

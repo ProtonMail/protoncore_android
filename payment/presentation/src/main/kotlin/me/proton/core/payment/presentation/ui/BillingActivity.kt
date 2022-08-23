@@ -22,6 +22,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,18 +30,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.paymentcommon.domain.entity.Currency
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
-import me.proton.core.paymentcommon.presentation.entity.BillingInput
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingViewModel
+import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
+import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.CoreLogger
@@ -52,7 +53,7 @@ import me.proton.core.util.kotlin.exhaustive
  * Note, that this one only works with a new Credit Card and is not responsible for displaying existing payment methods.
  */
 @AndroidEntryPoint
-class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBillingBinding::inflate) {
+internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBillingBinding::inflate) {
 
     private val viewModel by viewModels<BillingViewModel>()
 
@@ -73,11 +74,13 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                 }
             }
             payButton.onClick(::onPayClicked)
+            gPayButton.onClick(::onPayClicked)
             nextPaymentProviderButton.onClick(::onNextPaymentProviderClicked)
         }
         observeViewModel()
     }
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun observeViewModel() {
         viewModel.plansValidationState
             .flowWithLifecycle(lifecycle)
@@ -88,10 +91,6 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                         val amountDue = it.subscription.amountDue
                         val plan = input.plan.copy(amount = amountDue)
                         viewModel.setPlan(plan)
-                        binding.payButton.text = String.format(
-                            getString(R.string.payments_pay),
-                            plan.amount?.toDouble()?.formatCentsPriceDefaultLocale(plan.currency.name) ?: ""
-                        )
                     }
                     is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
                     else -> Unit
@@ -108,12 +107,14 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                         it.paymentToken,
                         it.amount,
                         it.currency,
-                        it.cycle
+                        it.cycle,
+                        it.subscriptionManagement
                     )
                     is BillingCommonViewModel.State.Success.SubscriptionCreated -> onBillingSuccess(
                         amount = it.amount,
                         currency = it.currency,
-                        cycle = it.cycle
+                        cycle = it.cycle,
+                        subscriptionManagement = it.subscriptionManagement
                     )
                     is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
                         onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
@@ -126,48 +127,100 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                 }
             }.launchIn(lifecycleScope)
 
-        viewModel.paymentProvidersResult
+        viewModel.state
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
             .onEach {
-                when (it) {
-                    is BillingViewModel.PaymentProvidersState.Error.Message -> showError(it.error)
-                    is BillingViewModel.PaymentProvidersState.Success -> {
-                        with(binding) {
-                            val currentProvider = it.activeProvider
-                            when (currentProvider) {
-                                PaymentProvider.GoogleInAppPurchase -> {
-                                    supportFragmentManager.showBillingIAPFragment(R.id.fragment_container)
-                                    nextPaymentProviderButton.visibility = View.VISIBLE
+                with(binding) {
+                    when (it) {
+                        is BillingViewModel.State.PaymentProvidersError.Message -> showError(it.error)
+                        is BillingViewModel.State.PaymentProvidersSuccess -> {
+                            with(binding) {
+                                val currentProvider = it.activeProvider
+                                when (currentProvider) {
+                                    PaymentProvider.GoogleInAppPurchase -> {
+                                        supportFragmentManager.showBillingIAPFragment(R.id.fragment_container)
+                                        nextPaymentProviderButton.visibility = View.VISIBLE
+                                    }
+                                    PaymentProvider.CardPayment -> {
+                                        supportFragmentManager.showBillingFragment(R.id.fragment_container)
+                                    }
+                                    PaymentProvider.PayPal -> error("PayPal is not supported")
+                                }.exhaustive
+                                viewModel.announcePlan()
+                                it.nextPaymentProviderTextResource?.let { textResource ->
+                                    nextPaymentProviderButton.text = getString(textResource)
+                                } ?: run {
+                                    nextPaymentProviderButton.visibility = View.GONE
                                 }
-                                PaymentProvider.CardPayment -> {
-                                    supportFragmentManager.showBillingFragment(R.id.fragment_container)
-                                }
-                                PaymentProvider.PayPal -> error("PayPal is not supported")
-                            }.exhaustive
-
-                            it.nextPaymentProviderTextResource?.let { textResource ->
-                                nextPaymentProviderButton.text = getString(textResource)
-                            } ?: run {
-                                nextPaymentProviderButton.visibility = View.GONE
                             }
                         }
-                    }
-                    BillingViewModel.PaymentProvidersState.PaymentProvidersEmpty -> {
-                        val message = getString(R.string.payments_no_payment_provider)
-                        CoreLogger.i(LogTag.NO_ACTIVE_PAYMENT_PROVIDER, message)
-                        setResult(RESULT_CANCELED, intent)
-                        finish()
-                    }
-                    is BillingViewModel.PaymentProvidersState.Idle,
-                    is BillingViewModel.PaymentProvidersState.Processing -> {
-                        // do nothing
-                    }
-                }.exhaustive
+                        BillingViewModel.State.PaymentProvidersEmpty -> {
+                            val message = getString(R.string.payments_no_payment_provider)
+                            CoreLogger.i(LogTag.EMPTY_ACTIVE_PAYMENT_PROVIDER, message)
+                            setResult(RESULT_CANCELED, intent)
+                            finish()
+                        }
+                        is BillingViewModel.State.PayButtonsState.ProtonPayDisabled -> {
+                            payButton.apply {
+                                isEnabled = false
+                                visibility = View.VISIBLE
+                            }
+                            gPayButton.visibility = View.INVISIBLE
+                        }
+                        is BillingViewModel.State.PayButtonsState.GPayDisabled -> {
+                            gPayButton.apply {
+                                isEnabled = false
+                                visibility = View.VISIBLE
+                            }
+                            payButton.visibility = View.INVISIBLE
+                        }
+                        is BillingViewModel.State.PayButtonsState.ProtonPayEnabled -> {
+                            payButton.visibility = View.VISIBLE
+                            gPayButton.visibility = View.INVISIBLE
+                            payButton.apply {
+                                isEnabled = true
+                                text = it.text
+                            }
+                        }
+                        is BillingViewModel.State.PayButtonsState.GPayEnabled -> {
+                            payButton.visibility = View.INVISIBLE
+                            gPayButton.visibility = View.VISIBLE
+                            gPayButton.isEnabled = true
+                        }
+                        is BillingViewModel.State.PayButtonsState.Idle -> {
+                            payButton.setIdle()
+                            gPayButton.apply {
+                                text = getString(R.string.payments_pay_with)
+                                icon = AppCompatResources.getDrawable(this@BillingActivity, R.drawable.ic_gpay_logo)
+                                setIdle()
+                            }
+                            nextPaymentProviderButton.isEnabled = true
+                        }
+                        is BillingViewModel.State.PayButtonsState.Loading -> {
+                            payButton.setLoading()
+                            gPayButton.apply {
+                                text = getString(R.string.payments_paying_in_process)
+                                setLoading()
+                            }
+                            nextPaymentProviderButton.isEnabled = false
+                        }
+                        is BillingViewModel.State.Idle,
+                        is BillingViewModel.State.Loading -> {
+                            // do nothing
+                        }
+                    }.exhaustive
+                }
             }.launchIn(lifecycleScope)
     }
 
-    private fun onBillingSuccess(token: String? = null, amount: Long, currency: Currency, cycle: SubscriptionCycle) {
+    private fun onBillingSuccess(
+        token: String? = null,
+        amount: Long,
+        currency: Currency,
+        cycle: SubscriptionCycle,
+        subscriptionManagement: SubscriptionManagement
+    ) {
         val intent = Intent()
             .putExtra(
                 ARG_BILLING_RESULT,
@@ -177,7 +230,8 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                     subscriptionCreated = token == null,
                     amount = amount,
                     currency = currency,
-                    cycle = cycle
+                    cycle = cycle,
+                    subscriptionManagement = subscriptionManagement
                 )
             )
         setResult(RESULT_OK, intent)
@@ -199,7 +253,14 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
         with(input) {
             val plans = listOf(plan.name)
             viewModel.onThreeDSTokenApproved(
-                user, plans, codes, amount, plan.currency, plan.subscriptionCycle, token
+                user,
+                plans,
+                codes,
+                amount,
+                plan.currency,
+                plan.subscriptionCycle,
+                token,
+                SubscriptionManagement.PROTON_MANAGED
             )
         }
     }

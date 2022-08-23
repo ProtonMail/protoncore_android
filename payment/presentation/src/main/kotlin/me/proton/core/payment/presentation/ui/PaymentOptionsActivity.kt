@@ -30,24 +30,26 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.PaymentMethodType
+import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityPaymentOptionsBinding
 import me.proton.core.payment.presentation.databinding.ItemPaymentMethodBinding
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.PaymentOptionsViewModel
-import me.proton.core.paymentcommon.domain.entity.PaymentMethodType
-import me.proton.core.paymentcommon.domain.entity.PaymentType
-import me.proton.core.paymentcommon.presentation.entity.CurrentSubscribedPlanDetails
-import me.proton.core.paymentcommon.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.presentation.ui.adapter.selectableProtonAdapter
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(ActivityPaymentOptionsBinding::inflate) {
+internal class PaymentOptionsActivity :
+    PaymentsActivity<ActivityPaymentOptionsBinding>(ActivityPaymentOptionsBinding::inflate) {
 
     private val viewModel by viewModels<PaymentOptionsViewModel>()
 
@@ -134,7 +136,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                         input.codes,
                         input.plan.currency,
                         input.plan.subscriptionCycle,
-                        PaymentType.PaymentMethod(selectedPaymentMethodId!!)
+                        PaymentType.PaymentMethod(selectedPaymentMethodId!!),
+                        SubscriptionManagement.PROTON_MANAGED
                     )
                 }
             }
@@ -159,7 +162,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-        viewModel.billingCommonViewModel.plansValidationState
+        viewModel.plansValidationState
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
             .onEach {
@@ -180,7 +183,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-        viewModel.billingCommonViewModel.subscriptionResult
+        viewModel.subscriptionResult
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
             .onEach {
@@ -193,7 +196,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                             subscriptionCreated = true,
                             amount = it.amount,
                             currency = it.currency,
-                            cycle = it.cycle
+                            cycle = it.cycle,
+                            subscriptionManagement = it.subscriptionManagement
                         )
                     )
                     is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
@@ -238,12 +242,13 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             amount,
             input.plan.currency,
             input.plan.subscriptionCycle,
-            token
+            token,
+            SubscriptionManagement.PROTON_MANAGED
         )
     }
 
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
-        if (availablePaymentMethods.isEmpty()) {
+        if (availablePaymentMethods.isEmpty() || (availablePaymentMethods.size == 1 && availablePaymentMethods[0] is PaymentOptionUIModel.InAppPurchase)) {
             startBilling(
                 input.userId,
                 viewModel.currentPlans.map {

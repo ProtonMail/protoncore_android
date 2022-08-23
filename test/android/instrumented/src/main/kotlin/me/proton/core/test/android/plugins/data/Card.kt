@@ -19,6 +19,7 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
+import me.proton.core.test.android.instrumented.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import java.util.Calendar
@@ -43,7 +44,7 @@ data class Card(
 
     val details: String
         get() = stringFromResource(
-            me.proton.core.payment.presentation.R.string.payment_cc_list_item,
+            R.string.payment_cc_list_item,
             brand.name,
             number.takeLast(4),
             expMonth,

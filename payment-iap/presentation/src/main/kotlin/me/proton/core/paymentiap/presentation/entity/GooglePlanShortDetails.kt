@@ -21,8 +21,8 @@ package me.proton.core.paymentiap.presentation.entity
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 
 /**
  * @param vendorNames Map of plan names for app vendors (the plan names are for the given [subscriptionCycle]).

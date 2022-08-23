@@ -54,5 +54,9 @@
     <string name="payments_choose_country">Select country</string>
     <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
     <string name="payment_paypal_list_item">PayPal</string>
+    <string name="payments_info_not_available">n/a</string>
+    <string name="payments_billing_yearly">For 1 year</string>
+    <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
+    <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
     <!-- endregion -->
 </resources>

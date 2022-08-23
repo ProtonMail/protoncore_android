@@ -22,6 +22,7 @@ import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -32,14 +33,14 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
-import me.proton.core.paymentcommon.domain.entity.PaymentTokenStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PaymentTokenApprovalViewModel @Inject constructor(
+public class PaymentTokenApprovalViewModel @Inject constructor(
     private val getPaymentTokenStatus: GetPaymentTokenStatus,
     private val secureEndpoint: SecureEndpoint,
     private val networkManager: NetworkManager
@@ -48,41 +49,40 @@ class PaymentTokenApprovalViewModel @Inject constructor(
     private val _approvalState = MutableStateFlow<State>(State.Idle)
     private val _networkConnectionState = MutableStateFlow<Boolean?>(null)
 
-    val approvalState = _approvalState.asStateFlow()
-    val networkConnectionState = _networkConnectionState.asStateFlow()
+    public val approvalState: StateFlow<State> = _approvalState.asStateFlow()
+    public val networkConnectionState: StateFlow<Boolean?> = _networkConnectionState.asStateFlow()
 
-    sealed class State {
-        object Idle : State()
-        object Processing : State()
-        data class Success(val paymentTokenStatus: PaymentTokenStatus) : State()
-        data class Error(val error: Throwable) : State()
+    public sealed class State {
+        public object Idle : State()
+        public object Processing : State()
+        public data class Success(val paymentTokenStatus: PaymentTokenStatus) : State()
+        public data class Error(val error: Throwable) : State()
     }
 
     /**
      * Handles the Webview redirect result. It also checks if the payment token has been approved.
      */
-    fun handleRedirection(
+    public fun handleRedirection(
         userId: UserId?,
         paymentToken: String,
         uri: Uri,
         paymentReturnHost: String
-    ) =
-        if (uri.host == secureEndpoint.host || uri.host == paymentReturnHost) {
-            if (uri.getQueryParameter("cancel") == CANCEL_QUERY_PARAM_VALUE) {
-                true
-            } else {
-                checkPaymentTokenApproved(userId, paymentToken)
-                false
-            }
+    ): Boolean = if (uri.host == secureEndpoint.host || uri.host == paymentReturnHost) {
+        if (uri.getQueryParameter("cancel") == CANCEL_QUERY_PARAM_VALUE) {
+            true
         } else {
+            checkPaymentTokenApproved(userId, paymentToken)
             false
         }
+    } else {
+        false
+    }
 
     /**
      * Watches for any network changes and informs the UI for any state change so that it can act
      * accordingly for any network dependent tasks.
      */
-    fun watchNetwork() {
+    public fun watchNetwork() {
         viewModelScope.launch {
             networkManager.observe().collect { status ->
                 _networkConnectionState.tryEmit(
@@ -104,7 +104,7 @@ class PaymentTokenApprovalViewModel @Inject constructor(
         _approvalState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    companion object {
-        const val CANCEL_QUERY_PARAM_VALUE = "1"
+    private companion object {
+        private const val CANCEL_QUERY_PARAM_VALUE: String = "1"
     }
 }

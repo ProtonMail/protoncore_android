@@ -18,4 +18,4 @@
 
 package me.proton.core.payment.presentation.entity
 
-data class SecureEndpoint(val host: String)
+public data class SecureEndpoint(val host: String)

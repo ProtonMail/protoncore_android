@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-proton {
-    apiModeDisabled()
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -34,7 +30,6 @@ dependencies {
         project(Module.domain),
         project(Module.networkData),
         project(Module.paymentDomain),
-        project(Module.paymentCommonDomain),
         `javax-inject`,
         `serialization-core`
     )
@@ -42,6 +37,7 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         project(Module.networkDomain),
+        project(Module.userDomain),
         project(Module.planDomain),
         retrofit,
     )

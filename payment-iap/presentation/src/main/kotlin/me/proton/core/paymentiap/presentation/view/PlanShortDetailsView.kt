@@ -23,12 +23,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
-import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.PlanShortDetailsBinding
 import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
-import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 
 internal class PlanShortDetailsView @JvmOverloads constructor(
     context: Context,
