@@ -78,8 +78,6 @@ open class ProtonInput : LinearLayout {
         (binding as ProtonInputBinding).label
     }
 
-    private var lastEditTimeMillis: Long? = null
-
     constructor(context: Context) : super(context) {
         init(context)
     }
@@ -141,26 +139,13 @@ open class ProtonInput : LinearLayout {
         input.addTextChangedListener { editable ->
             if (editable?.isNotEmpty() == true) clearInputError()
         }
+    }
 
-        input.addTextChangedListener {
-            lastEditTimeMillis = System.currentTimeMillis()
+    private fun clearIfPassword() {
+        if (isPasswordInput) {
+            clearTextAndOverwriteMemory()
         }
     }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        resetInputIfNeeded()
-    }
-
-    private fun resetInputIfNeeded() {
-        val durationFromLastEdit = System.currentTimeMillis() - (lastEditTimeMillis ?: 0L)
-        if (isInputTypeTextPassword() && durationFromLastEdit >= RESET_DURATION_MILLIS) {
-            text = null
-        }
-    }
-
-    private fun isInputTypeTextPassword() =
-        inputType and InputType.TYPE_TEXT_VARIATION_PASSWORD == InputType.TYPE_TEXT_VARIATION_PASSWORD
 
     override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>) {
         dispatchFreezeSelfOnly(container)
@@ -170,10 +155,15 @@ open class ProtonInput : LinearLayout {
         dispatchThawSelfOnly(container)
     }
 
+    override fun onDetachedFromWindow() {
+        clearIfPassword()
+        super.onDetachedFromWindow()
+    }
+
     override fun onSaveInstanceState(): Parcelable {
+        clearIfPassword()
         return ProtonInputState(
             superSavedState = super.onSaveInstanceState(),
-            lastEditTimeMillis = lastEditTimeMillis,
             childSavedState = saveChildViewStates()
         )
     }
@@ -181,7 +171,6 @@ open class ProtonInput : LinearLayout {
     override fun onRestoreInstanceState(state: Parcelable) {
         val protonInputState = state as ProtonInputState
         restoreChildViewStates(protonInputState.childSavedState)
-        lastEditTimeMillis = protonInputState.lastEditTimeMillis
         super.onRestoreInstanceState(protonInputState.superSavedState)
     }
 
@@ -472,11 +461,6 @@ open class ProtonInput : LinearLayout {
     @Parcelize
     data class ProtonInputState(
         val superSavedState: Parcelable?,
-        val lastEditTimeMillis: Long?,
         val childSavedState: SparseArray<Parcelable>,
     ) : BaseSavedState(superSavedState), Parcelable
-
-    companion object {
-        private const val RESET_DURATION_MILLIS = 1000L * 60L * 3L // 3 minutes
-    }
 }

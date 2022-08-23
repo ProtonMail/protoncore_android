@@ -328,7 +328,6 @@ public class me/proton/core/presentation/ui/view/ProtonCheckbox : com/google/and
 }
 
 public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/LinearLayout {
-	public static final field Companion Lme/proton/core/presentation/ui/view/ProtonInput$Companion;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
@@ -360,7 +359,7 @@ public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/Li
 	public fun isEnabled ()Z
 	public final fun isPasswordInput ()Z
 	public final fun isSuffixTextVisible ()Z
-	protected fun onAttachedToWindow ()V
+	protected fun onDetachedFromWindow ()V
 	protected fun onRestoreInstanceState (Landroid/os/Parcelable;)V
 	protected fun onSaveInstanceState ()Landroid/os/Parcelable;
 	public final fun setEditTextAlignment (I)V
@@ -390,9 +389,6 @@ public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/Li
 	public final fun setText (Ljava/lang/CharSequence;)V
 }
 
-public final class me/proton/core/presentation/ui/view/ProtonInput$Companion {
-}
-
 public final class me/proton/core/presentation/ui/view/ProtonInput$EndIconMode : java/lang/Enum {
 	public static final field CLEAR_TEXT Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
 	public static final field CUSTOM_ICON Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
@@ -410,16 +406,14 @@ public final class me/proton/core/presentation/ui/view/ProtonInput$EndIconMode$C
 
 public final class me/proton/core/presentation/ui/view/ProtonInput$ProtonInputState : android/view/View$BaseSavedState, android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Landroid/os/Parcelable;Ljava/lang/Long;Landroid/util/SparseArray;)V
+	public fun <init> (Landroid/os/Parcelable;Landroid/util/SparseArray;)V
 	public final fun component1 ()Landroid/os/Parcelable;
-	public final fun component2 ()Ljava/lang/Long;
-	public final fun component3 ()Landroid/util/SparseArray;
-	public final fun copy (Landroid/os/Parcelable;Ljava/lang/Long;Landroid/util/SparseArray;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
-	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;Landroid/os/Parcelable;Ljava/lang/Long;Landroid/util/SparseArray;ILjava/lang/Object;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
+	public final fun component2 ()Landroid/util/SparseArray;
+	public final fun copy (Landroid/os/Parcelable;Landroid/util/SparseArray;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;Landroid/os/Parcelable;Landroid/util/SparseArray;ILjava/lang/Object;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChildSavedState ()Landroid/util/SparseArray;
-	public final fun getLastEditTimeMillis ()Ljava/lang/Long;
 	public final fun getSuperSavedState ()Landroid/os/Parcelable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
