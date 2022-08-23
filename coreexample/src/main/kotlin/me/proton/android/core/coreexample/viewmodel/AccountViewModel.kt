@@ -56,10 +56,6 @@ import me.proton.core.auth.presentation.onMissingScopeFailed
 import me.proton.core.auth.presentation.onMissingScopeSuccess
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
-import me.proton.core.humanverification.presentation.observe
-import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.utils.errorToast
@@ -73,9 +69,7 @@ class AccountViewModel @Inject constructor(
     private val accountType: AccountType,
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
-    private var humanVerificationOrchestrator: HumanVerificationOrchestrator,
     private val missingScopeListener: MissingScopeListener
 ) : ViewModel() {
 
@@ -93,7 +87,6 @@ class AccountViewModel @Inject constructor(
 
     fun register(context: FragmentActivity) {
         authOrchestrator.register(context)
-        humanVerificationOrchestrator.register(context)
 
         accountManager.getAccounts()
             .flowWithLifecycle(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
@@ -102,7 +95,8 @@ class AccountViewModel @Inject constructor(
                     _state.emit(State.LoginNeeded)
                 else
                     _state.emit(State.AccountList(accounts))
-            }.launchIn(context.lifecycleScope)
+            }
+            .launchIn(context.lifecycleScope)
 
         authOrchestrator.setOnAddAccountResult {
             if (it == null) {
@@ -125,11 +119,6 @@ class AccountViewModel @Inject constructor(
                 .onAccountMigrationNeeded { context.showToast("MigrationNeeded") }
                 .onUserKeyCheckFailed { context.errorToast("InvalidUserKey") }
                 .onUserAddressKeyCheckFailed { context.errorToast("InvalidUserAddressKey") }
-        }
-
-        with(humanVerificationOrchestrator) {
-            humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
-                .onHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
         }
 
         accountManager.getPrimaryAccount()

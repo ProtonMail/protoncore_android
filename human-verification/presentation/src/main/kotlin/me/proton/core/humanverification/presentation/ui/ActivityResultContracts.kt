@@ -25,16 +25,21 @@ import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 
+@Deprecated("Will be removed in the next major release.")
 class StartHumanVerification : ActivityResultContract<HumanVerificationInput, HumanVerificationResult?>() {
 
-    override fun createIntent(context: Context, input: HumanVerificationInput) =
-        Intent(context, HumanVerificationActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            putExtra(HumanVerificationActivity.ARG_INPUT, input)
-        }
+    override fun createIntent(context: Context, input: HumanVerificationInput) = getIntent(context, input)
 
     override fun parseResult(resultCode: Int, intent: Intent?): HumanVerificationResult? {
         if (resultCode != Activity.RESULT_OK) return null
         return intent?.getParcelableExtra(HumanVerificationActivity.ARG_RESULT)
+    }
+
+    companion object {
+        fun getIntent(context: Context, input: HumanVerificationInput) =
+            Intent(context, HumanVerificationActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                putExtra(HumanVerificationActivity.ARG_INPUT, input)
+            }
     }
 }

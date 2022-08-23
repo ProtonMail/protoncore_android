@@ -18,6 +18,8 @@
 
 package me.proton.core.humanverification.presentation
 
+import android.content.Context
+import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
@@ -28,12 +30,14 @@ import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import javax.inject.Inject
 
+@Deprecated("Will be removed in the next major release.")
 class HumanVerificationOrchestrator @Inject constructor() {
 
     private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
 
     private var onHumanVerificationResultListener: ((result: HumanVerificationResult?) -> Unit)? = {}
 
+    @Deprecated("Will be removed in the next major release.")
     fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {
         onHumanVerificationResultListener = block
     }
@@ -55,6 +59,7 @@ class HumanVerificationOrchestrator @Inject constructor() {
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
+    @Deprecated("Will be removed in the next major release.")
     fun register(caller: ActivityResultCaller) {
         humanWorkflowLauncher = registerHumanVerificationResult(caller)
     }
@@ -62,6 +67,7 @@ class HumanVerificationOrchestrator @Inject constructor() {
     /**
      * Unregister all workflow activity launcher and listener.
      */
+    @Deprecated("Will be removed in the next major release.")
     fun unregister() {
         humanWorkflowLauncher?.unregister()
         onHumanVerificationResultListener = null
@@ -70,20 +76,39 @@ class HumanVerificationOrchestrator @Inject constructor() {
     /**
      * Start a Human Verification workflow.
      */
+    @Deprecated("Will be removed in the next major release.")
     fun startHumanVerificationWorkflow(
         details: HumanVerificationDetails
     ) {
         checkRegistered(humanWorkflowLauncher).launch(
-            HumanVerificationInput(
-                clientId = details.clientId.id,
-                clientIdType = details.clientId.getType().value,
-                verificationMethods = details.verificationMethods,
-                verificationToken = requireNotNull(details.verificationToken)
-            )
+            details.toInput()
         )
+    }
+
+    companion object {
+        /**
+         * Start a Human Verification workflow.
+         */
+        fun startHumanVerificationWorkflow(
+            details: HumanVerificationDetails,
+            context: Context
+        ) {
+            val intent = StartHumanVerification.getIntent(context, details.toInput()).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
     }
 }
 
+fun HumanVerificationDetails.toInput() = HumanVerificationInput(
+    clientId = clientId.id,
+    clientIdType = clientId.getType().value,
+    verificationMethods = verificationMethods,
+    verificationToken = requireNotNull(verificationToken)
+)
+
+@Deprecated("Will be removed in the next major release.")
 fun HumanVerificationOrchestrator.onHumanVerificationResult(
     block: (result: HumanVerificationResult?) -> Unit
 ): HumanVerificationOrchestrator {

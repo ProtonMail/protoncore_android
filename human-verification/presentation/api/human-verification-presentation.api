@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_HumanVerificationInitializer_HumanVerificationInitializerEntryPoint {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_humanverification_presentation_ui_HumanVerificationActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -87,6 +91,17 @@ public abstract interface annotation class me/proton/core/humanverification/pres
 public abstract interface annotation class me/proton/core/humanverification/presentation/HumanVerificationApiHost : java/lang/annotation/Annotation {
 }
 
+public final class me/proton/core/humanverification/presentation/HumanVerificationInitializer : androidx/startup/Initializer {
+	public fun <init> ()V
+	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
+	public fun create (Landroid/content/Context;)V
+	public fun dependencies ()Ljava/util/List;
+}
+
+public abstract interface class me/proton/core/humanverification/presentation/HumanVerificationInitializer$HumanVerificationInitializerEntryPoint {
+	public abstract fun humanVerificationStateHandler ()Lme/proton/core/humanverification/presentation/HumanVerificationStateHandler;
+}
+
 public final class me/proton/core/humanverification/presentation/HumanVerificationManagerObserver {
 	public fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;)V
 	public synthetic fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -104,6 +119,7 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator {
+	public static final field Companion Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator$Companion;
 	public fun <init> ()V
 	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnHumanVerificationResult (Lkotlin/jvm/functions/Function1;)V
@@ -111,8 +127,13 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 	public final fun unregister ()V
 }
 
+public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator$Companion {
+	public final fun startHumanVerificationWorkflow (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Landroid/content/Context;)V
+}
+
 public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestratorKt {
 	public static final fun onHumanVerificationResult (Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
+	public static final fun toInput (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory : dagger/internal/Factory {
@@ -121,6 +142,19 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
 	public static fun newInstance ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
+}
+
+public final class me/proton/core/humanverification/presentation/HumanVerificationStateHandler {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/humanverification/domain/HumanVerificationManager;)V
+	public final fun observe ()V
+}
+
+public final class me/proton/core/humanverification/presentation/HumanVerificationStateHandler_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/HumanVerificationStateHandler_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/humanverification/presentation/HumanVerificationStateHandler;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/humanverification/domain/HumanVerificationManager;)Lme/proton/core/humanverification/presentation/HumanVerificationStateHandler;
 }
 
 public final class me/proton/core/humanverification/presentation/LogTag {
@@ -331,11 +365,16 @@ public final class me/proton/core/humanverification/presentation/ui/HumanVerific
 }
 
 public final class me/proton/core/humanverification/presentation/ui/StartHumanVerification : androidx/activity/result/contract/ActivityResultContract {
+	public static final field Companion Lme/proton/core/humanverification/presentation/ui/StartHumanVerification$Companion;
 	public fun <init> ()V
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
 	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationResult;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/StartHumanVerification$Companion {
+	public final fun getIntent (Landroid/content/Context;Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;)Landroid/content/Intent;
 }
 
 public final class me/proton/core/humanverification/presentation/ui/common/HumanVerificationHelpFragment : me/proton/core/presentation/ui/ProtonDialogFragment {

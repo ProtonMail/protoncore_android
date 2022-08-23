@@ -50,6 +50,7 @@ dependencies {
         `lifecycle-savedState`,
         material,
         `serialization-core`,
+        `startup-runtime`,
     )
 
     implementation(
