@@ -25,8 +25,8 @@ import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.session.SessionId
@@ -74,14 +74,17 @@ class HumanVerificationNeededHandler<Api>(
         }
     }
 
-    // Must be called within sessionMutex.
-    private suspend fun verifyHuman(clientId: ClientId, details: HumanVerificationAvailableMethods): Boolean {
-        val result = when (humanVerificationListener.onHumanVerificationNeeded(clientId, details)) {
-            HumanVerificationListener.HumanVerificationResult.Success -> true
-            HumanVerificationListener.HumanVerificationResult.Failure -> false
+    // Must be called within clientMutex.
+    private suspend fun verifyHuman(clientId: ClientId, methods: HumanVerificationAvailableMethods): Boolean {
+        return try {
+            when (humanVerificationListener.onHumanVerificationNeeded(clientId, methods)) {
+                HumanVerificationListener.HumanVerificationResult.Success -> true
+                HumanVerificationListener.HumanVerificationResult.Failure -> false
+            }
+        } finally {
+            // Make sure we update the last verification time even if the coroutine is cancelled.
+            clientLastVerificationMap[clientId] = monoClockMs()
         }
-        clientLastVerificationMap[clientId] = monoClockMs()
-        return result
     }
 
     companion object {
