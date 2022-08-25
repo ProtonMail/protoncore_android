@@ -18,7 +18,9 @@
 
 package me.proton.core.network.domain.scopes
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.filterIsInstance
 import me.proton.core.domain.entity.UserId
 
 interface MissingScopeListener {
@@ -40,3 +42,6 @@ interface MissingScopeListener {
      */
     suspend fun onMissingScopeFailure()
 }
+
+inline fun <reified T : MissingScopeState> MissingScopeListener.onMissingScopeState(): Flow<T> =
+    state.filterIsInstance()

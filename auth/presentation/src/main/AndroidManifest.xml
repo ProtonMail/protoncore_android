@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -17,4 +16,26 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<manifest package="me.proton.core.auth.presentation" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="me.proton.core.auth.presentation">
+
+    <application>
+
+        <activity android:name=".ui.ConfirmPasswordActivity" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data
+                android:name="me.proton.core.auth.presentation.MissingScopeInitializer"
+                android:value="androidx.startup" />
+
+        </provider>
+
+    </application>
+
+</manifest>

@@ -26,14 +26,20 @@ import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.ui.ConfirmPasswordActivity
 
+@Deprecated("Will be removed in the next major release.")
 class StartConfirmPassword : ActivityResultContract<ConfirmPasswordInput, ConfirmPasswordResult?>() {
-    override fun createIntent(context: Context, input: ConfirmPasswordInput?): Intent =
-        Intent(context, ConfirmPasswordActivity::class.java).apply {
-            putExtra(ConfirmPasswordActivity.ARG_INPUT, input)
-        }
+
+    override fun createIntent(context: Context, input: ConfirmPasswordInput): Intent = getIntent(context, input)
 
     override fun parseResult(resultCode: Int, intent: Intent?): ConfirmPasswordResult? {
         if (resultCode != Activity.RESULT_OK) return null
         return intent?.getParcelableExtra(ConfirmPasswordActivity.ARG_RESULT)
+    }
+
+    companion object {
+        fun getIntent(context: Context, input: ConfirmPasswordInput) =
+            Intent(context, ConfirmPasswordActivity::class.java).apply {
+                putExtra(ConfirmPasswordActivity.ARG_INPUT, input)
+            }
     }
 }

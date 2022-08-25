@@ -94,6 +94,7 @@ class AuthOrchestrator @Inject constructor() {
         onSignUpResultListener = block
     }
 
+    @Deprecated("Will be removed in the next major release.")
     fun setOnConfirmPasswordResult(block: (result: ConfirmPasswordResult?) -> Unit) {
         onConfirmPasswordResultListener = block
     }
@@ -193,17 +194,6 @@ class AuthOrchestrator @Inject constructor() {
     ) {
         checkRegistered(chooseAddressLauncher).launch(
             ChooseAddressInput(userId.id, password = password, recoveryEmail = externalEmail)
-        )
-    }
-
-    /**
-     * Starts the Confirm Password workflow.
-     */
-    fun startConfirmPasswordWorkflow(scopeMissing: MissingScopeState.ScopeMissing) {
-        checkRegistered(confirmPasswordWorkflowLauncher).launch(
-            ConfirmPasswordInput(
-                userId = scopeMissing.userId.id,
-                missingScopes = scopeMissing.missingScopes.map { it.value })
         )
     }
 
@@ -336,6 +326,18 @@ class AuthOrchestrator @Inject constructor() {
             SignUpInput(requiredAccountType)
         )
     }
+
+    /**
+     * Starts the Confirm Password workflow.
+     */
+    @Deprecated("Will be removed in the next major release.")
+    fun startConfirmPasswordWorkflow(scopeMissing: MissingScopeState.ScopeMissing) {
+        checkRegistered(confirmPasswordWorkflowLauncher).launch(
+            ConfirmPasswordInput(
+                userId = scopeMissing.userId.id,
+                missingScopes = scopeMissing.missingScopes.map { it.value })
+        )
+    }
     // endregion
 }
 
@@ -381,6 +383,7 @@ fun AuthOrchestrator.onChooseAddressResult(
     return this
 }
 
+@Deprecated("Will be removed in the next major release.")
 fun AuthOrchestrator.onConfirmPasswordResult(
     block: (result: ConfirmPasswordResult?) -> Unit
 ): AuthOrchestrator {

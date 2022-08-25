@@ -21,57 +21,46 @@ package me.proton.core.auth.presentation
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
+import me.proton.core.network.domain.scopes.onMissingScopeState
 
 class MissingScopeObserver(
-    private val lifecycle: Lifecycle,
-    private val minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
-    private val missingScopeListener: MissingScopeListener
+    internal val missingScopeListener: MissingScopeListener,
+    internal val lifecycle: Lifecycle,
+    internal val minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) {
-    private val scope: CoroutineScope = lifecycle.coroutineScope
-    private val observerJobs = mutableListOf<Job>()
+    internal val scope = lifecycle.coroutineScope
 
     internal inline fun <reified T : MissingScopeState> addMissingScopeStateListener(
-        missingScopes: List<Scope> = emptyList(),
-        crossinline block: suspend (T) -> Unit
+        noinline block: suspend (T) -> Unit
     ) {
-        observerJobs += missingScopeListener.state
+        missingScopeListener.onMissingScopeState<T>()
             .flowWithLifecycle(lifecycle, minActiveState)
-            .onEach {
-                when (it) {
-                    !is T -> Unit
-                    is MissingScopeState.ScopeMissing -> {
-                        if (it.missingScopes.any { scope -> scope in missingScopes }) {
-                            block(it)
-                        }
-                    }
-                    else -> block(it)
-                }
-            }
+            .onEach { block(it) }
             .launchIn(scope)
-    }
-
-    fun cancelAllObservers() {
-        observerJobs.forEach { it.cancel() }
-        observerJobs.clear()
     }
 }
 
 fun MissingScopeListener.observe(
     lifecycle: Lifecycle,
     minActiveState: Lifecycle.State = Lifecycle.State.CREATED
-) = MissingScopeObserver(lifecycle, minActiveState, this)
+) = MissingScopeObserver(this, lifecycle, minActiveState)
 
 fun MissingScopeObserver.onConfirmPasswordNeeded(
     block: suspend (MissingScopeState.ScopeMissing) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(missingScopes = listOf(Scope.LOCKED, Scope.PASSWORD), block = block)
+    val scopes = listOf(Scope.LOCKED, Scope.PASSWORD)
+    addMissingScopeStateListener<MissingScopeState.ScopeMissing>(
+        block = {
+            if (it.missingScopes.any { scope -> scope in scopes }) {
+                block(it)
+            }
+        }
+    )
     return this
 }
 

@@ -51,7 +51,6 @@ import me.proton.core.accountmanager.presentation.onUserAddressKeyCheckFailed
 import me.proton.core.accountmanager.presentation.onUserKeyCheckFailed
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.observe
-import me.proton.core.auth.presentation.onConfirmPasswordNeeded
 import me.proton.core.auth.presentation.onMissingScopeFailed
 import me.proton.core.auth.presentation.onMissingScopeSuccess
 import me.proton.core.domain.entity.Product
@@ -133,12 +132,9 @@ class AccountViewModel @Inject constructor(
             .onEach { _secureSessionScopes.emit(it) }
             .launchIn(context.lifecycleScope)
 
-        with(authOrchestrator) {
-            missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
-                .onConfirmPasswordNeeded { startConfirmPasswordWorkflow(it) }
-                .onMissingScopeSuccess { context.showToast("Success Test") }
-                .onMissingScopeFailed { context.showToast("Failed test") }
-        }
+        missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+            .onMissingScopeSuccess { context.showToast("Success Test") }
+            .onMissingScopeFailed { context.showToast("Failed test") }
     }
 
     suspend fun signOut(userId: UserId) = accountManager.disableAccount(userId)
