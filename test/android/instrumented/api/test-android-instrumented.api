@@ -505,8 +505,6 @@ public final class me/proton/core/test/android/instrumented/utils/WaitUntilKt {
 public final class me/proton/core/test/android/plugins/Quark {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;
-	public final fun getPlanDevName ()Ljava/lang/String;
-	public final fun getPlanDevText ()Ljava/lang/String;
 	public final fun jailUnban ()Ljava/lang/String;
 	public final fun populateUserWithData (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
 	public final fun seedPaypalPaymentMethod (Lme/proton/core/test/android/plugins/data/User;)V
@@ -514,6 +512,10 @@ public final class me/proton/core/test/android/plugins/Quark {
 	public static synthetic fun seedSubscriber$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
 	public final fun seedUserWithCreditCard (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
 	public static synthetic fun seedUserWithCreditCard$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun setDefaultPaymentMethods ()V
+	public final fun setPaymentMethods (Lme/proton/core/domain/entity/AppStore;ZZZ)V
+	public static synthetic fun setPaymentMethods$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/domain/entity/AppStore;ZZZILjava/lang/Object;)V
+	public final fun systemEnv (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun userCreate (Lme/proton/core/test/android/plugins/data/User;ZLjava/lang/String;)Lme/proton/core/test/android/plugins/data/User;
 	public static synthetic fun userCreate$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ZLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
 }
@@ -555,6 +557,7 @@ public final class me/proton/core/test/android/plugins/Quark$InternalApiEndpoint
 	public static final field JAIL_UNBAN Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static final field PAYMENTS_SEED_PAYMENT_METHOD Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static final field PAYMENTS_SEED_SUBSCRIBER Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+	public static final field SYSTEM_ENV Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static final field USER_CREATE Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
 	public static fun values ()[Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
