@@ -16,24 +16,20 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_norm">
+    android:layout_height="wrap_content"
+    android:background="@color/background_norm"
+    android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/currencySpinner"
-        style="@style/ProtonSpinnerStyle"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/planListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large_plus"
-        android:spinnerMode="dropdown"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/manageSubscriptionText" />
+        android:layout_marginBottom="@dimen/gap_large_plus"
+        android:overScrollMode="never" />
 
     <TextView
         android:id="@+id/manageSubscriptionText"
@@ -44,21 +40,17 @@
         android:drawablePadding="@dimen/gap_medium"
         android:maxLines="2"
         android:text="@string/plans_autorenew_subscriptions"
-        app:drawableStartCompat="@drawable/ic_info_circle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planListRecyclerView" />
+        app:drawableStartCompat="@drawable/ic_info_circle" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/planListRecyclerView"
+    <Spinner
+        android:id="@+id/currencySpinner"
+        style="@style/ProtonSpinnerStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/gap_large_plus"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@id/currencySpinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_large_plus"
+        android:spinnerMode="dropdown"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 

@@ -168,7 +168,7 @@ public final class me/proton/core/plan/presentation/databinding/PlansListViewBin
 	public final field planListRecyclerView Landroidx/recyclerview/widget/RecyclerView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public fun getRoot ()Landroid/widget/LinearLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
 }
