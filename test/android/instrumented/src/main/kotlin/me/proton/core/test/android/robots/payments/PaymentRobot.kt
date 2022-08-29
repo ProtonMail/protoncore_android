@@ -43,11 +43,10 @@ open class PaymentRobot : CoreRobot() {
             currency: String,
             googleIAPAvailable: Boolean
         ) {
-            val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
+            // val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
             view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
-            view.withId(R.id.billingPeriodText).withText(R.string.payments_billing_yearly)
-                .checkDisplayed()
-            view.withId(R.id.amountText).withText("$currency$yearlyPriceString").checkDisplayed()
+            view.withId(R.id.billingPeriodText).withText(R.string.payments_billing_yearly).checkDisplayed()
+            view.withId(R.id.amountText).startsWith(currency).checkDisplayed()
             view.withId(R.id.payButton).checkDisplayed()
             if (googleIAPAvailable) {
                 view.withId(R.id.nextPaymentProviderButton).checkDisplayed()

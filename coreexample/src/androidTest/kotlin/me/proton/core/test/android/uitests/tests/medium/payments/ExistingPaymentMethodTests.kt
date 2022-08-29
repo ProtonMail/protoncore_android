@@ -18,28 +18,42 @@
 
 package me.proton.core.test.android.uitests.tests.medium.payments
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot.PaymentMethodElement.paymentMethod
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
+import org.junit.After
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
-class ExistingPaymentMethodTests : BaseTest() {
+@RunWith(Parameterized::class)
+class ExistingPaymentMethodTests(
+    private val appStore: AppStore,
+    private val card: Boolean,
+    private val paypal: Boolean,
+    private val inApp: Boolean
+) : BaseTest() {
 
-    companion object {
-        val userWithCard: User = quark.seedUserWithCreditCard()
+    @Before
+    fun setPaymentMethods() {
+        quark.setPaymentMethods(appStore, card, paypal, inApp)
+    }
+
+    @After
+    fun setDefaults() {
+        quark.setDefaultPaymentMethods()
     }
 
     @Test
     @Ignore("Requires user with paypal account linked")
     fun existingPaypalMethodDisplayed() {
-        val userWithPaypal = users.getUser { it.paypal.isNotEmpty() }
-
         login(userWithPaypal)
 
         CoreexampleRobot()
@@ -51,7 +65,6 @@ class ExistingPaymentMethodTests : BaseTest() {
     @Test
     @SmokeTest
     fun existingCreditCardMethodDisplayed() {
-
         login(userWithCard)
 
         CoreexampleRobot()
@@ -96,5 +109,20 @@ class ExistingPaymentMethodTests : BaseTest() {
                 paymentMethod(user.paypal).checkIsChecked()
                 paymentMethod(user.cards[0].details).checkIsNotChecked()
             }
+    }
+
+    companion object {
+        val userWithCard by lazy { quark.seedUserWithCreditCard() }
+        val userWithPaypal by lazy { users.getUser { it.paypal.isNotEmpty() } }
+
+        @get:Parameterized.Parameters(name = "appStore={0}, card={1}, paypal={2}, inApp={3}")
+        @get:JvmStatic
+        val data = listOf(
+            //      appStore,            card, paypal, inApp
+            arrayOf(AppStore.GooglePlay, true, true, true),
+            arrayOf(AppStore.GooglePlay, true, true, false),
+            arrayOf(AppStore.GooglePlay, true, false, true),
+            arrayOf(AppStore.GooglePlay, true, false, false)
+        ).toList()
     }
 }

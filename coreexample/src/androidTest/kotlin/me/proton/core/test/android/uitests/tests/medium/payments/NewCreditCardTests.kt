@@ -18,8 +18,8 @@
 
 package me.proton.core.test.android.uitests.tests.medium.payments
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
-import me.proton.core.paymentcommon.domain.usecase.PaymentProvider
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
@@ -28,18 +28,22 @@ import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
+
     private val newCreditCardRobot = AddCreditCardRobot()
 
-    companion object {
-        val userWithoutCard: User = quark.userCreate()
+    @After
+    fun setDefaults() {
+        quark.setDefaultPaymentMethods()
     }
 
     @Before
     fun goToPlanUpgrade() {
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
 
         login(userWithoutCard)
 
@@ -51,21 +55,12 @@ class NewCreditCardTests : BaseTest() {
                 view.withId(R.id.selectedPlanDetailsLayout).withAncestor(view.withId(R.id.scrollContent)).scrollTo()
             }
             .verify {
-                val paymentProviders = availablePaymentProviders()
-                if (PaymentProvider.GoogleInAppPurchase in paymentProviders) {
-                    googleIAPOptionDisplayed(
-                        plan = Plan.Dev,
-                        billingCycle = BillingCycle.Yearly,
-                        currency = Currency.CHF.symbol,
-                        anotherPaymentProviderAvailable = PaymentProvider.CardPayment in paymentProviders
-                    )
-                } else {
-                    billingDetailsDisplayed(
-                        plan = Plan.Dev,
-                        billingCycle = BillingCycle.Yearly,
-                        currency = Currency.CHF.symbol,
-                        googleIAPAvailable = PaymentProvider.GoogleInAppPurchase in paymentProviders)
-                }
+                billingDetailsDisplayed(
+                    plan = Plan.Dev,
+                    billingCycle = BillingCycle.Yearly,
+                    currency = Currency.CHF.symbol,
+                    googleIAPAvailable = false
+                )
             }
     }
 
@@ -98,8 +93,10 @@ class NewCreditCardTests : BaseTest() {
             .ccnumber("424242424242424")
             .postalCode("1234")
             .pay<AddCreditCardRobot>()
-            .verify {
-                errorSnackbarDisplayed("Your card has been declined. Please try a different card or contact your bank to authorize the charge")
-            }
+            .verify { errorSnackbarDisplayed("Your card has been declined") }
+    }
+
+    companion object {
+        val userWithoutCard: User = quark.userCreate()
     }
 }
