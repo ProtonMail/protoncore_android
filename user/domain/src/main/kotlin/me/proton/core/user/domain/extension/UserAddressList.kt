@@ -37,14 +37,14 @@ fun List<UserAddress>.sorted() = sortedBy { it.order }
 fun List<UserAddress>.firstInternalOrNull() = filter { it.type != AddressType.External }.sorted().firstOrNull()
 
 /**
+ * @return true if migrated/new key format must be generated, false otherwise.
+ */
+fun List<UserAddress>.generateNewKeyFormat() = isEmpty() || hasMigratedKey()
+
+/**
  * @return true if at least one [UserAddress] is migrated into the new key format, false otherwise.
  */
 fun List<UserAddress>.hasMigratedKey() = any { it.keys.any { key -> key.token != null && key.signature != null } }
-
-/**
- * @return true if at least one [UserAddress] is non-migrated (old key format), false otherwise.
- */
-fun List<UserAddress>.hasNonMigratedKey() = any { it.keys.any { key -> key.token == null || key.signature == null } }
 
 /**
  * @return true if at least one internal [UserAddress] exist, and have at least 1 key.

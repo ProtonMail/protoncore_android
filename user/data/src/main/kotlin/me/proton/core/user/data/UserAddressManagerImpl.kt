@@ -29,7 +29,7 @@ import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.firstInternalOrNull
-import me.proton.core.user.domain.extension.hasNonMigratedKey
+import me.proton.core.user.domain.extension.generateNewKeyFormat
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.signKeyList
@@ -100,12 +100,9 @@ class UserAddressManagerImpl @Inject constructor(
         // Check if key already exist.
         if (userAddress.keys.isNotEmpty()) return userAddress
 
-        // If User have at least one non-migrated UserAddressKey (old key format), let's use the legacy format.
-        val generateOldAddressKeyFormat = userAddresses.hasNonMigratedKey()
-
         // Generate new UserAddressKey from user PrivateKey (according old vs new format).
         val userAddressKey = userAddressKeySecretProvider.generateUserAddressKey(
-            generateOldFormat = generateOldAddressKeyFormat,
+            generateNewKeyFormat = userAddresses.generateNewKeyFormat(),
             userAddress = userAddress,
             userPrivateKey = userPrimaryKey.privateKey,
             isPrimary = isPrimary

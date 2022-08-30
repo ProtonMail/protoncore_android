@@ -308,9 +308,9 @@ public final class me/proton/core/user/domain/extension/UserAddressKeyKt {
 
 public final class me/proton/core/user/domain/extension/UserAddressListKt {
 	public static final fun firstInternalOrNull (Ljava/util/List;)Lme/proton/core/user/domain/entity/UserAddress;
+	public static final fun generateNewKeyFormat (Ljava/util/List;)Z
 	public static final fun hasInternalAddressKey (Ljava/util/List;)Z
 	public static final fun hasMigratedKey (Ljava/util/List;)Z
-	public static final fun hasNonMigratedKey (Ljava/util/List;)Z
 	public static final fun hasOriginalAddress (Ljava/util/List;)Z
 	public static final fun primary (Ljava/util/List;)Lme/proton/core/user/domain/entity/UserAddress;
 	public static final fun sorted (Ljava/util/List;)Ljava/util/List;

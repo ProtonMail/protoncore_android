@@ -30,7 +30,7 @@ import me.proton.core.accountmanager.data.LogTag
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.areAllInactive
-import me.proton.core.user.domain.extension.hasNonMigratedKey
+import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.util.kotlin.CoreLogger
 
 fun AccountStateHandler.onInvalidUserKey(
@@ -42,7 +42,7 @@ fun AccountStateHandler.onInvalidUserKey(
         if (user.keys.areAllInactive()) return@onEach
 
         val addresses = userManager.getAddresses(user.userId)
-        if (addresses.hasNonMigratedKey()) return@onEach
+        if (addresses.hasMigratedKey().not()) return@onEach
 
         val hasInvalidKeys = user.keys.any { key -> key.active == true && !key.privateKey.isActive }
         if (hasInvalidKeys) {
@@ -58,7 +58,7 @@ fun AccountStateHandler.onInvalidUserAddressKey(
     .flatMapLatest { it.map { account -> userManager.observeAddresses(account.userId) }.merge() }
     .filterNotNull()
     .onEach { addresses ->
-        if (addresses.hasNonMigratedKey()) return@onEach
+        if (addresses.hasMigratedKey().not()) return@onEach
 
         val keys = addresses.flatMap { address -> address.keys }
         if (keys.areAllInactive()) return@onEach

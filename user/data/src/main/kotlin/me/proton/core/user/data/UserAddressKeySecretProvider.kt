@@ -76,16 +76,9 @@ class UserAddressKeySecretProvider @Inject constructor(
 
     private fun generateUserAddressKeySecret(
         userPrivateKey: PrivateKey,
-        generateOldFormat: Boolean
+        generateNewKeyFormat: Boolean
     ): UserAddressKeySecret {
-        return if (generateOldFormat) {
-            // Old address key format -> user passphrase.
-            UserAddressKeySecret(
-                passphrase = checkNotNull(userPrivateKey.passphrase) { "Passphrase cannot be null." },
-                token = null,
-                signature = null
-            )
-        } else {
+        return if (generateNewKeyFormat) {
             // New address key format -> user keys encrypt token + signature -> address passphrase.
             cryptoContext.pgpCrypto.generateNewToken().use { passphrase ->
                 UserAddressKeySecret(
@@ -94,17 +87,24 @@ class UserAddressKeySecretProvider @Inject constructor(
                     signature = userPrivateKey.signData(cryptoContext, passphrase.array)
                 )
             }
+        } else {
+            // Old address key format -> user passphrase.
+            UserAddressKeySecret(
+                passphrase = checkNotNull(userPrivateKey.passphrase) { "Passphrase cannot be null." },
+                token = null,
+                signature = null
+            )
         }
     }
 
     @Suppress("LongParameterList")
     fun generateUserAddressKey(
-        generateOldFormat: Boolean,
+        generateNewKeyFormat: Boolean,
         userAddress: UserAddress,
         userPrivateKey: PrivateKey,
         isPrimary: Boolean
     ): UserAddressKey {
-        val secret = generateUserAddressKeySecret(userPrivateKey, generateOldFormat)
+        val secret = generateUserAddressKeySecret(userPrivateKey, generateNewKeyFormat)
         secret.passphrase.decrypt(keyStoreCrypto).use { decryptedPassphrase ->
             val email = userAddress.emailSplit
             val privateKey = PrivateKey(
