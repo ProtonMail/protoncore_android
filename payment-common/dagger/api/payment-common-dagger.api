@@ -12,5 +12,6 @@ public final class me/proton/core/paymentcommon/dagger/BuildConfig {
 public abstract interface class me/proton/core/paymentcommon/dagger/CorePaymentModule {
 	public abstract fun provideActivePaymentProvider (Lme/proton/core/paymentcommon/presentation/viewmodel/ActivePaymentProviderImpl;)Lme/proton/core/paymentcommon/presentation/ActivePaymentProvider;
 	public abstract fun provideGooglePlayBillingLibrary (Lme/proton/core/paymentcommon/data/ProtonIAPBillingLibraryImpl;)Lme/proton/core/paymentcommon/domain/usecase/ProtonIAPBillingLibrary;
+	public abstract fun providePaymentManager (Lme/proton/core/paymentcommon/data/PaymentManagerImpl;)Lme/proton/core/paymentcommon/domain/PaymentManager;
 }
 

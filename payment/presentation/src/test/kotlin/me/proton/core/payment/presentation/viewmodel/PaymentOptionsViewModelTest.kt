@@ -160,7 +160,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     fun `available payment methods no IAP provider success handled correctly`() = coroutinesTest {
         // GIVEN
         every { context.getString(any()) } returns "google"
-        coEvery { getAvailablePaymentProviders.invoke(true) } returns setOf(PaymentProvider.CardPayment)
+        coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns setOf(PaymentProvider.CardPayment)
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
         viewModel.availablePaymentMethodsState.test {
             // WHEN

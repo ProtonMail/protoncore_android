@@ -186,6 +186,11 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 binding.root.successSnack(it)
             }.launchIn(lifecycleScope)
 
+        plansViewModel.state
+            .flowWithLifecycle(lifecycle)
+            .onEach { binding.plansUpgrade.isEnabled = it.isUpgradeAvailable }
+            .launchIn(lifecycleScope)
+
         mailMessageViewModel.getState()
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()

@@ -22,13 +22,18 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.PLAN_PLUS_ID
 import me.proton.android.core.coreexample.PLAN_VISIONARY_ID
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.paymentcommon.domain.PaymentManager
 import me.proton.core.paymentcommon.domain.entity.SubscriptionCycle
 import me.proton.core.paymentcommon.presentation.entity.PlanShortDetails
 import me.proton.core.plan.domain.entity.MASK_MAIL
@@ -42,9 +47,23 @@ import javax.inject.Inject
 @HiltViewModel
 class PlansViewModel @Inject constructor(
     private val accountManager: AccountManager,
+    private val paymentManager: PaymentManager,
     private val plansOrchestrator: PlansOrchestrator,
     private val paymentsOrchestrator: PaymentsOrchestrator
 ) : ViewModel() {
+
+    data class State(
+        val isUpgradeAvailable: Boolean = false
+    )
+
+    private val mutableState = MutableStateFlow(State())
+    val state = mutableState.asStateFlow()
+
+    init {
+        accountManager.getPrimaryUserId()
+            .onEach { mutableState.emit(State(paymentManager.isUpgradeAvailable())) }
+            .launchIn(viewModelScope)
+    }
 
     fun register(context: ComponentActivity) {
         plansOrchestrator.register(context)

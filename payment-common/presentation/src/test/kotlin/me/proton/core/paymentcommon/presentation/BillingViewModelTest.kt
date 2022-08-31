@@ -729,7 +729,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `observing payment returns proton and GIAP`() = coroutinesTest {
-        coEvery { getAvailablePaymentProviders.invoke(true) } returns setOf(
+        coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns setOf(
             PaymentProvider.CardPayment, PaymentProvider.GoogleInAppPurchase, PaymentProvider.PayPal
         )
         coEvery { activePaymentProvider.getActivePaymentProvider() } returns PaymentProvider.GoogleInAppPurchase
@@ -744,7 +744,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `observing payment returns none`() = coroutinesTest {
-        coEvery { getAvailablePaymentProviders.invoke(true) } returns emptySet()
+        coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns emptySet()
 
         coEvery { activePaymentProvider.getActivePaymentProvider() } returns null
         billingViewModel = BillingViewModel(billingCommonViewModel, activePaymentProvider)
@@ -757,7 +757,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `switching payment providers works correctly`() = coroutinesTest {
-        coEvery { getAvailablePaymentProviders.invoke(true) } returns setOf(
+        coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns setOf(
             PaymentProvider.CardPayment, PaymentProvider.GoogleInAppPurchase, PaymentProvider.PayPal
         )
         val activePaymentProvider = ActivePaymentProviderImpl(getAvailablePaymentProviders)

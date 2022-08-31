@@ -22,7 +22,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.paymentcommon.data.PaymentManagerImpl
 import me.proton.core.paymentcommon.data.ProtonIAPBillingLibraryImpl
+import me.proton.core.paymentcommon.domain.PaymentManager
 import me.proton.core.paymentcommon.domain.usecase.ProtonIAPBillingLibrary
 import me.proton.core.paymentcommon.presentation.ActivePaymentProvider
 import me.proton.core.paymentcommon.presentation.viewmodel.ActivePaymentProviderImpl
@@ -36,4 +38,7 @@ public interface CorePaymentModule {
 
     @Binds
     public fun provideActivePaymentProvider(impl: ActivePaymentProviderImpl): ActivePaymentProvider
+
+    @Binds
+    public fun providePaymentManager(impl: PaymentManagerImpl): PaymentManager
 }

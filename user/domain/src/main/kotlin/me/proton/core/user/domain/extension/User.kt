@@ -72,3 +72,8 @@ fun User.isNotOrganizationUser() = role == Role.NoOrganization
  * @return true if the user [isOrganizationMember] or [isOrganizationAdmin].
  */
 fun User.isOrganizationUser() = isOrganizationAdmin() || isOrganizationMember()
+
+/**
+ * @return true if the user has rights to read subscription data.
+ */
+fun User.canReadSubscription() = role == Role.OrganizationAdmin || role == Role.NoOrganization

@@ -39,7 +39,7 @@ public class ActivePaymentProviderImpl @Inject constructor(
             return
         }
 
-        val availablePaymentProviders = getAvailablePaymentProviders(true).filter {
+        val availablePaymentProviders = getAvailablePaymentProviders(refresh = true).filter {
             // Adding PayPal is currently not supported.
             it != PaymentProvider.PayPal
         }

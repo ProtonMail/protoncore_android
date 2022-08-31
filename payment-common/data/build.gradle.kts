@@ -37,6 +37,7 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         project(Module.networkDomain),
+        project(Module.userDomain),
         project(Module.planDomain),
         retrofit,
     )

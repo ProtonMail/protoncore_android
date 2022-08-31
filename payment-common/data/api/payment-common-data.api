@@ -5,6 +5,13 @@ public final class me/proton/core/paymentcommon/data/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/paymentcommon/data/PaymentManagerImpl : me/proton/core/paymentcommon/domain/PaymentManager {
+	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/paymentcommon/domain/usecase/GetAvailablePaymentProviders;)V
+	public fun getPaymentProviders (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun isSubscriptionAvailable (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun isUpgradeAvailable (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/paymentcommon/data/ProtonIAPBillingLibraryImpl : me/proton/core/paymentcommon/domain/usecase/ProtonIAPBillingLibrary {
 	public fun <init> ()V
 	public fun isAvailable ()Z

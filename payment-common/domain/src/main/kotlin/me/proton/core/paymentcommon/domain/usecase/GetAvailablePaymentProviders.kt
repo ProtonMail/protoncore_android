@@ -21,6 +21,7 @@ package me.proton.core.paymentcommon.domain.usecase
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import javax.inject.Inject
 
@@ -30,23 +31,23 @@ public class GetAvailablePaymentProviders @Inject internal constructor(
     private val getPaymentStatus: GetPaymentStatus,
     private val protonIAPBillingLibrary: ProtonIAPBillingLibrary
 ) {
-    /** Returns a set of [payment providers][PaymentProvider] which can be offered to the user.
-     * In case it's not possible to fetch current payment status, an empty set is returned.
+    /**
+     * Returns a set of [payment providers][PaymentProvider] which can be offered to the user.
+     *
+     * If [userId] is null the primary [userId] will be used.
+     *
+     * Note: In case it's not possible to fetch current payment status, an empty set is returned.
      */
-    public suspend operator fun invoke(refresh: Boolean = false): Set<PaymentProvider> {
-        val userId = accountManager.getPrimaryUserId().first()
+    public suspend operator fun invoke(userId: UserId? = null, refresh: Boolean = false): Set<PaymentProvider> {
         val paymentStatus = try {
-            getPaymentStatus(userId, refresh)
+            getPaymentStatus(userId ?: accountManager.getPrimaryUserId().first(), refresh)
         } catch (_: ApiException) {
             null
         }
-
         return buildSet {
-            if (paymentStatus?.card == true)
-                add(PaymentProvider.CardPayment)
+            if (paymentStatus?.card == true) add(PaymentProvider.CardPayment)
             if (paymentStatus?.paypal == true) add(PaymentProvider.PayPal)
-            if (paymentStatus?.inApp == true && isBuiltForGooglePlay())
-                add(PaymentProvider.GoogleInAppPurchase)
+            if (paymentStatus?.inApp == true && isBuiltForGooglePlay()) add(PaymentProvider.GoogleInAppPurchase)
         }
     }
 
