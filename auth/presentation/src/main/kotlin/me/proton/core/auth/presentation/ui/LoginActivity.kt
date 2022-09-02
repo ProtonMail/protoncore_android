@@ -46,6 +46,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.util.kotlin.exhaustive
@@ -108,6 +109,14 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 blockingHelpButton.setText(blockingHelp.label)
             }
         }
+
+        viewModel.state
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onLongState(LoginViewModel.State.Processing) {
+                showToast(getString(R.string.auth_long_login))
+            }
+            .launchIn(lifecycleScope)
 
         viewModel.state
             .flowWithLifecycle(lifecycle)

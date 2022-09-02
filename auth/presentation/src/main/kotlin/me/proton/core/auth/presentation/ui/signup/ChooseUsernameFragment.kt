@@ -36,6 +36,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseUsernameBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
+import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.canSwitchToExternal
@@ -44,6 +45,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.user.domain.entity.Domain
@@ -89,6 +91,14 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                 onClick { viewModel.onUserSwitchAccountType() }
             }
         }
+
+        viewModel.state
+            .flowWithLifecycle(lifecycle)
+            .distinctUntilChanged()
+            .onLongState(ChooseUsernameViewModel.State.Processing) {
+                requireContext().showToast(getString(R.string.auth_long_signup))
+            }
+            .launchIn(lifecycleScope)
 
         viewModel.state
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)

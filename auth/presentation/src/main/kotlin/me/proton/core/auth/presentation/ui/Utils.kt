@@ -20,6 +20,12 @@ package me.proton.core.auth.presentation.ui
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.ui.signup.SignupFinishedFragment
 import me.proton.core.auth.presentation.ui.signup.CreatingUserFragment
@@ -108,4 +114,17 @@ fun FragmentManager.removeCongrats() {
         }
         popBackStack()
     }
+}
+
+/**
+ * Helper method to monitor flow for state staying as one for prolonged period of time to trigger specific actions
+ */
+internal inline fun <E> Flow<Any>.onLongState(state: E, crossinline action: () -> Unit) = flatMapLatest {
+    if (it == state) flow {
+        delay(10000)
+        emit(Unit)
+    }
+    else emptyFlow()
+}.onEach {
+    action()
 }
