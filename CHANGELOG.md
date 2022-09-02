@@ -11,6 +11,230 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.0.0] - 2022-09-02
+
+### Breaking Changes
+
+**Features**
+
+- human-verification:
+  - Provide a shared (singleton) instance of `OkHttpClient`.
+
+    The provided `OkHttpClient` instance is not customized in any way,
+    and can be used to contruct your own HTTP clients (`OkHttpClient.newBuilder`).
+
+    BREAKING-CHANGE: `ApiManagerFactory` takes `OkHttpClient` as a constructor argument. To inject, use `@SharedOkHttpClient` annotation.
+- network:
+  - The base API URL needs to be provided in client app dagger module.
+
+    The URL needs to be an instance of `okhttp3.HttpUrl` with `@BaseProtonApiUrl` qualifier.
+    In turn, clients no longer need to provide `ClientIdProvider`.
+  - Provide a shared (singleton) instance of `OkHttpClient`.
+
+    The provided `OkHttpClient` instance is not customized in any way,
+    and can be used to contruct your own HTTP clients (`OkHttpClient.newBuilder`).
+
+    BREAKING-CHANGE: `ApiManagerFactory` takes `OkHttpClient` as a constructor argument. To inject, use `@SharedOkHttpClient` annotation.
+
+**Refactoring**
+
+- auth:
+  - Moved MissingScope state handling in Initializer.
+
+    **There is no need to add any client side handling code anymore.**
+- human-verification:
+  - Moved HumanVerification state handling in Initializer.
+
+    **There is no need to add any client side handling code anymore**.
+
+### Chores
+
+- plugins-detekt:
+  - Reduced Detekt exclude rules, especially for tests.
+- report-presentation:
+  - Rename "Report an issue" to "Report a problem".
+
+### Features
+
+- Add `util-android-dagger` module for providing `AppLifecycleProvider`, `CoroutineScopeProvider` and `DispatcherProvider`.
+- Include `*-dagger` modules in their parent modules.
+
+  The `*-dagger` modules are included by default in their 'parent' modules (i.e.: `key-dagger` is included by default inside `key` module and maven dependency). This will cause build issues with Hilt because some of the common dependencies that you were providing at the moment will be duplicated in these new modules. To solve this you could either:
+  
+  - Remove those dependencies, either whole module classes from your app or just the conflicting @Provides and @Binds.
+  - Exclude the dagger modules until you have time to address this problem. To do this, you can use `exclude`:
+  
+  Kotlin version:
+  ```kotlin
+  implementation("me.proton.core:some-feature:1.2.3") {
+      configurations.all { exclude(module = "some-feature-dagger") }
+  }
+  ```
+  
+  Groovy version:
+  ```groovy
+  implementation("me.proton.core:some-feature:1.2.3") {
+      configurations.all { exclude module: "some-feature-dagger" }
+  }
+  ```
+  
+  This same change can also be used to remove the dagger module and provide your own dependencies when needed. However, you'd have to provide *all* the dependencies included in this module, as with Hilt there's no way to selectively override dependencies.
+- All Core modules have a corresponding `*-dagger` module.
+- feature-flag:
+  - Added Feature Flag not found info log.
+- human-verification-presentation:
+  - HumanVerificationActivity now use `ProtonTheme.DialogWhenLarge`.
+
+    HumanVerificationActivity will be displayed either full-screen (small, normal) or as a dialog (large, xlarge).
+- network:
+  - Added "proton.me" Public Keys Pinning.
+  - Removed old Public Key Pinning.
+  - `ApiManagerFactory` will be provided by `network-dagger` module.
+
+    The client apps will additionally need to provide:
+    - array of doh providers (`@DohProviderUrls`)
+    - array of certificate pins (`@CertificatePins`)
+    - list of alternative api pins (`@AlternativeApiPins`)
+  - Provide `ServerTimeListener` (for updating pgp-crypto time).
+- payment:
+  - Added PaymentManager.
+
+    - GetPaymentProviders: returns a set of PaymentProvider which can be offered to the user.
+    - IsUpgradeAvailable: returns true if there is an upgrade flow available.
+    - IsSubscriptionAvailable: returns true if there is (current) subscription flow available.
+  - Added Google In-App Purchase support.
+  - Add the new endpoint for payment status and remove the old one.
+
+    DAGGER: You should provide an `AppStore` in your dagger module:
+    - For builds distributed in Google Play Store:
+    ```
+    @Provides
+    fun provideAppStore() = AppStore.GooglePlay
+    ```
+    - For builds distributed in F-Droid:
+    ```
+    @Provides
+    fun provideAppStore() = AppStore.FDroid
+    ```
+  - redesign payment for IAP support.
+
+    feat(plan): redesign plans for IAP support.
+- payment-iap:
+  - Added Google In-App Purchase module.
+- plan:
+  - Updated the Current Plan used/max values calculation.
+  - Map (Proton) plan names to plan names for Google Play store.
+- plugins-detekt:
+  - Exclude Database annotated classes from `UnnecessaryAbstractClass` rule
+  - Allow to add a configuration file for Custom Detekt Rules in config/detekt/custom-rules.yml. The path can be changed by `protonDetekt { customRulesConfigFile = file(path-to-file.yml) }`.
+  - Allow custom threshold as `protonDetekt { threshold = 123 }`.
+- presentation:
+  - Automatically clear ProtonInput TextPassword onDetachedFromWindow/onSaveInstanceState.
+  - Added ProtonInput setSingleLine.
+- proguard-rules:
+  - Add `proguard-rules` module.
+
+    The module contains common proguard rules that are shared by multiple Core modules.
+    Currently it contains rules for classes marked with `@Serializable` (kotlin-serialization).
+
+    Note: the "official" rules from the kotlinx.serialization do not cover all cases we have,
+    so we use a different set of rules.
+- util:
+  - Add a StrictMode.VmPolicy builder extension function.
+
+### Bug Fixes
+
+- auth-presentation:
+  - Fixed Terms & Conditions WebView issues.
+- challenge-presentation:
+  - Fixed potential NoSuchElementException in ProtonMetadataInput.
+- feature-flag:
+  - Fetch unknown local FeatureId, and remember unknown remote FeatureId.
+- human-verification:
+  - Fixed Change Password HumanVerification flow.
+
+    HumanVerification handling is not anymore coupled to the Login or SignUp flows, but apply to any network call.
+    Start HumanVerification Activity onHumanVerificationNeeded (usually handled in top level main Activity).
+  - Delete invalid `HumanVerificationEntity` objects from DB.
+
+    In the past (HV2) it was possible to have `HumanVerificationNeeded` state,
+    and `null` captcha verification token. In HV3, for `HumanVerificationNeeded` state,
+    the captcha verification token should always be present.
+    
+    The migration will delete all `HumanVerificationEntity`
+    objects except those that are in "success" state.
+
+    MIGRATION: `HumanVerificationDatabase.MIGRATION_1`
+- network:
+  - Make sure we update the last HV time even if the coroutine is cancelled.
+- plan:
+  - Fixed Free Plan user count.
+- plan-presentation:
+  - Fixed not showing Currency Dropdown.
+- plugins-detekt:
+  - Fetch Detekt config from main branch on GitHub.
+  - Configuration file is now updated entirely, before the update might be partial, as we were using the async BufferedWriter.
+- presentation-compose:
+  - Make ProtonCenteredProgress being centered.
+  - Add overlineWeak to ProtonTypography.
+- user:
+  - Fixed UserAddressKey format generation logic (Key Migration Phase 2).
+
+### Internationalization
+
+- Upgrade translations from crowdin (07889828).
+- Upgrade translations from crowdin (cb51aedf).
+- Upgrade translations from crowdin (7e773d3e).
+
+### Performance Improvements
+
+- auth/challenge/user:
+  - Eliminate IO on the main thread during login and signup (gathering challenge data).
+- network:
+  - Use IO dispatcher when getting `ApiManager` instance from `ApiProvider.get`.
+
+    The first call to `ApiManagerFactory.create` can be expensive (50-100ms), and performs disk IO.
+
+### Refactoring
+
+- Use `@Binds` whenever possible (instead of `@Provide`).
+- Use `CoroutineScopeProvider` and `DispatcherProvider` when possible.
+
+  - Use `CoroutineScopeProvider` instead of creating custom (global) `CoroutineScope` instances.
+  - Use `DispatcherProvider` instead of calling methods on `kotlinx.coroutines.Dispatchers` object.
+- contact:
+  - Rename `contact-hilt` into `contact-dagger`.
+- crypto-validator:
+  - Run validation on IO thread (due to accessing shared prefs).
+- feature-flag:
+  - Refactored Feature Flag modules.
+
+    Fixed issues:
+    - `FeatureFlagRepositoryImpl get` doesn't return a nullable `FeatureFlag`.
+    - Fetching for a different userId will discard others. `FeatureFlagEntity` should have `userId` as primaryKey.
+    - Missing Local/Remote DataSource for consistency.
+    - Add `FeatureFlagManagerImpl` prefetch `Worker`.
+- human-verification-data:
+  - Renamed DB HumanVerificationEntity captchaVerificationToken to verificationToken.
+
+    MIGRATION: HumanVerificationDatabase.MIGRATION_2.
+- network:
+  - Add explicit parameter for DoH URLs in `ApiManagerFactory`.
+  - Use `URI.resolve` for constructing the URL for `dns-query` endpoint.
+- plugins-detekt:
+  - Deprecated `configFilePath` in favor of `configFile` and minor refactors.
+- user:
+  - Split `CoreUserManagerModule` into smaller modules.
+
+### Theming
+
+- Added `ProtonTheme.DialogWhenLarge` for Activity that will be displayed either full-screen (small, normal) or as a dialog (large, xlarge).
+- Updated Presentation and Presentation-Compose modules Color Taxonomy.
+
+  Added 1 global color (Pampas).
+  Added 1 reference color (proton_background_deep).
+  Changed Dark/Light Theme colors assignment.
+
 ## [8.5.0] - 2022-07-15
 
 ### Features
