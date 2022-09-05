@@ -19,33 +19,33 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Hilfe</string>
-  <string name="human_verification_title">Menschliche Überprüfung</string>
+  <string name="human_verification_title">Menschliche Bestätigung</string>
   <string name="human_verification_main_subtitle">Um Missbrauch zu verhindern, bestätige bitte, dass du ein Mensch bist, indem du eine der folgenden Optionen verwendest</string>
   <string name="human_verification_enter_code_subtitle">Geben Sie den an „%s” gesendeten Bestätigungscode ein.</string>
-  <string name="human_verification_enter_code_subtitle_email">Geben Sie den an „%s” gesendeten Bestätigungscode ein. Sollten Sie die E-Mail nicht in Ihrem Posteingang vorfinden, überprüfen Sie bitte Ihren Spam-Ordner.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Geben Sie den bereits erhaltenen Bestätigungscode ein:</string>
+  <string name="human_verification_enter_code_subtitle_email">Gib den an „%s“ gesendeten Bestätigungscode ein. Solltest du die E-Mail nicht in deinem Posteingang vorfinden, überprüfe bitte deinen Spam-Ordner.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Gib den bereits erhaltenen Bestätigungscode ein:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-Mail-Adresse</string>
-  <string name="human_verification_option_email_subtitle">Ihre E-Mail-Adresse wird nur für diese einmalige Überprüfung verwendet. Wenn Sie die Nachricht nicht in Ihrem Posteingang finden, überprüfen Sie bitte auch Ihren Spam-Ordner.</string>
+  <string name="human_verification_option_email_subtitle">Deine E-Mail-Adresse wird nur für diese einmalige Überprüfung verwendet. Wenn du die Nachricht nicht in deinem Posteingang findest, überprüfe bitte auch deinen Spam-Ordner.</string>
   <string name="human_verification_option_sms">Rufnummer</string>
-  <string name="human_verification_option_sms_subtitle">Ihre Rufnummer wird nur für diese einmalige Überprüfung verwendet.</string>
+  <string name="human_verification_option_sms_subtitle">Deine Rufnummer wird nur für diese einmalige Überprüfung verwendet.</string>
   <string name="human_verification_get_verification_code">Bestätigungscode abrufen</string>
   <string name="human_verification_already_have_code">Ich habe bereits einen Code</string>
   <string name="human_verification_request_replacement_code">Code nicht erhalten?</string>
   <string name="human_verification_verify">Bestätigen</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Benötigen Sie Hilfe bei der menschlichen Bestätigung?</string>
+  <string name="human_verification_help_title">Benötigst du Hilfe bei der menschlichen Bestätigung?</string>
   <string name="human_verification_code">Bestätigungscode</string>
   <string name="human_verification_code_request_new_code_title">Neuen Code anfordern?</string>
   <string name="human_verification_code_request_new_code_action">Neuen Code anfordern</string>
   <string name="human_verification_code_request_new_code">Lassen Sie sich einen Ersatzcode an „%s” senden.</string>
   <string name="email">E-Mail-Adresse</string>
-  <string name="email_hint">meine@emailadresse.de</string>
+  <string name="email_hint">email@beispiel.de</string>
   <string name="sms_hint">+49 ●●●●● ●●●●●●●●●●</string>
   <string name="verification_code_hint">•••••••</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Anfrage einreichen</string>
-  <string name="human_verification_help_manual">Wenn Sie Probleme bei der Erstellung Ihres Kontos haben, reichen Sie bitte eine Anfrage ein. Wir werden Ihnen innerhalb eines Werktags antworten.</string>
+  <string name="human_verification_help_manual">Wenn du Probleme bei der Erstellung deines Kontos hast, reiche bitte eine Anfrage ein. Wir werden dir innerhalb eines Werktags antworten.</string>
   <string name="human_verification_help_website_title">Besuche unseren Hilfebereich</string>
   <string name="human_verification_help_website">Erfahren Sie mehr über die menschliche Prüfung und warum wir danach fragen.</string>
   <string name="human_verification_sending_failed">Das Senden des Bestätigungscodes ist fehlgeschlagen. Bitte versuchen Sie es erneut.</string>

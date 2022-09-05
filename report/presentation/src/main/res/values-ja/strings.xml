@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">問題を報告</string>
+  <string name="core_report_bug_activity_title">Report a problem</string>
   <string name="core_report_bug_close">閉じる</string>
   <string name="core_report_bug_subject_field_hint">件名</string>
   <string name="core_report_bug_subject_field_required">件名を入力</string>

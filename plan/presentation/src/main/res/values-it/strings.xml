@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Seleziona un piano</string>
   <string name="plans_select_a_plan_subtitle">Un piano per tutti i servizi Proton</string>
   <string name="plans_fetching_general_error">Si è verificato un errore durante il recupero dei piani.</string>
+  <string name="plans_payment_error">Si è verificato un errore di pagamento. Riprova più tardi o crea un piano gratuito.</string>
   <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">al mese</string>
-  <string name="plan_price_annually">all\'anno*</string>
+  <string name="plan_price_annually">all\'anno</string>
   <string name="plans_current_plan">Piano attuale</string>
   <string name="plans_upgrade_plan">Effettua l\'upgrade del piano</string>
   <string name="plans_subscription">Abbonamento</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Ottieni %s</string>
   <string name="plans_manage_your_subscription">Gestisci il tuo abbonamento su <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s su %s</string>
+  <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Il tuo abbonamento è gestito da Google Play.</string>
   <string name="plans_manage_your_subscription_other">Il tuo abbonamento non può essere gestito all\'interno dell\'app mobile.</string>
+  <string name="plans_autorenew_subscriptions">Solo gli abbonamenti annuali con rinnovo automatico sono disponibili tramite questa app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Non è possibile eseguire l\'aggiornamento dall\'app mobile.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

@@ -22,6 +22,6 @@
   <string name="account_switcher_action_sign_in">登录</string>
   <string name="account_switcher_action_sign_out">退出账户</string>
   <string name="account_switcher_action_remove">移除</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
-  <string name="account_view_three_dots_content_description">Options</string>
+  <string name="account_list_item_chevron_content_description">切换账户</string>
+  <string name="account_view_three_dots_content_description">选项</string>
 </resources>

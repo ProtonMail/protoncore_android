@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">プランを選択</string>
   <string name="plans_select_a_plan_subtitle">すべての Proton サービスのための 1 つのプラン</string>
   <string name="plans_fetching_general_error">プランの読み込み時にエラーが発生しました。</string>
+  <string name="plans_payment_error">支払いエラーが発生しました。再度お試しいただくか、無料プランを作成してください。</string>
   <string name="plans_free_name">無料</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
-  <string name="plan_price_annually">年あたり*</string>
+  <string name="plan_price_annually">per year</string>
   <string name="plans_current_plan">現在のプラン</string>
   <string name="plans_upgrade_plan">プランをアップグレード</string>
   <string name="plans_subscription">サブスクリプション</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">%s を入手</string>
   <string name="plans_manage_your_subscription"><a href="https://account.protonmail.com">account.protonmail.com</a> からサブスクリプションを管理</string>
   <string name="plans_used_space">%s / %s</string>
+  <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
   <string name="plans_manage_your_subscription_other">モバイルアプリではサブスクリプションを管理できません。</string>
+  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードできません。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -58,7 +61,7 @@
     <item quantity="other">#proton_addresses# アドレス / ユーザー</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_addresses# addresses</item>
+    <item quantity="other">%d/#proton_addresses# アドレス</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">#proton_domains# 件のカスタムメールドメインに対応</item>
@@ -67,10 +70,10 @@
     <item quantity="other">#proton_calendars# 件のパーソナルカレンダー</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="other">%d/#proton_calendars# カレンダー</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">#proton_vpn# 台のデバイスで利用できる高速な VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 高速 VPN 接続</item>
@@ -79,7 +82,7 @@
     <item quantity="other">#proton_users# ユーザー</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="other">%d/#proton_users# ユーザー</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -106,9 +109,9 @@
   <string name="secure_core" comment="new_plans">Secure Core サーバー</string>
   <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">毎日のコミュニケーションに必要なプライバシーファーストのメールおよびカレンダーソリューション。</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">あなたのプライバシーとセキュリティは私たちの最優先事項です。</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">あなたのプライバシーとセキュリティは私たちの最優先事項です。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>ユーロ</item>

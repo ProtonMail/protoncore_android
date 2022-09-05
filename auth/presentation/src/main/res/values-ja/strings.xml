@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_calendar">暗号化されたカレンダーでイベントをプライベートかつ、安心安全に保ちます。</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Proton VPN でプライバシーを保護</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
+  <string name="welcome_subtitle_vpn">インターネット接続を暗号化し、プライバシーを保護する高速スイス VPN。</string>
   <string name="welcome_subtitle_vpn_alt">高速なスイスの VPN でプライバシーを保護します。最大限のセキュリティを備えた制限のない 1,600 台以上のサーバーがあります。</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">パスワード</string>
@@ -87,10 +87,10 @@
   <string name="auth_mailbox_login_error_primary_key_error">プライマリー キー エラーです。</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">無効なパスフレーズです。</string>
   <string name="auth_password_chooser_title">パスワードを変更</string>
-  <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
+  <string name="auth_password_chooser_description">組織のメンバーとして Proton アプリを使うと、初めにブラウザーから Proton にサインインしてパスワードを変更する必要があります。</string>
   <string name="auth_password_chooser_change">パスワードを変更</string>
   <string name="auth_user_check_one_free_error">1 つの無料 Proton アカウントのみが許可されています。</string>
-  <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
+  <string name="auth_user_check_delinquent_error">アカウントは支払い期限を過ぎたため現在保留中です。</string>
   <string name="auth_user_check_delinquent_action">請求の支払い</string>
   <string name="auth_account_not_found_error">アカウントのエラーが発生しました</string>
   <string name="auth_one_account_all_services">1つのアカウントで全 Proton サービスを利用可能.</string>

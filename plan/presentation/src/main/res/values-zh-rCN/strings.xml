@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">选择账户等级</string>
   <string name="plans_select_a_plan_subtitle">账户等级对所有 Proton 服务均有效</string>
   <string name="plans_fetching_general_error">获取账户等级失败。</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">免费版</string>
   <string name="plan_price_monthly">每月</string>
-  <string name="plan_price_annually">per year*</string>
+  <string name="plan_price_annually">per year</string>
   <string name="plans_current_plan">当前等级</string>
   <string name="plans_upgrade_plan">升级您的账户</string>
   <string name="plans_subscription">账户等级</string>
@@ -30,7 +31,7 @@
   <string name="plans_expiration_date">账户等级将于 &lt;b&gt;%s&lt;/b&gt; 失效</string>
   <string name="plans_billed_yearly">* 按每年 %s 收费</string>
   <string name="plans_billed_monthly">按月计费</string>
-  <string name="plans_billing_monthly">For 1 month</string>
+  <string name="plans_billing_monthly">1 个月</string>
   <string name="plans_billing_yearly">For 1 year</string>
   <string name="plans_billing_two_years">For 2 years</string>
   <string name="plans_upgrade_your_plan">升级您的账户</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Get %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
+  <string name="plans_payments_info_not_available">不适用</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
   <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
+  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

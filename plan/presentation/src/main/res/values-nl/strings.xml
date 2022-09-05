@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Selecteer een abonnement</string>
   <string name="plans_select_a_plan_subtitle">Één abonnement voor alle Proton diensten</string>
   <string name="plans_fetching_general_error">Er is een fout opgetreden bij het ophalen van de abonnementen.</string>
+  <string name="plans_payment_error">De betaling is niet gelukt. Probeer later nog eens, of start een gratis abonnement.</string>
   <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">maandelijks</string>
-  <string name="plan_price_annually">per year*</string>
+  <string name="plan_price_annually">per year</string>
   <string name="plans_current_plan">Huidig abonnement</string>
   <string name="plans_upgrade_plan">Upgrade uw abonnement</string>
   <string name="plans_subscription">Abonnement</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Krijg %s</string>
   <string name="plans_manage_your_subscription">Beheer uw abonnement op <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s van %s</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
+  <string name="plans_payments_info_not_available">n.v.t.</string>
+  <string name="plans_manage_your_subscription_google">Uw abonnement wordt beheerd door Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Uw abonnement kan niet beheerd worden in de mobiele app.</string>
+  <string name="plans_autorenew_subscriptions">Enkel abonnementen met automatische jaarlijkse verlenging zijn beschikbaar via deze app.</string>
   <string name="plans_can_not_upgrade_from_mobile">U kan niet upgraden vanuit de mobiele app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

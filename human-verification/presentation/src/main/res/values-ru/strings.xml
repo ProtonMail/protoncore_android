@@ -19,41 +19,41 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Помощь</string>
-  <string name="human_verification_title">Проверка \"Я не робот\"</string>
+  <string name="human_verification_title">Проверка пользователя</string>
   <string name="human_verification_main_subtitle">Чтобы предотвратить неправомерное использование, пожалуйста, пройдите одну из доступных проверок того, что вы не робот</string>
   <string name="human_verification_enter_code_subtitle">Введите код подтверждения, отправленный на $%s.</string>
   <string name="human_verification_enter_code_subtitle_email">Введите проверочный код, который был отправлен на $%s. Если вы не нашли его во входящих, пожалуйста, проверьте спам.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Введите имеющийся у вас проверочный код:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Эл. почта</string>
+  <string name="human_verification_option_email">Электронная почта</string>
   <string name="human_verification_option_email_subtitle">Ваша почта будет использована для разовой проверки. Если у вас во входящих нет писем, то проверьте папку со спамом.</string>
   <string name="human_verification_option_sms">Hомер телефона</string>
   <string name="human_verification_option_sms_subtitle">Ваш номер телефона будет использован только для этой разовой проверки.</string>
-  <string name="human_verification_get_verification_code">Получить проверочный код</string>
-  <string name="human_verification_already_have_code">У меня есть код</string>
+  <string name="human_verification_get_verification_code">Получить код подтверждения</string>
+  <string name="human_verification_already_have_code">У меня уже есть код</string>
   <string name="human_verification_request_replacement_code">Не получили код?</string>
   <string name="human_verification_verify">Проверить</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Требуется ли вам помощь для проверки \"Я не робот\"?</string>
-  <string name="human_verification_code">Проверочный код</string>
+  <string name="human_verification_code">Код подтверждения</string>
   <string name="human_verification_code_request_new_code_title">Запросить новый код?</string>
   <string name="human_verification_code_request_new_code_action">Запросить новый код</string>
-  <string name="human_verification_code_request_new_code">Получить замену кода на %s.</string>
-  <string name="email">Эл. почта</string>
+  <string name="human_verification_code_request_new_code">Получите код замены, отправленный на %s.</string>
+  <string name="email">Электронная почта</string>
   <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Запросить приглашение</string>
   <string name="human_verification_help_manual">Если у вас возникли проблемы с созданием учетной записи, пожалуйста, запросите приглашение и мы ответим в течение одного рабочего дня.</string>
-  <string name="human_verification_help_website_title">Посмотреть в нашем центре поддержки</string>
+  <string name="human_verification_help_website_title">Посетить наш справочный центр</string>
   <string name="human_verification_help_website">Подробнее о проверке \"Я не робот\" и зачем мы ее используем.</string>
   <string name="human_verification_sending_failed">Не удалось отправить проверочный код. Попробуйте еще раз.</string>
   <string name="human_verification_incorrect_code">Неверный код. Пожалуйста, попробуйте еще раз.</string>
   <string name="human_verification_resent_code">Мы отправили вам другой код.</string>
   <string name="human_verification_captcha_failed">Проверка CAPTCHA не удалась. Пожалуйста, попробуйте еще раз или выберите другой способ проверки.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">Нет соединения. Невозможно загрузить CAPTCHA.</string>
+  <string name="human_verification_captcha_no_connectivity">Нет подключения. Невозможно загрузить CAPTCHA.</string>
   <string name="human_verification_action_retry">Повторить</string>
   <string name="human_verification_method_loading_failed">Не удалось загрузить текущий метод проверки. Если проблема не исчезла, попробуйте использовать другие методы, если они доступны, или обратитесь к экрану справки.</string>
 </resources>

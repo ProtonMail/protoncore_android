@@ -27,13 +27,17 @@
   <string name="payments_error_session">Id sesi yang valid dibutuhkan saat berlangganan pengguna yang masuk.</string>
   <string name="payments_error_signup_paymentmethod">Tidak dapat mendaftar dengan metode pembayaran yang sudah ada.</string>
   <string name="payments_error_invalid_session">Sesi tidak valid.</string>
+  <string name="payments_no_payment_provider">Tidak ada layanan penyedia pembayaran aktif yang ditemukan.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Pilih metode pembayaran Anda</string>
   <string name="payments_add_credit_debit_card">Tambah kartu kredit/debit baru</string>
-  <string name="payments_billing_yearly">Untuk 1 tahun</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Bayar %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Bayar dengan</string>
   <string name="payments_method_icon">Ikon metode pembayaran.</string>
+  <string name="payments_method_surcharge">*Pembayaran dengan metode ini akan dikenakan biaya tambahan.</string>
+  <string name="payments_method_terms_conditions">Dengan membeli menggunakan Google Pay, Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk menyiapkan pembayaran yang berulang dengan Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Rincian pembayaran</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Negara</string>
   <string name="payments_paying_in_process">Pembayaran sedang berlangsung</string>
   <string name="payments_choose_country">Pilih negara</string>
-  <string name="payments_info_not_available">n/a</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Kdlw. %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

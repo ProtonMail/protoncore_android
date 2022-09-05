@@ -27,13 +27,17 @@
   <string name="payments_error_session">Çevrimiçi kullanıcı abone olurken geçerli oturum kimliği gereklidir.</string>
   <string name="payments_error_signup_paymentmethod">Var olan ödeme yöntemiyle hesap açılamadı.</string>
   <string name="payments_error_invalid_session">Oturum geçersiz.</string>
+  <string name="payments_no_payment_provider">Herhangi bir etkin ödeme hizmeti sağlayıcısı bulunamadı.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Ödeme yönteminizi seçin</string>
   <string name="payments_add_credit_debit_card">Yeni, kredi/banka kartı ekle</string>
-  <string name="payments_billing_yearly">Bir yıllık</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">%s öde</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Şununla öde</string>
   <string name="payments_method_icon">Ödeme yöntemi simgesi.</string>
+  <string name="payments_method_surcharge">*Bu ödeme yöntemi ile yapılan alışverişlerde ek ücret alınır.</string>
+  <string name="payments_method_terms_conditions">Satın almayı Google Pay ile yaparak Google Pay hüküm ve koşullar metnini ve Google Pay kullanarak yinelenen bir ödeme ayarlamayı kabul etmiş olursunuz.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Ödeme ayrıntıları</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Ülke</string>
   <string name="payments_paying_in_process">Ödeniyor</string>
   <string name="payments_choose_country">Ülke seçin</string>
-  <string name="payments_info_not_available">yok</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Geç. sonu %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

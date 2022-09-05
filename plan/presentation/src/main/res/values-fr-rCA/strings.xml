@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Sélectionnez une offre</string>
   <string name="plans_select_a_plan_subtitle">Un seul abonnement pour tous les services Proton</string>
   <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des offres.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">FREE</string>
   <string name="plan_price_monthly">par mois</string>
-  <string name="plan_price_annually">per year*</string>
+  <string name="plan_price_annually">per year</string>
   <string name="plans_current_plan">Offre actuelle</string>
   <string name="plans_upgrade_plan">Changez d\'offre</string>
   <string name="plans_subscription">Abonnement</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Obtenir %s</string>
   <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s sur %s</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
+  <string name="plans_payments_info_not_available">n/a</string>
+  <string name="plans_manage_your_subscription_google">Votre abonnement est géré par Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Votre abonnement ne peut pas être géré dans l\'application mobile.</string>
+  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Vous ne pouvez pas passer à l\'offre supérieure depuis l\'application mobile.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

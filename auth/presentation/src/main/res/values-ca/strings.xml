@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">Creant adreça</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Clicant a Crear adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i Condicions</a> de Proton</string>
   <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>
@@ -113,11 +113,11 @@
   <string name="auth_signup_recovery_method_phone">Telèfon</string>
   <string name="auth_signup_recovery_method_email_hint">Correu electrònic de recuperació</string>
   <string name="auth_signup_recovery_method_phone_hint">Número de telèfon de recuperació</string>
-  <string name="auth_signup_terms_conditions">Termes i Condicions</string>
+  <string name="auth_signup_terms_conditions">Termes i condicions</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Si cliqueu a Següent, esteu d\'acord amb els <annotation link="terms">Termes i Condicions</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">Ometre el mètode de recuperació?</string>
   <string name="auth_signup_skip_recovery_description">Un mètode de recuperació us ajudarà a accedir al vostre compte si oblideu la vostra contrasenya o no podeu entrar al vostre compte.</string>
-  <string name="auth_signup_skip_recovery">Ometre</string>
+  <string name="auth_signup_skip_recovery">Omet</string>
   <string name="auth_signup_set_recovery">Establir un mètode de recuperació</string>
   <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot ser blanc.</string>

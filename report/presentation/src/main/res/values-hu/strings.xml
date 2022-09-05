@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Hibabejelentés</string>
+  <string name="core_report_bug_activity_title">Report a problem</string>
   <string name="core_report_bug_close">Bezárás</string>
   <string name="core_report_bug_subject_field_hint">Tárgy</string>
   <string name="core_report_bug_subject_field_required">Adjon meg egy tárgyat</string>

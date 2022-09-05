@@ -32,7 +32,7 @@
   <string name="presentation_alert_cancel">Annuler</string>
   <string name="presentation_alert_submit">Envoyer</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Signaler un problème</string>
+  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
   <string name="presentation_menu_item_title_settings">Paramètres</string>
   <string name="presentation_menu_item_title_subscription">Abonnement</string>
   <string name="presentation_menu_item_title_sign_out">Se déconnecter</string>

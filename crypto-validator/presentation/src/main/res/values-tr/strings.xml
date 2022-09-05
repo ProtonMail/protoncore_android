@@ -19,7 +19,7 @@
 <resources>
   <string name="crypto_keystore_error_title">Şifreleme hatası</string>
   <string name="crypto_keystore_error_message">Bu aygıt, verilerinizi güvende tutmak için kullandığımız Android anahtar deposunun hatalı bir uyarlamasını kullanıyor. Bir saldırganın bu aygıta fiziksel erişim sağlaması durumunda verileriniz ele geçirilebilir. Ne yapmak istersiniz?</string>
-  <string name="crypto_keystore_error_continue_action">Devam et</string>
+  <string name="crypto_keystore_error_continue_action">İlerle</string>
   <string name="crypto_keystore_error_more_info_action">Ayrıntılı bilgi alın</string>
   <string name="crypto_keystore_error_logout_action">Oturumu kapat</string>
   <string name="crypto_keystore_error_exit_action">Çıkış</string>

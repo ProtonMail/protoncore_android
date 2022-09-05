@@ -27,13 +27,17 @@
   <string name="payments_error_session">Щоб підписати зареєстрованого користувача потрібен дійсний ідентифікатор сеансу.</string>
   <string name="payments_error_signup_paymentmethod">Не вдалося зареєструватися за допомогою наявного способу оплати.</string>
   <string name="payments_error_invalid_session">Нечинний сеанс.</string>
+  <string name="payments_no_payment_provider">Не знайдена жодна активна платіжна служба.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>
   <string name="payments_add_credit_debit_card">Додати нову кредитну/платіжну картку</string>
-  <string name="payments_billing_yearly">На 1 рік</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Сплатити %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Оплатити за допомогою</string>
   <string name="payments_method_icon">Піктограма способу оплати.</string>
+  <string name="payments_method_surcharge">*Покупки, здійснені за допомогою цього способу оплати, обкладаються комісією.</string>
+  <string name="payments_method_terms_conditions">Покупка за допомогою Google Pay означає, що ви приймаєте умови користування Google Pay і погоджуєтеся налаштувати регулярні платежі з Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Подробиці платежу</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Країна</string>
   <string name="payments_paying_in_process">Оплата</string>
   <string name="payments_choose_country">Виберіть країну</string>
-  <string name="payments_info_not_available">н/д</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Чинна до %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

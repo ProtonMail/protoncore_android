@@ -27,13 +27,17 @@
   <string name="payments_error_session">Es necessita una ID de sessió vàlida per subscriure a un usuari connectat.</string>
   <string name="payments_error_signup_paymentmethod">No es pot procedir al registre amb el mètode de pagament existent.</string>
   <string name="payments_error_invalid_session">Sessió invàlida.</string>
+  <string name="payments_no_payment_provider">No s\'ha trobat cap proveïdor de pagament actiu.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Trieu la vostra forma de pagament</string>
   <string name="payments_add_credit_debit_card">Afegir nova targeta de crèdit/dèbit</string>
-  <string name="payments_billing_yearly">1 any</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
   <string name="payments_method_icon">Icona de mètode de pagament.</string>
+  <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
+  <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Detalls del pagament</string>
@@ -43,12 +47,11 @@
   <string name="payments_security_code">Codi de seguretat</string>
   <string name="payments_postal_code">Codi postal</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">00/00</string>
+  <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">País</string>
   <string name="payments_paying_in_process">Pagant</string>
   <string name="payments_choose_country">Selecciona un país</string>
-  <string name="payments_info_not_available">n/d</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

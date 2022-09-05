@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Escolher um plano</string>
   <string name="plans_select_a_plan_subtitle">Um plano para todos os serviços da Proton</string>
   <string name="plans_fetching_general_error">Ocorreu um erro ao buscar os planos.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">Gratuito</string>
   <string name="plan_price_monthly">por mês</string>
-  <string name="plan_price_annually">por ano*</string>
+  <string name="plan_price_annually">por ano</string>
   <string name="plans_current_plan">Plano atual</string>
   <string name="plans_upgrade_plan">Faça upgrade de seu plano</string>
   <string name="plans_subscription">Assinatura</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Obter %s</string>
   <string name="plans_manage_your_subscription">Gerenciar a sua assinatura em <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
+  <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Sua assinatura é gerenciada pela Google Play.</string>
   <string name="plans_manage_your_subscription_other">Sua assinatura não pode ser gerenciada no aplicativo móvel.</string>
+  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Você não pode fazer upgrade do aplicativo móvel.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -116,7 +119,7 @@
   <string name="servers_in_countries" comment="new_plans">1500+ servidores em 63 países</string>
   <string name="ad_blocker" comment="new_plans">Bloqueador de anúncios integrado (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Acesso global a serviços de streaming</string>
-  <string name="secure_core" comment="new_plans">Servidores Core seguros</string>
+  <string name="secure_core" comment="new_plans">Servidores Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">A solução de e-mail e calendário com foco em privacidade para toda a sua comunicação.</string>

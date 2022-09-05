@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="payments_iap_surcharge_info">* omvat bijkomende operatorkosten en belastingen.</string>
+  <string name="payments_iap_terms_conditions">Door te kiezen voor “Betaal met Google Pay” ga je akkoord met Google Pay\'s algemene voorwaarden en het opzetten van een terugkerende betaling met Google.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
+  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
+  <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
+</resources>

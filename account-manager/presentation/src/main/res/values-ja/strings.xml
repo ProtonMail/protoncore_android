@@ -23,5 +23,5 @@
   <string name="account_switcher_action_sign_out">サインアウト</string>
   <string name="account_switcher_action_remove">削除</string>
   <string name="account_list_item_chevron_content_description">アカウント変更を開く</string>
-  <string name="account_view_three_dots_content_description">Options</string>
+  <string name="account_view_three_dots_content_description">オプション</string>
 </resources>

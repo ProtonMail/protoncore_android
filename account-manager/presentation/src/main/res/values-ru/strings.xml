@@ -17,11 +17,11 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Сменить на</string>
-  <string name="account_switcher_action_add_account">Добавить учётную запись</string>
+  <string name="account_switcher_section_switch_to">Перейти к</string>
+  <string name="account_switcher_action_add_account">Добавить аккаунт</string>
   <string name="account_switcher_action_sign_in">Войти</string>
   <string name="account_switcher_action_sign_out">Выйти</string>
   <string name="account_switcher_action_remove">Удалить</string>
-  <string name="account_list_item_chevron_content_description">Отключить переключатель аккаунтов</string>
+  <string name="account_list_item_chevron_content_description">Открыть переключатель аккаунтов</string>
   <string name="account_view_three_dots_content_description">Параметры</string>
 </resources>

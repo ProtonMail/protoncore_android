@@ -45,11 +45,11 @@
   <string name="auth_need_help">¿Necesita ayuda?</string>
   <string name="auth_login_assistive_text">Ingrese su correo electrónico o nombre de usuario.</string>
   <string name="auth_help_title">¿Cómo podemos ayudarle?</string>
-  <string name="auth_help_option_forgot_username">¿Olvidó su usuario?</string>
-  <string name="auth_help_option_forgot_password">¿Olvidó su contraseña?</string>
+  <string name="auth_help_option_forgot_username">Nombre de usuario olvidado</string>
+  <string name="auth_help_option_forgot_password">Contraseña olvidada</string>
   <string name="auth_help_option_other">Otros problemas de inicio de sesión</string>
   <string name="auth_help_other">¿Aún necesita ayuda? Contáctenos directamente.</string>
-  <string name="auth_help_option_customer_support">Atención al cliente</string>
+  <string name="auth_help_option_customer_support">Soporte técnico</string>
   <string name="auth_2fa_title">Autenticación de dos factores</string>
   <string name="auth_2fa_label">Código de dos factores</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperación</string>
@@ -62,7 +62,7 @@
   <string name="auth_mailbox_title">Desbloquee su buzón</string>
   <string name="auth_mailbox_password_label">Contraseña del buzón</string>
   <string name="auth_mailbox_unlock_action">Desbloquear</string>
-  <string name="auth_forgot_password">¿Olvidó su contraseña?</string>
+  <string name="auth_forgot_password">Contraseña olvidada</string>
   <string name="auth_login_general_error">Ocurrió un error.</string>
   <string name="auth_login_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_mailbox_empty_credentials">Las credenciales no deben estar vacías.</string>
@@ -94,10 +94,10 @@
   <string name="auth_user_check_delinquent_action">Pagar factura</string>
   <string name="auth_account_not_found_error">Error con la cuenta</string>
   <string name="auth_one_account_all_services">Una cuenta para todos los servicios de Proton.</string>
-  <string name="auth_create_account">Crear cuenta</string>
+  <string name="auth_create_account">Crear una cuenta</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Cree su cuenta de Proton</string>
-  <string name="auth_signup_current_email">Usar su correo electrónico actual en su lugar</string>
+  <string name="auth_signup_current_email">Use su correo electrónico actual en su lugar</string>
   <string name="auth_signup_create_secure_proton_address">Crear una dirección segura de Proton Mail en su lugar</string>
   <string name="auth_signup_username">Nombre de usuario</string>
   <string name="auth_signup_domain">Dominio</string>
@@ -112,7 +112,7 @@
   <string name="auth_signup_recovery_method_email">Correo</string>
   <string name="auth_signup_recovery_method_phone">Teléfono</string>
   <string name="auth_signup_recovery_method_email_hint">Correo de recuperación</string>
-  <string name="auth_signup_recovery_method_phone_hint">Número de teléfono de recuperación</string>
+  <string name="auth_signup_recovery_method_phone_hint">Número telefónico de recuperación</string>
   <string name="auth_signup_terms_conditions">Términos y Condiciones</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Al hacer clic en Siguiente, acepta los <annotation link="terms">Términos y Condiciones</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">¿Omitir método de recuperación?</string>

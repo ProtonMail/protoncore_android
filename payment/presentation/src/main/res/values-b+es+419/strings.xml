@@ -27,13 +27,17 @@
   <string name="payments_error_session">Se necesita un id de sesión válido al suscribirse a un usuario conectado.</string>
   <string name="payments_error_signup_paymentmethod">No se pudo registrar con el método de pago existente.</string>
   <string name="payments_error_invalid_session">Sesión inválida.</string>
+  <string name="payments_no_payment_provider">No se encontró ningún proveedor de pago activo.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Elija su método de pago</string>
   <string name="payments_add_credit_debit_card">Añadir tarjeta de crédito/débito nueva</string>
-  <string name="payments_billing_yearly">Por 1 año</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Pague %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Pagar con</string>
   <string name="payments_method_icon">Ícono de método de pago.</string>
+  <string name="payments_method_surcharge">*Las compras realizadas con este método de pago tienen un recargo.</string>
+  <string name="payments_method_terms_conditions">Al comprar con Google Pay significa que acepta los términos y condiciones de Google Pay y acepta establecer un pago recurrente con Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Detalles del pago</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">País</string>
   <string name="payments_paying_in_process">Pagando</string>
   <string name="payments_choose_country">Seleccionar país</string>
-  <string name="payments_info_not_available">n/d</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

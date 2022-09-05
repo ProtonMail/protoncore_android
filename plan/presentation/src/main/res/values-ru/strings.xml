@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Выберите тариф</string>
   <string name="plans_select_a_plan_subtitle">Один аккаунт для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
+  <string name="plans_payment_error">Произошла ошибка при оплате. Повторите попытку позже или создайте бесплатный план.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">в месяц</string>
-  <string name="plan_price_annually">в год*</string>
+  <string name="plan_price_annually">в год</string>
   <string name="plans_current_plan">Текущий тариф</string>
   <string name="plans_upgrade_plan">Улучшить тариф</string>
   <string name="plans_subscription">Подписка</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Получить %s</string>
   <string name="plans_manage_your_subscription">Управляйте своей подпиской по ссылке: <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s из %s</string>
+  <string name="plans_payments_info_not_available">н/д</string>
   <string name="plans_manage_your_subscription_google">Ваша подписка управляется Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вы не можете управлять подпиской из мобильного приложения.</string>
+  <string name="plans_autorenew_subscriptions">Через это приложение доступны только автопродлеваемые годовые подписки.</string>
   <string name="plans_can_not_upgrade_from_mobile">Обновление через мобильное приложение невозможно.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Оберіть тарифний план</string>
   <string name="plans_select_a_plan_subtitle">Один тарифний план для всіх служб Proton</string>
   <string name="plans_fetching_general_error">Помилка отримання тарифних планів.</string>
+  <string name="plans_payment_error">Сталася помилка платежу. Спробуйте пізніше або створіть безплатний обліковий запис.</string>
   <string name="plans_free_name">Безплатний</string>
   <string name="plan_price_monthly">на місяць</string>
-  <string name="plan_price_annually">на рік*</string>
+  <string name="plan_price_annually">на рік</string>
   <string name="plans_current_plan">Поточний тарифний план</string>
   <string name="plans_upgrade_plan">Оновіть свій тарифний план</string>
   <string name="plans_subscription">Передплата</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Отримати %s</string>
   <string name="plans_manage_your_subscription">Керуйте передплатою на <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s з %s</string>
+  <string name="plans_payments_info_not_available">н/д</string>
   <string name="plans_manage_your_subscription_google">Вашою передплатою керує Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вашою передплатою не можна керувати в мобільному застосунку.</string>
+  <string name="plans_autorenew_subscriptions">У цьому застосунку доступні лише річні передплати з автопоновленням.</string>
   <string name="plans_can_not_upgrade_from_mobile">Неможливо змінити план у мобільному застосунку.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Vælg et abonnement</string>
   <string name="plans_select_a_plan_subtitle">Ét abonnement til alle Proton-tjenester</string>
   <string name="plans_fetching_general_error">Der opstod en fejl under hentning af abonnementer.</string>
+  <string name="plans_payment_error">Der er opstået en betalingsfejl. Prøv venligst igen senere eller opret et gratis abonnement.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pr. måned</string>
-  <string name="plan_price_annually">pr. år*</string>
+  <string name="plan_price_annually">årligt</string>
   <string name="plans_current_plan">Nuværende abonnement</string>
   <string name="plans_upgrade_plan">Opgradér dit abonnement</string>
   <string name="plans_subscription">Abonnement</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Få %s</string>
   <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s af %s</string>
+  <string name="plans_payments_info_not_available">ikke tilgængelig</string>
   <string name="plans_manage_your_subscription_google">Dit abonnement håndteres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Dit abonnement kan ikke administreres i mobilappen.</string>
+  <string name="plans_autorenew_subscriptions">Kun årlige abonnementer med automatisk fornyelse er tilgængelige via denne app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Du kan ikke opgradere fra mobil-appen.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

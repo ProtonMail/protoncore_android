@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2022 Proton Technologies AG
   ~ This file is part of Proton AG and ProtonCore.
   ~
@@ -15,7 +16,6 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
     <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>

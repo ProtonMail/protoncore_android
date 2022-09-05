@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Select a Plan</string>
   <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">رایگان</string>
   <string name="plan_price_monthly">per month</string>
-  <string name="plan_price_annually">per year*</string>
+  <string name="plan_price_annually">per year</string>
   <string name="plans_current_plan">طرح کنونی</string>
   <string name="plans_upgrade_plan">Upgrade your plan</string>
   <string name="plans_subscription">اشتراک</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Get %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s of %s</string>
+  <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
   <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
+  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

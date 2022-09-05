@@ -24,21 +24,21 @@
   <string name="welcome_subtitle_mail_alt">隐私、安全、便利相辅相成。将个人数据掌控权交给您自己的加密邮箱。</string>
   <string name="welcome_title_drive">使用 Proton Drive 来保护您的隐私</string>
   <string name="welcome_subtitle_drive">便捷的云端存储与安全的加密技术完美结合，众望所归的可信云存储服务。</string>
-  <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
+  <string name="welcome_subtitle_drive_alt">最安全的文件存储方式。上传、同步、分享文件均有前沿加密技术保护。</string>
   <string name="welcome_title_calendar">使用 Proton Calendar 来保护您的隐私</string>
   <string name="welcome_subtitle_calendar">加密日历让您的生活大小事保持隐私、安全和可靠。</string>
-  <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Protect your privacy with Proton VPN</string>
-  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
-  <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
-  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="welcome_subtitle_calendar_alt">我们的端到端加密日历能让您的生活时刻井然有序，掌控自如。</string>
+  <string name="welcome_title_vpn">使用 Proton VPN 捍卫您的隐私</string>
+  <string name="welcome_subtitle_vpn">加密网络连接、保护隐私的瑞士高速 VPN。</string>
+  <string name="welcome_subtitle_vpn_alt">真正保护隐私的瑞士高速 VPN。极致的安全性，超过 1600 台服务器，流量无限制。</string>
+  <string name="welcome_privacy_by_default">隐私优先</string>
   <string name="auth_password_label">密码</string>
   <string name="auth_password_help">密码必须至少包含 8 个字符</string>
   <string name="auth_current_login_password">当前登录密码</string>
   <string name="auth_enter_six_digit_code">请输入 6 位验证码</string>
   <string name="auth_second_factor_code">双重验证码</string>
   <string name="auth_email_username">邮箱或用户名</string>
-  <string name="auth_proton_email_or_username">Username or Proton Address</string>
+  <string name="auth_proton_email_or_username">用户名或 Proton 邮箱地址</string>
   <string name="auth_account_details">请输入您的 Proton 账户信息。</string>
   <string name="auth_sign_in">登录</string>
   <string name="auth_sign_in_action">登录</string>
@@ -66,17 +66,17 @@
   <string name="auth_login_general_error">出错了。</string>
   <string name="auth_login_empty_credentials">账号和密码不应为空。</string>
   <string name="auth_mailbox_empty_credentials">账号和密码不应为空。</string>
-  <string name="auth_create_address_title">Create a Proton Mail address</string>
-  <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use Proton Mail, please create an address.</string>
+  <string name="auth_create_address_title">创建 Proton Mail 邮箱地址</string>
+  <string name="auth_create_address_subtitle">您的 Proton 账户已关联至 %1$s。创建邮箱地址即可使用 Proton Mail。</string>
   <string name="auth_username">用户名</string>
   <string name="auth_username_next_action">下一步</string>
   <string name="auth_create_address_result_title">%s 可以注册</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new Proton Mail email address.</string>
+  <string name="auth_create_address_result_title_username">您的 Proton Mail 邮箱地址将是 %1$s@%2$s。</string>
   <string name="auth_create_address_result_subtitle">您可以使用该地址登录所有 Proton 服务。</string>
   <string name="auth_create_address_result_recovery_title">您的密保邮箱：</string>
   <string name="auth_create_address_create">创建地址</string>
   <string name="auth_create_address_creating">正在创建地址</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">点击创建地址即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">服务条款</a>。</string>
   <string name="auth_create_address_error_credentials">账号和密码不应为空。</string>
   <string name="auth_create_address_error_no_available_domain">没有可用的域名。</string>
   <string name="auth_create_address_error_private_key">生成私钥失败。</string>
@@ -98,7 +98,7 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">创建您的账户</string>
   <string name="auth_signup_current_email">使用您已有的邮箱地址</string>
-  <string name="auth_signup_create_secure_proton_address">Create a secure Proton Mail address instead</string>
+  <string name="auth_signup_create_secure_proton_address">创建一个安全的 Proton Mail 邮箱地址</string>
   <string name="auth_signup_username">用户名</string>
   <string name="auth_signup_domain">域名</string>
   <string name="auth_signup_email">邮箱</string>
@@ -106,7 +106,7 @@
   <string name="auth_signup_choose_password">创建密码</string>
   <string name="auth_signup_repeat_password">确认密码</string>
   <string name="auth_signup_recovery_method_title">设置恢复方法（非必需）</string>
-  <string name="auth_signup_recovery_method_title_mandatory">Set recovery method</string>
+  <string name="auth_signup_recovery_method_title_mandatory">设置恢复方法</string>
   <string name="auth_signup_recovery_method_subtitle">假如以后您忘记用户名或密码无法登录，我们将通过这个邮箱或电话号码帮助您恢复账户。</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">假如以后您忘记用户名或密码无法登录，我们将通过这个邮箱帮助您恢复账户。</string>
   <string name="auth_signup_recovery_method_email">电子邮箱</string>
@@ -132,12 +132,12 @@
   <string name="auth_signup_enter_code_subtitle">请输入发送到 %s 的验证码：</string>
   <string name="auth_signup_error_human_verification_failed">人机验证失败。</string>
   <string name="auth_signup_token_code_resent">验证码已重新发送。</string>
-  <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
-  <string name="auth_signup_congratulations">Congratulations!</string>
-  <string name="auth_signup_start_using_proton">Start using Proton</string>
-  <string name="auth_signup_start_using_calendar">Start using Proton Calendar</string>
-  <string name="auth_signup_start_using_mail">Start using Proton Mail</string>
-  <string name="auth_signup_start_using_drive">Start using Proton Drive</string>
-  <string name="auth_signup_start_using_vpn">Start using Proton VPN</string>
+  <string name="auth_signup_congratulations_subtitle">您的 Proton 账户已创建完成。\n欢迎来到隐私的世界。</string>
+  <string name="auth_signup_congratulations">祝贺您！</string>
+  <string name="auth_signup_start_using_proton">开始使用 Proton</string>
+  <string name="auth_signup_start_using_calendar">开始使用 Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">开始使用 Proton Mail</string>
+  <string name="auth_signup_start_using_drive">开始使用 Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">开始使用 Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">密保方式无效。</string>
 </resources>

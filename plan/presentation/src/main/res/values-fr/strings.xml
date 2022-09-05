@@ -20,15 +20,16 @@
   <string name="plans_select_a_plan">Sélectionnez un abonnement</string>
   <string name="plans_select_a_plan_subtitle">Un seul abonnement pour tous les services Proton</string>
   <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des abonnements.</string>
+  <string name="plans_payment_error">Une erreur de paiement s\'est produite. Réessayez plus tard ou créez un compte gratuit.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">par mois</string>
-  <string name="plan_price_annually">par an*</string>
+  <string name="plan_price_annually">par an</string>
   <string name="plans_current_plan">Abonnement actuel</string>
   <string name="plans_upgrade_plan">Changez d\'abonnement</string>
   <string name="plans_subscription">Abonnement</string>
-  <string name="plans_renewal_date">Votre abonnement sera automatiquement renouvelé le &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Votre abonnement expirera le &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_billed_yearly">*Facturé annuellement à %s</string>
+  <string name="plans_renewal_date">Votre abonnement sera automatiquement renouvelé le &lt;b&gt;%s&lt;/b&gt;.</string>
+  <string name="plans_expiration_date">Votre abonnement expirera le &lt;b&gt;%s&lt;/b&gt;.</string>
+  <string name="plans_billed_yearly">*Facturé annuellement : %s</string>
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>
   <string name="plans_billing_yearly">Pour 1 an</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Obtenir %s</string>
   <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s sur %s</string>
+  <string name="plans_payments_info_not_available">indisponible</string>
   <string name="plans_manage_your_subscription_google">Votre abonnement est géré par Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Votre abonnement ne peut pas être géré dans l\'application mobile.</string>
+  <string name="plans_manage_your_subscription_other">Vous ne pouvez pas gérer votre abonnement dans l\'application mobile.</string>
+  <string name="plans_autorenew_subscriptions">Seuls les abonnements annuels qui se renouvellent automatiquement sont disponibles via cette application.</string>
   <string name="plans_can_not_upgrade_from_mobile">Vous ne pouvez pas passer à l\'abonnement supérieur depuis l\'application mobile.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

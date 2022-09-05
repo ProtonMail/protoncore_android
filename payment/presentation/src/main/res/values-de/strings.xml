@@ -27,13 +27,17 @@
   <string name="payments_error_session">Eine gültige Sitzungs-ID wird benötigt, um einen angemeldeten Benutzer zu abonnieren.</string>
   <string name="payments_error_signup_paymentmethod">Anmeldung mit bestehender Zahlungsmethode nicht möglich.</string>
   <string name="payments_error_invalid_session">Ungültige Sitzung.</string>
+  <string name="payments_no_payment_provider">Es wurde kein aktiver Zahlungsanbieter gefunden.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Wähle deine Zahlungsmethode</string>
   <string name="payments_add_credit_debit_card">Neue Kredit-/Debitkarte hinzufügen</string>
-  <string name="payments_billing_yearly">Für ein Jahr</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Bezahle %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Bezahle mit</string>
   <string name="payments_method_icon">Symbol für die Zahlungsmethode.</string>
+  <string name="payments_method_surcharge">*Bei Käufen, die mit dieser Zahlungsmethode getätigt werden, fallen zusätzliche Gebühren an.</string>
+  <string name="payments_method_terms_conditions">Der Kauf mit Google Pay bedeutet, dass du die Geschäftsbedingungen von Google Pay akzeptierst und dich damit einverstanden erklärst, eine wiederkehrende Zahlung mit Google einzurichten.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Zahlungsinformationen</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Land</string>
   <string name="payments_paying_in_process">Zahlung wird verarbeitet</string>
   <string name="payments_choose_country">Land wählen</string>
-  <string name="payments_info_not_available">k.A.</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Gültig bis %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

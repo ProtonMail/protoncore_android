@@ -21,10 +21,10 @@
   <string name="presentation_browser_missing">Невозможно найти браузер для открытия ссылки.</string>
   <string name="presentation_force_update_title">Требуется обновление</string>
   <string name="presentation_force_update_message">Эта версия приложения уже не поддерживается, пожалуйста, обновите его, чтобы продолжить им пользоваться.</string>
-  <string name="presentation_force_update_learn_more">Узнать больше</string>
+  <string name="presentation_force_update_learn_more">Подробнее</string>
   <string name="presentation_force_update_update">Обновить</string>
   <string name="presentation_market_missing">Не могу найти приложение из стандартного магазина на этом устройстве. Пожалуйста, перейдите в магазин приложений и обновите приложение.</string>
-  <string name="presentation_authenticate">Аутентификация</string>
+  <string name="presentation_authenticate">Аутентифицировать</string>
   <string name="presentation_signin_to_continue">Войдите чтобы продолжить</string>
   <string name="presentation_alert_title">Внимание</string>
   <string name="presentation_alert_ok">ОК</string>

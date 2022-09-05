@@ -27,13 +27,17 @@
   <string name="payments_error_session">Při odběru přihlášeného uživatele je vyžadováno platné ID relace.</string>
   <string name="payments_error_signup_paymentmethod">Nelze se zaregistrovat pomocí stávající platební metody.</string>
   <string name="payments_error_invalid_session">Neplatná relace.</string>
+  <string name="payments_no_payment_provider">Nebyl nalezen žádný aktivní poskytovatel platby.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Zvolte způsob platby</string>
   <string name="payments_add_credit_debit_card">Přidat novou kreditní/debetní kartu</string>
-  <string name="payments_billing_yearly">Na rok</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Zaplatit %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Zaplatit pomocí</string>
   <string name="payments_method_icon">Ikona platební metody.</string>
+  <string name="payments_method_surcharge">*Nákupy provedené tímto způsobem platby jsou zpoplatněny.</string>
+  <string name="payments_method_terms_conditions">Nákup pomocí služby Google Pay znamená, že přijímáte podmínky služby Google Pay a souhlasíte s nastavením opakované platby u společnosti Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Platební údaje</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Země</string>
   <string name="payments_paying_in_process">Platba</string>
   <string name="payments_choose_country">Vyberte stát</string>
-  <string name="payments_info_not_available">není k dispozici</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

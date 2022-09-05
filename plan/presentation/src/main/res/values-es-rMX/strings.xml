@@ -17,19 +17,20 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Seleccionar un plan</string>
+  <string name="plans_select_a_plan">Seleccione un plan</string>
   <string name="plans_select_a_plan_subtitle">Un plan para todos los servicios de Proton</string>
   <string name="plans_fetching_general_error">Ocurrió un error al recuperar los planes.</string>
+  <string name="plans_payment_error">Ocurrió un error en el pago. Intente de nuevo más tarde o cree un plan gratuito.</string>
   <string name="plans_free_name">Gratuito</string>
   <string name="plan_price_monthly">al mes</string>
-  <string name="plan_price_annually">al año*</string>
+  <string name="plan_price_annually">al año</string>
   <string name="plans_current_plan">Plan actual</string>
   <string name="plans_upgrade_plan">Actualice su plan</string>
   <string name="plans_subscription">Suscripción</string>
   <string name="plans_renewal_date">Su plan se renovará automáticamente en &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Su plan expirará en &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Facturado anualmente en %s</string>
-  <string name="plans_billed_monthly">Facturación mensual</string>
+  <string name="plans_billed_monthly">Facturado mensualmente</string>
   <string name="plans_billing_monthly">Por 1 mes</string>
   <string name="plans_billing_yearly">Por 1 año</string>
   <string name="plans_billing_two_years">Por 2 años</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Obtenga %s</string>
   <string name="plans_manage_your_subscription">Gestione su suscripción en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
+  <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Su suscripción es gestionada por Google Play.</string>
   <string name="plans_manage_your_subscription_other">Su suscripción no puede gestionarse dentro de la aplicación móvil.</string>
+  <string name="plans_autorenew_subscriptions">Solo las suscripciones anuales automáticas están disponibles en esta aplicación.</string>
   <string name="plans_can_not_upgrade_from_mobile">No puede actualizar desde la aplicación móvil.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -98,7 +101,7 @@
   <!-- region plans headers -->
   <string name="plan_id_free_header">La básica para comunicaciones privadas y seguras.</string>
   <string name="plan_id_plus_header">Buzón completo con protección avanzada.</string>
-  <string name="plan_id_vpnbasic_header">VPN Básica</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 países</string>
   <string name="plan_id_vpnbasic_high_speed">Velocidad alta</string>
   <string name="plan_id_vpnplus_adblock">Bloqueador de anuncios (NetShield)</string>
@@ -119,7 +122,7 @@
   <string name="secure_core" comment="new_plans">Servidores Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">La solución de calendario y correo electrónico que prioriza la privacidad para sus necesidades de comunicación diarias.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">La solución de calendario y correo que prioriza la privacidad para sus necesidades de comunicación diarias.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Su privacidad y seguridad son nuestra prioridad.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Su privacidad y seguridad son nuestra prioridad.</string>
   <!-- endregion -->

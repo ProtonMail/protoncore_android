@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">Wybierz plan</string>
   <string name="plans_select_a_plan_subtitle">Jeden plan do wszystkich usług Proton</string>
   <string name="plans_fetching_general_error">Wystąpił błąd podczas pobierania planów.</string>
+  <string name="plans_payment_error">Wystąpił błąd płatności. Spróbuj ponownie później lub utwórz darmowe konto.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">miesięcznie</string>
-  <string name="plan_price_annually">rocznie*</string>
+  <string name="plan_price_annually">rocznie</string>
   <string name="plans_current_plan">Obecny plan</string>
   <string name="plans_upgrade_plan">Ulepsz plan</string>
   <string name="plans_subscription">Subskrypcja</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">Wybierz plan %s</string>
   <string name="plans_manage_your_subscription">Zarządzaj swoją subskrypcją na stronie <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s z %s</string>
+  <string name="plans_payments_info_not_available">nie dotyczy</string>
   <string name="plans_manage_your_subscription_google">Twoja subskrypcja jest zarządzana przez Google Play.</string>
   <string name="plans_manage_your_subscription_other">Twoja subskrypcja nie może być zarządzana w aplikacji mobilnej.</string>
+  <string name="plans_autorenew_subscriptions">Za pośrednictwem tej aplikacji dostępne są tylko odnawialne roczne subskrypcje.</string>
   <string name="plans_can_not_upgrade_from_mobile">Nie możesz ulepszyć planu za pomocą aplikacji mobilnej.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

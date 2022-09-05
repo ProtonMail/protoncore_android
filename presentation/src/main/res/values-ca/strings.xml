@@ -21,7 +21,7 @@
   <string name="presentation_browser_missing">No es troba cap navegador per obrir aquest enllaç.</string>
   <string name="presentation_force_update_title">Actualització necessària</string>
   <string name="presentation_force_update_message">Aquesta versió de l\'aplicació ja no està suportada, si us plau actualitzeu-la per continuar-la utilitzant.</string>
-  <string name="presentation_force_update_learn_more">Saber-ne més</string>
+  <string name="presentation_force_update_learn_more">Més informació</string>
   <string name="presentation_force_update_update">Actualitzar</string>
   <string name="presentation_market_missing">No es troba l\'aplicació de botiga instal·lada al dispositiu. Aneu a la botiga i actualitzeu l\'aplicació.</string>
   <string name="presentation_authenticate">Autenticar</string>
@@ -29,17 +29,17 @@
   <string name="presentation_alert_title">Alerta</string>
   <string name="presentation_alert_ok">D\'acord</string>
   <string name="presentation_alert_enter">Entrar</string>
-  <string name="presentation_alert_cancel">Cancel·lar</string>
-  <string name="presentation_alert_submit">Enviar</string>
+  <string name="presentation_alert_cancel">Cancel·la</string>
+  <string name="presentation_alert_submit">Envia</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Informeu d\'un problema</string>
+  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
   <string name="presentation_menu_item_title_settings">Configuració</string>
   <string name="presentation_menu_item_title_subscription">Subscripció</string>
-  <string name="presentation_menu_item_title_sign_out">Tancar la sessió</string>
+  <string name="presentation_menu_item_title_sign_out">Tanca la sessió</string>
   <!-- Other -->
   <string name="presentation_back">Torna</string>
-  <string name="presentation_close">Tancar</string>
-  <string name="presentation_skip">Ometre</string>
+  <string name="presentation_close">Tanca</string>
+  <string name="presentation_skip">Omet</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">No s\'ha pogut connectar al servidor.</string>
   <string name="presentation_check_your_connection">Comproveu la vostra connexió</string>

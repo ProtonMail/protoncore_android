@@ -27,13 +27,17 @@
   <string name="payments_error_session">订阅登录用户时需要有效会话 id。</string>
   <string name="payments_error_signup_paymentmethod">无法使用现有的支付方式注册。</string>
   <string name="payments_error_invalid_session">无效会话。</string>
+  <string name="payments_no_payment_provider">No active payment provider found.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">请选择您的支付方式</string>
   <string name="payments_add_credit_debit_card">添加新的信用卡/借记卡</string>
-  <string name="payments_billing_yearly">For 1 year</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
   <string name="payments_method_icon">支付方式图标。</string>
+  <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
+  <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">支付明细</string>
@@ -41,14 +45,13 @@
   <string name="payments_card_number">卡号</string>
   <string name="payments_expiration_date">有效期至</string>
   <string name="payments_security_code">安全码</string>
-  <string name="payments_postal_code">ZIP code</string>
+  <string name="payments_postal_code">邮编</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">国家</string>
   <string name="payments_paying_in_process">正在支付</string>
-  <string name="payments_choose_country">Select country</string>
-  <string name="payments_info_not_available">无</string>
+  <string name="payments_choose_country">选择国家</string>
   <string name="payment_cc_list_item">%1$s - %2$s（有效期至 %3$s/%4$s）</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

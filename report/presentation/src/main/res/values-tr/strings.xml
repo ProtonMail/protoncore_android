@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Bir sorun bildirin</string>
+  <string name="core_report_bug_activity_title">Bir sorun bildireceğim</string>
   <string name="core_report_bug_close">Kapat</string>
   <string name="core_report_bug_subject_field_hint">Konu</string>
   <string name="core_report_bug_subject_field_required">Bir konu yazın</string>
@@ -29,7 +29,7 @@
   </plurals>
   <string name="core_report_bug_discard_changes_title">Hata bildirimi kapatılsın mı?</string>
   <string name="core_report_bug_discard_changes_description">Bu sayfadan ayrılırsanız, bildiriminiz kaydedilmeyecek.</string>
-  <string name="core_report_bug_discard_changes_cancel">Yazmaya devam et</string>
+  <string name="core_report_bug_discard_changes_cancel">Yazmayı sürdürün</string>
   <string name="core_report_bug_discard_changes_confirm">Kaydetmeden kapat</string>
   <plurals name="core_report_bug_form_field_too_long">
     <item quantity="one">En fazla %d karakter</item>

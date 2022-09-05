@@ -27,13 +27,17 @@
   <string name="payments_error_session">Identyfikator ważnej sesji jest potrzebny podczas zakupu subskrypcji zalogowanego użytkownika.</string>
   <string name="payments_error_signup_paymentmethod">Nie można zarejestrować się z istniejącą metodą płatności.</string>
   <string name="payments_error_invalid_session">Sesja jest nieprawidłowa.</string>
+  <string name="payments_no_payment_provider">Aktywny dostawca płatności nie został znaleziony.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Wybierz metodę płatności</string>
   <string name="payments_add_credit_debit_card">Dodaj nową kartę płatniczą</string>
-  <string name="payments_billing_yearly">Na rok</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Zapłać %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Zapłać za pomocą</string>
   <string name="payments_method_icon">Ikona metody płatności.</string>
+  <string name="payments_method_surcharge">*Zakup za pomocą tej metody płatności zawiera opłatę.</string>
+  <string name="payments_method_terms_conditions">Kupując za pomocą Google Pay, akceptujesz regulamin Google Pay i zgadzasz się na utworzenie subskrypcji.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Szczegóły płatności</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Kraj</string>
   <string name="payments_paying_in_process">Przetwarzanie płatności</string>
   <string name="payments_choose_country">Wybierz kraj</string>
-  <string name="payments_info_not_available">nie dotyczy</string>
   <string name="payment_cc_list_item">%1$s - %2$s (wygasa %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

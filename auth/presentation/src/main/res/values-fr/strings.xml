@@ -43,7 +43,7 @@
   <string name="auth_sign_in">Se connecter</string>
   <string name="auth_sign_in_action">Se connecter</string>
   <string name="auth_need_help">Besoin d\'aide ?</string>
-  <string name="auth_login_assistive_text">Veuillez saisir votre adresse électronique ou nom d\'utilisateur.</string>
+  <string name="auth_login_assistive_text">Saisissez votre adresse électronique ou nom d\'utilisateur.</string>
   <string name="auth_help_title">Comment pouvons-nous vous aider ?</string>
   <string name="auth_help_option_forgot_username">Nom d\'utilisateur oublié</string>
   <string name="auth_help_option_forgot_password">Mot de passe oublié</string>

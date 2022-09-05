@@ -18,22 +18,26 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">Une erreur est survenue.</string>
+  <string name="payments_general_error">Une erreur s’est produite.</string>
   <string name="payments_no_connectivity">Aucune connexion pour afficher la page de confirmation 3DS.</string>
   <string name="payments_3ds_not_approved">L\'approbation 3DS a été rejetée.</string>
   <string name="payments_error_card_name">Nom du titulaire de la carte requis.</string>
   <string name="payments_error_card_number">Numéro de carte non valide.</string>
-  <string name="payments_error_cvc">Veuillez saisir le code de sécurité.</string>
+  <string name="payments_error_cvc">Saisissez le code de sécurité.</string>
   <string name="payments_error_session">Un identifiant de session valide est nécessaire lors de l\'abonnement d’un utilisateur connecté.</string>
   <string name="payments_error_signup_paymentmethod">Impossible de s\'inscrire avec le mode de paiement actuel.</string>
   <string name="payments_error_invalid_session">Session non valide.</string>
+  <string name="payments_no_payment_provider">Aucun fournisseur de paiement actif.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Choisissez votre mode de paiement</string>
+  <string name="payments_choose_payment_method">Choisissez votre mode de paiement.</string>
   <string name="payments_add_credit_debit_card">Ajouter une nouvelle carte de crédit/débit</string>
-  <string name="payments_billing_yearly">Pour 1 an</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Payer %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Payer avec</string>
   <string name="payments_method_icon">Icône de mode de paiement.</string>
+  <string name="payments_method_surcharge">*Les achats effectués avec ce mode de paiement entraînent un surcoût.</string>
+  <string name="payments_method_terms_conditions">Acheter avec Google Pay implique que vous acceptez les termes et conditions de Google Pay et que vous acceptez de programmer un paiement récurrent avec Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Informations sur le paiement</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Pays</string>
   <string name="payments_paying_in_process">Paiement en cours</string>
   <string name="payments_choose_country">Sélectionnez un pays</string>
-  <string name="payments_info_not_available">n/a</string>
   <string name="payment_cc_list_item">%1$s - %2$s (exp. %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

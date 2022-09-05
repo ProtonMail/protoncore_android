@@ -32,7 +32,7 @@
   <string name="human_verification_get_verification_code">Obtenir codi de verificació</string>
   <string name="human_verification_already_have_code">Ja tinc un codi</string>
   <string name="human_verification_request_replacement_code">No heu rebut el codi?</string>
-  <string name="human_verification_verify">Verificar</string>
+  <string name="human_verification_verify">Verifica</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Necessiteu ajuda amb la verificació humana?</string>
   <string name="human_verification_code">Codi de verificació</string>
@@ -40,7 +40,7 @@
   <string name="human_verification_code_request_new_code_action">Demanar un codi nou</string>
   <string name="human_verification_code_request_new_code">Obtenir un codi de reemplaçament a %s.</string>
   <string name="email">Correu electrònic</string>
-  <string name="email_hint">correu@exemple.cat</string>
+  <string name="email_hint">correu@exemple.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

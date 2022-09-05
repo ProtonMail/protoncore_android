@@ -27,13 +27,17 @@
   <string name="payments_error_session">Este necesar un ID de sesiune valid pentru abonarea unui utilizator conectat.</string>
   <string name="payments_error_signup_paymentmethod">Nu se poate crea un cont cu metoda de plată existentă.</string>
   <string name="payments_error_invalid_session">Sesiune nevalidă.</string>
+  <string name="payments_no_payment_provider">Nu s-a găsit un furnizor de plată activ.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Alegeți metoda de plată</string>
   <string name="payments_add_credit_debit_card">Adăugare card de credit / debit</string>
-  <string name="payments_billing_yearly">Pentru un an</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Plătiți %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Plată cu</string>
   <string name="payments_method_icon">Pictograma metodei de plată.</string>
+  <string name="payments_method_surcharge">* Plățile efectuate cu această metodă de plată implică o suprataxă.</string>
+  <string name="payments_method_terms_conditions">Cumpărând cu Google Pay înseamnă că acceptați termenii și condițiile Google Pay și sunteți de acord să stabiliți o plată recurentă cu Google.</string>
+  <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Detalii plată</string>
@@ -48,7 +52,6 @@
   <string name="payments_country">Țara</string>
   <string name="payments_paying_in_process">Se plătește</string>
   <string name="payments_choose_country">Selectare țară</string>
-  <string name="payments_info_not_available">n/d</string>
   <string name="payment_cc_list_item">%1$s - %2$s (dată expirare %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

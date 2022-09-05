@@ -20,9 +20,10 @@
   <string name="plans_select_a_plan">選擇方案</string>
   <string name="plans_select_a_plan_subtitle">單一方案，Proton 服務吃到飽</string>
   <string name="plans_fetching_general_error">接收方案時發生錯誤。</string>
+  <string name="plans_payment_error">出現付款錯誤。請稍候再嘗試一次，或試著創建一個免費方案。</string>
   <string name="plans_free_name">免費</string>
   <string name="plan_price_monthly">每月</string>
-  <string name="plan_price_annually">每年*</string>
+  <string name="plan_price_annually">每年</string>
   <string name="plans_current_plan">目前方案</string>
   <string name="plans_upgrade_plan">升級您的方案</string>
   <string name="plans_subscription">訂閲</string>
@@ -38,8 +39,10 @@
   <string name="plans_get_proton">取得 %s</string>
   <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
   <string name="plans_used_space">%s 中的 %s</string>
+  <string name="plans_payments_info_not_available">不適用</string>
   <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
   <string name="plans_manage_your_subscription_other">您的訂閱無法在行動裝置應用程式內管理。</string>
+  <string name="plans_autorenew_subscriptions">此應用程式僅提供自動續購型年約授權.</string>
   <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置應用程式升級。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
