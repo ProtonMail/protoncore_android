@@ -18,6 +18,7 @@
 package me.proton.core.network.domain
 
 import kotlinx.coroutines.delay
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_REQUEST_TIMEOUT
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_SERVICE_UNAVAILABLE
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_TOO_MANY_REQUESTS
 import me.proton.core.network.domain.handlers.DohApiHandler
@@ -141,6 +142,8 @@ internal fun <T> ApiResult<T>.needsRetry(
     if (!isRetryable()) return false
 
     val httpCode = (this as? ApiResult.Error.Http)?.httpCode
+
+    if (httpCode == HTTP_REQUEST_TIMEOUT) return retryCount == 0
 
     return when (val retryAfter = retryAfter()) {
         null -> httpCode !in arrayOf(HTTP_TOO_MANY_REQUESTS, HTTP_SERVICE_UNAVAILABLE)

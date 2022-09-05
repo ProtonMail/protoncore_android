@@ -30,7 +30,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Success("")
         assertFalse { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -38,7 +38,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Connection()
         assertTrue { result.isRetryable() }
         assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -46,7 +46,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Certificate(Throwable())
         assertFalse { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -54,7 +54,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Parse(null)
         assertFalse { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -62,7 +62,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(400, "Bad Request")
         assertFalse { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -78,7 +78,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(429, "Too Many Requests")
         assertTrue { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -86,7 +86,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(429, "Too Many Requests", retryAfter = 2.seconds)
         assertTrue { result.isRetryable() }
         assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -94,7 +94,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(429, "Too Many Requests", retryAfter = 20.seconds)
         assertTrue { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -102,7 +102,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(500, "Internal Server Error")
         assertTrue { result.isRetryable() }
         assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -110,7 +110,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(500, "Internal Server Error", retryAfter = 2.seconds)
         assertTrue { result.isRetryable() }
         assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -118,7 +118,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(500, "Internal Server Error", retryAfter = 20.seconds)
         assertTrue { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -126,7 +126,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(503, "Service Unavailable")
         assertTrue { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -134,7 +134,7 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(503, "Service Unavailable", retryAfter = 2.seconds)
         assertTrue { result.isRetryable() }
         assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     @Test
@@ -142,11 +142,11 @@ internal class ApiResultRetryTest {
         val result = ApiResult.Error.Http(503, "Service Unavailable", retryAfter = 20.seconds)
         assertTrue { result.isRetryable() }
         assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
-        assertFalse { result.needsRetry(1, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 
     companion object {
         private val MAX_RETRY_AFTER = 10.seconds
-        private const val MAX_RETRY_COUNT = 1
+        private const val MAX_RETRY_COUNT = 2
     }
 }
