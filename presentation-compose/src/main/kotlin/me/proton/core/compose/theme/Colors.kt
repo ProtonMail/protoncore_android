@@ -578,6 +578,38 @@ fun ProtonColors.textWeak(enabled: Boolean = true) = if (enabled) textWeak else 
 fun ProtonColors.textInverted(enabled: Boolean = true) = if (enabled) textInverted else textDisabled
 fun ProtonColors.interactionNorm(enabled: Boolean = true) = if (enabled) interactionNorm else interactionDisabled
 
+internal fun ProtonColors.toMaterial3ThemeColors() = androidx.compose.material3.ColorScheme(
+    primary = brandNorm,
+    onPrimary = Color.White,
+    primaryContainer = backgroundNorm,
+    onPrimaryContainer = textNorm,
+    inversePrimary = Color.White,
+    secondary = brandNorm,
+    onSecondary = Color.White,
+    secondaryContainer = backgroundSecondary,
+    onSecondaryContainer = textNorm,
+    tertiary = brandDarken20,
+    onTertiary = Color.White,
+    tertiaryContainer = backgroundNorm,
+    onTertiaryContainer = textNorm,
+    background = backgroundNorm,
+    onBackground = textNorm,
+    surface = backgroundSecondary,
+    onSurface = textNorm,
+    surfaceVariant = backgroundNorm,
+    onSurfaceVariant = textNorm,
+    inverseSurface = backgroundNorm,
+    inverseOnSurface = textNorm,
+    error = notificationError,
+    onError = textInverted,
+    errorContainer = backgroundNorm,
+    onErrorContainer = textNorm,
+    outline = brandNorm,
+    surfaceTint = brandNorm,
+    outlineVariant = brandNorm,
+    scrim = brandDarken40
+)
+
 internal fun ProtonColors.toMaterialThemeColors() = Colors(
     primary = brandNorm,
     primaryVariant = brandDarken20,

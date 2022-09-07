@@ -18,9 +18,32 @@
 
 @file:Suppress("TopLevelPropertyNaming", "ObjectPropertyName", "NoMultipleSpaces")
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 import org.gradle.api.artifacts.VersionCatalog
+import studio.forface.easygradle.dsl.`coroutines version`
+import studio.forface.easygradle.dsl.`dagger version`
+import studio.forface.easygradle.dsl.`kotlin version`
+import studio.forface.easygradle.dsl.`mockK version`
+import studio.forface.easygradle.dsl.`serialization version`
+import studio.forface.easygradle.dsl.android.`activity version`
+import studio.forface.easygradle.dsl.android.`android-annotation version`
+import studio.forface.easygradle.dsl.android.`android-arch version`
+import studio.forface.easygradle.dsl.android.`android-paging version`
+import studio.forface.easygradle.dsl.android.`android-room version`
+import studio.forface.easygradle.dsl.android.`android-test version`
+import studio.forface.easygradle.dsl.android.`android-work version`
+import studio.forface.easygradle.dsl.android.`appcompat version`
+import studio.forface.easygradle.dsl.android.`constraint-layout version`
+import studio.forface.easygradle.dsl.android.`espresso version`
+import studio.forface.easygradle.dsl.android.`fragment version`
+import studio.forface.easygradle.dsl.android.`hilt-android version`
+import studio.forface.easygradle.dsl.android.`hilt-androidx version`
+import studio.forface.easygradle.dsl.android.`ktx version`
+import studio.forface.easygradle.dsl.android.`lifecycle version`
+import studio.forface.easygradle.dsl.android.`material version`
+import studio.forface.easygradle.dsl.android.`retrofit version`
+import studio.forface.easygradle.dsl.android.`retrofit-kotlin-serialization version`
+import studio.forface.easygradle.dsl.android.`robolectric version`
+import studio.forface.easygradle.dsl.android.`timber version`
 
 
 internal fun initVersions(libs: VersionCatalog) {
@@ -71,7 +94,7 @@ public const val `googlePlayBilling version`: String =         "5.0.0"
 public const val `datastore version`: String =                 "1.0.0"
 public const val `drawerLayout version`: String =              "1.1.1"
 public const val `hilt-navigation-compose version`: String =   "1.0.0-rc01"
-public const val `material3 version`: String =                 "1.0.0-alpha03"
+public const val `material3 version`: String =                 "1.0.0-beta01"
 public const val `navigation version`: String =                "2.4.0-rc01"
 public const val `recyclerview version`: String =              "1.1.0"
 public const val `startup-runtime version`: String =           "1.1.0"         // Released: Aug 04, 2021

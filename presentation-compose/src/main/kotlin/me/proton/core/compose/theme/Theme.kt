@@ -26,6 +26,31 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 
+
+@Composable
+fun ProtonTheme3(
+    isDark: Boolean = isNightMode(),
+    colors: ProtonColors = if (isDark) ProtonColors.Dark else ProtonColors.Light,
+    typography: ProtonTypography = ProtonTypography.Default,
+    shapes: ProtonShapes = ProtonShapes(),
+    content: @Composable () -> Unit
+) {
+    val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
+
+    CompositionLocalProvider(
+        LocalColors provides rememberedColors,
+        LocalTypography provides typography,
+        LocalShapes provides shapes,
+        LocalContentColor provides rememberedColors.textNorm,
+    ) {
+        androidx.compose.material3.MaterialTheme(
+            typography = typography.toMaterial3ThemeTypography(),
+            colorScheme = rememberedColors.toMaterial3ThemeColors(),
+            content = content
+        )
+    }
+}
+
 @Composable
 fun ProtonTheme(
     isDark: Boolean = isNightMode(),

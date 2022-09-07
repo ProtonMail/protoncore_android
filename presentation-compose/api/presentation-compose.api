@@ -610,6 +610,7 @@ public final class me/proton/core/compose/theme/ShapeKt {
 
 public final class me/proton/core/compose/theme/ThemeKt {
 	public static final fun ProtonTheme (ZLme/proton/core/compose/theme/ProtonColors;Lme/proton/core/compose/theme/ProtonTypography;Lme/proton/core/compose/theme/ProtonShapes;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonTheme3 (ZLme/proton/core/compose/theme/ProtonColors;Lme/proton/core/compose/theme/ProtonTypography;Lme/proton/core/compose/theme/ProtonShapes;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun isNightMode (Landroidx/compose/runtime/Composer;I)Z
 }
 

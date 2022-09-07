@@ -241,12 +241,31 @@ data class ProtonTypography(
     )
 
     companion object {
+
         val Default = ProtonTypography()
     }
 }
 
 private fun TextStyle.withDefaultFontFamily(default: FontFamily): TextStyle =
     if (fontFamily != null) this else copy(fontFamily = default)
+
+internal fun ProtonTypography.toMaterial3ThemeTypography() = androidx.compose.material3.Typography(
+    displayLarge = headline,
+    displayMedium = headline,
+    displaySmall = headline,
+    headlineLarge = subheadline,
+    headlineMedium = subheadline,
+    headlineSmall = subheadline,
+    titleLarge = body1Medium,
+    titleMedium = body1Medium,
+    titleSmall = body1Medium,
+    bodyLarge = body1Regular,
+    bodyMedium = body1Regular,
+    bodySmall = body1Regular,
+    labelLarge = captionMedium,
+    labelMedium = captionMedium,
+    labelSmall = captionMedium
+)
 
 internal fun ProtonTypography.toMaterialThemeTypography() = Typography(
     defaultFontFamily = FontFamily.SansSerif,
