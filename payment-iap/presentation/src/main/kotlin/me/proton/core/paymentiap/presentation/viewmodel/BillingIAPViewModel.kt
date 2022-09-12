@@ -182,9 +182,7 @@ internal class BillingIAPViewModel @Inject constructor(
         val billingFlowParamsBuilder = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(productDetailsParamsList)
 
-        if (userId != null) {
-            billingFlowParamsBuilder.setObfuscatedAccountId(userId)
-        }
+        // TODO CP-4582 call billingFlowParamsBuilder.setObfuscatedAccountId with encrypted userId
 
         billingRepository.launchBillingFlow(activity, billingFlowParamsBuilder.build())
         emit(State.Success.PurchaseFlowLaunched)

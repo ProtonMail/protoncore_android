@@ -41,7 +41,7 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
         if (!findUnacknowledgedGooglePurchase.isPresent) return null
         if (PaymentProvider.GoogleInAppPurchase !in getAvailablePaymentProviders()) return null
 
-        // For now, we don't support redeeming, if a user is already on a paid plan (CP-4583).
+        // TODO For now, we don't support redeeming, if a user is already on a paid plan (CP-4583).
         if (getCurrentSubscription(userId) != null) return null
 
         return findUnacknowledgedGooglePurchase.get().invoke(productId = null, userId)?.let { googlePurchase ->

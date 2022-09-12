@@ -74,6 +74,7 @@ private fun Purchase.isMatchingUser(userId: UserId?): Boolean {
     } else {
         // If the accountId stored inside a Google purchase is not null,
         // we should only redeem for the same user.
+        // TODO CP-4582
         accountId == userId?.id
     }
 }
