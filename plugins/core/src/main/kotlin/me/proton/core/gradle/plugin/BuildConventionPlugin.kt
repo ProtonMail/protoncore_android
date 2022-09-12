@@ -18,16 +18,12 @@
 
 package me.proton.core.gradle.plugin
 
-import Module.corePlatform
 import applyRepositories
 import initVersions
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.project
-import studio.forface.easygradle.dsl.*
 import javax.annotation.OverridingMethodsMustInvokeSuper
 
 public abstract class BuildConventionPlugin : Plugin<Project> {
@@ -37,7 +33,6 @@ public abstract class BuildConventionPlugin : Plugin<Project> {
         target.applyRepositories()
 
         onApplyPlugins(target)
-        target.dependencies { api(platform(project(corePlatform))) }
         onPluginsApplied(target)
     }
 
