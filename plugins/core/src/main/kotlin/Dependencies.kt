@@ -90,8 +90,6 @@ public val DependencyHandler.okhttp: Any
     get() = squareup("okhttp3", "okhttp") version `okHttp version`
 public val DependencyHandler.mockWebServer: Any
     get() = squareup("okhttp3", "mockwebserver") version `okHttp version`
-public val DependencyHandler.trustKit: Any
-    get() = dependency("com.datatheorem.android.trustkit", module = "trustkit") version `trustKit version`
 
 // Other
 public val DependencyHandler.`activity-noktx`: Any

@@ -17,12 +17,14 @@
  */
 package me.proton.core.network.data
 
-import com.datatheorem.android.trustkit.config.PublicKeyPin
+import android.annotation.SuppressLint
+import android.util.Base64
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
+import java.security.MessageDigest
+import java.security.cert.Certificate
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
@@ -57,20 +59,21 @@ fun initSPKIleafPinning(builder: OkHttpClient.Builder, pins: List<String>) {
         val sslContext = SSLContext.getInstance("TLS")
         sslContext.init(null, arrayOf(trustManager), null)
         builder.sslSocketFactory(sslContext.socketFactory, trustManager)
-        builder.hostnameVerifier(HostnameVerifier { _, _ ->
+        builder.hostnameVerifier { _, _ ->
             // Verification is based solely on SPKI pinning of leaf certificate
             true
-        })
+        }
     }
 }
 
+@SuppressLint("CustomX509TrustManager")
 class LeafSPKIPinningTrustManager(pinnedSPKIHashes: List<String>) : X509TrustManager {
 
-    private val pins: List<PublicKeyPin> = pinnedSPKIHashes.map { PublicKeyPin(it) }
+    private val pins: List<PublicKeyPin> = pinnedSPKIHashes.map { PublicKeyPin.fromSha256HashBase64(it) }
 
     @Throws(CertificateException::class)
     override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
-        if (PublicKeyPin(chain.first()) !in pins)
+        if (PublicKeyPin.fromCertificate(chain.first()) !in pins)
             throw CertificateException("Pin verification failed")
     }
 
@@ -80,4 +83,32 @@ class LeafSPKIPinningTrustManager(pinnedSPKIHashes: List<String>) : X509TrustMan
     }
 
     override fun getAcceptedIssuers(): Array<X509Certificate?>? = arrayOfNulls(0)
+}
+
+/**
+ * SHA-256 hash of the certificate's Subject Public Key Info,
+ * as described in the HPKP RFC https://tools.ietf.org/html/rfc7469s.
+ */
+data class PublicKeyPin(
+    private val sha256Hash: ByteArray
+) {
+    override fun equals(other: Any?): Boolean =
+        this === other || other is PublicKeyPin && sha256Hash.contentEquals(other.sha256Hash)
+
+    override fun hashCode(): Int = sha256Hash.contentHashCode()
+
+    companion object {
+
+        fun fromCertificate(certificate: Certificate): PublicKeyPin {
+            val digest = MessageDigest.getInstance("SHA-256").apply { reset() }
+            val sha256Hash = digest.digest(certificate.publicKey.encoded)
+            return PublicKeyPin(sha256Hash)
+        }
+
+        fun fromSha256HashBase64(sha256HashBase64: String): PublicKeyPin {
+            val sha256Hash = Base64.decode(sha256HashBase64, Base64.DEFAULT)
+            require(sha256Hash.size == 32) { "Invalid pin: length is not 32 bytes" }
+            return PublicKeyPin(sha256Hash)
+        }
+    }
 }

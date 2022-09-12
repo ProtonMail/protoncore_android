@@ -99,6 +99,21 @@ public final class me/proton/core/network/data/ProtonErrorException : java/io/IO
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/network/data/PublicKeyPin {
+	public static final field Companion Lme/proton/core/network/data/PublicKeyPin$Companion;
+	public fun <init> ([B)V
+	public final fun copy ([B)Lme/proton/core/network/data/PublicKeyPin;
+	public static synthetic fun copy$default (Lme/proton/core/network/data/PublicKeyPin;[BILjava/lang/Object;)Lme/proton/core/network/data/PublicKeyPin;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/network/data/PublicKeyPin$Companion {
+	public final fun fromCertificate (Ljava/security/cert/Certificate;)Lme/proton/core/network/data/PublicKeyPin;
+	public final fun fromSha256HashBase64 (Ljava/lang/String;)Lme/proton/core/network/data/PublicKeyPin;
+}
+
 public final class me/proton/core/network/data/client/ClientIdProviderImpl : me/proton/core/network/domain/client/ClientIdProvider {
 	public fun <init> (Lokhttp3/HttpUrl;Lme/proton/core/network/data/ProtonCookieStore;)V
 	public fun getClientId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

@@ -52,7 +52,6 @@ dependencies {
         datastore,
         `okHttp-logging`,
         `retrofit-kotlin-serialization`,
-        trustKit,
     )
 
     testImplementation(

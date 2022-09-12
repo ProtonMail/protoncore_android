@@ -84,7 +84,6 @@ public const val `googleTink version`: String =            "1.6.1"             /
 public const val `guavaListenableFuture version`: String = "1.0"
 public const val `miniDns version`: String =               "1.0.0"             // Released: Jul 18, 2020
 public const val `okHttp version`: String =                "4.9.1"
-public const val `trustKit version`: String =              "1.1.3"
 public const val `store4 version`: String =                "4.0.4-KT15"        // Released: Dec 10, 2021
 public const val `lifecycle-extensions version`: String =  "2.2.0"             // Released: Jan 00, 2020
 public const val `lottie version`: String =                "4.1.0"
