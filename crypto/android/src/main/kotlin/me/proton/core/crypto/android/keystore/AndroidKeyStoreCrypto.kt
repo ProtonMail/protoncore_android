@@ -129,27 +129,33 @@ class AndroidKeyStoreCrypto internal constructor(
         false
     }
 
-    internal fun encryptInternal(value: PlainByteArray, key: Key): EncryptedByteArray {
-        val cipher = cipherFactory.invoke()
-        cipher.init(Cipher.ENCRYPT_MODE, key)
-        val cipherByteArray = cipher.doFinal(value.array)
-        return EncryptedByteArray(cipher.iv + cipherByteArray)
+    internal fun encryptSync(value: PlainByteArray, key: Key): EncryptedByteArray {
+        // Only one KeyStore operation at a time, to minimize KeyStore concurrency issues.
+        synchronized(lock) {
+            val cipher = cipherFactory.invoke()
+            cipher.init(Cipher.ENCRYPT_MODE, key)
+            val cipherByteArray = cipher.doFinal(value.array)
+            return EncryptedByteArray(cipher.iv + cipherByteArray)
+        }
     }
 
-    internal fun decryptInternal(value: EncryptedByteArray, key: Key): PlainByteArray {
-        val cipher = cipherFactory.invoke()
-        val iv = value.array.copyOf(cipherIvBytes)
-        val cipherByteArray = value.array.copyOfRange(cipherIvBytes, value.array.size)
-        cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(cipherGCMTagBits, iv))
-        return PlainByteArray(cipher.doFinal(cipherByteArray))
+    internal fun decryptSync(value: EncryptedByteArray, key: Key): PlainByteArray {
+        // Only one KeyStore operation at a time, to minimize KeyStore concurrency issues.
+        synchronized(lock) {
+            val cipher = cipherFactory.invoke()
+            val iv = value.array.copyOf(cipherIvBytes)
+            val cipherByteArray = value.array.copyOfRange(cipherIvBytes, value.array.size)
+            cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(cipherGCMTagBits, iv))
+            return PlainByteArray(cipher.doFinal(cipherByteArray))
+        }
     }
 
     private fun encryptOrRetry(value: PlainByteArray, key: Key): EncryptedByteArray {
-        return runOrRetryOnce(LogTag.KEYSTORE_ENCRYPT_RETRY) { encryptInternal(value, key) }
+        return runOrRetryOnce(LogTag.KEYSTORE_ENCRYPT_RETRY) { encryptSync(value, key) }
     }
 
     private fun decryptOrRetry(value: EncryptedByteArray, key: Key): PlainByteArray {
-        return runOrRetryOnce(LogTag.KEYSTORE_DECRYPT_RETRY) { decryptInternal(value, key) }
+        return runOrRetryOnce(LogTag.KEYSTORE_DECRYPT_RETRY) { decryptSync(value, key) }
     }
 
     private fun encryptOrRetry(value: String, key: Key): EncryptedString {
