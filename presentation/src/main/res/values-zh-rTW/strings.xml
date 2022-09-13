@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">此版本的應用程式已不再受支援，請更新以繼續使用。</string>
   <string name="presentation_force_update_learn_more">取得更多資訊</string>
   <string name="presentation_force_update_update">更新</string>
-  <string name="presentation_market_missing">裝置上找不到市集應用程式。請前往商店更新應用程式。</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">驗證</string>
   <string name="presentation_signin_to_continue">登入以繼續</string>
   <string name="presentation_alert_title">警示</string>

@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον. Ενημερώστε την για να συνεχίσετε να τη χρησιμοποιείτε.</string>
   <string name="presentation_force_update_learn_more">Μάθετε περισσότερα</string>
   <string name="presentation_force_update_update">Αναβάθμιση</string>
-  <string name="presentation_market_missing">Δεν βρέθηκε η εφαρμογή αγοράς εγκατεστημένη στη συσκευή. Παρακαλούμε, μεταβείτε στο κατάστημα και ενημερώστε την εφαρμογή.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Ταυτοποίηση</string>
   <string name="presentation_signin_to_continue">Εισέλθετε για να συνεχίσετε</string>
   <string name="presentation_alert_title">Προειδοποίηση</string>

@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Esta versión de la app ya no es compatible, actualícela para continuar usándola.</string>
   <string name="presentation_force_update_learn_more">Más información</string>
   <string name="presentation_force_update_update">Actualizar</string>
-  <string name="presentation_market_missing">No se encuentra la tienda de aplicaciones instalada en el dispositivo. Vaya a la tienda y actualice la aplicación.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Iniciar sesión para continuar</string>
   <string name="presentation_alert_title">Alerta</string>

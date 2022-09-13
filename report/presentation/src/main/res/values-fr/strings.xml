@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Signaler un problème</string>
+  <string name="core_report_bug_activity_title">Signaler un bug</string>
   <string name="core_report_bug_close">Fermer</string>
   <string name="core_report_bug_subject_field_hint">Objet</string>
   <string name="core_report_bug_subject_field_required">Entrez un objet</string>

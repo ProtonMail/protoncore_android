@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Cette version de l\'application n\'est plus prise en charge, veuillez la mettre à jour pour continuer à l\'utiliser.</string>
   <string name="presentation_force_update_learn_more">En savoir plus</string>
   <string name="presentation_force_update_update">Mettre à jour</string>
-  <string name="presentation_market_missing">Impossible de trouver le magasin d’applications installé sur l\'appareil. Veuillez aller dans le magasin et mettre à jour l\'application.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">S\'authentifier</string>
   <string name="presentation_signin_to_continue">Connectez-vous pour continuer</string>
   <string name="presentation_alert_title">Alerte</string>
@@ -32,7 +32,7 @@
   <string name="presentation_alert_cancel">Annuler</string>
   <string name="presentation_alert_submit">Envoyer</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
+  <string name="presentation_menu_item_title_report_a_bug">Signaler un problème</string>
   <string name="presentation_menu_item_title_settings">Paramètres</string>
   <string name="presentation_menu_item_title_subscription">Abonnement</string>
   <string name="presentation_menu_item_title_sign_out">Se déconnecter</string>

@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Wybrana nazwa planu jest nieprawidłowa. Uruchom ponownie proces.</string>
   <string name="payments_iap_error_google_plan_price">Wystąpił problem z ceną usługi Google. Uruchom ponownie proces.</string>
   <string name="payments_iap_error_fetching_google_plan">Wystąpił problem z pobraniem usługi Google. Uruchom ponownie proces.</string>
+  <string name="payments_iap_error_already_owned">Posiadasz już ten produkt. Wybierz inny.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Aplikacja rozliczeniowa Google jest obecnie niedostępna.</string>
   <string name="payments_iap_general_error">Wystąpił błąd. Uruchom ponownie proces.</string>
 </resources>

@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Vybrán nesprávný název tarifu. Restartujte prosím proces.</string>
   <string name="payments_iap_error_google_plan_price">Problém s cenou produktu Google. Restartujte prosím proces.</string>
   <string name="payments_iap_error_fetching_google_plan">Problém se stažením produktu Google. Restartujte prosím proces.</string>
+  <string name="payments_iap_error_already_owned">Tento produkt již vlastníte. Prosím vyberte jiný.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Fakturační klient Google je momentálně nedostupný nebo odpojený.</string>
   <string name="payments_iap_general_error">Došlo k chybě. Restartujte prosím proces.</string>
 </resources>

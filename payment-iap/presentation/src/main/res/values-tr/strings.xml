@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Seçilmiş tarife adı geçersiz. Lütfen işlemi yeniden başlatın.</string>
   <string name="payments_iap_error_google_plan_price">Google ürün fiyatı ile ilgili bir sorun var. Lütfen işlemi yeniden başlatın.</string>
   <string name="payments_iap_error_fetching_google_plan">Google ürünü alınırken sorun çıktı. Lütfen işlemi yeniden başlatın.</string>
+  <string name="payments_iap_error_already_owned">Bu ürünü zaten satın almışsınız. Lütfen başka bir ürün seçin.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Google faturalama istemcisi şu anda kullanılamıyor ya da bağlantısı kesilmiş.</string>
   <string name="payments_iap_general_error">Bir sorun çıktı. Lütfen işlemi yeniden başlatın.</string>
 </resources>

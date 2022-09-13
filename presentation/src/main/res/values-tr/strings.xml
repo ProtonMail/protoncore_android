@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Uygulamanın bu sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için güncelleyin.</string>
   <string name="presentation_force_update_learn_more">Ayrıntılı bilgi alın</string>
   <string name="presentation_force_update_update">Güncelle</string>
-  <string name="presentation_market_missing">Aygıtta kurulu olan mağaza uygulaması bulunamıyor. Lütfen mağazaya gidin ve uygulamayı güncelleyin.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Kimliği doğrula</string>
   <string name="presentation_signin_to_continue">İlerlemek için yeniden oturum açın</string>
   <string name="presentation_alert_title">Uyarı</string>

@@ -54,5 +54,9 @@
   <string name="payments_choose_country">選擇國家</string>
   <string name="payment_cc_list_item">%1$s - %2$s（到期日 %3$s/%4$s）</string>
   <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">不適用</string>
+  <string name="payments_billing_yearly">為期1年</string>
+  <string name="payment_use_google_pay_instead">改用 Google Pay 試試</string>
+  <string name="payment_use_credit_card_instead">以信用卡或簽帳金融卡繳款</string>
   <!-- endregion -->
 </resources>

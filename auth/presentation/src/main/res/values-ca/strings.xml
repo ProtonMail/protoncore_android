@@ -39,11 +39,11 @@
   <string name="auth_second_factor_code">Codi de dos factors</string>
   <string name="auth_email_username">Adreça electrònica o nom d\'usuari</string>
   <string name="auth_proton_email_or_username">Nom d\'usuari o adreça de Proton</string>
-  <string name="auth_account_details">Inseriu els detalls del vostre compte de Proton.</string>
+  <string name="auth_account_details">Introduïu la informació del vostre compte de Proton.</string>
   <string name="auth_sign_in">Inicia la sessió</string>
   <string name="auth_sign_in_action">Inicia la sessió</string>
   <string name="auth_need_help">Necessiteu ajuda?</string>
-  <string name="auth_login_assistive_text">Inseriu el vostre correu electrònic o nom d\'usuari de Proton.</string>
+  <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>
   <string name="auth_help_title">Com us podem ajudar?</string>
   <string name="auth_help_option_forgot_username">Nom d\'usuari oblidat</string>
   <string name="auth_help_option_forgot_password">Contrasenya oblidada</string>
@@ -115,8 +115,8 @@
   <string name="auth_signup_recovery_method_phone_hint">Número de telèfon de recuperació</string>
   <string name="auth_signup_terms_conditions">Termes i condicions</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Si cliqueu a Següent, esteu d\'acord amb els <annotation link="terms">Termes i Condicions</annotation> de Proton.</string>
-  <string name="auth_signup_skip_recovery_title">Ometre el mètode de recuperació?</string>
-  <string name="auth_signup_skip_recovery_description">Un mètode de recuperació us ajudarà a accedir al vostre compte si oblideu la vostra contrasenya o no podeu entrar al vostre compte.</string>
+  <string name="auth_signup_skip_recovery_title">Voleu ometre el mètode de recuperació?</string>
+  <string name="auth_signup_skip_recovery_description">Un mètode de recuperació us ajudarà a accedir al vostre compte si oblideu la contrasenya o no podeu entrar al compte.</string>
   <string name="auth_signup_skip_recovery">Omet</string>
   <string name="auth_signup_set_recovery">Establir un mètode de recuperació</string>
   <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>

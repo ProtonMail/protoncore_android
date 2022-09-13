@@ -76,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Uw herstel e-mailadres is:</string>
   <string name="auth_create_address_create">Adres toevoegen</string>
   <string name="auth_create_address_creating">Adres aanmaken</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Door op Volgende te klikken, gaat u akkoord met de <a href="https://protonmail.com/terms-and-conditions">Voorwaarden van Proton</a></string>
   <string name="auth_create_address_error_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_create_address_error_no_available_domain">Geen beschikbaar domein.</string>
   <string name="auth_create_address_error_private_key">Genereren van private sleutel mislukt.</string>

@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Nome del piano selezionato non valido. Si prega di riavviare il processo.</string>
   <string name="payments_iap_error_google_plan_price">Problema con il prezzo del prodotto Google. Si prega di riavviare il processo.</string>
   <string name="payments_iap_error_fetching_google_plan">Problema durante il recupero del prodotto Google. Si prega di riavviare il processo.</string>
+  <string name="payments_iap_error_already_owned">Possiedi già questo prodotto. Selezionane uno diverso.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Il client di fatturazione di Google non è attualmente disponibile o è disconnesso.</string>
   <string name="payments_iap_general_error">Si è verificato un errore. Si prega di riavviare il processo.</string>
 </resources>

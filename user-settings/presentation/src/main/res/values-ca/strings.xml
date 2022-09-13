@@ -19,12 +19,12 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Correu electrònic de recuperació</string>
-  <string name="settings_recovery_email_current">Adreça de correu electrònic de recuperació/notificació actual</string>
+  <string name="settings_recovery_email_current">Correu electrònic de recuperació/notificació actual</string>
   <string name="settings_recovery_email_new">Correu electrònic de recuperació/notificació nou</string>
   <string name="settings_recovery_email_confirm">Confirmeu el correu electrònic de recuperació/notificació</string>
   <string name="settings_recovery_email_new_hint">Introduïu l\'adreça de correu electrònic</string>
   <string name="settings_recovery_email_confirm_hint">Torneu a introduir l\'adreça de correu electrònic</string>
-  <string name="settings_save">Desar</string>
+  <string name="settings_save">Desa</string>
   <string name="settings_password_required">Introduïu la contrasenya d\'inici de sessió</string>
   <string name="settings_password_required_ok">D\'acord</string>
   <string name="settings_not_set">Sense definir</string>
@@ -32,7 +32,7 @@
   <string name="settings_validation_email">El correu electrònic no és vàlid.</string>
   <string name="settings_general_error">S\'ha produït un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Canviar Contrasenya</string>
+  <string name="settings_password_management_change_login_password">Canvi de contrasenya</string>
   <string name="settings_password_management_change_mailbox_password">Canviar la contrasenya de la bústia</string>
   <string name="settings_password_management_header">Gestió de contrasenyes</string>
   <string name="settings_login_password_hint_current">Contrasenya d\'inici de sessió actual</string>

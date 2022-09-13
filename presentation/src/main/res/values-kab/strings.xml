@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">This version of the app is no longer supported, please update to continue using it.</string>
   <string name="presentation_force_update_learn_more">Issin ugar</string>
   <string name="presentation_force_update_update">Leqqem</string>
-  <string name="presentation_market_missing">Can not find market application installed on the device. Please go to the store and update the application.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Asesteb</string>
   <string name="presentation_signin_to_continue">Sign in to continue</string>
   <string name="presentation_alert_title">Alɣu</string>

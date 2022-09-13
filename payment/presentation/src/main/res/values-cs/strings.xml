@@ -54,5 +54,9 @@
   <string name="payments_choose_country">Vyberte stát</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">není k dispozici</string>
+  <string name="payments_billing_yearly">Na rok</string>
+  <string name="payment_use_google_pay_instead">Použít Google Pay místo toho</string>
+  <string name="payment_use_credit_card_instead">Použít kreditní/debetní kartu místo toho</string>
   <!-- endregion -->
 </resources>

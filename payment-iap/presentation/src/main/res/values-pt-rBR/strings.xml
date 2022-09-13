@@ -17,10 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
-  <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
-  <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
+  <string name="payments_iap_surcharge_info">* Inclui sobretaxa para taxas e impostos adicionais do provedor.</string>
+  <string name="payments_iap_terms_conditions">Ao tocar em "Comprar com o Google Pay", você concorda com os termos e condições do Google Pay e concorda em configurar um pagamento recorrente com o Google.</string>
+  <string name="payments_iap_invalid_google_plan">Nome de plano inválido selecionado. Por favor, reinicie o processo.</string>
+  <string name="payments_iap_error_google_plan_price">Problema com o preço do produto Google. Por favor, reinicie o processo.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problema ao buscar o produto do Google. Por favor, reinicie o processo.</string>
+  <string name="payments_iap_error_already_owned">Você já possui este produto. Por favor, selecione um diferente.</string>
+  <string name="payments_iap_error_billing_client_unavailable">O cliente de faturamento do Google está indisponível ou desconectado no momento.</string>
+  <string name="payments_iap_general_error">Ocorreu um erro. Por favor, reinicie o processo.</string>
 </resources>

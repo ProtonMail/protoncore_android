@@ -27,7 +27,7 @@
   <string name="welcome_subtitle_drive_alt">Nejbezpečnější způsob ukládání souborů. Nahrávejte, synchronizujte a sdílejte pomocí nejsilnějšího dostupného šifrování.</string>
   <string name="welcome_title_calendar">Chraňte své soukromí pomocí Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Šifrovaný kalendář, který udržuje Vaše životní události v soukromí, v bezpečí a chráněné.</string>
-  <string name="welcome_subtitle_calendar_alt">Náš end-to-end šifrovaný kalendář vám pomůže udržet si pořádek, přehled a kontrolu.</string>
+  <string name="welcome_subtitle_calendar_alt">Náš kalendář s koncovým šifrováním vám pomůže udržet si pořádek, přehled a kontrolu.</string>
   <string name="welcome_title_vpn">Chraňte své soukromí pomocí Proton VPN</string>
   <string name="welcome_subtitle_vpn">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí šifrováním internetového připojení.</string>
   <string name="welcome_subtitle_vpn_alt">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí. Maximální zabezpečení, více než 1 600 serverů a žádná omezení.</string>
@@ -83,7 +83,7 @@
   <string name="auth_create_address_error_signed_key_list">Generování seznamu klíčů se nezdařilo.</string>
   <string name="auth_create_address_error_setusername">Přiřazení uživatelského jména se nezdařilo.</string>
   <string name="auth_create_address_error_username_unavailable">Zvolené uživatelské jméno není k dispozici.</string>
-  <string name="auth_mailbox_login_error_no_primary_key">Nebyl nalezen žádný hlavní klíč.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Nebyl nalezen žádný primární klíč.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Chyba primárního klíče.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Neplatné heslo.</string>
   <string name="auth_password_chooser_title">Změňte své heslo</string>

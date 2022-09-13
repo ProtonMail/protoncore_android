@@ -103,12 +103,12 @@
   <string name="plan_id_plus_header">Voll funktionales Postfach mit erweitertem Schutz.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 Länder</string>
-  <string name="plan_id_vpnbasic_high_speed">Hochgeschwindigkeit</string>
+  <string name="plan_id_vpnbasic_high_speed">Hohe Geschwindigkeit</string>
   <string name="plan_id_vpnplus_adblock">Werbeblocker (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Unterstützung von Streaming-Diensten</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 Länder</string>
-  <string name="plan_id_vpnplus_highest_speed">Höchstgeschwindigkeit</string>
+  <string name="plan_id_vpnplus_highest_speed">Höchste Geschwindigkeit</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Unterstützung mehrerer Benutzer</string>
   <string name="plan_id_visionary_header">Visionary</string>

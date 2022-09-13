@@ -23,7 +23,7 @@
   <string name="plans_payment_error">De betaling is niet gelukt. Probeer later nog eens, of start een gratis abonnement.</string>
   <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">maandelijks</string>
-  <string name="plan_price_annually">per year</string>
+  <string name="plan_price_annually">per jaar</string>
   <string name="plans_current_plan">Huidig abonnement</string>
   <string name="plans_upgrade_plan">Upgrade uw abonnement</string>
   <string name="plans_subscription">Abonnement</string>

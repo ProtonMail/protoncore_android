@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Versi aplikasi ini sudah tidak didukung lagi, mohon tingkatkan untuk melanjutkan menggunakannya.</string>
   <string name="presentation_force_update_learn_more">Pelajari lebih lanjut</string>
   <string name="presentation_force_update_update">Perbarui</string>
-  <string name="presentation_market_missing">Tidak dapat menemukan toko aplikasi terpasang di perangkat. Mohon ke toko dan perbarui aplikasi.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Otentikasi</string>
   <string name="presentation_signin_to_continue">Masuk untuk melanjutkan</string>
   <string name="presentation_alert_title">Peringatan</string>

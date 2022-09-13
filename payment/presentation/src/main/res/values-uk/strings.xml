@@ -54,5 +54,9 @@
   <string name="payments_choose_country">Виберіть країну</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Чинна до %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">н/д</string>
+  <string name="payments_billing_yearly">На 1 рік</string>
+  <string name="payment_use_google_pay_instead">Використати Google Pay</string>
+  <string name="payment_use_credit_card_instead">Використати кредитну/дебетову картку</string>
   <!-- endregion -->
 </resources>

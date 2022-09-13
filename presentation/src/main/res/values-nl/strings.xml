@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Deze versie van de app wordt niet langer ondersteund, gelieve te updaten om hem te blijven gebruiken.</string>
   <string name="presentation_force_update_learn_more">Meer informatie</string>
   <string name="presentation_force_update_update">Bijwerken</string>
-  <string name="presentation_market_missing">Kan de op het toestel geïnstalleerde markttoepassing niet vinden. Ga naar de Store en update de applicatie.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Authenticeren</string>
   <string name="presentation_signin_to_continue">Log in om door te gaan</string>
   <string name="presentation_alert_title">Waarschuwing</string>

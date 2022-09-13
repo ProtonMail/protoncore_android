@@ -20,7 +20,9 @@
   <string name="payments_iap_surcharge_info">* Meliputi biaya tambahan yang dikenakan oleh layanan penyedia pembayaran dan biaya pajak.</string>
   <string name="payments_iap_terms_conditions">Dengan mengetuk "Buy with Google Pay", Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk menyiapkan pembayaran yang berulang dengan Google.</string>
   <string name="payments_iap_invalid_google_plan">Nama paket yang dipilih tidak valid. Silakan ulangi proses dari awal.</string>
-  <string name="payments_iap_error_google_plan_price">Terdapat masalah seputar harga produk Google. Silakan ulangi proses dari awal.</string>
+  <string name="payments_iap_error_google_plan_price">Terdapat masalah dengan harga produk Google. Silakan ulangi proses dari awal.</string>
   <string name="payments_iap_error_fetching_google_plan">Terdapat masalah dalam mengambil daftar produk Google. Silakan ulangi proses dari awal.</string>
-  <string name="payments_iap_general_error">Terjadi kesalahan. Silakan ulangi proses dari awal.</string>
+  <string name="payments_iap_error_already_owned">Anda telah memiliki produk ini. Silakan pilih produk lain.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Klien pembayaran Google saat ini sedang tidak tersedia atau tidak terhubung.</string>
+  <string name="payments_iap_general_error">Terjadi kesalahan. Silakan ulangi proses pembayaran dari awal.</string>
 </resources>

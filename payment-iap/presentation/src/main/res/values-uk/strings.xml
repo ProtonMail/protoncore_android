@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Вибрано недійсну назву тарифного плану. Перезапустіть процес.</string>
   <string name="payments_iap_error_google_plan_price">Проблема з ціною продукту Google. Перезапустіть процес.</string>
   <string name="payments_iap_error_fetching_google_plan">Проблема отримання продукту Google. Перезапустіть процес.</string>
+  <string name="payments_iap_error_already_owned">Ви вже придбали цей продукт. Будь ласка, виберіть інший.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Платіжний клієнт Google наразі недоступний або від\'єднаний.</string>
   <string name="payments_iap_general_error">Сталася помилка. Перезапустіть процес.</string>
 </resources>

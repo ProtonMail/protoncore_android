@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Ungültiger Abonnement-Name ausgewählt. Bitte starte den Vorgang erneut.</string>
   <string name="payments_iap_error_google_plan_price">Problem mit dem Google-Produktpreis. Bitte starte den Vorgang erneut.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem beim Abrufen des Google-Produkts. Bitte starte den Vorgang erneut.</string>
+  <string name="payments_iap_error_already_owned">Du besitzt dieses Produkt bereits. Wähle ein anderes aus.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Der Google-Abrechnungs-Client ist derzeit nicht verfügbar oder die Verbindung ist unterbrochen.</string>
   <string name="payments_iap_general_error">Ein Fehler ist aufgetreten. Bitte starte den Vorgang erneut.</string>
 </resources>

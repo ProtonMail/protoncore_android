@@ -27,16 +27,16 @@
   <string name="payments_error_session">Un identifiant de session valide est nécessaire lors de l\'abonnement d’un utilisateur connecté.</string>
   <string name="payments_error_signup_paymentmethod">Impossible de s\'inscrire avec le mode de paiement existant.</string>
   <string name="payments_error_invalid_session">Session invalide.</string>
-  <string name="payments_no_payment_provider">No active payment provider found.</string>
+  <string name="payments_no_payment_provider">Aucun fournisseur de paiement actif.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choisissez un mode de paiement</string>
   <string name="payments_add_credit_debit_card">Ajouter une nouvelle carte de crédit/débit</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Payer %s</string>
-  <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Payer avec</string>
   <string name="payments_method_icon">Icône de mode de paiement.</string>
-  <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
-  <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+  <string name="payments_method_surcharge">*Les achats effectués avec ce mode de paiement entraînent un surcoût.</string>
+  <string name="payments_method_terms_conditions">Acheter avec Google Pay implique que vous acceptez les termes et conditions de Google Pay et que vous acceptez de programmer un paiement récurrent avec Google.</string>
   <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -54,5 +54,9 @@
   <string name="payments_choose_country">Sélectionnez un pays</string>
   <string name="payment_cc_list_item">%1$s - %2$s (exp. %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">s. o.</string>
+  <string name="payments_billing_yearly">Pour 1 an</string>
+  <string name="payment_use_google_pay_instead">Utiliser plutôt Google Pay</string>
+  <string name="payment_use_credit_card_instead">Utiliser plutôt une carte de crédit ou de débit</string>
   <!-- endregion -->
 </resources>

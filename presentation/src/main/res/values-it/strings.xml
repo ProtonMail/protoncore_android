@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Questa versione dell\'app non è più supportata, aggiornala per continuare a usarla.</string>
   <string name="presentation_force_update_learn_more">Per saperne di più</string>
   <string name="presentation_force_update_update">Aggiorna</string>
-  <string name="presentation_market_missing">Impossibile trovare l\'applicazione market installata sul dispositivo. Vai al negozio e aggiorna l\'applicazione.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Autentica</string>
   <string name="presentation_signin_to_continue">Accedi per continuare</string>
   <string name="presentation_alert_title">Avviso</string>

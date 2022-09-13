@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Az alkalmazás ezen verziója már nem támogatott. Frissítenie kell egy újabbra.</string>
   <string name="presentation_force_update_learn_more">További információk</string>
   <string name="presentation_force_update_update">Frissítés</string>
-  <string name="presentation_market_missing">Nem található az áruház alkalmazás ezen az eszközön. Nyissa meg az áruházat és frissítse az alkalmazást.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Azonosítás</string>
   <string name="presentation_signin_to_continue">Jelentkezzen be a folytatáshoz</string>
   <string name="presentation_alert_title">Figyelmeztetés</string>

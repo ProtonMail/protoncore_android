@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Выбрано недопустимое имя тарифа. Перезапустите процесс.</string>
   <string name="payments_iap_error_google_plan_price">Проблема с ценой на продукцию Google. Перезапустите процесс.</string>
   <string name="payments_iap_error_fetching_google_plan">Проблема с получением продукта Google. Перезапустите процесс.</string>
+  <string name="payments_iap_error_already_owned">Вы уже владелец этого продкута. Пожалуйста, выберите другой.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Платежный клиент Google в данный момент недоступен или отключен.</string>
   <string name="payments_iap_general_error">Произошла ошибка. Перезапустите процесс.</string>
 </resources>

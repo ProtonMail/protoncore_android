@@ -21,7 +21,7 @@
   <string name="human_verification_help">Hilfe</string>
   <string name="human_verification_title">Menschliche Bestätigung</string>
   <string name="human_verification_main_subtitle">Um Missbrauch zu verhindern, bestätige bitte, dass du ein Mensch bist, indem du eine der folgenden Optionen verwendest</string>
-  <string name="human_verification_enter_code_subtitle">Geben Sie den an „%s” gesendeten Bestätigungscode ein.</string>
+  <string name="human_verification_enter_code_subtitle">Gib den an „%s” gesendeten Bestätigungscode ein.</string>
   <string name="human_verification_enter_code_subtitle_email">Gib den an „%s“ gesendeten Bestätigungscode ein. Solltest du die E-Mail nicht in deinem Posteingang vorfinden, überprüfe bitte deinen Spam-Ordner.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Gib den bereits erhaltenen Bestätigungscode ein:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
@@ -38,7 +38,7 @@
   <string name="human_verification_code">Bestätigungscode</string>
   <string name="human_verification_code_request_new_code_title">Neuen Code anfordern?</string>
   <string name="human_verification_code_request_new_code_action">Neuen Code anfordern</string>
-  <string name="human_verification_code_request_new_code">Lassen Sie sich einen Ersatzcode an „%s” senden.</string>
+  <string name="human_verification_code_request_new_code">Lass dir einen Ersatzcode an „%s“ senden.</string>
   <string name="email">E-Mail-Adresse</string>
   <string name="email_hint">email@beispiel.de</string>
   <string name="sms_hint">+49 ●●●●● ●●●●●●●●●●</string>
@@ -47,13 +47,13 @@
   <string name="human_verification_help_manual_title">Anfrage einreichen</string>
   <string name="human_verification_help_manual">Wenn du Probleme bei der Erstellung deines Kontos hast, reiche bitte eine Anfrage ein. Wir werden dir innerhalb eines Werktags antworten.</string>
   <string name="human_verification_help_website_title">Besuche unseren Hilfebereich</string>
-  <string name="human_verification_help_website">Erfahren Sie mehr über die menschliche Prüfung und warum wir danach fragen.</string>
-  <string name="human_verification_sending_failed">Das Senden des Bestätigungscodes ist fehlgeschlagen. Bitte versuchen Sie es erneut.</string>
-  <string name="human_verification_incorrect_code">Ungültiger Code. Bitte versuchen Sie es erneut.</string>
-  <string name="human_verification_resent_code">Ein weiterer Code wurde Ihnen zugesandt.</string>
-  <string name="human_verification_captcha_failed">Captcha-Überprüfung fehlgeschlagen. Bitte versuchen Sie es noch einmal oder wählen Sie eine andere Bestätigungsoption.</string>
+  <string name="human_verification_help_website">Erfahre mehr über die menschliche Prüfung und warum wir danach fragen.</string>
+  <string name="human_verification_sending_failed">Das Senden des Bestätigungscodes ist fehlgeschlagen. Bitte versuche es erneut.</string>
+  <string name="human_verification_incorrect_code">Ungültiger Code. Bitte versuche es erneut.</string>
+  <string name="human_verification_resent_code">Ein weiterer Code wurde dir zugesandt.</string>
+  <string name="human_verification_captcha_failed">CAPTCHA-Überprüfung fehlgeschlagen. Bitte versuche es noch einmal oder wähle eine andere Bestätigungsoption.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">Keine Internetverbindung. Captcha konnte nicht geladen werden.</string>
+  <string name="human_verification_captcha_no_connectivity">Keine Internetverbindung. CAPTCHA konnte nicht geladen werden.</string>
   <string name="human_verification_action_retry">Wiederholen</string>
   <string name="human_verification_method_loading_failed">Die aktuelle Überprüfungsmethode konnte nicht geladen werden. Wenn das Problem weiterhin besteht, versuche bitte eine der anderen Methoden, falls diese verfügbar sind, oder schaue in der Hilfe nach.</string>
 </resources>

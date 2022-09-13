@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Aquesta versió de l\'aplicació ja no està suportada, si us plau actualitzeu-la per continuar-la utilitzant.</string>
   <string name="presentation_force_update_learn_more">Més informació</string>
   <string name="presentation_force_update_update">Actualitzar</string>
-  <string name="presentation_market_missing">No es troba l\'aplicació de botiga instal·lada al dispositiu. Aneu a la botiga i actualitzeu l\'aplicació.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Inicieu sessió per continuar</string>
   <string name="presentation_alert_title">Alerta</string>

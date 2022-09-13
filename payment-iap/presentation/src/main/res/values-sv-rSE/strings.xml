@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Ogiltigt paketnamn valt. Starta om processen.</string>
   <string name="payments_iap_error_google_plan_price">Problem med Googles produktpris. Starta om processen.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem med att hämta Google-produkt. Starta om processen.</string>
+  <string name="payments_iap_error_already_owned">Du äger redan denna produkt. Välj en annan.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Googles faktureringsklient är för närvarande inte tillgänglig eller frånkopplad.</string>
   <string name="payments_iap_general_error">Ett fel har uppstått. Starta om processen.</string>
 </resources>

@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">選取的方案名稱無效。 請重新開始流程。</string>
   <string name="payments_iap_error_google_plan_price">Google 產品價格有問題。 請重新開始流程。</string>
   <string name="payments_iap_error_fetching_google_plan">擷取 Google 產品時發生錯誤。 請重新開始流程。</string>
+  <string name="payments_iap_error_already_owned">您已經擁有此產品。 請選擇另一個。</string>
+  <string name="payments_iap_error_billing_client_unavailable">Google帳務客戶端暫不可用或已斷線。</string>
   <string name="payments_iap_general_error">發生錯誤。 請重新開始流程。</string>
 </resources>

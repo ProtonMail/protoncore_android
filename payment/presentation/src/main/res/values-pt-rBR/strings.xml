@@ -35,8 +35,8 @@
   <string name="payments_pay" comment="Example: Pay 5EUR">Pagar %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Pagar com</string>
   <string name="payments_method_icon">Ícone do método de pagamento.</string>
-  <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
-  <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+  <string name="payments_method_surcharge">*As compras efetuadas com esta forma de pagamento têm um custo adicional.</string>
+  <string name="payments_method_terms_conditions">Comprar com o Google Pay significa que você aceita os termos e condições do Google Pay e concorda em configurar um pagamento recorrente com o Google.</string>
   <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -54,5 +54,9 @@
   <string name="payments_choose_country">Selecione o país</string>
   <string name="payment_cc_list_item">%1$s - %2$s (validade %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">n/a</string>
+  <string name="payments_billing_yearly">Por 1 ano</string>
+  <string name="payment_use_google_pay_instead">Usar Google Pay</string>
+  <string name="payment_use_credit_card_instead">Usar cartão de crédito/débito</string>
   <!-- endregion -->
 </resources>

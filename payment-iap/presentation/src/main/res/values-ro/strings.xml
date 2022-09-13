@@ -22,5 +22,7 @@
   <string name="payments_iap_invalid_google_plan">Nume plan selectat nevalid. Reporniți procesul.</string>
   <string name="payments_iap_error_google_plan_price">Problemă cu prețul produsului din Google. Reporniți procesul.</string>
   <string name="payments_iap_error_fetching_google_plan">Problemă preluare produs din google. Reporniți procesul.</string>
+  <string name="payments_iap_error_already_owned">Deja aveți acest produs. Alegeți unul diferit.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Clientul de plăți Google nu este momentan disponibil sau nu e conectat.</string>
   <string name="payments_iap_general_error">A apărut o eroare. Reporniți procesul.</string>
 </resources>

@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Denne version af appen understøttes ikke længere. Opgradér venligst for at fortsætte med at bruge den.</string>
   <string name="presentation_force_update_learn_more">Få mere at vide</string>
   <string name="presentation_force_update_update">Opdatér</string>
-  <string name="presentation_market_missing">Kan ikke finde markedsaktuel applikation installeret på enheden. Gå til butikken og opdater applikationen.</string>
+  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Godkend</string>
   <string name="presentation_signin_to_continue">Log ind for at fortsætte</string>
   <string name="presentation_alert_title">Advarsel</string>

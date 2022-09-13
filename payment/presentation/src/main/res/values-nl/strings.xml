@@ -27,7 +27,7 @@
   <string name="payments_error_session">Geldige sessie-id is nodig bij het aanmelden van een ingelogde gebruiker.</string>
   <string name="payments_error_signup_paymentmethod">Kon niet aanmelden met bestaande betaalmethode.</string>
   <string name="payments_error_invalid_session">Ongeldige sessie.</string>
-  <string name="payments_no_payment_provider">No active payment provider found.</string>
+  <string name="payments_no_payment_provider">Geen actieve betalingsprovider gevonden.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Kies uw betaalmethode</string>
@@ -36,7 +36,7 @@
   <string name="payments_pay_with" comment="Example: Pay with debit card">Betaal met</string>
   <string name="payments_method_icon">Pictogram betaalmethode.</string>
   <string name="payments_method_surcharge">*Aankopen gemaakt met deze betaalwijze brengen een toeslag in rekening.</string>
-  <string name="payments_method_terms_conditions">Door te betalen met Google Pay betekent dat je Google Pay\'s algemene voorwaarden aanvaardt en akkoord gaat met het opzetten van een terugkerende betaling met Google.</string>
+  <string name="payments_method_terms_conditions">Door te betalen met Google Pay betekent dat u Google Pay\'s algemene voorwaarden aanvaardt en akkoord gaat met het opzetten van een terugkerende betaling met Google.</string>
   <string name="payments_method_google">Google</string>
   <!-- endregion -->
   <!-- region billing -->
@@ -54,5 +54,9 @@
   <string name="payments_choose_country">Selecteer land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">n.v.t.</string>
+  <string name="payments_billing_yearly">Voor 1 jaar</string>
+  <string name="payment_use_google_pay_instead">Gebruik in de plaats Google Pay</string>
+  <string name="payment_use_credit_card_instead">Gebruik in de plaats krediet- of betaalkaarten</string>
   <!-- endregion -->
 </resources>

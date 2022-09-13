@@ -28,7 +28,7 @@
   <string name="settings_password_required">Anmeldepasswort eingeben</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nicht festgelegt</string>
-  <string name="settings_recovery_email_error_no_match">E-Mail-Adresse zum Zurücksetzen und für Benachrichtigen stimmen nicht überein.</string>
+  <string name="settings_recovery_email_error_no_match">Wiederherstellungs- und Bestätigungs-E-Mail stimmen nicht überein.</string>
   <string name="settings_validation_email">Ungültige E-Mail-Adresse.</string>
   <string name="settings_general_error">Ein Fehler ist aufgetreten.</string>
   <!-- login and mailbox password settings -->
