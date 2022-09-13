@@ -617,7 +617,6 @@ public final class me/proton/core/plan/presentation/view/LogTag {
 }
 
 public final class me/proton/core/plan/presentation/view/PlanItemView : androidx/constraintlayout/widget/ConstraintLayout {
-	public static final field Companion Lme/proton/core/plan/presentation/view/PlanItemView$Companion;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
@@ -628,9 +627,6 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 	public final fun setData (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;Z)V
 	public static synthetic fun setData$default (Lme/proton/core/plan/presentation/view/PlanItemView;Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZILjava/lang/Object;)V
 	public final fun setPlanSelectionListener (Lkotlin/jvm/functions/Function5;)V
-}
-
-public final class me/proton/core/plan/presentation/view/PlanItemView$Companion {
 }
 
 public final class me/proton/core/plan/presentation/view/PlanViewUtilsKt {

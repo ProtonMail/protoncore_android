@@ -35,8 +35,7 @@ import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.text.DateFormat
 
 class PlanItemView @JvmOverloads constructor(
     context: Context,
@@ -133,7 +132,7 @@ class PlanItemView @JvmOverloads constructor(
                 text = HtmlCompat.fromHtml(
                     String.format(
                         context.getString(renewalInfoText),
-                        SimpleDateFormat(RENEWAL_DATE_FORMAT, Locale.getDefault()).format(it)
+                        DateFormat.getDateInstance().format(it)
                     ),
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
@@ -246,8 +245,4 @@ class PlanItemView @JvmOverloads constructor(
             planCycleText.visibility = VISIBLE
             billableAmount = amount
         }
-
-    companion object {
-        private const val RENEWAL_DATE_FORMAT = "MMM dd, yyyy"
-    }
 }
