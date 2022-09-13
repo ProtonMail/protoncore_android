@@ -95,7 +95,7 @@ class PaymentsRepositoryImplTest {
                 interfaceClass = PaymentsApi::class
             )
         } returns apiManager
-        repository = PaymentsRepositoryImpl(apiProvider)
+        repository = PaymentsRepositoryImpl(mockk(relaxed = true), apiProvider)
     }
 
     @Test

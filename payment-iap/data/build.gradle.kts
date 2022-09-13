@@ -37,9 +37,16 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         `coroutines-core`,
+        dagger,
         googlePlayBilling,
         fragment,
         `javax-inject`,
         `lifecycle-runtime`
+    )
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk
     )
 }

@@ -32,6 +32,9 @@ import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -48,7 +51,8 @@ import javax.inject.Inject
 
 public class GoogleBillingRepositoryImpl @Inject internal constructor(
     billingClientFactory: BillingClientFactory,
-    dispatcherProvider: DispatcherProvider
+    connectedBillingClientFactory: ConnectedBillingClientFactory,
+    dispatcherProvider: DispatcherProvider,
 ) : GoogleBillingRepository {
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcherProvider.Main)
 
@@ -61,7 +65,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         }
     }
 
-    private val connectedBillingClient = ConnectedBillingClient(billingClientFactory(purchasesUpdatedListener))
+    private val connectedBillingClient = connectedBillingClientFactory(billingClientFactory(purchasesUpdatedListener))
 
     override suspend fun acknowledgePurchase(purchaseToken: String) {
         val params = AcknowledgePurchaseParams.newBuilder()
@@ -69,9 +73,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
             .build()
 
         val result = connectedBillingClient.withClient { it.acknowledgePurchase(params) }
-        if (result.responseCode != BillingClient.BillingResponseCode.OK) {
-            throw BillingClientError(result.responseCode, result.debugMessage)
-        }
+        result.checkOk()
     }
 
     override fun destroy() {
@@ -88,10 +90,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
             .setProductList(listOf(product))
             .build()
         val result = connectedBillingClient.withClient { it.queryProductDetails(params) }
-
-        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
-            throw BillingClientError(result.billingResult.responseCode, result.billingResult.debugMessage)
-        }
+        result.billingResult.checkOk()
 
         return result.productDetailsList?.firstOrNull()
     }
@@ -105,18 +104,26 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
             .setProductType(BillingClient.ProductType.SUBS)
             .build()
         val result = connectedBillingClient.withClient { it.queryPurchasesAsync(params) }
-
-        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
-            throw BillingClientError(result.billingResult.responseCode, result.billingResult.debugMessage)
-        }
+        result.billingResult.checkOk()
 
         return result.purchasesList
     }
+
+    private fun BillingResult.checkOk() {
+        if (responseCode != BillingClient.BillingResponseCode.OK) {
+            throw BillingClientError(responseCode, debugMessage)
+        }
+    }
+}
+
+@AssistedFactory
+internal interface ConnectedBillingClientFactory {
+    operator fun invoke(billingClient: BillingClient): ConnectedBillingClient
 }
 
 /** Manages access to [BillingClient], ensuring we are connected, before calling any of its methods. */
-private class ConnectedBillingClient constructor(
-    private val billingClient: BillingClient
+internal class ConnectedBillingClient @AssistedInject constructor(
+    @Assisted private val billingClient: BillingClient
 ) : BillingClientStateListener {
     private val connectionState = MutableStateFlow(BillingClientConnectionState.Idle)
 

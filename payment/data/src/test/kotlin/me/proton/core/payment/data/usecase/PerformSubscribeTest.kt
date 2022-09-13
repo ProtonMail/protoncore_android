@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.usecase
+package me.proton.core.payment.data.usecase
 
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -33,8 +33,10 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.usecase.PerformSubscribe
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -69,7 +71,7 @@ class PerformSubscribeTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = PerformSubscribe(repository, humanVerificationManager, clientIdProvider)
+        useCase = PerformSubscribeImpl(Optional.empty(), repository, humanVerificationManager, clientIdProvider)
         coEvery {
             repository.createOrUpdateSubscription(
                 testUserId,
