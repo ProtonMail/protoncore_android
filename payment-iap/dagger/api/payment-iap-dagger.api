@@ -1,4 +1,4 @@
-public class hilt_aggregated_deps/_me_proton_core_paymentiap_dagger_PaymentIapModule {
+public class hilt_aggregated_deps/_me_proton_core_paymentiap_dagger_CorePaymentIapModule {
 	public fun <init> ()V
 }
 
@@ -9,16 +9,8 @@ public final class me/proton/core/paymentiap/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/paymentiap/dagger/PaymentIapModule {
-	public static final field INSTANCE Lme/proton/core/paymentiap/dagger/PaymentIapModule;
-	public final fun provideBillingClient (Landroid/content/Context;)Lcom/android/billingclient/api/BillingClient$Builder;
-}
-
-public final class me/proton/core/paymentiap/dagger/PaymentIapModule_ProvideBillingClientFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/dagger/PaymentIapModule_ProvideBillingClientFactory;
-	public fun get ()Lcom/android/billingclient/api/BillingClient$Builder;
-	public synthetic fun get ()Ljava/lang/Object;
-	public static fun provideBillingClient (Landroid/content/Context;)Lcom/android/billingclient/api/BillingClient$Builder;
+public abstract interface class me/proton/core/paymentiap/dagger/CorePaymentIapModule {
+	public abstract fun bindBillingClientProvider (Lme/proton/core/paymentiap/data/BillingClientFactoryImpl;)Lme/proton/core/paymentiap/domain/BillingClientFactory;
+	public abstract fun bindGoogleBillingRepository (Lme/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl;)Lme/proton/core/paymentiap/domain/repository/GoogleBillingRepository;
 }
 

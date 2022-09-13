@@ -1,0 +1,20 @@
+public final class me/proton/core/paymentiap/data/BillingClientFactoryImpl : me/proton/core/paymentiap/domain/BillingClientFactory {
+	public fun <init> (Landroid/app/Application;)V
+	public fun invoke (Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lcom/android/billingclient/api/BillingClient;
+}
+
+public final class me/proton/core/paymentiap/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl : me/proton/core/paymentiap/domain/repository/GoogleBillingRepository {
+	public fun acknowledgePurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun destroy ()V
+	public fun getProductDetails (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
+	public fun launchBillingFlow (Landroid/app/Activity;Lcom/android/billingclient/api/BillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

@@ -1,0 +1,32 @@
+public abstract interface class me/proton/core/paymentiap/domain/BillingClientFactory {
+	public abstract fun invoke (Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lcom/android/billingclient/api/BillingClient;
+}
+
+public final class me/proton/core/paymentiap/domain/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/domain/repository/BillingClientError : java/lang/Throwable {
+	public fun <init> (ILjava/lang/String;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (ILjava/lang/String;)Lme/proton/core/paymentiap/domain/repository/BillingClientError;
+	public static synthetic fun copy$default (Lme/proton/core/paymentiap/domain/repository/BillingClientError;ILjava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/domain/repository/BillingClientError;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDebugMessage ()Ljava/lang/String;
+	public final fun getResponseCode ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/paymentiap/domain/repository/GoogleBillingRepository {
+	public abstract fun acknowledgePurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun destroy ()V
+	public abstract fun getProductDetails (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun launchBillingFlow (Landroid/app/Activity;Lcom/android/billingclient/api/BillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

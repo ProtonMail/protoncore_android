@@ -106,7 +106,7 @@ public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPVi
 	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
-	public static fun newInstance (Lcom/android/billingclient/api/BillingClient$Builder;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
+	public static fun newInstance (Lme/proton/core/paymentiap/domain/repository/GoogleBillingRepository;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_HiltModules {

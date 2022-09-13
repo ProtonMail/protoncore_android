@@ -16,23 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.paymentiap.domain
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.PurchasesUpdatedListener
 
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.paymentIapDomain),
-        project(Module.paymentIapPresentation)
-    )
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.paymentIapData),
-        `googlePlayBilling`
-    )
+public interface BillingClientFactory {
+    public operator fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): BillingClient
 }

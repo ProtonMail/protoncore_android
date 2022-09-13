@@ -77,7 +77,6 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
             .onEach {
                 @Suppress("IMPLICIT_CAST_TO_ANY")
                 when (it) {
-                    is BillingIAPViewModel.State.Initialized,
                     is BillingIAPViewModel.State.Initializing,
                     is BillingIAPViewModel.State.PurchaseStarted,
                     is BillingIAPViewModel.State.QueryingProductDetails -> {

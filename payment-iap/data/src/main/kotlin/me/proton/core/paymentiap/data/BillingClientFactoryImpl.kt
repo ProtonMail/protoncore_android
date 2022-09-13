@@ -16,28 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.paymentiap.dagger
+package me.proton.core.paymentiap.data
 
-import android.content.Context
+import android.app.Application
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.util.kotlin.CoreLogger
-import javax.inject.Singleton
+import me.proton.core.paymentiap.domain.BillingClientFactory
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-public object PaymentIapModule {
-
-    @Provides
-    @Singleton
-    public fun provideBillingClient(
-        @ApplicationContext context: Context
-    ): BillingClient.Builder = BillingClient.newBuilder(context).enablePendingPurchases()
+public class BillingClientFactoryImpl @Inject constructor(
+    private val application: Application
+) : BillingClientFactory {
+    override operator fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): BillingClient =
+        BillingClient.newBuilder(application)
+            .enablePendingPurchases()
+            .setListener(purchasesUpdatedListener)
+            .build()
 }

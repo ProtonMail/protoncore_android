@@ -76,5 +76,7 @@ public class PerformSubscribe @Inject constructor(
                 humanVerificationManager.clearDetails(clientId)
             }
         }
+
+        // TODO acknowledgePurchases (if Google IAP) via GoogleBillingRepository?
     }
 }

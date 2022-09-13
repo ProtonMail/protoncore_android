@@ -16,23 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.paymentiap.dagger
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import me.proton.core.paymentiap.data.BillingClientFactoryImpl
+import me.proton.core.paymentiap.data.repository.GoogleBillingRepositoryImpl
+import me.proton.core.paymentiap.domain.BillingClientFactory
+import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 
-publishOption.shouldBePublishedAsLib = true
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CorePaymentIapModule {
+    @Binds
+    public fun bindBillingClientProvider(impl: BillingClientFactoryImpl): BillingClientFactory
 
-dependencies {
-    api(
-        project(Module.paymentIapDomain),
-        project(Module.paymentIapPresentation)
-    )
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.paymentIapData),
-        `googlePlayBilling`
-    )
+    @Binds
+    public fun bindGoogleBillingRepository(impl: GoogleBillingRepositoryImpl): GoogleBillingRepository
 }
