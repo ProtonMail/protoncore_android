@@ -11,6 +11,21 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.0.1] - 2022-09-14
+
+### Bug Fixes
+
+- plan-presentation: Fixed DateFormat for PlanItemView (fr: "12 mai 2024", en: "May 12, 2024").
+
+### Internationalization
+
+- Upgrade translations from crowdin (2a21b3ae).
+
+### Refactoring
+
+- Removed unneeded core-platform module.
+- network-data: Removed TrustKit dependency.
+
 ## [9.0.0] - 2022-09-02
 
 ### Breaking Changes
