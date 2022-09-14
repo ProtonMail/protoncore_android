@@ -37,8 +37,8 @@ import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
-import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.utils.errorSnack
@@ -140,7 +140,11 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                                 when (currentProvider) {
                                     PaymentProvider.GoogleInAppPurchase -> {
                                         supportFragmentManager.showBillingIAPFragment(R.id.fragment_container)
-                                        nextPaymentProviderButton.visibility = View.VISIBLE
+                                        nextPaymentProviderButton.visibility =
+                                            if (input.singlePaymentProvider == PaymentProvider.GoogleInAppPurchase)
+                                                View.GONE
+                                            else
+                                                View.VISIBLE
                                     }
                                     PaymentProvider.CardPayment -> {
                                         supportFragmentManager.showBillingFragment(R.id.fragment_container)

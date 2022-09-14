@@ -106,7 +106,6 @@ public final class me/proton/core/payment/presentation/databinding/ActivityBilli
 
 public final class me/proton/core/payment/presentation/databinding/ActivityPaymentOptionsBinding : androidx/viewbinding/ViewBinding {
 	public final field addCreditCardButton Lme/proton/core/presentation/ui/view/ProtonButton;
-	public final field gPayButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field payButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field paymentMethodsList Landroidx/recyclerview/widget/RecyclerView;
 	public final field paymentOptionsDetails Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -176,21 +175,23 @@ public final class me/proton/core/payment/presentation/databinding/PlanShortDeta
 
 public final class me/proton/core/payment/presentation/entity/BillingInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/payment/presentation/entity/BillingInput;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingInput;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingInput;
+	public final fun component6 ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/payment/presentation/entity/BillingInput;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingInput;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCodes ()Ljava/util/List;
 	public final fun getExistingPlans ()Ljava/util/List;
 	public final fun getPaymentMethodId ()Ljava/lang/String;
 	public final fun getPlan ()Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public final fun getSinglePaymentProvider ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
 	public final fun getUser ()Lme/proton/core/domain/entity/UserId;
 	public final fun getUserId ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -305,6 +306,7 @@ public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingActivit
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
 	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun startBilling$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)V
 }
 
 public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -330,6 +332,7 @@ public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentOptions
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
 	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun startBilling$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)V
 }
 
 public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentTokenApprovalActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -342,6 +345,7 @@ public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentTokenAp
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
 	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun startBilling$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)V
 }
 
 public abstract interface class me/proton/core/payment/presentation/ui/PaymentOptionsActivity_GeneratedInjector {

@@ -24,12 +24,13 @@ import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
 import androidx.viewbinding.ViewBinding
 import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.R
+import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.payment.presentation.entity.PaymentOptionsResult
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
-import me.proton.core.payment.presentation.entity.BillingInput
-import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.errorSnack
@@ -79,14 +80,23 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
         )
     }
 
+    /**
+     * Starts the billing flow which has support for multiple various payment providers that
+     * the API decides which are currently available.
+     * By default, the user can switch between all payment providers.
+     *
+     * @param singlePaymentProvider the flow could be invoked with a single payment provider even though
+     * currently maybe more than one is available.
+     */
     protected fun startBilling(
         userId: String?,
         currentPlans: List<CurrentSubscribedPlanDetails>,
         plan: PlanShortDetails,
-        codes: List<String>?
+        codes: List<String>?,
+        singlePaymentProvider: PaymentProvider? = null
     ) {
         newBillingLauncher?.launch(
-            BillingInput(userId, currentPlans, plan, codes, null)
+            BillingInput(userId, currentPlans, plan, codes, null, singlePaymentProvider)
         )
     }
 

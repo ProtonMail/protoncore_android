@@ -38,6 +38,7 @@
     <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
     <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
     <string name="payments_method_google">Google</string>
+    <string name="payments_method_continue">Continue</string>
     <!-- endregion -->
     <!-- region billing -->
     <string name="payments_payment_details">Payment details</string>

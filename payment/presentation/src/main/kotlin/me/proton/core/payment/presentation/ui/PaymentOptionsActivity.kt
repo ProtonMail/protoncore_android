@@ -33,6 +33,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityPaymentOptionsBinding
 import me.proton.core.payment.presentation.databinding.ItemPaymentMethodBinding
@@ -110,36 +111,11 @@ internal class PaymentOptionsActivity :
                 layoutManager = LinearLayoutManager(context)
                 adapter = paymentOptionsAdapter
             }
-            addCreditCardButton.onClick {
-                startBilling(
-                    input.userId,
-                    viewModel.currentPlans.map {
-                        CurrentSubscribedPlanDetails(
-                            name = it.name,
-                            services = it.services,
-                            type = it.type
-                        )
-                    },
-                    input.plan.copy(amount = amountDue), input.codes
-                )
-            }
+            addCreditCardButton.onClick { startBilling() }
             selectedPlanDetailsLayout.plan = input.plan
             payButton.apply {
                 isEnabled = false
                 text = String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
-                onClick {
-                    viewModel.subscribe(
-                        user,
-                        input.plan.name,
-                        input.plan.services,
-                        input.plan.type,
-                        input.codes,
-                        input.plan.currency,
-                        input.plan.subscriptionCycle,
-                        PaymentType.PaymentMethod(selectedPaymentMethodId!!),
-                        SubscriptionManagement.PROTON_MANAGED
-                    )
-                }
             }
         }
         observe()
@@ -211,17 +187,48 @@ internal class PaymentOptionsActivity :
             }.launchIn(lifecycleScope)
     }
 
+    private fun onPayCreditCard() {
+        viewModel.subscribe(
+            user,
+            input.plan.name,
+            input.plan.services,
+            input.plan.type,
+            input.codes,
+            input.plan.currency,
+            input.plan.subscriptionCycle,
+            PaymentType.PaymentMethod(selectedPaymentMethodId!!),
+            SubscriptionManagement.PROTON_MANAGED
+        )
+    }
+
+    private fun startBilling(singlePaymentProvider: PaymentProvider? = null) {
+        startBilling(
+            input.userId,
+            viewModel.currentPlans.map {
+                CurrentSubscribedPlanDetails(
+                    name = it.name,
+                    services = it.services,
+                    type = it.type
+                )
+            },
+            input.plan.copy(amount = amountDue),
+            input.codes,
+            singlePaymentProvider
+        )
+    }
+
     private fun onPaymentMethodClicked(paymentMethod: PaymentOptionUIModel) {
         val googleProviderId = getString(R.string.payments_method_google).lowercase()
         with(binding) {
             if (paymentMethod.id == googleProviderId) {
                 paymentOptionsIapTerms.visibility = View.VISIBLE
-                gPayButton.visibility = View.VISIBLE
-                payButton.visibility = View.INVISIBLE
+                payButton.text = getString(R.string.payments_method_continue)
+                payButton.onClick(PaymentProvider.GoogleInAppPurchase, ::startBilling)
             } else {
                 paymentOptionsIapTerms.visibility = View.INVISIBLE
-                gPayButton.visibility = View.GONE
-                payButton.visibility = View.VISIBLE
+                payButton.text =
+                    String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
+                payButton.onClick(::onPayCreditCard)
             }
         }
         selectedPaymentMethodId = paymentMethod.id
@@ -249,17 +256,7 @@ internal class PaymentOptionsActivity :
 
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
         if (availablePaymentMethods.isEmpty() || (availablePaymentMethods.size == 1 && availablePaymentMethods[0] is PaymentOptionUIModel.InAppPurchase)) {
-            startBilling(
-                input.userId,
-                viewModel.currentPlans.map {
-                    CurrentSubscribedPlanDetails(
-                        name = it.name,
-                        services = it.services,
-                        type = it.type
-                    )
-                },
-                input.plan.copy(amount = amountDue), input.codes
-            )
+            startBilling()
             return
         }
         viewModel.validatePlan(
@@ -288,5 +285,9 @@ internal class PaymentOptionsActivity :
 
     companion object {
         const val ARG_INPUT = "arg.paymentsOptionsInput"
+
+        inline fun View.onClick(value: PaymentProvider, crossinline block: (PaymentProvider) -> Unit) {
+            setOnClickListener { block(value) }
+        }
     }
 }
