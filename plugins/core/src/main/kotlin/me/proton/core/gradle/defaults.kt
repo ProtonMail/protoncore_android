@@ -22,7 +22,7 @@ import org.gradle.api.JavaVersion
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 internal object AndroidDefaults {
-    const val compileSdk = 31
+    const val compileSdk = 33
     const val minSdk = 23
     const val ndkVersion = "21.3.6528147"
     const val targetSdk = 31

@@ -70,7 +70,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `android-room version` =                    "2.4.1"
 
     `android-test version` =                    "1.4.0"         // Released: Jun 30, 2021
-    `robolectric version` =                     "4.7.3"
+    `robolectric version` =                     "4.8.2"
     // endregion
 
     // region Others
