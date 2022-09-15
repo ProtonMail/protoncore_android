@@ -26,11 +26,11 @@ public fun StrictMode.VmPolicy.Builder.detectCommon(): StrictMode.VmPolicy.Build
         .detectActivityLeaks()
         .detectCleartextNetwork()
         .detectFileUriExposure()
-        .detectLeakedClosableObjects()
         .detectLeakedRegistrationObjects()
         .detectLeakedSqlLiteObjects()
         // .detectUntaggedSockets() // Not needed (unless we want to use `android.net.TrafficStats`).
         // .detectNonSdkApiUsage() // Skip: some androidx libraries violate this.
+        // .detectLeakedClosableObjects() // Skip: Sentry initialization violates this. https://github.com/getsentry/sentry-java/issues/909
         .apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 detectContentUriWithoutPermission()
