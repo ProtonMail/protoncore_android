@@ -326,7 +326,7 @@ public final class me/proton/core/humanverification/presentation/entity/HumanVer
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public abstract class me/proton/core/humanverification/presentation/ui/Hilt_HumanVerificationActivity : androidx/fragment/app/FragmentActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/humanverification/presentation/ui/Hilt_HumanVerificationActivity : androidx/appcompat/app/AppCompatActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
@@ -335,7 +335,7 @@ public abstract class me/proton/core/humanverification/presentation/ui/Hilt_Huma
 	protected fun inject ()V
 }
 
-public final class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity : androidx/fragment/app/FragmentActivity {
+public final class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity : androidx/appcompat/app/AppCompatActivity {
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity$Companion;

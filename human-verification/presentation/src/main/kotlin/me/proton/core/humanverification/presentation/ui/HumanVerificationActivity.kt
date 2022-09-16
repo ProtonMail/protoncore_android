@@ -21,7 +21,7 @@ package me.proton.core.humanverification.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
@@ -33,7 +33,7 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HumanVerificationActivity : FragmentActivity() {
+class HumanVerificationActivity : AppCompatActivity() {
 
     @Inject
     lateinit var humanVerificationVersion: HumanVerificationVersion
