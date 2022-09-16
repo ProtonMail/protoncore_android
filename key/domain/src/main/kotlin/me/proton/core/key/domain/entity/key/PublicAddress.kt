@@ -18,6 +18,8 @@
 
 package me.proton.core.key.domain.entity.key
 
+import me.proton.core.crypto.common.pgp.exception.CryptoException
+
 data class PublicAddress(
     val email: String,
     val recipientType: Int,
@@ -25,7 +27,9 @@ data class PublicAddress(
     val keys: List<PublicAddressKey>,
     val signedKeyList: PublicSignedKeyList?
 ) {
-    val primaryKey by lazy { keys.first { it.publicKey.isPrimary } }
+    val primaryKey by lazy {
+        keys.firstOrNull { it.publicKey.isPrimary } ?: throw CryptoException("No primary key available.")
+    }
 
     val recipient by lazy { Recipient.map[recipientType] }
 }

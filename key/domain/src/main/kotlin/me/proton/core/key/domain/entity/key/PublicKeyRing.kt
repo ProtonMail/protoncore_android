@@ -18,8 +18,12 @@
 
 package me.proton.core.key.domain.entity.key
 
+import me.proton.core.crypto.common.pgp.exception.CryptoException
+
 data class PublicKeyRing(
     val keys: List<PublicKey>
 ) {
-    val primaryKey by lazy { keys.first { it.isPrimary } }
+    val primaryKey by lazy {
+        keys.firstOrNull { it.isPrimary } ?: throw CryptoException("No primary key available.")
+    }
 }

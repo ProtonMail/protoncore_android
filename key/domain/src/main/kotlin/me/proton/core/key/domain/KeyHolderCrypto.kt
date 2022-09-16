@@ -76,7 +76,8 @@ import java.io.InputStream
  * @see [useKeysAs]
  */
 inline fun <R> KeyHolder.useKeys(context: CryptoContext, block: KeyHolderContext.() -> R): R {
-    val privateKeys = keys.map { key -> key.privateKey }
+    val activeKeys = keys.filter { it.privateKey.isActive }
+    val privateKeys = activeKeys.map { key -> key.privateKey }
     val publicKeys = privateKeys.map { key -> key.publicKey(context) }
     val keyHolderContext = KeyHolderContext(
         context = context,

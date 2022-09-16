@@ -19,6 +19,7 @@
 package me.proton.core.key.domain.entity.key
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.unlock
 import me.proton.core.key.domain.unlockOrNull
 import java.io.Closeable
@@ -28,7 +29,9 @@ data class PrivateKeyRing(
     val keys: List<PrivateKey>
 ) : Closeable {
 
-    private val primaryKey by lazy { keys.first { it.isPrimary } }
+    private val primaryKey by lazy {
+        keys.firstOrNull { it.isPrimary } ?: throw CryptoException("No primary key available.")
+    }
 
     private val unlockedPrimaryKeyDelegate = lazy { primaryKey.unlock(context) }
     private val unlockedKeysDelegate = lazy { keys.mapNotNull { it.unlockOrNull(context) } }

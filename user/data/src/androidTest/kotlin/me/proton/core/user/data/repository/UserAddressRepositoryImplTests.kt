@@ -249,7 +249,7 @@ class UserAddressRepositoryImplTests {
         addresses.primary()!!.useKeys(cryptoContext) {
             val message = "message"
 
-            // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
+            // Cannot encrypt/decrypt as UserAddressKey are inactive.
             assertFailsWith(CryptoException::class) { encryptText(message) }
         }
         Unit
@@ -354,7 +354,7 @@ class UserAddressRepositoryImplTests {
         addresses.primary()!!.useKeys(cryptoContext) {
             val message = "message"
 
-            // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
+            // Cannot encrypt/decrypt as UserAddressKey are inactive.
             assertFailsWith(CryptoException::class) { encryptText(message) }
         }
     }
