@@ -20,8 +20,6 @@ package me.proton.core.test.android.uitests.tests.medium.payments
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.plugins.data.BillingCycle
-import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
@@ -29,7 +27,6 @@ import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
@@ -41,31 +38,19 @@ class NewCreditCardTests : BaseTest() {
         quark.setDefaultPaymentMethods()
     }
 
-    @Before
-    fun goToPlanUpgrade() {
+    private fun goToPlanUpgrade() {
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
 
         login(userWithoutCard)
 
         CoreexampleRobot()
-            .plansUpgrade()
-            .changeCurrency(Currency.CHF)
+            .plansCurrent()
             .upgradeToPlan<AddCreditCardRobot>(Plan.Dev)
-            .apply {
-                view.withId(R.id.selectedPlanDetailsLayout).withAncestor(view.withId(R.id.scrollContent)).scrollTo()
-            }
-            .verify {
-                billingDetailsDisplayed(
-                    plan = Plan.Dev,
-                    billingCycle = BillingCycle.Yearly,
-                    currency = Currency.CHF.symbol,
-                    googleIAPAvailable = false
-                )
-            }
     }
 
     @Test
     fun backToPlanSelection() {
+        goToPlanUpgrade()
         newCreditCardRobot
             .close<SelectPlanRobot>()
             .verify { planDetailsDisplayedInsideRecyclerView(Plan.Dev) }
@@ -73,6 +58,7 @@ class NewCreditCardTests : BaseTest() {
 
     @Test
     fun missingPaymentDetails() {
+        goToPlanUpgrade()
         newCreditCardRobot
             .pay<AddCreditCardRobot>()
             .verify {
@@ -84,6 +70,7 @@ class NewCreditCardTests : BaseTest() {
 
     @Test
     fun invalidCreditCardNumber() {
+        goToPlanUpgrade()
         newCreditCardRobot
             .ccname("Test name")
             .country()

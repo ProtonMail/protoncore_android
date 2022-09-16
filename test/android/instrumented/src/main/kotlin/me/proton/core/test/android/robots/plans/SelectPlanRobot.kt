@@ -22,7 +22,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.view.PlanItemView
-import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
@@ -121,8 +120,8 @@ class SelectPlanRobot : CoreRobot() {
             view.withText(plan.text).checkDisplayed()
         }
 
-        fun planDetailsNotDisplayed(plan: Plan) {
-            view.withText(plan.text).checkNotDisplayed()
+        fun planDetailsNotDisplayed() {
+            view.withId(R.id.currentPlan).checkNotDisplayed()
         }
 
         fun canSelectPlan(plan: Plan) {

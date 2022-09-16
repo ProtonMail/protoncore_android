@@ -19,11 +19,11 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
-import me.proton.core.test.android.instrumented.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import java.util.Calendar
 import java.util.Locale
+import me.proton.core.payment.presentation.R
 
 @Serializable
 data class Card(

@@ -18,11 +18,10 @@
 
 package me.proton.core.test.android.robots.payments
 
-import me.proton.core.test.android.instrumented.R
-import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
+import me.proton.core.payment.presentation.R
 
 /**
  * [PaymentRobot] base class for payments actions and verifications implementation
@@ -39,11 +38,9 @@ open class PaymentRobot : CoreRobot() {
     class Verify : CoreVerify() {
         fun billingDetailsDisplayed(
             plan: Plan,
-            billingCycle: BillingCycle,
             currency: String,
             googleIAPAvailable: Boolean
         ) {
-            // val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
             view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
             view.withId(R.id.billingPeriodText).withText(R.string.payments_billing_yearly).checkDisplayed()
             view.withId(R.id.amountText).startsWith(currency).checkDisplayed()
@@ -53,27 +50,14 @@ open class PaymentRobot : CoreRobot() {
             }
         }
 
-        fun googleIAPOptionDisplayed(
-            plan: Plan,
-            billingCycle: BillingCycle,
-            currency: String,
-            anotherPaymentProviderAvailable: Boolean
-        ) {
-            val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
-            view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
-            view.withId(R.id.billingPeriodText).withText(R.string.payments_billing_yearly)
-                .checkDisplayed()
-            view.withId(R.id.amountText).withText("$currency$yearlyPriceString").checkDisplayed()
-            view.withId(R.id.priceSurchargeInfoText).checkDisplayed()
-            view.withId(R.id.termsConditionsInfoText).checkDisplayed()
-            if (anotherPaymentProviderAvailable) {
-                view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
-            }
-        }
-
         fun paymentMethodDisplayed(title: String, details: String) {
             view.withText(title).withId(R.id.paymentMethodTitleText).checkDisplayed()
             view.withText(details).withId(R.id.paymentMethodSubtitleText).checkDisplayed()
+        }
+
+        fun googlePaymentMethodDisplayed(title: String) {
+            view.withText(title).withId(R.id.paymentMethodTitleText).checkDisplayed()
+            view.withText("").withId(R.id.paymentMethodSubtitleText).checkNotDisplayed()
         }
 
         fun addCreditCardElementsDisplayed() {
@@ -90,8 +74,8 @@ open class PaymentRobot : CoreRobot() {
 
         fun googleIAPElementsDisplayed() {
             arrayOf(
-                R.id.termsConditionsInfoText,
-                R.id.priceSurchargeInfoText,
+                me.proton.core.paymentiap.presentation.R.id.termsConditionsInfoText,
+                me.proton.core.paymentiap.presentation.R.id.priceSurchargeInfoText,
                 R.id.nextPaymentProviderButton
             ).forEach {
                 view.withId(it).checkDisplayed()

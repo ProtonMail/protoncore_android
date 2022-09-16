@@ -1063,9 +1063,9 @@ public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proto
 public final class me/proton/core/test/android/robots/payments/PaymentRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun addCreditCardElementsDisplayed ()V
-	public final fun billingDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Ljava/lang/String;Z)V
+	public final fun billingDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Ljava/lang/String;Z)V
 	public final fun googleIAPElementsDisplayed ()V
-	public final fun googleIAPOptionDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Ljava/lang/String;Z)V
+	public final fun googlePaymentMethodDisplayed (Ljava/lang/String;)V
 	public final fun paymentMethodDisplayed (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -1086,7 +1086,7 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public final fun canUpgradeToPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsDisplayedInsideRecyclerView (Lme/proton/core/test/android/plugins/data/Plan;)V
-	public final fun planDetailsNotDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
+	public final fun planDetailsNotDisplayed ()V
 }
 
 public final class me/proton/core/test/android/robots/reports/BugReportRobot : me/proton/core/test/android/robots/CoreRobot {

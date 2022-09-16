@@ -71,13 +71,17 @@ internal class PaymentOptionsActivity :
             when (paymentMethod) {
                 is PaymentOptionUIModel.InAppPurchase -> {
                     paymentMethodTitleText.text = paymentMethod.provider
+                    paymentMethodSubtitleText.visibility = View.GONE
                     val drawable = ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_gpay)
                     paymentMethodIcon.setImageDrawable(drawable)
                     paymentMethodRadio.isChecked = selected
                 }
                 is PaymentOptionUIModel.PaymentMethod -> {
                     paymentMethodTitleText.text = paymentMethod.title
-                    paymentMethodSubtitleText.text = paymentMethod.subtitle
+                    paymentMethodSubtitleText.apply {
+                        text = paymentMethod.subtitle
+                        visibility = View.VISIBLE
+                    }
 
                     val drawableRes = when (PaymentMethodType.map[paymentMethod.type]) {
                         PaymentMethodType.CARD -> R.drawable.ic_proton_credit_card

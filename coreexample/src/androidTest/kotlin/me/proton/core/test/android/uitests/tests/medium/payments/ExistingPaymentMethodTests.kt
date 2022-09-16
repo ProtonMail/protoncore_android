@@ -18,6 +18,8 @@
 
 package me.proton.core.test.android.uitests.tests.medium.payments
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.Plan
@@ -25,13 +27,13 @@ import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot.PaymentMethodElement.paymentMethod
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import me.proton.core.payment.presentation.R
 
 @RunWith(Parameterized::class)
 class ExistingPaymentMethodTests(
@@ -63,14 +65,19 @@ class ExistingPaymentMethodTests(
     }
 
     @Test
-    @SmokeTest
     fun existingCreditCardMethodDisplayed() {
         login(userWithCard)
 
         CoreexampleRobot()
             .plansUpgrade()
             .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
-            .verify { paymentMethodDisplayed(Card.default.details, Card.default.name) }
+            .verify {
+                paymentMethodDisplayed(Card.default.details, Card.default.name)
+                if (inApp) {
+                    val context = ApplicationProvider.getApplicationContext<Context>()
+                    googlePaymentMethodDisplayed("${context.getString(R.string.payments_method_google)}*")
+                }
+            }
     }
 
     @Test

@@ -62,21 +62,23 @@ class UpgradePlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlanCardPayment() {
+        quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
         login(paidUser)
 
         coreExampleRobot
             .plansUpgrade()
-            .verify { planDetailsNotDisplayed(paidUser.plan) }
+            .verify { planDetailsNotDisplayed() }
     }
 
     @Test
     fun userWithPaidPlanCardAndIAPPayment() {
+        quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
         login(paidUser)
 
         coreExampleRobot
             .plansUpgrade()
-            .verify { planDetailsNotDisplayed(paidUser.plan) }
+            .verify { planDetailsNotDisplayed() }
     }
 }

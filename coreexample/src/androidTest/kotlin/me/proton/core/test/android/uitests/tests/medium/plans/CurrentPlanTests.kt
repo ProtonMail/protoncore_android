@@ -18,11 +18,13 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import org.junit.After
 import org.junit.Test
 
 class CurrentPlanTests : BaseTest() {
@@ -30,11 +32,16 @@ class CurrentPlanTests : BaseTest() {
     val user = quark.userCreate()
 
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
-
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
         login(user)
 
         return CoreexampleRobot()
             .plansCurrent()
+    }
+
+    @After
+    fun setDefaults() {
+        quark.setDefaultPaymentMethods()
     }
 
     @Test

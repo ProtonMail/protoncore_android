@@ -84,7 +84,6 @@ class SelectPlanForIAPTests : BaseTest() {
     }
 
     @Test
-    @SmokeTest
     fun selectPlusNoPaymentProvidersAvailable() {
         quark.setPaymentMethods(AppStore.GooglePlay, card = false, paypal = false, inApp = false)
         humanVerificationRobot?.let {
