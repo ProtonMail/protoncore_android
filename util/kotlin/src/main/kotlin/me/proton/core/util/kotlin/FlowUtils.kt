@@ -24,6 +24,21 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.retryWhen
 
 /**
+ * Catches exceptions, log [RuntimeException], then calls a specified action with the caught exception.
+ */
+inline fun <T> Flow<T>.catchAll(
+    logTag: String,
+    crossinline action: suspend FlowCollector<T>.(Throwable) -> Unit
+): Flow<T> {
+    return catch { error ->
+        if (error is RuntimeException) {
+            CoreLogger.e(logTag, error)
+        }
+        action(error)
+    }
+}
+
+/**
  * Catches an error that matches a given [predicate], and performs an [action] if such an error is caught.
  * If an error from upstream doesn't match the [predicate], it's passed downstream.
  */

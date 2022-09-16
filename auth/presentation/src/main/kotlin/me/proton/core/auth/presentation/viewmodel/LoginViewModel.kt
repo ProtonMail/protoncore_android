@@ -25,7 +25,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -46,6 +45,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
@@ -113,7 +113,7 @@ internal class LoginViewModel @Inject constructor(
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
     }.catchWhen(Throwable::isWrongPassword) {
         emit(State.InvalidPassword(it))
-    }.catch { error ->
+    }.catchAll(LogTag.FLOW_ERROR_LOGIN) { error ->
         emit(State.Error(error, error.isPotentialBlocking()))
     }.onEach { state ->
         _state.tryEmit(state)

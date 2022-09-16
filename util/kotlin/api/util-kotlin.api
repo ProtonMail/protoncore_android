@@ -66,6 +66,7 @@ public final class me/proton/core/util/kotlin/EntityMapperKt {
 }
 
 public final class me/proton/core/util/kotlin/FlowUtilsKt {
+	public static final fun catchAll (Lkotlinx/coroutines/flow/Flow;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun catchWhen (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun retryOnceWhen (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/flow/Flow;
 }

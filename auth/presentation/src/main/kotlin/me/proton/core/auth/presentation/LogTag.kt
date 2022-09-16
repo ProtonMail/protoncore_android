@@ -19,6 +19,9 @@
 package me.proton.core.auth.presentation
 
 object LogTag {
+    /** Tag for marking when a login flow has failed with an exception. */
+    const val FLOW_ERROR_LOGIN = "core.auth.presentation.flow.error.login"
+
     /** Tag for marking when a flow has failed with an exception, but it will be retried. */
     const val FLOW_ERROR_RETRY = "core.auth.presentation.flow.retry"
 }
