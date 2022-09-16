@@ -252,10 +252,12 @@ internal open class MergeDetektReports : DefaultTask() {
             println("Merging reports from files $reportFiles")
             val nonEmptyReports = reportFiles.filter { it.length() != 0L }
 
-            writer.handleFile(nonEmptyReports.first())
-            nonEmptyReports.drop(1).forEach {
-                writer.append(",")
-                writer.handleFile(it)
+            if (nonEmptyReports.isNotEmpty()) {
+                writer.handleFile(nonEmptyReports.first())
+                nonEmptyReports.drop(1).forEach {
+                    writer.append(",")
+                    writer.handleFile(it)
+                }
             }
 
             // Close array
