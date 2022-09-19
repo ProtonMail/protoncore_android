@@ -30,6 +30,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ProtonTheme"
+        android:taskAffinity=""
         tools:replace="android:theme">
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -62,6 +63,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:exported="true"
             android:theme="@style/ProtonTheme.Splash.CoreExample">
             <intent-filter>

@@ -52,6 +52,7 @@ dependencies {
         project(Module.networkDomain),
         `android-ktx`,
         `core-splashscreen`,
+        `hilt-android`,
         `lifecycle-livedata-core`,
         `lifecycle-process`,
     )

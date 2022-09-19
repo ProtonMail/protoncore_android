@@ -18,22 +18,26 @@
 
 package me.proton.core.humanverification.presentation
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator.Companion.startHumanVerificationWorkflow
+import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class HumanVerificationStateHandler @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
+    private val activityProvider: ActivityProvider,
     private val appLifecycleObserver: AppLifecycleObserver,
     private val humanVerificationManager: HumanVerificationManager
 ) {
     fun observe() {
-        humanVerificationManager.observe(appLifecycleObserver.lifecycle)
-            .onHumanVerificationNeeded { HumanVerificationOrchestrator.startHumanVerificationWorkflow(it, context) }
+        humanVerificationManager
+            .observe(appLifecycleObserver.lifecycle)
+            .onHumanVerificationNeeded {
+                activityProvider.lastResumed?.let { activity ->
+                    startHumanVerificationWorkflow(it, activity)
+                }
+            }
     }
 }

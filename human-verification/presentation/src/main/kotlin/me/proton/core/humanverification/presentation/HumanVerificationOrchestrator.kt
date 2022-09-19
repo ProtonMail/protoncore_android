@@ -18,8 +18,7 @@
 
 package me.proton.core.humanverification.presentation
 
-import android.content.Context
-import android.content.Intent
+import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
@@ -91,12 +90,10 @@ class HumanVerificationOrchestrator @Inject constructor() {
          */
         fun startHumanVerificationWorkflow(
             details: HumanVerificationDetails,
-            context: Context
+            activity: Activity
         ) {
-            val intent = StartHumanVerification.getIntent(context, details.toInput()).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            context.startActivity(intent)
+            val intent = StartHumanVerification.getIntent(activity, details.toInput())
+            activity.startActivityForResult(intent, 0)
         }
     }
 }
