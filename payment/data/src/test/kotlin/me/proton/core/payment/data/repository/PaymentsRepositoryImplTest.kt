@@ -394,7 +394,8 @@ class PaymentsRepositoryImplTest {
             currency = "EUR",
             amount = 5L,
             plans = listOf(mockk()),
-            external = SubscriptionManagement.PROTON_MANAGED
+            external = SubscriptionManagement.PROTON_MANAGED,
+            customerId = null
         )
         coEvery { apiManager.invoke<Subscription>(any(), any()) } returns ApiResult.Success(subscription)
         // WHEN

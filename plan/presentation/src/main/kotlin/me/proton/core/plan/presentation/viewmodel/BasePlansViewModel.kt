@@ -33,15 +33,16 @@ import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.plan.domain.entity.PLAN_VENDOR_GOOGLE
+import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 import me.proton.core.plan.domain.entity.Plan
-import me.proton.core.plan.domain.entity.PlanVendorName
+import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCycle.Companion.toPlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanPricing
+import me.proton.core.plan.presentation.entity.PlanVendorDetails
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.view.calculateUsedSpacePercentage
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -153,7 +154,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             starred = starred,
             services = services ?: 0,
             type = type,
-            vendorNames = vendorNames.groupByVendorAndCycle()
+            vendors = vendors.toPlanVendorDetailsMap()
         )
 
     fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
@@ -180,7 +181,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
                     currency = selectedPlan.currency.toSubscriptionCurrency(),
                     services = selectedPlan.services,
                     type = selectedPlan.type,
-                    vendorNames = selectedPlan.vendorNames.filterByCycle(cycle.toPlanCycle())
+                    vendors = selectedPlan.vendorNames.filterByCycle(cycle.toPlanCycle())
                 ),
                 codes = null
             )
@@ -189,22 +190,24 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
 }
 
 @VisibleForTesting
-internal fun Map<AppStore, Map<PlanCycle, String>>.filterByCycle(planCycle: PlanCycle): Map<AppStore, String> {
-    return mapNotNull { (appVendor, names: Map<PlanCycle, String>) ->
-        val vendorPlanName = names[planCycle] ?: return@mapNotNull null
-        appVendor to vendorPlanName
+internal fun Map<AppStore, PlanVendorDetails>.filterByCycle(
+    planCycle: PlanCycle
+): Map<AppStore, PaymentVendorDetails> {
+    return mapNotNull { (appVendor, details: PlanVendorDetails) ->
+        details.names[planCycle]?.let { vendorPlanName ->
+            appVendor to PaymentVendorDetails(customerId = details.customerId, vendorPlanName)
+        }
     }.toMap()
 }
 
 @VisibleForTesting
-internal fun List<PlanVendorName>.groupByVendorAndCycle(): Map<AppStore, Map<PlanCycle, String>> {
-    return groupBy { it.vendorName }.mapNotNull { (vendorName, planVendorNames) ->
-        val planCycleToName = planVendorNames.mapNotNull { planVendorName ->
-            PlanCycle.map[planVendorName.cycle]?.let { it to planVendorName.name }
-        }.toMap()
-        when (vendorName) {
-            PLAN_VENDOR_GOOGLE -> AppStore.GooglePlay to planCycleToName
-            else -> null
-        }
-    }.toMap()
+internal fun Map<AppStore, PlanVendorData>.toPlanVendorDetailsMap(): Map<AppStore, PlanVendorDetails> {
+    return mapValues { entry ->
+        PlanVendorDetails(
+            customerId = entry.value.customerId,
+            names = entry.value.names.mapNotNull { (planDuration, vendorPlanName) ->
+                PlanCycle.map[planDuration.months]?.let { it to vendorPlanName }
+            }.toMap()
+        )
+    }
 }

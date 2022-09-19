@@ -69,7 +69,7 @@ public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShort
 	public final fun getServices ()I
 	public final fun getSubscriptionCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getType ()I
-	public final fun getVendorNames ()Ljava/util/Map;
+	public final fun getVendors ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V

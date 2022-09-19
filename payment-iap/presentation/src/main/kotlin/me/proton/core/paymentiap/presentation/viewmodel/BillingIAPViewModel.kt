@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -73,7 +72,8 @@ internal class BillingIAPViewModel @Inject constructor(
             data class PurchaseSuccess(
                 val productId: String,
                 val purchaseToken: GooglePurchaseToken,
-                val orderID: String
+                val orderID: String,
+                val customerId: String
             ) : Success()
         }
 
@@ -149,16 +149,19 @@ internal class BillingIAPViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun makePurchase(userId: String?, activity: FragmentActivity): Job = flow {
+    fun makePurchase(activity: FragmentActivity, customerId: String): Job = flow {
         require(this@BillingIAPViewModel::selectedProduct.isInitialized) {
             "Product must be set before making the purchase."
         }
 
-        val unredeemedPurchase = findUnacknowledgedGooglePurchase(selectedProduct.productId, userId?.let { UserId(it) })
+        val unredeemedPurchase = findUnacknowledgedGooglePurchase(
+            customerId = customerId,
+            productId = selectedProduct.productId
+        )
         if (unredeemedPurchase != null) {
             emit(State.UnredeemedPurchase(unredeemedPurchase))
         } else {
-            launchBillingFlow(userId, activity)
+            launchBillingFlow(activity, customerId)
         }
     }.catch { error ->
         _billingIAPState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
@@ -171,7 +174,7 @@ internal class BillingIAPViewModel @Inject constructor(
     }
 
     /** Launches Google billing flow. */
-    private suspend fun FlowCollector<State>.launchBillingFlow(userId: String?, activity: FragmentActivity) {
+    private suspend fun FlowCollector<State>.launchBillingFlow(activity: FragmentActivity, customerId: String) {
         val offer = requireNotNull(selectedProduct.subscriptionOfferDetails?.firstOrNull())
         emit(State.PurchaseStarted)
         val productDetailsParamsList = listOf(
@@ -180,20 +183,18 @@ internal class BillingIAPViewModel @Inject constructor(
                 .setOfferToken(offer.offerToken)
                 .build()
         )
-        val billingFlowParamsBuilder = BillingFlowParams.newBuilder()
+        val billingFlowParams = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(productDetailsParamsList)
+            .setObfuscatedAccountId(customerId)
+            .build()
 
-        // TODO CP-4582 call billingFlowParamsBuilder.setObfuscatedAccountId with encrypted userId
-
-        billingRepository.launchBillingFlow(activity, billingFlowParamsBuilder.build())
+        billingRepository.launchBillingFlow(activity, billingFlowParams)
         emit(State.Success.PurchaseFlowLaunched)
     }
 
-    private fun listenForPurchases() = viewModelScope.launch {
-        billingRepository.purchaseUpdated.collect {
-            onPurchasesUpdated(it.first, it.second)
-        }
-    }
+    private fun listenForPurchases() = billingRepository.purchaseUpdated.onEach {
+        onPurchasesUpdated(it.first, it.second)
+    }.launchIn(viewModelScope)
 
     private fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
         when {
@@ -221,7 +222,8 @@ internal class BillingIAPViewModel @Inject constructor(
         _billingIAPState.value = State.Success.PurchaseSuccess(
             productId = selectedProduct.productId,
             purchaseToken = GooglePurchaseToken(purchase.purchaseToken),
-            orderID = purchase.orderId
+            orderID = purchase.orderId,
+            customerId = requireNotNull(purchase.accountIdentifiers?.obfuscatedAccountId)
         )
     }
 }

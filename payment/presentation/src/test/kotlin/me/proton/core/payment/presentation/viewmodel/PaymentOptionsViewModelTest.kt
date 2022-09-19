@@ -24,7 +24,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.spyk
 import io.mockk.verify
 import me.proton.core.country.domain.entity.Country
 import me.proton.core.country.domain.usecase.GetCountry
@@ -38,7 +37,6 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
-import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -54,7 +52,6 @@ import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
-import me.proton.core.plan.domain.entity.PLAN_ADDON
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.utils.getUserMessage
@@ -123,7 +120,8 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         currency = "EUR",
         amount = 5,
         plans = listOf(testSubscribedPlan),
-        external = SubscriptionManagement.PROTON_MANAGED
+        external = SubscriptionManagement.PROTON_MANAGED,
+        customerId = null
     )
 
     // endregion

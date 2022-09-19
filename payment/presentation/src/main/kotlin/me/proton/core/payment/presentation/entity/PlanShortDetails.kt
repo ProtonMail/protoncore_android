@@ -25,7 +25,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 
 /**
- * @param vendorNames Map of plan names for app vendors (the plan names are for the given [subscriptionCycle]).
+ * @param vendors Map of plan names for app vendors (the plan names are for the given [subscriptionCycle]).
  */
 @Parcelize
 public data class PlanShortDetails(
@@ -36,5 +36,11 @@ public data class PlanShortDetails(
     val currency: Currency = Currency.EUR,
     val services: Int,
     val type: Int,
-    val vendorNames: Map<AppStore, String>
+    val vendors: Map<AppStore, PaymentVendorDetails>
+) : Parcelable
+
+@Parcelize
+public data class PaymentVendorDetails(
+    val customerId: String,
+    val vendorPlanName: String
 ) : Parcelable

@@ -129,7 +129,7 @@ class PlansViewModel @Inject constructor(
                     subscriptionCycle = SubscriptionCycle.YEARLY,
                     services = MASK_MAIL,
                     type = PLAN_PRODUCT,
-                    vendorNames = emptyMap()
+                    vendors = emptyMap()
                 )
             )
         }
@@ -152,7 +152,7 @@ class PlansViewModel @Inject constructor(
                             subscriptionCycle = SubscriptionCycle.YEARLY,
                             services = MASK_MAIL + MASK_VPN,
                             type = PLAN_PRODUCT,
-                            vendorNames = emptyMap()
+                            vendors = emptyMap()
                         ),
                         codes = null
                     )

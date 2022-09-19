@@ -64,7 +64,8 @@ class PerformSubscribeTest {
         currency = "EUR",
         amount = 5L,
         plans = listOf(mockk()),
-        external = SubscriptionManagement.PROTON_MANAGED
+        external = SubscriptionManagement.PROTON_MANAGED,
+        customerId = null
     )
     // endregion
 

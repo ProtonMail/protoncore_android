@@ -22,7 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class IAPDetailsBody(
+public data class IAPDetailsBody constructor(
     @SerialName("productID")
     val productId: String,
     @SerialName("purchaseToken")
@@ -30,5 +30,7 @@ public data class IAPDetailsBody(
     @SerialName("orderID")
     val orderId: String,
     @SerialName("packageName")
-    val packageName: String
+    val packageName: String,
+    @SerialName("customerID")
+    val customerId: String
 )

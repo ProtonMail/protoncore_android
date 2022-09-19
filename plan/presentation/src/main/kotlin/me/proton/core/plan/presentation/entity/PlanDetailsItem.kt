@@ -108,7 +108,7 @@ sealed class PlanDetailsItem(
         val purchaseEnabled: Boolean = true,
         val services: Int,
         val type: Int,
-        val vendorNames: Map<AppStore, Map<PlanCycle, String>>
+        val vendors: Map<AppStore, PlanVendorDetails>
     ) : PlanDetailsItem(
         name,
         displayName,
@@ -151,3 +151,9 @@ data class PlanPricing(
             }
     }
 }
+
+@Parcelize
+data class PlanVendorDetails(
+    val customerId: String,
+    val names: Map<PlanCycle, String>
+): Parcelable

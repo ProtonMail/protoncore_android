@@ -184,7 +184,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         val purchaseToken = GooglePurchaseToken("test-purchase-token")
         val orderId = "test-order-id"
         val packageName = "test-package-name"
-        val paymentType = PaymentType.GoogleIAP(productId, purchaseToken, orderId, packageName)
+        val paymentType = PaymentType.GoogleIAP(productId, purchaseToken, orderId, packageName, "customer-id")
         val testSubscriptionPlanStatus = SubscriptionStatus(
             amount = 5,
             amountDue = 2,
@@ -320,7 +320,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         val purchaseToken = GooglePurchaseToken("test-purchase-token")
         val orderId = "test-order-id"
         val packageName = "test-package-name"
-        val paymentType = PaymentType.GoogleIAP(productId, purchaseToken, orderId, packageName)
+        val paymentType = PaymentType.GoogleIAP(productId, purchaseToken, orderId, packageName, "customer-id")
         val testSubscriptionPlanStatus = SubscriptionStatus(
             amount = 5,
             amountDue = 2,

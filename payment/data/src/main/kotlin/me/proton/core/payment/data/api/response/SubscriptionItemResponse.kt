@@ -44,7 +44,9 @@ internal data class SubscriptionItemResponse(
     @SerialName("External")
     val external: Int? = null,
     @SerialName("Plans")
-    val plans: List<PlanResponse>
+    val plans: List<PlanResponse>,
+    @SerialName("CustomerID")
+    val customerId: String? = null
 ) {
     fun toSubscription(): Subscription = Subscription(
         id = id,
@@ -56,6 +58,7 @@ internal data class SubscriptionItemResponse(
         currency = currency,
         amount = amount,
         external = SubscriptionManagement.map[external],
-        plans = plans.map { it.toPlan() }
+        plans = plans.map { it.toPlan() },
+        customerId = customerId
     )
 }

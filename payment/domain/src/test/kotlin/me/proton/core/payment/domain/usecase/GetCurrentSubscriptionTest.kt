@@ -52,7 +52,8 @@ class GetCurrentSubscriptionTest {
         currency = "EUR",
         amount = 5,
         plans = listOf(mockk()),
-        external = SubscriptionManagement.PROTON_MANAGED
+        external = SubscriptionManagement.PROTON_MANAGED,
+        customerId = null
     )
     // endregion
 

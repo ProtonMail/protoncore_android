@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.presentation.usecase
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -42,8 +43,7 @@ internal class RedeemGooglePurchase @Inject constructor(
         userId: UserId
     ) {
         val currency = PlanCurrency.valueOf(purchasedPlan.currency!!)
-        val planCycle =
-            PlanCycle.map[purchasedPlan.vendorNames.first { it.name in googlePurchase.productIds }.cycle]!!
+        val planCycle = getPlanCycleForPurchase(googlePurchase, purchasedPlan)
         val planNames = listOf(purchasedPlan.name)
         val subscriptionStatus = validateSubscriptionPlan(
             userId,
@@ -57,10 +57,11 @@ internal class RedeemGooglePurchase @Inject constructor(
             subscriptionStatus.amountDue,
             subscriptionStatus.currency,
             PaymentType.GoogleIAP(
-                googlePurchase.productIds.first(),
-                googlePurchase.purchaseToken,
-                googlePurchase.orderId,
-                googlePurchase.packageName
+                productId = googlePurchase.productIds.first(),
+                purchaseToken = googlePurchase.purchaseToken,
+                orderId = googlePurchase.orderId,
+                packageName = googlePurchase.packageName,
+                customerId = requireNotNull(googlePurchase.customerId)
             )
         )
         check(tokenResult.status == PaymentTokenStatus.CHARGEABLE)
@@ -75,5 +76,11 @@ internal class RedeemGooglePurchase @Inject constructor(
             tokenResult.token,
             SubscriptionManagement.GOOGLE_MANAGED
         )
+    }
+
+    private fun getPlanCycleForPurchase(googlePurchase: GooglePurchase, purchasedPlan: Plan): PlanCycle {
+        val planVendorData = requireNotNull(purchasedPlan.vendors[AppStore.GooglePlay])
+        val (planDuration, _) = planVendorData.names.entries.first { it.value in googlePurchase.productIds }
+        return requireNotNull(PlanCycle.map[planDuration.months])
     }
 }

@@ -193,7 +193,8 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         plans = listOf(
             testSubscribedPlan
         ),
-        external = SubscriptionManagement.PROTON_MANAGED
+        external = SubscriptionManagement.PROTON_MANAGED,
+        customerId = null
     )
     // endregion
 

@@ -26,6 +26,7 @@ public sealed class PaymentType(public val type: String) {
         val productId: String,
         val purchaseToken: GooglePurchaseToken,
         val orderId: String,
-        val packageName: String
+        val packageName: String,
+        val customerId: String
     ) : PaymentType("google")
 }

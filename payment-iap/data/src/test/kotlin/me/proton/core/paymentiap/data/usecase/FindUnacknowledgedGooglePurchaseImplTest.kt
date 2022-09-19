@@ -18,12 +18,12 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.Purchase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.domain.entity.UserId
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import kotlin.test.BeforeTest
@@ -62,10 +62,10 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
-            every { accountIdentifiers } returns null
+            every { accountIdentifiers } returns mockAccountIdentifiers()
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertEquals(purchase.wrap(), tested(null, null))
+        assertEquals(purchase.wrap(), tested(customerId = null, productId = null))
     }
 
     @Test
@@ -77,7 +77,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { products } returns listOf("product-B")
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertNull(tested("product-A", null))
+        assertNull(tested(customerId = null, productId = "product-A"))
     }
 
     @Test
@@ -89,7 +89,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { products } returns listOf("product-A")
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertEquals(purchase.wrap(), tested("product-A", null))
+        assertEquals(purchase.wrap(), tested(customerId = null, productId = "product-A"))
     }
 
     @Test
@@ -98,11 +98,11 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
             every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns "user-B"
+                every { obfuscatedAccountId } returns "customer-B"
             }
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertNull(tested(null, UserId("user-A")))
+        assertNull(tested(customerId = "customer-A", productId = null))
     }
 
     @Test
@@ -110,11 +110,12 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
-            every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns "user-A"
-            }
+            every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertEquals(purchase.wrap(), tested(null, UserId("user-A")))
+        assertEquals(purchase.wrap(), tested(customerId = "customer-A", productId = null))
     }
+
+    private fun mockAccountIdentifiers(customerId: String? = null): AccountIdentifiers =
+        mockk { every { obfuscatedAccountId } returns customerId }
 }

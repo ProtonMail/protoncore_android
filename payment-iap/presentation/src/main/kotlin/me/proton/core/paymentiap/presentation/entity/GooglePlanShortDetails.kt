@@ -23,9 +23,10 @@ import kotlinx.parcelize.Parcelize
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 
 /**
- * @param vendorNames Map of plan names for app vendors (the plan names are for the given [subscriptionCycle]).
+ * @param vendors Map of plan names for app vendors (the plan names are for the given [subscriptionCycle]).
  */
 @Parcelize
 public data class GooglePlanShortDetails(
@@ -37,7 +38,7 @@ public data class GooglePlanShortDetails(
     val formattedPriceAndCurrency: String? = null,
     val services: Int,
     val type: Int,
-    val vendorNames: Map<AppStore, String>
+    val vendors: Map<AppStore, PaymentVendorDetails>
 ) : Parcelable {
 
     public companion object {
@@ -51,7 +52,7 @@ public data class GooglePlanShortDetails(
                 formattedPriceAndCurrency = null,
                 services = plan.services,
                 type = plan.type,
-                vendorNames = plan.vendorNames
+                vendors = plan.vendors
             )
     }
 }

@@ -27,7 +27,7 @@ import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 
 @Parcelize
-data class SelectedPlan(
+data class SelectedPlan constructor(
     val planName: String,
     val planDisplayName: String,
     val free: Boolean,
@@ -36,7 +36,7 @@ data class SelectedPlan(
     val amount: Price,
     val services: Int,
     val type: Int,
-    val vendorNames: Map<AppStore, Map<PlanCycle, String>>
+    val vendorNames: Map<AppStore, PlanVendorDetails>
 ) : Parcelable {
     companion object {
         private const val FREE_PLAN_ID = "free"

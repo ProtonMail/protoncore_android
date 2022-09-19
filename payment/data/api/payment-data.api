@@ -61,15 +61,17 @@ public final class me/proton/core/payment/data/api/request/CardDetailsBody$Compa
 
 public final class me/proton/core/payment/data/api/request/IAPDetailsBody {
 	public static final field Companion Lme/proton/core/payment/data/api/request/IAPDetailsBody$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/data/api/request/IAPDetailsBody;
-	public static synthetic fun copy$default (Lme/proton/core/payment/data/api/request/IAPDetailsBody;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/data/api/request/IAPDetailsBody;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/data/api/request/IAPDetailsBody;
+	public static synthetic fun copy$default (Lme/proton/core/payment/data/api/request/IAPDetailsBody;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/data/api/request/IAPDetailsBody;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCustomerId ()Ljava/lang/String;
 	public final fun getOrderId ()Ljava/lang/String;
 	public final fun getPackageName ()Ljava/lang/String;
 	public final fun getProductId ()Ljava/lang/String;

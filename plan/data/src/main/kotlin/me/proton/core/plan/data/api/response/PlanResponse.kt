@@ -20,9 +20,12 @@ package me.proton.core.plan.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.AppStore
+import me.proton.core.plan.domain.entity.PLAN_VENDOR_GOOGLE
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.PlanDuration
 import me.proton.core.plan.domain.entity.PlanPricing
-import me.proton.core.plan.domain.entity.PlanVendorName
+import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
@@ -67,8 +70,8 @@ internal data class PlanResponse(
     val pricing: Pricing? = null,
     @SerialName("State")
     val state: Int? = null,
-    @SerialName("VendorNames")
-    val vendorNames: List<VendorName> = emptyList()
+    @SerialName("Vendors")
+    val vendors: Map<String, PlanVendorResponse> = emptyMap()
 ) {
     fun toPlan(): Plan = Plan(
         id = id,
@@ -90,7 +93,7 @@ internal data class PlanResponse(
         maxTier = maxTier,
         enabled = state?.toBoolean() ?: true,
         pricing = pricing?.toPlanPricing(),
-        vendorNames = vendorNames.map { it.toPlanVendorName() }
+        vendors = vendors.toPlanVendorDataMap()
     )
 }
 
@@ -107,10 +110,25 @@ internal data class Pricing(
 }
 
 @Serializable
-internal data class VendorName(
-    @SerialName("name") val name: String,
-    @SerialName("cycle") val cycle: Int,
-    @SerialName("vendorName") val vendorName: String
-) {
-    fun toPlanVendorName() = PlanVendorName(name, cycle, vendorName)
+internal data class PlanVendorResponse(
+    /** Map from cycle length (in months) to vendor plan name. */
+    @SerialName("Plans")
+    val plans: Map<Int, String>,
+
+    @SerialName("CustomerID")
+    val customerId: String
+)
+
+internal fun Map<String, PlanVendorResponse>.toPlanVendorDataMap(): Map<AppStore, PlanVendorData> {
+    return mapNotNull { entry ->
+        when (entry.key) {
+            PLAN_VENDOR_GOOGLE -> AppStore.GooglePlay
+            else -> null
+        }?.let { appStore ->
+            appStore to PlanVendorData(
+                customerId = entry.value.customerId,
+                names = entry.value.plans.mapKeys { PlanDuration(it.key) }
+            )
+        }
+    }.toMap()
 }

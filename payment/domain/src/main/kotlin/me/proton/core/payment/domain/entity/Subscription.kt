@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.entity
 
 import me.proton.core.plan.domain.entity.Plan
 
-public data class Subscription(
+public data class Subscription constructor(
     val id: String,
     val invoiceId: String,
     val cycle: Int,
@@ -30,5 +30,6 @@ public data class Subscription(
     val currency: String,
     val amount: Long,
     val external: SubscriptionManagement?,
-    val plans: List<Plan>
+    val plans: List<Plan>,
+    val customerId: String?
 )

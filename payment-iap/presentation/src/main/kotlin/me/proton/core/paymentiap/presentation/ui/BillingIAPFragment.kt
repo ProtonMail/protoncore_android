@@ -116,7 +116,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                         viewModel.setGPayButtonState(true)
                     }
                     is BillingIAPViewModel.State.Success.PurchaseSuccess -> {
-                        onPurchaseSuccess(it.productId, it.purchaseToken, it.orderID)
+                        onPurchaseSuccess(it.productId, it.purchaseToken, it.orderID, it.customerId)
                     }
                     is BillingIAPViewModel.State.Error.ProductPurchaseError.Message -> {
                         onError(it.error ?: R.string.payments_iap_general_error)
@@ -143,12 +143,20 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
         // no operation
     }
 
-    private fun onPay(input: BillingInput?) {
+    private fun onPay(input: BillingInput) {
         this.billingInput = input
-        billingIAPViewModel.makePurchase(input?.userId, requireActivity())
+        val customerId = requireNotNull(input.plan.vendors[AppStore.GooglePlay]?.customerId) {
+            "Missing Vendor data for Google Play."
+        }
+        billingIAPViewModel.makePurchase(requireActivity(), customerId = customerId)
     }
 
-    private fun onPurchaseSuccess(productId: String, purchaseToken: GooglePurchaseToken, orderId: String) {
+    private fun onPurchaseSuccess(
+        productId: String,
+        purchaseToken: GooglePurchaseToken,
+        orderId: String,
+        customerId: String
+    ) {
         requireNotNull(billingInput)
         billingInput?.let {
             viewModel.subscribe(
@@ -161,7 +169,8 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     productId = productId,
                     purchaseToken = purchaseToken,
                     orderId = orderId,
-                    packageName = requireContext().packageName
+                    packageName = requireContext().packageName,
+                    customerId = customerId
                 ),
                 subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
             )
@@ -171,7 +180,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
     private fun setPlan(plan: PlanShortDetails) {
         // the plan price should come from the Billing Library
         binding.selectedPlanDetailsLayout.plan = GooglePlanShortDetails.fromPlanShortDetails(plan)
-        val googlePlanName: String? = plan.vendorNames[AppStore.GooglePlay]
+        val googlePlanName: String? = plan.vendors[AppStore.GooglePlay]?.vendorPlanName
         if (googlePlanName == null) {
             onError(R.string.payments_iap_invalid_google_plan)
         } else {

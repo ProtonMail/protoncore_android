@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.presentation.usecase
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -41,18 +42,20 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
         if (!findUnacknowledgedGooglePurchase.isPresent) return null
         if (PaymentProvider.GoogleInAppPurchase !in getAvailablePaymentProviders()) return null
 
+        val subscription = getCurrentSubscription(userId)
         // TODO For now, we don't support redeeming, if a user is already on a paid plan (CP-4583).
-        if (getCurrentSubscription(userId) != null) return null
+        if (subscription != null) return null
 
-        return findUnacknowledgedGooglePurchase.get().invoke(productId = null, userId)?.let { googlePurchase ->
-            googlePurchase.findCorrespondingPlan(userId)?.let { plan -> googlePurchase to plan }
-        }
+        return findUnacknowledgedGooglePurchase.get()
+            .invoke(customerId = subscription?.customerId, productId = null)?.let { googlePurchase ->
+                googlePurchase.findCorrespondingPlan(userId)?.let { plan -> googlePurchase to plan }
+            }
     }
 
     private suspend fun GooglePurchase.findCorrespondingPlan(userId: UserId): Plan? {
         return getPlans(userId).find { plan ->
             productIds.all { id ->
-                plan.vendorNames.find { it.name == id } != null
+                plan.vendors[AppStore.GooglePlay]?.names?.values?.contains(id) == true
             }
         }
     }

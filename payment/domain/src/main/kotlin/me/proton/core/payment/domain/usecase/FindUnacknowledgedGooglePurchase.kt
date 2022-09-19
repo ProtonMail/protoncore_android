@@ -18,9 +18,8 @@
 
 package me.proton.core.payment.domain.usecase
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 
 public interface FindUnacknowledgedGooglePurchase {
-    public suspend operator fun invoke(productId: String?, userId: UserId?): GooglePurchase?
+    public suspend operator fun invoke(customerId: String?, productId: String?): GooglePurchase?
 }

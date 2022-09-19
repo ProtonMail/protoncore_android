@@ -19,54 +19,90 @@
 package me.proton.core.plan.presentation.viewmodel
 
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.plan.domain.entity.PlanVendorName
+import me.proton.core.payment.presentation.entity.PaymentVendorDetails
+import me.proton.core.plan.domain.entity.PlanDuration
+import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanVendorDetails
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class BasePlansViewModelTest {
     @Test
-    fun `group empty list`() {
-        assertTrue(emptyList<PlanVendorName>().groupByVendorAndCycle().isEmpty())
+    fun `convert empty map to plan vendor details`() {
+        assertTrue(emptyMap<AppStore, PlanVendorData>().toPlanVendorDetailsMap().isEmpty())
     }
 
     @Test
-    fun `group by vendor and cycle`() {
-        val input = listOf(
-            PlanVendorName("custommail_mail2022_12_renewing", 12, "custom"),
-            PlanVendorName("googlemail_mail2022_1_renewing", 1, "google"),
-            PlanVendorName("googlemail_mail2022_12_renewing", 12, "google"),
-            PlanVendorName("googlemail_mail2022_13_renewing", 13, "google")
-        )
-
-        val expected = mapOf(
-            AppStore.GooglePlay to mapOf(
-                PlanCycle.MONTHLY to "googlemail_mail2022_1_renewing",
-                PlanCycle.YEARLY to "googlemail_mail2022_12_renewing"
+    fun `convert to plan vendor details`() {
+        val input = mapOf(
+            Pair(
+                AppStore.GooglePlay,
+                PlanVendorData(
+                    customerId = "c-1",
+                    names = mapOf(
+                        PlanDuration(1) to "googlemail_mail2022_1_renewing",
+                        PlanDuration(12) to "googlemail_mail2022_12_renewing",
+                        PlanDuration(13) to "googlemail_mail2022_13_renewing"
+                    )
+                )
+            ),
+            Pair(
+                AppStore.FDroid,
+                PlanVendorData(
+                    customerId = "c-2",
+                    names = emptyMap()
+                )
             )
         )
 
-        assertEquals(expected, input.groupByVendorAndCycle())
+        val expected = mapOf(
+            Pair(
+                AppStore.GooglePlay,
+                PlanVendorDetails(
+                    customerId = "c-1",
+                    names = mapOf(
+                        PlanCycle.MONTHLY to "googlemail_mail2022_1_renewing",
+                        PlanCycle.YEARLY to "googlemail_mail2022_12_renewing"
+                    )
+                )
+            ),
+            Pair(
+                AppStore.FDroid,
+                PlanVendorDetails(
+                    customerId = "c-2",
+                    names = mapOf()
+                )
+            )
+        )
+
+        assertEquals(expected, input.toPlanVendorDetailsMap())
     }
 
     @Test
     fun `filter empty map`() {
-        assertTrue(mapOf<AppStore, Map<PlanCycle, String>>().filterByCycle(PlanCycle.YEARLY).isEmpty())
+        assertTrue(mapOf<AppStore, PlanVendorDetails>().filterByCycle(PlanCycle.YEARLY).isEmpty())
     }
 
     @Test
     fun `filter by cycle`() {
         val input = mapOf(
-            AppStore.GooglePlay to mapOf(
-                PlanCycle.MONTHLY to "googlemail_mail2022_1_renewing",
-                PlanCycle.YEARLY to "googlemail_mail2022_12_renewing",
-                PlanCycle.TWO_YEARS to "googlemail_mail2022_24_renewing"
+            AppStore.GooglePlay to PlanVendorDetails(
+                customerId = "c-1",
+                names = mapOf(
+                    PlanCycle.MONTHLY to "googlemail_mail2022_1_renewing",
+                    PlanCycle.YEARLY to "googlemail_mail2022_12_renewing",
+                    PlanCycle.TWO_YEARS to "googlemail_mail2022_24_renewing"
+                )
             )
         )
 
         val expected = mapOf(
-            AppStore.GooglePlay to "googlemail_mail2022_12_renewing"
+            AppStore.GooglePlay to PaymentVendorDetails(
+                customerId = "c-1",
+                vendorPlanName = "googlemail_mail2022_12_renewing"
+            )
         )
 
         assertEquals(expected, input.filterByCycle(PlanCycle.YEARLY))

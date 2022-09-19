@@ -19,7 +19,6 @@
 package me.proton.core.paymentiap.data.usecase
 
 import com.android.billingclient.api.Purchase
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.paymentiap.domain.entity.wrap
@@ -38,19 +37,19 @@ public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
      * - acknowledge the Google purchase (usually done as part of assigning the subscription).
      *
      * @param productId The Google product ID. If present, a potential unredeemed purchase will have to match it.
-     * @param userId If a potential unredeemed purchase has been marked
+     * @param customerId If a potential unredeemed purchase has been marked
      *  with a non-null [accountId][com.android.billingclient.api.AccountIdentifiers.getObfuscatedAccountId],
-     *  then the given [userId] will have to match it.
+     *  then the given [customerId] will have to match it.
      *
      *  @see me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
      *  @see me.proton.core.payment.domain.usecase.PerformSubscribe
      *  @see me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
      */
-    public override suspend operator fun invoke(productId: String?, userId: UserId?): GooglePurchase? {
+    public override suspend operator fun invoke(customerId: String?, productId: String?): GooglePurchase? {
         return billingRepositoryProvider.get().use { repository ->
             repository.querySubscriptionPurchases().find { purchase ->
                 purchase.isPurchasedButNotAcknowledged() &&
-                    purchase.isMatchingUser(userId) &&
+                    purchase.isMatchingCustomer(customerId) &&
                     purchase.containsProduct(productId)
             }?.wrap()
         }
@@ -65,7 +64,7 @@ private fun Purchase.containsProduct(productId: String?): Boolean {
     }
 }
 
-private fun Purchase.isMatchingUser(userId: UserId?): Boolean {
+private fun Purchase.isMatchingCustomer(customerId: String?): Boolean {
     val accountId = accountIdentifiers?.obfuscatedAccountId
     return if (accountId.isNullOrEmpty()) {
         // If the accountId stored inside a Google purchase is null,
@@ -73,9 +72,8 @@ private fun Purchase.isMatchingUser(userId: UserId?): Boolean {
         true
     } else {
         // If the accountId stored inside a Google purchase is not null,
-        // we should only redeem for the same user.
-        // TODO CP-4582
-        accountId == userId?.id
+        // we should only redeem if it matches customerId.
+        accountId == customerId
     }
 }
 

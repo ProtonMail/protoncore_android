@@ -121,7 +121,8 @@ public class PaymentsRepositoryImpl @Inject constructor(
                     productId = paymentType.productId,
                     purchaseToken = paymentType.purchaseToken.value,
                     orderId = paymentType.orderId,
-                    packageName = paymentType.packageName
+                    packageName = paymentType.packageName,
+                    customerId = paymentType.customerId
                 )
             )
             val request = CreatePaymentToken(amount, currency.name, payment, null)

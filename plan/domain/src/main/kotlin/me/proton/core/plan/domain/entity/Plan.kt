@@ -18,6 +18,8 @@
 
 package me.proton.core.plan.domain.entity
 
+import me.proton.core.domain.entity.AppStore
+
 const val PLAN_PRODUCT = 1
 const val PLAN_ADDON = 0
 
@@ -27,7 +29,7 @@ const val MASK_CALENDAR = MASK_MAIL // bitmap
 const val MASK_DRIVE = 2 // bitmap
 const val MASK_VPN = 4 // bitmap
 
-const val PLAN_VENDOR_GOOGLE = "google"
+const val PLAN_VENDOR_GOOGLE = "Google"
 
 data class Plan(
     val id: String?,
@@ -50,7 +52,7 @@ data class Plan(
     val maxTier: Int?,
     val enabled: Boolean,
     val pricing: PlanPricing? = null,
-    val vendorNames: List<PlanVendorName> = emptyList()
+    val vendors: Map<AppStore, PlanVendorData> = emptyMap()
 )
 
 data class PlanPricing(
@@ -59,8 +61,14 @@ data class PlanPricing(
     val twoYearly: Int? = null
 )
 
-data class PlanVendorName(
-    val name: String,
-    val cycle: Int,
-    val vendorName: String
+/**
+ * @param customerId Customer ID used with the vendor.
+ * @param names Mapping from plan duration (cycle) to vendor plan name.
+ */
+data class PlanVendorData constructor(
+    val customerId: String,
+    val names: Map<PlanDuration, String>
 )
+
+@JvmInline
+value class PlanDuration(val months: Int)
