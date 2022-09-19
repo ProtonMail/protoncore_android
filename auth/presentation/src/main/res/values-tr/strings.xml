@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Hesap ile ilgili hata</string>
   <string name="auth_one_account_all_services">Tüm Proton hizmetleri için tek hesap.</string>
   <string name="auth_create_account">Hesap oluştur</string>
+  <string name="auth_long_signup">Lütfen oturum açılırken bekleyin…</string>
+  <string name="auth_long_login">Lütfen bekleyin…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Proton hesabınızı oluşturun</string>
   <string name="auth_signup_current_email">Bunun yerine var olan e-posta adresinizi kullanın</string>

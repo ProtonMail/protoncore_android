@@ -23,7 +23,7 @@
   <string name="plans_payment_error">支払いエラーが発生しました。再度お試しいただくか、無料プランを作成してください。</string>
   <string name="plans_free_name">無料</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
-  <string name="plan_price_annually">per year</string>
+  <string name="plan_price_annually">年あたり</string>
   <string name="plans_current_plan">現在のプラン</string>
   <string name="plans_upgrade_plan">プランをアップグレード</string>
   <string name="plans_subscription">サブスクリプション</string>

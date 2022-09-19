@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Ошибка аккаунта</string>
   <string name="auth_one_account_all_services">Один аккаунт для всех служб Proton.</string>
   <string name="auth_create_account">Создать аккаунт</string>
+  <string name="auth_long_signup">Выполняется вход, подождите…</string>
+  <string name="auth_long_login">Пожалуйста, подождите…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Создание аккаунта Proton</string>
   <string name="auth_signup_current_email">Использовать ваш текущий адрес электронной почты</string>

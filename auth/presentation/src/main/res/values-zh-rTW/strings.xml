@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">帳號錯誤</string>
   <string name="auth_one_account_all_services">一組帳號，Proton 服務無限用。</string>
   <string name="auth_create_account">建立帳號</string>
+  <string name="auth_long_signup">正在登入，請稍候……</string>
+  <string name="auth_long_login">請稍候……</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">建立您的 Proton 帳號</string>
   <string name="auth_signup_current_email">改為使用您目前的電郵位址</string>

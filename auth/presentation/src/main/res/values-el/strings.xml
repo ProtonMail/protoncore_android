@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Σφάλμα με τον λογαριασμό</string>
   <string name="auth_one_account_all_services">Ένας λογαριασμός για όλες τις υπηρεσίες Proton.</string>
   <string name="auth_create_account">Δημιουργία λογαριασμού</string>
+  <string name="auth_long_signup">Signing in, please wait…</string>
+  <string name="auth_long_login">Please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Δημιουργήστε τον λογαριασμό σας Proton</string>
   <string name="auth_signup_current_email">Χρησιμοποιήστε την τρέχουσα διεύθυνση email σας</string>

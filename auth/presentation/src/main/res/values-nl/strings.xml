@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Fout met het account</string>
   <string name="auth_one_account_all_services">Één account voor alle Proton diensten.</string>
   <string name="auth_create_account">Een account aanmaken</string>
+  <string name="auth_long_signup">Aanmelden, een ogenblik geduld…</string>
+  <string name="auth_long_login">Een ogenblik geduld…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Maak uw Proton Account aan</string>
   <string name="auth_signup_current_email">Gebruik in plaats daarvan uw huidige e-mail</string>

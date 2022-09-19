@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Fejl på kontoen</string>
   <string name="auth_one_account_all_services">Én konto til alle Proton-tjenester.</string>
   <string name="auth_create_account">Opret en konto</string>
+  <string name="auth_long_signup">Signing in, please wait…</string>
+  <string name="auth_long_login">Please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Opret din Proton-konto</string>
   <string name="auth_signup_current_email">Brug din nuværende e-mail i stedet</string>

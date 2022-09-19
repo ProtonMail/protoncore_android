@@ -130,7 +130,7 @@
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 zemí</string>
   <string name="plan_id_vpnbasic_high_speed">Vysoká rychlost</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_adblock">Blokování reklam (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Podpora streamovacích služeb</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 zemí</string>
@@ -143,7 +143,7 @@
   <string name="unlimited_folders_labels_filters" comment="new_plans">Neomezený počet složek, štítků a filtrů</string>
   <string name="highest_vpn_speed" comment="new_plans">Nejvyšší rychlost VPN</string>
   <string name="servers_in_countries" comment="new_plans">1500+ serverů v 63 zemích</string>
-  <string name="ad_blocker" comment="new_plans">Vestavěný blokátor reklam (NetShield)</string>
+  <string name="ad_blocker" comment="new_plans">Vestavěné blokování reklam (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Globální přístup ke streamovacím službám</string>
   <string name="secure_core" comment="new_plans">Servery Secure Core</string>
   <string name="tor_vpn" comment="new_plans">TOR skrze VPN</string>

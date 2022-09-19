@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Problém s účtem</string>
   <string name="auth_one_account_all_services">Jeden účet pro všechny Proton služby.</string>
   <string name="auth_create_account">Vytvořit účet</string>
+  <string name="auth_long_signup">Přihlašuji, počkejte prosím…</string>
+  <string name="auth_long_login">Počkejte prosím…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Vytvořte si Proton účet</string>
   <string name="auth_signup_current_email">Místo toho použijte vaši aktuální e-mailovou adresu</string>

@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Hiba történt a fiókkal</string>
   <string name="auth_one_account_all_services">Egy fiók minden Proton szolgáltatáshoz.</string>
   <string name="auth_create_account">Fiók létrehozása</string>
+  <string name="auth_long_signup">Signing in, please wait…</string>
+  <string name="auth_long_login">Please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Proton fiók létrehozása</string>
   <string name="auth_signup_current_email">Inkább a jelenlegi e-mail címem használata</string>

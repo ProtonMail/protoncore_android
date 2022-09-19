@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Wystąpił błąd konta</string>
   <string name="auth_one_account_all_services">Jedno konto do wszystkich usług Proton.</string>
   <string name="auth_create_account">Utwórz konto</string>
+  <string name="auth_long_signup">Trwa logowanie. Poczekaj chwilę…</string>
+  <string name="auth_long_login">Poczekaj chwilę…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Utwórz konto Proton</string>
   <string name="auth_signup_current_email">Użyj swojego obecnego adresu e-mail</string>

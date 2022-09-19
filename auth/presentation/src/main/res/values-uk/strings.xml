@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Помилка з обліковим записом</string>
   <string name="auth_one_account_all_services">Один обліковий запис для всіх служб Proton.</string>
   <string name="auth_create_account">Створити обліковий запис</string>
+  <string name="auth_long_signup">Виконується вхід, будь ласка, зачекайте…</string>
+  <string name="auth_long_login">Будь ласка, зачекайте…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Створіть свій обліковий запис Proton</string>
   <string name="auth_signup_current_email">Використати натомість вашу поточну адресу е-пошти</string>

@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">アカウントのエラーが発生しました</string>
   <string name="auth_one_account_all_services">1つのアカウントで全 Proton サービスを利用可能.</string>
   <string name="auth_create_account">アカウントを作成</string>
+  <string name="auth_long_signup">サインインしています。お待ちください…</string>
+  <string name="auth_long_login">お待ちください…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Proton アカウントを作成</string>
   <string name="auth_signup_current_email">代わりに現在のメールアドレスを使用</string>

@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Eroare cont</string>
   <string name="auth_one_account_all_services">Un singur cont pentru toate serviciile Proton.</string>
   <string name="auth_create_account">Creare cont</string>
+  <string name="auth_long_signup">Se conectează, așteptați…</string>
+  <string name="auth_long_login">Așteptați…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creare cont Proton</string>
   <string name="auth_signup_current_email">Folosire adresă de e-mail actuală</string>

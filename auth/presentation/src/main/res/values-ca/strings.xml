@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Error amb el compte</string>
   <string name="auth_one_account_all_services">Un compte per a tots els serveis Proton.</string>
   <string name="auth_create_account">Crea un compte</string>
+  <string name="auth_long_signup">Signing in, please wait…</string>
+  <string name="auth_long_login">Please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creeu el vostre compte Proton</string>
   <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual</string>

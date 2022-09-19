@@ -56,7 +56,7 @@
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n/a</string>
   <string name="payments_billing_yearly">For 1 year</string>
-  <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
-  <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
+  <string name="payment_use_google_pay_instead">代わりに Google Pay を使用</string>
+  <string name="payment_use_credit_card_instead">代わりにクレジット/デビットカードを使用</string>
   <!-- endregion -->
 </resources>

@@ -95,6 +95,8 @@
   <string name="auth_account_not_found_error">Eror pada akun</string>
   <string name="auth_one_account_all_services">Satu akun untuk semua layanan Proton.</string>
   <string name="auth_create_account">Buat akun</string>
+  <string name="auth_long_signup">Memasukkan diri Anda, mohon tunggu…</string>
+  <string name="auth_long_login">Mohon tunggu…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Buat Akun Proton Anda</string>
   <string name="auth_signup_current_email">Gunakan alamat email Anda saat ini</string>
