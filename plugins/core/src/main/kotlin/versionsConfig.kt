@@ -19,11 +19,6 @@
 @file:Suppress("TopLevelPropertyNaming", "ObjectPropertyName", "NoMultipleSpaces")
 
 import org.gradle.api.artifacts.VersionCatalog
-import studio.forface.easygradle.dsl.`coroutines version`
-import studio.forface.easygradle.dsl.`dagger version`
-import studio.forface.easygradle.dsl.`kotlin version`
-import studio.forface.easygradle.dsl.`mockK version`
-import studio.forface.easygradle.dsl.`serialization version`
 import studio.forface.easygradle.dsl.android.`activity version`
 import studio.forface.easygradle.dsl.android.`android-annotation version`
 import studio.forface.easygradle.dsl.android.`android-arch version`
@@ -44,6 +39,11 @@ import studio.forface.easygradle.dsl.android.`retrofit version`
 import studio.forface.easygradle.dsl.android.`retrofit-kotlin-serialization version`
 import studio.forface.easygradle.dsl.android.`robolectric version`
 import studio.forface.easygradle.dsl.android.`timber version`
+import studio.forface.easygradle.dsl.`coroutines version`
+import studio.forface.easygradle.dsl.`dagger version`
+import studio.forface.easygradle.dsl.`kotlin version`
+import studio.forface.easygradle.dsl.`mockK version`
+import studio.forface.easygradle.dsl.`serialization version`
 
 
 internal fun initVersions(libs: VersionCatalog) {
@@ -77,7 +77,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `dagger version` =                          libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-android version` =                    libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-androidx version` =                   "1.0.0"         // Released: May 05, 2021
-    `mockK version` =                           "1.12.5"
+    `mockK version` =                           "1.12.8"
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "5.0.1"         // Released: Jun 28, 2018

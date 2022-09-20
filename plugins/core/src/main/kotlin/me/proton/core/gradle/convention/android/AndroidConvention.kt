@@ -20,6 +20,7 @@
 
 package me.proton.core.gradle.convention.android
 
+import java.io.File
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
@@ -63,9 +64,9 @@ private fun <T> T.applyConvention(settings: AndroidConventionSettings) where T :
     }
 
     lint {
-        isAbortOnError = false
+        abortOnError = false
         textReport = true
-        textOutput("stdout")
+        textOutput = File("stdout")
     }
 
     packagingOptions {
@@ -76,10 +77,12 @@ private fun <T> T.applyConvention(settings: AndroidConventionSettings) where T :
                 "licenses/*.txt",
                 "licenses/*.TXT",
                 "licenses/*.xml",
+                "MANIFEST.MF",
                 "META-INF/*.txt",
                 "META-INF/AL2.0",
                 "META-INF/LGPL2.1",
                 "META-INF/licenses/ASM",
+                "META-INF/LICENSE*",
                 "META-INF/plexus/*.xml",
                 "org/apache/maven/project/*.xml",
                 "org/codehaus/plexus/*.xml",
