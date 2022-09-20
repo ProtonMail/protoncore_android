@@ -269,11 +269,11 @@ public final class me/proton/core/auth/presentation/MissingScopeObserverKt {
 }
 
 public final class me/proton/core/auth/presentation/MissingScopeOrchestratorKt {
-	public static final fun startConfirmPasswordWorkflow (Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;Landroid/content/Context;)V
+	public static final fun startConfirmPasswordWorkflow (Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;Landroid/app/Activity;)V
 }
 
 public final class me/proton/core/auth/presentation/MissingScopeStateHandler {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public fun <init> (Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
 	public final fun observe ()V
 }
 
@@ -282,7 +282,7 @@ public final class me/proton/core/auth/presentation/MissingScopeStateHandler_Fac
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/MissingScopeStateHandler_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/MissingScopeStateHandler;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/MissingScopeStateHandler;
+	public static fun newInstance (Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/MissingScopeStateHandler;
 }
 
 public final class me/proton/core/auth/presentation/alert/AlertUtilsKt {

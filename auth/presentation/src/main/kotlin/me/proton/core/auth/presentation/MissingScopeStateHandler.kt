@@ -18,22 +18,25 @@
 
 package me.proton.core.auth.presentation
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MissingScopeStateHandler @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
+    private val activityProvider: ActivityProvider,
     private val appLifecycleObserver: AppLifecycleObserver,
     private val missingScopeListener: MissingScopeListener
 ) {
     fun observe() {
-        missingScopeListener.observe(appLifecycleObserver.lifecycle)
-            .onConfirmPasswordNeeded { it.startConfirmPasswordWorkflow(context) }
+        missingScopeListener
+            .observe(appLifecycleObserver.lifecycle)
+            .onConfirmPasswordNeeded {
+                activityProvider.lastResumed?.let { activity ->
+                    it.startConfirmPasswordWorkflow(activity)
+                }
+            }
     }
 }

@@ -18,8 +18,7 @@
 
 package me.proton.core.auth.presentation
 
-import android.content.Context
-import android.content.Intent
+import android.app.Activity
 import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.network.domain.scopes.MissingScopeState
@@ -27,11 +26,11 @@ import me.proton.core.network.domain.scopes.MissingScopeState
 /**
  * Starts the Confirm Password workflow.
  */
-fun MissingScopeState.ScopeMissing.startConfirmPasswordWorkflow(context: Context) {
-    val intent = StartConfirmPassword.getIntent(context, toInput()).apply {
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    context.startActivity(intent)
+fun MissingScopeState.ScopeMissing.startConfirmPasswordWorkflow(
+    activity: Activity
+) {
+    val intent = StartConfirmPassword.getIntent(activity, toInput())
+    activity.startActivityForResult(intent, 0)
 }
 
 private fun MissingScopeState.ScopeMissing.toInput() = ConfirmPasswordInput(
