@@ -187,6 +187,7 @@ start-review:
 binary-compatibility-check:
   extends: .gradle-job
   stage: test
+  interruptible: true
   needs:
     - assemble
   tags:
