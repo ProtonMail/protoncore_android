@@ -9,6 +9,11 @@ public final class me/proton/core/paymentiap/domain/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/paymentiap/domain/entity/GooglePurchaseWrapperKt {
+	public static final fun unwrap (Lme/proton/core/payment/domain/entity/GooglePurchase;)Lcom/android/billingclient/api/Purchase;
+	public static final fun wrap (Lcom/android/billingclient/api/Purchase;)Lme/proton/core/payment/domain/entity/GooglePurchase;
+}
+
 public final class me/proton/core/paymentiap/domain/repository/BillingClientError : java/lang/Throwable {
 	public fun <init> (ILjava/lang/String;)V
 	public final fun component1 ()I
@@ -29,6 +34,7 @@ public abstract interface class me/proton/core/paymentiap/domain/repository/Goog
 	public abstract fun getProductDetails (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun launchBillingFlow (Landroid/app/Activity;Lcom/android/billingclient/api/BillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/paymentiap/domain/repository/GoogleBillingRepository$DefaultImpls {

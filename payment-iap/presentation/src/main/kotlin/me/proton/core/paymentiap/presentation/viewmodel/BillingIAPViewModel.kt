@@ -27,15 +27,19 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
+import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -43,7 +47,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class BillingIAPViewModel @Inject constructor(
-    private val billingRepository: GoogleBillingRepository
+    private val billingRepository: GoogleBillingRepository,
+    private val findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
 ) : ProtonViewModel() {
 
     private val _billingIAPState = MutableStateFlow<State>(State.Initializing)
@@ -53,6 +58,7 @@ internal class BillingIAPViewModel @Inject constructor(
         object Initializing : State()
         object QueryingProductDetails : State()
         object PurchaseStarted : State()
+        data class UnredeemedPurchase(val purchase: GooglePurchase) : State()
 
         sealed class Success : State() {
             data class GoogleProductDetails(
@@ -64,7 +70,6 @@ internal class BillingIAPViewModel @Inject constructor(
             object PurchaseFlowLaunched : State()
 
             data class PurchaseSuccess(
-                val responseCode: Int,
                 val productId: String,
                 val purchaseToken: String,
                 val orderID: String
@@ -98,9 +103,14 @@ internal class BillingIAPViewModel @Inject constructor(
         listenForPurchases()
     }
 
+    override fun onCleared() {
+        billingRepository.destroy()
+    }
+
     fun queryProductDetails(googlePlanName: String) = viewModelScope.launch {
         flow {
             emit(State.QueryingProductDetails)
+
             val productDetails = billingRepository.getProductDetails(googlePlanName)
             if (productDetails == null) {
                 emit(State.Error.ProductDetailsError.ProductMismatch)
@@ -138,17 +148,29 @@ internal class BillingIAPViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun listenForPurchases() = viewModelScope.launch {
-        billingRepository.purchaseUpdated.collect {
-            onPurchasesUpdated(it.first, it.second)
+    fun makePurchase(userId: String?, activity: FragmentActivity): Job = flow {
+        require(this@BillingIAPViewModel::selectedProduct.isInitialized) {
+            "Product must be set before making the purchase."
         }
+
+        val unredeemedPurchase = findUnacknowledgedGooglePurchase(selectedProduct.productId, userId?.let { UserId(it) })
+        if (unredeemedPurchase != null) {
+            emit(State.UnredeemedPurchase(unredeemedPurchase))
+        } else {
+            launchBillingFlow(userId, activity)
+        }
+    }.catch { error ->
+        _billingIAPState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
+    }.onEach { subscriptionState ->
+        _billingIAPState.tryEmit(subscriptionState)
+    }.launchIn(viewModelScope)
+
+    fun redeemExistingPurchase(purchase: GooglePurchase) = viewModelScope.launch {
+        onSubscriptionPurchased(purchase.unwrap())
     }
 
-    // Launch Purchase flow
-    fun launchBillingFlow(userId: String?, activity: FragmentActivity): Job = flow {
-        require(this@BillingIAPViewModel::selectedProduct.isInitialized) {
-            "Product must be set before launching the billing flow."
-        }
+    /** Launches Google billing flow. */
+    private suspend fun FlowCollector<State>.launchBillingFlow(userId: String?, activity: FragmentActivity) {
         val offer = requireNotNull(selectedProduct.subscriptionOfferDetails?.firstOrNull())
         emit(State.PurchaseStarted)
         val productDetailsParamsList = listOf(
@@ -166,18 +188,12 @@ internal class BillingIAPViewModel @Inject constructor(
 
         billingRepository.launchBillingFlow(activity, billingFlowParamsBuilder.build())
         emit(State.Success.PurchaseFlowLaunched)
-    }.catch { error ->
-        _billingIAPState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
-    }.onEach { subscriptionState ->
-        _billingIAPState.tryEmit(subscriptionState)
-    }.launchIn(viewModelScope)
-
-    override fun onCleared() {
-        billingRepository.destroy()
     }
 
-    private fun ProductDetails.getProductPrice(): ProductDetails.PricingPhase? {
-        return subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)
+    private fun listenForPurchases() = viewModelScope.launch {
+        billingRepository.purchaseUpdated.collect {
+            onPurchasesUpdated(it.first, it.second)
+        }
     }
 
     private fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
@@ -187,12 +203,7 @@ internal class BillingIAPViewModel @Inject constructor(
                     purchase.products.contains(selectedProduct.productId)
                 }
                 if (purchase?.purchaseState == Purchase.PurchaseState.PURCHASED) {
-                    _billingIAPState.value = State.Success.PurchaseSuccess(
-                        responseCode = billingResult.responseCode,
-                        productId = selectedProduct.productId,
-                        purchaseToken = purchase.purchaseToken,
-                        orderID = purchase.orderId
-                    )
+                    onSubscriptionPurchased(purchase)
                 }
             }
             billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED -> {
@@ -206,4 +217,15 @@ internal class BillingIAPViewModel @Inject constructor(
             }
         }
     }
+
+    private fun onSubscriptionPurchased(purchase: Purchase) {
+        _billingIAPState.value = State.Success.PurchaseSuccess(
+            productId = selectedProduct.productId,
+            purchaseToken = purchase.purchaseToken,
+            orderID = purchase.orderId
+        )
+    }
 }
+
+private fun ProductDetails.getProductPrice(): ProductDetails.PricingPhase? =
+    subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)

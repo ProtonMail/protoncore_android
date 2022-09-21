@@ -19,28 +19,17 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.repository.PaymentsRepository
-import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
-import javax.inject.Inject
 
 /**
  * Creates new subscription.
  * Authorized. This means that it could only be used for upgrades. Sign ups should be handled through Human Verification
  * Headers with token and token type "payment".
  */
-public class PerformSubscribe @Inject constructor(
-    private val acknowledgeGooglePlayPurchase: AcknowledgeGooglePlayPurchase?,
-    private val paymentsRepository: PaymentsRepository,
-    private val humanVerificationManager: HumanVerificationManager,
-    private val clientIdProvider: ClientIdProvider
-) {
+public interface PerformSubscribe {
     /**
      * @param codes optional an array of [String] coupon or gift codes used for discounts.
      * @param paymentToken optional??? payment token.
@@ -54,35 +43,5 @@ public class PerformSubscribe @Inject constructor(
         codes: List<String>? = null,
         paymentToken: String? = null,
         subscriptionManagement: SubscriptionManagement
-    ): Subscription {
-        require(amount >= 0)
-        require(planNames.isNotEmpty())
-        require(paymentToken != null || amount <= 0) {
-            "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null."
-        }
-
-        val subscription = paymentsRepository.createOrUpdateSubscription(
-            sessionUserId = userId,
-            amount = amount,
-            currency = currency,
-            payment = if (amount == 0L) null else PaymentBody.TokenPaymentBody(paymentToken!!),
-            codes = codes,
-            plans = planNames.map { it to MAX_PLAN_QUANTITY }.toMap(),
-            cycle = cycle,
-            subscriptionManagement = subscriptionManagement
-        )
-
-        if (paymentToken != null) {
-            // Clear any previous payment token (unauthenticated session cookie HV details).
-            // HV payment token is previously added by BillingCommonViewModel.
-            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-            humanVerificationManager.clearDetails(clientId)
-
-            if (subscriptionManagement == SubscriptionManagement.GOOGLE_MANAGED) {
-                acknowledgeGooglePlayPurchase?.invoke(paymentToken)
-            }
-        }
-
-        return subscription
-    }
+    ): Subscription
 }

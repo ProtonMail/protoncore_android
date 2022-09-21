@@ -150,6 +150,8 @@ public val DependencyHandler.`startup-runtime`: Any
     get() = androidx("startup", moduleSuffix = "runtime") version `startup-runtime version`
 public val DependencyHandler.`serialization-core`: Any
     get() = serialization("core")
+public val DependencyHandler.`desugar-jdk-libs`: Any
+    get() = dependency("com.android.tools", module="desugar_jdk_libs") version `desugar_jdk_libs version`
 
 // region accessors
 public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`): Any =

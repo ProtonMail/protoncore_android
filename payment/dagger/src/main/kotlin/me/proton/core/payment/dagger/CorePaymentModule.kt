@@ -28,10 +28,13 @@ import me.proton.core.payment.data.PaymentManagerImpl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
 import me.proton.core.payment.data.repository.GooglePurchaseRepositoryImpl
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
+import me.proton.core.payment.data.usecase.PerformSubscribeImpl
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
+import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
+import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ProtonIAPBillingLibrary
 import me.proton.core.payment.presentation.ActivePaymentProvider
 import me.proton.core.payment.presentation.ActivePaymentProviderImpl
@@ -61,9 +64,16 @@ public interface CorePaymentModule {
     @Binds
     public fun bindGooglePurchaseRepository(impl: GooglePurchaseRepositoryImpl): GooglePurchaseRepository
 
+    @Binds
+    public fun bindPerformSubscribe(impl: PerformSubscribeImpl): PerformSubscribe
+
     /** Optional binding, provided by payment-iap-dagger. */
     @BindsOptionalOf
-    public fun optionalAcknowledgeGooglePlayPurchase(): AcknowledgeGooglePlayPurchase?
+    public fun optionalAcknowledgeGooglePlayPurchase(): AcknowledgeGooglePlayPurchase
+
+    /** Optional binding, provided by payment-iap-dagger. */
+    @BindsOptionalOf
+    public fun optionalFindUnredeemedGooglePurchase(): FindUnacknowledgedGooglePurchase
 
     public companion object {
         @Provides

@@ -89,7 +89,7 @@ public const val `lifecycle-extensions version`: String =  "2.2.0"             /
 public const val `lottie version`: String =                "4.1.0"
 public const val `javax-inject version`: String =          "1"
 public const val `ez-vcard_version`: String =              "0.11.3"
-
+public const val `desugar_jdk_libs version`: String =      "1.1.5"
 // endregion
 
 // region Tests

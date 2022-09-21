@@ -24,6 +24,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -68,10 +70,22 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         input.user
     }
 
+    private lateinit var onUnredeemedPurchaseLauncher: ActivityResultLauncher<Unit>
+
+    private val onUnredeemedPurchaseResult = ActivityResultCallback<UnredeemedPurchaseActivity.Result?> {
+        if (it == UnredeemedPurchaseActivity.Result.PurchaseRedeemed) {
+            upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, checkForUnredeemedPurchase = false)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         upgradePlanViewModel.register(this)
         activity?.addOnBackPressedCallback { setResult() }
+        onUnredeemedPurchaseLauncher = registerForActivityResult(
+            UnredeemedPurchaseActivity.Start(),
+            onUnredeemedPurchaseResult
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,7 +118,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     }
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
-                    is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> with (binding) {
+                    is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> with(binding) {
                         val plan = it.subscribedPlans[0]
                         val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.userCurrency
 
@@ -118,6 +132,10 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
                             setData(plan = plan, currency = currency, collapsible = false)
+                        }
+
+                        if (it.unredeemedGooglePurchase != null) {
+                            onUnredeemedPurchaseLauncher.launch(Unit)
                         }
                     }
                 }.exhaustive

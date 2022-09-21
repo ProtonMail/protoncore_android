@@ -1,4 +1,12 @@
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_HiltWrapper_UnredeemedPurchaseInitializer_UnredeemedPurchaseInitializerEntryPoint {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_SignupPlansFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_UnredeemedPurchaseActivity_GeneratedInjector {
 	public fun <init> ()V
 }
 
@@ -18,6 +26,14 @@ public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_Si
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_UnredeemedPurchaseViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_UnredeemedPurchaseViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_UpgradePlansViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -31,6 +47,9 @@ public final class me/proton/core/plan/presentation/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/plan/presentation/HiltWrapper_UnredeemedPurchaseInitializer_UnredeemedPurchaseInitializerEntryPoint : me/proton/core/plan/presentation/UnredeemedPurchaseInitializer$UnredeemedPurchaseInitializerEntryPoint {
 }
 
 public final class me/proton/core/plan/presentation/PlansOrchestrator {
@@ -53,6 +72,22 @@ public final class me/proton/core/plan/presentation/PlansOrchestrator_Factory : 
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/PlansOrchestrator;
 	public static fun newInstance ()Lme/proton/core/plan/presentation/PlansOrchestrator;
+}
+
+public final class me/proton/core/plan/presentation/UnredeemedPurchaseInitializer : androidx/startup/Initializer {
+	public fun <init> ()V
+	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
+	public fun create (Landroid/content/Context;)V
+	public fun dependencies ()Ljava/util/List;
+}
+
+public final class me/proton/core/plan/presentation/databinding/ActivityUnredeemedPurchaseBinding : androidx/viewbinding/ViewBinding {
+	public final field progress Lcom/google/android/material/progressindicator/CircularProgressIndicator;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/ActivityUnredeemedPurchaseBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/FrameLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/ActivityUnredeemedPurchaseBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/ActivityUnredeemedPurchaseBinding;
 }
 
 public final class me/proton/core/plan/presentation/databinding/ActivityUpgradeBinding : androidx/viewbinding/ViewBinding {
@@ -515,6 +550,15 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_SignupPlansFragme
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
+public abstract class me/proton/core/plan/presentation/ui/Hilt_UnredeemedPurchaseActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+}
+
 public abstract class me/proton/core/plan/presentation/ui/Hilt_UpgradeActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
@@ -558,6 +602,32 @@ public final class me/proton/core/plan/presentation/ui/StartPlanChooser : androi
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/plan/presentation/entity/PlanInput;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
 	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/plan/presentation/entity/UpgradeResult;
+}
+
+public final class me/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
+	public static final field Companion Lme/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Companion;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Companion {
+}
+
+public final class me/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Result : java/lang/Enum {
+	public static final field PurchaseRedeemed Lme/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Result;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Result;
+	public static fun values ()[Lme/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Result;
+}
+
+public final class me/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Start : androidx/activity/result/contract/ActivityResultContract {
+	public fun <init> ()V
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lkotlin/Unit;)Landroid/content/Intent;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity$Result;
+}
+
+public abstract interface class me/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity_GeneratedInjector {
+	public abstract fun injectUnredeemedPurchaseActivity (Lme/proton/core/plan/presentation/ui/UnredeemedPurchaseActivity;)V
 }
 
 public final class me/proton/core/plan/presentation/ui/UpgradeActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
@@ -611,6 +681,22 @@ public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment_Memb
 	public static fun injectProduct (Lme/proton/core/plan/presentation/ui/UpgradePlansFragment;Lme/proton/core/domain/entity/Product;)V
 }
 
+public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
+}
+
+public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+}
+
 public final class me/proton/core/plan/presentation/view/LogTag {
 	public static final field INSTANCE Lme/proton/core/plan/presentation/view/LogTag;
 	public static final field PLAN_RESOURCE_ERROR Ljava/lang/String;
@@ -660,12 +746,39 @@ public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewMod
 	public static fun provide ()Ljava/lang/String;
 }
 
+public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;)Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
-	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
+	public static fun newInstance (Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_HiltModules {

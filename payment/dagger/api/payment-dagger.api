@@ -12,7 +12,9 @@ public final class me/proton/core/payment/dagger/BuildConfig {
 public abstract interface class me/proton/core/payment/dagger/CorePaymentModule {
 	public static final field Companion Lme/proton/core/payment/dagger/CorePaymentModule$Companion;
 	public abstract fun bindGooglePurchaseRepository (Lme/proton/core/payment/data/repository/GooglePurchaseRepositoryImpl;)Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;
+	public abstract fun bindPerformSubscribe (Lme/proton/core/payment/data/usecase/PerformSubscribeImpl;)Lme/proton/core/payment/domain/usecase/PerformSubscribe;
 	public abstract fun optionalAcknowledgeGooglePlayPurchase ()Lme/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase;
+	public abstract fun optionalFindUnredeemedGooglePurchase ()Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;
 	public abstract fun provideActivePaymentProvider (Lme/proton/core/payment/presentation/ActivePaymentProviderImpl;)Lme/proton/core/payment/presentation/ActivePaymentProvider;
 	public abstract fun provideGooglePlayBillingLibrary (Lme/proton/core/payment/data/ProtonIAPBillingLibraryImpl;)Lme/proton/core/payment/domain/usecase/ProtonIAPBillingLibrary;
 	public abstract fun providePaymentManager (Lme/proton/core/payment/data/PaymentManagerImpl;)Lme/proton/core/payment/domain/PaymentManager;

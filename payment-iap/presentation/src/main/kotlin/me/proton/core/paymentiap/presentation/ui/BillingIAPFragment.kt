@@ -24,11 +24,13 @@ import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -81,6 +83,9 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     is BillingIAPViewModel.State.PurchaseStarted,
                     is BillingIAPViewModel.State.QueryingProductDetails -> {
                         // do nothing currently. maybe spinner?
+                    }
+                    is BillingIAPViewModel.State.UnredeemedPurchase -> {
+                        onUnredeemedPurchase(it.purchase)
                     }
                     is BillingIAPViewModel.State.Error.BillingClientDisconnected,
                     is BillingIAPViewModel.State.Error.BillingClientUnavailable -> {
@@ -139,7 +144,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
 
     private fun onPay(input: BillingInput?) {
         this.billingInput = input
-        billingIAPViewModel.launchBillingFlow(input?.userId, requireActivity())
+        billingIAPViewModel.makePurchase(input?.userId, requireActivity())
     }
 
     private fun onPurchaseSuccess(productId: String, purchaseToken: String, orderId: String) {
@@ -181,5 +186,16 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
             binding.root.errorSnack(getString(error))
         }
         viewModel.setPayButtonsState(false)
+    }
+
+    private fun onUnredeemedPurchase(purchase: GooglePurchase) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.payments_giap_unredeemed_title)
+            .setMessage(R.string.payments_giap_unredeemed_description)
+            .setPositiveButton(R.string.payments_giap_unredeemed_confirm) { _, _ ->
+                billingIAPViewModel.redeemExistingPurchase(purchase)
+            }
+            .setNegativeButton(R.string.presentation_alert_cancel) { _, _ -> }
+            .show()
     }
 }

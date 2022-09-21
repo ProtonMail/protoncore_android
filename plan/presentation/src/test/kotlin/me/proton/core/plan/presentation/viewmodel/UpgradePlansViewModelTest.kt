@@ -37,6 +37,7 @@ import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -52,6 +53,7 @@ import kotlin.test.assertTrue
 class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
+    private val checkUnredeemedGooglePurchase = mockk<CheckUnredeemedGooglePurchase>(relaxed = true)
     private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>(relaxed = true)
     private val getPlansUseCase = mockk<GetPlans>()
     private val getPlanDefaultUseCase = mockk<GetPlanDefault>(relaxed = true)
@@ -210,6 +212,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         )
 
         viewModel = UpgradePlansViewModel(
+            checkUnredeemedGooglePurchase,
             getAvailablePaymentProviders,
             getPlansUseCase,
             getPlanDefaultUseCase,
@@ -280,6 +283,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         val plansRepository = mockk<PlansRepository>(relaxed = true)
         coEvery { plansRepository.getPlans(testUserId) } returns listOf(testPlan.copy(enabled = false))
         viewModel = UpgradePlansViewModel(
+            checkUnredeemedGooglePurchase,
             getAvailablePaymentProviders,
             GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
             getPlanDefaultUseCase,
@@ -312,6 +316,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 testPlan.copy(services = 5)
             )
             viewModel = UpgradePlansViewModel(
+                checkUnredeemedGooglePurchase,
                 getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
                 getPlanDefaultUseCase,
@@ -392,6 +397,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 testPlan.copy(services = 5)
             )
             viewModel = UpgradePlansViewModel(
+                checkUnredeemedGooglePurchase,
                 getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),
                 getPlanDefaultUseCase,

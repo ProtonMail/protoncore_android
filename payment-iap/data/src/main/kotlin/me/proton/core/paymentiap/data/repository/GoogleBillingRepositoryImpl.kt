@@ -28,8 +28,10 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryProductDetails
+import com.android.billingclient.api.queryPurchasesAsync
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -96,6 +98,19 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
 
     override suspend fun launchBillingFlow(activity: Activity, billingFlowParams: BillingFlowParams) {
         connectedBillingClient.withClient { it.launchBillingFlow(activity, billingFlowParams) }
+    }
+
+    override suspend fun querySubscriptionPurchases(): List<Purchase> {
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.SUBS)
+            .build()
+        val result = connectedBillingClient.withClient { it.queryPurchasesAsync(params) }
+
+        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            throw BillingClientError(result.billingResult.responseCode, result.billingResult.debugMessage)
+        }
+
+        return result.purchasesList
     }
 }
 

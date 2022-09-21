@@ -1,5 +1,3 @@
-import studio.forface.easygradle.dsl.api
-
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -18,21 +16,11 @@ import studio.forface.easygradle.dsl.api
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
-}
+package me.proton.core.payment.domain.entity
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.paymentiap.domain"
-}
-
-dependencies {
-    api(
-        project(Module.domain),
-        project(Module.paymentDomain),
-        googlePlayBilling,
-        `javax-inject`
-    )
+public interface GooglePurchase {
+    public val orderId: String
+    public val packageName: String
+    public val productIds: List<String>
+    public val purchaseToken: String
 }

@@ -27,24 +27,29 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
+import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.usersettings.domain.usecase.GetOrganization
 import java.util.Calendar
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
-internal class UpgradePlansViewModel @Inject constructor(
+internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") constructor(
+    private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
@@ -53,7 +58,7 @@ internal class UpgradePlansViewModel @Inject constructor(
     private val getUser: GetUser,
     private val getPaymentMethods: GetAvailablePaymentMethods,
     @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
-    paymentsOrchestrator: PaymentsOrchestrator
+    paymentsOrchestrator: PaymentsOrchestrator,
 ) : BasePlansViewModel(paymentsOrchestrator) {
 
     private val _subscribedPlansState = MutableStateFlow<SubscribedPlansState>(SubscribedPlansState.Idle)
@@ -70,14 +75,15 @@ internal class UpgradePlansViewModel @Inject constructor(
             data class SubscribedPlans(
                 val subscribedPlans: List<PlanDetailsItem>,
                 val userCurrency: PlanCurrency?,
-                val subscriptionManagement: SubscriptionManagement? = null
+                val subscriptionManagement: SubscriptionManagement? = null,
+                val unredeemedGooglePurchase: Pair<GooglePurchase, Plan>? = null
             ) : Success()
         }
 
         data class Error(val error: Throwable) : SubscribedPlansState()
     }
 
-    fun getCurrentSubscribedPlans(userId: UserId) = flow {
+    fun getCurrentSubscribedPlans(userId: UserId, checkForUnredeemedPurchase: Boolean = true) = flow {
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
         val organization = getOrganization(userId, refresh = true)
@@ -88,7 +94,7 @@ internal class UpgradePlansViewModel @Inject constructor(
             it.type == PlanType.NORMAL.value
         }?.map {
             val calendar = Calendar.getInstance()
-            calendar.timeInMillis = currentSubscription.periodEnd * 1000
+            calendar.timeInMillis = currentSubscription.periodEnd.seconds.inWholeMilliseconds
             createCurrentPlan(
                 plan = it,
                 endDate = calendar.time,
@@ -114,7 +120,17 @@ internal class UpgradePlansViewModel @Inject constructor(
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
         getAvailablePlansForUpgrade(userId, isFree)
         val external = currentSubscription?.external
-        emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans, PlanCurrency.map[user.currency], external))
+        val unredeemed = if (checkForUnredeemedPurchase) {
+            checkUnredeemedGooglePurchase(userId)
+        } else null
+        emit(
+            SubscribedPlansState.Success.SubscribedPlans(
+                subscribedPlans,
+                PlanCurrency.map[user.currency],
+                external,
+                unredeemed
+            )
+        )
     }.catch { error ->
         _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
     }.onEach {
@@ -126,16 +142,14 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         val paymentProviders = getAvailablePaymentProviders()
         val anyPaymentEnabled = paymentProviders.isNotEmpty()
-        val availablePlans =
-            when {
-                !supportPaidPlans -> emptyList()
-                !anyPaymentEnabled -> emptyList()
-                !isFreeUser -> emptyList()
-                else -> getPlans(
-                    userId = userId
-                ).filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-                    .map { plan -> plan.toPaidPlanDetailsItem(false) }
-            }
+        val availablePlans = when {
+            !supportPaidPlans -> emptyList()
+            !anyPaymentEnabled -> emptyList()
+            !isFreeUser -> emptyList()
+            else -> getPlans(userId = userId)
+                .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
+                .map { plan -> plan.toPaidPlanDetailsItem(starred = false) }
+        }
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = anyPaymentEnabled))
     }.catch { error ->

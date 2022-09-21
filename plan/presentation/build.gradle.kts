@@ -31,6 +31,12 @@ proton {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+}
+
 dependencies {
     api(
         project(Module.domain),
@@ -46,8 +52,11 @@ dependencies {
         coordinatorlayout,
         `hilt-android`,
         material,
-        recyclerview
+        recyclerview,
+        `startup-runtime`
     )
+
+    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.kotlinUtil),

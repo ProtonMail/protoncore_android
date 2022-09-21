@@ -1,5 +1,3 @@
-import studio.forface.easygradle.dsl.api
-
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -18,21 +16,18 @@ import studio.forface.easygradle.dsl.api
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
+package me.proton.core.paymentiap.domain.entity
+
+import com.android.billingclient.api.Purchase
+import me.proton.core.payment.domain.entity.GooglePurchase
+
+internal data class GooglePurchaseWrapper(val purchase: Purchase) : GooglePurchase {
+    override val orderId: String get() = purchase.orderId
+    override val packageName: String get() = purchase.packageName
+    override val productIds: List<String> get() = purchase.products
+    override val purchaseToken: String get() = purchase.purchaseToken
 }
 
-publishOption.shouldBePublishedAsLib = true
+public fun GooglePurchase.unwrap(): Purchase = (this as GooglePurchaseWrapper).purchase
 
-android {
-    namespace = "me.proton.core.paymentiap.domain"
-}
-
-dependencies {
-    api(
-        project(Module.domain),
-        project(Module.paymentDomain),
-        googlePlayBilling,
-        `javax-inject`
-    )
-}
+public fun Purchase.wrap(): GooglePurchase = GooglePurchaseWrapper(this)

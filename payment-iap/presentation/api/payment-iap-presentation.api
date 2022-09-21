@@ -102,11 +102,11 @@ public abstract class me/proton/core/paymentiap/presentation/ui/Hilt_BillingIAPF
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
-	public static fun newInstance (Lme/proton/core/paymentiap/domain/repository/GoogleBillingRepository;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
+	public static fun newInstance (Lme/proton/core/paymentiap/domain/repository/GoogleBillingRepository;Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;)Lme/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel;
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_HiltModules {

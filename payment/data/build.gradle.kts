@@ -25,6 +25,12 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+}
+
 dependencies {
     api(
         project(Module.domain),
@@ -33,6 +39,8 @@ dependencies {
         `javax-inject`,
         `serialization-core`
     )
+
+    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.dataRoom),

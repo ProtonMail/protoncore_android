@@ -53,6 +53,11 @@ public interface GoogleBillingRepository : AutoCloseable {
      */
     public suspend fun launchBillingFlow(activity: Activity, billingFlowParams: BillingFlowParams)
 
+    /** Query for active subscriptions.
+     * @throws BillingClientError
+     */
+    public suspend fun querySubscriptionPurchases(): List<Purchase>
+
     override fun close() {
         destroy()
     }

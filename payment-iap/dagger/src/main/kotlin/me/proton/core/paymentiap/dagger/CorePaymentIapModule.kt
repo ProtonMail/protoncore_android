@@ -23,9 +23,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
-import me.proton.core.paymentiap.data.AcknowledgeGooglePlayPurchaseImpl
+import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
+import me.proton.core.paymentiap.data.usecase.AcknowledgeGooglePlayPurchaseImpl
 import me.proton.core.paymentiap.data.BillingClientFactoryImpl
 import me.proton.core.paymentiap.data.repository.GoogleBillingRepositoryImpl
+import me.proton.core.paymentiap.data.usecase.FindUnacknowledgedGooglePurchaseImpl
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 
@@ -40,4 +42,7 @@ public interface CorePaymentIapModule {
 
     @Binds
     public fun bindAcknowledgeGooglePlayPurchase(impl: AcknowledgeGooglePlayPurchaseImpl): AcknowledgeGooglePlayPurchase
+
+    @Binds
+    public fun bindFindUnredeemedGooglePurchase(impl: FindUnacknowledgedGooglePurchaseImpl): FindUnacknowledgedGooglePurchase
 }
