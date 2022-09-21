@@ -54,7 +54,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `dagger version` =                          libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-android version` =                    libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-androidx version` =                   "1.0.0"         // Released: May 05, 2021
-    `mockK version` =                           "1.12.3"
+    `mockK version` =                           "1.12.5"
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "5.0.1"         // Released: Jun 28, 2018
