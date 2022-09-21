@@ -26,8 +26,10 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import kotlinx.coroutines.flow.Flow
 
-/** Repository for interacting with Google Play Billing Client. */
-public interface GoogleBillingRepository {
+/** Repository for interacting with Google Play Billing Client.
+ * Make sure to [destroy] it once you're done. You can use the [use] function to do that automatically.
+ */
+public interface GoogleBillingRepository : AutoCloseable {
     public val purchaseUpdated: Flow<Pair<BillingResult, List<Purchase>?>>
 
     /**
@@ -50,6 +52,10 @@ public interface GoogleBillingRepository {
      * @throws BillingClientError
      */
     public suspend fun launchBillingFlow(activity: Activity, billingFlowParams: BillingFlowParams)
+
+    override fun close() {
+        destroy()
+    }
 }
 
 public data class BillingClientError(

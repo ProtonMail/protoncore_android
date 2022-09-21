@@ -10,6 +10,7 @@ public final class me/proton/core/paymentiap/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/paymentiap/dagger/CorePaymentIapModule {
+	public abstract fun bindAcknowledgeGooglePlayPurchase (Lme/proton/core/paymentiap/data/AcknowledgeGooglePlayPurchaseImpl;)Lme/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase;
 	public abstract fun bindBillingClientProvider (Lme/proton/core/paymentiap/data/BillingClientFactoryImpl;)Lme/proton/core/paymentiap/domain/BillingClientFactory;
 	public abstract fun bindGoogleBillingRepository (Lme/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl;)Lme/proton/core/paymentiap/domain/repository/GoogleBillingRepository;
 }

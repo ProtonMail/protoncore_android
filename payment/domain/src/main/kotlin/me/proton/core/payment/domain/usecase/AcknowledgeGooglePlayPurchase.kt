@@ -1,6 +1,3 @@
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
-
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -19,27 +16,13 @@ import studio.forface.easygradle.dsl.android.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
-}
+package me.proton.core.payment.domain.usecase
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.paymentiap.data"
-}
-
-dependencies {
-    api(
-        project(Module.paymentDomain),
-        project(Module.paymentIapDomain)
-    )
-    implementation(
-        project(Module.kotlinUtil),
-        `coroutines-core`,
-        googlePlayBilling,
-        fragment,
-        `javax-inject`,
-        `lifecycle-runtime`
-    )
+public interface AcknowledgeGooglePlayPurchase {
+    /** Acknowledge a Google Play purchase.
+     * @param paymentToken The payment token obtained from Proton API.
+     *  The token will be used to obtain a Google purchase token, which then
+     *  will be used to acknowledge the purchase.
+     */
+    public suspend operator fun invoke(paymentToken: String)
 }

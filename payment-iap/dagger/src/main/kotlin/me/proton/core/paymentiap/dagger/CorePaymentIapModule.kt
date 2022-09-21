@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
+import me.proton.core.paymentiap.data.AcknowledgeGooglePlayPurchaseImpl
 import me.proton.core.paymentiap.data.BillingClientFactoryImpl
 import me.proton.core.paymentiap.data.repository.GoogleBillingRepositoryImpl
 import me.proton.core.paymentiap.domain.BillingClientFactory
@@ -35,4 +37,7 @@ public interface CorePaymentIapModule {
 
     @Binds
     public fun bindGoogleBillingRepository(impl: GoogleBillingRepositoryImpl): GoogleBillingRepository
+
+    @Binds
+    public fun bindAcknowledgeGooglePlayPurchase(impl: AcknowledgeGooglePlayPurchaseImpl): AcknowledgeGooglePlayPurchase
 }

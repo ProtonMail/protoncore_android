@@ -57,6 +57,8 @@ import me.proton.core.label.data.local.LabelDatabase
 import me.proton.core.label.data.local.LabelEntity
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
+import me.proton.core.payment.data.local.db.PaymentDatabase
+import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.push.data.local.db.PushConverters
 import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.push.data.local.db.PushEntity
@@ -114,6 +116,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         ChallengeFrameEntity::class,
         // push
         PushEntity::class,
+        // payment
+        GooglePurchaseEntity::class,
     ],
     version = AppDatabase.version,
     exportSchema = true
@@ -147,11 +151,12 @@ abstract class AppDatabase :
     LabelDatabase,
     FeatureFlagDatabase,
     ChallengeDatabase,
-    PushDatabase {
+    PushDatabase,
+    PaymentDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 24
+        const val version = 25
 
         val migrations = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
@@ -177,6 +182,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_21_22,
             AppDatabaseMigrations.MIGRATION_22_23,
             AppDatabaseMigrations.MIGRATION_23_24,
+            AppDatabaseMigrations.MIGRATION_24_25,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

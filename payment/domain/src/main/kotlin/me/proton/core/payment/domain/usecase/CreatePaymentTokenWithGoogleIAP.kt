@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
@@ -29,6 +30,7 @@ import javax.inject.Inject
  * Creates new payment token with Google IAP.
  */
 public class CreatePaymentTokenWithGoogleIAP @Inject constructor(
+    private val googlePurchaseRepository: GooglePurchaseRepository,
     private val paymentsRepository: PaymentsRepository
 ) {
     public suspend operator fun invoke(
@@ -36,10 +38,19 @@ public class CreatePaymentTokenWithGoogleIAP @Inject constructor(
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.GoogleIAP
-    ): PaymentToken.CreatePaymentTokenResult = paymentsRepository.createPaymentTokenGoogleIAP(
-        userId,
-        amount,
-        currency,
-        paymentType
-    )
+    ): PaymentToken.CreatePaymentTokenResult {
+        val result = paymentsRepository.createPaymentTokenGoogleIAP(
+            userId,
+            amount,
+            currency,
+            paymentType
+        )
+
+        googlePurchaseRepository.updateGooglePurchase(
+            googlePurchaseToken = paymentType.purchaseToken,
+            paymentToken = result.token
+        )
+
+        return result
+    }
 }

@@ -59,6 +59,7 @@ dependencies {
         project(Module.labelData),
         project(Module.mailSettingsData),
         project(Module.networkDomain),
+        project(Module.paymentData),
         project(Module.pushData),
         project(Module.pushDomain),
         project(Module.userData),

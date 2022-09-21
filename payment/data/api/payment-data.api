@@ -95,6 +95,41 @@ public final class me/proton/core/payment/data/api/request/IAPDetailsBody$Compan
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract interface class me/proton/core/payment/data/local/db/PaymentDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/payment/data/local/db/PaymentDatabase$Companion;
+	public abstract fun googlePurchaseDao ()Lme/proton/core/payment/data/local/db/dao/GooglePurchaseDao;
+}
+
+public final class me/proton/core/payment/data/local/db/PaymentDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract class me/proton/core/payment/data/local/db/dao/GooglePurchaseDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteByGooglePurchaseToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun findByPaymentToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/data/local/entity/GooglePurchaseEntity {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/data/local/entity/GooglePurchaseEntity;
+	public static synthetic fun copy$default (Lme/proton/core/payment/data/local/entity/GooglePurchaseEntity;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/data/local/entity/GooglePurchaseEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGooglePurchaseToken ()Ljava/lang/String;
+	public final fun getPaymentToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/data/repository/GooglePurchaseRepositoryImpl : me/proton/core/payment/domain/repository/GooglePurchaseRepository {
+	public fun <init> (Lme/proton/core/payment/data/local/db/PaymentDatabase;)V
+	public fun deleteByGooglePurchaseToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findGooglePurchaseToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateGooglePurchase (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/payment/data/repository/PaymentsRepositoryImpl : me/proton/core/payment/domain/repository/PaymentsRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
 	public fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentBody;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

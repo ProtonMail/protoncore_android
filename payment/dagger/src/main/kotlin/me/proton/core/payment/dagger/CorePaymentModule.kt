@@ -19,20 +19,25 @@
 package me.proton.core.payment.dagger
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.payment.data.PaymentManagerImpl
-import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
+import me.proton.core.payment.data.repository.GooglePurchaseRepositoryImpl
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
+import me.proton.core.payment.domain.PaymentManager
+import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.ProtonIAPBillingLibrary
 import me.proton.core.payment.presentation.ActivePaymentProvider
 import me.proton.core.payment.presentation.ActivePaymentProviderImpl
-import me.proton.core.payment.domain.PaymentManager
+import me.proton.core.payment.presentation.entity.SecureEndpoint
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -52,6 +57,13 @@ public interface CorePaymentModule {
 
     @Binds
     public fun provideActivePaymentProvider(impl: ActivePaymentProviderImpl): ActivePaymentProvider
+
+    @Binds
+    public fun bindGooglePurchaseRepository(impl: GooglePurchaseRepositoryImpl): GooglePurchaseRepository
+
+    /** Optional binding, provided by payment-iap-dagger. */
+    @BindsOptionalOf
+    public fun optionalAcknowledgeGooglePlayPurchase(): AcknowledgeGooglePlayPurchase?
 
     public companion object {
         @Provides

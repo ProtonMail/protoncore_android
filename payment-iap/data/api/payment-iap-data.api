@@ -1,3 +1,8 @@
+public final class me/proton/core/paymentiap/data/AcknowledgeGooglePlayPurchaseImpl : me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {
+	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;)V
+	public fun invoke (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/paymentiap/data/BillingClientFactoryImpl : me/proton/core/paymentiap/domain/BillingClientFactory {
 	public fun <init> (Landroid/app/Application;)V
 	public fun invoke (Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lcom/android/billingclient/api/BillingClient;
@@ -12,6 +17,7 @@ public final class me/proton/core/paymentiap/data/BuildConfig {
 
 public final class me/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl : me/proton/core/paymentiap/domain/repository/GoogleBillingRepository {
 	public fun acknowledgePurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun close ()V
 	public fun destroy ()V
 	public fun getProductDetails (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;

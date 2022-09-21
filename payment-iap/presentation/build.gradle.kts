@@ -47,6 +47,7 @@ dependencies {
     implementation(
         // Core
         project(Module.kotlinUtil),
+        project(Module.paymentDomain),
         project(Module.paymentIapDomain),
 
         // Android

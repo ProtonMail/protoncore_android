@@ -35,11 +35,13 @@ dependencies {
     )
 
     implementation(
+        project(Module.dataRoom),
         project(Module.kotlinUtil),
         project(Module.networkDomain),
         project(Module.userDomain),
         project(Module.planDomain),
         retrofit,
+        `room-ktx`,
     )
 
     testImplementation(

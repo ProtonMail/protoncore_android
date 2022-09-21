@@ -36,6 +36,7 @@ import javax.inject.Inject
  * Headers with token and token type "payment".
  */
 public class PerformSubscribe @Inject constructor(
+    private val acknowledgeGooglePlayPurchase: AcknowledgeGooglePlayPurchase?,
     private val paymentsRepository: PaymentsRepository,
     private val humanVerificationManager: HumanVerificationManager,
     private val clientIdProvider: ClientIdProvider
@@ -59,7 +60,8 @@ public class PerformSubscribe @Inject constructor(
         require(paymentToken != null || amount <= 0) {
             "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null."
         }
-        return paymentsRepository.createOrUpdateSubscription(
+
+        val subscription = paymentsRepository.createOrUpdateSubscription(
             sessionUserId = userId,
             amount = amount,
             currency = currency,
@@ -68,15 +70,19 @@ public class PerformSubscribe @Inject constructor(
             plans = planNames.map { it to MAX_PLAN_QUANTITY }.toMap(),
             cycle = cycle,
             subscriptionManagement = subscriptionManagement
-        ).also {
-            if (paymentToken != null) {
-                // Clear any previous payment token (unauthenticated session cookie HV details).
-                // HV payment token is previously added by BillingCommonViewModel.
-                val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-                humanVerificationManager.clearDetails(clientId)
+        )
+
+        if (paymentToken != null) {
+            // Clear any previous payment token (unauthenticated session cookie HV details).
+            // HV payment token is previously added by BillingCommonViewModel.
+            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+            humanVerificationManager.clearDetails(clientId)
+
+            if (subscriptionManagement == SubscriptionManagement.GOOGLE_MANAGED) {
+                acknowledgeGooglePlayPurchase?.invoke(paymentToken)
             }
         }
 
-        // TODO acknowledgePurchases (if Google IAP) via GoogleBillingRepository?
+        return subscription
     }
 }
