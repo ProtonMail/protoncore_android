@@ -183,19 +183,19 @@ public final class me/proton/core/payment/domain/entity/PaymentStatus {
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class me/proton/core/payment/domain/entity/PaymentToken {
+public abstract class me/proton/core/payment/domain/entity/PaymentTokenResult {
 	public synthetic fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 }
 
-public final class me/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult : me/proton/core/payment/domain/entity/PaymentToken {
+public final class me/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult : me/proton/core/payment/domain/entity/PaymentTokenResult {
 	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
-	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getApprovalUrl ()Ljava/lang/String;
 	public final fun getReturnHost ()Ljava/lang/String;
@@ -205,11 +205,11 @@ public final class me/proton/core/payment/domain/entity/PaymentToken$CreatePayme
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult : me/proton/core/payment/domain/entity/PaymentToken {
+public final class me/proton/core/payment/domain/entity/PaymentTokenResult$PaymentTokenStatusResult : me/proton/core/payment/domain/entity/PaymentTokenResult {
 	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)V
 	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
-	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)Lme/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult;
-	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentToken$PaymentTokenStatusResult;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenStatus;)Lme/proton/core/payment/domain/entity/PaymentTokenResult$PaymentTokenStatusResult;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/PaymentTokenResult$PaymentTokenStatusResult;Lme/proton/core/payment/domain/entity/PaymentTokenStatus;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/PaymentTokenResult$PaymentTokenStatusResult;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getStatus ()Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 	public fun hashCode ()I

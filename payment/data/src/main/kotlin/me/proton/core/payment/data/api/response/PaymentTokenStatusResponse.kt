@@ -20,7 +20,7 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 
 @Serializable
@@ -28,8 +28,8 @@ internal data class PaymentTokenStatusResponse(
     @SerialName("Status")
     val status: Int
 ) {
-    fun toPaymentTokenStatusResult(): PaymentToken.PaymentTokenStatusResult =
-        PaymentToken.PaymentTokenStatusResult(
+    fun toPaymentTokenStatusResult(): PaymentTokenResult.PaymentTokenStatusResult =
+        PaymentTokenResult.PaymentTokenStatusResult(
             status = PaymentTokenStatus.map[status] ?: PaymentTokenStatus.NOT_SUPPORTED
         )
 }

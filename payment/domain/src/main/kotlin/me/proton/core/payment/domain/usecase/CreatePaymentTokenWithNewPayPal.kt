@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
@@ -39,7 +39,7 @@ public class CreatePaymentTokenWithNewPayPal @Inject constructor(
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.PayPal,
-    ): PaymentToken.CreatePaymentTokenResult {
+    ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
 
         return paymentsRepository.createPaymentTokenNewPayPal(

@@ -31,7 +31,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -143,7 +143,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 expectedCard
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
 
@@ -212,7 +212,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 paymentType
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, "test-token", null
         )
 
@@ -287,7 +287,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 expectedCard
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
 
@@ -347,7 +347,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 paymentType
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, "test-token", null
         )
 
@@ -404,7 +404,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 testPaymentMethodId
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
         billingViewModel.subscriptionResult.test {
@@ -472,7 +472,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 testPaymentMethodId
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
 
@@ -606,7 +606,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 expectedCard
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, "test-approval-url", "test-token", "test-return-host"
         )
 
@@ -731,7 +731,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testCurrency,
                 expectedCard
             )
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
 
@@ -790,7 +790,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
         coEvery {
             createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard)
-        } returns PaymentToken.CreatePaymentTokenResult(
+        } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
 

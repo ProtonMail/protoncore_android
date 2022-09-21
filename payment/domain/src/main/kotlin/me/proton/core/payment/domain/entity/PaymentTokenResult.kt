@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.domain.entity
 
-public sealed class PaymentToken(
+public sealed class PaymentTokenResult(
     public open val status: PaymentTokenStatus
 ) {
     public data class CreatePaymentTokenResult(
@@ -26,11 +26,11 @@ public sealed class PaymentToken(
         val approvalUrl: String?,
         val token: String,
         val returnHost: String?
-    ) : PaymentToken(status)
+    ) : PaymentTokenResult(status)
 
     public data class PaymentTokenStatusResult(
         override val status: PaymentTokenStatus
-    ) : PaymentToken(status)
+    ) : PaymentTokenResult(status)
 }
 
 public enum class PaymentTokenStatus(internal val id: Int) {

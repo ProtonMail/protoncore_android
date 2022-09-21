@@ -33,7 +33,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
@@ -100,7 +100,7 @@ public abstract class BillingCommonViewModel(
                 val subscriptionManagement: SubscriptionManagement
             ) : Success()
 
-            public data class TokenCreated(val paymentToken: PaymentToken.CreatePaymentTokenResult) : Success()
+            public data class TokenCreated(val paymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult) : Success()
             public data class SignUpTokenReady(
                 val amount: Long,
                 val currency: Currency,
@@ -112,7 +112,7 @@ public abstract class BillingCommonViewModel(
 
         public sealed class Incomplete : State() {
             public data class TokenApprovalNeeded(
-                val paymentToken: PaymentToken.CreatePaymentTokenResult,
+                val paymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult,
                 val amount: Long
             ) :
                 Incomplete()

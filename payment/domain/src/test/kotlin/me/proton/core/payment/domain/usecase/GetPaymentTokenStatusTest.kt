@@ -24,7 +24,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
@@ -41,7 +41,7 @@ class GetPaymentTokenStatusTest {
     // region test data
     private val testUserId = UserId("test-user-id")
     private val testPaymentToken = "test-payment-token"
-    private val testDefaultPaymentTokenStatusResult = PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
+    private val testDefaultPaymentTokenStatusResult = PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
 
     // endregion
     private lateinit var useCase: GetPaymentTokenStatus

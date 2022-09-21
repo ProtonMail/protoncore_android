@@ -40,7 +40,7 @@ import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
@@ -181,8 +181,8 @@ class PaymentsRepositoryImplTest {
     fun `payment token status success pending`() = runBlockingTest {
         // GIVEN
         val testPaymentToken = "test-payment-token"
-        coEvery { apiManager.invoke<PaymentToken.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Success(
-            PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
+        coEvery { apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Success(
+            PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
         )
         // WHEN
         val paymentStatusResponse = repository.getPaymentTokenStatus(
@@ -197,8 +197,8 @@ class PaymentsRepositoryImplTest {
     fun `payment token status success chargeable`() = runBlockingTest {
         // GIVEN
         val testPaymentToken = "test-payment-token"
-        coEvery { apiManager.invoke<PaymentToken.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Success(
-            PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+        coEvery { apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Success(
+            PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         )
         // WHEN
         val paymentStatusResponse = repository.getPaymentTokenStatus(
@@ -213,7 +213,7 @@ class PaymentsRepositoryImplTest {
     fun `payment token status error`() = runBlockingTest {
         // GIVEN
         val testPaymentToken = "test-payment-token"
-        coEvery { apiManager.invoke<PaymentToken.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
@@ -232,10 +232,10 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `create payment token logged in new credit card success`() = runBlockingTest {
         // GIVEN
-        val createTokenResult = PaymentToken.CreatePaymentTokenResult(
+        val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
@@ -253,10 +253,10 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `create payment token sign up new credit card success`() = runBlockingTest {
         // GIVEN
-        val createTokenResult = PaymentToken.CreatePaymentTokenResult(
+        val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
@@ -274,7 +274,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `create payment token logged in new credit card error`() = runBlockingTest {
         // GIVEN
-        coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Error.Http(
                 httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
             )
@@ -297,10 +297,10 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `create payment token logged in paypal success`() = runBlockingTest {
         // GIVEN
-        val createTokenResult = PaymentToken.CreatePaymentTokenResult(
+        val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(

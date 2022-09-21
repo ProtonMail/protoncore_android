@@ -20,7 +20,7 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 
 @Serializable
@@ -34,8 +34,8 @@ internal data class CreatePaymentTokenResponse(
     @SerialName("ReturnHost")
     val returnHost: String? = null,
 ) {
-    fun toCreatePaymentTokenResult(): PaymentToken.CreatePaymentTokenResult =
-        PaymentToken.CreatePaymentTokenResult(
+    fun toCreatePaymentTokenResult(): PaymentTokenResult.CreatePaymentTokenResult =
+        PaymentTokenResult.CreatePaymentTokenResult(
             status = PaymentTokenStatus.map[status] ?: PaymentTokenStatus.NOT_SUPPORTED,
             approvalUrl = approvalUrl,
             token = token,

@@ -24,7 +24,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentStatus
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -46,7 +46,7 @@ public interface PaymentsRepository {
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.PayPal
-    ): PaymentToken.CreatePaymentTokenResult
+    ): PaymentTokenResult.CreatePaymentTokenResult
 
     /**
      * Unauthenticated.
@@ -58,7 +58,7 @@ public interface PaymentsRepository {
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.CreditCard
-    ): PaymentToken.CreatePaymentTokenResult
+    ): PaymentTokenResult.CreatePaymentTokenResult
 
     /**
      * Unauthenticated.
@@ -70,7 +70,7 @@ public interface PaymentsRepository {
         amount: Long,
         currency: Currency,
         paymentMethodId: String
-    ): PaymentToken.CreatePaymentTokenResult
+    ): PaymentTokenResult.CreatePaymentTokenResult
 
     /**
      * Unauthenticated.
@@ -81,7 +81,7 @@ public interface PaymentsRepository {
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.GoogleIAP
-    ): PaymentToken.CreatePaymentTokenResult
+    ): PaymentTokenResult.CreatePaymentTokenResult
 
     /**
      * Unauthenticated.
@@ -91,7 +91,7 @@ public interface PaymentsRepository {
     public suspend fun getPaymentTokenStatus(
         sessionUserId: SessionUserId?,
         paymentToken: String
-    ): PaymentToken.PaymentTokenStatusResult
+    ): PaymentTokenResult.PaymentTokenStatusResult
     // endregion
 
     // region payment methods

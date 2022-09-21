@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
@@ -37,7 +37,7 @@ public class CreatePaymentTokenWithExistingPaymentMethod @Inject constructor(
         amount: Long,
         currency: Currency,
         paymentMethodId: String
-    ): PaymentToken.CreatePaymentTokenResult {
+    ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
         return paymentsRepository.createPaymentTokenExistingPaymentMethod(
             sessionUserId = userId,

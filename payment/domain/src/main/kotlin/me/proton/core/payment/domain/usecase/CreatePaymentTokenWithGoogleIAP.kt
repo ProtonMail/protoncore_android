@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
@@ -38,7 +38,7 @@ public class CreatePaymentTokenWithGoogleIAP @Inject constructor(
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.GoogleIAP
-    ): PaymentToken.CreatePaymentTokenResult {
+    ): PaymentTokenResult.CreatePaymentTokenResult {
         val result = paymentsRepository.createPaymentTokenGoogleIAP(
             userId,
             amount,

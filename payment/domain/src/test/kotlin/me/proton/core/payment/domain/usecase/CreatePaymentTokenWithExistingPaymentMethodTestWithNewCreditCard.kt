@@ -24,7 +24,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
@@ -47,7 +47,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     private val testToken = "test-token"
     private val testApprovalUrl = "test-approval-url"
     private val testReturnHost = "test-return-host"
-    private val createTokenResult = PaymentToken.CreatePaymentTokenResult(
+    private val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
         PaymentTokenStatus.PENDING, testApprovalUrl, testToken, testReturnHost
     )
     // endregion
@@ -104,7 +104,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
 
     @Test
     fun `create token returns chargeable`() = runBlockingTest {
-        val createTokenChargeableResult = PaymentToken.CreatePaymentTokenResult(
+        val createTokenChargeableResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
         coEvery {

@@ -181,7 +181,7 @@ internal class PaymentOptionsActivity :
                         )
                     )
                     is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
-                        onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
+                        onTokenApprovalNeeded(input.userId, it.paymentTokenResult, it.amount)
                     is BillingCommonViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
                     is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
                         showError(getString(R.string.payments_error_signup_paymentmethod))

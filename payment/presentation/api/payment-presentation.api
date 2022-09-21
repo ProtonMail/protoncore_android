@@ -439,14 +439,14 @@ public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommo
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete {
-	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;J)V
-	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;J)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;J)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;JILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;J)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;JILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Incomplete$TokenApprovalNeeded;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
-	public final fun getPaymentToken ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public final fun getPaymentTokenResult ()Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -510,12 +510,12 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingCommonVi
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
-	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;)V
-	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
-	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;
+	public fun <init> (Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;
+	public final fun copy (Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$TokenCreated;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getPaymentToken ()Lme/proton/core/payment/domain/entity/PaymentToken$CreatePaymentTokenResult;
+	public final fun getPaymentTokenResult ()Lme/proton/core/payment/domain/entity/PaymentTokenResult$CreatePaymentTokenResult;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

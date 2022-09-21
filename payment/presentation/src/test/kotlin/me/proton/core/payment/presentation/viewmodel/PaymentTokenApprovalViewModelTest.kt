@@ -31,7 +31,7 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
@@ -107,7 +107,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                 testUserId,
                 testToken
             )
-        } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+        } returns PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         val testReturnHost = "test-return-host"
         viewModel.approvalState.test {
             // WHEN
@@ -133,7 +133,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                 testUserId,
                 testToken
             )
-        } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.FAILED)
+        } returns PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.FAILED)
         val testReturnHost = "test-return-host"
         viewModel.approvalState.test {
             // WHEN
@@ -184,7 +184,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-host"
         every { testUri.getQueryParameter("cancel") } returns "0"
-        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(
+        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentTokenResult.PaymentTokenStatusResult(
             PaymentTokenStatus.CHARGEABLE
         )
         val testReturnHost = "test-host"
@@ -213,7 +213,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                     testUserId,
                     testToken
                 )
-            } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+            } returns PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
             val testReturnHost = "test-host"
             // WHEN
             val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
@@ -233,7 +233,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                     testUserId,
                     testToken
                 )
-            } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+            } returns PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
             val testReturnHost = "test-return-host"
             // WHEN
             val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)

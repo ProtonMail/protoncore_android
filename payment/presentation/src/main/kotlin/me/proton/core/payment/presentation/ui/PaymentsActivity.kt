@@ -23,7 +23,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
 import androidx.viewbinding.ViewBinding
-import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -70,12 +70,12 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
 
     protected fun onTokenApprovalNeeded(
         userId: String?,
-        paymentToken: PaymentToken.CreatePaymentTokenResult,
+        paymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult,
         amount: Long
     ) {
         tokenApprovalLauncher?.launch(
             PaymentTokenApprovalInput(
-                userId, paymentToken.token, paymentToken.returnHost!!, paymentToken.approvalUrl!!, amount
+                userId, paymentTokenResult.token, paymentTokenResult.returnHost!!, paymentTokenResult.approvalUrl!!, amount
             )
         )
     }
