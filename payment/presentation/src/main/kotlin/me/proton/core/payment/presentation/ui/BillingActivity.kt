@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -219,7 +220,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
     }
 
     private fun onBillingSuccess(
-        token: String? = null,
+        token: ProtonPaymentToken? = null,
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
@@ -230,7 +231,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                 ARG_BILLING_RESULT,
                 BillingResult(
                     paySuccess = true,
-                    token = token,
+                    token = token?.value,
                     subscriptionCreated = token == null,
                     amount = amount,
                     currency = currency,
@@ -249,7 +250,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
         viewModel.setPlan(plan)
     }
 
-    override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
+    override fun onThreeDSApprovalResult(amount: Long, token: ProtonPaymentToken, success: Boolean) {
         if (!success) {
             binding.payButton.setIdle()
             return

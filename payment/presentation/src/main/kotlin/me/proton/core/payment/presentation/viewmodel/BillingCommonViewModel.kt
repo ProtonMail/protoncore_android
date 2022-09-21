@@ -36,6 +36,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -96,7 +97,7 @@ public abstract class BillingCommonViewModel(
                 val currency: Currency,
                 val cycle: SubscriptionCycle,
                 val subscriptionStatus: Subscription,
-                val paymentToken: String?,
+                val paymentToken: ProtonPaymentToken?,
                 val subscriptionManagement: SubscriptionManagement
             ) : Success()
 
@@ -105,7 +106,7 @@ public abstract class BillingCommonViewModel(
                 val amount: Long,
                 val currency: Currency,
                 val cycle: SubscriptionCycle,
-                val paymentToken: String,
+                val paymentToken: ProtonPaymentToken,
                 val subscriptionManagement: SubscriptionManagement
             ) : Success()
         }
@@ -250,7 +251,7 @@ public abstract class BillingCommonViewModel(
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
-        token: String,
+        token: ProtonPaymentToken,
         subscriptionManagement: SubscriptionManagement
     ): Job = flow {
         emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token, subscriptionManagement))
@@ -286,7 +287,7 @@ public abstract class BillingCommonViewModel(
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
-        token: String,
+        token: ProtonPaymentToken,
         subscriptionManagement: SubscriptionManagement
     ): State =
         if (userId == null) {

@@ -33,6 +33,7 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PerformSubscribe
@@ -192,7 +193,7 @@ class PostLoginAccountSetupTest {
             currency = Currency.EUR,
             cycle = SubscriptionCycle.YEARLY,
             planName = "test-plan-name",
-            token = "test-token",
+            token = ProtonPaymentToken("test-token"),
             subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
 
@@ -220,7 +221,7 @@ class PostLoginAccountSetupTest {
         val currency = slot<Currency>()
         val cycle = slot<SubscriptionCycle>()
         val planNames = slot<List<String>>()
-        val paymentToken = slot<String>()
+        val paymentToken = slot<ProtonPaymentToken>()
         coVerify {
             performSubscribe.invoke(
                 capture(userId),
@@ -238,7 +239,7 @@ class PostLoginAccountSetupTest {
         assertEquals(Currency.EUR, currency.captured)
         assertEquals(SubscriptionCycle.YEARLY, cycle.captured)
         assertEquals(listOf("test-plan-name"), planNames.captured)
-        assertEquals("test-token", paymentToken.captured)
+        assertEquals(ProtonPaymentToken("test-token"), paymentToken.captured)
     }
 
     @Test

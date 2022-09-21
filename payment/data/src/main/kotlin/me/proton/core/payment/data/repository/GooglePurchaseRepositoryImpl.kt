@@ -20,6 +20,8 @@ package me.proton.core.payment.data.repository
 
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import javax.inject.Inject
 
@@ -28,19 +30,22 @@ public class GooglePurchaseRepositoryImpl @Inject constructor(
 ) : GooglePurchaseRepository {
     private val dao = paymentDatabase.googlePurchaseDao()
 
-    override suspend fun deleteByGooglePurchaseToken(googlePurchaseToken: String) {
-        dao.deleteByGooglePurchaseToken(googlePurchaseToken)
+    override suspend fun deleteByGooglePurchaseToken(googlePurchaseToken: GooglePurchaseToken) {
+        dao.deleteByGooglePurchaseToken(googlePurchaseToken.value)
     }
 
-    override suspend fun findGooglePurchaseToken(paymentToken: String): String? {
-        val entity = dao.findByPaymentToken(paymentToken)
-        return entity?.googlePurchaseToken
+    override suspend fun findGooglePurchaseToken(paymentToken: ProtonPaymentToken): GooglePurchaseToken? {
+        val entity = dao.findByPaymentToken(paymentToken.value)
+        return entity?.googlePurchaseToken?.let { GooglePurchaseToken(it) }
     }
 
-    override suspend fun updateGooglePurchase(googlePurchaseToken: String, paymentToken: String) {
+    override suspend fun updateGooglePurchase(
+        googlePurchaseToken: GooglePurchaseToken,
+        paymentToken: ProtonPaymentToken
+    ) {
         val entity = GooglePurchaseEntity(
-            googlePurchaseToken = googlePurchaseToken,
-            paymentToken = paymentToken
+            googlePurchaseToken = googlePurchaseToken.value,
+            paymentToken = paymentToken.value
         )
         dao.insertOrUpdate(entity)
     }

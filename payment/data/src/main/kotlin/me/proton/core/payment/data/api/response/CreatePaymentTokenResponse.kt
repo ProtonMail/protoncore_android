@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 
 @Serializable
 internal data class CreatePaymentTokenResponse(
@@ -38,7 +39,7 @@ internal data class CreatePaymentTokenResponse(
         PaymentTokenResult.CreatePaymentTokenResult(
             status = PaymentTokenStatus.map[status] ?: PaymentTokenStatus.NOT_SUPPORTED,
             approvalUrl = approvalUrl,
-            token = token,
+            token = ProtonPaymentToken(token),
             returnHost = returnHost
         )
 }

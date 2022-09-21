@@ -33,6 +33,7 @@ import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -52,7 +53,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testToken = "test-token"
+    private val testToken = ProtonPaymentToken("test-token")
     private val secureEndpoint = SecureEndpoint("test-secure-endpoint")
     // endregion
 

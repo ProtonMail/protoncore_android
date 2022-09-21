@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
@@ -71,7 +72,7 @@ internal class BillingIAPViewModel @Inject constructor(
 
             data class PurchaseSuccess(
                 val productId: String,
-                val purchaseToken: String,
+                val purchaseToken: GooglePurchaseToken,
                 val orderID: String
             ) : Success()
         }
@@ -219,7 +220,7 @@ internal class BillingIAPViewModel @Inject constructor(
     private fun onSubscriptionPurchased(purchase: Purchase) {
         _billingIAPState.value = State.Success.PurchaseSuccess(
             productId = selectedProduct.productId,
-            purchaseToken = purchase.purchaseToken,
+            purchaseToken = GooglePurchaseToken(purchase.purchaseToken),
             orderID = purchase.orderId
         )
     }

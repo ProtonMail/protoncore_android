@@ -26,6 +26,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 
@@ -41,14 +42,14 @@ public data class BillingResult(
 ) : Parcelable {
 
     public companion object {
-        public fun paymentDetails(clientId: ClientId, token: String): HumanVerificationDetails =
+        public fun paymentDetails(clientId: ClientId, token: ProtonPaymentToken): HumanVerificationDetails =
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = listOf(VerificationMethod.PAYMENT),
                 verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = TokenType.PAYMENT.value,
-                tokenCode = token
+                tokenCode = token.value
             )
     }
 }

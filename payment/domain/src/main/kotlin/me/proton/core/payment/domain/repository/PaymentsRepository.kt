@@ -26,6 +26,7 @@ import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -90,7 +91,7 @@ public interface PaymentsRepository {
      */
     public suspend fun getPaymentTokenStatus(
         sessionUserId: SessionUserId?,
-        paymentToken: String
+        paymentToken: ProtonPaymentToken
     ): PaymentTokenResult.PaymentTokenStatusResult
     // endregion
 

@@ -43,6 +43,7 @@ import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -95,7 +96,7 @@ class PaymentsRepositoryImplTest {
                 interfaceClass = PaymentsApi::class
             )
         } returns apiManager
-        repository = PaymentsRepositoryImpl(mockk(relaxed = true), apiProvider)
+        repository = PaymentsRepositoryImpl(apiProvider)
     }
 
     @Test
@@ -180,8 +181,13 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `payment token status success pending`() = runBlockingTest {
         // GIVEN
-        val testPaymentToken = "test-payment-token"
-        coEvery { apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Success(
+        val testPaymentToken = ProtonPaymentToken("test-payment-token")
+        coEvery {
+            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(
+                any(),
+                any()
+            )
+        } returns ApiResult.Success(
             PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
         )
         // WHEN
@@ -196,8 +202,13 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `payment token status success chargeable`() = runBlockingTest {
         // GIVEN
-        val testPaymentToken = "test-payment-token"
-        coEvery { apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Success(
+        val testPaymentToken = ProtonPaymentToken("test-payment-token")
+        coEvery {
+            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(
+                any(),
+                any()
+            )
+        } returns ApiResult.Success(
             PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         )
         // WHEN
@@ -212,8 +223,13 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `payment token status error`() = runBlockingTest {
         // GIVEN
-        val testPaymentToken = "test-payment-token"
-        coEvery { apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any(), any()) } returns ApiResult.Error.Http(
+        val testPaymentToken = ProtonPaymentToken("test-payment-token")
+        coEvery {
+            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(
+                any(),
+                any()
+            )
+        } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
@@ -233,7 +249,7 @@ class PaymentsRepositoryImplTest {
     fun `create payment token logged in new credit card success`() = runBlockingTest {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
@@ -247,14 +263,14 @@ class PaymentsRepositoryImplTest {
         // THEN
         assertNotNull(createPaymentTokenResult)
         assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
-        assertEquals("test-token", createPaymentTokenResult.token)
+        assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
     }
 
     @Test
     fun `create payment token sign up new credit card success`() = runBlockingTest {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
@@ -268,7 +284,7 @@ class PaymentsRepositoryImplTest {
         // THEN
         assertNotNull(createPaymentTokenResult)
         assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
-        assertEquals("test-token", createPaymentTokenResult.token)
+        assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
     }
 
     @Test
@@ -298,7 +314,7 @@ class PaymentsRepositoryImplTest {
     fun `create payment token logged in paypal success`() = runBlockingTest {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
@@ -312,7 +328,7 @@ class PaymentsRepositoryImplTest {
         // THEN
         assertNotNull(createPaymentTokenResult)
         assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
-        assertEquals("test-token", createPaymentTokenResult.token)
+        assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
     }
 
     @Test
@@ -387,7 +403,7 @@ class PaymentsRepositoryImplTest {
             codes = null,
             plans = mapOf("test-plan-id" to 1),
             cycle = SubscriptionCycle.YEARLY,
-            payment = PaymentBody.TokenPaymentBody("test-token-id"),
+            payment = PaymentBody.TokenPaymentBody(ProtonPaymentToken("test-token-id")),
             subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         // THEN
@@ -409,7 +425,7 @@ class PaymentsRepositoryImplTest {
                 codes = null,
                 plans = mapOf("test-plan-id" to 1),
                 cycle = SubscriptionCycle.YEARLY,
-                payment = PaymentBody.TokenPaymentBody("test-token-id"),
+                payment = PaymentBody.TokenPaymentBody(ProtonPaymentToken("test-token-id")),
                 subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         }

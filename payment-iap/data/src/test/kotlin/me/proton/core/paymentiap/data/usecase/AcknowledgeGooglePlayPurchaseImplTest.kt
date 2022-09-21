@@ -23,6 +23,8 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import kotlin.test.BeforeTest
@@ -42,17 +44,20 @@ internal class AcknowledgeGooglePlayPurchaseImplTest {
 
     @Test
     fun `acknowledges a purchase`() = runBlockingTest {
-        coEvery { googlePurchaseRepository.findGooglePurchaseToken("payment-token") } returns "google-purchase-token"
-        tested("payment-token")
+        val paymentToken = ProtonPaymentToken("payment-token")
+        val purchaseToken = GooglePurchaseToken("google-purchase-token")
+        coEvery { googlePurchaseRepository.findGooglePurchaseToken(paymentToken) } returns purchaseToken
+        tested(paymentToken)
 
-        coVerify { googleBillingRepository.acknowledgePurchase("google-purchase-token") }
+        coVerify { googleBillingRepository.acknowledgePurchase(purchaseToken) }
         verify { googleBillingRepository.close() }
-        coVerify { googlePurchaseRepository.deleteByGooglePurchaseToken("google-purchase-token") }
+        coVerify { googlePurchaseRepository.deleteByGooglePurchaseToken(purchaseToken) }
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `fails to find a corresponding payment token`() = runBlockingTest {
-        coEvery { googlePurchaseRepository.findGooglePurchaseToken("payment-token") } returns null
-        tested("payment-token")
+        val paymentToken = ProtonPaymentToken("payment-token")
+        coEvery { googlePurchaseRepository.findGooglePurchaseToken(paymentToken) } returns null
+        tested(paymentToken)
     }
 }

@@ -20,12 +20,13 @@ package me.proton.core.paymentiap.domain.entity
 
 import com.android.billingclient.api.Purchase
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 
 internal data class GooglePurchaseWrapper(val purchase: Purchase) : GooglePurchase {
     override val orderId: String get() = purchase.orderId
     override val packageName: String get() = purchase.packageName
     override val productIds: List<String> get() = purchase.products
-    override val purchaseToken: String get() = purchase.purchaseToken
+    override val purchaseToken: GooglePurchaseToken get() = GooglePurchaseToken(purchase.purchaseToken)
 }
 
 public fun GooglePurchase.unwrap(): Purchase = (this as GooglePurchaseWrapper).purchase

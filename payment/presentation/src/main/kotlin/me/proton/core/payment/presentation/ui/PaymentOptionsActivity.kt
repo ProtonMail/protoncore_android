@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.R
@@ -172,7 +173,7 @@ internal class PaymentOptionsActivity :
                     is BillingCommonViewModel.State.Success.SubscriptionCreated -> onPaymentResult(
                         BillingResult(
                             paySuccess = true,
-                            token = it.paymentToken,
+                            token = it.paymentToken?.value,
                             subscriptionCreated = true,
                             amount = it.amount,
                             currency = it.currency,
@@ -239,7 +240,7 @@ internal class PaymentOptionsActivity :
         paymentOptionsAdapter.notifyItemChanged(0) // invalidate the first option
     }
 
-    override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
+    override fun onThreeDSApprovalResult(amount: Long, token: ProtonPaymentToken, success: Boolean) {
         if (!success) {
             binding.payButton.setIdle()
             return

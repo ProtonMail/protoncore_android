@@ -18,11 +18,13 @@
 
 package me.proton.core.payment.domain.usecase
 
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
+
 public interface AcknowledgeGooglePlayPurchase {
     /** Acknowledge a Google Play purchase.
      * @param paymentToken The payment token obtained from Proton API.
      *  The token will be used to obtain a Google purchase token, which then
      *  will be used to acknowledge the purchase.
      */
-    public suspend operator fun invoke(paymentToken: String)
+    public suspend operator fun invoke(paymentToken: ProtonPaymentToken)
 }

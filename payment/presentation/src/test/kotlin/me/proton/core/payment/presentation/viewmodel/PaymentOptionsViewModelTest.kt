@@ -39,6 +39,7 @@ import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -362,7 +363,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         val testPlanServices = 1
         val testPlanType = PLAN_PRODUCT
         val testAmount = 5L
-        val testToken = "test-token"
+        val testToken = ProtonPaymentToken("test-token")
         // WHEN
         viewModel.onThreeDSTokenApproved(
             testUserId,

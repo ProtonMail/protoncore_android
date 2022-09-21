@@ -29,6 +29,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.test.kotlin.TestDispatcherProvider
@@ -64,14 +65,14 @@ internal class GoogleBillingRepositoryImplTest {
     @Test
     fun `acknowledge a purchase`() = runBlockingTest {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns BillingResult()
-        tested.use { it.acknowledgePurchase("token-123") }
+        tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
     }
 
     @Test(expected = BillingClientError::class)
     fun `fails to acknowledge a purchase`() = runBlockingTest {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns
             BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.ERROR).build()
-        tested.use { it.acknowledgePurchase("token-123") }
+        tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
     }
 
     @Test

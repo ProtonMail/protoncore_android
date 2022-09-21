@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -147,7 +148,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
         billingIAPViewModel.makePurchase(input?.userId, requireActivity())
     }
 
-    private fun onPurchaseSuccess(productId: String, purchaseToken: String, orderId: String) {
+    private fun onPurchaseSuccess(productId: String, purchaseToken: GooglePurchaseToken, orderId: String) {
         requireNotNull(billingInput)
         billingInput?.let {
             viewModel.subscribe(

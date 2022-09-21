@@ -41,6 +41,7 @@ import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalResult
 import me.proton.core.payment.presentation.viewmodel.PaymentTokenApprovalViewModel
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick
@@ -71,7 +72,7 @@ internal  class PaymentTokenApprovalActivity :
                     return request?.let { webRequest ->
                         viewModel.handleRedirection(
                             input.userId?.let { UserId(it) },
-                            input.paymentToken,
+                            ProtonPaymentToken(input.paymentToken),
                             webRequest.url,
                             input.returnHost
                         )

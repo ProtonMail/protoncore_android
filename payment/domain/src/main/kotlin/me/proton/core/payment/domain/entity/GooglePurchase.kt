@@ -22,5 +22,5 @@ public interface GooglePurchase {
     public val orderId: String
     public val packageName: String
     public val productIds: List<String>
-    public val purchaseToken: String
+    public val purchaseToken: GooglePurchaseToken
 }

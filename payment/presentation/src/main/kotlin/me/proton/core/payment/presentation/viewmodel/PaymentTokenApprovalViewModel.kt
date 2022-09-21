@@ -34,6 +34,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -64,7 +65,7 @@ public class PaymentTokenApprovalViewModel @Inject constructor(
      */
     public fun handleRedirection(
         userId: UserId?,
-        paymentToken: String,
+        paymentToken: ProtonPaymentToken,
         uri: Uri,
         paymentReturnHost: String
     ): Boolean = if (uri.host == secureEndpoint.host || uri.host == paymentReturnHost) {
@@ -95,7 +96,7 @@ public class PaymentTokenApprovalViewModel @Inject constructor(
         }
     }
 
-    private fun checkPaymentTokenApproved(userId: UserId?, paymentToken: String) = flow {
+    private fun checkPaymentTokenApproved(userId: UserId?, paymentToken: ProtonPaymentToken) = flow {
         emit(State.Processing)
         emit(State.Success(getPaymentTokenStatus(userId, paymentToken).status))
     }.catch {

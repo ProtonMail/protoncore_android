@@ -31,9 +31,11 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
@@ -144,7 +146,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
 
         billingViewModel.subscriptionResult.test {
@@ -179,7 +181,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     fun `upgrade subscription with Google IAP success handled properly`() = coroutinesTest {
         // GIVEN
         val productId = "test-product-it"
-        val purchaseToken = "test-purchase-token"
+        val purchaseToken = GooglePurchaseToken("test-purchase-token")
         val orderId = "test-order-id"
         val packageName = "test-package-name"
         val paymentType = PaymentType.GoogleIAP(productId, purchaseToken, orderId, packageName)
@@ -213,7 +215,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 paymentType
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.CHARGEABLE, null, "test-token", null
+            PaymentTokenStatus.CHARGEABLE, null, ProtonPaymentToken("test-token"), null
         )
 
         coEvery {
@@ -224,7 +226,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testSubscriptionCycle,
                 testPlanIds,
                 null,
-                "test-token",
+                ProtonPaymentToken("test-token"),
                 SubscriptionManagement.GOOGLE_MANAGED
             )
         } returns mockk()
@@ -288,7 +290,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
 
         billingViewModel.subscriptionResult.test {
@@ -315,7 +317,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     fun `sign up subscription Google IAP success handled properly`() = coroutinesTest {
         // GIVEN
         val productId = "test-product-it"
-        val purchaseToken = "test-purchase-token"
+        val purchaseToken = GooglePurchaseToken("test-purchase-token")
         val orderId = "test-order-id"
         val packageName = "test-package-name"
         val paymentType = PaymentType.GoogleIAP(productId, purchaseToken, orderId, packageName)
@@ -348,7 +350,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 paymentType
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.CHARGEABLE, null, "test-token", null
+            PaymentTokenStatus.CHARGEABLE, null, ProtonPaymentToken("test-token"), null
         )
 
         billingViewModel.subscriptionResult.test {
@@ -405,7 +407,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testPaymentMethodId
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
         billingViewModel.subscriptionResult.test {
             // WHEN
@@ -473,7 +475,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testPaymentMethodId
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
 
         billingViewModel.subscriptionResult.test {
@@ -607,7 +609,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.CHARGEABLE, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.CHARGEABLE, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
 
         coEvery {
@@ -618,7 +620,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testSubscriptionCycle,
                 testPlanIds,
                 null,
-                "test-token",
+                ProtonPaymentToken("test-token"),
                 SubscriptionManagement.PROTON_MANAGED
             )
         } returns mockk()
@@ -638,7 +640,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) {
                 performSubscribe.invoke(
                     testUserId, 2, testCurrency, testSubscriptionCycle,
-                    testPlanIds, null, "test-token", SubscriptionManagement.PROTON_MANAGED
+                    testPlanIds, null, ProtonPaymentToken("test-token"), SubscriptionManagement.PROTON_MANAGED
                 )
             }
             assertIs<BillingCommonViewModel.State.Idle>(awaitItem())
@@ -732,7 +734,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
 
         billingViewModel.subscriptionResult.test {
@@ -748,7 +750,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 2,
                 testCurrency,
                 testSubscriptionCycle,
-                "test-token",
+                ProtonPaymentToken("test-token"),
                 SubscriptionManagement.PROTON_MANAGED
             )
 
@@ -791,13 +793,13 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
-            PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
 
         coEvery {
             performSubscribe.invoke(
                 testUserId, 2, testCurrency, testSubscriptionCycle, testPlanIds, null,
-                "test-token", SubscriptionManagement.PROTON_MANAGED
+                ProtonPaymentToken("test-token"), SubscriptionManagement.PROTON_MANAGED
             )
         } returns mockk()
 
@@ -819,7 +821,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 2,
                 testCurrency,
                 testSubscriptionCycle,
-                "test-token",
+                ProtonPaymentToken("test-token"),
                 SubscriptionManagement.PROTON_MANAGED
             )
             // THEN

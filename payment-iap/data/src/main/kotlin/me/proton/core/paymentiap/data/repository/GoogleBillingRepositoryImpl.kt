@@ -43,6 +43,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
@@ -67,9 +68,9 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
 
     private val connectedBillingClient = connectedBillingClientFactory(billingClientFactory(purchasesUpdatedListener))
 
-    override suspend fun acknowledgePurchase(purchaseToken: String) {
+    override suspend fun acknowledgePurchase(purchaseToken: GooglePurchaseToken) {
         val params = AcknowledgePurchaseParams.newBuilder()
-            .setPurchaseToken(purchaseToken)
+            .setPurchaseToken(purchaseToken.value)
             .build()
 
         val result = connectedBillingClient.withClient { it.acknowledgePurchase(params) }

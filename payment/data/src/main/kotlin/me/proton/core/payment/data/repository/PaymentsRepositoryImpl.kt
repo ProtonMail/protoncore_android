@@ -38,6 +38,7 @@ import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -118,7 +119,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
             val payment = PaymentTypeEntity.GoogleIAP(
                 IAPDetailsBody(
                     productId = paymentType.productId,
-                    purchaseToken = paymentType.purchaseToken,
+                    purchaseToken = paymentType.purchaseToken.value,
                     orderId = paymentType.orderId,
                     packageName = paymentType.packageName
                 )
@@ -129,10 +130,10 @@ public class PaymentsRepositoryImpl @Inject constructor(
 
     override suspend fun getPaymentTokenStatus(
         sessionUserId: SessionUserId?,
-        paymentToken: String
+        paymentToken: ProtonPaymentToken
     ): PaymentTokenResult.PaymentTokenStatusResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentTokenStatus(paymentToken).toPaymentTokenStatusResult()
+            getPaymentTokenStatus(paymentToken.value).toPaymentTokenStatusResult()
         }.valueOrThrow
 
     override suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod> =
@@ -172,7 +173,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
     ): Subscription =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val paymentBodyEntity = if (payment is PaymentBody.TokenPaymentBody) {
-                TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token))
+                TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token.value))
             } else null
             createUpdateSubscription(
                 CreateSubscription(

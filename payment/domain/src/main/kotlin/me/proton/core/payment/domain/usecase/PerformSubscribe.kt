@@ -20,6 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -41,7 +42,7 @@ public interface PerformSubscribe {
         cycle: SubscriptionCycle,
         planNames: List<String>,
         codes: List<String>? = null,
-        paymentToken: String? = null,
+        paymentToken: ProtonPaymentToken? = null,
         subscriptionManagement: SubscriptionManagement
     ): Subscription
 }

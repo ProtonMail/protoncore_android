@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
 import androidx.viewbinding.ViewBinding
 import me.proton.core.payment.domain.entity.PaymentTokenResult
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -57,7 +58,7 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
                 if (!approved) {
                     showToast(R.string.payments_3ds_not_approved)
                 }
-                onThreeDSApprovalResult(amount, token, approved)
+                onThreeDSApprovalResult(amount, ProtonPaymentToken(token), approved)
             }
         }
 
@@ -75,7 +76,11 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
     ) {
         tokenApprovalLauncher?.launch(
             PaymentTokenApprovalInput(
-                userId, paymentTokenResult.token, paymentTokenResult.returnHost!!, paymentTokenResult.approvalUrl!!, amount
+                userId,
+                paymentTokenResult.token.value,
+                paymentTokenResult.returnHost!!,
+                paymentTokenResult.approvalUrl!!,
+                amount
             )
         )
     }
@@ -112,7 +117,7 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
         }
     }
 
-    open fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
+    open fun onThreeDSApprovalResult(amount: Long, token: ProtonPaymentToken, success: Boolean) {
         // no default operation
     }
 

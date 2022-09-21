@@ -46,22 +46,22 @@ public final class me/proton/core/auth/domain/entity/AuthInfo {
 }
 
 public final class me/proton/core/auth/domain/entity/BillingDetails {
-	public fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)V
+	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()J
 	public final fun component2 ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
+	public final fun component5-oTEqFM4 ()Ljava/lang/String;
 	public final fun component6 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun copy (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/auth/domain/entity/BillingDetails;
-	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/BillingDetails;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/BillingDetails;
+	public final fun copy-4KdbQwM (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/auth/domain/entity/BillingDetails;
+	public static synthetic fun copy-4KdbQwM$default (Lme/proton/core/auth/domain/entity/BillingDetails;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/BillingDetails;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
 	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getPlanName ()Ljava/lang/String;
 	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun getToken ()Ljava/lang/String;
+	public final fun getToken-oTEqFM4 ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

@@ -25,6 +25,7 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 
 /** Repository for interacting with Google Play Billing Client.
  * Make sure to [destroy] it once you're done. You can use the [use] function to do that automatically.
@@ -36,7 +37,7 @@ public interface GoogleBillingRepository : AutoCloseable {
      * @param purchaseToken A token from [Purchase.getPurchaseToken].
      * @throws BillingClientError
      */
-    public suspend fun acknowledgePurchase(purchaseToken: String)
+    public suspend fun acknowledgePurchase(purchaseToken: GooglePurchaseToken)
 
     /** Closes the connection to Google Billing client.
      * After this method is called, it's not possible to interact with this instance anymore.

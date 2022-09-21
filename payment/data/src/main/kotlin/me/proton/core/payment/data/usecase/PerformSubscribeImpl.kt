@@ -24,6 +24,7 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -50,7 +51,7 @@ public class PerformSubscribeImpl @Inject constructor(
         cycle: SubscriptionCycle,
         planNames: List<String>,
         codes: List<String>?,
-        paymentToken: String?,
+        paymentToken: ProtonPaymentToken?,
         subscriptionManagement: SubscriptionManagement
     ): Subscription {
         require(amount >= 0)

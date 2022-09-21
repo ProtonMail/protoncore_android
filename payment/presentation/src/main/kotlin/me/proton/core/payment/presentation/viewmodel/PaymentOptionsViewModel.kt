@@ -37,6 +37,7 @@ import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
@@ -172,7 +173,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
-        token: String,
+        token: ProtonPaymentToken,
         external: SubscriptionManagement
     ) = super.onThreeDSTokenApproved(
         userId,

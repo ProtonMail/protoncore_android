@@ -50,6 +50,7 @@ import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -178,7 +179,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                 currency = it.currency,
                 cycle = it.cycle,
                 planName = subscriptionDetails.planName,
-                token = it.token,
+                token = it.token?.let { value -> ProtonPaymentToken(value) },
                 subscriptionManagement = it.subscriptionManagement
             )
         }

@@ -22,6 +22,10 @@ public sealed class PaymentType(public val type: String) {
     public data class CreditCard(val card: Card) : PaymentType("card")
     public object PayPal : PaymentType("paypal")
     public data class PaymentMethod(val paymentMethodId: String) : PaymentType("paymentmethod")
-    public data class GoogleIAP(val productId: String, val purchaseToken: String, val orderId: String, val packageName: String) :
-        PaymentType("google")
+    public data class GoogleIAP(
+        val productId: String,
+        val purchaseToken: GooglePurchaseToken,
+        val orderId: String,
+        val packageName: String
+    ) : PaymentType("google")
 }

@@ -26,6 +26,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
@@ -40,8 +41,9 @@ class GetPaymentTokenStatusTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testPaymentToken = "test-payment-token"
-    private val testDefaultPaymentTokenStatusResult = PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
+    private val testPaymentToken = ProtonPaymentToken("test-payment-token")
+    private val testDefaultPaymentTokenStatusResult =
+        PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
 
     // endregion
     private lateinit var useCase: GetPaymentTokenStatus
@@ -74,10 +76,10 @@ class GetPaymentTokenStatusTest {
     @Test
     fun `payment token status empty token handled correctly`() = runBlockingTest {
         coEvery {
-            repository.getPaymentTokenStatus(null, "")
+            repository.getPaymentTokenStatus(null, ProtonPaymentToken(""))
         } returns testDefaultPaymentTokenStatusResult
         assertFailsWith(IllegalArgumentException::class) {
-            useCase.invoke(null, "")
+            useCase.invoke(null, ProtonPaymentToken(""))
         }
     }
 

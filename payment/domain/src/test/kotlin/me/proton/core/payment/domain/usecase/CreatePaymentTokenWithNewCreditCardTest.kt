@@ -28,6 +28,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
@@ -50,7 +51,7 @@ class CreatePaymentTokenWithNewCreditCardTest {
         expirationMonth = "01", expirationYear = "2021", name = "Test", country = "Test Country", zip = "123"
     )
     private val testPayment = PaymentType.CreditCard(testDefaultCardWithPaymentDetails)
-    private val testToken = "test-token"
+    private val testToken = ProtonPaymentToken("test-token")
     private val testApprovalUrl = "test-approval-url"
     private val testReturnHost = "test-return-host"
     private val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(

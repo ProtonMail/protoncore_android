@@ -19,14 +19,15 @@
 package me.proton.core.auth.domain.entity
 
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 
-data class BillingDetails(
+data class BillingDetails constructor(
     val amount: Long,
     val currency: Currency,
     val cycle: SubscriptionCycle,
     val planName: String,
-    val token: String?,
+    val token: ProtonPaymentToken?,
     val subscriptionManagement: SubscriptionManagement
 )

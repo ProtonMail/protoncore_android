@@ -18,11 +18,14 @@
 
 package me.proton.core.payment.domain.repository
 
-public interface GooglePurchaseRepository {
-    public suspend fun deleteByGooglePurchaseToken(googlePurchaseToken: String)
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 
-    public suspend fun findGooglePurchaseToken(paymentToken: String): String?
+public interface GooglePurchaseRepository {
+    public suspend fun deleteByGooglePurchaseToken(googlePurchaseToken: GooglePurchaseToken)
+
+    public suspend fun findGooglePurchaseToken(paymentToken: ProtonPaymentToken): GooglePurchaseToken?
 
     /** Locally updates a link between [googlePurchaseToken] and (Proton) [paymentToken]. */
-    public suspend fun updateGooglePurchase(googlePurchaseToken: String, paymentToken: String)
+    public suspend fun updateGooglePurchase(googlePurchaseToken: GooglePurchaseToken, paymentToken: ProtonPaymentToken)
 }

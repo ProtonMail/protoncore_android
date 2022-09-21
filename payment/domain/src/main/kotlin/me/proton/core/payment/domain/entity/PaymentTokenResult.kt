@@ -21,10 +21,10 @@ package me.proton.core.payment.domain.entity
 public sealed class PaymentTokenResult(
     public open val status: PaymentTokenStatus
 ) {
-    public data class CreatePaymentTokenResult(
+    public data class CreatePaymentTokenResult constructor(
         override val status: PaymentTokenStatus,
         val approvalUrl: String?,
-        val token: String,
+        val token: ProtonPaymentToken,
         val returnHost: String?
     ) : PaymentTokenResult(status)
 

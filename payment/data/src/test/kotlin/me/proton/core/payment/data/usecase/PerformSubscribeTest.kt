@@ -29,6 +29,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -51,7 +52,7 @@ class PerformSubscribeTest {
     // region test data
     private val testUserId = UserId("test-user-id")
     private val testPlanName = "test-plan-name"
-    private val testPaymentToken = "test-payment-token"
+    private val testPaymentToken = ProtonPaymentToken("test-payment-token")
     private val testSubscriptionId = "test-subscription-id"
     private val testSubscription = Subscription(
         id = testSubscriptionId,
@@ -292,7 +293,7 @@ class PerformSubscribeTest {
             cycle = SubscriptionCycle.YEARLY,
             planNames = listOf(testPlanName),
             codes = null,
-            paymentToken = "token",
+            paymentToken = ProtonPaymentToken("token"),
             subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
 

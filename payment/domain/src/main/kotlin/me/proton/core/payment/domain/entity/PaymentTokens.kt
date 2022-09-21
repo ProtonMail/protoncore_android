@@ -18,6 +18,8 @@
 
 package me.proton.core.payment.domain.entity
 
-public sealed class PaymentBody(public val type: String) {
-    public data class TokenPaymentBody(val token: ProtonPaymentToken) : PaymentBody("token")
-}
+@JvmInline
+public value class GooglePurchaseToken(public val value: String)
+
+@JvmInline
+public value class ProtonPaymentToken(public val value: String)
