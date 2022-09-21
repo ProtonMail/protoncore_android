@@ -22,7 +22,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.humanverification.data.api.UserVerificationApi
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
@@ -70,10 +70,12 @@ class UserVerificationRepositoryImplTest {
 
     private lateinit var remoteRepository: UserVerificationRepository
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun before() {
         MockKAnnotations.init(this)
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
         coEvery { clientIdProvider.getClientId(any()) } returns clientId
         every { apiManagerFactory.create(sessionId, UserVerificationApi::class) } returns apiManager
@@ -82,17 +84,17 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `send code pass empty email`() = runBlockingTest {
+    fun `send code pass empty email`() = runTest(dispatcherProvider.Main) {
         remoteRepository.sendVerificationCodeEmailAddress(sessionId, "", verificationTypeEmail)
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `send code pass empty sms`() = runBlockingTest {
+    fun `send code pass empty sms`() = runTest(dispatcherProvider.Main) {
         remoteRepository.sendVerificationCodePhoneNumber(sessionId, "", verificationTypeSms)
     }
 
     @Test
-    fun `send code pass email`() = runBlockingTest {
+    fun `send code pass email`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
 
@@ -100,7 +102,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `send code pass sms`() = runBlockingTest {
+    fun `send code pass sms`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
 
@@ -108,7 +110,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun `send code pass email error`() = runBlockingTest {
+    fun `send code pass email error`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
 
@@ -116,7 +118,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun `send code pass sms error`() = runBlockingTest {
+    fun `send code pass sms error`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
 
@@ -124,7 +126,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `send verification token sms`() = runBlockingTest {
+    fun `send verification token sms`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
 
@@ -132,7 +134,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `send verification token email`() = runBlockingTest {
+    fun `send verification token email`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
 
@@ -140,7 +142,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun `send verification token error sms`() = runBlockingTest {
+    fun `send verification token error sms`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
 
@@ -148,7 +150,7 @@ class UserVerificationRepositoryImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun `send verification token error email`() = runBlockingTest {
+    fun `send verification token error email`() = runTest(dispatcherProvider.Main) {
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
 

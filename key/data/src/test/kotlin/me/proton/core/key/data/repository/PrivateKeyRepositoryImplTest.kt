@@ -21,7 +21,7 @@ package me.proton.core.key.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -59,6 +59,8 @@ class PrivateKeyRepositoryImplTest {
 
     // endregion
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
@@ -69,13 +71,13 @@ class PrivateKeyRepositoryImplTest {
             ): ApiResult<T> = ApiResult.Success(block.invoke(keyApi))
         }
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every { apiFactory.create(any(), interfaceClass = KeyApi::class) } returns apiManager
         repository = PrivateKeyRepositoryImpl(apiProvider)
     }
 
     @Test
-    fun updatePrivateKeys_fails_wrong_srp_server_proof() = runBlockingTest {
+    fun updatePrivateKeys_fails_wrong_srp_server_proof() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { keyApi.updatePrivateKeys(any()) } returns SRPAuthenticationResponse(
             code = 1000,

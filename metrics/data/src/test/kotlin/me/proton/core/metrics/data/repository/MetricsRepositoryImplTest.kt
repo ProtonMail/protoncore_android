@@ -25,7 +25,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import me.proton.core.domain.entity.UserId
@@ -67,6 +67,8 @@ internal class MetricsRepositoryImplTest {
 
     lateinit var metricsRepository: MetricsRepositoryImpl
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun setUp() {
         coEvery { sessionProvider.getSessionId(userId) } returns sessionId
@@ -93,33 +95,35 @@ internal class MetricsRepositoryImplTest {
                 ApiResult.Success(Unit)
             }
         }
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
         metricsRepository = MetricsRepositoryImpl(apiProvider)
     }
 
     @Test
-    fun `post(userId, metrics) makes an authenticated api call to post the metrics`() = runBlockingTest {
-        // given
-        coJustRun { authenticatedApi.postMetrics(any()) }
-        // when
-        metricsRepository.post(userId, metrics)
-        // then 
-        coVerify {
-            authenticatedApi.postMetrics(metrics.toMetricsRequest())
-            unauthenticatedApi wasNot called
+    fun `post(userId, metrics) makes an authenticated api call to post the metrics`() =
+        runTest(dispatcherProvider.Main) {
+            // given
+            coJustRun { authenticatedApi.postMetrics(any()) }
+            // when
+            metricsRepository.post(userId, metrics)
+            // then
+            coVerify {
+                authenticatedApi.postMetrics(metrics.toMetricsRequest())
+                unauthenticatedApi wasNot called
+            }
         }
-    }
 
     @Test
-    fun `post(null, metrics) makes an unauthenticated api call to post the metrics`() = runBlockingTest {
-        // given
-        coJustRun { unauthenticatedApi.postMetrics(any()) }
-        // when
-        metricsRepository.post(null, metrics)
-        // then
-        coVerify {
-            unauthenticatedApi.postMetrics(metrics.toMetricsRequest())
-            authenticatedApi wasNot called
+    fun `post(null, metrics) makes an unauthenticated api call to post the metrics`() =
+        runTest(dispatcherProvider.Main) {
+            // given
+            coJustRun { unauthenticatedApi.postMetrics(any()) }
+            // when
+            metricsRepository.post(null, metrics)
+            // then
+            coVerify {
+                unauthenticatedApi.postMetrics(metrics.toMetricsRequest())
+                authenticatedApi wasNot called
+            }
         }
-    }
 }

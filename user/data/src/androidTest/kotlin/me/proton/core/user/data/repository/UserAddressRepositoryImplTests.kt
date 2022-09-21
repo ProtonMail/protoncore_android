@@ -110,6 +110,8 @@ class UserAddressRepositoryImplTests {
 
     private val product = Product.Mail
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -122,7 +124,7 @@ class UserAddressRepositoryImplTests {
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
         every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
         userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
 

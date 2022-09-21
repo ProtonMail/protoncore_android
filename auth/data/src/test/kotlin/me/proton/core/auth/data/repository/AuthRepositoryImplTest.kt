@@ -18,12 +18,13 @@
 
 package me.proton.core.auth.data.repository
 
+import java.net.ConnectException
 import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.ScopeInfo
@@ -43,7 +44,6 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import org.junit.Test
-import java.net.ConnectException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -87,12 +87,14 @@ class AuthRepositoryImplTest {
 
     private val product = Product.Mail
 
+    private val testDispatcherProvider = TestDispatcherProvider
+
     // endregion
     @Before
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, testDispatcherProvider)
         every {
             apiManagerFactory.create(
                 interfaceClass = AuthenticationApi::class
@@ -108,7 +110,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login info success result`() = runBlockingTest {
+    fun `login info success result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<LoginInfo>(any(), any()) } returns ApiResult.Success(successLoginInfo)
         // WHEN
@@ -119,7 +121,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login info error result`() = runBlockingTest {
+    fun `login info error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<LoginInfo>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -136,7 +138,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login success result`() = runBlockingTest {
+    fun `login success result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         every { successSessionInfo.username } returns testUsername
         every { successSessionInfo.accessToken } returns testAccessToken
@@ -157,7 +159,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login success result with frames`() = runBlockingTest {
+    fun `login success result with frames`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         every { successSessionInfo.username } returns testUsername
         every { successSessionInfo.accessToken } returns testAccessToken
@@ -188,7 +190,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login error result`() = runBlockingTest {
+    fun `login error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
@@ -211,7 +213,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login error result with frames`() = runBlockingTest {
+    fun `login error result with frames`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
@@ -244,7 +246,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login fails because server returns wrong SRP proof`() = runBlockingTest {
+    fun `login fails because server returns wrong SRP proof`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         val block = slot<suspend AuthenticationApi.() -> SessionInfo>()
         coEvery { apiManager.invoke(any(), capture(block)) } coAnswers {
@@ -269,7 +271,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `logout success result`() = runBlockingTest {
+    fun `logout success result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
         // WHEN
@@ -279,7 +281,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `logout api error result`() = runBlockingTest {
+    fun `logout api error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
@@ -291,7 +293,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `logout connectivity error result`() = runBlockingTest {
+    fun `logout connectivity error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Connection(
             potentialBlock = false, cause = ConnectException("connection refused")
@@ -303,7 +305,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `performSecondFactor code success result`() = runBlockingTest {
+    fun `performSecondFactor code success result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         every { successScopeInfo.scope } returns "test-scope"
         every { successScopeInfo.scopes } returns listOf("scope1", "scope2")
@@ -318,7 +320,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `performSecondFactor u2f success result`() = runBlockingTest {
+    fun `performSecondFactor u2f success result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         every { successScopeInfo.scope } returns "test-scope"
         every { successScopeInfo.scopes } returns listOf("scope1", "scope2")

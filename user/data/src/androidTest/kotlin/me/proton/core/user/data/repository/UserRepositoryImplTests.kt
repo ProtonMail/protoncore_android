@@ -46,7 +46,6 @@ import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.android.runBlockingWithTimeout
@@ -63,7 +62,6 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
-import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -100,6 +98,8 @@ class UserRepositoryImplTests {
         expectedServerProof = "test-server-proof"
     )
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -110,7 +110,7 @@ class UserRepositoryImplTests {
         coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
         userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
 

@@ -21,7 +21,7 @@ package me.proton.core.plan.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
@@ -55,11 +55,13 @@ class PlansRepositoryImplTest {
     private val testUserId = "test-user-id"
     // endregion
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every {
             apiFactory.create(
                 interfaceClass = PlansApi::class
@@ -75,7 +77,7 @@ class PlansRepositoryImplTest {
     }
 
     @Test
-    fun `plans return data no user returns non empty`() = runBlockingTest {
+    fun `plans return data no user returns non empty`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plans = listOf(
             Plan(
@@ -113,7 +115,7 @@ class PlansRepositoryImplTest {
     }
 
     @Test
-    fun `plans return data no user returns empty list`() = runBlockingTest {
+    fun `plans return data no user returns empty list`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plans = emptyList<Plan>()
         coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
@@ -125,7 +127,7 @@ class PlansRepositoryImplTest {
     }
 
     @Test
-    fun `plans return data for user id`() = runBlockingTest {
+    fun `plans return data for user id`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plans = listOf(
             Plan(
@@ -163,7 +165,7 @@ class PlansRepositoryImplTest {
     }
 
     @Test
-    fun `plans return data for user id returns empty list`() = runBlockingTest {
+    fun `plans return data for user id returns empty list`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plans = emptyList<Plan>()
         coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
@@ -175,7 +177,7 @@ class PlansRepositoryImplTest {
     }
 
     @Test
-    fun `plans return error`() = runBlockingTest {
+    fun `plans return error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -192,17 +194,17 @@ class PlansRepositoryImplTest {
     }
 
     @Test
-    fun `plans default return data`() = runBlockingTest {
+    fun `plans default return data`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val planDefault = Plan(
-                id = "plan-id-1",
-                type = 1,
-                cycle = 1,
-                name = "Plan 1",
-                title = "Plan Title 1",
-                currency = "CHF",
-                amount = 10,
-                maxDomains = 1,
+            id = "plan-id-1",
+            type = 1,
+            cycle = 1,
+            name = "Plan 1",
+            title = "Plan Title 1",
+            currency = "CHF",
+            amount = 10,
+            maxDomains = 1,
                 maxAddresses = 1,
                 maxCalendars = 1,
                 maxSpace = 1,

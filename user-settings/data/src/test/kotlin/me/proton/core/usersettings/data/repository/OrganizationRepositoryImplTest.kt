@@ -23,7 +23,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -61,12 +61,14 @@ class OrganizationRepositoryImplTest {
     private val testUserId = "test-user-id"
     // endregion
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
         every { db.organizationDao() } returns organizationDao
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every { apiFactory.create(any(), interfaceClass = OrganizationApi::class) } returns TestApiManager(
             organizationApi
         )
@@ -75,7 +77,7 @@ class OrganizationRepositoryImplTest {
     }
 
     @Test
-    fun `get organization returns success`() = runBlockingTest {
+    fun `get organization returns success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val organization = OrganizationResponse(
             email = "test-email",

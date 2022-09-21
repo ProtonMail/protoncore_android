@@ -35,14 +35,13 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.db.FeatureFlagDao
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.featureflag.data.local.FeatureFlagLocalDataSourceImpl
 import me.proton.core.featureflag.data.local.orGlobal
-import me.proton.core.featureflag.data.local.toFeatureFlag
 import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
@@ -103,16 +102,18 @@ class FeatureFlagRepositoryImplTest {
     private lateinit var remote: FeatureFlagRemoteDataSource
     private lateinit var repository: FeatureFlagRepository
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun setUp() {
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
         local = spyk(FeatureFlagLocalDataSourceImpl(database))
         remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider))
         repository = FeatureFlagRepositoryImpl(local, remote, workManager)
     }
 
     @Test
-    fun featureFlagIsReturnedFromDbWhenAvailable() = runBlockingTest {
+    fun featureFlagIsReturnedFromDbWhenAvailable() = runTest(dispatcherProvider.Main) {
         // Given
         val dbFlow = flowOf(listOf(enabledFeatureEntity))
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
@@ -127,7 +128,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun getUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runBlockingTest {
+    fun getUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runTest(dispatcherProvider.Main) {
         // Given
         val nullUserId: UserId? = null
         val dbFlow = flowOf(
@@ -154,7 +155,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun observeUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runBlockingTest {
+    fun observeUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runTest(dispatcherProvider.Main) {
         // Given
         val nullUserId: UserId? = null
         val dbFlow = flowOf(
@@ -183,7 +184,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun featureFlagValueIsObservedInDb() = runBlockingTest {
+    fun featureFlagValueIsObservedInDb() = runTest(dispatcherProvider.Main) {
         // Given
         val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
@@ -311,7 +312,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun prefetchFeatureFlagsEnqueueFetchWorker() = runBlockingTest {
+    fun prefetchFeatureFlagsEnqueueFetchWorker() = runTest(dispatcherProvider.Main) {
         val featureIdsString = "${featureId.id},${featureId1.id}"
         coEvery { featuresApi.getFeatureFlags(featureIdsString) } returns GetFeaturesResponse(
             resultCode = 1000,

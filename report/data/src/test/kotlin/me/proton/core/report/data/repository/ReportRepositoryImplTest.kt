@@ -21,7 +21,7 @@ package me.proton.core.report.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -61,6 +61,8 @@ internal class ReportRepositoryImplTest {
         Product.Mail
     )
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun setUp() {
         mockApiManager = mockk()
@@ -68,12 +70,12 @@ internal class ReportRepositoryImplTest {
         mockApiManagerFactory = mockk {
             every { create(any(), ReportApi::class) } returns mockApiManager
         }
-        mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider, TestDispatcherProvider)
+        mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider, dispatcherProvider)
         tested = ReportRepositoryImpl(mockApiProvider)
     }
 
     @Test
-    fun `successful report`() = runBlockingTest {
+    fun `successful report`() = runTest(dispatcherProvider.Main) {
         coEvery {
             mockApiManager.invoke<GenericResponse>(
                 any(),
@@ -84,7 +86,7 @@ internal class ReportRepositoryImplTest {
     }
 
     @Test
-    fun `failed report http error`() = runBlockingTest {
+    fun `failed report http error`() = runTest(dispatcherProvider.Main) {
         coEvery {
             mockApiManager.invoke<GenericResponse>(
                 any(),
@@ -99,7 +101,7 @@ internal class ReportRepositoryImplTest {
     }
 
     @Test
-    fun `failed report bad result`() = runBlockingTest {
+    fun `failed report bad result`() = runTest(dispatcherProvider.Main) {
         coEvery {
             mockApiManager.invoke<GenericResponse>(
                 any(),

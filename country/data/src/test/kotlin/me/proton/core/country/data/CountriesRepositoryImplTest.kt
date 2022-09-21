@@ -24,10 +24,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
 import me.proton.core.country.data.repository.CountriesRepositoryImpl
 import me.proton.core.country.data.repository.CountriesRepositoryImpl.Companion.FILE_NAME_ALL_COUNTRIES
@@ -104,7 +103,7 @@ class CountriesRepositoryImplTest {
 
     private val context = mockk<Context>(relaxed = true)
     private lateinit var repository: CountriesRepositoryImpl
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun beforeEveryTest() {
@@ -119,7 +118,7 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `all countries returns sorted list`() = runBlockingTest {
+    fun `all countries returns sorted list`() = runTest(testDispatcher) {
         val result = repository.getAllCountriesSorted()
         assertEquals(9, result.size)
         val firstCountry = result[0]
@@ -127,14 +126,14 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `all countries returns empty`() = runBlockingTest {
+    fun `all countries returns empty`() = runTest(testDispatcher) {
         every { context.readFromAssets(FILE_NAME_ALL_COUNTRIES) } returns testDataEmptyCountries
         val result = repository.getAllCountriesSorted()
         assertEquals(0, result.size)
     }
 
     @Test
-    fun `countries return success for empty file country list`() = runBlockingTest {
+    fun `countries return success for empty file country list`() = runTest(testDispatcher) {
         // GIVEN
         val emptyCountries = """
             {
@@ -149,7 +148,7 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `countries return error for invalid empty file`() = runBlockingTest {
+    fun `countries return error for invalid empty file`() = runTest(testDispatcher) {
         // GIVEN
         val errorCountries = """
             
@@ -162,14 +161,14 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `country code returns success`() = runBlockingTest {
+    fun `country code returns success`() = runTest(testDispatcher) {
         val result = repository.getCountry("Second")
         assertNotNull(result)
         assertEquals("SECOND", result.code)
     }
 
     @Test
-    fun `country code for nonexistent returns properly`() = runBlockingTest {
+    fun `country code for nonexistent returns properly`() = runTest(testDispatcher) {
         val result = repository.getCountry("Fourth")
         assertNotNull(result)
         assertEquals("FOURTH", result.code)

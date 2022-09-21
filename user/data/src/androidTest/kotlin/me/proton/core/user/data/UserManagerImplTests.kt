@@ -34,11 +34,11 @@ import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
@@ -107,6 +107,8 @@ class UserManagerImplTests {
 
     private val product = Product.Mail
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -118,7 +120,7 @@ class UserManagerImplTests {
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
         every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
         keySaltRepository = KeySaltRepositoryImpl(db, apiProvider)
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)

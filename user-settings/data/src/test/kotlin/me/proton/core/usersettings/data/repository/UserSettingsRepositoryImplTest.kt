@@ -24,14 +24,13 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
@@ -78,12 +77,14 @@ class UserSettingsRepositoryImplTest {
 
     // endregion
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
         every { db.userSettingsDao() } returns userSettingsDao
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every { apiFactory.create(any(), interfaceClass = UserSettingsApi::class) } returns TestApiManager(
             userSettingsApi
         )
@@ -92,7 +93,7 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `user settings returns success`() = runBlockingTest {
+    fun `user settings returns success`() = runTest(dispatcherProvider.Main) {
         val settingsResponse = UserSettingsResponse(
             email = RecoverySettingResponse("test-email", 1, notify = 1, reset = 1),
             phone = null,
@@ -126,7 +127,7 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `update recovery email returns result success`() = runBlockingTest {
+    fun `update recovery email returns result success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         setUpRecoveryEmailUpdateTest(testSrpProofs.expectedServerProof)
 
@@ -146,7 +147,7 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `update recovery email fails with wrong server proof`() = runBlockingTest {
+    fun `update recovery email fails with wrong server proof`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         setUpRecoveryEmailUpdateTest(testSrpProofs.expectedServerProof + "corrupted")
 
@@ -196,7 +197,7 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `update login password returns success`() = runBlockingTest {
+    fun `update login password returns success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val testAuth = setUpUpdatePasswordTest(testSrpProofs.expectedServerProof)
 
@@ -216,7 +217,7 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `update login password fails with wrong server proof`() = runBlockingTest {
+    fun `update login password fails with wrong server proof`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val testAuth = setUpUpdatePasswordTest(testSrpProofs.expectedServerProof + "corrupted")
 

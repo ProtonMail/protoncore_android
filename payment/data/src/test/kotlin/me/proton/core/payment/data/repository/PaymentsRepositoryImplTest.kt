@@ -21,7 +21,7 @@ package me.proton.core.payment.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -80,11 +80,13 @@ class PaymentsRepositoryImplTest {
     )
     // endregion
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
         every {
             apiManagerFactory.create(
                 interfaceClass = PaymentsApi::class
@@ -100,7 +102,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment methods return success single card`() = runBlockingTest {
+    fun `payment methods return success single card`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val paymentMethods = listOf(
             PaymentMethod(
@@ -128,7 +130,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment methods return success card and paypal`() = runBlockingTest {
+    fun `payment methods return success card and paypal`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val paymentMethods = listOf(
             PaymentMethod(
@@ -162,7 +164,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment methods return error`() = runBlockingTest {
+    fun `payment methods return error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<List<PaymentMethod>>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -179,7 +181,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment token status success pending`() = runBlockingTest {
+    fun `payment token status success pending`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val testPaymentToken = ProtonPaymentToken("test-payment-token")
         coEvery {
@@ -200,7 +202,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment token status success chargeable`() = runBlockingTest {
+    fun `payment token status success chargeable`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val testPaymentToken = ProtonPaymentToken("test-payment-token")
         coEvery {
@@ -221,7 +223,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment token status error`() = runBlockingTest {
+    fun `payment token status error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val testPaymentToken = ProtonPaymentToken("test-payment-token")
         coEvery {
@@ -246,7 +248,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create payment token logged in new credit card success`() = runBlockingTest {
+    fun `create payment token logged in new credit card success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -267,7 +269,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create payment token sign up new credit card success`() = runBlockingTest {
+    fun `create payment token sign up new credit card success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -288,7 +290,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create payment token logged in new credit card error`() = runBlockingTest {
+    fun `create payment token logged in new credit card error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Error.Http(
@@ -311,7 +313,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create payment token logged in paypal success`() = runBlockingTest {
+    fun `create payment token logged in paypal success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -332,7 +334,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `validate subscription returns success`() = runBlockingTest {
+    fun `validate subscription returns success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val subscriptionStatus = SubscriptionStatus(
             amount = 5,
@@ -358,7 +360,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `validate subscription returns error`() = runBlockingTest {
+    fun `validate subscription returns error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SubscriptionStatus>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -380,7 +382,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create subscription returns success`() = runBlockingTest {
+    fun `create subscription returns success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val subscription = Subscription(
             id = "test-subscription-id",
@@ -411,7 +413,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create subscription returns error`() = runBlockingTest {
+    fun `create subscription returns error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Subscription>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -437,7 +439,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment status success google play`() = runBlockingTest {
+    fun `payment status success google play`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
             PaymentStatus(
@@ -455,7 +457,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment status success f-droid`() = runBlockingTest {
+    fun `payment status success f-droid`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
             PaymentStatus(

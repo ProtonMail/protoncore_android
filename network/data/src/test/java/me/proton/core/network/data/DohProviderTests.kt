@@ -26,6 +26,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.util.MockApiClient

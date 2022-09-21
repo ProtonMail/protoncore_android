@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data
 
+import java.net.HttpURLConnection
 import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -27,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
@@ -63,7 +65,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.net.HttpURLConnection
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -78,7 +79,7 @@ import kotlin.time.Duration.Companion.seconds
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
 
-    val scope = CoroutineScope(TestCoroutineDispatcher())
+    private val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
     private lateinit var apiManagerFactory: ApiManagerFactory

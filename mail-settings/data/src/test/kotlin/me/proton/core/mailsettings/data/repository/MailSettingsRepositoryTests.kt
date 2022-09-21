@@ -24,7 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.MailSettingsApi
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
@@ -82,17 +82,19 @@ class MailSettingsRepositoryTests {
 
     private lateinit var mailSettingsRepository: MailSettingsRepositoryImpl
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     @Before
     fun beforeEveryTest() {
         mailSettingsRepository = MailSettingsRepositoryImpl(
             db = db,
-            apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider),
+            apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider),
             settingsWorker = settingsWorker
         )
     }
 
     @Test
-    fun `displayName setting is updated locally and remotely when changed`() = runBlockingTest {
+    fun `displayName setting is updated locally and remotely when changed`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
             MailSettingsTestData.mailSettingsEntity
@@ -108,7 +110,7 @@ class MailSettingsRepositoryTests {
     }
 
     @Test
-    fun `signature setting is updated locally and remotely when changed`() = runBlockingTest {
+    fun `signature setting is updated locally and remotely when changed`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
             MailSettingsTestData.mailSettingsEntity
@@ -125,7 +127,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `AutoSaveContacts setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -142,7 +144,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ComposerMode setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -159,7 +161,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `UpdateMessageButtons setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -176,7 +178,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ShowImages setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -193,7 +195,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ShowMoved setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -211,7 +213,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ViewMode setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -228,7 +230,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `SwipeLeft setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -245,7 +247,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `SwipeRight setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -262,7 +264,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `PMSignature setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -279,7 +281,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `DraftMimeType setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -301,7 +303,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ReceiveMimeType setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -323,7 +325,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ShowMimeType setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -340,7 +342,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `RightToLeft setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -357,7 +359,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `AttachPublicKey setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -374,7 +376,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `Sign setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -391,7 +393,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `PGPScheme setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -408,7 +410,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `PromptPin setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -425,7 +427,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `StickyLabels setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -442,7 +444,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `ConfirmLink setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -459,7 +461,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `InheritFolderColor setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity
@@ -476,7 +478,7 @@ class MailSettingsRepositoryTests {
 
     @Test
     fun `EnableFolderColor setting is updated locally and remotely when changed`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
                 MailSettingsTestData.mailSettingsEntity

@@ -22,7 +22,7 @@ import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
@@ -47,6 +47,8 @@ class AuthSignupRepositoryImplTest {
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: AuthRepositoryImpl
     // endregion
@@ -56,7 +58,7 @@ class AuthSignupRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
         every {
             apiManagerFactory.create(
                 interfaceClass = AuthenticationApi::class
@@ -66,7 +68,7 @@ class AuthSignupRepositoryImplTest {
     }
 
     @Test
-    fun `validate email returns success result`() = runBlockingTest {
+    fun `validate email returns success result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
         // WHEN
@@ -76,7 +78,7 @@ class AuthSignupRepositoryImplTest {
     }
 
     @Test
-    fun `validate email returns error result`() = runBlockingTest {
+    fun `validate email returns error result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401,
@@ -95,7 +97,7 @@ class AuthSignupRepositoryImplTest {
     }
 
     @Test
-    fun `validate phone returns success result`() = runBlockingTest {
+    fun `validate phone returns success result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
         // WHEN
@@ -105,7 +107,7 @@ class AuthSignupRepositoryImplTest {
     }
 
     @Test
-    fun `validate phone returns error result`() = runBlockingTest {
+    fun `validate phone returns error result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
             httpCode = 401,

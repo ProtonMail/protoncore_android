@@ -18,6 +18,8 @@
 
 package me.proton.core.mailsettings.data.worker
 
+import java.io.IOException
+import java.net.SocketTimeoutException
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ListenableWorker.Result.Failure
@@ -33,7 +35,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.MailSettingsApi
@@ -52,9 +54,6 @@ import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.io.IOException
-import java.lang.IllegalStateException
-import java.net.SocketTimeoutException
 import kotlin.test.assertFailsWith
 
 class UpdateSettingsWorkerTest {
@@ -85,10 +84,12 @@ class UpdateSettingsWorkerTest {
         every { this@mockk.create(any(), MailSettingsApi::class) } returns TestApiManager(mailSettingsApi)
     }
 
+    private val dispatcherProvider = TestDispatcherProvider
+
     private val worker = UpdateSettingsWorker(
         context,
         parameters,
-        ApiProvider(apiManagerFactory, sessionProvider, TestDispatcherProvider)
+        ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
     )
 
     @Test
@@ -118,7 +119,7 @@ class UpdateSettingsWorkerTest {
 
     @Test
     fun `worker executes updateDisplayName API call when given settingsProperty is DisplayName`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(DisplayName("updated name"))
@@ -134,7 +135,7 @@ class UpdateSettingsWorkerTest {
 
     @Test
     fun `worker executes updateAttachPublicKey API call when given settingsProperty is AttachPublicKey`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.AttachPublicKey(0))
@@ -149,7 +150,7 @@ class UpdateSettingsWorkerTest {
         }
 
     @Test
-    fun `worker returns Success when API call succeeds`() = runBlockingTest {
+    fun `worker returns Success when API call succeeds`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         userIdInputIs("userId")
         settingPropertyInputIs(SettingsProperty.PromptPin(0))
@@ -164,7 +165,7 @@ class UpdateSettingsWorkerTest {
 
     @Test
     fun `worker returns Failure when API call fails and maxRetries were reached`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.ShowImages(3))
@@ -180,7 +181,7 @@ class UpdateSettingsWorkerTest {
 
     @Test
     fun `worker returns Failure when API call fails and result is not retryable`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.ShowImages(3))
@@ -196,7 +197,7 @@ class UpdateSettingsWorkerTest {
 
     @Test
     fun `worker returns Retry when API call failed and maxRetries were not reached and result is retryable`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.DraftMimeType("text/plain"))
@@ -212,7 +213,7 @@ class UpdateSettingsWorkerTest {
 
     @Test
     fun `worker returns Failure when API call throw unexpected exception`() =
-        runBlockingTest {
+        runTest(dispatcherProvider.Main) {
             // GIVEN
             userIdInputIs("userId")
             settingPropertyInputIs(SettingsProperty.ShowImages(3))
