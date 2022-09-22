@@ -11,6 +11,44 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.0.2] - 2022-09-22
+
+### Chores
+
+- Added CoreLogger RuntimeException for Login flow.
+- Updated AndroidX Activity to 1.5.0.
+
+### Features
+
+- crypto-android:
+  - Synchronized KeyStore Encrypt/Decrypt functions.
+    Make sure only one KeyStore operation at a time, to minimize KeyStore concurrency issues.
+- presentation-compose:
+  - Added composable to remember a request to prompt the user to create a document.
+  - Added possibility to modify launcher Intent for OpenMultipleDocuments activity.
+
+### Bug Fixes
+
+- Avoid processing empty detekt reports list
+- auth:
+  - Keep ConfirmPasswordActivity in the same task as current resumed.
+- human-verification:
+  - Keep HumanVerificationActivity in the same task as current resumed.
+  - Use AppCompatActivity to support forcing night mode.
+- key:
+  - Use only Active Private Keys from KeyHolder.
+- util-android-strict-mode:
+  - Ignore StrictMode LeakedClosableViolation.
+
+### Internationalization
+
+- Upgrade translations from crowdin (81a4b7a9).
+
+### Refactoring
+
+- presentation-compose:
+  - Deprecated rememberFilePickerLauncher composable, should be replaced with rememberOpenMultipleDocumentsLauncher.
+
 ## [9.0.1] - 2022-09-14
 
 ### Bug Fixes
