@@ -57,7 +57,8 @@ dependencies {
         `coroutines-test`,
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        `serialization-json`
     )
 
     androidTestImplementation(
