@@ -3,6 +3,10 @@ public final class me/proton/core/test/kotlin/AssertionsKt {
 	public static final fun assertTrue (ZLkotlin/jvm/functions/Function0;)V
 }
 
+public final class me/proton/core/test/kotlin/BuildRetrofitApi {
+	public static final field INSTANCE Lme/proton/core/test/kotlin/BuildRetrofitApi;
+}
+
 public abstract interface class me/proton/core/test/kotlin/CoroutinesTest {
 	public abstract fun coroutinesTest (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
 	public abstract fun getCompDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
@@ -29,6 +33,10 @@ public final class me/proton/core/test/kotlin/CoroutinesTestKt {
 public final class me/proton/core/test/kotlin/CoroutinesTestRule : org/junit/rules/TestWatcher {
 	public fun <init> ()V
 	public final fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
+}
+
+public final class me/proton/core/test/kotlin/MockWebServerExtKt {
+	public static final fun enqueueFromResourceFile (Lokhttp3/mockwebserver/MockWebServer;Ljava/lang/String;Ljava/lang/ClassLoader;)V
 }
 
 public final class me/proton/core/test/kotlin/TestCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {

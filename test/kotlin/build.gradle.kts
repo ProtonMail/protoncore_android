@@ -17,6 +17,7 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonKotlinLibrary
@@ -33,10 +34,12 @@ dependencies {
         project(Module.kotlinUtil),
         `coroutines-test`,
         junit,
+        mockWebServer
     )
 
     implementation(
         `coroutines-core`,
         `kotlin-test`,
+        `retrofit-kotlin-serialization`
     )
 }
