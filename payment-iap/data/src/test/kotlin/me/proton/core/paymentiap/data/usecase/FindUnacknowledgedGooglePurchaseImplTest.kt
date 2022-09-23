@@ -28,8 +28,10 @@ import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 internal class FindUnacknowledgedGooglePurchaseImplTest {
     private lateinit var googleBillingRepository: GoogleBillingRepository
@@ -44,7 +46,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     @Test
     fun `no purchases`() = runBlockingTest {
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns emptyList()
-        assertNull(tested(null, null))
+        assertTrue(tested().isEmpty())
     }
 
     @Test
@@ -54,7 +56,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { isAcknowledged } returns true
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertNull(tested(null, null))
+        assertTrue(tested().isEmpty())
     }
 
     @Test
@@ -65,7 +67,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { accountIdentifiers } returns mockAccountIdentifiers()
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertEquals(purchase.wrap(), tested(customerId = null, productId = null))
+        assertContentEquals(listOf(purchase.wrap()), tested())
     }
 
     @Test
@@ -77,7 +79,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { products } returns listOf("product-B")
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertNull(tested(customerId = null, productId = "product-A"))
+        assertNull(tested.byProduct("product-A"))
     }
 
     @Test
@@ -89,7 +91,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { products } returns listOf("product-A")
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertEquals(purchase.wrap(), tested(customerId = null, productId = "product-A"))
+        assertEquals(purchase.wrap(), tested.byProduct("product-A"))
     }
 
     @Test
@@ -102,7 +104,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             }
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertNull(tested(customerId = "customer-A", productId = null))
+        assertNull(tested.byCustomer("customer-A"))
     }
 
     @Test
@@ -113,7 +115,25 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
-        assertEquals(purchase.wrap(), tested(customerId = "customer-A", productId = null))
+        assertEquals(purchase.wrap(), tested.byCustomer("customer-A"))
+    }
+
+    @Test
+    fun `multiple unacknowledged purchases`() = runBlockingTest {
+        val purchaseA = mockk<Purchase> {
+            every { purchaseTime } returns 1200
+            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
+            every { isAcknowledged } returns false
+            every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
+        }
+        val purchaseB = mockk<Purchase> {
+            every { purchaseTime } returns 1300
+            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
+            every { isAcknowledged } returns false
+            every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
+        }
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchaseA, purchaseB)
+        assertContentEquals(listOf(purchaseB.wrap(), purchaseA.wrap()), tested())
     }
 
     private fun mockAccountIdentifiers(customerId: String? = null): AccountIdentifiers =

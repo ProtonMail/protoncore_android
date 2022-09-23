@@ -16,18 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.usecase
+package me.proton.core.plan.presentation.entity
 
-import me.proton.core.payment.domain.entity.GooglePurchaseToken
-import me.proton.core.payment.domain.entity.ProtonPaymentToken
+enum class UnredeemedGooglePurchaseStatus {
+    /** The user is not subscribed to a paid plan, and it's possible to redeem the purchase. */
+    NotSubscribed,
 
-public interface AcknowledgeGooglePlayPurchase {
-    /** Acknowledge a Google Play purchase.
-     * @param paymentToken The payment token obtained from Proton API.
-     *  The token will be used to obtain a Google purchase token, which then
-     *  will be used to acknowledge the purchase.
-     */
-    public suspend operator fun invoke(paymentToken: ProtonPaymentToken)
-
-    public suspend operator fun invoke(purchaseToken: GooglePurchaseToken)
+    /** The user is already subscribed, but an acknowledgement to Google hasn't been sent. */
+    SubscribedButNotAcknowledged
 }

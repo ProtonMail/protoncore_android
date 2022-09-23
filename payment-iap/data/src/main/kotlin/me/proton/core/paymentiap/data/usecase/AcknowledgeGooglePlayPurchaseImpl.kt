@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
@@ -33,12 +34,14 @@ public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
         val googlePurchaseToken = requireNotNull(googlePurchaseRepository.findGooglePurchaseToken(paymentToken)) {
             "Could not find corresponding Google purchase token."
         }
+        invoke(googlePurchaseToken)
+    }
 
+    override suspend fun invoke(purchaseToken: GooglePurchaseToken) {
         // Create a new instance of `GoogleBillingRepository` and clean up after it:
         googleBillingRepositoryProvider.get().use {
-            it.acknowledgePurchase(googlePurchaseToken)
+            it.acknowledgePurchase(purchaseToken)
         }
-
-        googlePurchaseRepository.deleteByGooglePurchaseToken(googlePurchaseToken)
+        googlePurchaseRepository.deleteByGooglePurchaseToken(purchaseToken)
     }
 }

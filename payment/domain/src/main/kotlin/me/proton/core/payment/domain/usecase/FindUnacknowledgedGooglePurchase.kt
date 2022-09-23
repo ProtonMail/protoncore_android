@@ -21,5 +21,14 @@ package me.proton.core.payment.domain.usecase
 import me.proton.core.payment.domain.entity.GooglePurchase
 
 public interface FindUnacknowledgedGooglePurchase {
-    public suspend operator fun invoke(customerId: String?, productId: String?): GooglePurchase?
+    /** Returns any unredeemed purchases.
+     * The most recent purchases are at the beginning of the list.
+     */
+    public suspend operator fun invoke(): List<GooglePurchase>
+
+    /** Return the most recent purchase for the given [customerId]. */
+    public suspend fun byCustomer(customerId: String): GooglePurchase?
+
+    /** Return the most recent purchase for the given [productId]. */
+    public suspend fun byProduct(productId: String): GooglePurchase?
 }

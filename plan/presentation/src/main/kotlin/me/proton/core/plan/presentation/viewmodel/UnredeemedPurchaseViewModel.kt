@@ -30,8 +30,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.GooglePurchase
-import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.RedeemGooglePurchase
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -50,9 +49,17 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
         performCheck()
     }
 
-    internal fun redeemPurchase(googlePurchase: GooglePurchase, plan: Plan, userId: UserId) = flow {
+    internal fun redeemPurchase(
+        unredeemedPurchase: UnredeemedGooglePurchase,
+        userId: UserId
+    ) = flow {
         emit(State.Loading)
-        redeemGooglePurchase(googlePurchase, plan, userId)
+        redeemGooglePurchase(
+            unredeemedPurchase.googlePurchase,
+            unredeemedPurchase.purchasedPlan,
+            unredeemedPurchase.status,
+            userId
+        )
         emit(State.PurchaseRedeemed)
     }.catch {
         _state.emit(State.Error)
@@ -65,7 +72,7 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId().first() ?: return@flow
         val unredeemed = checkUnredeemedGooglePurchase.invoke(userId)
         if (unredeemed != null) {
-            emit(State.UnredeemedPurchase(unredeemed.first, unredeemed.second, userId))
+            emit(State.UnredeemedPurchase(unredeemed, userId))
         } else {
             emit(State.NoUnredeemedPurchases)
         }
@@ -78,7 +85,11 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
     internal sealed class State {
         object Loading : State()
         object Error : State()
-        class UnredeemedPurchase(val googlePurchase: GooglePurchase, val plan: Plan, val userId: UserId) : State()
+        class UnredeemedPurchase(
+            val unredeemedPurchase: UnredeemedGooglePurchase,
+            val userId: UserId
+        ) : State()
+
         object NoUnredeemedPurchases : State()
         object PurchaseRedeemed : State()
     }

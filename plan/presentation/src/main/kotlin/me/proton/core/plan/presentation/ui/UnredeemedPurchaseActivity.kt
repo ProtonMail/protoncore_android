@@ -32,10 +32,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.GooglePurchase
-import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.ActivityUnredeemedPurchaseBinding
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.viewmodel.UnredeemedPurchaseViewModel
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.errorToast
@@ -64,7 +63,7 @@ class UnredeemedPurchaseActivity :
             }
             is UnredeemedPurchaseViewModel.State.UnredeemedPurchase -> {
                 binding.progress.isVisible = false
-                showAlertForUnredeemedGooglePurchase(state.googlePurchase, state.plan, state.userId)
+                showAlertForUnredeemedGooglePurchase(state.unredeemedPurchase, state.userId)
             }
             is UnredeemedPurchaseViewModel.State.Error -> {
                 errorToast(getString(R.string.payments_giap_redeem_error))
@@ -91,15 +90,14 @@ class UnredeemedPurchaseActivity :
     }
 
     private fun showAlertForUnredeemedGooglePurchase(
-        googlePurchase: GooglePurchase,
-        plan: Plan,
+        unredeemedPurchase: UnredeemedGooglePurchase,
         userId: UserId,
     ) {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.payments_giap_unredeemed_title)
             .setMessage(R.string.payments_giap_unredeemed_description)
             .setPositiveButton(R.string.payments_giap_unredeemed_confirm) { _, _ ->
-                viewModel.redeemPurchase(googlePurchase, plan, userId)
+                viewModel.redeemPurchase(unredeemedPurchase, userId)
             }
             .setNegativeButton(R.string.presentation_alert_cancel) { _, _ -> }
             .setOnCancelListener { cancelAndFinish() }

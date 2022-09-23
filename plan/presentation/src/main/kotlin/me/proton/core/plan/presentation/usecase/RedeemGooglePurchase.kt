@@ -24,20 +24,37 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import javax.inject.Inject
 
 internal class RedeemGooglePurchase @Inject constructor(
+    private val acknowledgeGooglePlayPurchase: AcknowledgeGooglePlayPurchase,
     private val createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
     private val performSubscribe: PerformSubscribe,
     private val validateSubscriptionPlan: ValidateSubscriptionPlan
 ) {
     suspend operator fun invoke(
+        googlePurchase: GooglePurchase,
+        purchasedPlan: Plan,
+        purchaseStatus: UnredeemedGooglePurchaseStatus,
+        userId: UserId
+    ) {
+        when (purchaseStatus) {
+            UnredeemedGooglePurchaseStatus.NotSubscribed ->
+                createSubscriptionAndAcknowledge(googlePurchase, purchasedPlan, userId)
+            UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged ->
+                acknowledgeGooglePlayPurchase(googlePurchase.purchaseToken)
+        }
+    }
+
+    private suspend fun createSubscriptionAndAcknowledge(
         googlePurchase: GooglePurchase,
         purchasedPlan: Plan,
         userId: UserId
@@ -66,6 +83,7 @@ internal class RedeemGooglePurchase @Inject constructor(
         )
         check(tokenResult.status == PaymentTokenStatus.CHARGEABLE)
 
+        // performSubscribe also acknowledges Google purchase:
         performSubscribe(
             userId,
             subscriptionStatus.amountDue,

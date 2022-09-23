@@ -21,35 +21,52 @@ package me.proton.core.plan.presentation.usecase
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import java.util.Optional
 import javax.inject.Inject
 
 /** Checks if there is an unredeemed Google purchase for a logged in user. */
 internal class CheckUnredeemedGooglePurchase @Inject constructor(
-    private val findUnacknowledgedGooglePurchase: Optional<FindUnacknowledgedGooglePurchase>,
+    private val findUnacknowledgedGooglePurchaseOptional: Optional<FindUnacknowledgedGooglePurchase>,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getCurrentSubscription: GetCurrentSubscription,
     private val getPlans: GetPlans
 ) {
     @Suppress("ReturnCount")
-    suspend operator fun invoke(userId: UserId): Pair<GooglePurchase, Plan>? {
-        if (!findUnacknowledgedGooglePurchase.isPresent) return null
+    suspend operator fun invoke(userId: UserId): UnredeemedGooglePurchase? {
+        val findUnacknowledgedGooglePurchase = findUnacknowledgedGooglePurchaseOptional.getOrNull() ?: return null
         if (PaymentProvider.GoogleInAppPurchase !in getAvailablePaymentProviders()) return null
 
         val subscription = getCurrentSubscription(userId)
-        // TODO For now, we don't support redeeming, if a user is already on a paid plan (CP-4583).
-        if (subscription != null) return null
+        val subscriptionCustomerId = subscription?.customerId
+        val googlePurchases = if (subscriptionCustomerId != null) {
+            listOfNotNull(findUnacknowledgedGooglePurchase.byCustomer(subscriptionCustomerId))
+        } else {
+            findUnacknowledgedGooglePurchase()
+        }
+        val googlePurchase = googlePurchases.firstOrNull() ?: return null
+        val purchasedPlan = googlePurchase.findCorrespondingPlan(userId) ?: return null
 
-        return findUnacknowledgedGooglePurchase.get()
-            .invoke(customerId = subscription?.customerId, productId = null)?.let { googlePurchase ->
-                googlePurchase.findCorrespondingPlan(userId)?.let { plan -> googlePurchase to plan }
-            }
+        val status = if (subscription == null) {
+            UnredeemedGooglePurchaseStatus.NotSubscribed
+        } else if (subscription.matchesGooglePurchase(googlePurchase, purchasedPlan)) {
+            UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged
+        } else {
+            // Current subscription is not matching the googlePurchase's customerId,
+            // or the subscription is not managed by Google.
+            null
+        }
+
+        return status?.let { UnredeemedGooglePurchase(googlePurchase, purchasedPlan, it) }
     }
 
     private suspend fun GooglePurchase.findCorrespondingPlan(userId: UserId): Plan? {
@@ -59,4 +76,12 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
             }
         }
     }
+
+    private fun Subscription.matchesGooglePurchase(googlePurchase: GooglePurchase, purchasedPlan: Plan): Boolean {
+        return external == SubscriptionManagement.GOOGLE_MANAGED &&
+            customerId == googlePurchase.customerId &&
+            purchasedPlan.name in plans.map { it.name }
+    }
+
+    private fun <T : Any> Optional<T>.getOrNull(): T? = if (isPresent) get() else null
 }

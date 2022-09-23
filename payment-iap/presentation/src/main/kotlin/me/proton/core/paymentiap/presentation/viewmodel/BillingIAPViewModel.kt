@@ -154,10 +154,7 @@ internal class BillingIAPViewModel @Inject constructor(
             "Product must be set before making the purchase."
         }
 
-        val unredeemedPurchase = findUnacknowledgedGooglePurchase(
-            customerId = customerId,
-            productId = selectedProduct.productId
-        )
+        val unredeemedPurchase = findUnacknowledgedGooglePurchase.byProduct(selectedProduct.productId)
         if (unredeemedPurchase != null) {
             emit(State.UnredeemedPurchase(unredeemedPurchase))
         } else {

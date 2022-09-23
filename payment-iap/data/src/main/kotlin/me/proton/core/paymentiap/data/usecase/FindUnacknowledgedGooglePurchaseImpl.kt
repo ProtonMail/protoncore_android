@@ -29,51 +29,25 @@ import javax.inject.Provider
 public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
     private val billingRepositoryProvider: Provider<GoogleBillingRepository>,
 ) : FindUnacknowledgedGooglePurchase {
-    /**
-     * Checks if there is an unredeemed Google purchase.
-     * To redeem the purchase, the caller will need to:
-     * - create a corresponding payment token (if not yet created),
-     * - assign the subscription (if not already),
-     * - acknowledge the Google purchase (usually done as part of assigning the subscription).
-     *
-     * @param productId The Google product ID. If present, a potential unredeemed purchase will have to match it.
-     * @param customerId If a potential unredeemed purchase has been marked
-     *  with a non-null [accountId][com.android.billingclient.api.AccountIdentifiers.getObfuscatedAccountId],
-     *  then the given [customerId] will have to match it.
-     *
-     *  @see me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
-     *  @see me.proton.core.payment.domain.usecase.PerformSubscribe
-     *  @see me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
-     */
-    public override suspend operator fun invoke(customerId: String?, productId: String?): GooglePurchase? {
+    public override suspend operator fun invoke(): List<GooglePurchase> {
         return billingRepositoryProvider.get().use { repository ->
-            repository.querySubscriptionPurchases().find { purchase ->
-                purchase.isPurchasedButNotAcknowledged() &&
-                    purchase.isMatchingCustomer(customerId) &&
-                    purchase.containsProduct(productId)
-            }?.wrap()
+            repository.querySubscriptionPurchases()
+                .filter { it.isPurchasedButNotAcknowledged() }
+                .sortedByDescending { it.purchaseTime }
+                .map { it.wrap() }
         }
     }
-}
 
-private fun Purchase.containsProduct(productId: String?): Boolean {
-    return if (productId == null) {
-        true
-    } else {
-        products.contains(productId)
+    override suspend fun byCustomer(customerId: String): GooglePurchase? {
+        return invoke().find { purchase ->
+            purchase.customerId == customerId
+        }
     }
-}
 
-private fun Purchase.isMatchingCustomer(customerId: String?): Boolean {
-    val accountId = accountIdentifiers?.obfuscatedAccountId
-    return if (accountId.isNullOrEmpty()) {
-        // If the accountId stored inside a Google purchase is null,
-        // we can redeem against any user.
-        true
-    } else {
-        // If the accountId stored inside a Google purchase is not null,
-        // we should only redeem if it matches customerId.
-        accountId == customerId
+    override suspend fun byProduct(productId: String): GooglePurchase? {
+        return invoke().find { purchase ->
+            purchase.productIds.contains(productId)
+        }
     }
 }
 

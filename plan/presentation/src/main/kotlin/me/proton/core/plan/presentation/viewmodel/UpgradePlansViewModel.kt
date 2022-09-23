@@ -40,6 +40,7 @@ import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.usersettings.domain.usecase.GetOrganization
@@ -76,7 +77,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
                 val subscribedPlans: List<PlanDetailsItem>,
                 val userCurrency: PlanCurrency?,
                 val subscriptionManagement: SubscriptionManagement? = null,
-                val unredeemedGooglePurchase: Pair<GooglePurchase, Plan>? = null
+                val unredeemedGooglePurchase: UnredeemedGooglePurchase? = null
             ) : Success()
         }
 

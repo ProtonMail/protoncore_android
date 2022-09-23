@@ -425,6 +425,7 @@ public final class me/proton/core/payment/domain/repository/PaymentsRepository$D
 }
 
 public abstract interface class me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {
+	public abstract fun invoke-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun invoke-vl4Hrws (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -449,7 +450,9 @@ public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithN
 }
 
 public abstract interface class me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {
-	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun byCustomer (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun byProduct (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentMethods {
