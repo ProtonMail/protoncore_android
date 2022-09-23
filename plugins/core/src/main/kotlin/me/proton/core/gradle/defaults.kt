@@ -24,7 +24,7 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 internal object AndroidDefaults {
     const val compileSdk = 33
     const val minSdk = 23
-    const val ndkVersion = "21.3.6528147"
+    const val ndkVersion = "21.4.7075529"
     const val targetSdk = 31
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
