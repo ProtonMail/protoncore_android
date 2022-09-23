@@ -23,8 +23,14 @@ import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import me.proton.core.util.kotlin.exhaustive
 
+private const val MONTHS_YEAR = 12
+private const val MONTHS_TWO_YEARS = 24
+private const val MONTHS_UNKNOWN = Int.MIN_VALUE
+
 enum class PlanCycle(val value: Int) {
-    FREE(0), MONTHLY(1), YEARLY(12), TWO_YEARS(24);
+    FREE(0), MONTHLY(1), YEARLY(MONTHS_YEAR), TWO_YEARS(MONTHS_TWO_YEARS), OTHER(MONTHS_UNKNOWN);
+
+    var cycleDurationMonths: Int? = value
 
     fun getPrice(pricing: PlanPricing): Price? {
         return when (this) {
@@ -32,6 +38,7 @@ enum class PlanCycle(val value: Int) {
             YEARLY -> pricing.yearly
             TWO_YEARS -> pricing.twoYearly
             FREE -> PRICE_ZERO
+            OTHER -> pricing.other
         }?.toDouble().exhaustive
     }
 
@@ -41,6 +48,7 @@ enum class PlanCycle(val value: Int) {
             YEARLY -> SubscriptionCycle.YEARLY
             TWO_YEARS -> SubscriptionCycle.TWO_YEARS
             FREE -> SubscriptionCycle.FREE
+            OTHER -> SubscriptionCycle.OTHER
         }.exhaustive
 
     companion object {
@@ -51,6 +59,7 @@ enum class PlanCycle(val value: Int) {
             SubscriptionCycle.MONTHLY -> MONTHLY
             SubscriptionCycle.YEARLY -> YEARLY
             SubscriptionCycle.TWO_YEARS -> TWO_YEARS
+            SubscriptionCycle.OTHER -> OTHER
         }
     }
 }

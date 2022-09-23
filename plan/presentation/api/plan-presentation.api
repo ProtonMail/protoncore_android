@@ -227,10 +227,13 @@ public final class me/proton/core/plan/presentation/entity/PlanCycle : java/lang
 	public static final field Companion Lme/proton/core/plan/presentation/entity/PlanCycle$Companion;
 	public static final field FREE Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static final field MONTHLY Lme/proton/core/plan/presentation/entity/PlanCycle;
+	public static final field OTHER Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static final field TWO_YEARS Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static final field YEARLY Lme/proton/core/plan/presentation/entity/PlanCycle;
+	public final fun getCycleDurationMonths ()Ljava/lang/Integer;
 	public final fun getPrice (Lme/proton/core/plan/presentation/entity/PlanPricing;)Ljava/lang/Double;
 	public final fun getValue ()I
+	public final fun setCycleDurationMonths (Ljava/lang/Integer;)V
 	public final fun toSubscriptionCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static fun values ()[Lme/proton/core/plan/presentation/entity/PlanCycle;
@@ -403,16 +406,18 @@ public final class me/proton/core/plan/presentation/entity/PlanInput : android/o
 public final class me/proton/core/plan/presentation/entity/PlanPricing : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/plan/presentation/entity/PlanPricing$Companion;
-	public fun <init> (DDLjava/lang/Double;)V
-	public synthetic fun <init> (DDLjava/lang/Double;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (DDLjava/lang/Double;Ljava/lang/Double;)V
+	public synthetic fun <init> (DDLjava/lang/Double;Ljava/lang/Double;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()D
 	public final fun component2 ()D
 	public final fun component3 ()Ljava/lang/Double;
-	public final fun copy (DDLjava/lang/Double;)Lme/proton/core/plan/presentation/entity/PlanPricing;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanPricing;DDLjava/lang/Double;ILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanPricing;
+	public final fun component4 ()Ljava/lang/Double;
+	public final fun copy (DDLjava/lang/Double;Ljava/lang/Double;)Lme/proton/core/plan/presentation/entity/PlanPricing;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanPricing;DDLjava/lang/Double;Ljava/lang/Double;ILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanPricing;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMonthly ()D
+	public final fun getOther ()Ljava/lang/Double;
 	public final fun getTwoYearly ()Ljava/lang/Double;
 	public final fun getYearly ()D
 	public fun hashCode ()I

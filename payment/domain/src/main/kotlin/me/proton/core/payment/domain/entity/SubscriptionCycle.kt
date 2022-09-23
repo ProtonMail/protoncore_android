@@ -22,7 +22,8 @@ public enum class SubscriptionCycle(public val value: Int) {
     FREE(0),
     MONTHLY(1),
     YEARLY(12),
-    TWO_YEARS(24);
+    TWO_YEARS(24),
+    OTHER(-1);
 
     public companion object {
         public val map: Map<Int, SubscriptionCycle> = values().associateBy { it.value }

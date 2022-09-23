@@ -121,7 +121,9 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             price = PlanPricing.fromPlan(plan),
             isAutoRenewal = autoRenewal,
             endDate = endDate,
-            cycle = plan.cycle?.let { PlanCycle.map[it] },
+            cycle = plan.cycle?.let {
+                PlanCycle.map[it] ?: PlanCycle.OTHER.apply { cycleDurationMonths = plan.cycle }
+            } ?: PlanCycle.FREE,
             storage = plan.maxSpace,
             members = maxMembers,
             addresses = maxAddresses,

@@ -135,7 +135,8 @@ sealed class PlanDetailsItem(
 data class PlanPricing(
     val monthly: Price,
     val yearly: Price,
-    val twoYearly: Price? = null
+    val twoYearly: Price? = null,
+    val other: Price? = null
 ) : Parcelable {
 
     companion object {
@@ -147,7 +148,10 @@ data class PlanPricing(
                 val monthly = if (cycle == PlanCycle.MONTHLY) plan.amount else PRICE_ZERO
                 val yearly = if (cycle == PlanCycle.YEARLY) plan.amount else PRICE_ZERO
                 val twoYears = if (cycle == PlanCycle.TWO_YEARS) plan.amount else PRICE_ZERO
-                PlanPricing(monthly.toDouble(), yearly.toDouble(), twoYears.toDouble())
+                val otherPrice = if (plan.amount != 0 && plan.cycle != null) {
+                    plan.amount
+                } else null
+                PlanPricing(monthly.toDouble(), yearly.toDouble(), twoYears.toDouble(), otherPrice?.toDouble())
             }
     }
 }

@@ -345,6 +345,7 @@ public final class me/proton/core/payment/domain/entity/SubscriptionCycle : java
 	public static final field Companion Lme/proton/core/payment/domain/entity/SubscriptionCycle$Companion;
 	public static final field FREE Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static final field MONTHLY Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public static final field OTHER Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static final field TWO_YEARS Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static final field YEARLY Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getValue ()I

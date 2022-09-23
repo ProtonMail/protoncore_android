@@ -125,6 +125,8 @@ class PlanItemView @JvmOverloads constructor(
             PlanCycle.YEARLY -> planCycleText.text = context.getString(R.string.plans_billing_yearly)
             PlanCycle.TWO_YEARS -> planCycleText.text = context.getString(R.string.plans_billing_two_years)
             null, PlanCycle.FREE -> planCycleText.visibility = GONE
+            PlanCycle.OTHER -> planCycleText.text =
+                String.format(context.getString(R.string.plans_billing_other_period), plan.cycle.cycleDurationMonths)
         }.exhaustive
         val renewalInfoText = if (plan.isAutoRenewal) R.string.plans_renewal_date else R.string.plans_expiration_date
         plan.endDate?.let {
