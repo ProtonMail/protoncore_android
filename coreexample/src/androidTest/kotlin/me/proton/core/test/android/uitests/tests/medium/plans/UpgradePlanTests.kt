@@ -19,7 +19,9 @@
 package me.proton.core.test.android.uitests.tests.medium.plans
 
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.test.android.plugins.data.Plan
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -31,8 +33,6 @@ class UpgradePlanTests : BaseTest() {
 
     private val selectPlanRobot = SelectPlanRobot()
     private val coreExampleRobot = CoreexampleRobot()
-    private val freeUser = quark.userCreate()
-    private val paidUser = users.getUser { it.isPaid }
 
     @After
     fun setDefaults() {
@@ -44,6 +44,7 @@ class UpgradePlanTests : BaseTest() {
     fun userWithFreePlan() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
+        val freeUser = quark.userCreate()
         login(freeUser)
 
         coreExampleRobot
@@ -64,6 +65,7 @@ class UpgradePlanTests : BaseTest() {
     fun userWithPaidPlanCardPayment() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
+        val paidUser = users.getUser { it.isPaid }
         login(paidUser)
 
         coreExampleRobot
@@ -75,7 +77,72 @@ class UpgradePlanTests : BaseTest() {
     fun userWithPaidPlanCardAndIAPPayment() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
+        val paidUser = users.getUser { it.isPaid }
         login(paidUser)
+
+        coreExampleRobot
+            .plansUpgrade()
+            .verify { planDetailsNotDisplayed() }
+    }
+
+    @Test
+    fun userWithPaidPlanCardAndIAPPayment1month() {
+        quark.jailUnban()
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
+        val paidUserCycle1 = User(plan = Plan.Plus)
+        val cycle1 = PlanCycle.OTHER.apply {
+            cycleDurationMonths = 1
+        }
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle1, cycle1)
+        login(user)
+
+        coreExampleRobot
+            .plansUpgrade()
+            .verify { planDetailsNotDisplayed() }
+    }
+
+    @Test
+    fun userWithPaidPlanCardAndIAPPayment12months() {
+        quark.jailUnban()
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
+        val paidUserCycle12 = User(plan = Plan.Plus)
+        val cycle12 = PlanCycle.OTHER.apply {
+            cycleDurationMonths = 12
+        }
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle12, cycle12)
+        login(user)
+
+        coreExampleRobot
+            .plansUpgrade()
+            .verify { planDetailsNotDisplayed() }
+    }
+
+    @Test
+    fun userWithPaidPlanCardAndIAPPayment15months() {
+        quark.jailUnban()
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
+        val paidUserCycle15 = User(plan = Plan.Plus)
+        val cycle15 = PlanCycle.OTHER.apply {
+            cycleDurationMonths = 15
+        }
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15)
+        login(user)
+
+        coreExampleRobot
+            .plansUpgrade()
+            .verify { planDetailsNotDisplayed() }
+    }
+
+    @Test
+    fun userWithPaidPlanCardAndIAPPayment30months() {
+        quark.jailUnban()
+        quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
+        val paidUserCycle15 = User(plan = Plan.Plus)
+        val cycle15 = PlanCycle.OTHER.apply {
+            cycleDurationMonths = 30
+        }
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15)
+        login(user)
 
         coreExampleRobot
             .plansUpgrade()

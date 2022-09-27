@@ -491,8 +491,8 @@ public final class me/proton/core/test/android/instrumented/utils/StringUtils {
 	public final fun getEmailString (J)Ljava/lang/String;
 	public static synthetic fun getEmailString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JILjava/lang/Object;)Ljava/lang/String;
 	public final fun pluralStringFromResource (II[Ljava/lang/Object;)Ljava/lang/String;
-	public final fun randomString (JLjava/lang/String;)Ljava/lang/String;
-	public static synthetic fun randomString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JLjava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
+	public final fun randomString (JLjava/util/List;)Ljava/lang/String;
+	public static synthetic fun randomString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JLjava/util/List;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun stringFromResource (I)Ljava/lang/String;
 	public final fun stringFromResource (I[Ljava/lang/Object;)Ljava/lang/String;
 }
@@ -507,9 +507,11 @@ public final class me/proton/core/test/android/plugins/Quark {
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;
 	public final fun jailUnban ()Ljava/lang/String;
 	public final fun populateUserWithData (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun seedNewSubscriber (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun seedNewSubscriber$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun seedNewSubscriberWithCycle (Lme/proton/core/test/android/plugins/data/User;Lme/proton/core/plan/presentation/entity/PlanCycle;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun seedNewSubscriberWithCycle$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;Lme/proton/core/plan/presentation/entity/PlanCycle;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
 	public final fun seedPaypalPaymentMethod (Lme/proton/core/test/android/plugins/data/User;)V
-	public final fun seedSubscriber (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
-	public static synthetic fun seedSubscriber$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
 	public final fun seedUserWithCreditCard (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
 	public static synthetic fun seedUserWithCreditCard$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
 	public final fun setDefaultPaymentMethods ()V
@@ -1084,9 +1086,11 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public static synthetic fun billingCycleIs$default (Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;ILjava/lang/Object;)V
 	public final fun canSelectPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun canUpgradeToPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
+	public final fun planCycleDisplayed (Ljava/lang/String;)V
 	public final fun planDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsDisplayedInsideRecyclerView (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsNotDisplayed ()V
+	public final fun planRenewalDisplayed (Ljava/lang/String;)V
 }
 
 public final class me/proton/core/test/android/robots/reports/BugReportRobot : me/proton/core/test/android/robots/CoreRobot {

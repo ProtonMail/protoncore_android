@@ -24,7 +24,7 @@ import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetCo
 
 object StringUtils {
 
-    private const val lettersAndNumbers = "abcdefghijklmnopqrstuuvwxyz0123456789"
+    private val lettersAndNumbers = ('a'..'z') + ('A'..'Z') + ('0'..'9')
     private const val alphaNumericWithSpecialCharacters =
         "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@+_)(*&^%$#@!"
     private const val emailCharacters =
@@ -47,11 +47,15 @@ object StringUtils {
         }
 
     fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String =
-        randomString(length, alphaNumericWithSpecialCharacters)
+        randomString(length, alphaNumericWithSpecialCharacters.toCharArray().toList())
 
     fun getEmailString(length: Long = 10): String =
-        randomString(length, emailCharacters)
+        randomString(length, emailCharacters.toCharArray().toList())
 
-    fun randomString(stringLength: Long = 10, source: String = lettersAndNumbers): String =
-        (1..stringLength).map { source.random() }.joinToString(separator = "")
+    fun randomString(stringLength: Long = 10, source: List<Char> = lettersAndNumbers.toCharArray().toList()): String {
+        return (1..stringLength)
+            .map { kotlin.random.Random.nextInt(0, source.size) }
+            .map(source::get)
+            .joinToString("")
+    }
 }

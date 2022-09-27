@@ -230,10 +230,10 @@ public final class me/proton/core/plan/presentation/entity/PlanCycle : java/lang
 	public static final field OTHER Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static final field TWO_YEARS Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static final field YEARLY Lme/proton/core/plan/presentation/entity/PlanCycle;
-	public final fun getCycleDurationMonths ()Ljava/lang/Integer;
+	public final fun getCycleDurationMonths ()I
 	public final fun getPrice (Lme/proton/core/plan/presentation/entity/PlanPricing;)Ljava/lang/Double;
 	public final fun getValue ()I
-	public final fun setCycleDurationMonths (Ljava/lang/Integer;)V
+	public final fun setCycleDurationMonths (I)V
 	public final fun toSubscriptionCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static fun values ()[Lme/proton/core/plan/presentation/entity/PlanCycle;

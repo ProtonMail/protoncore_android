@@ -35,7 +35,7 @@ class PasswordManagementTests : BaseTest() {
 
     companion object {
         val freeUser = quark.userCreate()
-        val paidUser = quark.seedSubscriber()
+        val paidUser = quark.seedNewSubscriber()
     }
 
     private fun navigateToPasswordManagement(user: User) {

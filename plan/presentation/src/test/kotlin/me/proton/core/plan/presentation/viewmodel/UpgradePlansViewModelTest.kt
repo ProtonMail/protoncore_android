@@ -24,6 +24,10 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.Card
+import me.proton.core.payment.domain.entity.Details
+import me.proton.core.payment.domain.entity.PaymentMethod
+import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -37,6 +41,8 @@ import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -48,6 +54,7 @@ import me.proton.core.usersettings.domain.usecase.GetOrganization
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
@@ -422,4 +429,134 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 assertEquals("plan-name-1", planPaid.name)
             }
         }
+
+    @Test
+    fun `test current plan cycle other`() {
+        val testPlan = Plan(
+            id = null,
+            type = 1,
+            cycle = 15,
+            name = "plan-default",
+            title = "Plan Default",
+            currency = null,
+            amount = 0,
+            maxDomains = 0,
+            maxAddresses = 1,
+            maxCalendars = 0,
+            maxSpace = 1,
+            maxMembers = 1,
+            maxVPN = 0,
+            services = 0,
+            features = 0,
+            quantity = 0,
+            maxTier = 0,
+            enabled = true
+        )
+        val currentPlanResult = viewModel.createCurrentPlan(
+            plan = testPlan,
+            user = testUser,
+            paymentMethods = listOf(PaymentMethod(
+                id = "test-payment-method-id",
+                type = PaymentMethodType.CARD,
+                details = Details.CardDetails(
+                    Card.CardReadOnly(
+                        brand = "visa", last4 = "1234", expirationMonth = "01",
+                        expirationYear = "2021", name = "Test",
+                        country = "Test Country", zip = "123"
+                    )
+                )
+            )),
+            organization = null,
+            endDate = mockk()
+        )
+        assertIs<PlanDetailsItem.CurrentPlanDetailsItem>(currentPlanResult)
+        assertEquals(PlanCycle.OTHER, (currentPlanResult as PlanDetailsItem.CurrentPlanDetailsItem).cycle)
+        assertEquals(15, currentPlanResult.cycle?.cycleDurationMonths)
+    }
+
+    @Test
+    fun `test current plan cycle yearly`() {
+        val testPlan = Plan(
+            id = null,
+            type = 1,
+            cycle = 12,
+            name = "plan-default",
+            title = "Plan Default",
+            currency = null,
+            amount = 0,
+            maxDomains = 0,
+            maxAddresses = 1,
+            maxCalendars = 0,
+            maxSpace = 1,
+            maxMembers = 1,
+            maxVPN = 0,
+            services = 0,
+            features = 0,
+            quantity = 0,
+            maxTier = 0,
+            enabled = true
+        )
+        val currentPlanResult = viewModel.createCurrentPlan(
+            plan = testPlan,
+            user = testUser,
+            paymentMethods = listOf(PaymentMethod(
+                id = "test-payment-method-id",
+                type = PaymentMethodType.CARD,
+                details = Details.CardDetails(
+                    Card.CardReadOnly(
+                        brand = "visa", last4 = "1234", expirationMonth = "01",
+                        expirationYear = "2021", name = "Test",
+                        country = "Test Country", zip = "123"
+                    )
+                )
+            )),
+            organization = null,
+            endDate = mockk()
+        )
+        assertIs<PlanDetailsItem.CurrentPlanDetailsItem>(currentPlanResult)
+        assertEquals(PlanCycle.YEARLY, (currentPlanResult as PlanDetailsItem.CurrentPlanDetailsItem).cycle)
+    }
+
+    @Test
+    fun `test current plan cycle two yearly`() {
+        val testPlan = Plan(
+            id = null,
+            type = 1,
+            cycle = 24,
+            name = "plan-default",
+            title = "Plan Default",
+            currency = null,
+            amount = 0,
+            maxDomains = 0,
+            maxAddresses = 1,
+            maxCalendars = 0,
+            maxSpace = 1,
+            maxMembers = 1,
+            maxVPN = 0,
+            services = 0,
+            features = 0,
+            quantity = 0,
+            maxTier = 0,
+            enabled = true
+        )
+        val currentPlanResult = viewModel.createCurrentPlan(
+            plan = testPlan,
+            user = testUser,
+            paymentMethods = listOf(PaymentMethod(
+                id = "test-payment-method-id",
+                type = PaymentMethodType.CARD,
+                details = Details.CardDetails(
+                    Card.CardReadOnly(
+                        brand = "visa", last4 = "1234", expirationMonth = "01",
+                        expirationYear = "2021", name = "Test",
+                        country = "Test Country", zip = "123"
+                    )
+                )
+            )),
+            organization = null,
+            endDate = mockk()
+        )
+        assertIs<PlanDetailsItem.CurrentPlanDetailsItem>(currentPlanResult)
+        assertEquals(PlanCycle.TWO_YEARS, (currentPlanResult as PlanDetailsItem.CurrentPlanDetailsItem).cycle)
+    }
 }

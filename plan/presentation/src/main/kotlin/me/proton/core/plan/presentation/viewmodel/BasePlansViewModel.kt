@@ -93,7 +93,8 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             connections = freePlan.maxVPN
         )
 
-    protected fun createCurrentPlan(
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal fun createCurrentPlan(
         plan: Plan,
         user: User,
         paymentMethods: List<PaymentMethod>,
@@ -122,7 +123,9 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             isAutoRenewal = autoRenewal,
             endDate = endDate,
             cycle = plan.cycle?.let {
-                PlanCycle.map[it] ?: PlanCycle.OTHER.apply { cycleDurationMonths = plan.cycle }
+                PlanCycle.map[it] ?: PlanCycle.OTHER.apply {
+                    cycleDurationMonths = it
+                }
             } ?: PlanCycle.FREE,
             storage = plan.maxSpace,
             members = maxMembers,
@@ -144,7 +147,11 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
         PlanDetailsItem.PaidPlanDetailsItem(
             name = name,
             displayName = title,
-            cycle = cycle?.let { PlanCycle.map[it] },
+            cycle = cycle?.let {
+                PlanCycle.map[it] ?: PlanCycle.OTHER.apply {
+                    cycleDurationMonths = it
+                }
+            },
             price = PlanPricing.fromPlan(this),
             storage = maxSpace,
             members = maxMembers,

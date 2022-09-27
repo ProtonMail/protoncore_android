@@ -30,7 +30,7 @@ private const val MONTHS_UNKNOWN = Int.MIN_VALUE
 enum class PlanCycle(val value: Int) {
     FREE(0), MONTHLY(1), YEARLY(MONTHS_YEAR), TWO_YEARS(MONTHS_TWO_YEARS), OTHER(MONTHS_UNKNOWN);
 
-    var cycleDurationMonths: Int? = value
+    var cycleDurationMonths: Int = value
 
     fun getPrice(pricing: PlanPricing): Price? {
         return when (this) {

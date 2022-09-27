@@ -33,6 +33,8 @@ import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -292,6 +294,60 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             val planTwo = plansStatus.plans[1]
             assertEquals("plan-default", planTwo.name) // default is always last
             assertEquals("plan-name-2", planOne.name)
+        }
+    }
+
+    @Test
+    fun `get plans for signup 15`() = coroutinesTest {
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
+            testPlan,
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2", cycle = 15)
+        )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(3, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            val planThree = plansStatus.plans[2]
+            coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
+            assertEquals("plan-default", planThree.name)
+            assertEquals("plan-name-1", planOne.name)
+            assertEquals("plan-name-2", planTwo.name)
+            assertEquals(PlanCycle.MONTHLY, (planOne as PlanDetailsItem.PaidPlanDetailsItem).cycle)
+            assertEquals(PlanCycle.OTHER, (planTwo as PlanDetailsItem.PaidPlanDetailsItem).cycle)
+            assertEquals(15, planTwo.cycle!!.cycleDurationMonths)
+            assertIs<PlanDetailsItem.FreePlanDetailsItem>(planThree)
+        }
+    }
+
+    @Test
+    fun `get plans for signup 100`() = coroutinesTest {
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2", cycle = 100)
+        )
+        viewModel.availablePlansState.test {
+            // WHEN
+            viewModel.getAllPlansForSignup()
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(2, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
+            assertEquals("plan-default", planTwo.name)
+            assertEquals("plan-name-2", planOne.name)
+            assertEquals(PlanCycle.OTHER, (planOne as PlanDetailsItem.PaidPlanDetailsItem).cycle)
+            assertEquals(100, planOne.cycle!!.cycleDurationMonths)
+            assertIs<PlanDetailsItem.FreePlanDetailsItem>(planTwo)
         }
     }
 }

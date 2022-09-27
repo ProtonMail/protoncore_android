@@ -120,6 +120,14 @@ class SelectPlanRobot : CoreRobot() {
             view.withText(plan.text).checkDisplayed()
         }
 
+        fun planCycleDisplayed(value: String) {
+            view.withText(value).checkDisplayed()
+        }
+
+        fun planRenewalDisplayed(value: String) {
+            view.withText(value).checkDisplayed()
+        }
+
         fun planDetailsNotDisplayed() {
             view.withId(R.id.currentPlan).checkNotDisplayed()
         }

@@ -22,6 +22,7 @@ import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.DRIVE_POPULATE_USER_WITH_DATA
 import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.JAIL_UNBAN
@@ -108,11 +109,22 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
 
     fun jailUnban() = quarkRequest(JAIL_UNBAN)
 
-    fun seedSubscriber(user: User = User(plan = randomPaidPlan())): User {
+    fun seedNewSubscriber(user: User = User(plan = randomPaidPlan())): User {
         val args = arrayOf(
             "username=${user.name}",
             "password=${user.password}",
             "plan=${user.plan.planName}"
+        )
+        quarkRequest(PAYMENTS_SEED_SUBSCRIBER, args)
+        return user
+    }
+
+    fun seedNewSubscriberWithCycle(user: User = User(plan = randomPaidPlan()), cycle: PlanCycle): User {
+        val args = arrayOf(
+            "username=${user.name}",
+            "password=${user.password}",
+            "plan=${user.plan.planName}",
+            "cycle=${cycle.cycleDurationMonths}"
         )
         quarkRequest(PAYMENTS_SEED_SUBSCRIBER, args)
         return user
