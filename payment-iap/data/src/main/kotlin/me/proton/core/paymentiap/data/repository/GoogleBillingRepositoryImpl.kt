@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
@@ -126,7 +127,7 @@ internal interface ConnectedBillingClientFactory {
 internal class ConnectedBillingClient @AssistedInject constructor(
     @Assisted private val billingClient: BillingClient
 ) : BillingClientStateListener {
-    private val connectionState = MutableStateFlow(BillingClientConnectionState.Idle)
+    private val connectionState = MutableStateFlow<BillingClientConnectionState>(BillingClientConnectionState.Idle)
 
     fun destroy() {
         billingClient.endConnection()
@@ -146,8 +147,8 @@ internal class ConnectedBillingClient @AssistedInject constructor(
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             connectionState.value = BillingClientConnectionState.Connected
         } else {
-            connectionState.value = BillingClientConnectionState.Idle
-            throw BillingClientError(billingResult.responseCode, billingResult.debugMessage)
+            connectionState.value =
+                BillingClientConnectionState.Error(billingResult.responseCode, billingResult.debugMessage)
         }
     }
 
@@ -162,14 +163,24 @@ internal class ConnectedBillingClient @AssistedInject constructor(
         check(currentConnectionState != BillingClientConnectionState.Destroyed) {
             "Billing client has already been destroyed."
         }
-        if (currentConnectionState.isIdleOrDisconnected()) connect()
-        connectionState.first { it == BillingClientConnectionState.Connected }
+        if (!currentConnectionState.isConnectingOrConnected()) connect()
+        connectionState
+            .onEach {
+                if (it is BillingClientConnectionState.Error) {
+                    throw BillingClientError(it.responseCode, it.debugMessage)
+                }
+            }
+            .first { it == BillingClientConnectionState.Connected }
     }
 
-    private enum class BillingClientConnectionState {
-        Idle, Disconnected, Connecting, Connected, Destroyed;
+    private sealed class BillingClientConnectionState {
+        object Idle : BillingClientConnectionState()
+        object Disconnected : BillingClientConnectionState()
+        object Connecting : BillingClientConnectionState()
+        object Connected : BillingClientConnectionState()
+        object Destroyed : BillingClientConnectionState()
+        data class Error(val responseCode: Int, val debugMessage: String) : BillingClientConnectionState()
 
-        fun isConnectingOrConnected(): Boolean = this in arrayOf(Connecting, Connected)
-        fun isIdleOrDisconnected(): Boolean = this in arrayOf(Idle, Disconnected)
+        fun isConnectingOrConnected(): Boolean = this is Connecting || this is Connected
     }
 }

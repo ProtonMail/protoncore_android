@@ -26,11 +26,13 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 internal class ConnectedBillingClientTest {
     private lateinit var billingClient: BillingClient
@@ -69,16 +71,18 @@ internal class ConnectedBillingClientTest {
         tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>()) }
     }
 
-    @Test(expected = BillingClientError::class)
+    @Test
     fun `cannot establish connection`() = runBlockingTest {
-        val job = launch(start = CoroutineStart.UNDISPATCHED) {
+        val result = async(start = CoroutineStart.UNDISPATCHED) {
             tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>()) }
         }
 
         tested.onBillingSetupFinished(
             BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.ERROR).build()
         )
-        job.join()
+        assertFailsWith<BillingClientError> {
+            result.await()
+        }
     }
 
     @Test

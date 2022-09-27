@@ -36,6 +36,7 @@ import me.proton.core.test.kotlin.TestDispatcherProvider
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
 
 internal class GoogleBillingRepositoryImplTest {
@@ -97,6 +98,18 @@ internal class GoogleBillingRepositoryImplTest {
         coEvery { factory.connectedBillingClient.withClient<PurchasesResult>(any()) } returns purchaseResult
         val result = tested.use { it.querySubscriptionPurchases() }
         assertSame(result, purchaseList)
+    }
+
+    @Test
+    fun `fails to connect`() {
+        coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } throws BillingClientError(
+            BillingClient.BillingResponseCode.BILLING_UNAVAILABLE, "test error"
+        )
+        runBlockingTest {
+            assertFailsWith<BillingClientError> {
+                tested.use { it.launchBillingFlow(mockk(), mockk()) }
+            }
+        }
     }
 }
 
