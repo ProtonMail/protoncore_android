@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Proton Core"
+rootProject.name = "ProtonCore"
 
 
 val (projects, modules) = rootDir.projectsAndModules()

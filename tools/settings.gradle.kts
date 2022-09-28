@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Core Tools"
+rootProject.name = "CoreTools"
 
 enableFeaturePreview("VERSION_CATALOGS")
 

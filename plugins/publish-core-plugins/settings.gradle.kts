@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Publish core gradle plugins"
+rootProject.name = "PublishCoreGradlePlugins"
 
 include(
     "publish-plugin"
