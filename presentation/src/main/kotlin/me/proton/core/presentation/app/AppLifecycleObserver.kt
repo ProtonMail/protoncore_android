@@ -18,6 +18,8 @@
 
 package me.proton.core.presentation.app
 
+import android.os.Looper
+import androidx.core.os.HandlerCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -26,20 +28,30 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppLifecycleObserver @Inject constructor() : AppLifecycleProvider, DefaultLifecycleObserver {
+@Singleton
+class AppLifecycleObserver internal constructor(
+    mainLooper: Looper,
+    processLifecycleOwner: LifecycleOwner
+) : AppLifecycleProvider, DefaultLifecycleObserver {
 
     private val mutableState = MutableStateFlow(AppLifecycleProvider.State.Background)
 
     override val lifecycle: Lifecycle by lazy {
-        ProcessLifecycleOwner.get().lifecycle
+        processLifecycleOwner.lifecycle
     }
 
     override val state: StateFlow<AppLifecycleProvider.State> = mutableState.asStateFlow()
 
     init {
-        lifecycle.addObserver(this)
+        HandlerCompat.createAsync(mainLooper).post {
+            lifecycle.addObserver(this)
+        }
     }
+
+    @Inject
+    constructor() : this(Looper.getMainLooper(), ProcessLifecycleOwner.get())
 
     override fun onStart(owner: LifecycleOwner) {
         mutableState.tryEmit(AppLifecycleProvider.State.Foreground)
