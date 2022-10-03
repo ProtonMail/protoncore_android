@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Эта версия приложения уже не поддерживается, пожалуйста, обновите его, чтобы продолжить им пользоваться.</string>
   <string name="presentation_force_update_learn_more">Подробнее</string>
   <string name="presentation_force_update_update">Обновить</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">Не могу найти приложение на вашем устройстве. Пожалуйста, перейдите в магазин приложений и установите его.</string>
   <string name="presentation_authenticate">Аутентифицировать</string>
   <string name="presentation_signin_to_continue">Войдите чтобы продолжить</string>
   <string name="presentation_alert_title">Внимание</string>

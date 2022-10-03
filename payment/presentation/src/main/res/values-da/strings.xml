@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Køb foretaget med denne betalingsmetode medfører et tillægsgebyr.</string>
   <string name="payments_method_terms_conditions">Når du køber med Google Pay, betyder det, at du accepterer Google Pay\'s vilkår og betingelser og accepterer at oprette en tilbagevendende betaling med Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Fortsæt</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Betalingsdetaljer</string>
@@ -54,9 +55,16 @@
   <string name="payments_choose_country">Vælg land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Udløber %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">n/a</string>
-  <string name="payments_billing_yearly">For 1 year</string>
-  <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
-  <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
+  <string name="payments_info_not_available">ikke tilgængelig</string>
+  <string name="payments_billing_yearly">I 1 år</string>
+  <string name="payment_use_google_pay_instead">Brug Google Pay i stedet</string>
+  <string name="payment_use_credit_card_instead">Brug kredit-/debetkort i stedet</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Bekræft opgradering af konto</string>
+  <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
+  <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
+  <string name="payments_giap_redeem_success">Your account was successfully upgraded</string>
+  <string name="payments_giap_redeem_error">Unable to complete the upgrade. Please try again later.</string>
   <!-- endregion -->
 </resources>

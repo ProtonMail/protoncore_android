@@ -63,7 +63,7 @@
   <string name="auth_mailbox_password_label">Mot de passe de messagerie</string>
   <string name="auth_mailbox_unlock_action">Déverrouiller</string>
   <string name="auth_forgot_password">Mot de passe oublié</string>
-  <string name="auth_login_general_error">Une erreur est survenue.</string>
+  <string name="auth_login_general_error">Une erreur s’est produite.</string>
   <string name="auth_login_empty_credentials">Les identifiants ne doivent pas être vides.</string>
   <string name="auth_mailbox_empty_credentials">Les identifiants ne doivent pas être vides.</string>
   <string name="auth_create_address_title">Créer une adresse Proton Mail</string>
@@ -83,9 +83,9 @@
   <string name="auth_create_address_error_signed_key_list">La génération de la liste des clés a échoué.</string>
   <string name="auth_create_address_error_setusername">L\'association du nom d\'utilisateur a échoué.</string>
   <string name="auth_create_address_error_username_unavailable">Le nom d\'utilisateur choisi n\'est pas disponible.</string>
-  <string name="auth_mailbox_login_error_no_primary_key">Aucune clé principale trouvée.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Aucune clé principale n\'a été trouvée.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Erreur de clé principale.</string>
-  <string name="auth_mailbox_login_error_invalid_passphrase">Phrase d\'authentification incorrecte.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">La phrase d\'authentification n\'est pas valide.</string>
   <string name="auth_password_chooser_title">Modifier votre mot de passe</string>
   <string name="auth_password_chooser_description">Pour utiliser l\'application Proton en tant que membre d\'une organisation, vous devez d\'abord changer votre mot de passe en vous connectant à Proton via un navigateur.</string>
   <string name="auth_password_chooser_change">Modifier le mot de passe</string>
@@ -109,8 +109,8 @@
   <string name="auth_signup_repeat_password">Confirmez le mot de passe</string>
   <string name="auth_signup_recovery_method_title">Définir la méthode de récupération (facultatif)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Définir une méthode de récupération</string>
-  <string name="auth_signup_recovery_method_subtitle">Nous vous enverrons les instructions de récupération à cette adresse électronique ou à ce numéro de téléphone si vous êtes bloqué avec votre compte.</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">Nous vous enverrons les instructions de récupération à cette adresse si vous êtes bloqué avec votre compte.</string>
+  <string name="auth_signup_recovery_method_subtitle">Nous enverrons des instructions de récupération à cette adresse électronique ou à ce numéro de téléphone si vous n\'avez plus accès à votre compte.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Nous enverrons des instructions de récupération à cette adresse électronique si vous n\'avez plus accès à votre compte.</string>
   <string name="auth_signup_recovery_method_email">Adresse électronique</string>
   <string name="auth_signup_recovery_method_phone">Numéro de téléphone</string>
   <string name="auth_signup_recovery_method_email_hint">Adresse électronique de récupération</string>
@@ -119,7 +119,7 @@
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En cliquant sur Suivant, vous acceptez les <annotation link="terms">conditions générales d\'utilisation</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">Ne pas définir de méthode de récupération ?</string>
   <string name="auth_signup_skip_recovery_description">Une méthode de récupération vous aidera à accéder à votre compte en cas d\'oubli de votre mot de passe ou de blocage de votre compte.</string>
-  <string name="auth_signup_skip_recovery">Passer</string>
+  <string name="auth_signup_skip_recovery">Ignorer</string>
   <string name="auth_signup_set_recovery">Définir une méthode de récupération</string>
   <string name="auth_signup_no_connectivity">Aucune connexion pour afficher les conditions générales d’utilisation.</string>
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur ne doit pas être vide.</string>
@@ -127,7 +127,7 @@
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
   <string name="auth_signup_validation_password">Le mot de passe ne doit pas être vide.</string>
   <string name="auth_signup_your_account_is_being_setup">Votre compte est en cours de création...</string>
-  <string name="auth_signup_please_wait">En général, ceci ne prend pas plus d\'une minute.</string>
+  <string name="auth_signup_please_wait">Cela ne prend généralement pas plus d\'une minute.</string>
   <string name="auth_signup_replacement_code">Vous n\'avez pas reçu le code ?</string>
   <string name="auth_signup_verify">Vérifier</string>
   <string name="auth_signup_verification_code">Code de vérification</string>

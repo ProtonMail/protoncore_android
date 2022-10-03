@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Report a problem</string>
+  <string name="core_report_bug_activity_title">Αναφορά προβλήματος</string>
   <string name="core_report_bug_close">Κλείσιμο</string>
   <string name="core_report_bug_subject_field_hint">Θέμα</string>
   <string name="core_report_bug_subject_field_required">Εισάγετε ένα θέμα</string>

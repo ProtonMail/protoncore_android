@@ -46,7 +46,7 @@
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Demanar una invitació</string>
   <string name="human_verification_help_manual">Si teniu problemes per crear el vostre compte, sol·liciteu una cita i us respondrem en 1 dia laborable.</string>
-  <string name="human_verification_help_website_title">Visiteu el nostre Centre d\'Ajuda</string>
+  <string name="human_verification_help_website_title">Visiteu el nostre centre d\'ajuda</string>
   <string name="human_verification_help_website">Més informació sobre la verificació humana i per què la demanem.</string>
   <string name="human_verification_sending_failed">Ha fallat l\'enviament del codi de verificació. Torneu-ho a provar.</string>
   <string name="human_verification_incorrect_code">Codi incorrecte. Torneu-ho a provar.</string>

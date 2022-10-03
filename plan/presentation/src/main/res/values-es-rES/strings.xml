@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Selecciona un plan</string>
   <string name="plans_select_a_plan_subtitle">Un solo plan para todos los servicios Proton</string>
   <string name="plans_fetching_general_error">Se produjo un error al solicitar planes.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
+  <string name="plans_payment_error">Se ha producido un error en el pago. Por favor, inténtalo más tarde o crea un plan gratuito.</string>
   <string name="plans_free_name">Gratuito</string>
   <string name="plan_price_monthly">al mes</string>
   <string name="plan_price_annually">por año</string>
@@ -35,14 +35,14 @@
   <string name="plans_billing_yearly">Durante 1 año</string>
   <string name="plans_billing_two_years">Durante 2 años</string>
   <string name="plans_upgrade_your_plan">Mejora tu plan</string>
-  <string name="plans_proton_for_free">Get Proton for free</string>
+  <string name="plans_proton_for_free">Obtén Proton gratis</string>
   <string name="plans_get_proton">Obtén %s</string>
   <string name="plans_manage_your_subscription">Gestione su subscripción en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Tu suscripción está administrada por Mozilla.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
-  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
+  <string name="plans_manage_your_subscription_other">Tu suscripción no puede ser gestionada dentro de la aplicación móvil.</string>
+  <string name="plans_autorenew_subscriptions">A través de esta aplicación sólo están disponibles las suscripciones anuales con renovación automática.</string>
   <string name="plans_can_not_upgrade_from_mobile">No puede mejorar su plan actual desde la aplicación móvil.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

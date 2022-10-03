@@ -19,7 +19,7 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Adresse électronique de récupération</string>
-  <string name="settings_recovery_email_current">Adresse électronique de réinitialisation/notification actuelle</string>
+  <string name="settings_recovery_email_current">Adresse électronique actuelle de réinitialisation/notification</string>
   <string name="settings_recovery_email_new">Nouvelle adresse e-mail de récupération/notification</string>
   <string name="settings_recovery_email_confirm">Confirmer la nouvelle adresse électronique de réinitialisation/notification</string>
   <string name="settings_recovery_email_new_hint">Saisissez votre adresse électronique</string>
@@ -30,7 +30,7 @@
   <string name="settings_not_set">Non défini</string>
   <string name="settings_recovery_email_error_no_match">L’adresse électronique de récupération et sa confirmation ne correspondent pas.</string>
   <string name="settings_validation_email">L’adresse électronique n\'est pas valide.</string>
-  <string name="settings_general_error">Une erreur est survenue.</string>
+  <string name="settings_general_error">Une erreur s’est produite.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Modifier le mot de passe</string>
   <string name="settings_password_management_change_mailbox_password">Modifier le mot de passe de messagerie</string>

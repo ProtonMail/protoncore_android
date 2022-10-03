@@ -22,6 +22,6 @@
   <string name="account_switcher_action_sign_in">Iniciar sesión</string>
   <string name="account_switcher_action_sign_out">Cerrar sesión</string>
   <string name="account_switcher_action_remove">Eliminar</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
+  <string name="account_list_item_chevron_content_description">Abrir cambiador de cuentas</string>
   <string name="account_view_three_dots_content_description">Opciones</string>
 </resources>

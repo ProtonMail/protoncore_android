@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Tato verze aplikace již není podporována. Chcete-li ji nadále používat, aktualizujte ji.</string>
   <string name="presentation_force_update_learn_more">Více informací</string>
   <string name="presentation_force_update_update">Aktualizovat</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">Aplikaci nelze v zařízení najít. Chcete-li ji nainstalovat, přejděte do obchodu s aplikacemi.</string>
   <string name="presentation_authenticate">Ověřit</string>
   <string name="presentation_signin_to_continue">Chcete-li pokračovat, přihlaste se</string>
   <string name="presentation_alert_title">Upozornění</string>

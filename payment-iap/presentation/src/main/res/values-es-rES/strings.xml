@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
-  <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
-  <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
-  <string name="payments_iap_error_billing_client_unavailable">The Google billing client is currently unavailable or disconnected.</string>
-  <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
+  <string name="payments_iap_surcharge_info">* Incluye un recargo por tasas e impuestos adicionales del proveedor.</string>
+  <string name="payments_iap_terms_conditions">Al pulsar "Comprar con Google Pay", aceptas los términos y condiciones de Google Pay y aceptas establecer un pago recurrente con Google.</string>
+  <string name="payments_iap_invalid_google_plan">Se seleccionó un nombre de plan no válido. Por favor, reinicia el proceso.</string>
+  <string name="payments_iap_error_google_plan_price">Problema con el precio de los productos de Google. Por favor, reinicia el proceso.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problema al buscar el producto de Google. Por favor, reinicia el proceso.</string>
+  <string name="payments_iap_error_already_owned">Ya tienes este producto. Por favor, selecciona uno diferente.</string>
+  <string name="payments_iap_error_billing_client_unavailable">El cliente de facturación de Google no está disponible actualmente o está desconectado.</string>
+  <string name="payments_iap_general_error">Se ha producido un error. Por favor, reinicia el proceso.</string>
 </resources>

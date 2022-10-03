@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Nákupy provedené tímto způsobem platby jsou zpoplatněny.</string>
   <string name="payments_method_terms_conditions">Nákup pomocí služby Google Pay znamená, že přijímáte podmínky služby Google Pay a souhlasíte s nastavením opakované platby u společnosti Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Pokračovat</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Platební údaje</string>
@@ -58,5 +59,12 @@
   <string name="payments_billing_yearly">Na rok</string>
   <string name="payment_use_google_pay_instead">Použít Google Pay místo toho</string>
   <string name="payment_use_credit_card_instead">Použít kreditní/debetní kartu místo toho</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Potvrdit navýšení účtu</string>
+  <string name="payments_giap_unredeemed_description">Vaše platba Google Pay byla úspěšně zpracována, ale proces navýšení účtu byl přerušen. Použít nyní platbu pro navýšení účtu?</string>
+  <string name="payments_giap_unredeemed_confirm">Potvrdit navýšení</string>
+  <string name="payments_giap_redeem_success">Váš účet byl úspěšně navýšen</string>
+  <string name="payments_giap_redeem_error">Navýšení nelze dokončit. Zkuste to prosím později.</string>
   <!-- endregion -->
 </resources>

@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Ця версія застосунку більше не підтримується. Оновіть його, щоб продовжити користуватися.</string>
   <string name="presentation_force_update_learn_more">Докладніше</string>
   <string name="presentation_force_update_update">Оновити</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">Не вдалося знайти застосунок на пристрої. Перейдіть у магазин та встановіть застосунок.</string>
   <string name="presentation_authenticate">Автентифікація</string>
   <string name="presentation_signin_to_continue">Увійдіть для продовження</string>
   <string name="presentation_alert_title">Попередження</string>

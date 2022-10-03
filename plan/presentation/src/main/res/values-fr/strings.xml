@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Sélectionnez un abonnement</string>
   <string name="plans_select_a_plan_subtitle">Un seul abonnement pour tous les services Proton</string>
   <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des abonnements.</string>
-  <string name="plans_payment_error">Une erreur de paiement s\'est produite. Réessayez plus tard ou créez un compte gratuit.</string>
+  <string name="plans_payment_error">Une erreur de paiement s\'est produite. Nous vous invitons à réessayer plus tard ou à créer un compte gratuit.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">par mois</string>
   <string name="plan_price_annually">par an</string>
@@ -100,7 +100,7 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">Le point de départ des communications privées et sécurisées.</string>
-  <string name="plan_id_plus_header">Messagerie complète avec protection avancée.</string>
+  <string name="plan_id_plus_header">Une messagerie complète avec une protection avancée.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 pays</string>
   <string name="plan_id_vpnbasic_high_speed">Haute vitesse</string>

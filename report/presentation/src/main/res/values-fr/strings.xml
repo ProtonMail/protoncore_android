@@ -20,7 +20,7 @@
   <string name="core_report_bug_activity_title">Signaler un bug</string>
   <string name="core_report_bug_close">Fermer</string>
   <string name="core_report_bug_subject_field_hint">Objet</string>
-  <string name="core_report_bug_subject_field_required">Entrez un objet</string>
+  <string name="core_report_bug_subject_field_required">Indiquez un sujet</string>
   <string name="core_report_bug_description_field_hint">Qu\'est-ce qui ne s\'est pas bien passé ? (10 caractères minimum)</string>
   <string name="core_report_bug_description_field_placeholder">Décrivez le problème avec autant de détails que possible. S\'il y avait un message d\'erreur, faites-nous savoir ce qu\'il disait.</string>
   <plurals name="core_report_bug_description_field_required">
@@ -35,7 +35,7 @@
     <item quantity="one">%d caractère maximum</item>
     <item quantity="other">%d caractères maximum</item>
   </plurals>
-  <string name="core_report_bug_general_error">Un problème est survenu. Réessayez dans quelques minutes.</string>
+  <string name="core_report_bug_general_error">Une erreur s\'est produite. Nous vous invitons à réessayer dans quelques minutes.</string>
   <string name="core_report_bug_send">Envoyer le rapport</string>
   <string name="core_report_bug_success">Merci de votre signalement</string>
 </resources>

@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Pembayaran dengan metode ini akan dikenakan biaya tambahan.</string>
   <string name="payments_method_terms_conditions">Dengan membeli menggunakan Google Pay, Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk menyiapkan pembayaran yang berulang dengan Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Lanjut</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Rincian pembayaran</string>
@@ -58,5 +59,12 @@
   <string name="payments_billing_yearly">Untuk 1 tahun</string>
   <string name="payment_use_google_pay_instead">Gunakan Google Pay</string>
   <string name="payment_use_credit_card_instead">Gunakan kartu kredit/debit</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Konfirmasi peningkatan akun</string>
+  <string name="payments_giap_unredeemed_description">Pembayaran Google Pay Anda berhasil diproses, namun proses pembayaran terganggu. Terapkan pembayaran untuk meningkatkan jenis akun Anda sekarang?</string>
+  <string name="payments_giap_unredeemed_confirm">Konfirmasi peningkatan akun</string>
+  <string name="payments_giap_redeem_success">Akun Anda berhasil ditingkatkan</string>
+  <string name="payments_giap_redeem_error">Tidak dapat menyelesaikan peningkatan akun. Silakan coba lagi nanti.</string>
   <!-- endregion -->
 </resources>

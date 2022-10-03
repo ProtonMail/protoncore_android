@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Această versiune a aplicației nu mai este acceptată, actualizați-o pentru a o mai putea folosi.</string>
   <string name="presentation_force_update_learn_more">Detalii</string>
   <string name="presentation_force_update_update">Actualizare</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">Nu s-a găsit aplicația pe dispozitiv. Mergeți în „Magazin Play” și instalați aplicația.</string>
   <string name="presentation_authenticate">Autentificare</string>
   <string name="presentation_signin_to_continue">Conectați-vă pentru a continua</string>
   <string name="presentation_alert_title">Alertă</string>

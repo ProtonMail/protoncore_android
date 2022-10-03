@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Cette version de l\'application n\'est plus prise en charge, veuillez la mettre à jour pour continuer à l\'utiliser.</string>
   <string name="presentation_force_update_learn_more">En savoir plus</string>
   <string name="presentation_force_update_update">Mettre à jour</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">Impossible de trouver l\'application sur votre appareil. Nous vous invitons à vous rendre dans la boutique d\'applications pour l\'installer.</string>
   <string name="presentation_authenticate">S\'authentifier</string>
   <string name="presentation_signin_to_continue">Connectez-vous pour continuer</string>
   <string name="presentation_alert_title">Alerte</string>

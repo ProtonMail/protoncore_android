@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Köp som görs med denna betalningsmetod medför en tilläggsavgift.</string>
   <string name="payments_method_terms_conditions">Att köpa med Google Pay innebär att du accepterar Google Pays användarvillkor och godkänner att skapa en återkommande betalning med Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Fortsätt</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Betalningsdetaljer</string>
@@ -58,5 +59,12 @@
   <string name="payments_billing_yearly">För 1 år</string>
   <string name="payment_use_google_pay_instead">Använd Google Pay istället</string>
   <string name="payment_use_credit_card_instead">Använd kredit-/betalkort istället</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Bekräfta kontouppgradering</string>
+  <string name="payments_giap_unredeemed_description">Din Google Pay-betalning har behandlats, men kontouppgraderingsprocessen avbröts. Tillämpa betalningen för att uppgradera ditt konto nu?</string>
+  <string name="payments_giap_unredeemed_confirm">Bekräfta uppgradering</string>
+  <string name="payments_giap_redeem_success">Ditt konto har uppgraderats</string>
+  <string name="payments_giap_redeem_error">Det gick inte att slutföra uppgraderingen. Försök igen senare.</string>
   <!-- endregion -->
 </resources>

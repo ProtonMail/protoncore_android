@@ -51,7 +51,7 @@
   <string name="human_verification_sending_failed">Pengiriman kode verifikasi gagal. Silakan coba lagi.</string>
   <string name="human_verification_incorrect_code">Kode salah. Silakan coba lagi.</string>
   <string name="human_verification_resent_code">Kami sudah mengirim Anda kode lainnya.</string>
-  <string name="human_verification_captcha_failed">Gagal verifikasi CAPTCHA. Mohon coba satu kali lagi atau pilih metode verifikasi lainnya.</string>
+  <string name="human_verification_captcha_failed">Verifikasi CAPTCHA gagal. Silakan coba satu kali lagi atau pilih metode verifikasi lainnya.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Tidak ada konektivitas. Tidak dapat memuat CAPTCHA.</string>
   <string name="human_verification_action_retry">Coba Lagi</string>

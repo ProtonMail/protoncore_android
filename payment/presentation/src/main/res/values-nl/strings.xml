@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Aankopen gemaakt met deze betaalwijze brengen een toeslag in rekening.</string>
   <string name="payments_method_terms_conditions">Door te betalen met Google Pay betekent dat u Google Pay\'s algemene voorwaarden aanvaardt en akkoord gaat met het opzetten van een terugkerende betaling met Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Doorgaan</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Betalingsgegevens</string>
@@ -56,7 +57,14 @@
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n.v.t.</string>
   <string name="payments_billing_yearly">Voor 1 jaar</string>
-  <string name="payment_use_google_pay_instead">Gebruik in de plaats Google Pay</string>
-  <string name="payment_use_credit_card_instead">Gebruik in de plaats krediet- of betaalkaarten</string>
+  <string name="payment_use_google_pay_instead">Gebruik in plaats daarvan Google Pay</string>
+  <string name="payment_use_credit_card_instead">Gebruik in de plaats daarvan krediet- of betaalkaarten</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Account upgraden bevestigen</string>
+  <string name="payments_giap_unredeemed_description">Uw Google Pay-betaling is succesvol verwerkt, maar het account upgrade-proces werd onderbroken. Wilt u de betaling voor het upgraden van uw account nu toepassen?</string>
+  <string name="payments_giap_unredeemed_confirm">Upgrade bevestigen</string>
+  <string name="payments_giap_redeem_success">Uw account is succesvol bijgewerkt</string>
+  <string name="payments_giap_redeem_error">De upgrade kon niet worden voltooid. Probeer het later nog eens.</string>
   <!-- endregion -->
 </resources>

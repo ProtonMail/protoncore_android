@@ -27,7 +27,7 @@
   <string name="welcome_subtitle_drive_alt">Cara teraman untuk menyimpan berkas Anda. Unggah, sinkronisasikan, dan bagikan menggunakan enkripsi terkuat yang pernah ada.</string>
   <string name="welcome_title_calendar">Lindungi privasi Anda dengan Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga hidup Anda tetap privat, aman, dan terkunci rapat.</string>
-  <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi dari ujung ke ujung membantu Anda tetap teratur, berada dalam jalur, dan terkendali.</string>
+  <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi secara end-to-end membantu Anda agar tetap teratur, terjadwal, dan terkendali.</string>
   <string name="welcome_title_vpn">Lindungi privasi Anda dengan Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
@@ -83,7 +83,7 @@
   <string name="auth_create_address_error_signed_key_list">Gagal membuat daftar kunci.</string>
   <string name="auth_create_address_error_setusername">Gagal mengasosiasikan nama pengguna.</string>
   <string name="auth_create_address_error_username_unavailable">Nama pengguna tidak tersedia.</string>
-  <string name="auth_mailbox_login_error_no_primary_key">Tidak ditemukan Kunci Utama.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Kunci Utama tidak ditemukan.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Kunci Utama eror.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Frase sandi tidak valid.</string>
   <string name="auth_password_chooser_title">Ubah kata sandi Anda</string>

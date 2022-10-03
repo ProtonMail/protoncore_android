@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">* За покупки, совершенные с использованием данного способа оплаты, взимается дополнительная плата.</string>
   <string name="payments_method_terms_conditions">Покупка через Google Pay означает, что вы принимаете правила и условия Google Pay и соглашаетесь установить повторяющиеся платежи с Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Продолжить</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Платежные реквизиты</string>
@@ -58,5 +59,12 @@
   <string name="payments_billing_yearly">За 1 год</string>
   <string name="payment_use_google_pay_instead">Использовать Google Pay</string>
   <string name="payment_use_credit_card_instead">Использовать кредитную/дебетовую карту</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Подтвердите улучшение аккаунта</string>
+  <string name="payments_giap_unredeemed_description">Ваш платеж Google успешно обработан, но процесс улучшения аккаунта был прерван. Применить платеж, чтобы улучшить аккаунт сейчас?</string>
+  <string name="payments_giap_unredeemed_confirm">Подтвердите улучшение</string>
+  <string name="payments_giap_redeem_success">Ваш аккаунт был успешно улучшен</string>
+  <string name="payments_giap_redeem_error">Не удается завершить улучшение. Пожалуйста, попробуйте позже.</string>
   <!-- endregion -->
 </resources>

@@ -42,7 +42,7 @@
   <string name="email">E-Mail-Adresse</string>
   <string name="email_hint">email@beispiel.de</string>
   <string name="sms_hint">+49 ●●●●● ●●●●●●●●●●</string>
-  <string name="verification_code_hint">•••••••</string>
+  <string name="verification_code_hint">●●●●●●</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Anfrage einreichen</string>
   <string name="human_verification_help_manual">Wenn du Probleme bei der Erstellung deines Kontos hast, reiche bitte eine Anfrage ein. Wir werden dir innerhalb eines Werktags antworten.</string>

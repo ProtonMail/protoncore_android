@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Bu ödeme yöntemi ile yapılan alışverişlerde ek ücret alınır.</string>
   <string name="payments_method_terms_conditions">Satın almayı Google Pay ile yaparak Google Pay hüküm ve koşullar metnini ve Google Pay kullanarak yinelenen bir ödeme ayarlamayı kabul etmiş olursunuz.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">İlerle</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Ödeme ayrıntıları</string>
@@ -58,5 +59,12 @@
   <string name="payments_billing_yearly">1 yıllık</string>
   <string name="payment_use_google_pay_instead">Yerine Google Pay kullan</string>
   <string name="payment_use_credit_card_instead">Yerine kredi ya da banka kartı kullan</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Hesabı yükseltmeyi onaylayın</string>
+  <string name="payments_giap_unredeemed_description">Google Pay ödemeniz alındı ancak hesap yükseltme işleminiz kesintiye uğradı. Hesabınızı şimdi yükseltmek için ödemenin uygulanmasını ister misiniz?</string>
+  <string name="payments_giap_unredeemed_confirm">Yükseltmeyi onayla</string>
+  <string name="payments_giap_redeem_success">Hesabınız yükseltildi</string>
+  <string name="payments_giap_redeem_error">Yükseltme işlemi tamamlanamadı. Lütfen bir süre sonra yeniden deneyin.</string>
   <!-- endregion -->
 </resources>

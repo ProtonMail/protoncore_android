@@ -38,6 +38,7 @@
   <string name="payments_method_surcharge">*Las compras realizadas con este método de pago tienen un recargo.</string>
   <string name="payments_method_terms_conditions">Al comprar con Google Pay significa que acepta los términos y condiciones de Google Pay y acepta establecer un pago recurrente con Google.</string>
   <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Continuar</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Detalles del pago</string>
@@ -58,5 +59,12 @@
   <string name="payments_billing_yearly">Por 1 año</string>
   <string name="payment_use_google_pay_instead">Usar Google Pay en su lugar</string>
   <string name="payment_use_credit_card_instead">Usar tarjeta de crédito/débito en su lugar</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Confirmar actualización de la cuenta</string>
+  <string name="payments_giap_unredeemed_description">Su pago de Google Pay se procesó con éxito, pero el proceso de actualización de la cuenta fue interrumpido. ¿Aplicar el pago para actualizar su cuenta ahora?</string>
+  <string name="payments_giap_unredeemed_confirm">Confirmar actualización</string>
+  <string name="payments_giap_redeem_success">Su cuenta se actualizó con éxito</string>
+  <string name="payments_giap_redeem_error">No se pudo completar la actualización. Intente más tarde.</string>
   <!-- endregion -->
 </resources>
