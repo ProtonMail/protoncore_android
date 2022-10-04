@@ -30,7 +30,8 @@ abstract class BasePlansFragment : ProtonFragment {
 
     protected fun setResult(selectedPlan: SelectedPlan? = null, billing: BillingResult? = null) {
         parentFragmentManager.setFragmentResult(
-            KEY_PLAN_SELECTED, bundleOf(
+            KEY_PLAN_SELECTED,
+            bundleOf(
                 BUNDLE_KEY_PLAN to selectedPlan,
                 BUNDLE_KEY_BILLING_DETAILS to billing
             )

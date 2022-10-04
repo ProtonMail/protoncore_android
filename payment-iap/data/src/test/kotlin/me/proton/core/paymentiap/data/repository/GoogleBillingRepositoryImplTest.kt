@@ -125,7 +125,5 @@ private class FakeBillingClientFactory : BillingClientFactory {
 private class FakeConnectedBillingClientFactory : ConnectedBillingClientFactory {
     val connectedBillingClient: ConnectedBillingClient = mockk(relaxed = true)
 
-    override fun invoke(billingClient: BillingClient): ConnectedBillingClient {
-        return connectedBillingClient
-    }
+    override fun invoke(billingClient: BillingClient): ConnectedBillingClient = connectedBillingClient
 }

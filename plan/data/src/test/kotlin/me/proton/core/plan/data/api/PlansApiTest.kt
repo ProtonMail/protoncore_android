@@ -79,7 +79,8 @@ class PlansApiTest {
                         PlanDuration(12) to "googlemail_mail2022_12_renewing"
                     )
                 )
-            ), plans[0].vendors
+            ),
+            plans[0].vendors
         )
 
         assertEquals(MASK_MAIL or MASK_CALENDAR or MASK_DRIVE or MASK_VPN, plans[1].services)

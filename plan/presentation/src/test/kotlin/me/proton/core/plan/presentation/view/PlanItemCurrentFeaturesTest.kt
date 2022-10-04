@@ -27,7 +27,6 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
 import me.proton.core.plan.presentation.R
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import org.junit.After
 import org.junit.Before

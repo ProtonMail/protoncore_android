@@ -99,7 +99,7 @@ class PaymentsApiTest {
                 },
                 "PaymentMethodID": null
             }
-        """.trimIndent()
+            """.trimIndent()
         )
         val requestJson = Json.parseToJsonElement(requestBody)
         assertEquals(expectedRequestJson, requestJson)

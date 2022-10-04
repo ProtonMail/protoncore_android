@@ -91,7 +91,7 @@ class UnredeemedPurchaseActivity :
 
     private fun showAlertForUnredeemedGooglePurchase(
         unredeemedPurchase: UnredeemedGooglePurchase,
-        userId: UserId,
+        userId: UserId
     ) {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.payments_giap_unredeemed_title)
@@ -110,9 +110,12 @@ class UnredeemedPurchaseActivity :
     }
 
     private fun successAndFinish(result: Result?) {
-        setResult(RESULT_OK, Intent().apply {
-            putExtra(RESULT_ARG, result?.ordinal)
-        })
+        setResult(
+            RESULT_OK,
+            Intent().apply {
+                putExtra(RESULT_ARG, result?.ordinal)
+            }
+        )
         finish()
     }
 
@@ -121,9 +124,8 @@ class UnredeemedPurchaseActivity :
     }
 
     class Start : ActivityResultContract<Unit, Result?>() {
-        override fun createIntent(context: Context, input: Unit): Intent {
-            return Intent(context, UnredeemedPurchaseActivity::class.java)
-        }
+        override fun createIntent(context: Context, input: Unit): Intent =
+            Intent(context, UnredeemedPurchaseActivity::class.java)
 
         override fun parseResult(resultCode: Int, intent: Intent?): Result? {
             if (resultCode != RESULT_OK) return null

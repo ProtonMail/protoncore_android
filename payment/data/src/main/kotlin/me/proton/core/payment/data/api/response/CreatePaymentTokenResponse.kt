@@ -33,7 +33,7 @@ internal data class CreatePaymentTokenResponse(
     @SerialName("Status")
     val status: Int,
     @SerialName("ReturnHost")
-    val returnHost: String? = null,
+    val returnHost: String? = null
 ) {
     fun toCreatePaymentTokenResult(): PaymentTokenResult.CreatePaymentTokenResult =
         PaymentTokenResult.CreatePaymentTokenResult(

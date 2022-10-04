@@ -156,4 +156,4 @@ data class PlanPricing(
 data class PlanVendorDetails(
     val customerId: String,
     val names: Map<PlanCycle, String>
-): Parcelable
+) : Parcelable

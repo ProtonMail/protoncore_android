@@ -205,20 +205,20 @@ class PlansRepositoryImplTest {
             currency = "CHF",
             amount = 10,
             maxDomains = 1,
-                maxAddresses = 1,
-                maxCalendars = 1,
-                maxSpace = 1,
-                maxMembers = 1,
-                maxVPN = 1,
-                services = 0,
-                features = 1,
-                quantity = 1,
-                maxTier = 1,
-                enabled = true,
-                pricing = PlanPricing(
-                    1, 10, 20
-                )
+            maxAddresses = 1,
+            maxCalendars = 1,
+            maxSpace = 1,
+            maxMembers = 1,
+            maxVPN = 1,
+            services = 0,
+            features = 1,
+            quantity = 1,
+            maxTier = 1,
+            enabled = true,
+            pricing = PlanPricing(
+                1, 10, 20
             )
+        )
         coEvery { apiManager.invoke<Plan>(any(), any()) } returns ApiResult.Success(planDefault)
         // WHEN
         val plansResponse = repository.getPlansDefault(sessionUserId = null)

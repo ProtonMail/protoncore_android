@@ -20,7 +20,6 @@ package me.proton.core.plan.presentation.entity
 
 import me.proton.core.payment.domain.entity.Subscription
 
-
 data class PlanSubscription(
     val subscription: Subscription?,
     val subscriptionPlanSupportedFromCore: Boolean

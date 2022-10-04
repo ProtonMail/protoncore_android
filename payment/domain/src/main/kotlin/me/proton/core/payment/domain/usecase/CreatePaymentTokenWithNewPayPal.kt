@@ -38,7 +38,7 @@ public class CreatePaymentTokenWithNewPayPal @Inject constructor(
         userId: UserId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.PayPal,
+        paymentType: PaymentType.PayPal
     ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
 

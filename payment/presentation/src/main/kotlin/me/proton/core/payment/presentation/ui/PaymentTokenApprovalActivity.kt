@@ -53,7 +53,7 @@ import me.proton.core.util.kotlin.exhaustive
  */
 @SuppressLint("SetJavaScriptEnabled")
 @AndroidEntryPoint
-internal  class PaymentTokenApprovalActivity :
+internal class PaymentTokenApprovalActivity :
     PaymentsActivity<ActivityPaymentTokenApprovalBinding>(ActivityPaymentTokenApprovalBinding::inflate) {
 
     private val viewModel by viewModels<PaymentTokenApprovalViewModel>()

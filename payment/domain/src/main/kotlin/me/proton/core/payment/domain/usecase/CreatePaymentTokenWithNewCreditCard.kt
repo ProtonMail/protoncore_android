@@ -38,7 +38,7 @@ public class CreatePaymentTokenWithNewCreditCard @Inject constructor(
         userId: UserId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.CreditCard,
+        paymentType: PaymentType.CreditCard
     ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
 

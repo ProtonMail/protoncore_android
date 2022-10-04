@@ -222,7 +222,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             getUserUseCase,
             getPaymentMethodsUseCase,
             true,
-            paymentOrchestrator,
+            paymentOrchestrator
         )
     }
 
@@ -293,7 +293,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             getUserUseCase,
             getPaymentMethodsUseCase,
             true,
-            paymentOrchestrator,
+            paymentOrchestrator
         )
         viewModel.availablePlansState.test {
             // WHEN
@@ -326,7 +326,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 getUserUseCase,
                 getPaymentMethodsUseCase,
                 true,
-                paymentOrchestrator,
+                paymentOrchestrator
             )
             viewModel.availablePlansState.test {
                 // WHEN
@@ -407,7 +407,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 getUserUseCase,
                 getPaymentMethodsUseCase,
                 true,
-                paymentOrchestrator,
+                paymentOrchestrator
             )
             viewModel.availablePlansState.test {
                 // WHEN
