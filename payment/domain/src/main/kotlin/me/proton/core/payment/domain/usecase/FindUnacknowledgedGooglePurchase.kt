@@ -23,6 +23,7 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 public interface FindUnacknowledgedGooglePurchase {
     /** Returns any unredeemed purchases.
      * The most recent purchases are at the beginning of the list.
+     * May return an empty list if Billing service is not available (either temporarily or permanently).
      */
     public suspend operator fun invoke(): List<GooglePurchase>
 

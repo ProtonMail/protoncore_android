@@ -20,6 +20,7 @@ package me.proton.core.plan.presentation.usecase
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -41,8 +42,19 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
     private val getCurrentSubscription: GetCurrentSubscription,
     private val getPlans: GetPlans
 ) {
-    @Suppress("ReturnCount")
+    /** Returns the latest unredeemed Google purchase for a given [user][userId].
+     * May return `null` if it was not possible to fetch some data (network error).
+     */
     suspend operator fun invoke(userId: UserId): UnredeemedGooglePurchase? {
+        return try {
+            perform(userId)
+        } catch (_: ApiException) {
+            null
+        }
+    }
+
+    @Suppress("ReturnCount")
+    private suspend fun perform(userId: UserId): UnredeemedGooglePurchase? {
         val findUnacknowledgedGooglePurchase = findUnacknowledgedGooglePurchaseOptional.getOrNull() ?: return null
         if (PaymentProvider.GoogleInAppPurchase !in getAvailablePaymentProviders()) return null
 

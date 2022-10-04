@@ -19,17 +19,20 @@
 package me.proton.core.paymentiap.data.usecase
 
 import com.android.billingclient.api.AccountIdentifiers
+import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -134,6 +137,24 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
         }
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchaseA, purchaseB)
         assertContentEquals(listOf(purchaseB.wrap(), purchaseA.wrap()), tested())
+    }
+
+    @Test
+    fun `returns empty list if Billing service is unavailable`() = runBlockingTest {
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } throws BillingClientError(
+            BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
+            "Unavailable"
+        )
+        assertTrue(tested().isEmpty())
+    }
+
+    @Test
+    fun `rethrows an error`() = runBlockingTest {
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } throws BillingClientError(
+            BillingClient.BillingResponseCode.ERROR,
+            "Error"
+        )
+        assertFailsWith<BillingClientError> { tested() }
     }
 
     private fun mockAccountIdentifiers(customerId: String? = null): AccountIdentifiers =

@@ -23,15 +23,18 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryPurchasesAsync
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 internal class ConnectedBillingClientTest {
@@ -99,5 +102,18 @@ internal class ConnectedBillingClientTest {
         job.join()
 
         coVerify(exactly = 1) { billingClient.queryPurchasesAsync(any<QueryPurchasesParams>(), any()) }
+    }
+
+    @Test
+    fun `connection is lost`() = runBlockingTest {
+        val deferredResult = async {
+            assertFailsWith<BillingClientError> {
+                tested.withClient { it.launchBillingFlow(mockk(), mockk()) }
+            }
+        }
+        tested.onBillingServiceDisconnected()
+        val error = deferredResult.await()
+
+        assertEquals(BillingClient.BillingResponseCode.SERVICE_DISCONNECTED, error.responseCode)
     }
 }

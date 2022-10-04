@@ -140,7 +140,10 @@ internal class ConnectedBillingClient @AssistedInject constructor(
     }
 
     override fun onBillingServiceDisconnected() {
-        connectionState.value = BillingClientConnectionState.Disconnected
+        connectionState.value = BillingClientConnectionState.Error(
+            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+            "Service disconnected."
+        )
     }
 
     override fun onBillingSetupFinished(billingResult: BillingResult) {
@@ -175,7 +178,6 @@ internal class ConnectedBillingClient @AssistedInject constructor(
 
     private sealed class BillingClientConnectionState {
         object Idle : BillingClientConnectionState()
-        object Disconnected : BillingClientConnectionState()
         object Connecting : BillingClientConnectionState()
         object Connected : BillingClientConnectionState()
         object Destroyed : BillingClientConnectionState()

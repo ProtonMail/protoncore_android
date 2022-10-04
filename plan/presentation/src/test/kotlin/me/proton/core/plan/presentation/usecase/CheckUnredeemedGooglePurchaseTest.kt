@@ -24,6 +24,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -304,5 +306,12 @@ class CheckUnredeemedGooglePurchaseTest {
             UnredeemedGooglePurchase(googlePurchaseA, planA, UnredeemedGooglePurchaseStatus.NotSubscribed),
             tested(userId)
         )
+    }
+
+    @Test
+    fun `returns null on network error`() = runTest {
+        coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.values().toSet()
+        coEvery { getCurrentSubscription.invoke(any()) } throws ApiException(ApiResult.Error.Connection())
+        assertNull(tested(mockk()))
     }
 }

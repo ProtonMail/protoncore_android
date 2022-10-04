@@ -18,10 +18,12 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import javax.inject.Inject
 import javax.inject.Provider
@@ -30,11 +32,19 @@ public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
     private val billingRepositoryProvider: Provider<GoogleBillingRepository>,
 ) : FindUnacknowledgedGooglePurchase {
     public override suspend operator fun invoke(): List<GooglePurchase> {
-        return billingRepositoryProvider.get().use { repository ->
-            repository.querySubscriptionPurchases()
-                .filter { it.isPurchasedButNotAcknowledged() }
-                .sortedByDescending { it.purchaseTime }
-                .map { it.wrap() }
+        return runCatching {
+            billingRepositoryProvider.get().use { repository ->
+                repository.querySubscriptionPurchases()
+                    .filter { it.isPurchasedButNotAcknowledged() }
+                    .sortedByDescending { it.purchaseTime }
+                    .map { it.wrap() }
+            }
+        }.getOrElse {
+            if (it is BillingClientError && it.responseCode in ALLOWED_BILLING_ERRORS) {
+                emptyList()
+            } else {
+                throw it
+            }
         }
     }
 
@@ -48,6 +58,16 @@ public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
         return invoke().find { purchase ->
             purchase.productIds.contains(productId)
         }
+    }
+
+    internal companion object {
+        private val ALLOWED_BILLING_ERRORS = arrayOf(
+            BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
+            BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED,
+            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+            BillingClient.BillingResponseCode.SERVICE_TIMEOUT,
+            BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE
+        )
     }
 }
 

@@ -47,6 +47,7 @@ dependencies {
         project(Module.kotlinTest),
         `coroutines-test`,
         `kotlin-test`,
+        `kotlin-test-junit`,
         mockk
     )
 }
