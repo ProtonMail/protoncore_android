@@ -298,6 +298,7 @@ drive-integration-tests:
     reports:
       junit: test_result.xml
     paths:
+      - test_result.xml
       - screenshots
       - logcat.txt
       - video.mp4
