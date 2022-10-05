@@ -36,6 +36,9 @@ protonDagger {
 protonTestsOptions.unitTestFlavor = "dev"
 
 android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
     signingConfigs {
         create("release") {
             storeFile = file("coreexample.jks")
@@ -142,6 +145,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
 }
 
 dependencies {
+    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
 
