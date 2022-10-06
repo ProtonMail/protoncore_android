@@ -21,7 +21,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiErrorHandler
@@ -104,9 +103,7 @@ class DohApiHandler<Api>(
                 primaryBackend.isPotentiallyBlocked()
             }
             val dohRefresh = async {
-                withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
-                    dohProvider.refreshAlternatives()
-                }
+                dohProvider.refreshAlternatives()
             }
             // If ping on primary api succeeded don't fallback to proxy
             val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
@@ -125,8 +122,9 @@ class DohApiHandler<Api>(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T>? {
         val alternatives = prefs.alternativeBaseUrls?.shuffled()
+        val alternativesStart = monoClockMs()
         alternatives?.forEach { baseUrl ->
-            if (monoClockMs() - call.timestampMs > apiClient.dohTimeoutMs) {
+            if (monoClockMs() - alternativesStart > apiClient.alternativesTotalTimeout) {
                 return ApiResult.Error.Timeout(true, null)
             }
             val backend = createAltBackend(baseUrl)

@@ -397,13 +397,4 @@ internal class ProtonApiBackendTests {
         val headerFound = request?.headers?.any { it == extraHeader } ?: false
         Assert.assertTrue(headerFound)
     }
-
-    @Test
-    fun `client timeoutSeconds is respected for long lasting calls`() = runBlockingTest {
-        val startTime = currentTime
-        val clientTimeoutMs = client.timeoutSeconds * 1000
-        val result = backend(ApiManager.Call(0) { delay(2 * clientTimeoutMs); test() })
-        Assert.assertTrue(result is ApiResult.Error.Timeout)
-        Assert.assertTrue(currentTime - startTime <= clientTimeoutMs)
-    }
 }

@@ -66,7 +66,8 @@ dependencies {
         mockk,
         mockWebServer,
         `retrofit-scalars-converter`,
-        robolectric
+        robolectric,
+        `kotlin-test-junit`
     )
 
     kaptTest(`hilt-android-compiler`)

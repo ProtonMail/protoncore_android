@@ -63,9 +63,9 @@ interface ApiClient {
     val dohServiceTimeoutMs: Long get() = TimeUnit.SECONDS.toMillis(10)
 
     /**
-     * Timeout for refreshing proxy list (can span multiple DoH queries).
+     * Total time for trying alternative routing proxies.
      */
-    val dohProxyRefreshTimeoutMs: Long get() = TimeUnit.SECONDS.toMillis(30)
+    val alternativesTotalTimeout: Long get() = TimeUnit.SECONDS.toMillis(30)
 
     /**
      * Retry count for exponential backoff.

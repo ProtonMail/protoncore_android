@@ -473,37 +473,24 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test DoH no timeout for human verification`() = runTest(testScope.coroutineContext) {
-        coEvery { backend.invoke<TestResult>(any()) } coAnswers { // or for proxy, or have test for both
-            delay(2 * apiClient.dohTimeoutMs)
-            success5foo
-        }
-
-        coEvery { backend.invoke<TestResult>(any()) } returns success5foo
-        coEvery { backend.isPotentiallyBlocked() } returns true
-        coEvery { altBackend1.invoke<TestResult>(any()) } coAnswers {
-            success5foo
-        }
-
-        val result = apiManager.invoke { test() }
-        assertTrue(result is ApiResult.Success)
-    }
-
-    @Test
-    fun `test DoH timeout`() = runTest(testScope.coroutineContext) {
+    fun `test alternatives total timeout`() = runTest(testScope.coroutineContext) {
         time = 100_000L // this will set the api call timestamp to 100K
         coEvery { backend.invoke<TestResult>(any()) } coAnswers {
-            delay(apiClient.dohTimeoutMs + 1)
-            time += apiClient.dohTimeoutMs + 1
             ApiResult.Error.Connection(true)
         }
 
+        coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns
+            listOf("https://proxy1.com/", "https://proxy2.com/")
         coEvery { backend.isPotentiallyBlocked() } returns true
         coEvery { altBackend1.invoke<TestResult>(any()) } coAnswers {
-            success5foo
+            time += apiClient.alternativesTotalTimeout + 1
+            ApiResult.Error.Connection(true)
         }
 
-        val result = apiManager.invoke { test() }
+        val result = apiManager.invoke(forceNoRetryOnConnectionErrors = true) { test() }
+        coVerify(exactly = 1) {
+            altBackend1.invoke<TestResult>(any())
+        }
         assertTrue(result is ApiResult.Error.Timeout)
     }
 
