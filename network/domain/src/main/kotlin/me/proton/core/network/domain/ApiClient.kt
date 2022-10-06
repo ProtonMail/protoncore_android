@@ -55,7 +55,7 @@ interface ApiClient {
     /**
      * How long alternative API proxy will be used before primary API is attempted again.
      */
-    val proxyValidityPeriodMs: Long get() = TimeUnit.DAYS.toMillis(1)
+    val proxyValidityPeriodMs: Long get() = TimeUnit.MINUTES.toMillis(90)
 
     /**
      * Timeout for DoH queries.
