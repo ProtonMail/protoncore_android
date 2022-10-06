@@ -62,7 +62,7 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient): OkHttpClient.B
 internal fun String?.formatToken(client: ApiClient) = when {
     this == null -> "[none]"
     client.enableDebugLogging -> this
-    else -> "${take(TOKEN_PREFIX_LENGTH)}..."
+    else -> "${removePrefix("Bearer ").take(TOKEN_PREFIX_LENGTH)}..."
 }
 
 internal const val TOKEN_PREFIX_LENGTH = 5
