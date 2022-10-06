@@ -101,17 +101,15 @@ class ApiManagerFactory(
 
     @VisibleForTesting
     val baseOkHttpClient by lazy {
-        require(apiClient.timeoutSeconds >= ApiClient.MIN_TIMEOUT_SECONDS) {
-            "Minimum timeout for ApiClient is ${ApiClient.MIN_TIMEOUT_SECONDS} seconds."
-        }
         require(clientVersionValidator.validate(apiClient.appVersionHeader)) {
             "Invalid app version code: ${apiClient.appVersionHeader}."
         }
         okHttpClient.newBuilder()
             .cache(cache())
-            .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-            .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-            .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
+            .callTimeout(apiClient.callTimeoutSeconds, TimeUnit.SECONDS)
+            .connectTimeout(apiClient.connectTimeoutSeconds, TimeUnit.SECONDS)
+            .writeTimeout(apiClient.writeTimeoutSeconds, TimeUnit.SECONDS)
+            .readTimeout(apiClient.readTimeoutSeconds, TimeUnit.SECONDS)
             .cookieJar(cookieStore)
             .build()
     }

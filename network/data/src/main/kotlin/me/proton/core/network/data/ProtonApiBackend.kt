@@ -161,7 +161,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         invokeInternal(call.block)
 
     private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
-        ApiResult.withTimeout(TimeUnit.SECONDS.toMillis(client.timeoutSeconds)) { api.safeCall(networkManager, block) }
+        api.safeCall(networkManager, block)
 
     override suspend fun refreshSession(session: Session): ApiResult<Session> {
         val result = invokeInternal {
@@ -182,5 +182,13 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     }
 
     override suspend fun isPotentiallyBlocked(): Boolean =
-        invokeInternal { ping(TimeoutOverride(connectionTimeoutSeconds = 20)) }.isPotentialBlocking
+        invokeInternal {
+            ping(
+                TimeoutOverride(
+                    connectionTimeoutSeconds = client.pingTimeoutSeconds,
+                    readTimeoutSeconds = client.pingTimeoutSeconds,
+                    writeTimeoutSeconds = client.pingTimeoutSeconds
+                )
+            )
+        }.isPotentialBlocking
 }

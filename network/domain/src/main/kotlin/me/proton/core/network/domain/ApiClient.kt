@@ -41,16 +41,22 @@ interface ApiClient {
     val userAgent: String
 
     /**
-     * Timeout for internal api call attempt (due to error handling logic there might be internal
+     * Timeouts for internal api call attempt (due to error handling logic there might be multiple internal
      * calls in a single API call by the client).
-     * The returned value must be greater than or equal to [MIN_TIMEOUT_SECONDS].
      */
-    val timeoutSeconds: Long get() = MIN_TIMEOUT_SECONDS
+    val connectTimeoutSeconds: Long get() = 10
+    val readTimeoutSeconds: Long get() = 30
+    val writeTimeoutSeconds: Long get() = 30
 
     /**
-     * Global timeout for DoH logic.
+     * Main timeout for single call including DNS, connecting, writes and reads. Cannot override for specific calls :(
      */
-    val dohTimeoutMs: Long get() = 80_000L
+    val callTimeoutSeconds: Long get() = 30
+
+    /**
+     * This value will be applied to connect, read and write for API pings.
+     */
+    val pingTimeoutSeconds: Int get() = 10
 
     /**
      * How long alternative API proxy will be used before primary API is attempted again.
@@ -89,8 +95,4 @@ interface ApiClient {
      * @param errorMessage the localized error message the user should see.
      */
     fun forceUpdate(errorMessage: String)
-
-    companion object {
-        const val MIN_TIMEOUT_SECONDS = 30L
-    }
 }

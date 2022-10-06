@@ -6,34 +6,34 @@ public abstract interface class me/proton/core/network/domain/ApiBackend {
 }
 
 public abstract interface class me/proton/core/network/domain/ApiClient {
-	public static final field Companion Lme/proton/core/network/domain/ApiClient$Companion;
-	public static final field MIN_TIMEOUT_SECONDS J
 	public abstract fun forceUpdate (Ljava/lang/String;)V
+	public abstract fun getAlternativesTotalTimeout ()J
 	public abstract fun getAppVersionHeader ()Ljava/lang/String;
 	public abstract fun getBackoffBaseDelayMs ()I
 	public abstract fun getBackoffRetryCount ()I
-	public abstract fun getDohProxyRefreshTimeoutMs ()J
+	public abstract fun getCallTimeoutSeconds ()J
+	public abstract fun getConnectTimeoutSeconds ()J
 	public abstract fun getDohServiceTimeoutMs ()J
-	public abstract fun getDohTimeoutMs ()J
 	public abstract fun getEnableDebugLogging ()Z
+	public abstract fun getPingTimeoutSeconds ()I
 	public abstract fun getProxyValidityPeriodMs ()J
+	public abstract fun getReadTimeoutSeconds ()J
 	public abstract fun getShouldUseDoh ()Z
-	public abstract fun getTimeoutSeconds ()J
 	public abstract fun getUserAgent ()Ljava/lang/String;
-}
-
-public final class me/proton/core/network/domain/ApiClient$Companion {
-	public static final field MIN_TIMEOUT_SECONDS J
+	public abstract fun getWriteTimeoutSeconds ()J
 }
 
 public final class me/proton/core/network/domain/ApiClient$DefaultImpls {
+	public static fun getAlternativesTotalTimeout (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getBackoffBaseDelayMs (Lme/proton/core/network/domain/ApiClient;)I
 	public static fun getBackoffRetryCount (Lme/proton/core/network/domain/ApiClient;)I
-	public static fun getDohProxyRefreshTimeoutMs (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getCallTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getConnectTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getDohServiceTimeoutMs (Lme/proton/core/network/domain/ApiClient;)J
-	public static fun getDohTimeoutMs (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getPingTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)I
 	public static fun getProxyValidityPeriodMs (Lme/proton/core/network/domain/ApiClient;)J
-	public static fun getTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getReadTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getWriteTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
 }
 
 public abstract interface class me/proton/core/network/domain/ApiErrorHandler {
