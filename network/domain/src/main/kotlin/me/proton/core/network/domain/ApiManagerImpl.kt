@@ -111,7 +111,7 @@ class ApiManagerImpl<Api>(
                 val result = handler.invoke(activeBackend(), currentResult, call)
                 // add the handler in the retry list only if it produced a different error than the initial error it
                 // has been dealing with
-                if (result is ApiResult.Error && currentResult != result) {
+                if (result is ApiResult.Error && currentResult != result && handler != dohApiHandler) {
                     handlersToRetry.add(handler)
                 }
                 currentResult = result
