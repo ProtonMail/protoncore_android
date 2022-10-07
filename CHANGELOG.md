@@ -11,6 +11,71 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.1.0] - 2022-10-07
+
+### Features
+
+- payment:
+  - For GIAP, acknowledge the purchase after the subscription is assigned.
+
+    MIGRATION:
+    1. Add and provide `PaymentDatabase`.
+    2. Add a database migration: `PaymentDatabase.MIGRATION_0`.
+  - Redeem unacknowledged Google purchase for (paid) users.
+  - Support GIAP payment option
+- payment-iap:
+  - Detect if there is an unredeemed Google purchase.
+
+    `UnredeemedPurchaseInitializer` will be added to your manifest (androidx.startup).
+    In case there is an unredeemed Google purchase, an alert dialog will
+    be shown (in a separate, transparent activity), asking the user to redeem.
+  - Match a Google purchase with a Proton user.
+- plan:
+  - Add plan cycles UI and unit tests.
+  - Add support for unknown plan cycles.
+  - Redeem unacknowledged Google purchase for (paid) users.
+- presentation-compose:
+  - Create ProtonTheme 3 extending material 3 theme.
+
+### Bug Fixes
+
+- Make sure to add **"core library desugaring"** to support `Optional` API from Java 8.
+- Pass test dispatcher to runTest method.
+
+  This is to solve test failures which started happening after updating
+  AGP to 7.1.3 (error `Detected use of different schedulers..`)
+- network:
+  - Don't retry DohApiHandler when it failed.
+  - Introduces fine grained control of timeouts.
+  - Reduce proxy validity to 90min.
+  - Remove timeouts for refreshing proxies.
+
+    Refreshing proxies can take a long time - in VPN it requires a user
+    action (getting VPN permission for Guest Hole). Instead use timeout for
+    running proxies after they are refreshed. There are still timeouts for
+    using DoH services so as long as Guest Hole doesn't kick-in there's
+    still a limit for refreshing proxies.
+  - Remove Bearer prefix when logging token.
+  - Retry request only once on 408 code.
+- payment, plan:
+  - Don't crash when checking for unredeemed purchases, if Billing services are unavailable.
+- payment-iap:
+  - Propagate errors received in `BillingClientStateListener.onBillingSetupFinished`.
+- presentation:
+  - Prevent crash in `AppLifecycleObserver` when constructed on a non-main thread.
+
+### Internationalization
+
+- Upgrade translations from crowdin (544a83d1).
+
+### Refactoring
+
+- payment:
+  - Introduce value classes for payment/purchase tokens.
+  - Rename `PaymentToken` into `PaymentTokenResult`.
+- payment-iap:
+  - Add `GoogleBillingRepository` for interacting with Google Play Billing Client.
+
 ## [9.0.2] - 2022-09-22
 
 ### Chores
