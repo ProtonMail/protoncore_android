@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.1.1] - 2022-10-10
+
+### Bug Fixes
+
+- plan:
+  - The compilation should not fail, if `payment-iap` module is not added.
+
 ## [9.1.0] - 2022-10-07
 
 ### Features
