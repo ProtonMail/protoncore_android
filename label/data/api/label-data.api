@@ -74,8 +74,10 @@ public final class me/proton/core/label/data/LabelEventListener_Factory : dagger
 
 public final class me/proton/core/label/data/LabelsEvents {
 	public static final field Companion Lme/proton/core/label/data/LabelsEvents$Companion;
+	public fun <init> ()V
 	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/List;
 	public final fun copy (Ljava/util/List;)Lme/proton/core/label/data/LabelsEvents;
 	public static synthetic fun copy$default (Lme/proton/core/label/data/LabelsEvents;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/label/data/LabelsEvents;

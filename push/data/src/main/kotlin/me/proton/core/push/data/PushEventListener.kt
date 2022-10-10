@@ -33,7 +33,7 @@ import me.proton.core.push.domain.entity.PushId
 import me.proton.core.push.domain.entity.PushObjectType
 import me.proton.core.push.domain.local.PushLocalDataSource
 import me.proton.core.push.domain.repository.PushRepository
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 
 public open class PushEventListener @Inject constructor(
@@ -49,7 +49,7 @@ public open class PushEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, Push>>? {
-        return response.body.deserializeOrNull<PushesEvent>()?.pushes?.map {
+        return response.body.deserialize<PushesEvent>().pushes?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.push?.toPush(config.userId))
         }
     }
@@ -80,7 +80,7 @@ public open class PushEventListener @Inject constructor(
 @Serializable
 private data class PushesEvent(
     @SerialName("Pushes")
-    val pushes: List<PushEvent>
+    val pushes: List<PushEvent>? = null
 )
 
 @Serializable

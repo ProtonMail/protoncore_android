@@ -29,14 +29,14 @@ import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.extension.toUserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
 data class UserSettingsEvents(
     @SerialName("UserSettings")
-    val settings: UserSettingsResponse
+    val settings: UserSettingsResponse? = null
 )
 
 @Singleton
@@ -52,14 +52,15 @@ open class UserSettingsEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, UserSettingsResponse>>? {
-        return response.body.deserializeOrNull<UserSettingsEvents>()?.let {
-            listOf(Event(Action.Update, "null", it.settings))
+        return response.body.deserialize<UserSettingsEvents>().settings?.let {
+            listOf(Event(Action.Update, "null", it))
         }
     }
 
     override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onUpdate(config: EventManagerConfig, entities: List<UserSettingsResponse>) {
+
         repository.updateUserSettings(entities.first().toUserSettings(config.userId))
     }
 

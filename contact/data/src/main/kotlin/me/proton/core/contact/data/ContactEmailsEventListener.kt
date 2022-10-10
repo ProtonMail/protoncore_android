@@ -31,14 +31,14 @@ import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
 data class ContactEmailsEvents(
     @SerialName("ContactEmails")
-    val contactEmails: List<ContactEmailEvent>
+    val contactEmails: List<ContactEmailEvent>? = null
 )
 
 @Serializable
@@ -66,7 +66,7 @@ open class ContactEmailEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, ContactEmailResource>>? {
-        return response.body.deserializeOrNull<ContactEmailsEvents>()?.contactEmails?.map {
+        return response.body.deserialize<ContactEmailsEvents>().contactEmails?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.contactEmail)
         }
     }

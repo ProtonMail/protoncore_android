@@ -29,14 +29,14 @@ import me.proton.core.mailsettings.data.api.response.MailSettingsResponse
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.extension.toMailSettings
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
 data class MailSettingsEvents(
     @SerialName("MailSettings")
-    val settings: MailSettingsResponse
+    val settings: MailSettingsResponse? = null
 )
 
 @Singleton
@@ -52,8 +52,8 @@ open class MailSettingsEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, MailSettingsResponse>>? {
-        return response.body.deserializeOrNull<MailSettingsEvents>()?.let {
-            listOf(Event(Action.Update, "null", it.settings))
+        return response.body.deserialize<MailSettingsEvents>().settings?.let {
+            listOf(Event(Action.Update, "null", it))
         }
     }
 

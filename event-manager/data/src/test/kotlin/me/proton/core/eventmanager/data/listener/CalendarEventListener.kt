@@ -25,12 +25,12 @@ import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 
 @Serializable
 data class CalendarsEvents(
     @SerialName("Calendars")
-    val calendars: List<CalendarEvent>
+    val calendars: List<CalendarEvent>? = null
 )
 
 @Serializable
@@ -60,8 +60,8 @@ open class CalendarEventListener : EventListener<String, CalendarResource>() {
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, CalendarResource>>? {
-        val events = response.body.deserializeOrNull<CalendarsEvents>()
-        return events?.calendars?.map {
+        val events = response.body.deserialize<CalendarsEvents>()
+        return events.calendars?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.calendar)
         }
     }

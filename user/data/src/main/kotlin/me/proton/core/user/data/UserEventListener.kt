@@ -29,14 +29,14 @@ import me.proton.core.key.data.api.response.UserResponse
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
 data class UserEvents(
     @SerialName("User")
-    val user: UserResponse
+    val user: UserResponse? = null
 )
 
 @Singleton
@@ -52,8 +52,8 @@ open class UserEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, UserResponse>>? {
-        return response.body.deserializeOrNull<UserEvents>()?.let {
-            listOf(Event(Action.Update, it.user.id, it.user))
+        return response.body.deserialize<UserEvents>().user?.let {
+            listOf(Event(Action.Update, it.id, it))
         }
     }
 

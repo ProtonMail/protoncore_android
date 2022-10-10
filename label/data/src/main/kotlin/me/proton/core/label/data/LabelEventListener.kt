@@ -31,14 +31,14 @@ import me.proton.core.label.domain.entity.LabelId
 import me.proton.core.label.domain.entity.LabelType
 import me.proton.core.label.domain.repository.LabelLocalDataSource
 import me.proton.core.label.domain.repository.LabelRepository
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
 data class LabelsEvents(
     @SerialName("Labels")
-    val labels: List<LabelEvent>
+    val labels: List<LabelEvent>? = null
 )
 
 @Serializable
@@ -65,7 +65,7 @@ open class LabelEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, LabelResource>>? {
-        return response.body.deserializeOrNull<LabelsEvents>()?.labels?.map {
+        return response.body.deserialize<LabelsEvents>().labels?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.label)
         }
     }

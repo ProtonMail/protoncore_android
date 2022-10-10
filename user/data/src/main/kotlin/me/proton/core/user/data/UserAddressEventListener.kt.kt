@@ -30,14 +30,14 @@ import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.extension.toAddress
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.repository.UserAddressRepository
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
 data class UserAddressEvents(
     @SerialName("Addresses")
-    val addresses: List<UserAddressEvent>
+    val addresses: List<UserAddressEvent>? = null
 )
 
 @Serializable
@@ -63,7 +63,7 @@ open class UserAddressEventListener @Inject constructor(
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, AddressResponse>>? {
-        return response.body.deserializeOrNull<UserAddressEvents>()?.addresses?.map {
+        return response.body.deserialize<UserAddressEvents>().addresses?.map {
             Event(requireNotNull(Action.map[it.action]), it.address.id, it.address)
         }
     }

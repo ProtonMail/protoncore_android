@@ -26,12 +26,12 @@ import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.key.data.api.response.UserResponse
-import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.deserialize
 
 @Serializable
 data class UserEvents(
     @SerialName("User")
-    val user: UserResponse
+    val user: UserResponse? = null
 )
 
 open class UserEventListener : EventListener<String, UserResponse>() {
@@ -43,8 +43,8 @@ open class UserEventListener : EventListener<String, UserResponse>() {
         config: EventManagerConfig,
         response: EventsResponse
     ): List<Event<String, UserResponse>>? {
-        return response.body.deserializeOrNull<UserEvents>()?.let {
-            listOf(Event(Action.Update, it.user.id, it.user))
+        return response.body.deserialize<UserEvents>().user?.let {
+            listOf(Event(Action.Update, it.id, it))
         }
     }
 
