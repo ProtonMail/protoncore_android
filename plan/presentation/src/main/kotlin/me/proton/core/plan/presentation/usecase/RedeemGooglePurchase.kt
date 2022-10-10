@@ -32,10 +32,11 @@ import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
+import java.util.Optional
 import javax.inject.Inject
 
 internal class RedeemGooglePurchase @Inject constructor(
-    private val acknowledgeGooglePlayPurchase: AcknowledgeGooglePlayPurchase,
+    private val acknowledgeGooglePlayPurchaseOptional: Optional<AcknowledgeGooglePlayPurchase>,
     private val createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
     private val performSubscribe: PerformSubscribe,
     private val validateSubscriptionPlan: ValidateSubscriptionPlan
@@ -50,7 +51,7 @@ internal class RedeemGooglePurchase @Inject constructor(
             UnredeemedGooglePurchaseStatus.NotSubscribed ->
                 createSubscriptionAndAcknowledge(googlePurchase, purchasedPlan, userId)
             UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged ->
-                acknowledgeGooglePlayPurchase(googlePurchase.purchaseToken)
+                acknowledgeGooglePlayPurchaseOptional.getOrNull()?.invoke(googlePurchase.purchaseToken)
         }
     }
 
@@ -101,4 +102,6 @@ internal class RedeemGooglePurchase @Inject constructor(
         val (planDuration, _) = planVendorData.names.entries.first { it.value in googlePurchase.productIds }
         return requireNotNull(PlanCycle.map[planDuration.months])
     }
+
+    private fun <T : Any> Optional<T>.getOrNull(): T? = if (isPresent) get() else null
 }
