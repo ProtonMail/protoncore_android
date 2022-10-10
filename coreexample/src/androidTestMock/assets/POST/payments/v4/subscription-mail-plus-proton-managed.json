@@ -1,0 +1,42 @@
+{
+  "Code": 1000,
+  "Subscription": {
+    "ID": "zL42loPYyWGerUan59_znvVTLBz71E84dssmJHVsMscJk7ScqcIrBQdQMvGLl9C8w9wiPAh6M4FZV_Jw9WTtDw==",
+    "InvoiceID": "LkFiOm3_dZjYLrp9FwvOr-k5JEW8jB0VJlWd-zfbf4KxuPSxBAm_tqsxxvoq1TNzBaDU9vlwL9i-bOAmv1A3iA==",
+    "Cycle": 12,
+    "PeriodStart": 1665745161,
+    "PeriodEnd": 1697281161,
+    "CreateTime": 1665745164,
+    "CouponCode": null,
+    "Currency": "CHF",
+    "Amount": 4788,
+    "Discount": 0,
+    "RenewDiscount": 0,
+    "RenewAmount": 4788,
+    "Plans": [
+      {
+        "ID": "Wb4NAqmiuqoA7kCHE28y92bBFfN8jaYQCLxHRAB96yGj-bh9SxguXC48_WSU-fRUjdAr-lx95c6rFLplgXyXYA==",
+        "ParentMetaPlanID": "hUcV0_EeNwUmXA6EoyNrtO-ZTD8H8F6LvNaSjMaPxB5ecFkA7y-5kc3q38cGumJENGHjtSoUndkYFUx0_xlJeg==",
+        "Type": 1,
+        "Name": "mail2022",
+        "Title": "Mail Plus",
+        "MaxDomains": 1,
+        "MaxAddresses": 10,
+        "MaxCalendars": 20,
+        "MaxSpace": 16106127360,
+        "MaxMembers": 1,
+        "MaxVPN": 0,
+        "MaxTier": 0,
+        "Services": 1,
+        "Features": 1,
+        "State": 1,
+        "Cycle": 12,
+        "Currency": "CHF",
+        "Amount": 4788,
+        "Quantity": 1
+      }
+    ],
+    "Renew": 1,
+    "External": 0
+  }
+}

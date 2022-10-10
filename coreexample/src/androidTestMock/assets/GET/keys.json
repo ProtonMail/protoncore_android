@@ -1,0 +1,19 @@
+{
+  "Code": 1000,
+  "RecipientType": 1,
+  "MIMEType": "text/html",
+  "Keys": [
+    {
+      "Flags": 3,
+      "PublicKey": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: ProtonMail\n\nxjMEY0fm4hYJKwYBBAHaRw8BAQdAcQcU17vasED/GNSVBFJL8pOsRTLv9ix6\nPVnQan43bVjNR3Rlc3QtZm4yaTM0aEBwYXltZW50cy5wcm90b24uYmxhY2sg\nPHRlc3QtZm4yaTM0aEBwYXltZW50cy5wcm90b24uYmxhY2s+wowEExYIAD4F\nAmNH5uIJkGXQGno3YG6/FiEEm2+6uaYNlaK0+/shZdAaejdgbr8CGwMCHgEC\nGQEDCwkHAhUIAxYAAgIiAQAAT4UA/1FkNRAJ9ErCsx0OiN4JeEZsDuBd0DbF\ni48ejOMocAlWAQCjtN7ylHanFip80t9Bbsd0iw2CJhKwfOddWXY02k9GD8Ko\nBBAWCABaBQJjSThiCZDU0hoFUaey7BYhBDYVQ78NpW2mDLPalNTSGgVRp7Ls\nLBxUZXN0IE9wZW5QR1AgQ0EgPHRlc3Qtb3BlbnBncC1jYUBwcm90b24ubWU+\nBYMA7U4AAACuBgD7BWTrCQToGDVRZKUckkAAgpCgRY6fnv8ZK2JxlFWQ8bAA\n/3347rLgOgtARjj9t1znCjAeoCQbJQw74ge/nSRxgekAzjgEY0fm4hIKKwYB\nBAGXVQEFAQEHQNU+tdqd9yjxaO+gW4XCWwFoCA8SqKa2N6aRZJ6l6zBaAwEK\nCcJ4BBgWCAAqBQJjR+biCZBl0Bp6N2BuvxYhBJtvurmmDZWitPv7IWXQGno3\nYG6/AhsMAADHIQEAqxfglAyZmITQxybwxvipBXQaPcvxWUOxH6h3PxLBu5IB\nANo+nxEII8hQkzdgN3plBNhS3kuD4fwUTTWv1L+Y/8gO\n=/TXu\n-----END PGP PUBLIC KEY BLOCK-----\n"
+    }
+  ],
+  "SignedKeyList": {
+    "MinEpochID": null,
+    "MaxEpochID": null,
+    "ExpectedMinEpochID": 1,
+    "Data": "[{\"Fingerprint\": \"9b6fbab9a60d95a2b4fbfb2165d01a7a37606ebf\",\"SHA256Fingerprints\": [\"aef688d21c4cfa367ff5754862498501f400f87d9ce207b88fa52ccac556c582\",\"731f8442280cf2312ea0bf9ea6fd7542fcb983ff51c1e4c97fa0371c78e7ec41\"],\"Flags\": 3,\"Primary\": 1}]",
+    "Signature": "-----BEGIN PGP SIGNATURE-----\nVersion: ProtonMail\n\nwnUEABYKACcFAmNJOGIJkGXQGno3YG6/FiEEm2+6uaYNlaK0+/shZdAaejdg\nbr8AAA9PAQCLUDIEFDrqv+lppiWkukJkGsp+tJ8iwSozU7Q1/63UBgD/SfqD\n1R+fea5FwlqdfRXTzfwj6Xafoqe2Rg4tfQRTeAo=\n=vtu/\n-----END PGP SIGNATURE-----\n"
+  },
+  "Warnings": []
+}

@@ -18,10 +18,30 @@
 
 package me.proton.core.test.android.robots.payments
 
+import me.proton.core.payment.presentation.R
+
 /**
  * [GoogleIAPRobot] class contains new credit card addition actions and verifications implementation
  */
 class GoogleIAPRobot : PaymentRobot() {
 
-    inline fun <reified T> payWithGPay() = pay<T>()
+    inline fun <reified T> payWithGPay(): T = clickElement(R.id.gPayButton)
+
+    fun switchPaymentProvider(): GoogleIAPRobot = clickElement(R.id.nextPaymentProviderButton)
+
+    @Suppress("FINAL_UPPER_BOUND")
+    fun <V : Verify> verify(block: Verify.() -> Unit) = Verify().apply(block)
+
+    class Verify : PaymentRobot.Verify() {
+        fun payWithCardButtonIsNotVisible() {
+            view.withId(R.id.payButton).checkNotDisplayed()
+        }
+
+        fun payWithGoogleButtonIsClickable() {
+            view.withId(R.id.gPayButton)
+                .checkDisplayed()
+                .isEnabled()
+                .isClickable()
+        }
+    }
 }

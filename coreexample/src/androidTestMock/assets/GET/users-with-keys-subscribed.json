@@ -1,0 +1,35 @@
+{
+  "Code": 1000,
+  "User": {
+    "ID": "VhC0TBoR_SHd7-rjOLtY5lYQ_Dqw9e8Lu54FqyW05ssJ3eEo6hglLat6Aq9M5MaM66EZ2Nr327QQL5zyF15SvQ==",
+    "Name": "test-mock-936",
+    "Currency": "CHF",
+    "Credit": 0,
+    "Type": 1,
+    "CreateTime": 1665679842,
+    "MaxSpace": 524288000,
+    "MaxUpload": 26214400,
+    "UsedSpace": 248329,
+    "Subscribed": 1,
+    "Services": 1,
+    "MnemonicStatus": 0,
+    "Role": 0,
+    "Private": 1,
+    "Delinquent": 0,
+    "Keys": [
+      {
+        "ID": "ktXfDhLWmzv_urlJa4J_hjGWNLOYRwwJbY8N7vJ8iUJjsW6tET3rGLWLU64DhPXcjiXkLS-P-Cex_cnsfiB-2g==",
+        "Version": 3,
+        "Primary": 1,
+        "RecoverySecret": null,
+        "RecoverySecretSignature": null,
+        "PrivateKey": "-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: ProtonMail\n\nxYYEY0bwZhYJKwYBBAHaRw8BAQdA1yDTR70NxF/vJVpYKVcA85nGx202WhTF\nr8B7CjTyRaj+CQMIawSpxnhvxmlgWQkR6VxIOn/FvaCnnHoEeZpBB7glqril\nSvo7VaLxVDNmTlK0iXLAdN9IDJzoTstqem3kP0eDsV1VllYogeEZXycMVLdl\ngs03dGVzdC1tb2NrLTkzNkBwcm90b24uYmxhY2sgPHRlc3QtbW9jay05MzZA\ncHJvdG9uLmJsYWNrPsKMBBMWCAA+BQJjRvBmCZCx8Eg4YZqbdxYhBPwQ6P4+\nLphcoA4eGLHwSDhhmpt3AhsDAh4BAhkBAwsJBwIVCAMWAAICIgEAAPGgAQDP\nFL4EJ4KERUaQe+CqRcN9n0eht+an0gB4DI13laL4DAD9GoT/l7rgzE/6S/mZ\nvs+pIXDa2vVe9lFeYPwAH6Q5cg3HiwRjRvBmEgorBgEEAZdVAQUBAQdAWcGA\nsFE9w5OQUIJSpltFD0NF0a7tqqCJzta33ylLfjYDAQoJ/gkDCLzXimofJ0Ov\nYMsejJrofkHZXKaBE1Jl2yxf4jMxBGGB93G/INhsjF0fNX0XJfucUKJ4Lyk+\nMaiQsvD4dMUSJjxuRqNyfOp3NR1SYa0+hSfCeAQYFggAKgUCY0bwZgmQsfBI\nOGGam3cWIQT8EOj+Pi6YXKAOHhix8Eg4YZqbdwIbDAAAKUEA/jgGKBtfNvRp\nqNn3b+1V7pOCNhabyDge22SlCFWI1Q6+AP4xt9jEIRVDzGVEnhxG44o82cyC\nTZLysQbBbsnilK4BBw==\n=pKOS\n-----END PGP PRIVATE KEY BLOCK-----\n",
+        "Fingerprint": "fc10e8fe3e2e985ca00e1e18b1f04838619a9b77",
+        "Active": 1
+      }
+    ],
+    "ToMigrate": 1,
+    "Email": "test-mock-936@proton.black",
+    "DisplayName": ""
+  }
+}

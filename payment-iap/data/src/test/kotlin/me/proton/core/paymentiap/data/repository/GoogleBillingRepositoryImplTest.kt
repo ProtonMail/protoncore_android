@@ -48,7 +48,7 @@ internal class GoogleBillingRepositoryImplTest {
     fun setUp() {
         billingClientFactory = FakeBillingClientFactory()
         factory = FakeConnectedBillingClientFactory()
-        tested = GoogleBillingRepositoryImpl(billingClientFactory, factory, TestDispatcherProvider)
+        tested = GoogleBillingRepositoryImpl(factory, TestDispatcherProvider)
     }
 
     @AfterTest
@@ -125,5 +125,6 @@ private class FakeBillingClientFactory : BillingClientFactory {
 private class FakeConnectedBillingClientFactory : ConnectedBillingClientFactory {
     val connectedBillingClient: ConnectedBillingClient = mockk(relaxed = true)
 
-    override fun invoke(billingClient: BillingClient): ConnectedBillingClient = connectedBillingClient
+    override fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): ConnectedBillingClient =
+        connectedBillingClient
 }

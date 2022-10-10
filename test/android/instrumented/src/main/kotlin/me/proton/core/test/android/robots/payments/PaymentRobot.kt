@@ -35,7 +35,7 @@ open class PaymentRobot : CoreRobot() {
      */
     inline fun <reified T> pay(): T = clickElement(R.id.payButton)
 
-    class Verify : CoreVerify() {
+    open class Verify : CoreVerify() {
         fun billingDetailsDisplayed(
             plan: Plan,
             currency: String,
@@ -75,11 +75,14 @@ open class PaymentRobot : CoreRobot() {
         fun googleIAPElementsDisplayed() {
             arrayOf(
                 me.proton.core.paymentiap.presentation.R.id.termsConditionsInfoText,
-                me.proton.core.paymentiap.presentation.R.id.priceSurchargeInfoText,
-                R.id.nextPaymentProviderButton
+                me.proton.core.paymentiap.presentation.R.id.priceSurchargeInfoText
             ).forEach {
                 view.withId(it).checkDisplayed()
             }
+        }
+
+        fun nextPaymentProviderButtonDisplayed() {
+            view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
         }
     }
 

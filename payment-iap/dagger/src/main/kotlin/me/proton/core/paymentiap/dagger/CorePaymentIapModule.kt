@@ -33,10 +33,14 @@ import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-public interface CorePaymentIapModule {
+public interface CorePaymentIapBillingModule {
     @Binds
     public fun bindBillingClientProvider(impl: BillingClientFactoryImpl): BillingClientFactory
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CorePaymentIapModule {
     @Binds
     public fun bindGoogleBillingRepository(impl: GoogleBillingRepositoryImpl): GoogleBillingRepository
 

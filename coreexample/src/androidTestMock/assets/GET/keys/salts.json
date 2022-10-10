@@ -1,0 +1,13 @@
+{
+  "Code": 1000,
+  "KeySalts": [
+    {
+      "ID": "ktXfDhLWmzv_urlJa4J_hjGWNLOYRwwJbY8N7vJ8iUJjsW6tET3rGLWLU64DhPXcjiXkLS-P-Cex_cnsfiB-2g==",
+      "KeySalt": "KyXt2jZxVpS4Uh3AVwY2HA=="
+    },
+    {
+      "ID": "gG7SLPctbQeU4GiCDYrwPdtGBOwjTo501TUvu-xanerLahsW7uShd29QbBmy8FHXomp20WmH6bWcyKZAu5aMoQ==",
+      "KeySalt": "KyXt2jZxVpS4Uh3AVwY2HA=="
+    }
+  ]
+}

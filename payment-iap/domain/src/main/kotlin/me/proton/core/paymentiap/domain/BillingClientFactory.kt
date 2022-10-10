@@ -21,6 +21,6 @@ package me.proton.core.paymentiap.domain
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.PurchasesUpdatedListener
 
-public interface BillingClientFactory {
+public fun interface BillingClientFactory {
     public operator fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): BillingClient
 }

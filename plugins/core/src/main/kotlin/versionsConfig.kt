@@ -116,12 +116,13 @@ public const val `desugar_jdk_libs version`: String =      "1.1.5"
 // endregion
 
 // region Tests
-public const val `androidx-test-monitor version`: String =     "1.5.0"
-public const val `hamcrest version`: String =                  "2.2"
-public const val `uiautomator version`: String =               "2.2.0"         // Released: Oct 25, 2018
-public const val `preference version`: String =                "1.1.1"         // Released: Apr 15, 2020
-public const val `json-simple version`: String =               "1.1.1"         // Released: Mar 21, 2012
-public const val `turbine version`: String =                   "0.7.0"
-public const val `junit version`: String =                     "4.13.2"
-public const val `junit-ktx version`: String =                 "1.1.3"
+public const val `androidx-test-monitor version`: String =      "1.5.0"
+public const val `androidx-test-orchestrator version`: String = "1.4.1"
+public const val `hamcrest version`: String =                   "2.2"
+public const val `uiautomator version`: String =                "2.2.0"         // Released: Oct 25, 2018
+public const val `preference version`: String =                 "1.1.1"         // Released: Apr 15, 2020
+public const val `json-simple version`: String =                "1.1.1"         // Released: Mar 21, 2012
+public const val `turbine version`: String =                    "0.7.0"
+public const val `junit version`: String =                      "4.13.2"
+public const val `junit-ktx version`: String =                  "1.1.3"
 // endregion

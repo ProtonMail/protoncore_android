@@ -1,0 +1,22 @@
+{
+  "Code": 1000,
+  "Features": [
+    {
+      "Code": "ThreadingAndroid",
+      "Type": "boolean",
+      "Global": true,
+      "DefaultValue": true,
+      "Value": true,
+      "Writable": false
+    },
+    {
+      "Code": "CanUserSendFeedback",
+      "Type": "boolean",
+      "Global": true,
+      "DefaultValue": false,
+      "Value": false,
+      "Writable": false
+    }
+  ],
+  "Total": 2
+}

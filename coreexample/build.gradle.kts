@@ -141,6 +141,21 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, hv3Host.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, quarkHost.toBuildConfigValue())
         }
+        productFlavors.register("mock") {
+            buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.mock".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.mock".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "quark.mock".toBuildConfigValue())
+            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
+
+            dimension = flavorDimensions.env
+            testInstrumentationRunner = "me.proton.core.test.android.ProtonTestRunner"
+            testInstrumentationRunnerArguments["clearPackageData"] = "true"
+
+            testOptions {
+                animationsDisabled = true
+                execution = "ANDROIDX_TEST_ORCHESTRATOR"
+            }
+        }
     }
 }
 
@@ -234,11 +249,21 @@ dependencies {
         `hilt-android-compiler`
     )
 
+    kaptAndroidTest(
+        `hilt-android-compiler`
+    )
+
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
+        `android-test-runner`,
         `hilt-android-testing`,
-        `kotlin-test-junit`
+        `kotlin-test-junit`,
+        `mockk-android`,
+        mockWebServer,
+        uiautomator
     )
+
+    androidTestUtil(`androidx-test-orchestrator`)
 
     // Lint - off temporary
     // lintChecks(project(Module.lint))

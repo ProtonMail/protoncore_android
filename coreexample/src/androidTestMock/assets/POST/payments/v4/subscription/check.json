@@ -1,0 +1,13 @@
+{
+  "Code": 1000,
+  "AmountDue": 4788,
+  "Amount": 4788,
+  "Cycle": 12,
+  "CouponDiscount": 0,
+  "Gift": 0,
+  "Currency": "CHF",
+  "UnusedCredit": 0,
+  "Credit": 0,
+  "Proration": 0,
+  "Coupon": null
+}

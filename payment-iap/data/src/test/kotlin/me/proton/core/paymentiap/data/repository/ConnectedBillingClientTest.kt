@@ -44,7 +44,7 @@ internal class ConnectedBillingClientTest {
     @BeforeTest
     fun setUp() {
         billingClient = mockk(relaxed = true)
-        tested = ConnectedBillingClient(billingClient)
+        tested = ConnectedBillingClient({ billingClient }, mockk())
     }
 
     @Test

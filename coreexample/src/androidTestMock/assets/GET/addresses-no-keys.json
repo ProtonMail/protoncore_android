@@ -1,0 +1,22 @@
+{
+  "Code": 1000,
+  "Addresses": [
+    {
+      "ID": "Aj_ugxEsw8G-5twSvHmaaC-R75FBj7szznD7ib4DbBa7cuJxrIITuXMuzUHLMcQQrBglx0jacVwzDq-wGKMphQ==",
+      "DomainID": "l8vWAXHBQmv0u7OVtPbcqMa4iwQaBqowINSQjPrxAr-Da8fVPKUkUcqAq30_BCxj1X0nW70HQRmAa-rIvzmKUA==",
+      "Email": "test-mock-936@proton.black",
+      "Status": 1,
+      "Type": 1,
+      "Receive": 0,
+      "Send": 0,
+      "DisplayName": "",
+      "Signature": "",
+      "Order": 1,
+      "Priority": 1,
+      "ConfirmationState": 1,
+      "HasKeys": 0,
+      "SignedKeyList": null,
+      "Keys": []
+    }
+  ]
+}

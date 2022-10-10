@@ -58,7 +58,7 @@ public val DependencyHandler.`compose-material`: Any
 public val DependencyHandler.`compose-material3`: Any
     get() = compose("material3", version = `material3 version`)
 public val DependencyHandler.`compose-material-icons-core`: Any
-    get() = compose("material", moduleSuffix="icons-core")
+    get() = compose("material", moduleSuffix = "icons-core")
 public val DependencyHandler.`compose-runtime`: Any
     get() = compose("runtime")
 public val DependencyHandler.`compose-ui`: Any
@@ -151,7 +151,7 @@ public val DependencyHandler.`startup-runtime`: Any
 public val DependencyHandler.`serialization-core`: Any
     get() = serialization("core")
 public val DependencyHandler.`desugar-jdk-libs`: Any
-    get() = dependency("com.android.tools", module="desugar_jdk_libs") version `desugar_jdk_libs version`
+    get() = dependency("com.android.tools", module = "desugar_jdk_libs") version `desugar_jdk_libs version`
 
 // region accessors
 public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`): Any =
@@ -163,6 +163,8 @@ public val DependencyHandler.`android-test-core-ktx`: Any
     get() = dependency("androidx.test", module = "core-ktx") version `android-test version`
 public val DependencyHandler.`androidx-test-monitor`: Any
     get() = androidx("test", module = "monitor") version `androidx-test-monitor version`
+public val DependencyHandler.`androidx-test-orchestrator`: Any
+    get() = androidx("test", module = "orchestrator") version `androidx-test-orchestrator version`
 public val DependencyHandler.`espresso-contrib`: Any
     get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
 public val DependencyHandler.`espresso-idling-resource`: Any

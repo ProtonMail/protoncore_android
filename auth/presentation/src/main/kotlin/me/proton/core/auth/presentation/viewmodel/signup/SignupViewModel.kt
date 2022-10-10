@@ -167,7 +167,7 @@ internal class SignupViewModel @Inject constructor(
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
-        _state.tryEmit(it)
+        _state.emit(it)
     }.launchIn(viewModelScope)
 
     fun register(caller: ActivityResultCaller) {

@@ -1,0 +1,46 @@
+{
+  "Code": 1000,
+  "Addresses": [
+    {
+      "ID": "Aj_ugxEsw8G-5twSvHmaaC-R75FBj7szznD7ib4DbBa7cuJxrIITuXMuzUHLMcQQrBglx0jacVwzDq-wGKMphQ==",
+      "DomainID": "l8vWAXHBQmv0u7OVtPbcqMa4iwQaBqowINSQjPrxAr-Da8fVPKUkUcqAq30_BCxj1X0nW70HQRmAa-rIvzmKUA==",
+      "Email": "test-mock-936@proton.black",
+      "Status": 1,
+      "Type": 1,
+      "Receive": 1,
+      "Send": 1,
+      "DisplayName": "",
+      "Signature": "",
+      "Order": 1,
+      "Priority": 1,
+      "ConfirmationState": 1,
+      "HasKeys": 1,
+      "SignedKeyList": {
+        "MinEpochID": null,
+        "MaxEpochID": null,
+        "ExpectedMinEpochID": 413,
+        "Data": "[{\"Fingerprint\": \"0060f7739d803c34162963bfad3c05fca6a522f1\",\"SHA256Fingerprints\": [\"317add2a2a52233559e42c9a9b0f1cc84dc4532132b415a98b02663d3f9591b6\",\"855d512b2230abbbd058da2a5e210f35c161a2cd5d514b2062265463eee1192c\"],\"Flags\": 3,\"Primary\": 1}]",
+        "Signature": "-----BEGIN PGP SIGNATURE-----\nVersion: ProtonMail\n\nwnUEABYKACcFAmNIQecJkK08BfympSLxFiEEAGD3c52APDQWKWO/rTwF/Kal\nIvEAAK3ZAQCPrqF9RPcFj/gkfM5IUxN0HUULnXWCJaMhxEinVbTu2gD+OOZI\n4yvWC3fcDpSVYhClNjV6fn6rVLzetG0MbHwmVgs=\n=yPix\n-----END PGP SIGNATURE-----\n"
+      },
+      "Keys": [
+        {
+          "ID": "gG7SLPctbQeU4GiCDYrwPdtGBOwjTo501TUvu-xanerLahsW7uShd29QbBmy8FHXomp20WmH6bWcyKZAu5aMoQ==",
+          "Primary": 1,
+          "Flags": 3,
+          "Fingerprint": "0060f7739d803c34162963bfad3c05fca6a522f1",
+          "Fingerprints": [
+            "0060f7739d803c34162963bfad3c05fca6a522f1",
+            "9381fee3c76b61154cfaeeca2f48c5ae1156905f"
+          ],
+          "PublicKey": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: ProtonMail\n\nxjMEY0bwZxYJKwYBBAHaRw8BAQdA32HWq/s9pn80cTYQzntfCUObXhQdKTYL\ncWhzh5mKVCPNN3Rlc3QtbW9jay05MzZAcHJvdG9uLmJsYWNrIDx0ZXN0LW1v\nY2stOTM2QHByb3Rvbi5ibGFjaz7CjAQTFggAPgUCY0bwZwmQrTwF/KalIvEW\nIQQAYPdznYA8NBYpY7+tPAX8pqUi8QIbAwIeAQIZAQMLCQcCFQgDFgACAiIB\nAAAZlwEA162m1fpQ1Lc4BOIud94Na4PYNLOZG+1XyBn+cZaRFeYA/AmpAYsd\naTK94OOAziF3xzTmogaSOaLlAdK4amyqMUkFwqgEEBYIAFoFAmNIQecJkNTS\nGgVRp7LsFiEENhVDvw2lbaYMs9qU1NIaBVGnsuwsHFRlc3QgT3BlblBHUCBD\nQSA8dGVzdC1vcGVucGdwLWNhQHByb3Rvbi5tZT4FgwDtTgAAACbtAQDLWkDg\nWyIHnmcvKydwf3g1qGa+h8DfnqiqPHDPumtxpgD+OisPcOZocVFvTCyrumXn\nCuydKSCMmEF+dbQp6L5XfgXOOARjRvBnEgorBgEEAZdVAQUBAQdAPgaJsuED\neY1ElpnYaZHraXVHH4CiMYCOXe+BxTl88gcDAQoJwngEGBYIACoFAmNG8GcJ\nkK08BfympSLxFiEEAGD3c52APDQWKWO/rTwF/KalIvECGwwAADVyAQCG85q1\nI4fqiEpB1S+qMykiI5X0vUrxyLvf4UajjduwAQD/auK6+JyYruPq/UV+L9yw\nVxCwZV211YbS1oaQOTElhAI=\n=6Gbr\n-----END PGP PUBLIC KEY BLOCK-----\n",
+          "Active": 1,
+          "Version": 3,
+          "Activation": null,
+          "PrivateKey": "-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: ProtonMail\n\nxYYEY0bwZxYJKwYBBAHaRw8BAQdA32HWq/s9pn80cTYQzntfCUObXhQdKTYL\ncWhzh5mKVCP+CQMIUpXLJHRxAopggKwtUzebKlK5y8EYCwho/je4Q9t9drFo\nf++RYhV1Bf/5oVO27Mw9rhVmbONCYSInx5tuJjQ+DhvmqkfqcYruP3kLMGHU\nZ803dGVzdC1tb2NrLTkzNkBwcm90b24uYmxhY2sgPHRlc3QtbW9jay05MzZA\ncHJvdG9uLmJsYWNrPsKMBBMWCAA+BQJjRvBnCZCtPAX8pqUi8RYhBABg93Od\ngDw0Filjv608BfympSLxAhsDAh4BAhkBAwsJBwIVCAMWAAICIgEAABmXAQDX\nrabV+lDUtzgE4i533g1rg9g0s5kb7VfIGf5xlpEV5gD8CakBix1pMr3g44DO\nIXfHNOaiBpI5ouUB0rhqbKoxSQXHiwRjRvBnEgorBgEEAZdVAQUBAQdAPgaJ\nsuEDeY1ElpnYaZHraXVHH4CiMYCOXe+BxTl88gcDAQoJ/gkDCN7T8/EcLqWx\nYJSp14FcyrKeISS5eF/7BtQKrPG8znPt2IJP38dqbplEgzgfS1ypbrKJHf+n\n6gKR/aEVL7TaNqQ/TS3V/Kyt9F3pc7XZ8lzCeAQYFggAKgUCY0bwZwmQrTwF\n/KalIvEWIQQAYPdznYA8NBYpY7+tPAX8pqUi8QIbDAAANXIBAIbzmrUjh+qI\nSkHVL6ozKSIjlfS9SvHIu9/hRqON27ABAP9q4rr4nJiu4+r9RX4v3LBXELBl\nXbXVhtLWhpA5MSWEAg==\n=egGh\n-----END PGP PRIVATE KEY BLOCK-----\n",
+          "Token": null,
+          "Signature": null
+        }
+      ]
+    }
+  ]
+}

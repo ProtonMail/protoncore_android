@@ -1,0 +1,17 @@
+{
+  "Code": 1000,
+  "Scope": "4297913728",
+  "Scopes": [
+    "full",
+    "locked",
+    "self",
+    "payments",
+    "keys",
+    "parent",
+    "user",
+    "loggedin",
+    "nondelinquent",
+    "mail",
+    "verified"
+  ]
+}

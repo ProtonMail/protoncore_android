@@ -1,0 +1,21 @@
+{
+  "Code": 1000,
+  "Plans": {
+    "Type": 1,
+    "Name": "free",
+    "Title": "Proton Free",
+    "MaxDomains": 0,
+    "MaxAddresses": 1,
+    "MaxCalendars": 1,
+    "MaxSpace": 524288000,
+    "MaxRewardSpace": 1073741824,
+    "MaxMembers": 1,
+    "MaxVPN": 1,
+    "Services": null,
+    "Features": 0,
+    "Cycle": null,
+    "Currency": null,
+    "Amount": 0,
+    "Quantity": 1
+  }
+}

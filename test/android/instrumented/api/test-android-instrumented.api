@@ -1055,6 +1055,14 @@ public final class me/proton/core/test/android/robots/payments/ExistingPaymentMe
 
 public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
 	public fun <init> ()V
+	public final fun switchPaymentProvider ()Lme/proton/core/test/android/robots/payments/GoogleIAPRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/GoogleIAPRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot$Verify : me/proton/core/test/android/robots/payments/PaymentRobot$Verify {
+	public fun <init> ()V
+	public final fun payWithCardButtonIsNotVisible ()V
+	public final fun payWithGoogleButtonIsClickable ()V
 }
 
 public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -1062,12 +1070,13 @@ public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proto
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/PaymentRobot$Verify;
 }
 
-public final class me/proton/core/test/android/robots/payments/PaymentRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+public class me/proton/core/test/android/robots/payments/PaymentRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun addCreditCardElementsDisplayed ()V
 	public final fun billingDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Ljava/lang/String;Z)V
 	public final fun googleIAPElementsDisplayed ()V
 	public final fun googlePaymentMethodDisplayed (Ljava/lang/String;)V
+	public final fun nextPaymentProviderButtonDisplayed ()V
 	public final fun paymentMethodDisplayed (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -1086,6 +1095,7 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public static synthetic fun billingCycleIs$default (Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;ILjava/lang/Object;)V
 	public final fun canSelectPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun canUpgradeToPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
+	public final fun currentPlanDetailsDisplayed ()V
 	public final fun planCycleDisplayed (Ljava/lang/String;)V
 	public final fun planDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsDisplayedInsideRecyclerView (Lme/proton/core/test/android/plugins/data/Plan;)V

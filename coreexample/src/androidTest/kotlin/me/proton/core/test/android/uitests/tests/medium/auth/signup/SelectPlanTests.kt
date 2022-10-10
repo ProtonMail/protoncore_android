@@ -158,7 +158,10 @@ class SelectPlanTests : BaseTest() {
         selectPlanRobot?.let {
             it.toggleExpandPlan(Dev)
                 .selectPlan<GoogleIAPRobot>(Dev)
-                .verify { googleIAPElementsDisplayed() }
+                .verify {
+                    googleIAPElementsDisplayed()
+                    nextPaymentProviderButtonDisplayed()
+                }
 
             GoogleIAPRobot()
                 .close<SelectPlanRobot>()

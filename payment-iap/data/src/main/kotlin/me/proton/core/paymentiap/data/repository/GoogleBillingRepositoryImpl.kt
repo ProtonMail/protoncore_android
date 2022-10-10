@@ -52,7 +52,6 @@ import me.proton.core.util.kotlin.DispatcherProvider
 import javax.inject.Inject
 
 public class GoogleBillingRepositoryImpl @Inject internal constructor(
-    billingClientFactory: BillingClientFactory,
     connectedBillingClientFactory: ConnectedBillingClientFactory,
     dispatcherProvider: DispatcherProvider,
 ) : GoogleBillingRepository {
@@ -67,7 +66,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         }
     }
 
-    private val connectedBillingClient = connectedBillingClientFactory(billingClientFactory(purchasesUpdatedListener))
+    private val connectedBillingClient = connectedBillingClientFactory(purchasesUpdatedListener)
 
     override suspend fun acknowledgePurchase(purchaseToken: GooglePurchaseToken) {
         val params = AcknowledgePurchaseParams.newBuilder()
@@ -120,13 +119,15 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
 
 @AssistedFactory
 internal interface ConnectedBillingClientFactory {
-    operator fun invoke(billingClient: BillingClient): ConnectedBillingClient
+    operator fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): ConnectedBillingClient
 }
 
 /** Manages access to [BillingClient], ensuring we are connected, before calling any of its methods. */
 internal class ConnectedBillingClient @AssistedInject constructor(
-    @Assisted private val billingClient: BillingClient
+    billingClientFactory: BillingClientFactory,
+    @Assisted private val purchasesUpdatedListener: PurchasesUpdatedListener
 ) : BillingClientStateListener {
+    private val billingClient = billingClientFactory(purchasesUpdatedListener)
     private val connectionState = MutableStateFlow<BillingClientConnectionState>(BillingClientConnectionState.Idle)
 
     fun destroy() {

@@ -58,7 +58,11 @@ object ApplicationModule {
     @Singleton
     fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
         CoreExampleRepository(apiProvider)
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object WorkManagerModule {
     @Provides
     @Singleton
     fun provideWorkManager(@ApplicationContext context: Context): WorkManager =
