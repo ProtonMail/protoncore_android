@@ -140,10 +140,12 @@ assemble:
     CORE_APP: :coreexample:assembleLocalPropertiesDebug
     # Build UI tests for CoreExample
     CORE_APP_TESTS: :coreexample:assembleLocalPropertiesDebugAndroidTest
+    # Mock variant and mock UI tests
+    CORE_APP_MOCK: :coreexample:assembleMockDebug :coreexample:assembleMockDebugAndroidTest
     # Build androidTest apks for several projects
     CORE_LIBS_TESTS: :user:user-data:assembleDebugAndroidTest :key:key-data:assembleDebugAndroidTest :crypto:crypto-android:assembleDebugAndroidTest
   script:
-    - ./gradlew $CORE_APP $CORE_APP_TESTS $CORE_LIBS_TESTS
+    - ./gradlew $CORE_APP $CORE_APP_MOCK $CORE_APP_TESTS $CORE_LIBS_TESTS
   artifacts:
     paths:
       - coreexample/build/outputs/
@@ -266,8 +268,11 @@ drive-integration-tests:
   when: always
   image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0
   variables:
+    APP_APK: "coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk"
     RESULTS_DIR: "${CI_COMMIT_REF_SLUG}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
+    DEVICE_MODEL: "Pixel2,version=28"
+    EXTRA_OPTIONS: ""
   tags:
     - medium
   allow_failure: true
@@ -275,12 +280,13 @@ drive-integration-tests:
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
     - gcloud firebase test android run
-      --app coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk
+      --app ${APP_APK}
       --test ${TEST_APK}
-      --device model=Pixel2,version=28
+      --device model=${DEVICE_MODEL}
       --test-targets "$TEST_TARGET"
       --timeout 25m
       --results-dir=$RESULTS_DIR
+      ${EXTRA_OPTIONS}
   after_script:
     - mkdir -p screenshots
     - mkdir -p logs
@@ -329,6 +335,15 @@ uitest:plans:
 uitest:usersettings:
   variables:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.usersettings"
+  extends: .firebase-tests-common
+
+uitest:giap-tests:
+  variables:
+    APP_APK: "coreexample/build/outputs/apk/mock/debug/coreexample-mock-debug.apk"
+    TEST_APK: "coreexample/build/outputs/apk/androidTest/mock/debug/coreexample-mock-debug-androidTest.apk"
+    TEST_TARGET: "package me.proton.core.test.android.uitests.giap"
+    DEVICE_MODEL: "Pixel2.arm,version=28"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
 
 androidTest:user-data:
