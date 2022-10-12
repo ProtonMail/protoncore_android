@@ -73,6 +73,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         sealed class Success : SubscribedPlansState() {
             data class SubscribedPlans(
                 val subscribedPlans: List<PlanDetailsItem>,
+                val renewAmount: Long?,
                 val userCurrency: PlanCurrency?,
                 val subscriptionManagement: SubscriptionManagement? = null,
                 val unredeemedGooglePurchase: UnredeemedGooglePurchase? = null
@@ -124,10 +125,11 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         } else null
         emit(
             SubscribedPlansState.Success.SubscribedPlans(
-                subscribedPlans,
-                PlanCurrency.map[user.currency],
-                external,
-                unredeemed
+                subscribedPlans = subscribedPlans,
+                renewAmount = currentSubscription?.renewAmount,
+                userCurrency = PlanCurrency.map[user.currency],
+                subscriptionManagement = external,
+                unredeemedGooglePurchase = unredeemed
             )
         )
     }.catch { error ->

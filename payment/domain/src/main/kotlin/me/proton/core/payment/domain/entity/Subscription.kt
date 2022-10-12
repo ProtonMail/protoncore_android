@@ -29,6 +29,9 @@ public data class Subscription constructor(
     val couponCode: String?,
     val currency: String,
     val amount: Long,
+    val discount: Long,
+    val renewDiscount: Long,
+    val renewAmount: Long,
     val external: SubscriptionManagement?,
     val plans: List<Plan>,
     val customerId: String?

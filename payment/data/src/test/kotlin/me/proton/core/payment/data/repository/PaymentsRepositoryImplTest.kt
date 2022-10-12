@@ -392,7 +392,10 @@ class PaymentsRepositoryImplTest {
             periodEnd = 2L,
             couponCode = null,
             currency = "EUR",
-            amount = 5L,
+            amount = 5,
+            discount = 0,
+            renewDiscount = 0,
+            renewAmount = 5,
             plans = listOf(mockk()),
             external = SubscriptionManagement.PROTON_MANAGED,
             customerId = null

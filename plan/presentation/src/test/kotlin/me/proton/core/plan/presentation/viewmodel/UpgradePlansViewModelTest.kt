@@ -197,6 +197,9 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         couponCode = null,
         currency = "EUR",
         amount = 5,
+        discount = 0,
+        renewDiscount = 0,
+        renewAmount = 5,
         plans = listOf(
             testSubscribedPlan
         ),

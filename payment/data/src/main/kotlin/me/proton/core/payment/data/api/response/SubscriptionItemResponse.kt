@@ -41,6 +41,12 @@ internal data class SubscriptionItemResponse(
     val currency: String,
     @SerialName("Amount")
     val amount: Long,
+    @SerialName("Discount")
+    val discount: Long,
+    @SerialName("RenewDiscount")
+    val renewDiscount: Long,
+    @SerialName("RenewAmount")
+    val renewAmount: Long,
     @SerialName("External")
     val external: Int? = null,
     @SerialName("Plans")
@@ -57,6 +63,9 @@ internal data class SubscriptionItemResponse(
         couponCode = couponCode,
         currency = currency,
         amount = amount,
+        discount = discount,
+        renewDiscount = renewDiscount,
+        renewAmount = renewAmount,
         external = SubscriptionManagement.map[external],
         plans = plans.map { it.toPlan() },
         customerId = customerId

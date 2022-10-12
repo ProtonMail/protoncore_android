@@ -131,7 +131,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
-                            setData(plan = plan, currency = currency, collapsible = false)
+                            setData(plan = plan, renewAmount = it.renewAmount, currency = currency, collapsible = false)
                         }
 
                         if (it.unredeemedGooglePurchase != null) {

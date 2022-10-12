@@ -48,7 +48,7 @@ internal class PlansListView @JvmOverloads constructor(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
             planDetails.apply {
-                setData(plan = plan, currency = selectedCurrency, collapsible = plansSize != 1)
+                setData(plan = plan, renewAmount = null, currency = selectedCurrency, collapsible = plansSize != 1)
 
                 planSelectionListener = { planId, planName, amount, services, type ->
                     selectPlanListener(

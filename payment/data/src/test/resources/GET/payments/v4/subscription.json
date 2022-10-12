@@ -9,6 +9,9 @@
     "CouponCode": null,
     "Currency": "EUR",
     "Amount": 4788,
+    "Discount":0,
+    "RenewDiscount":0,
+    "RenewAmount":4788,
     "Plans": [
       {
         "ID": "Wb4NAqmiuqoA7kCHE28y92bBFfN8jaYQCLxHRAB96yGj-bh9SxguXC48_WSU-fRUjdAr-lx95c6rFLplgXyXYA==",

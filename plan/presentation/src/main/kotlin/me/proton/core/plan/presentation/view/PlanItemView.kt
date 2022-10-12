@@ -32,6 +32,7 @@ import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.presentation.utils.PRICE_ZERO
+import me.proton.core.presentation.utils.Price
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
@@ -55,6 +56,7 @@ class PlanItemView @JvmOverloads constructor(
 
     fun setData(
         plan: PlanDetailsItem,
+        renewAmount: Long?,
         cycle: PlanCycle = PlanCycle.YEARLY,
         currency: PlanCurrency?,
         collapsible: Boolean = true
@@ -68,7 +70,7 @@ class PlanItemView @JvmOverloads constructor(
         when (plan) {
             is PlanDetailsItem.FreePlanDetailsItem -> bindFreePlan(plan)
             is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(plan)
-            is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(plan)
+            is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(renewAmount?.toDouble(), plan)
         }.exhaustive
     }
 
@@ -84,7 +86,7 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
-    private fun bindCurrentPlan(plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
+    private fun bindCurrentPlan(renewAmount: Price?, plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
         currentPlanGroup.visibility = VISIBLE
         storageProgress.apply {
             val usedPercentage = plan.usedSpace.toDouble() / plan.maxSpace
@@ -151,7 +153,7 @@ class PlanItemView @JvmOverloads constructor(
             separator.visibility = View.VISIBLE
         }
 
-        val amount = plan.price?.let { price -> plan.cycle?.getPrice(price) } ?: PRICE_ZERO
+        val amount = renewAmount ?: plan.price?.let { price -> plan.cycle?.getPrice(price) } ?: PRICE_ZERO
         billableAmount = amount
         planPriceText.text = amount.formatCentsPriceDefaultLocale(currency.name)
     }
