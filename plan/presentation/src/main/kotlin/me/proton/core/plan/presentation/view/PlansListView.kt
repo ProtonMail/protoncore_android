@@ -34,6 +34,7 @@ import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.entity.SubscribedPlan
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
 import me.proton.core.presentation.utils.PRICE_ZERO
 
@@ -48,7 +49,11 @@ internal class PlansListView @JvmOverloads constructor(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
             planDetails.apply {
-                setData(plan = plan, renewAmount = null, currency = selectedCurrency, collapsible = plansSize != 1)
+                setData(
+                    SubscribedPlan(
+                        plan = plan, renewAmount = null, currency = selectedCurrency, collapsible = plansSize != 1
+                    )
+                )
 
                 planSelectionListener = { planId, planName, amount, services, type ->
                     selectPlanListener(

@@ -311,10 +311,13 @@ public final class me/proton/core/payment/domain/entity/ProtonPaymentToken {
 }
 
 public final class me/proton/core/payment/domain/entity/Subscription {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JJJJLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Ljava/util/List;
-	public final fun component11 ()Ljava/lang/String;
+	public final fun component10 ()J
+	public final fun component11 ()J
+	public final fun component12 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun component13 ()Ljava/util/List;
+	public final fun component14 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()I
 	public final fun component4 ()J
@@ -322,21 +325,24 @@ public final class me/proton/core/payment/domain/entity/Subscription {
 	public final fun component6 ()Ljava/lang/String;
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()J
-	public final fun component9 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Subscription;
-	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Subscription;
+	public final fun component9 ()J
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JJJJLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Subscription;
+	public static synthetic fun copy$default (Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JJJJLme/proton/core/payment/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Subscription;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
 	public final fun getCouponCode ()Ljava/lang/String;
 	public final fun getCurrency ()Ljava/lang/String;
 	public final fun getCustomerId ()Ljava/lang/String;
 	public final fun getCycle ()I
+	public final fun getDiscount ()J
 	public final fun getExternal ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getInvoiceId ()Ljava/lang/String;
 	public final fun getPeriodEnd ()J
 	public final fun getPeriodStart ()J
 	public final fun getPlans ()Ljava/util/List;
+	public final fun getRenewAmount ()J
+	public final fun getRenewDiscount ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

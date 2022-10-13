@@ -31,6 +31,7 @@ import me.proton.core.plan.presentation.databinding.PlanItemBinding
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
+import me.proton.core.plan.presentation.entity.SubscribedPlan
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
@@ -55,22 +56,21 @@ class PlanItemView @JvmOverloads constructor(
     private lateinit var planDetailsItem: PlanDetailsItem
 
     fun setData(
-        plan: PlanDetailsItem,
-        renewAmount: Long?,
-        cycle: PlanCycle = PlanCycle.YEARLY,
-        currency: PlanCurrency?,
-        collapsible: Boolean = true
+        subscribedPlan: SubscribedPlan
     ) {
-        this.planDetailsItem = plan
-        this.cycle = cycle
-        this.currency = currency ?: PlanCurrency.EUR
-        this.collapsible = collapsible
+        this.planDetailsItem = subscribedPlan.plan
+        this.cycle = subscribedPlan.cycle
+        this.currency = subscribedPlan.currency ?: PlanCurrency.EUR
+        this.collapsible = subscribedPlan.collapsible
 
-        initCommonViews(plan)
-        when (plan) {
-            is PlanDetailsItem.FreePlanDetailsItem -> bindFreePlan(plan)
-            is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(plan)
-            is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(renewAmount?.toDouble(), plan)
+        initCommonViews(subscribedPlan.plan)
+        when (subscribedPlan.plan) {
+            is PlanDetailsItem.FreePlanDetailsItem -> bindFreePlan(subscribedPlan.plan)
+            is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(subscribedPlan.plan)
+            is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(
+                subscribedPlan.renewAmount?.toDouble(),
+                subscribedPlan.plan
+            )
         }.exhaustive
     }
 

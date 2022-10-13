@@ -18,7 +18,10 @@
 
 package me.proton.core.plan.presentation.entity
 
-data class SupportedPlan(
-    val name: String,
-    val starred: Boolean = false
+data class SubscribedPlan(
+    val plan: PlanDetailsItem,
+    val renewAmount: Long?,
+    val cycle: PlanCycle = PlanCycle.YEARLY,
+    val currency: PlanCurrency?,
+    val collapsible: Boolean = true
 )

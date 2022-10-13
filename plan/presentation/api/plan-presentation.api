@@ -501,16 +501,22 @@ public final class me/proton/core/plan/presentation/entity/SelectedPlan$Companio
 	public final fun free (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/SelectedPlan;
 }
 
-public final class me/proton/core/plan/presentation/entity/SupportedPlan {
-	public fun <init> (Ljava/lang/String;Z)V
-	public synthetic fun <init> (Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Z
-	public final fun copy (Ljava/lang/String;Z)Lme/proton/core/plan/presentation/entity/SupportedPlan;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/SupportedPlan;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/SupportedPlan;
+public final class me/proton/core/plan/presentation/entity/SubscribedPlan {
+	public fun <init> (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Ljava/lang/Long;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;Z)V
+	public synthetic fun <init> (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Ljava/lang/Long;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/plan/presentation/entity/PlanDetailsItem;
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Lme/proton/core/plan/presentation/entity/PlanCycle;
+	public final fun component4 ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
+	public final fun component5 ()Z
+	public final fun copy (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Ljava/lang/Long;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;Z)Lme/proton/core/plan/presentation/entity/SubscribedPlan;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/SubscribedPlan;Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Ljava/lang/Long;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/SubscribedPlan;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getName ()Ljava/lang/String;
-	public final fun getStarred ()Z
+	public final fun getCollapsible ()Z
+	public final fun getCurrency ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
+	public final fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
+	public final fun getPlan ()Lme/proton/core/plan/presentation/entity/PlanDetailsItem;
+	public final fun getRenewAmount ()Ljava/lang/Long;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -753,8 +759,7 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 	public final fun getBillableAmount ()D
 	public final fun getPlanSelectionListener ()Lkotlin/jvm/functions/Function5;
 	public final fun setBillableAmount (D)V
-	public final fun setData (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;Z)V
-	public static synthetic fun setData$default (Lme/proton/core/plan/presentation/view/PlanItemView;Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZILjava/lang/Object;)V
+	public final fun setData (Lme/proton/core/plan/presentation/entity/SubscribedPlan;)V
 	public final fun setPlanSelectionListener (Lkotlin/jvm/functions/Function5;)V
 }
 

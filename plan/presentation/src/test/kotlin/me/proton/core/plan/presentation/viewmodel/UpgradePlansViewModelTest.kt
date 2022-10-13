@@ -264,8 +264,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertIs<UpgradePlansViewModel.SubscribedPlansState.Processing>(awaitItem())
             val currentPlan = awaitItem()
             assertTrue(currentPlan is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans)
-            assertEquals(1, currentPlan.subscribedPlans.size)
-            val plan = currentPlan.subscribedPlans[0]
+            val plan = currentPlan.subscribedPlan.plan
             assertEquals("plan-default", plan.name)
             assertEquals(1, plan.storage)
         }

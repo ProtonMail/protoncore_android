@@ -38,6 +38,7 @@ import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanType
+import me.proton.core.plan.presentation.entity.SubscribedPlan
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.user.domain.usecase.GetUser
@@ -72,9 +73,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
 
         sealed class Success : SubscribedPlansState() {
             data class SubscribedPlans(
-                val subscribedPlans: List<PlanDetailsItem>,
-                val renewAmount: Long?,
-                val userCurrency: PlanCurrency?,
+                val subscribedPlan: SubscribedPlan,
                 val subscriptionManagement: SubscriptionManagement? = null,
                 val unredeemedGooglePurchase: UnredeemedGooglePurchase? = null
             ) : Success()
@@ -125,9 +124,11 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         } else null
         emit(
             SubscribedPlansState.Success.SubscribedPlans(
-                subscribedPlans = subscribedPlans,
-                renewAmount = currentSubscription?.renewAmount,
-                userCurrency = PlanCurrency.map[user.currency],
+                subscribedPlan = SubscribedPlan(
+                    plan = subscribedPlans[0],
+                    renewAmount = currentSubscription?.renewAmount,
+                    currency = PlanCurrency.map[user.currency]
+                ),
                 subscriptionManagement = external,
                 unredeemedGooglePurchase = unredeemed
             )

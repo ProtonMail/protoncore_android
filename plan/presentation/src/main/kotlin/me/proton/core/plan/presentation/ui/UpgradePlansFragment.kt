@@ -119,8 +119,8 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> with(binding) {
-                        val plan = it.subscribedPlans[0]
-                        val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.userCurrency
+                        val plan = it.subscribedPlan.plan
+                        val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.subscribedPlan.currency
 
                         manageSubscriptionText.apply {
                             setText(it.subscriptionManagement.subscriptionManagementText())
@@ -131,7 +131,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
-                            setData(plan = plan, renewAmount = it.renewAmount, currency = currency, collapsible = false)
+                            setData(it.subscribedPlan.copy(currency = currency, collapsible = false))
                         }
 
                         if (it.unredeemedGooglePurchase != null) {
