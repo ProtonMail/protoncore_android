@@ -11,6 +11,30 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.1.2] - 2022-10-14
+
+### Chores
+
+- plugins-detekt:
+  - Added '*Previews' to `UnusedPrivateMember.ignoreAnnotated`
+
+    This allows to define a custom annotation like the following
+    ```kotlin
+    @Preview(device = Devices.PHONE)
+    @Preview(device = Devices.FOLDABLE)
+    @Preview(device = Devices.TABLET)
+    annotation class AdaptivePreviews
+    ```
+
+### Bug Fixes
+
+- Use deserialize instead of deserializeOrNull in event listeners.
+
+  The goal is to prevent exceptions from being swallowed and to make issues easier to detect.
+- plan:
+  - Introduce SubscribedPlan.kt entity.
+  - Fix subscription plan amount.
+
 ## [9.1.1] - 2022-10-10
 
 ### Bug Fixes
