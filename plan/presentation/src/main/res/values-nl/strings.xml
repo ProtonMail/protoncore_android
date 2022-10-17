@@ -34,6 +34,10 @@
   <string name="plans_billing_monthly">Voor 1 maand</string>
   <string name="plans_billing_yearly">Voor 1 jaar</string>
   <string name="plans_billing_two_years">Voor 2 jaar</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Voor %d maand</item>
+    <item quantity="other">Voor %d maanden</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Upgrade uw abonnement</string>
   <string name="plans_proton_for_free">Krijg Proton gratis</string>
   <string name="plans_get_proton">Krijg %s</string>

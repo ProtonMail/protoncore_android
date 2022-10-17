@@ -38,7 +38,7 @@
   <string name="payments_method_surcharge">*Bei Käufen, die mit dieser Zahlungsmethode getätigt werden, fallen zusätzliche Gebühren an.</string>
   <string name="payments_method_terms_conditions">Der Kauf mit Google Pay bedeutet, dass du die Geschäftsbedingungen von Google Pay akzeptierst und dich damit einverstanden erklärst, eine wiederkehrende Zahlung mit Google einzurichten.</string>
   <string name="payments_method_google">Google</string>
-  <string name="payments_method_continue">Weiter</string>
+  <string name="payments_method_continue">Fortfahren</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Zahlungsinformationen</string>
@@ -61,10 +61,10 @@
   <string name="payment_use_credit_card_instead">Stattdessen Kredit-/Debitkarte verwenden</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Bestätige das Konto-Upgrade</string>
+  <string name="payments_giap_unredeemed_title">Konto-Upgrade bestätigen</string>
   <string name="payments_giap_unredeemed_description">Deine Google Pay-Zahlung wurde erfolgreich verarbeitet, aber der Prozess des Konto-Upgrades wurde unterbrochen. Soll die Zahlung übernommen werden, um dein Konto jetzt zu aktualisieren?</string>
   <string name="payments_giap_unredeemed_confirm">Upgrade bestätigen</string>
-  <string name="payments_giap_redeem_success">Dein Konto wurde erfolgreich erweitert</string>
+  <string name="payments_giap_redeem_success">Upgrade deines Kontos erfolgreich</string>
   <string name="payments_giap_redeem_error">Das Upgrade kann nicht abgeschlossen werden. Bitte versuche es später erneut.</string>
   <!-- endregion -->
 </resources>

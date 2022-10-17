@@ -34,6 +34,12 @@
   <string name="plans_billing_monthly">Na měsíc</string>
   <string name="plans_billing_yearly">Na rok</string>
   <string name="plans_billing_two_years">Na dva roky</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Na %d měsíc</item>
+    <item quantity="few">Na %d měsíce</item>
+    <item quantity="many">Na %d měsíců</item>
+    <item quantity="other">Na %d měsíců</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Přejít na vyšší tarif</string>
   <string name="plans_proton_for_free">Získejte Proton zdarma</string>
   <string name="plans_get_proton">Získejte %s</string>

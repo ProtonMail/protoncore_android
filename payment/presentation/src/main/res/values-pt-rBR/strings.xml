@@ -61,7 +61,7 @@
   <string name="payment_use_credit_card_instead">Usar cartão de crédito/débito</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirm account upgrade</string>
+  <string name="payments_giap_unredeemed_title">Confirmar upgrade da conta</string>
   <string name="payments_giap_unredeemed_description">Seu pagamento no Google Pay foi processado com sucesso, mas o processo de upgrade da conta foi interrompido. Aplique agora o pagamento para atualizar sua conta?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmar upgrade</string>
   <string name="payments_giap_redeem_success">Sua conta foi atualizada com sucesso</string>

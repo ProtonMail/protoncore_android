@@ -20,29 +20,33 @@
   <string name="plans_select_a_plan">Επιλέξτε ένα Πακέτο</string>
   <string name="plans_select_a_plan_subtitle">Ένα πρόγραμμα για όλες τις υπηρεσίες Proton</string>
   <string name="plans_fetching_general_error">Παρουσιάστηκε σφάλμα κατά τη λήψη πλάνων.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
+  <string name="plans_payment_error">Παρουσιάστηκε σφάλμα πληρωμής. Δοκιμάστε ξανά αργότερα ή δημιουργήστε ένα δωρεάν πρόγραμμα.</string>
   <string name="plans_free_name">Δωρεάν</string>
   <string name="plan_price_monthly">ανά μήνα</string>
-  <string name="plan_price_annually">per year</string>
+  <string name="plan_price_annually">ανά έτος</string>
   <string name="plans_current_plan">Τρέχων Πλάνο</string>
   <string name="plans_upgrade_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_subscription">Συνδρομή</string>
-  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_renewal_date">Το πρόγραμμά σας θα ανανεωθεί αυτόματα στις &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Το πρόγραμμά σας θα λήξει στις &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Ετήσια χρέωση την %s</string>
   <string name="plans_billed_monthly">Μηνιαία χρέωση</string>
   <string name="plans_billing_monthly">Για 1 μήνα</string>
   <string name="plans_billing_yearly">Για 1 χρόνο</string>
   <string name="plans_billing_two_years">Για 2 χρόνια</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Για %d μήνα</item>
+    <item quantity="other">Για %d μήνες</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_proton_for_free">Αποκτήστε το Proton δωρεάν</string>
   <string name="plans_get_proton">Αποκτήστε %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Διαχειριστείτε τη συνδρομή σας στο <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s από %s</string>
-  <string name="plans_payments_info_not_available">n/a</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
-  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
+  <string name="plans_payments_info_not_available">δ/υ</string>
+  <string name="plans_manage_your_subscription_google">Η συνδρομή σας διαχειρίζεται από το Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Δεν είναι δυνατή η διαχείριση της συνδρομής σας εντός της εφαρμογής για κινητές συσκευές.</string>
+  <string name="plans_autorenew_subscriptions">Μόνο οι ετήσιες συνδρομές αυτόματης ανανέωσης είναι διαθέσιμες μέσω αυτής της εφαρμογής.</string>
   <string name="plans_can_not_upgrade_from_mobile">Δεν γίνεται να αναβαθμίσετε από την εφαρμογή κινητού.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -58,20 +62,20 @@
     <item quantity="other">#proton_storage# αποθηκευτικό χώρο / χρήστη</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# email address</item>
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="one">#proton_addresses# διεύθυνση ηλεκτρονικού ταχυδρομείου</item>
+    <item quantity="other">#proton_addresses# διευθύνσεις ηλεκτρονικού ταχυδρομείου</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address / user</item>
-    <item quantity="other">#proton_addresses# addresses / user</item>
+    <item quantity="one">#proton_addresses# διεύθυνση / χρήστη</item>
+    <item quantity="other">#proton_addresses# διευθύνσεις / χρήστη</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d από #proton_addresses# διεύθυνση</item>
     <item quantity="other">%d από #proton_addresses# διευθύνσεις</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Support for #proton_domains# custom email domain</item>
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="one">Υποστήριξη για #proton_domains# προσαρμοσμένο τομέα ηλεκτρονικού ταχυδρομείου</item>
+    <item quantity="other">Υποστήριξη για #proton_domains# προσαρμοσμένων τομέων ηλεκτρονικού ταχυδρομείου</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# προσωπικό ημερολόγιο</item>
@@ -86,22 +90,22 @@
     <item quantity="other">VPN υψηλής ταχύτητας σε #proton_vpn# συσκευές</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# σύνδεση VPN υψηλής ταχύτητας</item>
+    <item quantity="other">#proton_vpn# συνδέσεις VPN υψηλής ταχύτητας</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# χρήστη</item>
     <item quantity="other">#proton_users# χρήστες</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_users# user</item>
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="one">%d από #proton_users# χρήστη</item>
+    <item quantity="other">%d από #proton_users# χρήστες</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">Τα βασικά για ιδιωτική και διασφαλισμένη επικοινωνία.</string>
-  <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
-  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_plus_header">Πλήρως εξοπλισμένο γραμματοκιβώτιο με προηγμένη προστασία.</string>
+  <string name="plan_id_vpnbasic_header">VPN Βασικό</string>
   <string name="plan_id_vpnbasic_countries">63 χώρες</string>
   <string name="plan_id_vpnbasic_high_speed">Υψηλή ταχύτητα</string>
   <string name="plan_id_vpnplus_adblock">Φραγή Διαφημίσεων (NetShield)</string>

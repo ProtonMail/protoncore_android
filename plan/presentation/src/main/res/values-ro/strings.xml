@@ -34,6 +34,11 @@
   <string name="plans_billing_monthly">Pentru o lună</string>
   <string name="plans_billing_yearly">Pentru un an</string>
   <string name="plans_billing_two_years">Pentru doi ani</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Pentru o lună</item>
+    <item quantity="few">Pentru %d luni</item>
+    <item quantity="other">Pentru %d de luni</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Upgrade plan</string>
   <string name="plans_proton_for_free">Luați Proton gratuit</string>
   <string name="plans_get_proton">Luați %s</string>

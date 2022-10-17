@@ -34,6 +34,10 @@
   <string name="plans_billing_monthly">I 1 måned</string>
   <string name="plans_billing_yearly">I 1 år</string>
   <string name="plans_billing_two_years">I 2 år</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">I %d måned</item>
+    <item quantity="other">I %d måneder</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Opgradér abonnement</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>

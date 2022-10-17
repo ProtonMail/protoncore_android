@@ -62,9 +62,9 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Bekræft opgradering af konto</string>
-  <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
-  <string name="payments_giap_redeem_success">Your account was successfully upgraded</string>
-  <string name="payments_giap_redeem_error">Unable to complete the upgrade. Please try again later.</string>
+  <string name="payments_giap_unredeemed_description">Din Google Pay-betaling blev behandlet, men opgraderingen af kontoen blev afbrudt. Vil du gennemføre betalingen for at opgradere din konto nu?</string>
+  <string name="payments_giap_unredeemed_confirm">Bekræft opgradering</string>
+  <string name="payments_giap_redeem_success">Din konto er med succes blevet opgraderet</string>
+  <string name="payments_giap_redeem_error">Opgraderingen kan ikke fuldføres. Prøv venligst igen senere.</string>
   <!-- endregion -->
 </resources>

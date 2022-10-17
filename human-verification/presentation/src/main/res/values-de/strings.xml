@@ -50,7 +50,7 @@
   <string name="human_verification_help_website">Erfahre mehr über die menschliche Prüfung und warum wir danach fragen.</string>
   <string name="human_verification_sending_failed">Das Senden des Bestätigungscodes ist fehlgeschlagen. Bitte versuche es erneut.</string>
   <string name="human_verification_incorrect_code">Ungültiger Code. Bitte versuche es erneut.</string>
-  <string name="human_verification_resent_code">Ein weiterer Code wurde dir zugesandt.</string>
+  <string name="human_verification_resent_code">Wir haben dir einen weiteren Code gesendet.</string>
   <string name="human_verification_captcha_failed">CAPTCHA-Überprüfung fehlgeschlagen. Bitte versuche es noch einmal oder wähle eine andere Bestätigungsoption.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Keine Internetverbindung. CAPTCHA konnte nicht geladen werden.</string>

@@ -29,11 +29,15 @@
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Dein Abonnement wird am &lt;b&gt;%s&lt;/b&gt; automatisch verlängert</string>
   <string name="plans_expiration_date">Dein Abonnement läuft am &lt;b&gt;%s&lt;/b&gt; ab</string>
-  <string name="plans_billed_yearly">*Jährlich verrechnet zu %s</string>
+  <string name="plans_billed_yearly">*Jährlich abgerechnet zu %s</string>
   <string name="plans_billed_monthly">Monatliche Abrechnung</string>
   <string name="plans_billing_monthly">Für einen Monat</string>
   <string name="plans_billing_yearly">Für ein Jahr</string>
   <string name="plans_billing_two_years">Für zwei Jahre</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Für einen Monat</item>
+    <item quantity="other">Für %d Monate</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Abonnement wechseln</string>
   <string name="plans_proton_for_free">Proton kostenlos erhalten</string>
   <string name="plans_get_proton">Hol dir %s</string>
@@ -41,9 +45,9 @@
   <string name="plans_used_space">%s von %s</string>
   <string name="plans_payments_info_not_available">k.A.</string>
   <string name="plans_manage_your_subscription_google">Dein Abonnement wird von Google Play verwaltet.</string>
-  <string name="plans_manage_your_subscription_other">Dein Abonnement kann nicht innerhalb der mobilen App verwaltet werden.</string>
+  <string name="plans_manage_your_subscription_other">Dein Abonnement kann nicht in der mobilen App verwaltet werden.</string>
   <string name="plans_autorenew_subscriptions">Über diese App sind nur automatisch verlängerbare Jahresabonnements verfügbar.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Mittels der mobilen App kann kein Upgrade durchgeführt werden.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Über die mobile App kann kein Upgrade durchgeführt werden.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz</item>
@@ -114,12 +118,12 @@
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Unbegrenzte Anzahl von Ordnern, Kategorien und Filterlisten</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Unbegrenzte Anzahl an Ordnern, Kategorien und Filtern</string>
   <string name="highest_vpn_speed" comment="new_plans">Höchste VPN-Geschwindigkeiten</string>
   <string name="servers_in_countries" comment="new_plans">Mehr als 1.500 Server in 63 Ländern</string>
   <string name="ad_blocker" comment="new_plans">Integrierter Werbeblocker (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Weltweiter Zugang zu Streaming-Diensten</string>
-  <string name="secure_core" comment="new_plans">„Secure Core”‐Server</string>
+  <string name="secure_core" comment="new_plans">„Secure Core“‐Server</string>
   <string name="tor_vpn" comment="new_plans">Tor über VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Die datenschutzfreundliche E-Mail- und Kalenderlösung für deine täglichen Kommunikationsbedürfnisse.</string>

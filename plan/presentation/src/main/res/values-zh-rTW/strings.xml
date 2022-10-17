@@ -34,6 +34,9 @@
   <string name="plans_billing_monthly">為期1個月</string>
   <string name="plans_billing_yearly">為期1年</string>
   <string name="plans_billing_two_years">為期2年</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="other">為期%d個月</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">升級您的方案</string>
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">取得 %s</string>

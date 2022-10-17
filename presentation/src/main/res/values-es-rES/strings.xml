@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Esta versión de la aplicación ha dejado de ser soportada, por favor actualice para continuar usándola.</string>
   <string name="presentation_force_update_learn_more">Más información</string>
   <string name="presentation_force_update_update">Actualizar</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">No se ha encontrado la aplicación en el dispositivo. Dirígete a la tienda de aplicaciones y actualiza la aplicación.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Inicia sesión para continuar</string>
   <string name="presentation_alert_title">Alerta</string>

@@ -34,6 +34,12 @@
   <string name="plans_billing_monthly">Na miesiąc</string>
   <string name="plans_billing_yearly">Na rok</string>
   <string name="plans_billing_two_years">Na 2 lata</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Na miesiąc</item>
+    <item quantity="few">Na %d miesiące</item>
+    <item quantity="many">Na %d miesięcy</item>
+    <item quantity="other">Na %d miesiąca</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Ulepsz plan</string>
   <string name="plans_proton_for_free">Załóż darmowe konto</string>
   <string name="plans_get_proton">Wybierz plan %s</string>

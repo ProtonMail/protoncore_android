@@ -34,6 +34,9 @@
   <string name="plans_billing_monthly">Untuk 1 bulan</string>
   <string name="plans_billing_yearly">Untuk 1 tahun</string>
   <string name="plans_billing_two_years">Untuk 2 tahun</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="other">Untuk %d bulan</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Tingkatkan paket langganan Anda</string>
   <string name="plans_proton_for_free">Dapatkan Proton gratis</string>
   <string name="plans_get_proton">Dapatkan %s</string>

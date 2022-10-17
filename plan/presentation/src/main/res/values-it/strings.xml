@@ -34,6 +34,10 @@
   <string name="plans_billing_monthly">Per 1 mese</string>
   <string name="plans_billing_yearly">Per 1 anno</string>
   <string name="plans_billing_two_years">Per 2 anni</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Per %d mese</item>
+    <item quantity="other">Per %d mesi</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Effettua l\'upgrade del piano</string>
   <string name="plans_proton_for_free">Ottieni Proton gratis</string>
   <string name="plans_get_proton">Ottieni %s</string>

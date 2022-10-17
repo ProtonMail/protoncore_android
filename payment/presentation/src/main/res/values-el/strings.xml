@@ -27,18 +27,18 @@
   <string name="payments_error_session">Απαιτείται έγκυρο αναγνωριστικό περιόδου λειτουργίας κατά την εγγραφή ενός συνδεδεμένου χρήστη.</string>
   <string name="payments_error_signup_paymentmethod">Δεν ήταν δυνατή η εγγραφή με τον υπάρχοντα τρόπο πληρωμής.</string>
   <string name="payments_error_invalid_session">Μη έγκυρη περιόδου λειτουργίας.</string>
-  <string name="payments_no_payment_provider">No active payment provider found.</string>
+  <string name="payments_no_payment_provider">Δεν βρέθηκε ενεργός πάροχος πληρωμών.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Διαλέξτε τη μέθοδο πληρωμής σας</string>
   <string name="payments_add_credit_debit_card">Προσθήκη νέας πιστωτικής/χρεωστικής κάρτας</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Πληρωμή %s</string>
-  <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Πληρώστε με</string>
   <string name="payments_method_icon">Εικονίδιο τρόπου πληρωμής.</string>
-  <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
-  <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+  <string name="payments_method_surcharge">*Οι αγορές που πραγματοποιούνται με αυτόν τον τρόπο πληρωμής επιβαρύνονται με επιπλέον χρέωση.</string>
+  <string name="payments_method_terms_conditions">Η αγορά με το Google Pay σημαίνει ότι αποδέχεστε τους όρους και τις προϋποθέσεις του Google Pay και συμφωνείτε να ρυθμίσετε μια επαναλαμβανόμενη πληρωμή με την Google.</string>
   <string name="payments_method_google">Google</string>
-  <string name="payments_method_continue">Continue</string>
+  <string name="payments_method_continue">Συνέχεια</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Στοιχεία Πληρωμής</string>
@@ -55,16 +55,16 @@
   <string name="payments_choose_country">Επιλογή χώρας</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Λήξη %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">n/a</string>
-  <string name="payments_billing_yearly">For 1 year</string>
-  <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
-  <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
+  <string name="payments_info_not_available">δ/υ</string>
+  <string name="payments_billing_yearly">Για 1 χρόνο</string>
+  <string name="payment_use_google_pay_instead">Χρησιμοποιήστε Google Pay</string>
+  <string name="payment_use_credit_card_instead">Χρησιμοποιήστε πιστωτική/χρεωστική κάρτα</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirm account upgrade</string>
-  <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
-  <string name="payments_giap_redeem_success">Your account was successfully upgraded</string>
+  <string name="payments_giap_unredeemed_title">Επιβεβαιώστε αναβάθμιση λογαριασμού</string>
+  <string name="payments_giap_unredeemed_description">Η επεξεργασία της πληρωμής σας στο Google Pay ολοκληρώθηκε με επιτυχία, αλλά η διαδικασία αναβάθμισης λογαριασμού διακόπηκε. Εφαρμόστε την πληρωμή για να αναβαθμίσετε τον λογαριασμό σας τώρα;</string>
+  <string name="payments_giap_unredeemed_confirm">Επιβεβαιώστε την αναβάθμιση</string>
+  <string name="payments_giap_redeem_success">Ο λογαριασμός σας αναβαθμίστηκε με επιτυχία</string>
   <string name="payments_giap_redeem_error">Δεν είναι δυνατή η ολοκλήρωση της αναβάθμισης. Προσπαθήστε ξανά αργότερα.</string>
   <!-- endregion -->
 </resources>

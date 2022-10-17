@@ -34,14 +34,17 @@
   <string name="plans_billing_monthly">1 个月</string>
   <string name="plans_billing_yearly">1 年</string>
   <string name="plans_billing_two_years">2 年</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="other">For %d months</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">升级您的账户</string>
   <string name="plans_proton_for_free">免费获得Proton</string>
   <string name="plans_get_proton">获得 %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
   <string name="plans_payments_info_not_available">不适用</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
+  <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
+  <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
@@ -89,7 +92,7 @@
   <string name="plan_id_free_header">The basic for private and secure communications.</string>
   <string name="plan_id_plus_header">防护等级更高的全功能邮箱。</string>
   <string name="plan_id_vpnbasic_header">VPN 普通版</string>
-  <string name="plan_id_vpnbasic_countries">63 countries</string>
+  <string name="plan_id_vpnbasic_countries">63 个国家和地区</string>
   <string name="plan_id_vpnbasic_high_speed">速度较快</string>
   <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Streaming service support</string>
@@ -102,11 +105,11 @@
   <!-- endregion -->
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Unlimited folders, labels, and filters</string>
-  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
+  <string name="highest_vpn_speed" comment="new_plans">最快的 VPN 速度</string>
+  <string name="servers_in_countries" comment="new_plans">63 个国家与地区的 1500 多个服务器</string>
   <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
-  <string name="secure_core" comment="new_plans">Secure Core servers</string>
+  <string name="secure_core" comment="new_plans">安全的核心服务器</string>
   <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>

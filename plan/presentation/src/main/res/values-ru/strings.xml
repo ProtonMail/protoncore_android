@@ -34,6 +34,12 @@
   <string name="plans_billing_monthly">За 1 месяц</string>
   <string name="plans_billing_yearly">За 1 год</string>
   <string name="plans_billing_two_years">За 2 года</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">За %d месяц</item>
+    <item quantity="few">За %d месяца</item>
+    <item quantity="many">За %d месяцев</item>
+    <item quantity="other">За %d месяцев</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Улучшить план</string>
   <string name="plans_proton_for_free">Получить Proton бесплатно</string>
   <string name="plans_get_proton">Получить %s</string>

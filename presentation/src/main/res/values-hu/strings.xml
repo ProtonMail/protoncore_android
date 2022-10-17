@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Az alkalmazás ezen verziója már nem támogatott. Frissítenie kell egy újabbra.</string>
   <string name="presentation_force_update_learn_more">További információk</string>
   <string name="presentation_force_update_update">Frissítés</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">Nem található az áruház alkalmazás ezen az eszközön. Nyissa meg az áruházat és frissítse az alkalmazást.</string>
   <string name="presentation_authenticate">Azonosítás</string>
   <string name="presentation_signin_to_continue">Jelentkezzen be a folytatáshoz</string>
   <string name="presentation_alert_title">Figyelmeztetés</string>
@@ -32,12 +32,12 @@
   <string name="presentation_alert_cancel">Mégsem</string>
   <string name="presentation_alert_submit">Küldés</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
+  <string name="presentation_menu_item_title_report_a_bug">Probléma jelentése</string>
   <string name="presentation_menu_item_title_settings">Beállítások</string>
   <string name="presentation_menu_item_title_subscription">Előfizetés</string>
   <string name="presentation_menu_item_title_sign_out">Kijelentkezés</string>
   <!-- Other -->
-  <string name="presentation_back">Back</string>
+  <string name="presentation_back">Vissza</string>
   <string name="presentation_close">Bezárás</string>
   <string name="presentation_skip">Kihagyás</string>
   <string name="presentation_phone_calling_code_template">+%s</string>

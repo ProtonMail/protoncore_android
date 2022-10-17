@@ -19,9 +19,9 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
   <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">选择了无效的计划名称。 请重启该进程。</string>
+  <string name="payments_iap_error_google_plan_price">Problem with Google product price. 请重启该进程。</string>
+  <string name="payments_iap_error_fetching_google_plan">获取 Google 产品时出现问题。 请重启该进程。</string>
   <string name="payments_iap_error_already_owned">您已获得该产品。 请选择其它的。</string>
   <string name="payments_iap_error_billing_client_unavailable">Google计费客户端目前不可用或已断开连接。</string>
   <string name="payments_iap_general_error">出错了。 请重启该进程。</string>

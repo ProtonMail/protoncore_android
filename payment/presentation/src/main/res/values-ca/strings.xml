@@ -55,16 +55,16 @@
   <string name="payments_choose_country">Selecciona un país</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">n/a</string>
+  <string name="payments_info_not_available">n/d</string>
   <string name="payments_billing_yearly">1 any</string>
   <string name="payment_use_google_pay_instead">Utilitza Google Pay</string>
   <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirm account upgrade</string>
+  <string name="payments_giap_unredeemed_title">Confirmar actualització de categoria</string>
   <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
-  <string name="payments_giap_redeem_success">Your account was successfully upgraded</string>
+  <string name="payments_giap_unredeemed_confirm">Confirmar actualització</string>
+  <string name="payments_giap_redeem_success">El teu compte s\'ha actualitzat correctament</string>
   <string name="payments_giap_redeem_error">Unable to complete the upgrade. Please try again later.</string>
   <!-- endregion -->
 </resources>

@@ -34,6 +34,10 @@
   <string name="plans_billing_monthly">Bir aylık</string>
   <string name="plans_billing_yearly">Bir yıllık</string>
   <string name="plans_billing_two_years">İki yıllık</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">%d aylık</item>
+    <item quantity="other">%d aylık</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Tarifenizi yükseltin</string>
   <string name="plans_proton_for_free">Ücretsiz olarak Proton kullanın</string>
   <string name="plans_get_proton">%s alın</string>

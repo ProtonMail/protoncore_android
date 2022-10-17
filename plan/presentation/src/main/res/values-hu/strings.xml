@@ -23,7 +23,7 @@
   <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">Ingyenes</string>
   <string name="plan_price_monthly">havonta</string>
-  <string name="plan_price_annually">per year</string>
+  <string name="plan_price_annually">évente</string>
   <string name="plans_current_plan">Jelenlegi előfizetés</string>
   <string name="plans_upgrade_plan">Váltás nagyobb csomagra</string>
   <string name="plans_subscription">Előfizetés</string>
@@ -34,6 +34,10 @@
   <string name="plans_billing_monthly">1 hónapra</string>
   <string name="plans_billing_yearly">1 évre</string>
   <string name="plans_billing_two_years">2 évre</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">For %d month</item>
+    <item quantity="other">For %d months</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Váltás nagyobb csomagra</string>
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
@@ -120,7 +124,7 @@
   <string name="ad_blocker" comment="new_plans">Beépített reklámblokkoló (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Videós szolgáltatásokhoz való globális elérés</string>
   <string name="secure_core" comment="new_plans">Secure Core szerverek</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor VPN-en</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">A magánszférát előtérben tartó e-mail és naptár megoldás, a mindennapi kommunikációjához.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Magánszférája és biztonsága az elődleges szempontunk.</string>

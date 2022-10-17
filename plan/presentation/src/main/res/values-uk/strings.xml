@@ -34,6 +34,12 @@
   <string name="plans_billing_monthly">На 1 місяць</string>
   <string name="plans_billing_yearly">На 1 рік</string>
   <string name="plans_billing_two_years">На 2 роки</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">На %d місяць</item>
+    <item quantity="few">На %d місяці</item>
+    <item quantity="many">На %d місяців</item>
+    <item quantity="other">На %d місяці</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">Оновіть свій тарифний план</string>
   <string name="plans_proton_for_free">Отримати Proton безплатно</string>
   <string name="plans_get_proton">Отримати %s</string>

@@ -34,6 +34,9 @@
   <string name="plans_billing_monthly">1 か月間</string>
   <string name="plans_billing_yearly">1 年間</string>
   <string name="plans_billing_two_years">2 年間</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="other">%d か月間</item>
+  </plurals>
   <string name="plans_upgrade_your_plan">プランをアップグレード</string>
   <string name="plans_proton_for_free">Proton を無料を入手</string>
   <string name="plans_get_proton">%s を入手</string>

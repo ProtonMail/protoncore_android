@@ -22,15 +22,15 @@
   <string name="settings_recovery_email_current">Email de recuperação/notificação actual</string>
   <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
+  <string name="settings_recovery_email_new_hint">Insira o endereço de email</string>
   <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
   <string name="settings_save">Gravar</string>
   <string name="settings_password_required">Introduza a sua palavra-passe de início de sessão</string>
   <string name="settings_password_required_ok">Aceitar</string>
   <string name="settings_not_set">Não definido</string>
   <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
-  <string name="settings_validation_email">Email is invalid.</string>
-  <string name="settings_general_error">An error occurred.</string>
+  <string name="settings_validation_email">O email é inválido.</string>
+  <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Alterar senha</string>
   <string name="settings_password_management_change_mailbox_password">Alterar a palavra passe da caixa de correio</string>
