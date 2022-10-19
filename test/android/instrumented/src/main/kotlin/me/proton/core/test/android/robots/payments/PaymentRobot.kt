@@ -35,6 +35,8 @@ open class PaymentRobot : CoreRobot() {
      */
     inline fun <reified T> pay(): T = clickElement(R.id.payButton)
 
+    inline fun <reified T: PaymentRobot> switchPaymentProvider(): T = clickElement(R.id.nextPaymentProviderButton)
+
     open class Verify : CoreVerify() {
         fun billingDetailsDisplayed(
             plan: Plan,

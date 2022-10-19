@@ -116,7 +116,7 @@ class GiapUpgradeTests: BaseMockTest {
     }
 
     private fun freeUserCanUpgrade() {
-        billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
+        billingClientFactory.mockBillingClientSuccess()
 
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/subscription",

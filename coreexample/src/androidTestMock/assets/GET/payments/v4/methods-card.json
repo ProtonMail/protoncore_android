@@ -1,0 +1,18 @@
+{
+  "Code": 1000,
+  "PaymentMethods": [
+    {
+      "ID": "payment-method-id",
+      "Type": "card",
+      "Details": {
+        "ExpMonth": "01",
+        "ExpYear": "2053",
+        "Name": "Jane Doe",
+        "Country": "Switzerland",
+        "ZIP": "zip-code",
+        "Brand": "MyCompany",
+        "Last4": "1234"
+      }
+    }
+  ]
+}

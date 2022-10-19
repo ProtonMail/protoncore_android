@@ -57,6 +57,10 @@ class FakeBillingClientFactory : BillingClientFactory {
     }
 }
 
+fun FakeBillingClientFactory.mockBillingClientSuccess() {
+    billingClient.mockBillingClientSuccess { listeners }
+}
+
 @Suppress("OVERRIDE_DEPRECATION")
 private class FakeBillingClient(
     private val mock: BillingClient,

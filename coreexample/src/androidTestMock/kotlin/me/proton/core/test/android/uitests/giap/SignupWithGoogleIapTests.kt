@@ -37,6 +37,7 @@ import me.proton.core.test.android.mocks.mockStartConnection
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
+import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.BaseMockTest
@@ -81,7 +82,7 @@ class SignupWithGoogleIapTests : BaseMockTest {
 
     @Test
     fun signUpAndSubscribeGiapOnly() {
-        billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
+        billingClientFactory.mockBillingClientSuccess()
 
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
@@ -172,9 +173,9 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .toggleExpandPlan(TestPlan.Plus)
             .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
             .apply { verify { googleIAPElementsDisplayed() } }
-            .switchPaymentProvider()
+            .switchPaymentProvider<AddCreditCardRobot>()
             .apply { verify { addCreditCardElementsDisplayed() } }
-            .switchPaymentProvider()
+            .switchPaymentProvider<GoogleIAPRobot>()
             .apply { verify { googleIAPElementsDisplayed() } }
             .back<SelectPlanRobot>()
             .verify {

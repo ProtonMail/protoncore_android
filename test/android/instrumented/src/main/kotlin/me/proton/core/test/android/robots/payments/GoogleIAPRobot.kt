@@ -27,8 +27,6 @@ class GoogleIAPRobot : PaymentRobot() {
 
     inline fun <reified T> payWithGPay(): T = clickElement(R.id.gPayButton)
 
-    fun switchPaymentProvider(): GoogleIAPRobot = clickElement(R.id.nextPaymentProviderButton)
-
     @Suppress("FINAL_UPPER_BOUND")
     fun <V : Verify> verify(block: Verify.() -> Unit) = Verify().apply(block)
 
