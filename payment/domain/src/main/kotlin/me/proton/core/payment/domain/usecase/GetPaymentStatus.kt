@@ -31,7 +31,7 @@ import javax.inject.Singleton
  * @see GetAvailablePaymentProviders
  */
 @Singleton
-internal class GetPaymentStatus @Inject constructor(
+public class GetPaymentStatus @Inject constructor(
     private val appStore: AppStore,
     private val paymentsRepository: PaymentsRepository
 ) {
@@ -42,7 +42,7 @@ internal class GetPaymentStatus @Inject constructor(
      * The status may be cached in memory.
      * @throws me.proton.core.network.domain.ApiException
      */
-    suspend operator fun invoke(userId: UserId?, refresh: Boolean): PaymentStatus = paymentStatusMutex.withLock {
+    public suspend operator fun invoke(userId: UserId?, refresh: Boolean): PaymentStatus = paymentStatusMutex.withLock {
         if (refresh) paymentStatusCache.remove(userId)
 
         paymentStatusCache.getOrPut(userId) {

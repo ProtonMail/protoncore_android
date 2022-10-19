@@ -68,16 +68,59 @@ class GiapUpgradeTests: BaseMockTest {
         freeUserCanUpgrade()
     }
 
-    private fun freeUserCanUpgrade() {
+    @Test
+    fun freeUserSubscriptionScreenNoPlansNoPaymentOptionsAvailable() {
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-all-disabled.json"
+        )
+
         billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
 
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/subscription",
             "GET/payments/v4/subscription-none.json", 422
         )
+
+        dispatcher.mockFromAssets(
+            "GET", "/users",
+            "GET/users-with-keys-not-subscribed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/organizations",
+            "GET/organizations-none.json", 422
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/addresses",
+            "GET/addresses-with-keys.json"
+        )
+        dispatcher.mockFromAssets(
+            "POST", "/payments/v4/subscription",
+            "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+
+        ActivityScenario.launch(MainActivity::class.java)
+
+        AddAccountRobot()
+            .signIn()
+            .username(testUsername)
+            .password(testPassword)
+            .signIn<CoreexampleRobot>()
+
+        CoreexampleRobot()
+            .plansCurrent()
+            .verify {
+                currentPlanDetailsDisplayed()
+                plansNotDisplayed()
+            }
+    }
+
+    private fun freeUserCanUpgrade() {
+        billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
+
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/subscription",
-            "GET/payments/v4/subscription-mail-plus-google-managed.json"
+            "GET/payments/v4/subscription-none.json", 422
         )
 
         dispatcher.mockFromAssets(

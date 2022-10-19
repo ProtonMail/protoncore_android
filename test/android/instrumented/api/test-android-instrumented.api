@@ -1061,7 +1061,9 @@ public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot : 
 
 public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot$Verify : me/proton/core/test/android/robots/payments/PaymentRobot$Verify {
 	public fun <init> ()V
+	public final fun nextPaymentProviderButtonIsNotVisible ()V
 	public final fun payWithCardButtonIsNotVisible ()V
+	public final fun payWithCardButtonIsVisible ()V
 	public final fun payWithGoogleButtonIsClickable ()V
 	public final fun switchPaymentProviderButtonIsNotVisible ()V
 	public final fun switchPaymentProviderButtonIsVisible ()V
@@ -1103,6 +1105,7 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public final fun planDetailsDisplayedInsideRecyclerView (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsNotDisplayed ()V
 	public final fun planRenewalDisplayed (Ljava/lang/String;)V
+	public final fun plansNotDisplayed ()V
 }
 
 public final class me/proton/core/test/android/robots/reports/BugReportRobot : me/proton/core/test/android/robots/CoreRobot {

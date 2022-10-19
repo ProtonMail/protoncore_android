@@ -136,6 +136,10 @@ class SelectPlanRobot : CoreRobot() {
             view.withId(R.id.currentPlan).checkDisplayed()
         }
 
+        fun plansNotDisplayed() {
+            view.withId(R.id.plansView).checkNotDisplayed()
+        }
+
         fun canSelectPlan(plan: Plan) {
             scrollToPlan(plan)
 

@@ -477,6 +477,11 @@ public final class me/proton/core/payment/domain/usecase/GetCurrentSubscription 
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/domain/usecase/GetPaymentStatus {
+	public fun <init> (Lme/proton/core/domain/entity/AppStore;Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/payment/domain/usecase/GetPaymentTokenStatus {
 	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
 	public final fun invoke-moyEFhY (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
