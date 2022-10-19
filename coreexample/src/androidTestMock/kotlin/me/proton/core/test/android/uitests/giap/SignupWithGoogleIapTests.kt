@@ -24,9 +24,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.plan.presentation.entity.PlanInput
@@ -41,56 +39,30 @@ import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
-import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.test.android.uitests.BaseMockTest
+import me.proton.core.test.android.uitests.MockTestRule
 import okhttp3.HttpUrl
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.Rule
-import timber.log.Timber
 import javax.inject.Inject
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import me.proton.core.paymentiap.presentation.R as PaymentIapR
 import me.proton.core.test.android.plugins.data.Plan as TestPlan
 
 @HiltAndroidTest
-class SignupWithGoogleIapTests {
-    private val testUsername = "test-mock-936"
-    private val testPassword = "password"
-
-    @get:Rule(order = Rule.DEFAULT_ORDER - 1)
-    val hiltAndroidRule = HiltAndroidRule(this)
+class SignupWithGoogleIapTests : BaseMockTest {
+    @get:Rule
+    val mockTestRule = MockTestRule(this)
 
     @BindValue
     @BaseProtonApiUrl
-    lateinit var baseProtonApiUrl: HttpUrl
+    override lateinit var baseProtonApiUrl: HttpUrl
 
     @Inject
     lateinit var billingClientFactory: FakeBillingClientFactory
 
     private val appContext: Context get() = ApplicationProvider.getApplicationContext()
     private val billingClient: BillingClient get() = billingClientFactory.billingClient
-    private lateinit var dispatcher: TestWebServerDispatcher
-    private lateinit var webServer: MockWebServer
-
-    @BeforeTest
-    fun setUp() {
-        Timber.plant(Timber.DebugTree())
-        CoreLogger.set(CoreExampleLogger())
-
-        dispatcher = TestWebServerDispatcher()
-        webServer = MockWebServer().apply {
-            dispatcher = this@SignupWithGoogleIapTests.dispatcher
-        }
-        baseProtonApiUrl = webServer.url("/")
-
-        hiltAndroidRule.inject()
-    }
-
-    @AfterTest
-    fun tearDown() {
-        webServer.shutdown()
-    }
+    private val dispatcher: TestWebServerDispatcher get() = mockTestRule.dispatcher
 
     @Test
     fun googleBillingNotAvailable() {
@@ -137,6 +109,13 @@ class SignupWithGoogleIapTests {
             .skipConfirm<SelectPlanRobot>()
             .toggleExpandPlan(TestPlan.Plus)
             .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .apply {
+                verify<GoogleIAPRobot.Verify> {
+                    payWithGoogleButtonIsClickable()
+                    payWithCardButtonIsNotVisible()
+                    switchPaymentProviderButtonIsNotVisible()
+                }
+            }
             .payWithGPay<SignupFinishedRobot>()
             .verify {
                 signupFinishedDisplayed()
@@ -169,6 +148,13 @@ class SignupWithGoogleIapTests {
             .skipConfirm<SelectPlanRobot>()
             .toggleExpandPlan(TestPlan.Plus)
             .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .apply {
+                verify<GoogleIAPRobot.Verify> {
+                    payWithGoogleButtonIsClickable()
+                    payWithCardButtonIsNotVisible()
+                    switchPaymentProviderButtonIsVisible()
+                }
+            }
             .payWithGPay<SignupFinishedRobot>()
             .verify {
                 signupFinishedDisplayed()

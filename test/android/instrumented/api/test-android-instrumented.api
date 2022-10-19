@@ -1063,6 +1063,8 @@ public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot$Ve
 	public fun <init> ()V
 	public final fun payWithCardButtonIsNotVisible ()V
 	public final fun payWithGoogleButtonIsClickable ()V
+	public final fun switchPaymentProviderButtonIsNotVisible ()V
+	public final fun switchPaymentProviderButtonIsVisible ()V
 }
 
 public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proton/core/test/android/robots/CoreRobot {

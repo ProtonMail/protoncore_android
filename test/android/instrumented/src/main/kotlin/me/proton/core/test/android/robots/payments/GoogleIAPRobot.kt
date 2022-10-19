@@ -37,6 +37,14 @@ class GoogleIAPRobot : PaymentRobot() {
             view.withId(R.id.payButton).checkNotDisplayed()
         }
 
+        fun switchPaymentProviderButtonIsNotVisible() {
+            view.withId(R.id.nextPaymentProviderButton).checkNotDisplayed()
+        }
+
+        fun switchPaymentProviderButtonIsVisible() {
+            view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
+        }
+
         fun payWithGoogleButtonIsClickable() {
             view.withId(R.id.gPayButton)
                 .checkDisplayed()

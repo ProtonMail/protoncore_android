@@ -21,9 +21,7 @@ package me.proton.core.test.android.uitests.giap
 import androidx.test.core.app.ActivityScenario
 import com.android.billingclient.api.BillingClient
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.test.android.TestWebServerDispatcher
@@ -31,55 +29,30 @@ import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
+import me.proton.core.test.android.uitests.BaseMockTest
 import me.proton.core.test.android.uitests.CoreexampleRobot
-import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.test.android.uitests.MockTestRule
 import okhttp3.HttpUrl
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.Rule
-import timber.log.Timber
 import javax.inject.Inject
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import me.proton.core.test.android.plugins.data.Plan as TestPlan
 
 @HiltAndroidTest
-class GiapUpgradeTests {
-    private val testUsername = "test-mock-936"
-    private val testPassword = "password"
-
-    @get:Rule(order = Rule.DEFAULT_ORDER - 1)
-    val hiltAndroidRule = HiltAndroidRule(this)
+class GiapUpgradeTests: BaseMockTest {
+    @get:Rule
+    val mockTestRule = MockTestRule(this)
 
     @BindValue
     @BaseProtonApiUrl
-    lateinit var baseProtonApiUrl: HttpUrl
+    override lateinit var baseProtonApiUrl: HttpUrl
 
     @Inject
     lateinit var billingClientFactory: FakeBillingClientFactory
 
     private val billingClient: BillingClient get() = billingClientFactory.billingClient
-    private lateinit var dispatcher: TestWebServerDispatcher
-    private lateinit var webServer: MockWebServer
 
-    @BeforeTest
-    fun setUp() {
-        Timber.plant(Timber.DebugTree())
-        CoreLogger.set(CoreExampleLogger())
-
-        dispatcher = TestWebServerDispatcher()
-        webServer = MockWebServer().apply {
-            dispatcher = this@GiapUpgradeTests.dispatcher
-        }
-        baseProtonApiUrl = webServer.url("/")
-
-        hiltAndroidRule.inject()
-    }
-
-    @AfterTest
-    fun tearDown() {
-        webServer.shutdown()
-    }
+    private val dispatcher: TestWebServerDispatcher get() = mockTestRule.dispatcher
 
     @Test
     fun freeUserUpgradeAllProvidersAvailable() {
