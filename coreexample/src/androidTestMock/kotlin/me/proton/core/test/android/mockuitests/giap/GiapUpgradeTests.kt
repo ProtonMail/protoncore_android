@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.giap
+package me.proton.core.test.android.mockuitests.giap
 
 import androidx.test.core.app.ActivityScenario
 import com.android.billingclient.api.BillingClient
@@ -29,9 +29,9 @@ import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
-import me.proton.core.test.android.uitests.BaseMockTest
+import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.uitests.CoreexampleRobot
-import me.proton.core.test.android.uitests.MockTestRule
+import me.proton.core.test.android.mockuitests.MockTestRule
 import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
@@ -94,10 +94,6 @@ class GiapUpgradeTests: BaseMockTest {
             "GET", "/addresses",
             "GET/addresses-with-keys.json"
         )
-        dispatcher.mockFromAssets(
-            "POST", "/payments/v4/subscription",
-            "POST/payments/v4/subscription-mail-plus-google-managed.json"
-        )
 
         ActivityScenario.launch(MainActivity::class.java)
 
@@ -138,6 +134,10 @@ class GiapUpgradeTests: BaseMockTest {
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
             "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-mail-plus-proton-managed.json"
         )
 
         ActivityScenario.launch(MainActivity::class.java)

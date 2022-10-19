@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.giap
+package me.proton.core.test.android.mockuitests.giap
 
 import android.content.Context
 import androidx.test.core.app.ActivityScenario

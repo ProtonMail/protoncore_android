@@ -337,11 +337,11 @@ uitest:usersettings:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.usersettings"
   extends: .firebase-tests-common
 
-uitest:giap-tests:
+uitest:mocked-tests:
   variables:
     APP_APK: "coreexample/build/outputs/apk/mock/debug/coreexample-mock-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/mock/debug/coreexample-mock-debug-androidTest.apk"
-    TEST_TARGET: "package me.proton.core.test.android.uitests.giap"
+    TEST_TARGET: "package me.proton.core.test.android.mockuitests"
     DEVICE_MODEL: "Pixel2.arm,version=28"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common

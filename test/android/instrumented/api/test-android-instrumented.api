@@ -1055,7 +1055,6 @@ public final class me/proton/core/test/android/robots/payments/ExistingPaymentMe
 
 public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
 	public fun <init> ()V
-	public final fun switchPaymentProvider ()Lme/proton/core/test/android/robots/payments/GoogleIAPRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/GoogleIAPRobot$Verify;
 }
 

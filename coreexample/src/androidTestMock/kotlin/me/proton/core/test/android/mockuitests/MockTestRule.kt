@@ -16,12 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests
+package me.proton.core.test.android.mockuitests
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.core.test.android.TestWebServerDispatcher
+import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell
+import me.proton.core.test.android.mocks.FakeApiClient
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestRule
@@ -36,6 +38,7 @@ class MockTestRule constructor(private val testInstance: BaseMockTest) : TestRul
     lateinit var dispatcher: TestWebServerDispatcher
 
     override fun apply(base: Statement, description: Description): Statement {
+        ProtonTest.commandTimeout = FakeApiClient.CALL_TIMEOUT.inWholeMilliseconds
         initLogging()
 
         dispatcher = TestWebServerDispatcher()

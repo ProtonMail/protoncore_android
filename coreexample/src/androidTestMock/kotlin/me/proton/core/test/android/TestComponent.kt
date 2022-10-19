@@ -19,11 +19,14 @@
 package me.proton.core.test.android
 
 import androidx.work.WorkManager
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import io.mockk.mockk
+import me.proton.android.core.coreexample.api.CoreExampleApiClient
+import me.proton.android.core.coreexample.di.NetworkBindsModule
 import me.proton.android.core.coreexample.di.NetworkConstantsModule
 import me.proton.android.core.coreexample.di.WorkManagerModule
 import me.proton.core.crypto.common.context.CryptoContext
@@ -34,8 +37,10 @@ import me.proton.core.crypto.dagger.CoreCryptoModule
 import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.CertificatePins
 import me.proton.core.network.data.di.DohProviderUrls
+import me.proton.core.network.domain.ApiClient
 import me.proton.core.paymentiap.dagger.CorePaymentIapBillingModule
 import me.proton.core.paymentiap.domain.BillingClientFactory
+import me.proton.core.test.android.mocks.FakeApiClient
 import me.proton.core.test.android.mocks.FakeKeyStoreCrypto
 import me.proton.core.test.android.mocks.FakePGPCrypto
 import me.proton.core.test.android.mocks.FakeSrpCrypto
@@ -49,6 +54,7 @@ import javax.inject.Singleton
         CoreCryptoModule::class,
         CorePaymentIapBillingModule::class,
         NetworkConstantsModule::class,
+        NetworkBindsModule::class,
         WorkManagerModule::class
     ]
 )
@@ -96,6 +102,14 @@ object TestComponent {
     @AlternativeApiPins
     @Provides
     fun provideAlternativeApiPins() = emptyList<String>()
+    // endregion
+
+    // region NetworkBindsModule
+
+    @Provides
+    @Singleton
+    fun provideApiClient(): ApiClient = FakeApiClient()
+
     // endregion
 
     // region WorkManagerModule

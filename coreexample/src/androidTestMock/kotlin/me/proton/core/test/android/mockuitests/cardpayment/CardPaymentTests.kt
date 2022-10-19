@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.cardpayment
+package me.proton.core.test.android.mockuitests.cardpayment
 
 import androidx.test.core.app.ActivityScenario
 import dagger.hilt.android.testing.BindValue
@@ -38,9 +38,9 @@ import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
-import me.proton.core.test.android.uitests.BaseMockTest
+import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.uitests.CoreexampleRobot
-import me.proton.core.test.android.uitests.MockTestRule
+import me.proton.core.test.android.mockuitests.MockTestRule
 import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
