@@ -50,6 +50,7 @@ class GetPlans @Inject constructor(
                     Product.Vpn -> it.hasServiceFor(MASK_VPN)
                 }.exhaustive
             }.filter(clientPlanFilter?.filter() ?: { true })
+            .sortedByDescending { it.services }
     }
 
     private fun Plan.hasServiceFor(mask: Int): Boolean =

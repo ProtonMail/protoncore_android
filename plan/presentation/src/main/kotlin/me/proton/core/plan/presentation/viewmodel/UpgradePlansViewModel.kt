@@ -150,7 +150,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
             !isFreeUser -> emptyList()
             else -> getPlans(userId = userId)
                 .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-                .map { plan -> plan.toPaidPlanDetailsItem(starred = false) }
+                .map { plan -> plan.toPaidPlanDetailsItem() }
         }
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = anyPaymentEnabled))

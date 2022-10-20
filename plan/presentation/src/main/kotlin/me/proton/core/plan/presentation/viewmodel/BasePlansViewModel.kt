@@ -34,6 +34,7 @@ import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
+import me.proton.core.plan.domain.entity.MASK_ALL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.plan.presentation.R
@@ -48,6 +49,7 @@ import me.proton.core.plan.presentation.view.calculateUsedSpacePercentage
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.User
 import me.proton.core.usersettings.domain.entity.Organization
+import me.proton.core.util.kotlin.hasFlag
 import java.util.Date
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -143,7 +145,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
         )
     }
 
-    protected fun Plan.toPaidPlanDetailsItem(starred: Boolean) =
+    protected fun Plan.toPaidPlanDetailsItem() =
         PlanDetailsItem.PaidPlanDetailsItem(
             name = name,
             displayName = title,
@@ -160,7 +162,7 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
             domains = maxDomains,
             connections = maxVPN,
             currency = PlanCurrency.valueOf(currency!!), // paid plan has to have currency
-            starred = starred,
+            starred = services?.hasFlag(MASK_ALL) ?: false,
             services = services ?: 0,
             type = type,
             vendors = vendors.toPlanVendorDetailsMap()

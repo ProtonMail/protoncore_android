@@ -51,7 +51,9 @@ internal fun createPlanFeature(
         return Pair(value.replace(KEY_FEATURE_ADDRESSES, quantity.toString()), icon)
     }
     if (type.contains(KEY_FEATURE_VPN)) {
-        val quantity = plan.connections
+        val quantity = if (plan.connections > 0) plan.connections else 1
+        // check plurals: item_connections, for english zero is not being taken into account and defaults to other
+        // 0 and 1 have the same value
         val value =
             context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
         return Pair(value.replace(KEY_FEATURE_VPN, quantity.toString()), icon)

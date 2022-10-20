@@ -54,7 +54,7 @@ internal class SignupPlansViewModel @Inject constructor(
             plans.apply {
                 addAll(
                     getPlans(userId = null)
-                        .map { plan -> plan.toPaidPlanDetailsItem(false) }
+                        .map { plan -> plan.toPaidPlanDetailsItem() }
                 )
                 add(createFreePlan(getPlanDefault(userId = null)))
             }
