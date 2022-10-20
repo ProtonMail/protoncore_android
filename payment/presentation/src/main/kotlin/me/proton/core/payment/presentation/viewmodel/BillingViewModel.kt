@@ -114,8 +114,8 @@ public class BillingViewModel @Inject constructor(
     }
 
     public fun onPay(input: BillingInput) {
-        _userInteractionState.tryEmit(UserInteractionState.OnPay(input))
         _state.tryEmit(State.PayButtonsState.Loading)
+        _userInteractionState.tryEmit(UserInteractionState.OnPay(input))
     }
 
     public fun onLoadingStateChange(loading: Boolean) {

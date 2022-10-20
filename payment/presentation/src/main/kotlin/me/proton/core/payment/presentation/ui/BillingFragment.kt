@@ -132,6 +132,7 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
         }.size
 
         if (numberOfInvalidFields > 0) {
+            viewModel.setPayButtonsState(false)
             return@with
         }
 
