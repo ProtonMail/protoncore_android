@@ -121,6 +121,7 @@ internal class PaymentOptionsActivity :
             payButton.apply {
                 isEnabled = false
                 text = String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
+                onClick(::onPayCreditCard)
             }
         }
         observe()
@@ -231,9 +232,6 @@ internal class PaymentOptionsActivity :
                 payButton.onClick(PaymentProvider.GoogleInAppPurchase, ::startBilling)
             } else {
                 paymentOptionsIapTerms.visibility = View.INVISIBLE
-                payButton.text =
-                    String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
-                payButton.onClick(::onPayCreditCard)
             }
         }
         selectedPaymentMethodId = paymentMethod.id
@@ -292,7 +290,9 @@ internal class PaymentOptionsActivity :
         const val ARG_INPUT = "arg.paymentsOptionsInput"
 
         inline fun View.onClick(value: PaymentProvider, crossinline block: (PaymentProvider) -> Unit) {
-            setOnClickListener { block(value) }
+            setOnClickListener {
+                block(value)
+            }
         }
     }
 }
