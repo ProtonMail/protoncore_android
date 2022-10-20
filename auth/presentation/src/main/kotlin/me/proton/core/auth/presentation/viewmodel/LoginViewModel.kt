@@ -43,6 +43,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
 import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchAll
@@ -69,6 +70,7 @@ internal class LoginViewModel @Inject constructor(
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
         data class Error(val error: Throwable, val isPotentialBlocking: Boolean) : State()
         data class InvalidPassword(val error: Throwable) : State()
+        data class ExternalAccountNotSupported(val error: Throwable) : State()
     }
 
     fun stopLoginWorkflow(): Job = viewModelScope.launch {
@@ -113,6 +115,8 @@ internal class LoginViewModel @Inject constructor(
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
     }.catchWhen(Throwable::isWrongPassword) {
         emit(State.InvalidPassword(it))
+    }.catchWhen(Throwable::isExternalAccountNotSupported) {
+        emit(State.ExternalAccountNotSupported(it))
     }.catchAll(LogTag.FLOW_ERROR_LOGIN) { error ->
         emit(State.Error(error, error.isPotentialBlocking()))
     }.onEach { state ->
@@ -132,4 +136,10 @@ private fun Throwable.isWrongPassword(): Boolean {
     if (this !is ApiException) return false
     val error = error as? ApiResult.Error.Http
     return error?.proton?.code == ResponseCodes.PASSWORD_WRONG
+}
+
+private fun Throwable.isExternalAccountNotSupported(): Boolean {
+    if (this !is ApiException) return false
+    val error = error as? ApiResult.Error.Http
+    return error?.proton?.code == APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
 }

@@ -27,6 +27,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -46,6 +47,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validateUsername
@@ -126,8 +128,13 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     is LoginViewModel.State.Idle -> showLoading(false)
                     is LoginViewModel.State.Processing -> showLoading(true)
                     is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                    is LoginViewModel.State.Error -> onError(true, it.error.getUserMessage(resources), it.isPotentialBlocking)
+                    is LoginViewModel.State.Error -> onError(
+                        true,
+                        it.error.getUserMessage(resources),
+                        it.isPotentialBlocking
+                    )
                     is LoginViewModel.State.InvalidPassword -> onWrongPassword(it.error.getUserMessage(resources))
+                    is LoginViewModel.State.ExternalAccountNotSupported -> onExternalAccountNotSupported()
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
@@ -171,6 +178,24 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         onError(triggerValidation = true, message = message, isPotentialBlocking = false)
     }
 
+    private fun onExternalAccountNotSupported() {
+        showLoading(false)
+
+        MaterialAlertDialogBuilder(this)
+            .setCancelable(false)
+            .setTitle(R.string.auth_login_external_account_unsupported_title)
+            .setMessage(R.string.auth_login_external_account_unsupported_message)
+            .setPositiveButton(R.string.auth_login_external_account_unsupported_help_action) { _, _ ->
+                showExternalAccountHelpPage()
+            }
+            .setNegativeButton(me.proton.core.presentation.R.string.presentation_alert_cancel, null)
+            .show()
+    }
+
+    private fun showExternalAccountHelpPage() {
+        openBrowserLink(getString(R.string.external_account_help_link))
+    }
+
     override fun onError(triggerValidation: Boolean, message: String?, isPotentialBlocking: Boolean) {
         if (triggerValidation) {
             binding.apply {
@@ -196,6 +221,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     private fun onSignInClicked() {
         with(binding) {
             hideKeyboard()
+            usernameInput.clearInputError()
+            passwordInput.clearInputError()
             blockingHelpButton.isVisible = false
             lifecycleScope.launch {
                 binding.usernameInput.flush()

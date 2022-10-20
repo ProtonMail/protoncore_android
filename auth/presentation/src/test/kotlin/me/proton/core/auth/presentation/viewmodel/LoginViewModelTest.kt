@@ -72,7 +72,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             accountHandler,
             createLoginSession,
             keyStoreCrypto,
-            postLoginAccountSetup,
+            postLoginAccountSetup
         )
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
     }
@@ -247,11 +247,16 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `handles invalid password`() = coroutinesTest {
-        coEvery { createLoginSession.invoke(any(), any(), any()) } throws ApiException(ApiResult.Error.Http(
-            HttpResponseCodes.HTTP_UNPROCESSABLE,
-            "Unprocessable Content",
-            ApiResult.Error.ProtonData(ResponseCodes.PASSWORD_WRONG, "Incorrect login credentials. Please try again")
-        ))
+        coEvery { createLoginSession.invoke(any(), any(), any()) } throws ApiException(
+            ApiResult.Error.Http(
+                HttpResponseCodes.HTTP_UNPROCESSABLE,
+                "Unprocessable Content",
+                ApiResult.Error.ProtonData(
+                    ResponseCodes.PASSWORD_WRONG,
+                    "Incorrect login credentials. Please try again"
+                )
+            )
+        )
 
         viewModel.state.test {
             // WHEN
@@ -266,6 +271,31 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
         coVerify(exactly = 1) { createLoginSession.invoke(testUserName, any(), any()) }
         coVerify(exactly = 0) { postLoginAccountSetup.invoke(any(), testPassword, any(), any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `handle unsupported external account`() = coroutinesTest {
+        coEvery { createLoginSession.invoke(any(), any(), any()) } throws ApiException(
+            ApiResult.Error.Http(
+                HttpResponseCodes.HTTP_UNPROCESSABLE,
+                "Unprocessable Content",
+                ApiResult.Error.ProtonData(
+                    ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS,
+                    "Get a Proton Mail address linked to this account in your Proton web settings"
+                )
+            )
+        )
+
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+
+            // THEN
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
+            assertIs<LoginViewModel.State.ExternalAccountNotSupported>(awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     private fun mockSessionInfo(
