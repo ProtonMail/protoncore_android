@@ -68,6 +68,53 @@ coverage report:
 
 It also allows for further customization. See the [plugin's README](./jacoco/README.md) for more info.
 
+## Include Core Build plugin
+- Plugin id: `me.proton.core.gradle-plugins.include-core-build`
+- Published on MavenCentral.
+
+Gradle Settings Plugin to automatically checkout the Proton Core Build, if needed.
+
+```kotlin
+settings.gradle.kts
+
+plugins {
+  id("me.proton.core.gradle-plugins.include-core-build") version "plugin-version"
+}
+```
+Git Repo Uri:
+- isCI -> "https://$username:$token@$host/proton/mobile/android/proton-libs.git"
+- else -> "https://github.com/ProtonMail/protoncore_android.git"
+
+Git Clone/Checkout/IncludeBuild:
+- if env CORE_COMMIT_SHA exist -> clone/checkout and include full build from provided commit sha, in parent directory.
+- if config has includes (see below) -> clone/checkout and include only included projects from provided branch, tag or commit, in parent directory.
+
+Configuration:
+```kotlin
+settings.gradle.kts
+
+plugins {
+  id("me.proton.core.gradle-plugins.include-core-build") version "plugin-version"
+}
+
+includeCoreBuild {
+  // refreshIntervalMillis.set("86400000") // How often the repository should be updated, default 24h.
+  branch.set("main")
+  // tag.set("1.0.0")
+  // commit.set("commitSha")
+  includeBuild("gopenpgp") // Checkout "proton-libs" in parent dir and include "gopenpgp" build.
+}
+```
+
+Override include with local:
+```kotlin
+gradle.properties
+
+local.git.proton-libs=../proton-libs
+```
+
+**Note: This plugin in based on [IncludeGit Gradle Plugin](https://melix.github.io/includegit-gradle-plugin).**
+
 ## Publish-core-libraries plugin
 - Plugin id: `publish-core-libraries`
 - Not published on MavenCentral.

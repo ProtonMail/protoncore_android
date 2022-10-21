@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,34 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Core gradle plugins"
+import org.gradle.api.initialization.Settings
+import org.gradle.kotlin.dsl.configure
 
-includeBuild("publish-core-plugins")
-
-include(
-    "core",
-    "detekt",
-    "jacoco",
-    "kotlin",
-    "tests",
-    "include-core-build",
-    "publish-core-libraries"
-)
-
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://plugins.gradle.org/m2/")
-    }
-}
-
-enableFeaturePreview("VERSION_CATALOGS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../gradle/libs.versions.toml"))
-        }
-    }
-}
+fun Settings.includeCoreBuild(repos: ProtonIncludeCoreBuildExtension.() -> Unit) = configure(repos)
