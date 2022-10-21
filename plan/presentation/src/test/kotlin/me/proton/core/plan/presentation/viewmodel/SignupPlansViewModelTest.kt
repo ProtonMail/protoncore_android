@@ -260,8 +260,8 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             val planTwo = plansStatus.plans[1]
             val planThree = plansStatus.plans[2]
             assertEquals("plan-default", planThree.name) // default is always last
-            assertEquals("plan-name-2", planOne.name)
-            assertEquals("plan-name-3", planTwo.name)
+            assertEquals("plan-name-3", planOne.name)
+            assertEquals("plan-name-2", planTwo.name)
         }
     }
 

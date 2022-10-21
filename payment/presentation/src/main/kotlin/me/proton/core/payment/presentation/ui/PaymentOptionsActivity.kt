@@ -232,6 +232,9 @@ internal class PaymentOptionsActivity :
                 payButton.onClick(PaymentProvider.GoogleInAppPurchase, ::startBilling)
             } else {
                 paymentOptionsIapTerms.visibility = View.INVISIBLE
+                payButton.text =
+                    String.format(getString(R.string.payments_pay), selectedPlanDetailsLayout.userReadablePlanAmount)
+                payButton.onClick(::onPayCreditCard)
             }
         }
         selectedPaymentMethodId = paymentMethod.id

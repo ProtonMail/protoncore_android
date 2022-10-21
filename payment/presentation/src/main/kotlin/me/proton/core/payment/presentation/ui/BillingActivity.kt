@@ -278,11 +278,20 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
         viewModel.switchNextPaymentProvider()
     }
 
-    override fun showLoading(loading: Boolean) {
+    override fun showLoading(loading: Boolean) = with(binding) {
         if (loading) {
-            binding.payButton.setLoading()
+            payButton.setLoading()
+            gPayButton.apply {
+                setLoading()
+                text = getString(R.string.payments_paying_in_process)
+            }
         } else {
-            binding.payButton.setIdle()
+            payButton.setIdle()
+            gPayButton.apply {
+                setIdle()
+                text = getString(R.string.payments_pay_with)
+                icon = AppCompatResources.getDrawable(this@BillingActivity, R.drawable.ic_gpay_logo)
+            }
         }
         viewModel.onLoadingStateChange(loading)
     }

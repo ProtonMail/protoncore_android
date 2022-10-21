@@ -143,7 +143,7 @@ class PlanItemFeaturesKtTest {
             context = context,
             plan = mockedPlan
         )
-        assertEquals("test-string-0", result.first)
+        assertEquals("test-string-1", result.first)
         assertEquals(R.drawable.ic_proton_shield, result.second)
         verify { mockedPlan.connections }
         verify(exactly = 0) { mockedPlan.storage }
