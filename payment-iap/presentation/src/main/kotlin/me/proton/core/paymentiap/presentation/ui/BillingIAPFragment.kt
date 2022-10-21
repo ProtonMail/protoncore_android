@@ -44,6 +44,7 @@ import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBind
 import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
 import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.CoreLogger
@@ -132,10 +133,8 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-        activity?.apply {
-            onBackPressedDispatcher.addCallback {
-                finish()
-            }
+        addOnBackPressedCallback {
+            requireActivity().finish()
         }
     }
 

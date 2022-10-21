@@ -42,6 +42,7 @@ import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Comp
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -98,7 +99,7 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-        requireActivity().onBackPressedDispatcher.addCallback {
+        addOnBackPressedCallback {
             requireActivity().finish()
         }
     }
