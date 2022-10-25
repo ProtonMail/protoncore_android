@@ -24,11 +24,12 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.hmacSha256
 import me.proton.core.key.domain.decryptAndVerifyData
 import me.proton.core.key.domain.decryptAndVerifyDataOrNull
-import me.proton.core.key.domain.decryptAndVerifyNestedKey
 import me.proton.core.key.domain.decryptAndVerifyText
 import me.proton.core.key.domain.decryptAndVerifyTextOrNull
 import me.proton.core.key.domain.decryptFile
 import me.proton.core.key.domain.decryptAndVerifyHashKey
+import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrNull
+import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrThrow
 import me.proton.core.key.domain.decryptSessionKey
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.decryptTextOrNull
@@ -44,6 +45,7 @@ import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import me.proton.core.key.domain.extension.allowCompromisedKeys
 import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.generateNestedPrivateKey
@@ -56,7 +58,6 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.util.kotlin.HashUtils
 import me.proton.core.util.kotlin.sha256
 import java.io.File
 
@@ -119,7 +120,7 @@ internal fun nestedKeyCreation(
 
     // Use parent, UserAddress to decrypt the nested Private Key.
     val decryptedNestedPrivateKey = userAddress.useKeys(context) {
-        decryptAndVerifyNestedKey(encryptedNestedPrivateKey)
+        decryptAndVerifyNestedKeyOrThrow(encryptedNestedPrivateKey)
     }
     // Then directly use the Private Key (e.g. for single crypto function call).
     decryptedNestedPrivateKey.privateKey.encryptText(context, "text")
@@ -159,7 +160,7 @@ internal fun extendedKeyHolderApi(
 
     fun from(userAddress: UserAddress): Calendar {
         val nestedPrivateKey = userAddress.useKeys(context) {
-            decryptAndVerifyNestedKey(calendarKey, calendarPassphrase, calendarPassphraseSignature)
+            decryptAndVerifyNestedKeyOrThrow(calendarKey, calendarPassphrase, calendarPassphraseSignature)
         }
         // Build Calendar: specify privateKey + passphrase.
         return Calendar(listOf(CalendarPrivateKey(privateKey = nestedPrivateKey.privateKey)))
@@ -182,7 +183,7 @@ internal fun convertToKeyHolderApi(
     calendarKey: EncryptedMessage
 ) {
     val nestedPrivateKey = userAddress.useKeys(context) {
-        decryptAndVerifyNestedKey(calendarPassphrase, calendarPassphraseSignature, calendarKey)
+        decryptAndVerifyNestedKeyOrThrow(calendarPassphrase, calendarPassphraseSignature, calendarKey)
     }
 
     // One unlock-able PrivateKey is enough to convert into KeyHolder.
@@ -217,7 +218,15 @@ internal fun nestedNodeKeyCreation(
     check(encryptedNestedPrivateKey.isEncrypted)
 
     val decryptedPrivateNestedKey = parentNode.useKeys(context) {
-        decryptAndVerifyNestedKey(encryptedNestedPrivateKey, verifyKeyRing = userAddress.publicKeyRing(context))
+        val verificationKeyRing = userAddress.publicKeyRing(context)
+        decryptAndVerifyNestedKeyOrNull(
+            encryptedNestedPrivateKey,
+            verifyKeyRing = verificationKeyRing
+        ) ?: decryptAndVerifyNestedKeyOrThrow(
+            encryptedNestedPrivateKey,
+            // Retry decryption, but allowing the use of compromised keys
+            verifyKeyRing = verificationKeyRing.allowCompromisedKeys()
+        )
     }
 
     val currentNode = decryptedPrivateNestedKey.keyHolder()
