@@ -126,15 +126,6 @@
         <activity
             android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.payment.presentation.ui.BillingActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.payment.presentation.ui.PaymentOptionsActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
-            android:windowSoftInputMode="adjustResize" />
         <activity android:name="me.proton.core.presentation.ui.alert.ForceUpdateActivity" />
         <activity
             android:name="me.proton.core.report.presentation.ui.BugReportActivity"
