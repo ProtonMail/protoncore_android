@@ -83,7 +83,9 @@ class SelectPlanRobot : CoreRobot() {
                 view.withId(R.id.planGroup).hasSibling(
                     view.withText(plan.text)
                 )
-            ).click()
+            )
+            .scrollTo()
+            .click()
         return T::class.java.newInstance()
     }
 
