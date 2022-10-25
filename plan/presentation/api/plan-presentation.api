@@ -311,6 +311,14 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$Curre
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$CurrentPlanDetailsItem$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$CurrentPlanDetailsItem;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/PlanDetailsItem$CurrentPlanDetailsItem;
+}
+
 public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$FreePlanDetailsItem : me/proton/core/plan/presentation/entity/PlanDetailsItem {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;JIIIII)V
@@ -337,6 +345,14 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$FreeP
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$FreePlanDetailsItem$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$FreePlanDetailsItem;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/PlanDetailsItem$FreePlanDetailsItem;
 }
 
 public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem : me/proton/core/plan/presentation/entity/PlanDetailsItem {
@@ -384,6 +400,14 @@ public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidP
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/PlanDetailsItem$PaidPlanDetailsItem;
+}
+
 public final class me/proton/core/plan/presentation/entity/PlanInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
@@ -401,6 +425,14 @@ public final class me/proton/core/plan/presentation/entity/PlanInput : android/o
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/plan/presentation/entity/PlanInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/PlanInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/PlanInput;
 }
 
 public final class me/proton/core/plan/presentation/entity/PlanPricing : android/os/Parcelable {
@@ -427,6 +459,14 @@ public final class me/proton/core/plan/presentation/entity/PlanPricing : android
 
 public final class me/proton/core/plan/presentation/entity/PlanPricing$Companion {
 	public final fun fromPlan (Lme/proton/core/plan/domain/entity/Plan;)Lme/proton/core/plan/presentation/entity/PlanPricing;
+}
+
+public final class me/proton/core/plan/presentation/entity/PlanPricing$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/PlanPricing;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/PlanPricing;
 }
 
 public final class me/proton/core/plan/presentation/entity/PlanSubscription {
@@ -466,6 +506,14 @@ public final class me/proton/core/plan/presentation/entity/PlanVendorDetails : a
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/plan/presentation/entity/PlanVendorDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/PlanVendorDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/PlanVendorDetails;
+}
+
 public final class me/proton/core/plan/presentation/entity/SelectedPlan : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/plan/presentation/entity/SelectedPlan$Companion;
@@ -499,6 +547,14 @@ public final class me/proton/core/plan/presentation/entity/SelectedPlan : androi
 
 public final class me/proton/core/plan/presentation/entity/SelectedPlan$Companion {
 	public final fun free (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/SelectedPlan;
+}
+
+public final class me/proton/core/plan/presentation/entity/SelectedPlan$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/SelectedPlan;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/SelectedPlan;
 }
 
 public final class me/proton/core/plan/presentation/entity/SubscribedPlan {
@@ -559,6 +615,14 @@ public final class me/proton/core/plan/presentation/entity/UpgradeResult : andro
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/plan/presentation/entity/UpgradeResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/plan/presentation/entity/UpgradeResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/plan/presentation/entity/UpgradeResult;
 }
 
 public abstract class me/proton/core/plan/presentation/ui/BasePlansFragment : me/proton/core/presentation/ui/ProtonFragment {

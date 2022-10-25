@@ -79,6 +79,14 @@ public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShort
 	public final fun fromPlanShortDetails (Lme/proton/core/payment/presentation/entity/PlanShortDetails;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
 }
 
+public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
+}
+
 public final class me/proton/core/paymentiap/presentation/ui/BillingIAPFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V

@@ -55,15 +55,15 @@ internal fun initVersions(libs: VersionCatalog) {
     // endregion
 
     // region Android
-    `activity version` =                        "1.5.0"         // Released: Jun 29, 2022
+    `activity version` =                        "1.5.1"
     `android-annotation version` =              "1.2.0"         // Released: Mar 24, 2021
     `appcompat version` =                       "1.4.1"         // Released: Jan 12, 2022
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
     `constraint-layout version` =               "2.1.0"         // Released: Jul 22, 2021
     `espresso version` =                        "3.4.0"         // Released: Jul 04, 2021
-    `fragment version` =                        "1.3.6"         // Released: Sep 01, 2021
+    `fragment version` =                        "1.5.4"
     `ktx version` =                             "1.7.0"
-    `lifecycle version` =                       "2.4.0"
+    `lifecycle version` =                       "2.5.1"
     `material version` =                        "1.4.0"
     `android-paging version` =                  "3.1.0"
     `android-work version` =                    "2.7.1"
@@ -77,7 +77,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `dagger version` =                          libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-android version` =                    libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-androidx version` =                   "1.0.0"         // Released: May 05, 2021
-    `mockK version` =                           "1.12.8"
+    `mockK version` =                           "1.13.2"
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "5.0.1"         // Released: Jun 28, 2018
@@ -85,19 +85,19 @@ internal fun initVersions(libs: VersionCatalog) {
 }
 
 // region Android
-public const val `android-tools version`: String =             "30.0.2"        // Updated: Jun, 2020
-public const val `core-splashscreen version`: String =         "1.0.0-beta02"
+public const val `android-tools version`: String =             "30.0.3"
+public const val `core-splashscreen version`: String =         "1.0.0"
 public const val `androidx-collection version`: String =       "1.1.0"
-public const val `compose version`: String =                   "1.2.0-alpha01"
+public const val `compose version`: String =                   "1.2.0-rc02"
 public const val `coordinatorlayout version`: String =         "1.1.0"
 public const val `googlePlayBilling version`: String =         "5.0.0"
 public const val `datastore version`: String =                 "1.0.0"
 public const val `drawerLayout version`: String =              "1.1.1"
-public const val `hilt-navigation-compose version`: String =   "1.0.0-rc01"
-public const val `material3 version`: String =                 "1.0.0-beta01"
-public const val `navigation version`: String =                "2.4.0-rc01"
+public const val `hilt-navigation-compose version`: String =   "1.0.0"
+public const val `material3 version`: String =                 "1.0.0"
+public const val `navigation version`: String =                "2.5.3"
 public const val `recyclerview version`: String =              "1.1.0"
-public const val `startup-runtime version`: String =           "1.1.0"         // Released: Aug 04, 2021
+public const val `startup-runtime version`: String =           "1.1.1"
 // endregion
 
 // region Other
@@ -112,7 +112,7 @@ public const val `lifecycle-extensions version`: String =  "2.2.0"             /
 public const val `lottie version`: String =                "4.1.0"
 public const val `javax-inject version`: String =          "1"
 public const val `ez-vcard_version`: String =              "0.11.3"
-public const val `desugar_jdk_libs version`: String =      "1.1.5"
+public const val `desugar_jdk_libs version`: String =      "1.2.2"
 // endregion
 
 // region Tests

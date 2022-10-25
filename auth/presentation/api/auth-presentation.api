@@ -675,6 +675,14 @@ public final class me/proton/core/auth/presentation/entity/AddAccountInput : and
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/AddAccountInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/AddAccountInput;
+}
+
 public final class me/proton/core/auth/presentation/entity/AddAccountResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;)V
@@ -689,6 +697,14 @@ public final class me/proton/core/auth/presentation/entity/AddAccountResult : an
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/AddAccountResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/AddAccountResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/AddAccountResult;
 }
 
 public final class me/proton/core/auth/presentation/entity/AddAccountWorkflow : java/lang/Enum {
@@ -716,6 +732,14 @@ public final class me/proton/core/auth/presentation/entity/ChooseAddressInput : 
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/ChooseAddressInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/ChooseAddressInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/ChooseAddressInput;
+}
+
 public abstract class me/proton/core/auth/presentation/entity/ChooseAddressResult : android/os/Parcelable {
 }
 
@@ -733,6 +757,14 @@ public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$S
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$Success$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$Success;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/ChooseAddressResult$Success;
+}
+
 public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError : me/proton/core/auth/presentation/entity/ChooseAddressResult {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;)V
@@ -745,6 +777,14 @@ public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$U
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
 }
 
 public final class me/proton/core/auth/presentation/entity/CreateAddressInput : android/os/Parcelable {
@@ -769,6 +809,14 @@ public final class me/proton/core/auth/presentation/entity/CreateAddressInput : 
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/CreateAddressInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/CreateAddressInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/CreateAddressInput;
+}
+
 public abstract class me/proton/core/auth/presentation/entity/CreateAddressResult : android/os/Parcelable {
 }
 
@@ -779,12 +827,28 @@ public final class me/proton/core/auth/presentation/entity/CreateAddressResult$S
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/CreateAddressResult$Success$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/CreateAddressResult$Success;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/CreateAddressResult$Success;
+}
+
 public final class me/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError : me/proton/core/auth/presentation/entity/CreateAddressResult {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;)V
 	public fun describeContents ()I
 	public final fun getMessage ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError;
 }
 
 public final class me/proton/core/auth/presentation/entity/LoginInput : android/os/Parcelable {
@@ -806,6 +870,14 @@ public final class me/proton/core/auth/presentation/entity/LoginInput : android/
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/LoginInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/LoginInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/LoginInput;
+}
+
 public final class me/proton/core/auth/presentation/entity/LoginResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/NextStep;)V
@@ -822,6 +894,14 @@ public final class me/proton/core/auth/presentation/entity/LoginResult : android
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/LoginResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/LoginResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/LoginResult;
+}
+
 public final class me/proton/core/auth/presentation/entity/NextStep : java/lang/Enum, android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field ChooseAddress Lme/proton/core/auth/presentation/entity/NextStep;
@@ -832,6 +912,14 @@ public final class me/proton/core/auth/presentation/entity/NextStep : java/lang/
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/NextStep;
 	public static fun values ()[Lme/proton/core/auth/presentation/entity/NextStep;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/NextStep$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/NextStep;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/NextStep;
 }
 
 public final class me/proton/core/auth/presentation/entity/PasswordAnd2FAInput : android/os/Parcelable {
@@ -848,6 +936,14 @@ public final class me/proton/core/auth/presentation/entity/PasswordAnd2FAInput :
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/PasswordAnd2FAInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;
 }
 
 public final class me/proton/core/auth/presentation/entity/SecondFactorInput : android/os/Parcelable {
@@ -870,6 +966,14 @@ public final class me/proton/core/auth/presentation/entity/SecondFactorInput : a
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/SecondFactorInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorInput;
+}
+
 public abstract class me/proton/core/auth/presentation/entity/SecondFactorResult : android/os/Parcelable {
 }
 
@@ -889,6 +993,14 @@ public final class me/proton/core/auth/presentation/entity/SecondFactorResult$Su
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/SecondFactorResult$Success$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorResult$Success;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorResult$Success;
+}
+
 public final class me/proton/core/auth/presentation/entity/SecondFactorResult$UnrecoverableError : me/proton/core/auth/presentation/entity/SecondFactorResult {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;)V
@@ -901,6 +1013,14 @@ public final class me/proton/core/auth/presentation/entity/SecondFactorResult$Un
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorResult$UnrecoverableError$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorResult$UnrecoverableError;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorResult$UnrecoverableError;
 }
 
 public final class me/proton/core/auth/presentation/entity/SessionResult : android/os/Parcelable {
@@ -949,6 +1069,14 @@ public final class me/proton/core/auth/presentation/entity/SessionResult$Compani
 	public final fun from (Lme/proton/core/auth/domain/entity/SessionInfo;)Lme/proton/core/auth/presentation/entity/SessionResult;
 }
 
+public final class me/proton/core/auth/presentation/entity/SessionResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SessionResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SessionResult;
+}
+
 public final class me/proton/core/auth/presentation/entity/TwoPassModeInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;)V
@@ -965,6 +1093,14 @@ public final class me/proton/core/auth/presentation/entity/TwoPassModeInput : an
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/TwoPassModeInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/TwoPassModeInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/TwoPassModeInput;
+}
+
 public final class me/proton/core/auth/presentation/entity/TwoPassModeResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;)V
@@ -977,6 +1113,14 @@ public final class me/proton/core/auth/presentation/entity/TwoPassModeResult : a
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/TwoPassModeResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/TwoPassModeResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/TwoPassModeResult;
 }
 
 public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput : android/os/Parcelable {
@@ -995,6 +1139,14 @@ public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPa
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;
+}
+
 public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Z)V
@@ -1007,6 +1159,14 @@ public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPa
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult;
 }
 
 public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod : android/os/Parcelable {
@@ -1024,6 +1184,14 @@ public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod
 	public final fun isSet ()Z
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/signup/RecoveryMethod;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/signup/RecoveryMethod;
 }
 
 public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethodType : java/lang/Enum {
@@ -1045,6 +1213,14 @@ public final class me/proton/core/auth/presentation/entity/signup/SignUpInput : 
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/signup/SignUpInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
 }
 
 public final class me/proton/core/auth/presentation/entity/signup/SignUpResult : android/os/Parcelable {
@@ -1069,6 +1245,14 @@ public final class me/proton/core/auth/presentation/entity/signup/SignUpResult :
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/signup/SignUpResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/signup/SignUpResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/signup/SignUpResult;
+}
+
 public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/presentation/entity/BillingResult;)V
@@ -1087,6 +1271,14 @@ public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDe
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
 }
 
 public abstract interface class me/proton/core/auth/presentation/testing/ProtonTestEntryPoint {
@@ -2193,6 +2385,62 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/RecoverySMS
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserInputReady$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserInputReady;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserInputReady;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserProcessing$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserProcessing;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserProcessing;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserSuccess$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserSuccess;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$CreateUserSuccess;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$CreateUserCanceled$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$CreateUserCanceled;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$CreateUserCanceled;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$Message$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$Message;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$Message;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$PlanChooserCanceled$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$PlanChooserCanceled;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Error$PlanChooserCanceled;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Idle$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Idle;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel$State$Idle;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory : dagger/internal/Factory {

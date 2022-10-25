@@ -292,6 +292,14 @@ public final class me/proton/core/humanverification/presentation/entity/HumanVer
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/humanverification/presentation/entity/HumanVerificationInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
+}
+
 public final class me/proton/core/humanverification/presentation/entity/HumanVerificationResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/humanverification/presentation/entity/HumanVerificationToken;)V
@@ -310,6 +318,14 @@ public final class me/proton/core/humanverification/presentation/entity/HumanVer
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/humanverification/presentation/entity/HumanVerificationResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/humanverification/presentation/entity/HumanVerificationResult;
+}
+
 public final class me/proton/core/humanverification/presentation/entity/HumanVerificationToken : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
@@ -324,6 +340,14 @@ public final class me/proton/core/humanverification/presentation/entity/HumanVer
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/humanverification/presentation/entity/HumanVerificationToken$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationToken;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/humanverification/presentation/entity/HumanVerificationToken;
 }
 
 public abstract class me/proton/core/humanverification/presentation/ui/Hilt_HumanVerificationActivity : androidx/appcompat/app/AppCompatActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -601,6 +625,14 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Dialo
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Args;
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Companion {

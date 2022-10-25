@@ -199,6 +199,14 @@ public final class me/proton/core/payment/presentation/entity/BillingInput : and
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/payment/presentation/entity/BillingInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/BillingInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/BillingInput;
+}
+
 public final class me/proton/core/payment/presentation/entity/BillingResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/payment/presentation/entity/BillingResult$Companion;
@@ -230,6 +238,14 @@ public final class me/proton/core/payment/presentation/entity/BillingResult$Comp
 	public final fun paymentDetails-58zzsGY (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;)Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;
 }
 
+public final class me/proton/core/payment/presentation/entity/BillingResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/BillingResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/BillingResult;
+}
+
 public final class me/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;I)V
@@ -248,6 +264,62 @@ public final class me/proton/core/payment/presentation/entity/CurrentSubscribedP
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/CurrentSubscribedPlanDetails;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$InAppPurchase;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentOptionUIModel$PaymentMethod;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentOptionsInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentOptionsInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentOptionsInput;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentOptionsResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentOptionsResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentOptionsResult;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentTokenApprovalInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalInput;
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentTokenApprovalResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentTokenApprovalResult;
+}
+
 public final class me/proton/core/payment/presentation/entity/PaymentVendorDetails : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
@@ -262,6 +334,14 @@ public final class me/proton/core/payment/presentation/entity/PaymentVendorDetai
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/payment/presentation/entity/PaymentVendorDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PaymentVendorDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PaymentVendorDetails;
 }
 
 public final class me/proton/core/payment/presentation/entity/PlanShortDetails : android/os/Parcelable {
@@ -291,6 +371,14 @@ public final class me/proton/core/payment/presentation/entity/PlanShortDetails :
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/payment/presentation/entity/PlanShortDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/payment/presentation/entity/PlanShortDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/payment/presentation/entity/PlanShortDetails;
 }
 
 public final class me/proton/core/payment/presentation/entity/SecureEndpoint {

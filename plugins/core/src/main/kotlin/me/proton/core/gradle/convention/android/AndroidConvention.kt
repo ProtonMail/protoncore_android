@@ -25,6 +25,7 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import me.proton.core.gradle.AndroidDefaults
+import me.proton.core.gradle.JvmDefaults
 import me.proton.core.gradle.convention.BuildConvention
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
@@ -61,6 +62,11 @@ private fun <T> T.applyConvention(settings: AndroidConventionSettings) where T :
         // Note: targetSdk is set separately, since this property doesn't exist in `CommonExtension`
         testInstrumentationRunner = AndroidDefaults.testInstrumentationRunner
         vectorDrawables.useSupportLibrary = settings.vectorDrawablesSupport
+    }
+
+    compileOptions {
+        sourceCompatibility = JvmDefaults.jvmTarget
+        targetCompatibility = JvmDefaults.jvmTarget
     }
 
     lint {

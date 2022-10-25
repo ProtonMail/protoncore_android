@@ -27,13 +27,13 @@ application {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_9
-    targetCompatibility = JavaVersion.VERSION_1_9
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
-        jvmTarget = "9"
+        jvmTarget = "11"
     }
 }
 

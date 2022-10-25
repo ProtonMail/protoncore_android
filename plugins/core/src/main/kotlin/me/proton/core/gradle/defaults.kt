@@ -34,7 +34,7 @@ internal object DaggerDefaults {
 }
 
 internal object JvmDefaults {
-    val jvmTarget = JavaVersion.VERSION_1_8
+    val jvmTarget = JavaVersion.VERSION_11
 }
 
 internal object KotlinDefaults {

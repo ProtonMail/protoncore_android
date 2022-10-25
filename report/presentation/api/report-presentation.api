@@ -71,6 +71,14 @@ public final class me/proton/core/report/presentation/entity/BugReportInput : an
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/report/presentation/entity/BugReportInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/report/presentation/entity/BugReportInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/report/presentation/entity/BugReportInput;
+}
+
 public abstract class me/proton/core/report/presentation/entity/BugReportOutput {
 }
 

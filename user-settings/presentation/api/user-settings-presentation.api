@@ -125,6 +125,14 @@ public final class me/proton/core/usersettings/presentation/entity/PasswordManag
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/usersettings/presentation/entity/PasswordManagementResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/usersettings/presentation/entity/PasswordManagementResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/usersettings/presentation/entity/PasswordManagementResult;
+}
+
 public final class me/proton/core/usersettings/presentation/entity/SettingsInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;)V
@@ -140,6 +148,14 @@ public final class me/proton/core/usersettings/presentation/entity/SettingsInput
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/usersettings/presentation/entity/SettingsInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/usersettings/presentation/entity/SettingsInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/usersettings/presentation/entity/SettingsInput;
+}
+
 public final class me/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Z)V
@@ -152,6 +168,14 @@ public final class me/proton/core/usersettings/presentation/entity/UpdateRecover
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult;
 }
 
 public final class me/proton/core/usersettings/presentation/ui/FragmentOrchestratorKt {
