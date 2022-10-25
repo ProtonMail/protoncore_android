@@ -39,6 +39,7 @@ import java.nio.file.Files
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -644,5 +645,45 @@ class KeyHolderTest {
         }
         assertTrue(verified)
         file.delete()
+    }
+
+    @Test
+    fun useKeys_generate_encrypt_and_decrypt_nested_key() {
+        // given
+        val encryptedNestedKey = keyHolder1.useKeys(context){
+            val nestedKey = generateNestedPrivateKey("user", "example.proton.me")
+            encryptAndSignNestedKey(nestedKey)
+        }
+        // when
+        val decryptedNestedKey = keyHolder1.useKeys(context){
+            decryptAndVerifyNestedKeyOrThrow(encryptedNestedKey)
+        }
+        // then
+        assertEquals(
+            encryptedNestedKey.privateKey.fingerprint(context),
+            decryptedNestedKey.privateKey.fingerprint(context)
+        )
+        assertTrue(decryptedNestedKey.privateKey.isActive)
+    }
+
+    @Test
+    fun useKeys_generate_encrypt_and_decrypt_nested_key_wrong_signature() {
+        // given
+        val encryptedNestedKey = keyHolder1.useKeysAs(context){ encryptContext ->
+            val nestedKey = encryptContext.generateNestedPrivateKey("user", "example.proton.me")
+            keyHolder2.useKeysAs(context){ signingContext ->
+                signingContext.encryptAndSignNestedKey(
+                    nestedKey,
+                    encryptKeyRing = encryptContext.publicKeyRing
+                )
+            }
+
+        }
+        // when & then
+        assertFails {
+            keyHolder1.useKeys(context){
+                decryptAndVerifyNestedKeyOrThrow(encryptedNestedKey)
+            }
+        }
     }
 }

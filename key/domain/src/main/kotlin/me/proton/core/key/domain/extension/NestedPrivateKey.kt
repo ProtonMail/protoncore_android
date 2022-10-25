@@ -18,7 +18,7 @@
 
 package me.proton.core.key.domain.extension
 
-import me.proton.core.key.domain.decryptAndVerifyNestedKey
+import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrThrow
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -31,7 +31,7 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
  *
  * @throws [IllegalStateException] if there is no valid passphrase for the [PrivateKey].
  *
- * @see [KeyHolderContext.decryptAndVerifyNestedKey]
+ * @see [KeyHolderContext.decryptAndVerifyNestedKeyOrThrow]
  */
 fun NestedPrivateKey.keyHolder(keyId: KeyId = KeyId.unused): KeyHolder {
     checkNotNull(privateKey.passphrase) { "No valid passphrase for private key, see decryptAndVerifyNestedKey." }
