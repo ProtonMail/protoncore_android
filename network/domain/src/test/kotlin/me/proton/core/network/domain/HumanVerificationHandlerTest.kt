@@ -20,7 +20,6 @@ package me.proton.core.network.domain
 
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
@@ -40,8 +39,8 @@ import kotlin.test.assertNotNull
  */
 class HumanVerificationHandlerTest {
 
-    private val sessionId = mockk<SessionId>(relaxed = true)
-    private val clientId = mockk<ClientId>(relaxed = true)
+    private val sessionId = SessionId("sessionId")
+    private val clientId = ClientId.AccountSession(sessionId)
 
     private val clientIdProvider = mockk<ClientIdProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
