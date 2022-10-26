@@ -11,6 +11,38 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.1.3] - 2022-10-26
+
+### Features
+
+- Added Include Core Build Gradle Settings Plugin.
+- auth: Handle error for unsupported external account.
+
+### Bug Fixes
+
+- key:
+  - Throw when nested private key can't be decrypted
+
+    Instead of returning an inactive nested private key if the passphrase
+    can't be decrypted or verified,
+    `KeyHolderContext.decryptAndVerifyNestedPrivateKey()` will throw, and
+    let the caller handle errors.
+- payment:
+  - Memory leak in billing screen.
+- plan:
+  - Fix PayButton loading state.
+  - Fix PayButton for existing payment method.
+  - Fix plan card payment PayButton state.
+  - Fix plans order, star and descriptions.
+
+### Internationalization
+
+- Upgrade translations from crowdin (3f00767c).
+
+### Refactoring
+
+- user: Use decryptAndVerifyNestedPrivateKeyOrNull for address keys.
+
 ## [9.1.2] - 2022-10-14
 
 ### Chores
