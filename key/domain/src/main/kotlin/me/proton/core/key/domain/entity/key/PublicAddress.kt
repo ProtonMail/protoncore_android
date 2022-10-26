@@ -42,3 +42,13 @@ enum class Recipient(val value: Int) {
         val map = values().associateBy { it.value }
     }
 }
+
+/**
+ * Returns `true` if the [PublicAddress] has a key that can encrypt an email, otherwise `false`.
+ */
+fun PublicAddress.canEncryptEmail() = keys.canEncryptEmail()
+
+/**
+ * Returns `true` if the [PublicAddress] has a key that can verify an email, otherwise `false`.
+ */
+fun PublicAddress.canVerifyEmail() = keys.canVerifyEmail()

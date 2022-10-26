@@ -439,8 +439,23 @@ public final class me/proton/core/key/domain/entity/key/PublicAddressKey {
 }
 
 public final class me/proton/core/key/domain/entity/key/PublicAddressKeyKt {
+	public static final fun canEncrypt (I)Z
+	public static final fun canEncrypt (Lme/proton/core/key/domain/entity/key/PublicAddressKey;)Z
+	public static final fun canEncryptEmail (Ljava/util/List;)Z
+	public static final fun canEncryptEmail (Lme/proton/core/key/domain/entity/key/PublicAddressKey;)Z
+	public static final fun canVerify (I)Z
+	public static final fun canVerify (Lme/proton/core/key/domain/entity/key/PublicAddressKey;)Z
+	public static final fun canVerifyEmail (Ljava/util/List;)Z
+	public static final fun canVerifyEmail (Lme/proton/core/key/domain/entity/key/PublicAddressKey;)Z
+	public static final fun emailNoEncrypt (I)Z
+	public static final fun emailNoSign (I)Z
 	public static final fun isCompromised (I)Z
 	public static final fun isObsolete (I)Z
+}
+
+public final class me/proton/core/key/domain/entity/key/PublicAddressKt {
+	public static final fun canEncryptEmail (Lme/proton/core/key/domain/entity/key/PublicAddress;)Z
+	public static final fun canVerifyEmail (Lme/proton/core/key/domain/entity/key/PublicAddress;)Z
 }
 
 public final class me/proton/core/key/domain/entity/key/PublicKey {

@@ -24,6 +24,16 @@ data class PublicAddressKey(
     val publicKey: PublicKey
 )
 
+fun PublicAddressKey.canEncrypt(): Boolean = flags.canEncrypt()
+fun PublicAddressKey.canVerify(): Boolean = flags.canVerify()
+
+fun PublicAddressKey.canEncryptEmail(): Boolean = canEncrypt() && !flags.emailNoEncrypt()
+fun PublicAddressKey.canVerifyEmail(): Boolean = canVerify() && !flags.emailNoSign()
+
+fun List<PublicAddressKey>.canEncryptEmail() = any { it.canEncryptEmail() }
+fun List<PublicAddressKey>.canVerifyEmail() = any { it.canVerifyEmail() }
+
+
 /**
  * Bitmap with the following values.
  *
@@ -32,5 +42,15 @@ data class PublicAddressKey(
  */
 typealias PublicAddressKeyFlags = Int
 
+private const val MASK_EMAIL_NO_ENCRYPT_VALUE = 4 // 100
+private const val MASK_EMAIL_NO_SIGN_VALUE = 8 // 1000
+
 fun PublicAddressKeyFlags.isCompromised() = this.and(1) == 0
 fun PublicAddressKeyFlags.isObsolete() = this.and(2) == 0
+
+fun PublicAddressKeyFlags.canVerify(): Boolean = !isCompromised()
+fun PublicAddressKeyFlags.canEncrypt(): Boolean = !isObsolete()
+
+fun PublicAddressKeyFlags.emailNoEncrypt() = this.and(MASK_EMAIL_NO_ENCRYPT_VALUE) == MASK_EMAIL_NO_ENCRYPT_VALUE
+fun PublicAddressKeyFlags.emailNoSign() = this.and(MASK_EMAIL_NO_SIGN_VALUE) == MASK_EMAIL_NO_SIGN_VALUE
+
