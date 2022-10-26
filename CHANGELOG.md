@@ -11,6 +11,31 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.2.0] - 2022-10-26
+
+### Chores
+
+- Upgraded libs versions.
+
+  - Kotlin 1.6.21.
+  - Kotlin Coroutines 1.5.2.
+  - Kotlin Serialization 1.3.3.
+  - Java 11 (+ desugar_jdk_libs 1.2.2).
+  - Gradle 7.4.2.
+  - AGP 7.3.1.
+  - SDK Tools 30.0.3.
+  - Dagger/Hilt 2.44.
+  - Mockk 1.13.2.
+  - Activity 1.5.1 (prev was 1.5.0).
+  - Compose 1.2.0-rc02 (prev was 1.2.0-alpha01).
+  - Core SplashScreen 1.0.0 (prev was 1.0.0-beta2).
+  - Fragment 1.5.4 (prev was 1.3.6).
+  - Hilt Navigation Compose 1.0.0 (prev was 1.0.0-rc01).
+  - Lifecycle 2.5.1 (prev was 2.4.0).
+  - Material3 1.0.0 (prev was 1.0.0-beta01).
+  - Navigation 2.5.3 (prev was 2.4.0).
+  - Startup 1.1.1 (prev was 1.1.0).
+
 ## [9.1.3] - 2022-10-26
 
 ### Features
