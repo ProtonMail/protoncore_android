@@ -20,7 +20,7 @@ package me.proton.core.plan.presentation.entity
 
 data class SubscribedPlan(
     val plan: PlanDetailsItem,
-    val renewAmount: Long?,
+    val amount: Long?,
     val cycle: PlanCycle = PlanCycle.YEARLY,
     val currency: PlanCurrency?,
     val collapsible: Boolean = true

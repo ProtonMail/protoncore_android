@@ -86,7 +86,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         emit(SubscribedPlansState.Processing)
         val currentSubscription = getCurrentSubscription(userId)
         val organization = getOrganization(userId, refresh = true)
-        val user = getUser(userId, refresh = false)
+        val user = getUser(userId, refresh = true)
         val paymentMethods = getPaymentMethods(userId)
 
         val subscribedPlans: MutableList<PlanDetailsItem> = currentSubscription?.plans?.filter {
@@ -126,7 +126,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
             SubscribedPlansState.Success.SubscribedPlans(
                 subscribedPlan = SubscribedPlan(
                     plan = subscribedPlans[0],
-                    renewAmount = currentSubscription?.renewAmount,
+                    amount = currentSubscription?.amount,
                     currency = PlanCurrency.map[user.currency]
                 ),
                 subscriptionManagement = external,

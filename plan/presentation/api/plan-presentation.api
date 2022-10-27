@@ -568,11 +568,11 @@ public final class me/proton/core/plan/presentation/entity/SubscribedPlan {
 	public final fun copy (Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Ljava/lang/Long;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;Z)Lme/proton/core/plan/presentation/entity/SubscribedPlan;
 	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/SubscribedPlan;Lme/proton/core/plan/presentation/entity/PlanDetailsItem;Ljava/lang/Long;Lme/proton/core/plan/presentation/entity/PlanCycle;Lme/proton/core/plan/presentation/entity/PlanCurrency;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/SubscribedPlan;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()Ljava/lang/Long;
 	public final fun getCollapsible ()Z
 	public final fun getCurrency ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public final fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public final fun getPlan ()Lme/proton/core/plan/presentation/entity/PlanDetailsItem;
-	public final fun getRenewAmount ()Ljava/lang/Long;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

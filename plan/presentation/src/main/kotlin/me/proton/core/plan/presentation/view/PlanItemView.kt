@@ -68,7 +68,7 @@ class PlanItemView @JvmOverloads constructor(
             is PlanDetailsItem.FreePlanDetailsItem -> bindFreePlan(subscribedPlan.plan)
             is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(subscribedPlan.plan)
             is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(
-                subscribedPlan.renewAmount?.toDouble(),
+                subscribedPlan.amount?.toDouble(),
                 subscribedPlan.plan
             )
         }.exhaustive
@@ -86,7 +86,7 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
-    private fun bindCurrentPlan(renewAmount: Price?, plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
+    private fun bindCurrentPlan(amount: Price?, plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
         currentPlanGroup.visibility = VISIBLE
         storageProgress.apply {
             val usedPercentage = plan.usedSpace.toDouble() / plan.maxSpace
@@ -153,7 +153,7 @@ class PlanItemView @JvmOverloads constructor(
             separator.visibility = View.VISIBLE
         }
 
-        val amount = renewAmount ?: plan.price?.let { price -> plan.cycle?.getPrice(price) } ?: PRICE_ZERO
+        val amount = amount ?: plan.price?.let { price -> plan.cycle?.getPrice(price) } ?: PRICE_ZERO
         billableAmount = amount
         planPriceText.text = amount.formatCentsPriceDefaultLocale(currency.name)
     }

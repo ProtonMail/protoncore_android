@@ -51,7 +51,7 @@ internal class PlansListView @JvmOverloads constructor(
             planDetails.apply {
                 setData(
                     SubscribedPlan(
-                        plan = plan, renewAmount = null, currency = selectedCurrency, collapsible = plansSize != 1
+                        plan = plan, amount = null, currency = selectedCurrency, collapsible = plansSize != 1
                     )
                 )
 
