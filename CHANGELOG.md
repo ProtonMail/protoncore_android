@@ -11,6 +11,18 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.2.1] - 2022-10-27
+
+### Chores
+
+- payment:
+  - Constraint payment activities to portrait.
+
+### Refactoring
+
+- plan:
+  - Use amount instead of renew amount in current plan.
+
 ## [9.2.0] - 2022-10-26
 
 ### Chores
