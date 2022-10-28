@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.3.0] - 2022-10-28
+
+### Features
+
+- plan:
+  - Fix current plan currency.
+
 ## [9.2.1] - 2022-10-27
 
 ### Chores
