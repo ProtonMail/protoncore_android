@@ -49,6 +49,7 @@ sealed class PlanDetailsItem(
         override val members: Int,
         override val calendars: Int,
         val cycle: PlanCycle?,
+        val currency: PlanCurrency?,
         val price: PlanPricing?,
         val isAutoRenewal: Boolean,
         val endDate: Date?,

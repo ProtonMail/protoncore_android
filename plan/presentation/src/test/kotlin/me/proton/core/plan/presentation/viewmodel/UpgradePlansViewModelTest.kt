@@ -175,7 +175,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         email = null,
         name = "test-username",
         displayName = null,
-        currency = "test-currency",
+        currency = "CHF",
         credit = 0,
         usedSpace = 0,
         maxSpace = 100,

@@ -129,6 +129,9 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
                     cycleDurationMonths = it
                 }
             } ?: PlanCycle.FREE,
+            currency = plan.currency?.let {
+                PlanCurrency.valueOf(it)
+            } ?: PlanCurrency.valueOf(user.currency),
             storage = plan.maxSpace,
             members = maxMembers,
             addresses = maxAddresses,

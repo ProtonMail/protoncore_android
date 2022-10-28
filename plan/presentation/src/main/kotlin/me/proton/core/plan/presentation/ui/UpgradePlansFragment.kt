@@ -120,7 +120,8 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> with(binding) {
                         val plan = it.subscribedPlan.plan
-                        val currency = (plan as? PlanDetailsItem.PaidPlanDetailsItem)?.currency ?: it.subscribedPlan.currency
+                        val currency =
+                            (plan as? PlanDetailsItem.CurrentPlanDetailsItem)?.currency ?: it.subscribedPlan.currency
 
                         manageSubscriptionText.apply {
                             setText(it.subscriptionManagement.subscriptionManagementText())
