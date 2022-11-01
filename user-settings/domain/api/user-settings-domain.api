@@ -1,3 +1,24 @@
+public final class me/proton/core/usersettings/domain/entity/DeviceSettings {
+	public static final field Companion Lme/proton/core/usersettings/domain/entity/DeviceSettings$Companion;
+	public static final field isCrashReportEnabledDefault Z
+	public static final field isTelemetryEnabledDefault Z
+	public fun <init> ()V
+	public fun <init> (ZZ)V
+	public synthetic fun <init> (ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun copy (ZZ)Lme/proton/core/usersettings/domain/entity/DeviceSettings;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/DeviceSettings;ZZILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/DeviceSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun isCrashReportEnabled ()Z
+	public final fun isTelemetryEnabled ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/domain/entity/DeviceSettings$Companion {
+}
+
 public final class me/proton/core/usersettings/domain/entity/Flags {
 	public fun <init> (Ljava/lang/Boolean;)V
 	public final fun component1 ()Ljava/lang/Boolean;
@@ -247,6 +268,13 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings$WeekSt
 public final class me/proton/core/usersettings/domain/entity/UserSettings$WeekStart$Companion {
 	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
 	public final fun getMap ()Ljava/util/Map;
+}
+
+public abstract interface class me/proton/core/usersettings/domain/repository/DeviceSettingsRepository {
+	public abstract fun getDeviceSettings (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeDeviceSettings ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateIsCrashReportEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateIsTelemetryEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/usersettings/domain/repository/OrganizationRepository {

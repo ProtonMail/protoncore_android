@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_usersettings_dagger_CoreDeviceSettingsModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_usersettings_dagger_CoreUserSettingsModule {
 	public fun <init> ()V
 }
@@ -7,6 +11,37 @@ public final class me/proton/core/usersettings/dagger/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public final class me/proton/core/usersettings/dagger/CoreDeviceSettingsModule {
+	public static final field INSTANCE Lme/proton/core/usersettings/dagger/CoreDeviceSettingsModule;
+	public final fun provideDeviceSettingsLocalDataSource (Lme/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider;)Lme/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource;
+	public final fun provideDeviceSettingsRepository (Lme/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource;)Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;
+	public final fun provideLocalSettingsDataStoreProvider (Landroid/content/Context;)Lme/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider;
+}
+
+public final class me/proton/core/usersettings/dagger/CoreDeviceSettingsModule_ProvideDeviceSettingsLocalDataSourceFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/usersettings/dagger/CoreDeviceSettingsModule_ProvideDeviceSettingsLocalDataSourceFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource;
+	public static fun provideDeviceSettingsLocalDataSource (Lme/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider;)Lme/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource;
+}
+
+public final class me/proton/core/usersettings/dagger/CoreDeviceSettingsModule_ProvideDeviceSettingsRepositoryFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/usersettings/dagger/CoreDeviceSettingsModule_ProvideDeviceSettingsRepositoryFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;
+	public static fun provideDeviceSettingsRepository (Lme/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource;)Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;
+}
+
+public final class me/proton/core/usersettings/dagger/CoreDeviceSettingsModule_ProvideLocalSettingsDataStoreProviderFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/usersettings/dagger/CoreDeviceSettingsModule_ProvideLocalSettingsDataStoreProviderFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider;
+	public static fun provideLocalSettingsDataStoreProvider (Landroid/content/Context;)Lme/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider;
 }
 
 public abstract interface class me/proton/core/usersettings/dagger/CoreUserSettingsModule {

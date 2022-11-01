@@ -52,6 +52,7 @@ dependencies {
         project(Module.userData),
 
         // Other
+        `datastorePreferences`,
         `room-ktx`,
         store4
     )

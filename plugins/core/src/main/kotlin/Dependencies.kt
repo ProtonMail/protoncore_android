@@ -108,6 +108,8 @@ public val DependencyHandler.coordinatorlayout: Any
     get() = dependency("androidx.coordinatorlayout", module = "coordinatorlayout") version `coordinatorlayout version`
 public val DependencyHandler.datastore: Any
     get() = dependency("androidx.datastore", module = "datastore") version `datastore version`
+public val DependencyHandler.datastorePreferences: Any
+    get() = dependency("androidx.datastore", module = "datastore-preferences") version `datastore version`
 public val DependencyHandler.drawerLayout: Any
     get() = androidx("drawerlayout") version `drawerLayout version`
 public val DependencyHandler.googlePlayBilling: Any

@@ -816,6 +816,32 @@ public final class me/proton/core/usersettings/data/extension/UserSettingsMapper
 	public static final fun toUserSettings (Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;Lme/proton/core/domain/entity/UserId;)Lme/proton/core/usersettings/domain/entity/UserSettings;
 }
 
+public abstract interface class me/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource {
+	public abstract fun observe ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateIsCrashReportEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateIsTelemetryEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/data/local/DeviceSettingsLocalDataSourceImpl : me/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource {
+	public fun <init> (Lme/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider;)V
+	public fun observe ()Lkotlinx/coroutines/flow/Flow;
+	public fun updateIsCrashReportEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateIsTelemetryEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/data/local/LocalSettingsDataStoreProvider {
+	public fun <init> (Landroid/content/Context;)V
+	public final fun getDeviceSettingsDataStore ()Landroidx/datastore/core/DataStore;
+}
+
+public final class me/proton/core/usersettings/data/repository/DeviceSettingsRepositoryImpl : me/proton/core/usersettings/domain/repository/DeviceSettingsRepository {
+	public fun <init> (Lme/proton/core/usersettings/data/local/DeviceSettingsLocalDataSource;)V
+	public fun getDeviceSettings (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeDeviceSettings ()Lkotlinx/coroutines/flow/Flow;
+	public fun updateIsCrashReportEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateIsTelemetryEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/usersettings/data/repository/OrganizationRepositoryImpl : me/proton/core/usersettings/domain/repository/OrganizationRepository {
 	public fun <init> (Lme/proton/core/usersettings/data/db/OrganizationDatabase;Lme/proton/core/network/data/ApiProvider;)V
 	public fun getOrganization (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
