@@ -86,10 +86,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
 
             signInButton.onClick(::onSignInClicked)
-            usernameInput.labelText = when (input.requiredAccountType) {
-                AccountType.Internal, AccountType.Username -> R.string.auth_proton_email_or_username
-                AccountType.External -> R.string.auth_email_username
-            }.let { getString(it) }
             usernameInput.text = input.username
             usernameInput.setOnFocusLostListener { _, _ ->
                 usernameInput.validateUsername()

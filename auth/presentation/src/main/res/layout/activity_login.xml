@@ -87,7 +87,7 @@
                 android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:challengeFlow="login"
                 app:challengeFrame="username"
-                tools:label="Login" />
+                app:label="@string/auth_email_username" />
 
             <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/passwordInput"
