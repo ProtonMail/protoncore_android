@@ -150,6 +150,7 @@ public object Module {
     public const val userSettingsDagger: String = "$userSettings:user-settings-dagger"
     public const val userSettingsDomain: String = "$userSettings:user-settings-domain"
     public const val userSettingsPresentation: String = "$userSettings:user-settings-presentation"
+    public const val userSettingsPresentationCompose: String = "$userSettings:user-settings-presentation-compose"
     public const val userSettingsData: String = "$userSettings:user-settings-data"
 
     // Human Verification

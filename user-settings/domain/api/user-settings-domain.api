@@ -315,6 +315,11 @@ public final class me/proton/core/usersettings/domain/usecase/GetUserSettings {
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/usersettings/domain/usecase/ObserveDeviceSettings {
+	public fun <init> (Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
+	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
+}
+
 public final class me/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword {
 	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;Ljava/lang/String;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -336,5 +341,11 @@ public final class me/proton/core/usersettings/domain/usecase/PerformUpdateUserP
 public final class me/proton/core/usersettings/domain/usecase/SetupUsername {
 	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/domain/usecase/UpdateDeviceSettings {
+	public fun <init> (Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
+	public final fun updateIsCrashReportEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun updateIsTelemetryEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

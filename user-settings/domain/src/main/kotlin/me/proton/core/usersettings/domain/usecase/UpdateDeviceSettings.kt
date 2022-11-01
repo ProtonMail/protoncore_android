@@ -16,22 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.usersettings.domain.usecase
 
-plugins {
-    protonAndroidLibrary
+import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
+import javax.inject.Inject
+
+class UpdateDeviceSettings @Inject constructor(
+    private val repository: DeviceSettingsRepository,
+) {
+    suspend fun updateIsTelemetryEnabled(isEnabled: Boolean) =
+        repository.updateIsTelemetryEnabled(isEnabled)
+
+    suspend fun updateIsCrashReportEnabled(isEnabled: Boolean) =
+        repository.updateIsCrashReportEnabled(isEnabled)
 }
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.userSettingsDagger),
-        project(Module.userSettingsData),
-        project(Module.userSettingsDomain),
-        project(Module.userSettingsPresentation),
-        project(Module.userSettingsPresentationCompose)
-    )
-}
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }
