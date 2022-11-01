@@ -109,8 +109,8 @@ fun setupFlavors(testedExtension: TestedExtension) {
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
-            buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.protonmail.ch".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.protonmail.com".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.API_HOST, "mail-api.proton.me".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.proton.me".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
         }
@@ -125,17 +125,13 @@ fun setupFlavors(testedExtension: TestedExtension) {
                 }
             }
             val proxyToken: String? = localProperties.getProperty(buildConfigFieldKeys.PROXY_TOKEN)
-            val host: String = localProperties.getProperty("HOST") ?: "protonmail.ch"
-            val apiHost = localProperties.getProperty(buildConfigFieldKeys.API_HOST) ?: "api.$host"
+            val host: String = localProperties.getProperty("HOST") ?: "proton.me"
+            val apiHost = localProperties.getProperty(buildConfigFieldKeys.API_HOST) ?: "mail-api.$host"
             val hv3Host = localProperties.getProperty(buildConfigFieldKeys.HV3_HOST) ?: "verify.$host"
             val quarkHost = localProperties.getProperty(buildConfigFieldKeys.QUARK_HOST) ?: host
             val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
 
-            buildConfigField(
-                "Boolean",
-                buildConfigFieldKeys.USE_DEFAULT_PINS,
-                useDefaultPins.toBoolean().toBuildConfigValue()
-            )
+            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, useDefaultPins.toBoolean().toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, proxyToken.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.API_HOST, apiHost.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, hv3Host.toBuildConfigValue())
