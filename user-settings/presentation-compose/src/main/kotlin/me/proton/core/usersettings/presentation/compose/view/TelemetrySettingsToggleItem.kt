@@ -1,6 +1,7 @@
 package me.proton.core.usersettings.presentation.compose.view
 
 import android.content.res.Configuration
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -16,13 +17,16 @@ import me.proton.core.usersettings.presentation.compose.viewmodel.DeviceSettings
 @Composable
 fun TelemetrySettingsToggleItem(
     viewModel: DeviceSettingsViewModel = hiltViewModel(),
+    divider: @Composable () -> Unit = { Divider() },
 ) {
     val state by rememberAsState(viewModel.state, viewModel.initialState)
-
-    TelemetrySettingsToggleItem(
-        isEnabled = state.isTelemetryEnabled,
-        onToggle = { viewModel.perform(Action.ToggleTelemetry) }
-    )
+    if (state.isSettingsVisible) {
+        TelemetrySettingsToggleItem(
+            isEnabled = state.isTelemetryEnabled,
+            onToggle = { viewModel.perform(Action.ToggleTelemetry) }
+        )
+        divider()
+    }
 }
 
 @Composable

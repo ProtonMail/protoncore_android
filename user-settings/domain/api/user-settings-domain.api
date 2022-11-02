@@ -1,3 +1,11 @@
+public final class me/proton/core/usersettings/domain/FeatureFlags : java/lang/Enum {
+	public static final field ShowDataCollectSettings Lme/proton/core/usersettings/domain/FeatureFlags;
+	public final fun getDefault ()Z
+	public final fun getId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/usersettings/domain/FeatureFlags;
+	public static fun values ()[Lme/proton/core/usersettings/domain/FeatureFlags;
+}
+
 public final class me/proton/core/usersettings/domain/entity/DeviceSettings {
 	public static final field Companion Lme/proton/core/usersettings/domain/entity/DeviceSettings$Companion;
 	public static final field isCrashReportEnabledDefault Z
@@ -318,6 +326,11 @@ public final class me/proton/core/usersettings/domain/usecase/GetUserSettings {
 public final class me/proton/core/usersettings/domain/usecase/ObserveDeviceSettings {
 	public fun <init> (Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
 	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/usersettings/domain/usecase/ObserveFeatureFlag {
+	public fun <init> (Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public final fun invoke (Lme/proton/core/usersettings/domain/FeatureFlags;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public final class me/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword {

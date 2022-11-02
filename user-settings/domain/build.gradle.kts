@@ -34,6 +34,7 @@ dependencies {
         project(Module.cryptoCommon),
         project(Module.domain),
         project(Module.userDomain),
+        project(Module.featureFlagDomain),
         `coroutines-core`,
         `javax-inject`,
     )

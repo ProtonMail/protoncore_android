@@ -1,6 +1,7 @@
 package me.proton.core.usersettings.presentation.compose.view
 
 import android.content.res.Configuration
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -16,13 +17,16 @@ import me.proton.core.usersettings.presentation.compose.viewmodel.DeviceSettings
 @Composable
 fun CrashReportSettingsToggleItem(
     viewModel: DeviceSettingsViewModel = hiltViewModel(),
+    divider: @Composable () -> Unit = { Divider() },
 ) {
     val state by rememberAsState(viewModel.state, viewModel.initialState)
-
-    CrashReportSettingsToggleItem(
-        isEnabled = state.isCrashReportEnabled,
-        onToggle = { viewModel.perform(Action.ToggleCrashReport) }
-    )
+    if (state.isSettingsVisible) {
+        CrashReportSettingsToggleItem(
+            isEnabled = state.isCrashReportEnabled,
+            onToggle = { viewModel.perform(Action.ToggleCrashReport) }
+        )
+        divider()
+    }
 }
 
 @Composable

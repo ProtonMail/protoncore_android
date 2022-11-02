@@ -23,27 +23,34 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.usersettings.domain.FeatureFlags
 import me.proton.core.usersettings.domain.entity.DeviceSettings
 import me.proton.core.usersettings.domain.usecase.ObserveDeviceSettings
+import me.proton.core.usersettings.domain.usecase.ObserveFeatureFlag
 import me.proton.core.usersettings.domain.usecase.UpdateDeviceSettings
 import javax.inject.Inject
 
 @HiltViewModel
 class DeviceSettingsViewModel @Inject constructor(
     observeDeviceSettings: ObserveDeviceSettings,
+    observeFeatureFlag: ObserveFeatureFlag,
     private val updateDeviceSettings: UpdateDeviceSettings,
 ) : ViewModel() {
 
     val initialState = State()
 
-    val state: StateFlow<State> = observeDeviceSettings().mapLatest {
+    val state: StateFlow<State> = combine(
+        observeFeatureFlag(FeatureFlags.ShowDataCollectSettings),
+        observeDeviceSettings(),
+    ) { featureFlag, deviceSettings ->
         State(
-            isTelemetryEnabled = it.isTelemetryEnabled,
-            isCrashReportEnabled = it.isCrashReportEnabled
+            isSettingsVisible = featureFlag.value,
+            isTelemetryEnabled = deviceSettings.isTelemetryEnabled,
+            isCrashReportEnabled = deviceSettings.isCrashReportEnabled
         )
     }.stateIn(
         scope = viewModelScope,
@@ -65,6 +72,7 @@ class DeviceSettingsViewModel @Inject constructor(
     }
 
     data class State(
+        val isSettingsVisible: Boolean = FeatureFlags.ShowDataCollectSettings.default,
         val isTelemetryEnabled: Boolean = DeviceSettings.isTelemetryEnabledDefault,
         val isCrashReportEnabled: Boolean = DeviceSettings.isCrashReportEnabledDefault,
     )
