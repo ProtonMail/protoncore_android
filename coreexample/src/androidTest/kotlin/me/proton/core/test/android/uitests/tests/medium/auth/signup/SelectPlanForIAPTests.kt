@@ -19,9 +19,9 @@
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.test.android.plugins.data.Plan.Dev
-import me.proton.core.test.android.plugins.data.Plan.Free
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.Plan.Dev
+import me.proton.core.test.quark.data.Plan.Free
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot

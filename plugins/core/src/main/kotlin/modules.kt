@@ -35,6 +35,7 @@ public object Module {
     public const val kotlinTest: String = "$test:test-kotlin"
     public const val androidTest: String = "$test:test-android"
     public const val androidInstrumentedTest: String = "$androidTest:test-android-instrumented"
+    public const val quark: String = "$test:test-quark"
     // endregion
 
     // region Shared

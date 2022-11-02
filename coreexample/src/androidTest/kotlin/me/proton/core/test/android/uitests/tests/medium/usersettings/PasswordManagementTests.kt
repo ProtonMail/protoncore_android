@@ -21,7 +21,7 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -34,7 +34,7 @@ class PasswordManagementTests : BaseTest() {
     private val passwordManagementRobot = PasswordManagementRobot()
 
     companion object {
-        val freeUser = quark.userCreate()
+        val freeUser = quark.userCreate().first
         val paidUser = quark.seedNewSubscriber()
     }
 

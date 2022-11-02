@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,45 +16,69 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.plugins
+package me.proton.core.test.quark
 
-import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.plan.presentation.entity.PlanCycle
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
-import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.DRIVE_POPULATE_USER_WITH_DATA
-import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.JAIL_UNBAN
-import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.PAYMENTS_SEED_PAYMENT_METHOD
-import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.PAYMENTS_SEED_SUBSCRIBER
-import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.SYSTEM_ENV
-import me.proton.core.test.android.plugins.Quark.InternalApiEndpoint.USER_CREATE
-import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.plugins.data.randomPaidPlan
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.DRIVE_POPULATE_USER_WITH_DATA
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.JAIL_UNBAN
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.PAYMENTS_SEED_PAYMENT_METHOD
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.PAYMENTS_SEED_SUBSCRIBER
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.SYSTEM_ENV
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE_ADDRESS
+import me.proton.core.test.quark.data.User
+import me.proton.core.test.quark.data.randomPaidPlan
+import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse
+import me.proton.core.test.quark.response.CreateUserQuarkResponse
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.toInt
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-class Quark(private val host: String, private val proxyToken: String?, internalApiJsonPath: String) {
+private const val INTERNAL_API_JSON_PATH: String = "/sensitive/internal_apis.json"
+
+public class Quark constructor(
+    private val host: String,
+    private val proxyToken: String?,
+    private val internalApi: InternalApi
+) {
+    private val json = Json { ignoreUnknownKeys = true }
 
     @Serializable
-    data class InternalApi(
+    public data class InternalApi(
         val endpoints: LinkedHashMap<InternalApiEndpoint, String>,
         val constants: LinkedHashMap<String, String>
     )
 
-    enum class InternalApiEndpoint {
+    public enum class InternalApiEndpoint {
         SYSTEM_ENV,
         JAIL_UNBAN,
         USER_CREATE,
+        USER_CREATE_ADDRESS,
         PAYMENTS_SEED_PAYMENT_METHOD,
         PAYMENTS_SEED_SUBSCRIBER,
         DRIVE_POPULATE_USER_WITH_DATA
     }
+
+    public constructor(
+        host: String,
+        proxyToken: String?
+    ) : this(
+        host = host,
+        proxyToken = proxyToken,
+        internalApi = Quark::class.java
+            .getResourceAsStream(INTERNAL_API_JSON_PATH)
+            .let { requireNotNull(it) { "Could not find resource file: $INTERNAL_API_JSON_PATH" } }
+            .bufferedReader()
+            .use { it.readText() }
+            .deserialize()
+    )
 
     private val client = OkHttpClient
         .Builder()
@@ -63,20 +87,11 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
-    private val internalApi: InternalApi = InstrumentationRegistry
-        .getInstrumentation()
-        .context
-        .assets
-        .open(internalApiJsonPath)
-        .bufferedReader()
-        .use { it.readText() }
-        .deserialize()
-
-    val defaultVerificationCode = internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!
+    public val defaultVerificationCode: String = internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!
 
     private fun executeRequest(request: Request): String {
         client.newCall(request).execute().use {
-            Log.d(testTag, "\nSent request to endpoint : ${request.url}; Response Code: ${it.code}")
+            println("Sent request to endpoint : ${request.url}; Response Code: ${it.code}")
             check(it.code <= 201) { "Response code error: ${it.body?.string()}" }
             return requireNotNull(it.body).string()
         }
@@ -102,14 +117,16 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         }
     }
 
-    fun systemEnv(variable: String, value: String) {
+    public fun systemEnv(variable: String, value: String) {
         val args = arrayOf("$variable=$value")
         quarkRequest(SYSTEM_ENV, args) { post("".toRequestBody()) }
     }
 
-    fun jailUnban() = quarkRequest(JAIL_UNBAN)
+    public fun jailUnban() {
+        quarkRequest(JAIL_UNBAN)
+    }
 
-    fun seedNewSubscriber(user: User = User(plan = randomPaidPlan())): User {
+    public fun seedNewSubscriber(user: User = User(plan = randomPaidPlan())): User {
         val args = arrayOf(
             "username=${user.name}",
             "password=${user.password}",
@@ -119,18 +136,18 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         return user
     }
 
-    fun seedNewSubscriberWithCycle(user: User = User(plan = randomPaidPlan()), cycle: PlanCycle): User {
+    public fun seedNewSubscriberWithCycle(user: User = User(plan = randomPaidPlan()), cycleDurationMonths: Int): User {
         val args = arrayOf(
             "username=${user.name}",
             "password=${user.password}",
             "plan=${user.plan.planName}",
-            "cycle=${cycle.cycleDurationMonths}"
+            "cycle=${cycleDurationMonths}"
         )
         quarkRequest(PAYMENTS_SEED_SUBSCRIBER, args)
         return user
     }
 
-    fun seedUserWithCreditCard(user: User = User()): User {
+    public fun seedUserWithCreditCard(user: User = User()): User {
         val args = arrayOf(
             "-u=${user.name}",
             "-p=${user.password}",
@@ -140,7 +157,7 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         return user
     }
 
-    fun seedPaypalPaymentMethod(user: User) {
+    public fun seedPaypalPaymentMethod(user: User) {
         val args = arrayOf(
             "-u=${user.name}",
             "-p=${user.password}",
@@ -151,25 +168,47 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         quarkRequest(PAYMENTS_SEED_PAYMENT_METHOD, args)
     }
 
-    fun userCreate(
+    public fun userCreate(
         user: User = User(),
-        createAddress: Boolean = true,
-        keysEncryption: String = "Curve25519"
-    ): User {
+        createAddress: CreateAddress? = CreateAddress.WithKey(GenKeys.Curve25519)
+    ): Pair<User, CreateUserQuarkResponse> {
         val args = arrayOf(
+            if (user.isExternal) "-e=true" else "",
+            if (user.isExternal) "-em=${URLEncoder.encode(user.email, "UTF-8")}" else "",
             if (user.name.isNotEmpty()) "-N=${user.name}" else "",
-            if (user.name.isNotEmpty()) "-p=${user.password}" else "",
-            if (createAddress) "-c=true" else "",
+            if (user.password.isNotEmpty()) "-p=${user.password}" else "",
             if (user.passphrase.isNotEmpty()) "-m=${user.passphrase}" else "",
             if (user.recoveryEmail.isNotEmpty()) "-r=${user.recoveryEmail}" else "",
-            "-k=$keysEncryption"
+            if (createAddress is CreateAddress.NoKey) "-c=true" else "",
+            if (createAddress is CreateAddress.WithKey) "-k=${createAddress.genKeys.name}" else "",
+            "--format=json"
         )
 
-        quarkRequest(USER_CREATE, args)
-        return user
+        val responseJson = quarkRequest(USER_CREATE, args)
+        println("Quark response: $responseJson")
+        val response = json.decodeFromString<CreateUserQuarkResponse>(responseJson!!)
+        return user to response
     }
 
-    fun populateUserWithData(
+    public fun userCreateAddress(
+        decryptedUserId: Long,
+        password: String,
+        email: String,
+        genKeys: GenKeys = GenKeys.Curve25519
+    ): CreateUserAddressQuarkResponse {
+        val args = listOf(
+            "userID" to decryptedUserId.toString(),
+            "password" to password,
+            "email" to email,
+            "--gen-keys" to genKeys.name,
+            "--format" to "json"
+        ).toEncodedArgs()
+        val responseJson = quarkRequest(USER_CREATE_ADDRESS, args)
+        println("Quark response: $responseJson")
+        return json.decodeFromString(responseJson!!)
+    }
+
+    public fun populateUserWithData(
         user: User,
     ): User {
         val args = arrayOf(
@@ -181,9 +220,9 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         return user
     }
 
-    fun setDefaultPaymentMethods() = setPaymentMethods(card = true, paypal = true, inApp = true)
+    public fun setDefaultPaymentMethods(): Unit = setPaymentMethods(card = true, paypal = true, inApp = true)
 
-    fun setPaymentMethods(
+    public fun setPaymentMethods(
         appStore: AppStore = AppStore.GooglePlay,
         card: Boolean = true,
         paypal: Boolean = true,
@@ -196,4 +235,16 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         }
         systemEnv(requireNotNull(env), "$value")
     }
+
+    public sealed class CreateAddress {
+        public object NoKey : CreateAddress()
+        public data class WithKey(val genKeys: GenKeys = GenKeys.Curve25519) : CreateAddress()
+    }
+
+    public enum class GenKeys {
+        None, RSA2048, RSA4096, Curve25519
+    }
+
+    private fun List<Pair<String, String>?>.toEncodedArgs(): Array<String> =
+        filterNotNull().map { (key, value) -> "$key=${URLEncoder.encode(value, "UTF-8")}" }.toTypedArray()
 }

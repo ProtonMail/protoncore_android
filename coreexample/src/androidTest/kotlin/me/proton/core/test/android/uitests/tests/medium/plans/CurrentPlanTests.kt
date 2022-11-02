@@ -24,8 +24,8 @@ import androidx.test.core.app.ApplicationProvider
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCycle
-import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -37,7 +37,7 @@ import java.util.Date
 
 class CurrentPlanTests : BaseTest() {
 
-    val user = quark.userCreate()
+    val user = quark.userCreate().first
 
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
@@ -80,7 +80,7 @@ class CurrentPlanTests : BaseTest() {
         val cycle1 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 1
         }
-        val user = quark.seedNewSubscriberWithCycle(paidUserCycle1, cycle1)
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle1, cycle1.cycleDurationMonths)
         login(user)
 
         CoreexampleRobot()
@@ -109,7 +109,7 @@ class CurrentPlanTests : BaseTest() {
         val cycle12 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 12
         }
-        val user = quark.seedNewSubscriberWithCycle(paidUserCycle12, cycle12)
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle12, cycle12.cycleDurationMonths)
         login(user)
 
         CoreexampleRobot()
@@ -133,7 +133,7 @@ class CurrentPlanTests : BaseTest() {
         val cycle15 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 15
         }
-        val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15)
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15.cycleDurationMonths)
         login(user)
 
         CoreexampleRobot()
@@ -162,7 +162,7 @@ class CurrentPlanTests : BaseTest() {
         val cycle30 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 30
         }
-        val user = quark.seedNewSubscriberWithCycle(paidUserCycle30, cycle30)
+        val user = quark.seedNewSubscriberWithCycle(paidUserCycle30, cycle30.cycleDurationMonths)
         login(user)
 
         CoreexampleRobot()

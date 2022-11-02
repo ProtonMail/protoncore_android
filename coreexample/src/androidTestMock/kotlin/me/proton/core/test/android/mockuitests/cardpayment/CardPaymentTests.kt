@@ -29,8 +29,8 @@ import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
-import me.proton.core.test.android.plugins.data.Card
-import me.proton.core.test.android.plugins.data.Plan
+import me.proton.core.test.quark.data.Card
+import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot

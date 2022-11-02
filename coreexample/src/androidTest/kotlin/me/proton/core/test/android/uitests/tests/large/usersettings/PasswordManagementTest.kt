@@ -26,10 +26,11 @@ import org.junit.Test
 
 class PasswordManagementTest : BaseTest() {
 
-    val user = quark.userCreate()
+    private val createUserResult = quark.userCreate()
 
     @Test
     fun changePasswordAndLogin() {
+        val user = createUserResult.first
         val newPassword = "newPassword"
 
         login(user)

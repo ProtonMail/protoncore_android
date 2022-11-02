@@ -22,9 +22,9 @@ import androidx.core.widget.NestedScrollView
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.view.PlanItemView
-import me.proton.core.test.android.plugins.data.BillingCycle
-import me.proton.core.test.android.plugins.data.Currency
-import me.proton.core.test.android.plugins.data.Plan
+import me.proton.core.test.quark.data.BillingCycle
+import me.proton.core.test.quark.data.Currency
+import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 

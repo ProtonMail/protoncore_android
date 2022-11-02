@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.plugins.data
+package me.proton.core.test.quark.data
 
 import kotlinx.serialization.Serializable
-import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import java.util.Calendar
 import java.util.Locale
-import me.proton.core.payment.presentation.R
 import me.proton.core.util.kotlin.random
 
 @Serializable
-data class Card(
+public data class Card(
     val number: String = "",
     val expMonth: String = "",
     val expYear: String = "",
@@ -35,32 +33,23 @@ data class Card(
     val country: String = "",
     val zip: String = ""
 ) {
-    val brand: Brand = when (number.take(1).toInt()) {
+    public val brand: Brand = when (number.take(1).toInt()) {
         3 -> Brand.AmericanExpress
         4 -> Brand.Visa
         5 -> Brand.Mastercard
         else -> Brand.Unknown
     }
 
-    val details: String
-        get() = stringFromResource(
-            R.string.payment_cc_list_item,
-            brand.name,
-            number.takeLast(4),
-            expMonth,
-            expYear
-        )
-
     @Serializable
-    enum class Brand(name: String) {
+    public enum class Brand(public val value: String) {
         Mastercard("MasterCard"),
         AmericanExpress("American Express"),
         Visa("Visa"),
         Unknown(""),
     }
 
-    companion object {
-        val default: Card = Card(
+    public companion object {
+        public val default: Card = Card(
             number = "4242424242424242",
             expMonth = String.format(Locale.ROOT, "%02d", Calendar.getInstance().get(Calendar.MONTH) + 1),
             expYear = (Calendar.getInstance().get(Calendar.YEAR) + 1).toString(),

@@ -61,6 +61,7 @@ prepare-environment:
   variables:
     NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_SLUG} --data tag=${CI_COMMIT_REF_SLUG}"
+    SENSITIVE_DIR: "test/quark/src/main/resources/sensitive"
   script:
     - |
       if [ $CI_PIPELINE_SOURCE == "merge_request_event" ]; then
@@ -68,15 +69,15 @@ prepare-environment:
         export $(cat deploy.env)
         echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
         echo HOST="$DYNAMIC_DOMAIN" >> local.properties
-        mkdir -p coreexample/src/androidTest/assets/sensitive
-        cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
-        cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
+        mkdir -p $SENSITIVE_DIR
+        cat $TEST_USERS > $SENSITIVE_DIR/users.json
+        cat $TEST_INTERNAL_API_V4 > $SENSITIVE_DIR/internal_apis.json
       else
         echo "No need to prepare env"
       fi
   artifacts:
     paths:
-      - coreexample/src/androidTest/assets/sensitive
+      - $SENSITIVE_DIR
       - local.properties
     reports:
       dotenv: deploy.env

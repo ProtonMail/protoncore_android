@@ -20,7 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot.AuthenticationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -35,7 +35,7 @@ class RecoveryEmailTests : BaseTest() {
     private val recoveryEmailRobot = RecoveryEmailRobot()
 
     companion object {
-        val user: User = quark.userCreate(User(recoveryEmail = "recovery@example.lt"))
+        val user: User = quark.userCreate(User(recoveryEmail = "recovery@example.lt")).first
     }
 
     @Before

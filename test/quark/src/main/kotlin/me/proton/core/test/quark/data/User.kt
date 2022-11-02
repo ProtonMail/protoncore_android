@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.plugins.data
+package me.proton.core.test.quark.data
 
-import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.deserializeList
 import me.proton.core.util.kotlin.random
 
+private const val USERS_JSON_PATH = "/sensitive/users.json"
+
 @Serializable
-data class User(
-    val name: String = "proton_core_${String.random(length = 6)}",
+public data class User(
+    val name: String = randomUsername(),
     val password: String = "11111111",
     val email: String = EMPTY_STRING,
 
@@ -43,37 +42,41 @@ data class User(
     val paypal: String = EMPTY_STRING,
     val dataSetScenario: String = EMPTY_STRING,
 
-    val recoveryEmail: String = ""
+    val recoveryEmail: String = "",
+    val isExternal: Boolean = false
 ) {
 
     val isOnePasswordWithUsername: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
 
     val isPaid: Boolean = plan != Plan.Free
 
-    class Users(private val jsonPath: String) {
+    public companion object {
+        public fun randomUsername(): String = "proton_core_${String.random()}"
+    }
 
-        private val userData: MutableList<User> = InstrumentationRegistry
-            .getInstrumentation()
-            .context
-            .assets
-            .open(jsonPath)
-            .bufferedReader()
-            .use { it.readText() }
-            .deserializeList<User>() as MutableList<User>
+    public class Users constructor(private val userData: List<User>) {
+        public constructor(usersJsonAssetsPath: String = USERS_JSON_PATH) : this(
+            userData = User::class.java
+                .getResourceAsStream(usersJsonAssetsPath)
+                .let { requireNotNull(it) { "Could not find resource file: $usersJsonAssetsPath" } }
+                .bufferedReader()
+                .use { it.readText() }
+                .deserializeList<User>() as MutableList<User>
+        )
 
-        fun getUser(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): User {
+        public fun getUser(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): User {
             getUsers(usernameAndOnePass, predicate)
                 .let {
                     try {
                         return it.random()
                     } catch (e: NoSuchElementException) {
-                        Log.e(testTag, "User does not exist in assets/$jsonPath")
+                        println("User does not exist.")
                         throw e
                     }
                 }
         }
 
-        fun getUsers(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): List<User> {
+        public fun getUsers(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): List<User> {
             return userData
                 .filter { it.isOnePasswordWithUsername == usernameAndOnePass }
                 .filter(predicate)

@@ -20,8 +20,8 @@ package me.proton.core.test.android.uitests.tests.medium.payments
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -84,6 +84,6 @@ class NewCreditCardTests : BaseTest() {
     }
 
     companion object {
-        val userWithoutCard: User = quark.userCreate()
+        val userWithoutCard: User = quark.userCreate().first
     }
 }

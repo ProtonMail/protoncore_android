@@ -33,6 +33,7 @@ local.properties
 # Sensitive test data
 test/android/instrumented/src/main/assets/sensitive/*
 coreexample/src/androidTest/assets/sensitive/*
+test/quark/src/main/resources/sensitive/*
 
 # # # # # # # # #
 # IDEA SETTINGS #

@@ -18,8 +18,6 @@ The code and data files in this distribution are licensed under the terms of the
     - [Robot.kt](instrumented/Robot.kt) - builders reference. Should be a superclass for Robot classes.
     - [ProtonTest.kt](instrumented/ProtonTest.kt) - shared `setUp()` and `tearDown()` functions.
 - [plugins](plugins) - Proton specific helper classes
-    - [data](plugins/data) - Test data classes
-        - [User.kt](plugins/data/User.kt) - Test user management class
     - [Database.kt](plugins/Database.kt) - Various database management functions
     - [Requests.kt](plugins/Requests.kt) - Helper class for communication with internal Proton API
 - [robots](robots) - Core robots

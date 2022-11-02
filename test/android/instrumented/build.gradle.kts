@@ -33,6 +33,7 @@ proton {
 dependencies {
     api(
         project(Module.humanVerificationPresentation),
+        project(Module.quark),
         espresso,
         recyclerview,
         `espresso-intents`,
@@ -70,6 +71,7 @@ dependencies {
         `espresso-web`,
         material,
         okhttp,
+        `serialization-json`,
         uiautomator,
     )
 }

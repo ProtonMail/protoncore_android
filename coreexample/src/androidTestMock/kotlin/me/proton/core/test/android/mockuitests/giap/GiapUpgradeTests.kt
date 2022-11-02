@@ -36,7 +36,7 @@ import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
 import kotlin.test.Test
-import me.proton.core.test.android.plugins.data.Plan as TestPlan
+import me.proton.core.test.quark.data.Plan as TestPlan
 
 @HiltAndroidTest
 class GiapUpgradeTests: BaseMockTest {

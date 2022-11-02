@@ -30,12 +30,12 @@ import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
-import me.proton.core.test.android.plugins.Quark
-import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.plugins.data.User.Users
+import me.proton.core.test.quark.data.User.Users
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import org.junit.After
 import org.junit.BeforeClass
 
@@ -60,8 +60,8 @@ open class BaseTest(
     }
 
     companion object {
-        val users = Users("sensitive/users.json")
-        val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
+        val users = Users()
+        val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
         val authHelper by lazy { protonTestEntryPoint.loginTestHelper }
 
         private val protonTestEntryPoint by lazy {

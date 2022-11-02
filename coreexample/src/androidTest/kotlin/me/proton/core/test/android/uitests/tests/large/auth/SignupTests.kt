@@ -20,9 +20,9 @@ package me.proton.core.test.android.uitests.tests.large.auth
 
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.data.Card
-import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.Card
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot

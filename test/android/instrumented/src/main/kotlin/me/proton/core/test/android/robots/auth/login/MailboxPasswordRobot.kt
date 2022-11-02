@@ -19,7 +19,7 @@
 package me.proton.core.test.android.robots.auth.login
 
 import me.proton.core.auth.R
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 

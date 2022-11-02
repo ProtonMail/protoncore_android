@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.plugins.data
+package me.proton.core.test.quark.data
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class Plan(var planName: String, var text: String) {
+public enum class Plan(public var planName: String, public var text: String) {
     Free("free", "Proton Free"),
     Professional("pro", "Proton Mail Professional"),
     Visionary("visionary", "Visionary"),
@@ -29,13 +29,17 @@ enum class Plan(var planName: String, var text: String) {
     Dev("", "")
 }
 
-fun randomPaidPlan(): Plan = Plan.values().filter { it != Plan.Free }.random()
+internal fun randomPaidPlan(): Plan = Plan.values().filter { it != Plan.Free }.random()
 
-enum class BillingCycle(val value: String, val monthlyPrice: Double, val yearlyPrice: Number) {
+public enum class BillingCycle(
+    public val value: String,
+    public val monthlyPrice: Double,
+    public val yearlyPrice: Number
+) {
     Yearly("Pay annually", 4.00, 48.00),
 }
 
-enum class Currency(val symbol: String, val code: String) {
+public enum class Currency(public val symbol: String, public val code: String) {
     Euro("€", "EUR"),
     USD("$", "USD"),
     CHF("CHF", "CHF")

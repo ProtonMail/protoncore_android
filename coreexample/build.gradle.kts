@@ -251,6 +251,7 @@ dependencies {
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
+        project(Module.quark),
         `android-test-runner`,
         `hilt-android-testing`,
         `kotlin-test-junit`,

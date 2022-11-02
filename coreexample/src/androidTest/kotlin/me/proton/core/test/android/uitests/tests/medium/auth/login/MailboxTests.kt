@@ -22,7 +22,7 @@ import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -35,7 +35,7 @@ class MailboxTests : BaseTest() {
     private val mailboxPasswordRobot = MailboxPasswordRobot()
 
     companion object {
-        private val twoPassUser = quark.userCreate(User(passphrase = "passphrase"))
+        private val twoPassUser = quark.userCreate(User(passphrase = "passphrase")).first
     }
 
     @Before
