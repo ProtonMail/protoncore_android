@@ -37,6 +37,10 @@ public open class AndroidLibraryExtension @Inject constructor() : KotlinConventi
     override var apiMode: ExplicitApiMode = KotlinDefaults.apiMode
 }
 
+public open class AndroidTestExtension @Inject constructor() : KotlinConventionSettings {
+    override var apiMode: ExplicitApiMode = ExplicitApiMode.Disabled
+}
+
 public open class AndroidUiLibraryExtension @Inject constructor() : KotlinConventionSettings {
     override var apiMode: ExplicitApiMode = KotlinDefaults.apiMode
 }

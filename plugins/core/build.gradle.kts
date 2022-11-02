@@ -41,6 +41,11 @@ gradlePlugin {
             displayName = "Proton build convention plugin for Android library modules"
             implementationClass = "me.proton.core.gradle.plugin.android.AndroidLibraryPlugin"
         }
+        create("androidTestConvention") {
+            id = "me.proton.core.test.android"
+            displayName = "Proton build convention plugin for Android test modules"
+            implementationClass = "me.proton.core.gradle.plugin.android.AndroidTestPlugin"
+        }
         create("androidUiLibraryConvention") {
             id = "me.proton.core.library.android.ui"
             displayName = "Proton build convention plugin for Android UI library modules"

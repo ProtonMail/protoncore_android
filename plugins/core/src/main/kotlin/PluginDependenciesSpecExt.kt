@@ -25,6 +25,9 @@ public inline val PluginDependenciesSpec.protonAndroidApp: PluginDependencySpec
 public inline val PluginDependenciesSpec.protonAndroidLibrary: PluginDependencySpec
     get() = id("me.proton.core.library.android")
 
+public inline val PluginDependenciesSpec.protonAndroidTest: PluginDependencySpec
+    get() = id("me.proton.core.test.android")
+
 public inline val PluginDependenciesSpec.protonAndroidUiLibrary: PluginDependencySpec
     get() = id("me.proton.core.library.android.ui")
 

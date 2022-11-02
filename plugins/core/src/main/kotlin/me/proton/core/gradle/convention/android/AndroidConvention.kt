@@ -24,6 +24,7 @@ import java.io.File
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.TestExtension
 import me.proton.core.gradle.AndroidDefaults
 import me.proton.core.gradle.JvmDefaults
 import me.proton.core.gradle.convention.BuildConvention
@@ -43,6 +44,12 @@ internal class AndroidConvention : BuildConvention<AndroidConventionSettings> {
         target.extensions
             .findByType<ApplicationExtension>()
             ?.let {
+                it.applyConvention(settings)
+                it.defaultConfig.targetSdk = targetSdk
+            }
+
+        target.extensions
+            .findByType<TestExtension>()?.let {
                 it.applyConvention(settings)
                 it.defaultConfig.targetSdk = targetSdk
             }
@@ -110,9 +117,9 @@ private fun <T> T.applyConvention(settings: AndroidConventionSettings) where T :
 
     // Ensure sources are set for published artifacts
     sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
+        findByName("main")?.java?.srcDirs("src/main/kotlin")
+        findByName("test")?.java?.srcDirs("src/test/kotlin")
+        findByName("androidTest")?.java?.srcDirs("src/androidTest/kotlin")
     }
 
     testOptions {
