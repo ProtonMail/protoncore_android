@@ -141,6 +141,17 @@ class OnIntent : ConditionWatcher {
         matchers.add(IntentMatchers.toPackage(toPackage))
     }
 
+    fun checkBrowserOpened(url: String) {
+        waitForCondition {
+            intended(
+                AllOf.allOf(
+                    IntentMatchers.hasAction(Intent.ACTION_VIEW),
+                    IntentMatchers.hasData(url)
+                )
+            )
+        }
+    }
+
     // Checks with wait that intent with given matchers is sent
     fun checkSent() {
         waitForCondition { intended(intentMatcher()) }

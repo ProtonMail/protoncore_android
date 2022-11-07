@@ -24,9 +24,11 @@ import me.proton.core.network.domain.ApiClient
 import java.util.Locale
 import javax.inject.Inject
 
-const val VERSION_NAME = "3.0.0" // imitating ProtonMail version
+open class CoreExampleApiClient @Inject constructor() : ApiClient {
+    protected open val appName = "android-mail"
+    protected open val productName = "ProtonMail"
+    protected open val versionName = "3.0.0" // imitating ProtonMail version
 
-class CoreExampleApiClient @Inject constructor() : ApiClient {
     /**
      * Tells the lib if DoH should be used in a given moment (based e.g. on user setting or whether
      * VPN connection is active). Will be checked before  each API call.
@@ -38,7 +40,7 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
      * Client's value for 'x-pm-appversion' header.
      */
     override val appVersionHeader: String
-        get() = "android-mail@$VERSION_NAME"
+        get() = "$appName@$versionName"
 
     /**
      * Client's value for 'User-Agent' header.
@@ -47,8 +49,8 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
         get() = String.format(
             Locale.US,
             "%s/%s (Android %s; %s; %s %s; %s)",
-            "ProtonMail",
-            VERSION_NAME,
+            productName,
+            versionName,
             Build.VERSION.RELEASE,
             Build.MODEL,
             Build.BRAND,

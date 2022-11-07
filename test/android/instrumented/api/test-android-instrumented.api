@@ -7,6 +7,11 @@ public final class me/proton/core/test/android/NestedScrollViewExtension : andro
 	public fun perform (Landroidx/test/espresso/UiController;Landroid/view/View;)V
 }
 
+public final class me/proton/core/test/android/ProtonHiltTestRunner : androidx/test/runner/AndroidJUnitRunner {
+	public fun <init> ()V
+	public fun newApplication (Ljava/lang/ClassLoader;Ljava/lang/String;Landroid/content/Context;)Landroid/app/Application;
+}
+
 public final class me/proton/core/test/android/instrumented/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -254,6 +259,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnDevice
 public final class me/proton/core/test/android/instrumented/ui/espresso/OnIntent : me/proton/core/test/android/instrumented/ConditionWatcher {
 	public fun <init> ()V
 	public final fun anyIntent ()Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun checkBrowserOpened (Ljava/lang/String;)V
 	public final fun checkSent ()V
 	public final fun filterEquals (Landroid/content/Intent;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
 	public final fun getMatchers ()Ljava/util/List;
@@ -556,6 +562,7 @@ public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$
 public final class me/proton/core/test/android/robots/auth/AddAccountRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun createAccount ()Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
+	public final fun learnMoreAboutExternalAccountLinking ()Lme/proton/core/test/android/robots/auth/AddAccountRobot;
 	public final fun signIn ()Lme/proton/core/test/android/robots/auth/login/LoginRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/AddAccountRobot$Verify;
 }
@@ -563,6 +570,8 @@ public final class me/proton/core/test/android/robots/auth/AddAccountRobot : me/
 public final class me/proton/core/test/android/robots/auth/AddAccountRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun addAccountElementsDisplayed ()V
+	public final fun unsupportedExternalAccountAlertDisplayed ()V
+	public final fun unsupportedExternalAccountBrowserLinkOpened ()V
 }
 
 public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot : me/proton/core/test/android/robots/CoreRobot {

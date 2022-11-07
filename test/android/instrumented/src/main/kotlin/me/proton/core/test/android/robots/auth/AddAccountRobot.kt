@@ -19,6 +19,7 @@
 package me.proton.core.test.android.robots.auth
 
 import me.proton.core.auth.R
+import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.login.LoginRobot
@@ -40,10 +41,22 @@ class AddAccountRobot : CoreRobot() {
      */
     fun createAccount(): ChooseUsernameRobot = clickElement(R.id.sign_up)
 
+    fun learnMoreAboutExternalAccountLinking(): AddAccountRobot =
+        clickElement(stringFromResource(R.string.auth_login_external_account_unsupported_help_action))
+
     class Verify : CoreVerify() {
         fun addAccountElementsDisplayed() {
             view.withId(R.id.sign_in).checkDisplayed()
             view.withId(R.id.sign_up).checkDisplayed()
+        }
+
+        fun unsupportedExternalAccountAlertDisplayed() {
+            view.withText(R.string.auth_login_external_account_unsupported_title)
+                .checkDisplayed()
+        }
+
+        fun unsupportedExternalAccountBrowserLinkOpened() {
+            intent.checkBrowserOpened(stringFromResource(R.string.external_account_help_link))
         }
     }
 

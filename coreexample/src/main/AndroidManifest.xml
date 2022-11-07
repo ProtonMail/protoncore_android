@@ -29,8 +29,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ProtonTheme"
         android:taskAffinity=""
+        android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -46,25 +46,41 @@
                 android:value="androidx.startup" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.WorkManagerInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.EventManagerInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.AccountStateHandlerInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.StrictModeInitializer"
                 android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.core.plan.presentation.UnredeemedPurchaseInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.core.auth.presentation.MissingScopeInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.core.humanverification.presentation.HumanVerificationInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
         </provider>
 
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleInstance"
             android:exported="true"
+            android:launchMode="singleInstance"
             android:theme="@style/ProtonTheme.Splash.CoreExample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

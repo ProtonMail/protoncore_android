@@ -144,7 +144,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
 
             dimension = flavorDimensions.env
-            testInstrumentationRunner = "me.proton.core.test.android.ProtonTestRunner"
+            testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
             testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
             testOptions {

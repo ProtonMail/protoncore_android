@@ -61,7 +61,8 @@ open class ProtonTest(
 
     private val retryRule = RetryRule(activity, tries)
 
-    @Rule
+    // Order: in some tests, we want to execute the `HiltAndroidRule` first, and then the `ruleChain`.
+    @Rule(order = Rule.DEFAULT_ORDER + 1)
     @JvmField
     val ruleChain = RuleChain
         .outerRule(testName)

@@ -19,7 +19,28 @@
 package me.proton.android.core.coreexample
 
 import android.app.Application
+import androidx.startup.AppInitializer
 import dagger.hilt.android.HiltAndroidApp
+import me.proton.android.core.coreexample.init.AccountStateHandlerInitializer
+import me.proton.android.core.coreexample.init.EventManagerInitializer
+import me.proton.android.core.coreexample.init.WorkManagerInitializer
+import me.proton.core.auth.presentation.MissingScopeInitializer
+import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
+import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 
 @HiltAndroidApp
-class CoreExampleApp : Application()
+class CoreExampleApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        AppInitializer.getInstance(this).apply {
+            initializeComponent(WorkManagerInitializer::class.java)
+            initializeComponent(EventManagerInitializer::class.java)
+            initializeComponent(AccountStateHandlerInitializer::class.java)
+            initializeComponent(CryptoValidatorInitializer::class.java)
+            initializeComponent(UnredeemedPurchaseInitializer::class.java)
+            initializeComponent(MissingScopeInitializer::class.java)
+            initializeComponent(HumanVerificationInitializer::class.java)
+        }
+    }
+}

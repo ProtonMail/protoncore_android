@@ -16,14 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android
+package me.proton.android.core.coreexample.hilttests.mocks
 
-import android.app.Application
-import android.content.Context
-import androidx.test.runner.AndroidJUnitRunner
-import dagger.hilt.android.testing.HiltTestApplication
+import me.proton.android.core.coreexample.api.CoreExampleApiClient
 
-class ProtonTestRunner : AndroidJUnitRunner() {
-    override fun newApplication(cl: ClassLoader, className: String, context: Context): Application =
-        super.newApplication(cl, HiltTestApplication::class.java.name, context)
+class AndroidTestApiClient(
+    override val appName: String,
+    override val productName: String,
+    override val versionName: String
+) : CoreExampleApiClient() {
+    override val shouldUseDoh: Boolean = false
 }

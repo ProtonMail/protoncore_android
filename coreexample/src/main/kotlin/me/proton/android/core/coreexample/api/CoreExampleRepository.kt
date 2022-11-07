@@ -22,8 +22,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.user.data.api.UserApi
+import javax.inject.Inject
 
-class CoreExampleRepository(
+class CoreExampleRepository @Inject constructor(
     private val provider: ApiProvider
 ) {
 
