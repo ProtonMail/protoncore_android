@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Parola actuală de conectare</string>
   <string name="auth_enter_six_digit_code">Introduceți codul din 6 cifre</string>
   <string name="auth_second_factor_code">Cod conectare cu doi factori</string>
-  <string name="auth_email_username">E-mail sau utilizator</string>
-  <string name="auth_proton_email_or_username">Nume de utilizator sau adresă Proton</string>
+  <string name="auth_email_username">Utilizator sau e-mail</string>
   <string name="auth_account_details">Introduceți detaliile contului Proton.</string>
   <string name="auth_sign_in">Autentificare</string>
   <string name="auth_sign_in_action">Autentificare</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Deblocare</string>
   <string name="auth_forgot_password">Am uitat parola</string>
   <string name="auth_login_general_error">A apărut o eroare.</string>
+  <string name="auth_login_external_account_unsupported_title">Este necesară o adresă Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Obțineți o adresă Proton Mail asociată acestui cont în setările web Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Detalii</string>
   <string name="auth_login_empty_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_mailbox_empty_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_create_address_title">Creare adresă Proton Mail</string>

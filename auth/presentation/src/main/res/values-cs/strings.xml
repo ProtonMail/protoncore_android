@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Aktuální přihlašovací heslo</string>
   <string name="auth_enter_six_digit_code">Zadejte 6-místný kód</string>
   <string name="auth_second_factor_code">Kód pro dvoufaktorové ověření</string>
-  <string name="auth_email_username">E-mail nebo uživatelské jméno</string>
-  <string name="auth_proton_email_or_username">Uživatelské jméno nebo e-mailová adresa Proton</string>
+  <string name="auth_email_username">Uživatelské jméno nebo e-mail</string>
   <string name="auth_account_details">Zadejte údaje Vašeho účtu Proton.</string>
   <string name="auth_sign_in">Přihlásit se</string>
   <string name="auth_sign_in_action">Přihlásit se</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Odemknout</string>
   <string name="auth_forgot_password">Zapomenuté heslo</string>
   <string name="auth_login_general_error">Došlo k chybě.</string>
+  <string name="auth_login_external_account_unsupported_title">Adresa Protonu je vyžadována</string>
+  <string name="auth_login_external_account_unsupported_message">Připojte Proton Mail adresu k tomuto účtu v nastavení webu Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Více informací</string>
   <string name="auth_login_empty_credentials">Přihlašovací údaje by neměly chybět.</string>
   <string name="auth_mailbox_empty_credentials">Přihlašovací údaje by neměly chybět.</string>
   <string name="auth_create_address_title">Vytvořit adresu Proton Mail</string>

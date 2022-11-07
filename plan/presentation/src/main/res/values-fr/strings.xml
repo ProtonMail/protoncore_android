@@ -126,9 +126,9 @@
   <string name="secure_core" comment="new_plans">Serveurs Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">La solution de messagerie et d\'agenda qui privilégie le respect de la vie privée pour vos besoins de communication quotidiens.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Une messagerie sécurisée avec des fonctionnalités avancées pour vos communications quotidiennes.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Votre vie privée et votre sécurité sont notre priorité.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Votre vie privée et votre sécurité sont notre priorité.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Une confidentialité et une sécurité totales en utilisant tous les services Proton.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

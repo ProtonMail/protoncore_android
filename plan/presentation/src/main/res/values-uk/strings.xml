@@ -154,9 +154,9 @@
   <string name="secure_core" comment="new_plans">Secure Core сервери</string>
   <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Створена для приватності електронна пошта й календар для ваших повсякденних потреб спілкування.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Захищена електронна пошта з розширеними можливостями для щоденного спілкування.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Ваша приватність і безпека — наш пріоритет.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Ваша приватність і безпека — наш пріоритет.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Комплексна приватність і безпека з усіма службами Proton.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

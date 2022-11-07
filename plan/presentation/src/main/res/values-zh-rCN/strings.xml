@@ -35,30 +35,30 @@
   <string name="plans_billing_yearly">1 年</string>
   <string name="plans_billing_two_years">2 年</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="other">For %d months</item>
+    <item quantity="other">%d 个月</item>
   </plurals>
   <string name="plans_upgrade_your_plan">升级您的账户</string>
   <string name="plans_proton_for_free">免费获得Proton</string>
   <string name="plans_get_proton">获得 %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">通过 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的订阅</string>
   <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
   <string name="plans_payments_info_not_available">不适用</string>
   <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
   <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>
-  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
+  <string name="plans_autorenew_subscriptions">此应用仅提供自动续订年度订阅。</string>
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="other">高达 #proton_storage# 的存储空间</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间 / 用户</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="other">#proton_addresses# 个邮箱地址</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# 个邮箱地址 / 用户</item>
@@ -112,9 +112,9 @@
   <string name="secure_core" comment="new_plans">安全的核心服务器</string>
   <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">The privacy-first email and calendar solution for your everyday communication needs.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>欧元</item>

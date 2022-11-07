@@ -24,8 +24,8 @@
   <string name="core_report_bug_description_field_hint">¿Qué salió mal? Mínimo 10 caracteres</string>
   <string name="core_report_bug_description_field_placeholder">Por favor describa el problema con el máximo detalle que pueda. Si recibió un mensaje de error, por favor háganos saber su contenido.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Introduzca al menos %d carácter</item>
-    <item quantity="other">Introduzca al menos %d caracteres</item>
+    <item quantity="one">Introduce al menos %d carácter</item>
+    <item quantity="other">Introduce al menos %d caracteres</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">¿Cerrar reporte de error?</string>
   <string name="core_report_bug_discard_changes_description">Si cierra esta página su reporte no será guardado.</string>

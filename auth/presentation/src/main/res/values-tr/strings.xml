@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Geçerli oturum açma parolası</string>
   <string name="auth_enter_six_digit_code">6 rakamlı kodu yazın</string>
   <string name="auth_second_factor_code">İki aşamalı kimlik doğrulama kodu</string>
-  <string name="auth_email_username">E-posta ya da kullanıcı adı</string>
-  <string name="auth_proton_email_or_username">Kullanıcı adı ya da Proton adresi</string>
+  <string name="auth_email_username">Kullanıcı adı ya da e-posta</string>
   <string name="auth_account_details">Proton hesabınızın bilgilerini yazın.</string>
   <string name="auth_sign_in">Oturum aç</string>
   <string name="auth_sign_in_action">Oturum aç</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Kilidi aç</string>
   <string name="auth_forgot_password">Parolamı unuttum</string>
   <string name="auth_login_general_error">Bir sorun çıktı.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton adresi gereklidir</string>
+  <string name="auth_login_external_account_unsupported_message">Proton web ayarlarınızdan bu hesap ile ilişkilendirilmiş bir Proton Mail hesabı alın.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Ayrıntılı bilgi alın</string>
   <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_title">Bir Proton Mail adresi oluşturun</string>

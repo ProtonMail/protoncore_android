@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="plans_select_a_plan">Selecciona un plan</string>
-  <string name="plans_select_a_plan_subtitle">Un solo plan para todos los servicios Proton</string>
+  <string name="plans_select_a_plan_subtitle">Un plan para todos los servicios de Proton</string>
   <string name="plans_fetching_general_error">Se produjo un error al solicitar planes.</string>
   <string name="plans_payment_error">Se ha producido un error en el pago. Por favor, inténtalo más tarde o crea un plan gratuito.</string>
   <string name="plans_free_name">Gratuito</string>
@@ -41,21 +41,21 @@
   <string name="plans_upgrade_your_plan">Mejora tu plan</string>
   <string name="plans_proton_for_free">Obtén Proton gratis</string>
   <string name="plans_get_proton">Obtén %s</string>
-  <string name="plans_manage_your_subscription">Gestione su subscripción en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Gestiona tu suscripción en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Tu suscripción está administrada por Mozilla.</string>
-  <string name="plans_manage_your_subscription_other">Tu suscripción no puede ser gestionada dentro de la aplicación móvil.</string>
+  <string name="plans_manage_your_subscription_other">Tu suscripción no puede ser gestionada desde la aplicación móvil.</string>
   <string name="plans_autorenew_subscriptions">A través de esta aplicación sólo están disponibles las suscripciones anuales con renovación automática.</string>
-  <string name="plans_can_not_upgrade_from_mobile">No puede mejorar su plan actual desde la aplicación móvil.</string>
+  <string name="plans_can_not_upgrade_from_mobile">No puedes mejorar tu cuenta desde la aplicación móvil.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# almacenamiento</item>
     <item quantity="other">#proton_storage# almacenamiento</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Subir a almacenamiento #proton_storage#</item>
-    <item quantity="other">Subir a almacenamiento #proton_storage#</item>
+    <item quantity="one">Hasta #proton_storage# de almacenamiento</item>
+    <item quantity="other">Hasta #proton_storage# de almacenamiento</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# almacenamiento / usuario</item>
@@ -103,8 +103,8 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Lo básico para comunicaciones privadas y seguras.</string>
-  <string name="plan_id_plus_header">Buzón con características completas y protección avanzada.</string>
+  <string name="plan_id_free_header">La básica para comunicaciones privadas y seguras.</string>
+  <string name="plan_id_plus_header">Bandeja de entrada completa con protección avanzada.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 países</string>
   <string name="plan_id_vpnbasic_high_speed">Alta velocidad</string>
@@ -126,9 +126,9 @@
   <string name="secure_core" comment="new_plans">Servidores Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">La solución de correo electrónico y calendario basada en la privacidad para tus comunicaciones diarias.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Correo electrónico seguro con funciones avanzadas para tu día a día.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Tu privacidad y seguridad son nuestra prioridad.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Tu privacidad y seguridad son nuestra prioridad.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privacidad y seguridad totales con todos los servicios de Proton combinados.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

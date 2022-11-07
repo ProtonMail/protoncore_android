@@ -20,11 +20,11 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Endereço de recuperação</string>
   <string name="settings_recovery_email_current">Email de recuperação/notificação actual</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
-  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
+  <string name="settings_recovery_email_new">Novo e-mail de recuperação/notificação</string>
+  <string name="settings_recovery_email_confirm">Confirmar email de recuperação/notificação</string>
   <string name="settings_recovery_email_new_hint">Insira o endereço de email</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
-  <string name="settings_save">Gravar</string>
+  <string name="settings_recovery_email_confirm_hint">Reinsira o endereço de email</string>
+  <string name="settings_save">Guardar</string>
   <string name="settings_password_required">Introduza a sua palavra-passe de início de sessão</string>
   <string name="settings_password_required_ok">Aceitar</string>
   <string name="settings_not_set">Não definido</string>
@@ -40,9 +40,9 @@
   <string name="settings_login_password_hint_new_confirm">Confirmar nova palavra-passe de início de sessão</string>
   <string name="settings_mailbox_password_hint_new">Nova senha da caixa de correio</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmar a nova palavra-passe da caixa de correio</string>
-  <string name="settings_change_password_error">A change password error has occurred.</string>
-  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_change_password_error">Ocorreu um erro na troca da senha.</string>
+  <string name="settings_recovery_email_success">Email de recuperação atualizado</string>
   <string name="settings_password_management_success">Senha actualizada</string>
-  <string name="settings_password_management_login_password_success">Login password updated</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_login_password_success">Senha de início de sessão atualizada</string>
+  <string name="settings_password_management_mailbox_password_success">A senha da caixa de correio foi actualizada</string>
 </resources>

@@ -61,9 +61,9 @@
   <string name="payment_use_credit_card_instead">Utiliza una tarjeta de crédito/débito en su lugar</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirmar actualización de la cuenta</string>
-  <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirmar actualización</string>
+  <string name="payments_giap_unredeemed_title">Confirmar la mejora de la cuenta</string>
+  <string name="payments_giap_unredeemed_description">Tu pago de Google Pay se procesó con éxito, pero el proceso de mejora de la cuenta fue interrumpido. ¿Quieres procesar el pago para mejorar tu cuenta ahora?</string>
+  <string name="payments_giap_unredeemed_confirm">Confirmar la mejora</string>
   <string name="payments_giap_redeem_success">Tu cuenta se ha actualizado correctamente.</string>
   <string name="payments_giap_redeem_error">No se ha podido completar la actualización. Intenta más tarde.</string>
   <!-- endregion -->

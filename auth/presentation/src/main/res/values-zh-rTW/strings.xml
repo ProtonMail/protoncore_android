@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">目前的登入密碼</string>
   <string name="auth_enter_six_digit_code">請輸入 6 位數代碼</string>
   <string name="auth_second_factor_code">兩步驟代碼</string>
-  <string name="auth_email_username">電郵位址或使用者名稱</string>
-  <string name="auth_proton_email_or_username">使用者名稱或 Proton 電郵位址</string>
+  <string name="auth_email_username">使用者名稱或電子郵件</string>
   <string name="auth_account_details">輸入您的 Proton 帳號詳細資料。</string>
   <string name="auth_sign_in">登入</string>
   <string name="auth_sign_in_action">登入</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">解鎖</string>
   <string name="auth_forgot_password">忘記密碼</string>
   <string name="auth_login_general_error">發生錯誤。</string>
+  <string name="auth_login_external_account_unsupported_title">需要 Proton 地址</string>
+  <string name="auth_login_external_account_unsupported_message">在您的 Proton 網路設定中取得連結至此帳號的 Proton Mail 電子郵件地址。</string>
+  <string name="auth_login_external_account_unsupported_help_action">取得更多資訊</string>
   <string name="auth_login_empty_credentials">憑證不應為空。</string>
   <string name="auth_mailbox_empty_credentials">憑證不應為空。</string>
   <string name="auth_create_address_title">建立 Proton Mail 位址</string>

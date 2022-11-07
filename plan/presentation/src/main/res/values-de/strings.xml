@@ -25,7 +25,7 @@
   <string name="plan_price_monthly">pro Monat</string>
   <string name="plan_price_annually">pro Jahr</string>
   <string name="plans_current_plan">Aktuelles Abonnement</string>
-  <string name="plans_upgrade_plan">Abonnement wechseln</string>
+  <string name="plans_upgrade_plan">Abonnement upgraden</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Dein Abonnement wird am &lt;b&gt;%s&lt;/b&gt; automatisch verlängert</string>
   <string name="plans_expiration_date">Dein Abonnement läuft am &lt;b&gt;%s&lt;/b&gt; ab</string>
@@ -35,7 +35,7 @@
   <string name="plans_billing_yearly">Für ein Jahr</string>
   <string name="plans_billing_two_years">Für zwei Jahre</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">Für einen Monat</item>
+    <item quantity="one">Für %d Monat</item>
     <item quantity="other">Für %d Monate</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Abonnement wechseln</string>
@@ -126,9 +126,9 @@
   <string name="secure_core" comment="new_plans">„Secure Core“‐Server</string>
   <string name="tor_vpn" comment="new_plans">Tor über VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Die datenschutzfreundliche E-Mail- und Kalenderlösung für deine täglichen Kommunikationsbedürfnisse.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Sichere E-Mails mit erweiterten Funktionen für deine tägliche Kommunikation.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Umfassender Schutz der Privatsphäre und Sicherheit bei allen Proton-Diensten.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

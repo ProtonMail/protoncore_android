@@ -20,7 +20,7 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">No se encuentra el navegador para abrir el enlace.</string>
   <string name="presentation_force_update_title">Actualización requerida</string>
-  <string name="presentation_force_update_message">Esta versión de la aplicación ha dejado de ser soportada, por favor actualice para continuar usándola.</string>
+  <string name="presentation_force_update_message">Esta versión de la aplicación ya no es compatible, actualiza la aplicación para seguir usándola.</string>
   <string name="presentation_force_update_learn_more">Más información</string>
   <string name="presentation_force_update_update">Actualizar</string>
   <string name="presentation_market_missing">No se ha encontrado la aplicación en el dispositivo. Dirígete a la tienda de aplicaciones y actualiza la aplicación.</string>

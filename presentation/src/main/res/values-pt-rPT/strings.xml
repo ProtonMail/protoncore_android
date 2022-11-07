@@ -20,28 +20,28 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Can not find browser to open the link.</string>
   <string name="presentation_force_update_title">Actualização requerida</string>
-  <string name="presentation_force_update_message">This version of the app is no longer supported, please update to continue using it.</string>
+  <string name="presentation_force_update_message">Esta versão da aplicação já não é suportada, por favor atualize para continuar a usá-la.</string>
   <string name="presentation_force_update_learn_more">Saiba mais</string>
   <string name="presentation_force_update_update">Actualizar</string>
   <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Autenticar</string>
-  <string name="presentation_signin_to_continue">Sign in to continue</string>
+  <string name="presentation_signin_to_continue">Inicie sessão para continuar</string>
   <string name="presentation_alert_title">Alerta</string>
   <string name="presentation_alert_ok">Aceitar</string>
   <string name="presentation_alert_enter">Inserir</string>
   <string name="presentation_alert_cancel">Cancelar</string>
-  <string name="presentation_alert_submit">Submit</string>
+  <string name="presentation_alert_submit">Enviar</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
+  <string name="presentation_menu_item_title_report_a_bug">Relatar um problema</string>
   <string name="presentation_menu_item_title_settings">Definições</string>
-  <string name="presentation_menu_item_title_subscription">Subscription</string>
+  <string name="presentation_menu_item_title_subscription">Subscrição</string>
   <string name="presentation_menu_item_title_sign_out">Terminar sessão</string>
   <!-- Other -->
-  <string name="presentation_back">Back</string>
+  <string name="presentation_back">Recuar</string>
   <string name="presentation_close">Fechar</string>
   <string name="presentation_skip">Saltar</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Could not connect to server.</string>
-  <string name="presentation_check_your_connection">Check your connection</string>
+  <string name="presentation_general_connection_error">Não é possível ligar ao servidor.</string>
+  <string name="presentation_check_your_connection">Verifique a sua ligação.</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
 </resources>

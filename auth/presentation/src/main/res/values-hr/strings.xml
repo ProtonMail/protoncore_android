@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Current login password</string>
   <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
   <string name="auth_second_factor_code">Two-Factor code</string>
-  <string name="auth_email_username">Adresa e-pošte ili korisničko ime</string>
-  <string name="auth_proton_email_or_username">Username or Proton Address</string>
+  <string name="auth_email_username">Username or email</string>
   <string name="auth_account_details">Enter your Proton Account details.</string>
   <string name="auth_sign_in">Prijavite se</string>
   <string name="auth_sign_in_action">Prijavite se</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Otključaj</string>
   <string name="auth_forgot_password">Zaboravili ste lozinku</string>
   <string name="auth_login_general_error">An error occurred.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton address required</string>
+  <string name="auth_login_external_account_unsupported_message">Get a Proton Mail address linked to this account in your Proton web settings.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Learn more</string>
   <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_title">Create a Proton Mail address</string>

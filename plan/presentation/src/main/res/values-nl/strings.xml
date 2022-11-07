@@ -126,9 +126,9 @@
   <string name="secure_core" comment="new_plans">Secure Core-servers</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">De privacy-eerst e-mail en agenda oplossing voor uw alledaagse communicatienoden.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Veilige e-mail met geavanceerde functies voor uw dagelijkse communicatie.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Uw privacy en veiligheid zijn onze prioriteit.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Uw privacy en veiligheid zijn onze prioriteit.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Uitgebreide privacy en beveiliging met alle Proton-diensten gecombineerd.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

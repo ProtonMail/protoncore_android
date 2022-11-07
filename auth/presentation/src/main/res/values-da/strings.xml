@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Nuværende login-adgangskode</string>
   <string name="auth_enter_six_digit_code">Indtast den sekscifrede kode</string>
   <string name="auth_second_factor_code">To-faktor-kode</string>
-  <string name="auth_email_username">E-mail eller brugernavn</string>
-  <string name="auth_proton_email_or_username">Brugernavn eller Proton-adresse</string>
+  <string name="auth_email_username">Brugernavn eller e-mail</string>
   <string name="auth_account_details">Indtast oplysninger om din Proton-konto.</string>
   <string name="auth_sign_in">Log ind</string>
   <string name="auth_sign_in_action">Log ind</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Lås op</string>
   <string name="auth_forgot_password">Glemt adgangskode</string>
   <string name="auth_login_general_error">Der opstod en fejl.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-adresse påkrævet</string>
+  <string name="auth_login_external_account_unsupported_message">Få en Proton Mail-adresse knyttet til denne konto i dine Proton-webindstillinger.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Få yderligere information</string>
   <string name="auth_login_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
   <string name="auth_mailbox_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
   <string name="auth_create_address_title">Opret en Proton Mail-adresse</string>

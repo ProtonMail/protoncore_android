@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Password d\'accesso attuale</string>
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice a due fattori</string>
-  <string name="auth_email_username">Email o username</string>
-  <string name="auth_proton_email_or_username">Nome utente o Indirizzo Proton</string>
+  <string name="auth_email_username">Nome utente o email</string>
   <string name="auth_account_details">Inserisci i dettagli del tuo account Proton.</string>
   <string name="auth_sign_in">Accedi</string>
   <string name="auth_sign_in_action">Accedi</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Sblocca</string>
   <string name="auth_forgot_password">Password dimenticata</string>
   <string name="auth_login_general_error">Si è verificato un errore.</string>
+  <string name="auth_login_external_account_unsupported_title">Indirizzo Proton richiesto</string>
+  <string name="auth_login_external_account_unsupported_message">Ottieni un indirizzo di posta Proton collegato a questo account nelle impostazioni web di Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Per saperne di più</string>
   <string name="auth_login_empty_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_mailbox_empty_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_create_address_title">Crea un indirizzo Proton Mail</string>

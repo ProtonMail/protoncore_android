@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Поточний пароль для входу</string>
   <string name="auth_enter_six_digit_code">Введіть 6-значний код</string>
   <string name="auth_second_factor_code">Код двоетапної перевірки</string>
-  <string name="auth_email_username">Е-пошта чи ім\'я користувача</string>
-  <string name="auth_proton_email_or_username">Ім\'я користувача або адреса Proton</string>
+  <string name="auth_email_username">Ім\'я користувача або е-пошта</string>
   <string name="auth_account_details">Введіть дані свого облікового запису Proton.</string>
   <string name="auth_sign_in">Увійти</string>
   <string name="auth_sign_in_action">Увійти</string>
@@ -61,9 +60,12 @@
   <string name="auth_2fa_error_empty_code">Поле коду двоетапної перевірки не повинне бути порожнім</string>
   <string name="auth_mailbox_title">Розблокуйте поштову скриньку</string>
   <string name="auth_mailbox_password_label">Пароль поштової скриньки</string>
-  <string name="auth_mailbox_unlock_action">Розблокувати</string>
+  <string name="auth_mailbox_unlock_action">Розблокуйте</string>
   <string name="auth_forgot_password">Забули пароль</string>
   <string name="auth_login_general_error">Сталася помилка.</string>
+  <string name="auth_login_external_account_unsupported_title">Адреса Proton обов\'язкова</string>
+  <string name="auth_login_external_account_unsupported_message">Отримайте адресу Proton Mail, прив\'язану до цього облікового запису, у вебналаштуваннях Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Докладніше</string>
   <string name="auth_login_empty_credentials">Поле з обліковими даними не повинне бути порожніми.</string>
   <string name="auth_mailbox_empty_credentials">Поле з обліковими даними не повинне бути порожніми.</string>
   <string name="auth_create_address_title">Створити адресу Proton Mail</string>
@@ -118,7 +120,7 @@
   <string name="auth_signup_terms_conditions">Умови та положення</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Натискаючи Далі, ви погоджуєтеся з <annotation link="terms">Умовами та положеннями</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Не додавати спосіб відновлення?</string>
-  <string name="auth_signup_skip_recovery_description">Спосіб відновлення допоможе вам отримати доступ до свого облікового запису у випадку втрати пароля чи виходу з облікового запису.</string>
+  <string name="auth_signup_skip_recovery_description">Спосіб відновлення допоможе вам отримати доступ до свого облікового запису у випадку втрати пароля чи блокування облікового запису.</string>
   <string name="auth_signup_skip_recovery">Пропустити</string>
   <string name="auth_signup_set_recovery">Встановити спосіб відновлення</string>
   <string name="auth_signup_no_connectivity">Немає з\'єднання, щоб показати Умови та положення.</string>
@@ -127,7 +129,7 @@
   <string name="auth_signup_validation_password_length">Пароль повинен містити принаймні 8 символів.</string>
   <string name="auth_signup_validation_password">Пароль не повинен бути порожнім.</string>
   <string name="auth_signup_your_account_is_being_setup">Створюємо ваш обліковий запис…</string>
-  <string name="auth_signup_please_wait">Зазвичай це триває не більше хвилини.</string>
+  <string name="auth_signup_please_wait">Зазвичай це триває не більше ніж хвилину.</string>
   <string name="auth_signup_replacement_code">Не отримали код?</string>
   <string name="auth_signup_verify">Перевірити</string>
   <string name="auth_signup_verification_code">Код підтвердження</string>
@@ -136,10 +138,10 @@
   <string name="auth_signup_token_code_resent">Код повторно надіслано.</string>
   <string name="auth_signup_congratulations_subtitle">Ваш обліковий запис Proton успішно створено.\nНасолоджуйтеся світом приватності.</string>
   <string name="auth_signup_congratulations">Вітаємо!</string>
-  <string name="auth_signup_start_using_proton">Почати користування Proton</string>
-  <string name="auth_signup_start_using_calendar">Почати користування Proton Calendar</string>
-  <string name="auth_signup_start_using_mail">Почати користування Proton Mail</string>
-  <string name="auth_signup_start_using_drive">Почати користування Proton Drive</string>
-  <string name="auth_signup_start_using_vpn">Почати користування Proton VPN</string>
-  <string name="auth_signup_error_validation_recovery_destination">Недійсні дані способу відновлення доступу.</string>
+  <string name="auth_signup_start_using_proton">Почати користуватись Proton</string>
+  <string name="auth_signup_start_using_calendar">Почати користуватись Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Почати користуватись Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Почати користуватись Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Почати користуватись Proton VPN</string>
+  <string name="auth_signup_error_validation_recovery_destination">Некоректні дані способу відновлення доступу.</string>
 </resources>

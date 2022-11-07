@@ -37,8 +37,7 @@
   <string name="auth_current_login_password">Huidig loginwachtwoord</string>
   <string name="auth_enter_six_digit_code">Voer 6-cijferige code in</string>
   <string name="auth_second_factor_code">Tweestapsverificatiecode</string>
-  <string name="auth_email_username">E-mailadres of gebruikersnaam</string>
-  <string name="auth_proton_email_or_username">Gebruikersnaam of Proton E-mailadres</string>
+  <string name="auth_email_username">Gebruikersnaam of e-mailadres</string>
   <string name="auth_account_details">Vul uw Proton Account gegevens in.</string>
   <string name="auth_sign_in">Inloggen</string>
   <string name="auth_sign_in_action">Inloggen</string>
@@ -64,6 +63,9 @@
   <string name="auth_mailbox_unlock_action">Ontgrendelen</string>
   <string name="auth_forgot_password">Wachtwoord vergeten</string>
   <string name="auth_login_general_error">Er is iets fout gegaan.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-adres vereist</string>
+  <string name="auth_login_external_account_unsupported_message">Verkrijg een Proton Mail-adres verbonden aan dit account via uw Proton-webinstellingen.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Meer informatie</string>
   <string name="auth_login_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_mailbox_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_create_address_title">Maak een Proton Mail e-mailadres aan</string>
@@ -76,7 +78,7 @@
   <string name="auth_create_address_result_recovery_title">Uw herstel e-mailadres is:</string>
   <string name="auth_create_address_create">Adres toevoegen</string>
   <string name="auth_create_address_creating">Adres aanmaken</string>
-  <string name="auth_create_address_terms">Door op Volgende te klikken, gaat u akkoord met de <a href="https://protonmail.com/terms-and-conditions">Voorwaarden van Proton</a>.</string>
+  <string name="auth_create_address_terms">Door op Volgende te klikken, gaat u akkoord met de <a href="https://protonmail.com/terms-and-conditions">Algemene Voorwaarden</a></string>
   <string name="auth_create_address_error_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_create_address_error_no_available_domain">Geen beschikbaar domein.</string>
   <string name="auth_create_address_error_private_key">Genereren van private sleutel mislukt.</string>

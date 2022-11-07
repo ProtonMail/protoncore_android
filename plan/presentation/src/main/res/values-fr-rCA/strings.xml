@@ -35,8 +35,8 @@
   <string name="plans_billing_yearly">Pour 1 an</string>
   <string name="plans_billing_two_years">Pendant 2 ans</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">For %d month</item>
-    <item quantity="other">For %d months</item>
+    <item quantity="one">Pour %d mois</item>
+    <item quantity="other">Pour %d mois</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Changez d\'offre</string>
   <string name="plans_proton_for_free">Obtenir Proton gratuitement</string>
@@ -126,9 +126,9 @@
   <string name="secure_core" comment="new_plans">Serveurs Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor via RPV</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">La première solution de courriel et calendrier orienté confidentialité pour vos besoins de communication quotidiens.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Une messagerie sécurisée avec des fonctionnalités avancées pour vos communications quotidiennes.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Votre confidentialité et votre sécurité sont notre priorité.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Votre confidentialité et votre sécurité sont notre priorité.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Une confidentialité et une sécurité totales en utilisant tous les services Proton.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
