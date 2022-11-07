@@ -143,13 +143,16 @@ assemble:
     CORE_APP_TESTS: :coreexample:assembleLocalPropertiesDebugAndroidTest
     # Mock variant and mock UI tests
     CORE_APP_MOCK: :coreexample:assembleMockDebug :coreexample:assembleMockDebugAndroidTest
+    # Hilt tests
+    HILT_TESTS: :coreexample:coreexample-hilt-tests:assembleLocalPropertiesDebug
     # Build androidTest apks for several projects
     CORE_LIBS_TESTS: :user:user-data:assembleDebugAndroidTest :key:key-data:assembleDebugAndroidTest :crypto:crypto-android:assembleDebugAndroidTest
   script:
-    - ./gradlew $CORE_APP $CORE_APP_MOCK $CORE_APP_TESTS $CORE_LIBS_TESTS
+    - ./gradlew $CORE_APP $CORE_APP_MOCK $CORE_APP_TESTS $CORE_LIBS_TESTS $HILT_TESTS
   artifacts:
     paths:
       - coreexample/build/outputs/
+      - coreexample/hilt-tests/build/outputs/apk/
       - user/data/build/outputs/apk/
       - key/data/build/outputs/apk/
       - crypto/android/build/outputs/apk/
@@ -273,7 +276,9 @@ drive-integration-tests:
     TEST_APK: "coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk"
     RESULTS_DIR: "${CI_COMMIT_REF_SLUG}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
     DEVICE_MODEL: "Pixel2,version=28"
+    DEVICE_MODEL_RESULTS_DIR: "Pixel2-28-en-portrait"
     EXTRA_OPTIONS: ""
+    FLAKY_TEST_RERUN: "0"
   tags:
     - medium
   allow_failure: true
@@ -287,15 +292,16 @@ drive-integration-tests:
       --test-targets "$TEST_TARGET"
       --timeout 25m
       --results-dir=$RESULTS_DIR
+      --num-flaky-test-attempts=$FLAKY_TEST_RERUN
       ${EXTRA_OPTIONS}
   after_script:
     - mkdir -p screenshots
     - mkdir -p logs
-    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/logcat logcat.txt
-    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/video.mp4 video.mp4
-    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/test_result_1.xml test_result_1.xml
-    - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/test_cases ./logs
-    - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/Pixel2-28-en-portrait/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
+    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/logcat logcat.txt
+    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/video.mp4 video.mp4
+    - gsutil cp $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/test_result_1.xml test_result_1.xml
+    - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/test_cases ./logs
+    - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
     - python3 coreexample/ci/process_report.py test_result_1.xml test_result.xml
   needs:
     - assemble
@@ -339,11 +345,25 @@ uitest:usersettings:
   extends: .firebase-tests-common
 
 uitest:mocked-tests:
+  allow_failure: false
   variables:
     APP_APK: "coreexample/build/outputs/apk/mock/debug/coreexample-mock-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/mock/debug/coreexample-mock-debug-androidTest.apk"
     TEST_TARGET: "package me.proton.core.test.android.mockuitests"
+    FLAKY_TEST_RERUN: "1"
     DEVICE_MODEL: "Pixel2.arm,version=28"
+    DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
+  extends: .firebase-tests-common
+
+uitest:hilt-tests:
+  allow_failure: false
+  variables:
+    TEST_APK: "coreexample/hilt-tests/build/outputs/apk/localProperties/debug/coreexample-hilt-tests-localProperties-debug.apk"
+    TEST_TARGET: "package me.proton.android.core.coreexample.hilttests"
+    FLAKY_TEST_RERUN: "1"
+    DEVICE_MODEL: "Pixel2.arm,version=28"
+    DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
 
