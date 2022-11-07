@@ -11,7 +11,23 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
-## [9.3.0] - 2022-10-28
+## [9.3.0] - 2022-11-07
+
+### Chores
+
+- Renamed Gradle Project names (allow accessors).
+
+### Features
+
+- auth: Uniform username for any account type.
+- plan: Fix current plan currency.
+- user-settings:
+  - Added DeviceSettingsHandler (observe DeviceSettings changes).
+  - Added Device Settings Feature Flag ("ShowDataCollectSettings").
+  - Added TelemetrySettingsToggleItem & CrashReportSettingsToggleItem Composables.
+  - Added DeviceSettingsRepository (DeviceSettings: isTelemetryEnabled & isCrashReportEnabled).
+
+## [9.2.2] - 2022-10-28
 
 ### Features
 
