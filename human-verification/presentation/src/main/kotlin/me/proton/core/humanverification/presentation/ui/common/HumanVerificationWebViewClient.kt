@@ -47,9 +47,13 @@ class HumanVerificationWebViewClient(
     private val onWebLocationChanged: (String) -> Unit,
     @HumanVerificationApiHost private val verifyAppUrl: String
 ) : WebViewClient() {
+    private val rootDomain: String = when {
+        apiHost.isIpAddress() -> apiHost
+        else -> apiHost.split(".").takeLast(2).joinToString(".")
+    }
 
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.host == apiHost
+        val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.matchesRootDomain()
         return when {
             request.method != "GET" -> null
             request.url.isAlternativeUrl() -> overrideForDoH(request, extraHeaders)
@@ -92,6 +96,11 @@ class HumanVerificationWebViewClient(
             "code ${error?.errorCode} ${error?.description}"
         CoreLogger.log(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, error?.let { WebResponseError.Resource(it) })
+    }
+
+    private fun Uri.matchesRootDomain(): Boolean {
+        if (host == apiHost) return true
+        return host?.endsWith(rootDomain) == true
     }
 
     private fun tryAllowingSelfSignedDoHCert(error: SslError): Boolean {
@@ -185,6 +194,11 @@ class HumanVerificationWebViewClient(
         const val TAG = "HumanVerificationWebViewClient"
 
         private const val CSP_HEADER = "content-security-policy"
+
+        private val ipv4Regex = Regex("\\d+\\.\\d+\\.\\d+\\.\\d+")
+        private val ipv6Regex = Regex("[0-9a-fA-F:/]+")
+
+        private fun String.isIpAddress(): Boolean = ipv4Regex.matches(this) || ipv6Regex.matches(this)
     }
 }
 
