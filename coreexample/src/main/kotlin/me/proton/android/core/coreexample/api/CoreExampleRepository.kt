@@ -28,7 +28,7 @@ class CoreExampleRepository @Inject constructor(
     private val provider: ApiProvider
 ) {
 
-    suspend fun triggerHumanVerification(userId: UserId) =
+    suspend fun triggerHumanVerification(userId: UserId?) =
         provider.get<CoreExampleApi>(userId).invoke {
             triggerHumanVerification()
         }

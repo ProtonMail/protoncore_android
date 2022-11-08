@@ -110,7 +110,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             }
             triggerHumanVer.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    accountViewModel.getPrimaryUserId().first()?.let {
+                    accountViewModel.getPrimaryUserId().first().let {
                         coreExampleRepository.triggerHumanVerification(it)
                     }
                 }
