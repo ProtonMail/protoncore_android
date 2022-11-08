@@ -18,14 +18,12 @@
 
 package me.proton.core.user.domain.extension
 
+import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserAddressKeyFlags
 
-private const val MASK_CAN_VERIFY = 1 // 01
-private const val MASK_CAN_ENCRYPT_VALUE = 2 // 10
-
-fun UserAddressKeyFlags.canVerify() = this.and(MASK_CAN_VERIFY) == MASK_CAN_VERIFY
-fun UserAddressKeyFlags.canEncrypt() = this.and(MASK_CAN_ENCRYPT_VALUE) == MASK_CAN_ENCRYPT_VALUE
+fun UserAddressKeyFlags.canVerify() = this.and(KeyFlags.NotCompromised) == KeyFlags.NotCompromised
+fun UserAddressKeyFlags.canEncrypt() = this.and(KeyFlags.NotObsolete) == KeyFlags.NotObsolete
 
 fun UserAddressKey.canEncrypt(): Boolean = flags.canEncrypt()
 fun UserAddressKey.canVerify(): Boolean = flags.canVerify()

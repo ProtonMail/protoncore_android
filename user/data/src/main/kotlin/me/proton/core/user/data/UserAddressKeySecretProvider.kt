@@ -26,12 +26,13 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrNull
-import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrThrow
 import me.proton.core.key.domain.encryptData
+import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.signData
+import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.emailSplit
@@ -119,10 +120,15 @@ class UserAddressKeySecretProvider @Inject constructor(
                 isActive = true,
                 passphrase = secret.passphrase,
             )
+            val defaultKeyFlags = KeyFlags.NotCompromised or KeyFlags.NotObsolete
+            val keyFlags = when (userAddress.type) {
+                AddressType.External -> defaultKeyFlags or KeyFlags.EmailNoEncrypt or KeyFlags.EmailNoSign
+                else -> defaultKeyFlags
+            }
             return UserAddressKey(
                 addressId = userAddress.addressId,
-                version = 0,
-                flags = 3,
+                version = 3,
+                flags = keyFlags,
                 token = secret.token,
                 signature = secret.signature,
                 active = true,
@@ -135,6 +141,7 @@ class UserAddressKeySecretProvider @Inject constructor(
     companion object {
         private const val HEX_DIGITS = "0123456789abcdefABCDEF"
         private const val EXPECTED_TOKEN_LENGTH = 64
+
         /**
          * Check the format of address key tokens.
          * They must be 64 char long hexadecimal strings.
