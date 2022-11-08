@@ -34,23 +34,15 @@ fun List<PublicAddressKey>.canEncryptEmail() = any { it.canEncryptEmail() }
 fun List<PublicAddressKey>.canVerifyEmail() = any { it.canVerifyEmail() }
 
 
-/**
- * Bitmap with the following values.
- *
- * - Key is not compromised = 1 (2^0) (if the bit is set to one the key is not compromised)
- * - Key is not obsolete = 2 (2^1)
- */
+/** Bitmap with the values from [KeyFlags]. */
 typealias PublicAddressKeyFlags = Int
 
-private const val MASK_EMAIL_NO_ENCRYPT_VALUE = 4 // 100
-private const val MASK_EMAIL_NO_SIGN_VALUE = 8 // 1000
-
-fun PublicAddressKeyFlags.isCompromised() = this.and(1) == 0
-fun PublicAddressKeyFlags.isObsolete() = this.and(2) == 0
+fun PublicAddressKeyFlags.isCompromised() = this.and(KeyFlags.NotCompromised) == 0
+fun PublicAddressKeyFlags.isObsolete() = this.and(KeyFlags.NotObsolete) == 0
 
 fun PublicAddressKeyFlags.canVerify(): Boolean = !isCompromised()
 fun PublicAddressKeyFlags.canEncrypt(): Boolean = !isObsolete()
 
-fun PublicAddressKeyFlags.emailNoEncrypt() = this.and(MASK_EMAIL_NO_ENCRYPT_VALUE) == MASK_EMAIL_NO_ENCRYPT_VALUE
-fun PublicAddressKeyFlags.emailNoSign() = this.and(MASK_EMAIL_NO_SIGN_VALUE) == MASK_EMAIL_NO_SIGN_VALUE
+fun PublicAddressKeyFlags.emailNoEncrypt() = this.and(KeyFlags.EmailNoEncrypt) == KeyFlags.EmailNoEncrypt
+fun PublicAddressKeyFlags.emailNoSign() = this.and(KeyFlags.EmailNoSign) == KeyFlags.EmailNoSign
 

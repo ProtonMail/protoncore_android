@@ -291,6 +291,14 @@ public final class me/proton/core/key/domain/entity/key/Key {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/key/domain/entity/key/KeyFlags {
+	public static final field EmailNoEncrypt I
+	public static final field EmailNoSign I
+	public static final field INSTANCE Lme/proton/core/key/domain/entity/key/KeyFlags;
+	public static final field NotCompromised I
+	public static final field NotObsolete I
+}
+
 public final class me/proton/core/key/domain/entity/key/KeyId {
 	public static final field Companion Lme/proton/core/key/domain/entity/key/KeyId$Companion;
 	public fun <init> (Ljava/lang/String;)V
