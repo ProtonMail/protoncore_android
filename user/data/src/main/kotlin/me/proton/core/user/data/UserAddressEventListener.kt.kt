@@ -47,7 +47,7 @@ data class UserAddressEvent(
     @SerialName("Action")
     val action: Int,
     @SerialName("Address")
-    val address: AddressResponse
+    val address: AddressResponse? = null
 )
 
 @Singleton
@@ -64,7 +64,7 @@ open class UserAddressEventListener @Inject constructor(
         response: EventsResponse
     ): List<Event<String, AddressResponse>>? {
         return response.body.deserialize<UserAddressEvents>().addresses?.map {
-            Event(requireNotNull(Action.map[it.action]), it.address.id, it.address)
+            Event(requireNotNull(Action.map[it.action]), it.id, it.address)
         }
     }
 

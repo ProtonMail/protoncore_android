@@ -9,6 +9,7 @@ public final class me/proton/core/user/data/UserAddressEvent {
 	public static final field Companion Lme/proton/core/user/data/UserAddressEvent$Companion;
 	public synthetic fun <init> (ILjava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;)V
+	public synthetic fun <init> (Ljava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
 	public final fun component3 ()Lme/proton/core/key/data/api/response/AddressResponse;
