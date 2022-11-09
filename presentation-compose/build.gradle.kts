@@ -42,8 +42,10 @@ dependencies {
         `compose-ui-graphics`,
         `compose-ui-text`,
         `coroutines-core`,
+        `hilt-navigation-compose`,
         `lifecycle-common`,
         `lifecycle-viewModel`,
+        `lifecycle-viewModel-compose`,
     )
 
     implementation(
