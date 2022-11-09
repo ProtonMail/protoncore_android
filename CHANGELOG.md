@@ -11,6 +11,24 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.3.1] - 2022-11-09
+
+### Features
+
+- gopenpgp:
+  - Update to gopenpgp v2.4.10 and go-srp v0.0.5
+- key:
+  - Add internal/external ext functions to public addresses and keys.
+
+### Bug Fixes
+
+- user-data:
+  - Fixed deserialization issue for UserAddressEvent (action=0).
+
+### Internationalization
+
+- Upgrade translations from crowdin (7d057c46).
+
 ## [9.3.0] - 2022-11-07
 
 ### Chores
