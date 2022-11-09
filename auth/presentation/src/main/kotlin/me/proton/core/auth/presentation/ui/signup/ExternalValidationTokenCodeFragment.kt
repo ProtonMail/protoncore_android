@@ -31,9 +31,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupValidationTokenCodeBinding
+import me.proton.core.auth.presentation.viewmodel.ExternalValidationTokenCodeViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEnterCodeViewModel
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -48,7 +48,7 @@ import me.proton.core.util.kotlin.exhaustive
 @AndroidEntryPoint
 class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_signup_validation_token_code) {
 
-    private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
+    private val viewModel by viewModels<ExternalValidationTokenCodeViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupValidationTokenCodeBinding::bind)
 

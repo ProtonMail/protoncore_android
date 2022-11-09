@@ -98,6 +98,14 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Cr
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ExternalValidationTokenCodeViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ExternalValidationTokenCodeViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_LoginViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -2120,6 +2128,42 @@ public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewM
 public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public fun <init> (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)V
+	public final fun getToken (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+	public final fun getValidationState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun getVerificationCodeResendState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun resendCode (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
+	public final fun validateToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

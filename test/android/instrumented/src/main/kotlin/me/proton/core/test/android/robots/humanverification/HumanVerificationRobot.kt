@@ -46,7 +46,6 @@ abstract class HVRobot : CoreRobot() {
 
 class HumanVerificationRobot : HVRobot() {
     private val delegate: HVRobot = when (version) {
-        HumanVerificationVersion.HV2 -> HV2Robot()
         HumanVerificationVersion.HV3 -> HV3Robot()
     }
 

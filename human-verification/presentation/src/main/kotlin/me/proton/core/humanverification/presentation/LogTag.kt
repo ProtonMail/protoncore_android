@@ -22,5 +22,4 @@ import me.proton.core.util.kotlin.LoggerLogTag
 
 object LogTag {
      val HV_REQUEST_ERROR = LoggerLogTag("core.humanverification.presentation.request.error")
-     val HV_REQUEST_INFO = LoggerLogTag("core.humanverification.presentation.request.info")
 }

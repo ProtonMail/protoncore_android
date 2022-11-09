@@ -23,10 +23,10 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
+import me.proton.core.auth.presentation.viewmodel.ExternalValidationTokenCodeViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
-import me.proton.core.humanverification.presentation.viewmodel.hv2.method.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -44,11 +44,12 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     private val checkCreationTokenValidity = mockk<CheckCreationTokenValidity>(relaxed = true)
     // endregion
 
-    private lateinit var viewModel: HumanVerificationEnterCodeViewModel
+    private lateinit var viewModel: ExternalValidationTokenCodeViewModel
 
     @Before
     fun beforeEveryTest() {
-        viewModel = HumanVerificationEnterCodeViewModel(resendVerificationCodeToDestination, checkCreationTokenValidity)
+        viewModel =
+            ExternalValidationTokenCodeViewModel(resendVerificationCodeToDestination, checkCreationTokenValidity)
     }
 
     @Test

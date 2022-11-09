@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.viewmodel.hv2.method
+package me.proton.core.auth.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,7 +40,7 @@ import javax.inject.Inject
  * It will contact the API in order to verify that the entered code is the correct one.
  */
 @HiltViewModel
-class HumanVerificationEnterCodeViewModel @Inject constructor(
+class ExternalValidationTokenCodeViewModel @Inject constructor(
     private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination,
     private val checkCreationTokenValidity: CheckCreationTokenValidity
 ) : ProtonViewModel() {

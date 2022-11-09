@@ -19,5 +19,5 @@
 package me.proton.core.humanverification.presentation.utils
 
 enum class HumanVerificationVersion {
-    HV2, HV3
+    HV3
 }

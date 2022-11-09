@@ -38,7 +38,7 @@ import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
 internal class HV3Robot : HVRobot() {
-    override fun help(): HVRobot = clickElement<HV2Robot>(R.id.menu_help, TextView::class.java)
+    override fun help(): HVRobot = clickElement<HV3Robot>(R.id.menu_help, TextView::class.java)
 
     override fun captcha(): HVCaptchaRobot = hvOption<HV3CaptchaRobot>(CAPTCHA)
 

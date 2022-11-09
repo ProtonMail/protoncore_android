@@ -20,4 +20,3 @@ package me.proton.core.humanverification.presentation.ui.common
 
 internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
 internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
-internal val VALID_METHODS_HV2 = setOf("sms", "email", "captcha")
