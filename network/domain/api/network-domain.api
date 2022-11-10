@@ -72,16 +72,11 @@ public final class me/proton/core/network/domain/ApiManagerImpl : me/proton/core
 }
 
 public abstract class me/proton/core/network/domain/ApiResult {
-	public static final field Companion Lme/proton/core/network/domain/ApiResult$Companion;
 	public final fun getExceptionOrNull ()Ljava/lang/Throwable;
 	public fun getValueOrNull ()Ljava/lang/Object;
 	public final fun getValueOrThrow ()Ljava/lang/Object;
 	public fun isPotentialBlocking ()Z
 	public final fun throwIfError ()V
-}
-
-public final class me/proton/core/network/domain/ApiResult$Companion {
-	public final fun withTimeout (JLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/network/domain/ApiResult$Error : me/proton/core/network/domain/ApiResult {

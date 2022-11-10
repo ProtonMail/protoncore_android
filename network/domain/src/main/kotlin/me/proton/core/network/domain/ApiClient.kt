@@ -44,7 +44,7 @@ interface ApiClient {
      * Timeouts for internal api call attempt (due to error handling logic there might be multiple internal
      * calls in a single API call by the client).
      */
-    val connectTimeoutSeconds: Long get() = 10
+    val connectTimeoutSeconds: Long get() = 3
     val readTimeoutSeconds: Long get() = 30
     val writeTimeoutSeconds: Long get() = 30
 
@@ -56,7 +56,7 @@ interface ApiClient {
     /**
      * This value will be applied to connect, read and write for API pings.
      */
-    val pingTimeoutSeconds: Int get() = 10
+    val pingTimeoutSeconds: Int get() = 3
 
     /**
      * How long alternative API proxy will be used before primary API is attempted again.

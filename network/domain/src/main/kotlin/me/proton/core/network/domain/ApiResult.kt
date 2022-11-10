@@ -146,19 +146,6 @@ sealed class ApiResult<out T> {
     fun throwIfError() {
         if (this is Error) doThrow()
     }
-
-    companion object {
-        /**
-         * Introduce timeout for given block returning [ApiResult].
-         *
-         * @param T Value type for successful call.
-         * @param timeoutMs Timeout in milliseconds.
-         * @param block potentially long-running lambda producing [ApiResult].
-         * @return block [ApiResult] or [ApiResult.Error.Timeout] on timeout.
-         */
-        suspend fun <T> withTimeout(timeoutMs: Long, block: suspend CoroutineScope.() -> ApiResult<T>) =
-            withTimeoutOrNull(timeoutMs, block) ?: Error.Timeout(true, null)
-    }
 }
 
 fun ApiResult.Error.doThrow() {
