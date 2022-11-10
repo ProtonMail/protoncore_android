@@ -55,7 +55,11 @@ class HumanVerificationWebViewClient(
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
         val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.matchesRootDomain()
         return when {
-            request.method != "GET" -> null
+            request.method != "GET" -> {
+                // It's not possible to override a POST request, because
+                // WebResourceRequest doesn't provide access to POST body.
+                null
+            }
             request.url.isAlternativeUrl() -> overrideForDoH(request, extraHeaders)
             needsExtraHeaderForAPI -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
