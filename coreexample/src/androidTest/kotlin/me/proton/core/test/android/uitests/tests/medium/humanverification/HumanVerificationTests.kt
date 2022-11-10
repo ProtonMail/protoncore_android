@@ -23,6 +23,7 @@ import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class HumanVerificationTests : BaseTest() {
@@ -55,6 +56,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
+    @Ignore("Doesn't work on CI, where a proxy token is needed.")
     fun email() {
         val testAddress = "testEmail@example.lt"
 
@@ -70,6 +72,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
+    @Ignore("Doesn't work on CI, where a proxy token is needed.")
     fun phone() {
         val testPhoneNo = "2087599036"
         val testCountry = "United Kingdom"
