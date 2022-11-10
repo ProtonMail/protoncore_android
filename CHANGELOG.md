@@ -11,6 +11,18 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.4.0] - 2022-11-10
+
+### Breaking Changes
+
+**Features**
+
+- user-setting-presentation-compose: Use Optional ViewModel hiltViewModelOrNull for Device Settings.
+
+### Features
+
+- presentation-compose: Added Optional ViewModel hiltViewModelOrNull function.
+
 ## [9.3.1] - 2022-11-09
 
 ### Features
