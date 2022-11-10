@@ -204,6 +204,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     @MainThread
     private fun handleResourceLoadingError() {
         this.view ?: return
+        view?.errorSnack(R.string.presentation_connectivity_issues)
         setLoading(false)
     }
 
