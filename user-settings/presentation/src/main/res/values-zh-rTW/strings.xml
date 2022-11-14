@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">已更新密碼</string>
   <string name="settings_password_management_login_password_success">已更新登入密碼</string>
   <string name="settings_password_management_mailbox_password_success">電子信箱密碼已更新</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">匿名遙測</string>
+  <string name="device_settings_telemetry_hint">為了改善我們的服務，我們有時候會蒐集匿名的使用資料。</string>
+  <string name="device_settings_crashreport_title">匿名當機報告</string>
+  <string name="device_settings_crashreport_hint">若應用程式當機，將會傳送一份報告給我們的工程師，其中會包含原因的詳細資訊。我們僅會使用這些資訊來改進應用程式。</string>
 </resources>

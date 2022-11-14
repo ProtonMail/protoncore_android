@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
   <string name="settings_password_management_login_password_success">Contrasenya d\'inici de sessió actualitzada</string>
   <string name="settings_password_management_mailbox_password_success">Contrasenya de la bústia actualitzada</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
+  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
+  <string name="device_settings_crashreport_title">Anonymous crash reports</string>
+  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
 </resources>

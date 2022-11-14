@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Contraseña actualizada</string>
   <string name="settings_password_management_login_password_success">Contraseña de inicio de sesión actualizada</string>
   <string name="settings_password_management_mailbox_password_success">Contraseña del buzón actualizada</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Telemetría anónima</string>
+  <string name="device_settings_telemetry_hint">Para mejorar nuestros servicios, a veces recolectamos datos de uso anónimos.</string>
+  <string name="device_settings_crashreport_title">Reportes anónimos de fallos</string>
+  <string name="device_settings_crashreport_hint">Si la app falla, se enviará un reporte a nuestros ingenieros con detalles de la causa.</string>
 </resources>

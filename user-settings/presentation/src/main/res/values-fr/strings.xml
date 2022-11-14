@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Mot de passe mis à jour</string>
   <string name="settings_password_management_login_password_success">Mot de passe de connexion mis à jour</string>
   <string name="settings_password_management_mailbox_password_success">Mot de passe de messagerie mis à jour</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Télémétrie anonyme</string>
+  <string name="device_settings_telemetry_hint">Pour améliorer nos services, nous collectons parfois des données d\'utilisation anonymisées.</string>
+  <string name="device_settings_crashreport_title">Rapports de plantage anonymes</string>
+  <string name="device_settings_crashreport_hint">Si l\'application plante, un rapport sera envoyé à nos ingénieurs avec des détails sur la cause. Nous les utiliserons uniquement pour améliorer l\'application.</string>
 </resources>

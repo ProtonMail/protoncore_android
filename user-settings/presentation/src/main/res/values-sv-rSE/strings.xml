@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Lösenord uppdaterat</string>
   <string name="settings_password_management_login_password_success">Inloggningslösenord uppdaterat</string>
   <string name="settings_password_management_mailbox_password_success">Brevlådans lösenord uppdaterad</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonym telemetri</string>
+  <string name="device_settings_telemetry_hint">För att förbättra våra tjänster samlar vi ibland in anonymiserad användningsdata.</string>
+  <string name="device_settings_crashreport_title">Anonyma kraschrapporter</string>
+  <string name="device_settings_crashreport_hint">Om appen kraschar kommer en rapport att skickas till våra ingenjörer med detaljer om orsaken. Vi kommer endast att använda dessa för att förbättra appen.</string>
 </resources>

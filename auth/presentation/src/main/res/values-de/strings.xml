@@ -134,7 +134,7 @@
   <string name="auth_signup_verify">Bestätigen</string>
   <string name="auth_signup_verification_code">Bestätigungscode</string>
   <string name="auth_signup_enter_code_subtitle">Gib den an „%s“ gesendeten Bestätigungscode ein:</string>
-  <string name="auth_signup_error_human_verification_failed">Menschliche Bestätigung fehlgeschlagen.</string>
+  <string name="auth_signup_error_human_verification_failed">Menschliche Verifizierung fehlgeschlagen.</string>
   <string name="auth_signup_token_code_resent">Token-Code erneut gesendet.</string>
   <string name="auth_signup_congratulations_subtitle">Dein Proton-Konto wurde erfolgreich erstellt.\nGenieße die Welt der Privatsphäre.</string>
   <string name="auth_signup_congratulations">Herzlichen Glückwunsch!</string>

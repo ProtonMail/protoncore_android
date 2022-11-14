@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">密码已更改</string>
   <string name="settings_password_management_login_password_success">登录密码已更改</string>
   <string name="settings_password_management_mailbox_password_success">邮箱密码已更改</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
+  <string name="device_settings_telemetry_hint">为了提升服务质量，我们偶尔会收集一些匿名的使用数据。</string>
+  <string name="device_settings_crashreport_title">匿名故障报告</string>
+  <string name="device_settings_crashreport_hint">如果应用崩溃了，会向我们的工程师发送含有崩溃细节的报告，我们仅仅利用它们提供应用的稳定性。</string>
 </resources>

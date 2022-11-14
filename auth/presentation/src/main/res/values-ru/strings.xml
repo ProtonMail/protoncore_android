@@ -37,7 +37,7 @@
   <string name="auth_current_login_password">Текущий пароль для входа</string>
   <string name="auth_enter_six_digit_code">Введите код из 6 цифр</string>
   <string name="auth_second_factor_code">Код двухфакторной аутентификации</string>
-  <string name="auth_email_username">Username or email</string>
+  <string name="auth_email_username">Имя пользователя или эл. почта</string>
   <string name="auth_account_details">Введите данные вашего аккаунта Proton.</string>
   <string name="auth_sign_in">Войти</string>
   <string name="auth_sign_in_action">Войти</string>

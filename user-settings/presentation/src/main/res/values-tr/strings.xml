@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Parola güncellendi</string>
   <string name="settings_password_management_login_password_success">Oturum açma parolası güncellendi</string>
   <string name="settings_password_management_mailbox_password_success">Posta kutusu parolası güncellendi</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonim kullanım verileri</string>
+  <string name="device_settings_telemetry_hint">Hizmetlerimizi iyileştirmek için bazen anonimleştirilmiş kullanım verileri toplarız.</string>
+  <string name="device_settings_crashreport_title">Anonim çökme bildirimleri</string>
+  <string name="device_settings_crashreport_hint">Uygulama çökerse, nedeni ayrıntıları ile birlikte mühendislerimize gönderilir. Bu verileri yalnızca uygulamayı geliştirmek için kullanırız.</string>
 </resources>

@@ -70,7 +70,7 @@
     <item quantity="other">Support for #proton_domains# custom email domains</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="other">#proton_calendars# 个私人日历</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="other">%d of #proton_calendars# calendars</item>
@@ -89,31 +89,31 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">The basic for private and secure communications.</string>
+  <string name="plan_id_free_header">基础的私密和安全通信功能。</string>
   <string name="plan_id_plus_header">防护等级更高的全功能邮箱。</string>
   <string name="plan_id_vpnbasic_header">VPN 普通版</string>
   <string name="plan_id_vpnbasic_countries">63 个国家和地区</string>
   <string name="plan_id_vpnbasic_high_speed">速度较快</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Streaming service support</string>
+  <string name="plan_id_vpnplus_adblock">广告拦截（NetShield）</string>
+  <string name="plan_id_vpnplus_streaming">支持流媒体服务</string>
   <string name="plan_id_vpnplus_header">VPN 增强版</string>
-  <string name="plan_id_vpnplus_countries">63 countries</string>
+  <string name="plan_id_vpnplus_countries">63 个国家和地区</string>
   <string name="plan_id_vpnplus_highest_speed">速度最快</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">支持多用户</string>
   <string name="plan_id_visionary_header">尊享版</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Unlimited folders, labels, and filters</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">不限量文件夹、标签和筛选规则</string>
   <string name="highest_vpn_speed" comment="new_plans">最快的 VPN 速度</string>
   <string name="servers_in_countries" comment="new_plans">63 个国家与地区的 1500 多个服务器</string>
-  <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
+  <string name="ad_blocker" comment="new_plans">内置广告过滤器（NetShield）</string>
+  <string name="streaming_services_access" comment="new_plans">畅享全球流媒体服务</string>
   <string name="secure_core" comment="new_plans">安全的核心服务器</string>
   <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">包含多种高级功能的安全邮箱，充分满足您的日常通讯需求。</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">您的隐私和安全是我们的首要任务。</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

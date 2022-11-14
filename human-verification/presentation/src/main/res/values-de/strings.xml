@@ -19,7 +19,7 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Hilfe</string>
-  <string name="human_verification_title">Menschliche Bestätigung</string>
+  <string name="human_verification_title">Menschliche Verifizierung</string>
   <string name="human_verification_main_subtitle">Um Missbrauch zu verhindern, bestätige bitte, dass du ein Mensch bist, indem du eine der folgenden Optionen verwendest</string>
   <string name="human_verification_enter_code_subtitle">Gib den an „%s” gesendeten Bestätigungscode ein.</string>
   <string name="human_verification_enter_code_subtitle_email">Gib den an „%s“ gesendeten Bestätigungscode ein. Solltest du die E-Mail nicht in deinem Posteingang vorfinden, überprüfe bitte deinen Spam-Ordner.</string>
@@ -34,20 +34,20 @@
   <string name="human_verification_request_replacement_code">Code nicht erhalten?</string>
   <string name="human_verification_verify">Bestätigen</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Benötigst du Hilfe bei der menschlichen Bestätigung?</string>
+  <string name="human_verification_help_title">Benötigst du Hilfe bei der menschlichen Verifizierung?</string>
   <string name="human_verification_code">Bestätigungscode</string>
   <string name="human_verification_code_request_new_code_title">Neuen Code anfordern?</string>
   <string name="human_verification_code_request_new_code_action">Neuen Code anfordern</string>
   <string name="human_verification_code_request_new_code">Lass dir einen Ersatzcode an „%s“ senden.</string>
   <string name="email">E-Mail-Adresse</string>
   <string name="email_hint">email@beispiel.de</string>
-  <string name="sms_hint">+49 ●●●●● ●●●●●●●●●●</string>
+  <string name="sms_hint">+49 ●●● ●●●●●●●●</string>
   <string name="verification_code_hint">●●●●●●</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Anfrage einreichen</string>
   <string name="human_verification_help_manual">Wenn du Probleme bei der Erstellung deines Kontos hast, reiche bitte eine Anfrage ein. Wir werden dir innerhalb eines Werktags antworten.</string>
   <string name="human_verification_help_website_title">Besuche unseren Hilfebereich</string>
-  <string name="human_verification_help_website">Erfahre mehr über die menschliche Prüfung und warum wir danach fragen.</string>
+  <string name="human_verification_help_website">Erfahre mehr über die menschliche Verifizierung und warum wir danach fragen.</string>
   <string name="human_verification_sending_failed">Das Senden des Bestätigungscodes ist fehlgeschlagen. Bitte versuche es erneut.</string>
   <string name="human_verification_incorrect_code">Ungültiger Code. Bitte versuche es erneut.</string>
   <string name="human_verification_resent_code">Wir haben dir einen weiteren Code gesendet.</string>

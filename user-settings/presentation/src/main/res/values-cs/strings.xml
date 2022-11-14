@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Heslo bylo změněno</string>
   <string name="settings_password_management_login_password_success">Přihlašovací heslo bylo aktualizováno</string>
   <string name="settings_password_management_mailbox_password_success">Heslo k e-mailové schránce bylo aktualizováno</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonymní telemetrie</string>
+  <string name="device_settings_telemetry_hint">Za účelem zlepšení našich služeb občas shromažďujeme anonymizované údaje o používání.</string>
+  <string name="device_settings_crashreport_title">Anonymní hlášení pádů</string>
+  <string name="device_settings_crashreport_hint">Pokud dojde k pádu aplikace, bude našim technikům odeslána zpráva s podrobnostmi o příčině. Použijeme je pouze k vylepšení aplikace.</string>
 </resources>

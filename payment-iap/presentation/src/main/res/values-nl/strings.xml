@@ -20,8 +20,8 @@
   <string name="payments_iap_surcharge_info">* omvat bijkomende operatorkosten en belastingen.</string>
   <string name="payments_iap_terms_conditions">Door te kiezen voor “Betaal met Google Pay” gaat u akkoord met Google Pay\'s algemene voorwaarden en het opzetten van een terugkerende betaling met Google.</string>
   <string name="payments_iap_invalid_google_plan">Ongeldige abonnementsnaam. Herstart het proces.</string>
-  <string name="payments_iap_error_google_plan_price">Probleem met Google product prijs. Herstart het proces.</string>
-  <string name="payments_iap_error_fetching_google_plan">Probleem met het ophalen van Google producten. Herstart het proces.</string>
+  <string name="payments_iap_error_google_plan_price">Probleem met Google-product prijs. Herstart het proces.</string>
+  <string name="payments_iap_error_fetching_google_plan">Probleem met het ophalen van Google-producten. Herstart het proces.</string>
   <string name="payments_iap_error_already_owned">U bezit dit product al. Selecteer een andere.</string>
   <string name="payments_iap_error_billing_client_unavailable">De Google-factureringsclient is momenteel niet beschikbaar of verbroken.</string>
   <string name="payments_iap_general_error">Er is een fout opgetreden. Herstart het proces.</string>

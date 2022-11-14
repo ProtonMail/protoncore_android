@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Пароль оновлено</string>
   <string name="settings_password_management_login_password_success">Пароль входу оновлено</string>
   <string name="settings_password_management_mailbox_password_success">Пароль поштової скриньки оновлено</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Анонімна телеметрія</string>
+  <string name="device_settings_telemetry_hint">Для поліпшення наших послуг ми іноді збираємо анонімні дані користування.</string>
+  <string name="device_settings_crashreport_title">Анонімні звіти про збої</string>
+  <string name="device_settings_crashreport_hint">Якщо стається збій у роботі застосунку, нашим інженерам буде надіслано звіт з детальним описом причини збою. Ми використаємо ці дані лише для вдосконалення застосунку.</string>
 </resources>

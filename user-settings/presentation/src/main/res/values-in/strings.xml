@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Kata sandi diperbarui</string>
   <string name="settings_password_management_login_password_success">Kata sandi masuk sudah diperbarui</string>
   <string name="settings_password_management_mailbox_password_success">Kata sandi kotak surat diperbarui</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Telemetri anonim</string>
+  <string name="device_settings_telemetry_hint">Demi meningkatkan kualitas layanan, kami mengumpulkan data penggunaan secara anonim dari waktu ke waktu.</string>
+  <string name="device_settings_crashreport_title">Laporan crash anonim</string>
+  <string name="device_settings_crashreport_hint">Apabila aplikasi Anda crash, laporan dengan rincian crash terkait akan dikirim ke tim kami. Kami hanya akan menggunakan laporan ini untuk meningkatkan aplikasi.</string>
 </resources>

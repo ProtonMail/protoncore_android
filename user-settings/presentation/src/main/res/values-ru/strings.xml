@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Пароль обновлен</string>
   <string name="settings_password_management_login_password_success">Пароль для входа обновлен</string>
   <string name="settings_password_management_mailbox_password_success">Пароль почтового ящика обновлен</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Анонимная телеметрия</string>
+  <string name="device_settings_telemetry_hint">Иногда мы собираем обезличенные данные для улучшения наших сервисов.</string>
+  <string name="device_settings_crashreport_title">Анонимные отчеты о сбоях</string>
+  <string name="device_settings_crashreport_hint">Если приложение завершится с ошибкой, нашим инженерам будет отправлен отчёт с подробной причиной. Мы используем его только для улучшения нашего приложения.</string>
 </resources>

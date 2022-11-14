@@ -45,4 +45,9 @@
   <string name="settings_password_management_success">Hasło zostało zaktualizowane</string>
   <string name="settings_password_management_login_password_success">Hasło logowania zostało zaktualizowane</string>
   <string name="settings_password_management_mailbox_password_success">Hasło skrzynki pocztowej zostało zaktualizowane</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonimowa telemetria</string>
+  <string name="device_settings_telemetry_hint">Aby ulepszyć nasze usługi, czasem zbieramy anonimowe dane użytkowania aplikacji.</string>
+  <string name="device_settings_crashreport_title">Anonimowe raporty o awariach</string>
+  <string name="device_settings_crashreport_hint">Jeśli aplikacja ulegnie awarii, raport ze szczegółami błędów zostanie wysłany do naszych inżynierów. Będziemy używać tych danych tylko do ulepszenia aplikacji.</string>
 </resources>
