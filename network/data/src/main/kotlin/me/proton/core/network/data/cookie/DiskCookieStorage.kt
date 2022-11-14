@@ -19,12 +19,15 @@
 package me.proton.core.network.data.cookie
 
 import android.content.Context
+import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.SerializationException
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
@@ -40,7 +43,8 @@ class DiskCookieStorage constructor(
     private val Context.dataStore by dataStore(
         storeName,
         scope = scopeProvider.GlobalIOSupervisedScope,
-        serializer = SerializableCookiesSerializer()
+        serializer = SerializableCookiesSerializer(),
+        corruptionHandler = ReplaceFileCorruptionHandler { SerializableCookies(emptyMap()) }
     )
 
     private val dataStore: DataStore<SerializableCookies> = context.dataStore
@@ -78,11 +82,14 @@ private class SerializableCookiesSerializer : Serializer<SerializableCookies> {
     override val defaultValue: SerializableCookies
         get() = SerializableCookies(mapOf())
 
-    override suspend fun readFrom(input: InputStream): SerializableCookies {
-        return input.bufferedReader().use {
-            it.readText().deserialize()
+    override suspend fun readFrom(input: InputStream): SerializableCookies =
+        try {
+            input.bufferedReader().use {
+                it.readText().deserialize()
+            }
+        } catch (serialization: SerializationException) {
+            throw CorruptionException("Unable to read Settings", serialization)
         }
-    }
 
     override suspend fun writeTo(t: SerializableCookies, output: OutputStream) {
         output.bufferedWriter().use {
