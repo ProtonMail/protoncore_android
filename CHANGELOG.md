@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.4.1] - 2022-11-14
+
+### Bug Fixes
+
+- network-data: Fixed potential SerializationException on deserialize SerializableCookies.
+
 ## [9.4.0] - 2022-11-10
 
 ### Breaking Changes
