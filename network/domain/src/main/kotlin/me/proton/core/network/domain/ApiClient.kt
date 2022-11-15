@@ -50,8 +50,10 @@ interface ApiClient {
 
     /**
      * Main timeout for single call including DNS, connecting, writes and reads. Cannot override for specific calls :(
+     * Default is 0, meaning no timeout.
+     * If > 0, call timeout has a precedence over any other timeout type.
      */
-    val callTimeoutSeconds: Long get() = 30
+    val callTimeoutSeconds: Long get() = 0
 
     /**
      * This value will be applied to connect, read and write for API pings.

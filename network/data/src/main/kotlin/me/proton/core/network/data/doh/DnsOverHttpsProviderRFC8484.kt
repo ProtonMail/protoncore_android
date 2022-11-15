@@ -25,7 +25,6 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.util.kotlin.safe
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
