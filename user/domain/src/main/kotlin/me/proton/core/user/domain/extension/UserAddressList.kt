@@ -20,6 +20,9 @@ package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.entity.hasNoKeys
+import me.proton.core.user.domain.entity.isExternal
+import me.proton.core.user.domain.entity.isInternal
 
 /**
  * @return primary [UserAddress] (with lower [UserAddress.order]).
@@ -34,7 +37,7 @@ fun List<UserAddress>.sorted() = sortedBy { it.order }
 /**
  * @return first internal [UserAddress] from [List].
  */
-fun List<UserAddress>.firstInternalOrNull() = filter { it.type != AddressType.External }.sorted().firstOrNull()
+fun List<UserAddress>.firstInternalOrNull() = filterInternal().firstOrNull()
 
 /**
  * @return true if migrated/new key format must be generated, false otherwise.
@@ -55,3 +58,23 @@ fun List<UserAddress>.hasInternalAddressKey() = firstInternalOrNull()?.keys?.isN
  * @return true if at least one [AddressType.Original] address exist.
  */
 fun List<UserAddress>.hasOriginalAddress() = any { it.type == AddressType.Original }
+
+/**
+ * @return A list of external addresses.
+ */
+fun List<UserAddress>.filterExternal(): List<UserAddress> = filter { it.isExternal() }
+
+/**
+ * @return A list of internal (non-external) addresses.
+ */
+fun List<UserAddress>.filterInternal(): List<UserAddress> = filter { it.isInternal() }
+
+/**
+ * @return True if any of the addresses has no keys.
+ */
+fun List<UserAddress>.hasMissingKeys(): Boolean = any { it.hasNoKeys() }
+
+/**
+ * @return Addresses that have no keys.
+ */
+fun List<UserAddress>.filterHasNoKeys(): List<UserAddress> = filter { it.hasNoKeys() }

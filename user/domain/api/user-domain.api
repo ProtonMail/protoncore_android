@@ -277,6 +277,12 @@ public final class me/proton/core/user/domain/entity/UserAddressKey : me/proton/
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/user/domain/entity/UserAddressKt {
+	public static final fun hasNoKeys (Lme/proton/core/user/domain/entity/UserAddress;)Z
+	public static final fun isExternal (Lme/proton/core/user/domain/entity/UserAddress;)Z
+	public static final fun isInternal (Lme/proton/core/user/domain/entity/UserAddress;)Z
+}
+
 public final class me/proton/core/user/domain/entity/UserKey : me/proton/core/key/domain/entity/keyholder/KeyHolderPrivateKey {
 	public fun <init> (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;)V
 	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -307,10 +313,14 @@ public final class me/proton/core/user/domain/extension/UserAddressKeyKt {
 }
 
 public final class me/proton/core/user/domain/extension/UserAddressListKt {
+	public static final fun filterExternal (Ljava/util/List;)Ljava/util/List;
+	public static final fun filterHasNoKeys (Ljava/util/List;)Ljava/util/List;
+	public static final fun filterInternal (Ljava/util/List;)Ljava/util/List;
 	public static final fun firstInternalOrNull (Ljava/util/List;)Lme/proton/core/user/domain/entity/UserAddress;
 	public static final fun generateNewKeyFormat (Ljava/util/List;)Z
 	public static final fun hasInternalAddressKey (Ljava/util/List;)Z
 	public static final fun hasMigratedKey (Ljava/util/List;)Z
+	public static final fun hasMissingKeys (Ljava/util/List;)Z
 	public static final fun hasOriginalAddress (Ljava/util/List;)Z
 	public static final fun primary (Ljava/util/List;)Lme/proton/core/user/domain/entity/UserAddress;
 	public static final fun sorted (Ljava/util/List;)Ljava/util/List;

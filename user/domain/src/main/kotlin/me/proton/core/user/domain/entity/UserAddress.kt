@@ -84,3 +84,16 @@ enum class AddressType(val value: Int) {
         val map = values().associateBy { it.value }
     }
 }
+
+fun UserAddress.isInternal(): Boolean = when (type) {
+    AddressType.Original,
+    AddressType.Alias,
+    AddressType.Custom,
+    AddressType.Premium -> true
+    AddressType.External -> false
+    null -> false
+}
+
+fun UserAddress.isExternal(): Boolean = type == AddressType.External
+
+fun UserAddress.hasNoKeys(): Boolean = keys.isEmpty()
