@@ -162,6 +162,8 @@ public final class me/proton/core/util/kotlin/StringUtilsKt {
 	public static final fun nullIfBlank (Ljava/lang/String;)Ljava/lang/String;
 	public static final fun nullIfEmpty (Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
 	public static final fun nullIfEmpty (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun random (Lkotlin/jvm/internal/StringCompanionObject;JLjava/util/List;)Ljava/lang/String;
+	public static synthetic fun random$default (Lkotlin/jvm/internal/StringCompanionObject;JLjava/util/List;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun startsWith (Ljava/lang/String;Ljava/lang/String;)Z
 	public static final fun stripEmptyLines (Ljava/lang/String;IZLkotlin/jvm/functions/Function1;)Ljava/lang/String;
 	public static synthetic fun stripEmptyLines$default (Ljava/lang/String;IZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/String;

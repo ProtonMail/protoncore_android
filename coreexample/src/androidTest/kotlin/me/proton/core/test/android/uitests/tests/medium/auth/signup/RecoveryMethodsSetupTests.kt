@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
@@ -28,6 +27,7 @@ import me.proton.core.test.android.robots.humanverification.HumanVerificationRob
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.util.kotlin.random
 import org.junit.Before
 import org.junit.Test
 
@@ -46,7 +46,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
             .verify { domainInputDisplayed() }
 
         ChooseUsernameRobot()
-            .username(randomString())
+            .username(String.random())
             .next()
             .password("12345678")
             .confirmPassword("12345678")

@@ -21,10 +21,10 @@ package me.proton.core.test.android.instrumented.utils
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
+import me.proton.core.util.kotlin.random
 
 object StringUtils {
 
-    private val lettersAndNumbers = ('a'..'z') + ('A'..'Z') + ('0'..'9')
     private const val alphaNumericWithSpecialCharacters =
         "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@+_)(*&^%$#@!"
     private const val emailCharacters =
@@ -47,15 +47,8 @@ object StringUtils {
         }
 
     fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String =
-        randomString(length, alphaNumericWithSpecialCharacters.toCharArray().toList())
+        String.random(length, alphaNumericWithSpecialCharacters.toCharArray().toList())
 
     fun getEmailString(length: Long = 10): String =
-        randomString(length, emailCharacters.toCharArray().toList())
-
-    fun randomString(stringLength: Long = 10, source: List<Char> = lettersAndNumbers.toCharArray().toList()): String {
-        return (1..stringLength)
-            .map { kotlin.random.Random.nextInt(0, source.size) }
-            .map(source::get)
-            .joinToString("")
-    }
+        String.random(length, emailCharacters.toCharArray().toList())
 }

@@ -18,12 +18,12 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.util.kotlin.random
 import org.junit.Before
 import org.junit.Test
 
@@ -53,7 +53,7 @@ class UsernameSetupTests : BaseTest() {
     @Test
     fun navigateToPasswordSetup() {
         chooseUsernameRobot
-            .username(StringUtils.randomString())
+            .username(String.random())
             .next()
             .verify { passwordSetupElementsDisplayed() }
     }
@@ -70,7 +70,7 @@ class UsernameSetupTests : BaseTest() {
     @Test
     fun recoveryMethod() {
         val recoveryMethodsRobot = chooseUsernameRobot
-            .username(StringUtils.randomString())
+            .username(String.random())
             .next()
             .password("12345678")
             .confirmPassword("12345678")

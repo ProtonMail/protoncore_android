@@ -19,11 +19,11 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import java.util.Calendar
 import java.util.Locale
 import me.proton.core.payment.presentation.R
+import me.proton.core.util.kotlin.random
 
 @Serializable
 data class Card(
@@ -67,7 +67,7 @@ data class Card(
             name = "Test Account",
             cvc = (111..999).random().toString(),
             country = "Angola",
-            zip = randomString(stringLength = 4)
+            zip = String.random(length = 4)
         )
     }
 }

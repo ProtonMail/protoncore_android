@@ -32,6 +32,7 @@ import me.proton.core.label.domain.entity.Label
 import me.proton.core.label.domain.entity.LabelId
 import me.proton.core.label.domain.entity.LabelType
 import me.proton.core.label.domain.repository.LabelRepository
+import me.proton.core.util.kotlin.random
 import me.proton.core.util.kotlin.truncateToLength
 import javax.inject.Inject
 
@@ -85,15 +86,12 @@ class LabelDetailViewModel @Inject constructor(
     private fun updateLabel(): Flow<State> = flow {
         emit(State.Loading)
         val updatedLabel = requireNotNull(labelRepository.getLabel(userId, labelType, labelId))
-        labelRepository.updateLabel(userId, updatedLabel.copy(name = randomString()))
+        labelRepository.updateLabel(userId, updatedLabel.copy(name = String.random()))
         emit(State.Updated)
         emitAll(observeLabel())
     }.catch {
         emit(State.Error(it.message))
     }
-
-    private fun randomString(length: Long = 6, source: String = "randomLabelName"): String =
-        (1..length).map { source.random() }.joinToString(separator = "")
 
     private fun Flow<DataResult<List<Label>>>.mapState(): Flow<State> = map {
         when (it) {

@@ -20,7 +20,6 @@ package me.proton.core.test.android.uitests.tests.large.auth
 
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
@@ -31,6 +30,7 @@ import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.util.kotlin.random
 import org.junit.Ignore
 import org.junit.Test
 
@@ -38,7 +38,7 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Test
     @Ignore("Cannot verify captcha with espresso")
     fun signupFreeWithCaptchaAndRecoveryEmail() {
-        val user = User(recoveryEmail = "${randomString()}@example.lt")
+        val user = User(recoveryEmail = "${String.random()}@example.lt")
         val recoveryMethodsRobot = AddAccountRobot()
             .createAccount()
             .setUsername(user.name)

@@ -110,7 +110,17 @@ fun CharSequence.substring(
     ignoreMissingStart: Boolean = false,
     ignoreMissingEnd: Boolean = false,
     ignoreCase: Boolean = false
-) = subsequence(start, end, startIndex, endIndex, startInclusive, endInclusive, ignoreMissingStart, ignoreMissingEnd, ignoreCase)
+) = subsequence(
+    start,
+    end,
+    startIndex,
+    endIndex,
+    startInclusive,
+    endInclusive,
+    ignoreMissingStart,
+    ignoreMissingEnd,
+    ignoreCase
+)
 
 /**
  * @return [CharSequence]. If receiver [CharSequence] is shorted than the given [maxLength], return
@@ -222,8 +232,8 @@ fun String.stripEmptyLines(
     val lines = if (keepSurroundings) lines() else trim().lines()
     // Remove duplicated lines and apply eventual mapping
     return lines.asSequence().filterNotIndexed { index, _ ->
-        val linesToCheck = (0 .. allowed.absoluteValue)
-            .map { lines.getOrElse(index - it) { placeholder} }
+        val linesToCheck = (0..allowed.absoluteValue)
+            .map { lines.getOrElse(index - it) { placeholder } }
         linesToCheck.all { it.isBlank() }
     }.map(map).reduce { acc, s -> "$acc\n$s" }
 }
@@ -243,4 +253,10 @@ operator fun String.times(times: Int): String {
     repeat(times) { builder.append(this) }
     return builder.toString()
 }
+
+fun String.Companion.random(
+    length: Long = 6,
+    charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+): String =
+    (1..length).map { charPool.random() }.joinToString("")
 // endregion

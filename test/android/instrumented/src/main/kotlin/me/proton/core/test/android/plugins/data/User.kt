@@ -22,13 +22,13 @@ import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
-import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.deserializeList
+import me.proton.core.util.kotlin.random
 
 @Serializable
 data class User(
-    val name: String = "proton_core_${StringUtils.randomString(stringLength = 6)}",
+    val name: String = "proton_core_${String.random(length = 6)}",
     val password: String = "11111111",
     val email: String = EMPTY_STRING,
 

@@ -20,9 +20,9 @@ package me.proton.core.test.android.robots.payments
 
 import me.proton.core.payment.presentation.R
 import me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
-import me.proton.core.test.android.plugins.data.Card
+import me.proton.core.test.quark.data.Card
 import me.proton.core.test.android.robots.other.CountryRobot
+import me.proton.core.util.kotlin.random
 
 /**
  * [AddCreditCardRobot] class contains new credit card addition actions and verifications implementation
@@ -67,7 +67,7 @@ class AddCreditCardRobot : PaymentRobot() {
             .ccnumber(card.number)
             .cvc(card.cvc)
             .expirationDate("${card.expMonth}${card.expYear.takeLast(2)}")
-            .postalCode(randomString(stringLength = 4))
+            .postalCode(String.random(length = 4))
             .country()
             .selectCountry<AddCreditCardRobot>(card.country)
             .pay<T>()

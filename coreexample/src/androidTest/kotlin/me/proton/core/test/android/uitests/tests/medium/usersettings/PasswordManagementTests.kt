@@ -21,12 +21,12 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
+import me.proton.core.util.kotlin.random
 import org.junit.Test
 
 class PasswordManagementTests : BaseTest() {
@@ -52,23 +52,23 @@ class PasswordManagementTests : BaseTest() {
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
-            .changePassword<PasswordManagementRobot>(freeUser.password, randomString(), randomString())
+            .changePassword<PasswordManagementRobot>(freeUser.password, String.random(), String.random())
             .verify { inputErrorDisplayed(R.string.auth_signup_error_passwords_do_not_match) }
     }
 
     @Test
     fun incorrectPassword() {
-        val password = randomString()
+        val password = String.random()
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
-            .changePassword<PasswordManagementRobot>(randomString(), password, password)
+            .changePassword<PasswordManagementRobot>(String.random(), password, password)
             .verify { errorSnackbarDisplayed("Incorrect login credentials. Please try again") }
     }
 
     @Test
     fun incompletePassword() {
-        val password = randomString(stringLength = 3)
+        val password = String.random(length = 3)
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
@@ -76,7 +76,7 @@ class PasswordManagementTests : BaseTest() {
             .verify { inputErrorDisplayed(R.string.auth_signup_validation_password) }
 
         passwordManagementRobot
-            .changePassword<PasswordManagementRobot>(randomString(), password, randomString())
+            .changePassword<PasswordManagementRobot>(String.random(), password, String.random())
             .verify { inputErrorDisplayed(R.string.auth_signup_validation_password_length) }
     }
 
