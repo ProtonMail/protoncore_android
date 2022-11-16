@@ -706,63 +706,105 @@ public final class me/proton/core/test/android/robots/confirmpassword/ConfirmPas
 	public final fun confirmPasswordElementsDisplayed ()V
 }
 
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVCaptchaRobot {
+public abstract class me/proton/core/test/android/robots/humanverification/BaseHVCaptchaRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
 	public abstract fun iAmHuman (Ljava/lang/Class;)Ljava/lang/Object;
 	public abstract fun verify (Lkotlin/jvm/functions/Function1;)V
 }
 
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVCaptchaRobot$Verify {
+public abstract interface class me/proton/core/test/android/robots/humanverification/BaseHVCaptchaRobot$Verify {
 	public abstract fun captchaDisplayed ()V
 }
 
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVCodeRobot {
-	public abstract fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVCodeRobot;
+public abstract class me/proton/core/test/android/robots/humanverification/BaseHVCodeRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public abstract fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
 	public abstract fun verifyCode (Ljava/lang/Class;)Ljava/lang/Object;
 }
 
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVEmailRobot {
-	public abstract fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/HVCodeRobot;
-	public abstract fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVEmailRobot;
+public abstract class me/proton/core/test/android/robots/humanverification/BaseHVEmailRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public abstract fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public abstract fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVEmailRobot;
 }
 
-public abstract class me/proton/core/test/android/robots/humanverification/HVRobot : me/proton/core/test/android/robots/CoreRobot {
+public abstract class me/proton/core/test/android/robots/humanverification/BaseHVRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
-	public abstract fun captcha ()Lme/proton/core/test/android/robots/humanverification/HVCaptchaRobot;
-	public abstract fun email ()Lme/proton/core/test/android/robots/humanverification/HVEmailRobot;
-	public abstract fun help ()Lme/proton/core/test/android/robots/humanverification/HVRobot;
-	public abstract fun sms ()Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
+	public abstract fun captcha ()Lme/proton/core/test/android/robots/humanverification/BaseHVCaptchaRobot;
+	public abstract fun email ()Lme/proton/core/test/android/robots/humanverification/BaseHVEmailRobot;
+	public abstract fun help ()Lme/proton/core/test/android/robots/humanverification/BaseHVRobot;
+	public abstract fun sms ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
 	public abstract fun verify (Lkotlin/jvm/functions/Function1;)V
 }
 
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVRobot$Verify {
+public abstract interface class me/proton/core/test/android/robots/humanverification/BaseHVRobot$Verify {
 	public abstract fun hvElementsDisplayed ()V
 }
 
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVSmsCountryRobot {
-	public abstract fun close (Ljava/lang/Class;)Ljava/lang/Object;
-	public abstract fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVSmsCountryRobot;
-	public abstract fun selectCountry (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
-}
-
-public abstract interface class me/proton/core/test/android/robots/humanverification/HVSmsRobot {
-	public abstract fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/HVSmsCountryRobot;
-	public abstract fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/HVCodeRobot;
-	public abstract fun setPhone (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
-}
-
-public final class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot : me/proton/core/test/android/robots/humanverification/HVRobot {
-	public static final field Companion Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Companion;
+public abstract class me/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
-	public fun captcha ()Lme/proton/core/test/android/robots/humanverification/HVCaptchaRobot;
-	public fun email ()Lme/proton/core/test/android/robots/humanverification/HVEmailRobot;
-	public fun help ()Lme/proton/core/test/android/robots/humanverification/HVRobot;
-	public fun sms ()Lme/proton/core/test/android/robots/humanverification/HVSmsRobot;
+	public abstract fun dismiss ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
+	public abstract fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot;
+	public abstract fun selectCountry (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
+}
+
+public abstract class me/proton/core/test/android/robots/humanverification/BaseHVSmsRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public abstract fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot;
+	public abstract fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public abstract fun setPhone (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HVCaptchaRobot : me/proton/core/test/android/robots/humanverification/BaseHVCaptchaRobot {
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public fun iAmHuman (Ljava/lang/Class;)Ljava/lang/Object;
 	public fun verify (Lkotlin/jvm/functions/Function1;)V
 }
 
-public final class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Companion {
-	public final fun getVersion ()Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
-	public final fun setVersion (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+public abstract class me/proton/core/test/android/robots/humanverification/HVCodeRobot : me/proton/core/test/android/robots/humanverification/BaseHVCodeRobot {
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public fun verifyCode (Ljava/lang/Class;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HVEmailRobot : me/proton/core/test/android/robots/humanverification/BaseHVEmailRobot {
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVEmailRobot;
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HVRobot : me/proton/core/test/android/robots/humanverification/BaseHVRobot {
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public fun captcha ()Lme/proton/core/test/android/robots/humanverification/BaseHVCaptchaRobot;
+	public fun email ()Lme/proton/core/test/android/robots/humanverification/BaseHVEmailRobot;
+	public fun help ()Lme/proton/core/test/android/robots/humanverification/BaseHVRobot;
+	public fun sms ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
+	public fun verify (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HVRobotKt {
+	public static final fun getDEFAULT_HV_VERSION ()Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
+	public static final fun setDEFAULT_HV_VERSION (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+}
+
+public abstract class me/proton/core/test/android/robots/humanverification/HVSmsCountryRobot : me/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot {
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public fun dismiss ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
+	public fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot;
+	public fun selectCountry (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
+}
+
+public abstract class me/proton/core/test/android/robots/humanverification/HVSmsRobot : me/proton/core/test/android/robots/humanverification/BaseHVSmsRobot {
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
+	public fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot;
+	public fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public fun setPhone (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
 }
 
 public final class me/proton/core/test/android/robots/other/CountryRobot : me/proton/core/test/android/robots/CoreRobot {

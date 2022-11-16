@@ -324,9 +324,9 @@ uitest:signup:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.signup"
   extends: .firebase-tests-common
 
-uitest:login:
+uitest:login-and-hv:
   variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.login"
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.login,package me.proton.core.test.android.uitests.tests.medium.humanverification"
   extends: .firebase-tests-common
 
 uitest:payments:

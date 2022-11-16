@@ -25,18 +25,17 @@ import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
+import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.util.kotlin.random
-import org.junit.Ignore
 import org.junit.Test
 
 class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Test
-    @Ignore("Cannot verify captcha with espresso")
     fun signupFreeWithCaptchaAndRecoveryEmail() {
         val user = User(recoveryEmail = "${String.random()}@example.lt")
         val recoveryMethodsRobot = AddAccountRobot()
@@ -45,7 +44,7 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .email(user.recoveryEmail)
 
-        val hvRobot: HumanVerificationRobot = if (paymentProvidersForSignup().isNotEmpty()) {
+        val hvRobot: HVRobot = if (paymentProvidersForSignup().isNotEmpty()) {
             recoveryMethodsRobot.next<SelectPlanRobot>().selectPlan(user.plan)
         } else {
             recoveryMethodsRobot.next()
@@ -53,10 +52,9 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
 
         hvRobot
             .captcha()
-            .iAmHuman(CoreexampleRobot::class.java)
-            .verify { userStateIs(user, Ready, Authenticated) }
-
-        CoreexampleRobot()
+            .iAmHuman(SignupFinishedRobot::class.java)
+            .startUsingProton<CoreexampleRobot>()
+            .apply { verify { userStateIs(user, Ready, Authenticated) } }
             .settingsRecoveryEmail()
             .verify {
                 recoveryEmailElementsDisplayed()
@@ -79,7 +77,7 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
                 .payWithCreditCard<CoreexampleRobot>(Card.default)
                 .verify { userStateIs(user, Ready, Authenticated) }
         } else {
-            skipRecoveryRobot.skipConfirm<HumanVerificationRobot>().verify {
+            skipRecoveryRobot.skipConfirm<HVRobot>().verify {
                 hvElementsDisplayed()
             }
         }

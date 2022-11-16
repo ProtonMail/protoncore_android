@@ -18,24 +18,22 @@
 
 package me.proton.core.test.android.robots.humanverification
 
-import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.test.android.robots.CoreRobot
 
 /**
  * Base class for human verification actions and verifications.
- * @see HumanVerificationRobot
  */
-abstract class HVRobot : CoreRobot() {
-    abstract fun help(): HVRobot
+abstract class BaseHVRobot : CoreRobot() {
+    abstract fun help(): BaseHVRobot
 
     /** Selects 'captcha' human verification option. */
-    abstract fun captcha(): HVCaptchaRobot
+    abstract fun captcha(): BaseHVCaptchaRobot
 
     /** Selects 'email' human verification option. */
-    abstract fun email(): HVEmailRobot
+    abstract fun email(): BaseHVEmailRobot
 
     /** Selects 'sms' human verification option. */
-    abstract fun sms(): HVSmsRobot
+    abstract fun sms(): BaseHVSmsRobot
 
     abstract fun verify(block: Verify.() -> Unit)
 
@@ -44,63 +42,47 @@ abstract class HVRobot : CoreRobot() {
     }
 }
 
-class HumanVerificationRobot : HVRobot() {
-    private val delegate: HVRobot = when (version) {
-        HumanVerificationVersion.HV3 -> HV3Robot()
-    }
-
-    override fun help(): HVRobot = delegate.help()
-    override fun captcha(): HVCaptchaRobot = delegate.captcha()
-    override fun email(): HVEmailRobot = delegate.email()
-    override fun sms(): HVSmsRobot = delegate.sms()
-    override fun verify(block: Verify.() -> Unit) = delegate.verify(block)
-
-    companion object {
-        var version: HumanVerificationVersion = HumanVerificationVersion.HV3
-    }
-}
-
-interface HVCaptchaRobot {
+abstract class BaseHVCaptchaRobot : CoreRobot() {
     /**
      * Checks "I am human" checkbox. Only works with development hCAPTCHA enabled
      * @param T next Robot to be returned
      * @return an instance of [T]
      */
-    fun <T> iAmHuman(next: Class<T>): T
+    abstract fun <T> iAmHuman(next: Class<T>): T
 
-    fun verify(block: Verify.() -> Unit)
+    abstract fun verify(block: Verify.() -> Unit)
 
     interface Verify {
         fun captchaDisplayed()
     }
 }
 
-interface HVEmailRobot {
+abstract class BaseHVEmailRobot : CoreRobot() {
     /** Sets the value of email input to [email]. */
-    fun setEmail(email: String): HVEmailRobot
+    abstract fun setEmail(email: String): BaseHVEmailRobot
 
     /** Clicks 'get verification code' button. */
-    fun getVerificationCode(): HVCodeRobot
+    abstract fun getVerificationCode(): BaseHVCodeRobot
 }
 
-interface HVSmsRobot {
+abstract class BaseHVSmsRobot : CoreRobot() {
     /** Sets the value of phone number input to [number]. */
-    fun setPhone(number: String?): HVSmsRobot
+    abstract fun setPhone(number: String?): BaseHVSmsRobot
 
     /** Clicks country code list button. */
-    fun countryCodeList(): HVSmsCountryRobot
+    abstract fun countryCodeList(): BaseHVSmsCountryRobot
 
     /** Clicks 'get verification code' button. */
-    fun getVerificationCode(): HVCodeRobot
+    abstract fun getVerificationCode(): BaseHVCodeRobot
 }
 
-interface HVSmsCountryRobot {
-    fun search(text: String): HVSmsCountryRobot
-    fun selectCountry(country: String): HVSmsRobot
-    fun <T> close(next: Class<T>): T
+abstract class BaseHVSmsCountryRobot : CoreRobot() {
+    abstract fun dismiss(): BaseHVSmsRobot
+    abstract fun search(text: String): BaseHVSmsCountryRobot
+    abstract fun selectCountry(country: String): BaseHVSmsRobot
 }
 
-interface HVCodeRobot {
-    fun setCode(code: String): HVCodeRobot
-    fun <T> verifyCode(next: Class<T>): T
+abstract class BaseHVCodeRobot : CoreRobot() {
+    abstract fun setCode(code: String): BaseHVCodeRobot
+    abstract fun <T> verifyCode(next: Class<T>): T
 }

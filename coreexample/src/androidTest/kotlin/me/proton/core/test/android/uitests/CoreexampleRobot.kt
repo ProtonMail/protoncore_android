@@ -33,7 +33,7 @@ import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.robots.reports.BugReportRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
@@ -48,7 +48,7 @@ open class CoreexampleRobot : CoreRobot() {
         return scrollToAndClick(buttonId)
     }
 
-    fun humanVerification(): HumanVerificationRobot = scrollToAndClick(R.id.trigger_human_ver)
+    fun humanVerification(): HVRobot = scrollToAndClick(R.id.trigger_human_ver)
     fun signup(): ChooseUsernameRobot = scrollToAndClick(R.id.signup)
     fun signupExternal(): ChooseUsernameRobot = scrollToAndClick(R.id.signupExternal)
     fun signupUsername(): ChooseUsernameRobot = scrollToAndClick(R.id.signupUsername)

@@ -18,29 +18,23 @@
 
 package me.proton.core.test.android.uitests.tests.medium.humanverification
 
-import me.proton.core.account.domain.entity.AccountState.Ready
-import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
-@Ignore("WebView human verification does not support atlas proxy")
 class HumanVerificationTests : BaseTest() {
-
-    private val humanVerificationRobot = HumanVerificationRobot()
-    private val user = users.getUser()
+    private val humanVerificationRobot = HVRobot()
     private val defaultCode = quark.defaultVerificationCode
 
     @Before
     fun triggerHumanVerification() {
         quark.jailUnban()
 
-        login(user)
-
-        CoreexampleRobot()
+        AddAccountRobot()
+            .back<CoreexampleRobot>()
             .humanVerification()
             .verify { hvElementsDisplayed() }
     }
@@ -50,18 +44,17 @@ class HumanVerificationTests : BaseTest() {
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .close(HumanVerificationRobot::class.java)
+            .dismiss()
+        humanVerificationRobot
             .help()
-            .close<HumanVerificationRobot>()
+            .close<HVRobot>()
             .close<CoreexampleRobot>()
             .verify {
                 accountSwitcherDisplayed()
-                userStateIs(user, Ready, Authenticated)
             }
     }
 
     @Test
-    @Ignore("WebView issue. A espresso bug that prevents modification of the value of input fields makes it impossible to actually test this.")
     fun email() {
         val testAddress = "testEmail@example.lt"
 
@@ -73,12 +66,10 @@ class HumanVerificationTests : BaseTest() {
             .verifyCode(CoreexampleRobot::class.java)
             .verify {
                 accountSwitcherDisplayed()
-                userStateIs(user, Ready, Authenticated)
             }
     }
 
     @Test
-    @Ignore("WebView issue. A espresso bug that prevents modification of the value of input fields makes it impossible to actually test this.")
     fun phone() {
         val testPhoneNo = "2087599036"
         val testCountry = "United Kingdom"
@@ -86,7 +77,6 @@ class HumanVerificationTests : BaseTest() {
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .search(testCountry)
             .selectCountry(testCountry)
             .setPhone(testPhoneNo)
             .getVerificationCode()
@@ -94,7 +84,6 @@ class HumanVerificationTests : BaseTest() {
             .verifyCode(CoreexampleRobot::class.java)
             .verify {
                 accountSwitcherDisplayed()
-                userStateIs(user, Ready, Authenticated)
             }
     }
 
@@ -105,7 +94,6 @@ class HumanVerificationTests : BaseTest() {
             .iAmHuman(CoreexampleRobot::class.java)
             .verify {
                 accountSwitcherDisplayed()
-                userStateIs(user, Ready, Authenticated)
             }
     }
 }

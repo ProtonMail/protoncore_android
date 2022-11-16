@@ -45,7 +45,7 @@ class RetryRule(
                         return
                     } catch (t: Throwable) {
                         throwable = t
-                        Log.e(testTag, "Test failed on run $run:\n ${t.message}")
+                        Log.e(testTag, "Test failed on run $run", t)
                         if (i < tries) {
                             ActivityScenario.launch(activity)
                         }

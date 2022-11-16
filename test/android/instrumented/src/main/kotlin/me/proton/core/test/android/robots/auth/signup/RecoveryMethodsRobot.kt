@@ -23,7 +23,7 @@ import me.proton.core.auth.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.other.CountryRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 
@@ -46,7 +46,7 @@ class RecoveryMethodsRobot : CoreRobot() {
 
         /**
          * Clicks "Skip" button
-         * The next step is usually [HumanVerificationRobot] or [SelectPlanRobot].
+         * The next step is usually [HVRobot] or [SelectPlanRobot].
          */
         inline fun <reified T> skipConfirm(): T =
             clickElement(stringFromResource(R.string.auth_signup_skip_recovery))
@@ -80,7 +80,7 @@ class RecoveryMethodsRobot : CoreRobot() {
 
     /**
      * Clicks 'next' button
-     * @return [HumanVerificationRobot]
+     * @return [HVRobot]
      */
     inline fun <reified T> next(): T {
         view

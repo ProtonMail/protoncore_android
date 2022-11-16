@@ -25,7 +25,7 @@ import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
@@ -37,7 +37,7 @@ import org.junit.Test
 
 class SelectPlanTests : BaseTest() {
 
-    private var humanVerificationRobot: HumanVerificationRobot? = null
+    private var humanVerificationRobot: HVRobot? = null
     private var selectPlanRobot: SelectPlanRobot? = null
 
     @After
@@ -62,7 +62,7 @@ class SelectPlanTests : BaseTest() {
         if (paymentProvidersForSignup().isNotEmpty()) {
             selectPlanRobot = skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
         } else {
-            humanVerificationRobot = skipRecoveryRobot.skipConfirm<HumanVerificationRobot>()
+            humanVerificationRobot = skipRecoveryRobot.skipConfirm<HVRobot>()
         }
     }
 
@@ -93,12 +93,12 @@ class SelectPlanTests : BaseTest() {
         selectPlanRobot?.let {
             it.scrollToPlan(Free)
                 .toggleExpandPlan(Free)
-                .selectPlan<HumanVerificationRobot>(Free)
+                .selectPlan<HVRobot>(Free)
                 .verify {
                     hvElementsDisplayed()
                 }
 
-            HumanVerificationRobot()
+            HVRobot()
                 .close<SelectPlanRobot>()
                 .verify {
                     planDetailsDisplayedInsideRecyclerView(Free)
