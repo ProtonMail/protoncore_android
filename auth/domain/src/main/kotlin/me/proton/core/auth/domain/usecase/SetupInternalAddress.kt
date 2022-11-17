@@ -25,13 +25,14 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.extension.displayNameNotNull
-import me.proton.core.user.domain.extension.firstInternalOrNull
+import me.proton.core.user.domain.extension.filterInternal
+import me.proton.core.user.domain.extension.filterHasNoKeys
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 /**
- * Setup a new internal [UserAddress] and [UserAddressKey].
+ * Setup a new internal [UserAddress] (if none are currently present) and/or any missing [address keys][UserAddressKey].
  *
  * Prerequisite: Primary [UserKey.privateKey] must be unlocked (`isLocked == false`).
  *
@@ -49,10 +50,17 @@ class SetupInternalAddress @Inject constructor(
         val user = userRepository.getUser(userId)
 
         val finalDomain = domain ?: domainRepository.getAvailableDomains().first()
+        val internalAddresses = userAddressManager.getAddresses(userId).filterInternal()
 
-        val address = userAddressManager.getAddresses(userId).firstInternalOrNull()
-        if (address == null || address.keys.isEmpty()) {
+        if (internalAddresses.isEmpty()) {
             userAddressManager.setupInternalAddress(userId, user.displayNameNotNull(), finalDomain)
+        } else {
+            internalAddresses
+                .filterHasNoKeys()
+                .filter { it.enabled }
+                .forEach { address ->
+                    userAddressManager.createAddressKey(userId, address.addressId, isPrimary = true)
+                }
         }
     }
 }

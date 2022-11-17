@@ -29,10 +29,10 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.filterExternal
-import me.proton.core.user.domain.extension.hasInternalAddressKey
 import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.user.domain.extension.hasMissingKeys
 import me.proton.core.user.domain.extension.hasUsername
+import me.proton.core.user.domain.extension.filterInternal
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -81,16 +81,13 @@ class SetupAccountCheck @Inject constructor(
                 fetchAddresses(userId).needsExternalUserAddressKeySetup() -> SetupExternalAddressKeysNeeded
                 else -> NoSetupNeeded
             }
-            AccountType.Internal -> {
-                val addresses = addressRepository.getAddresses(userId, refresh = true)
-                when {
-                    !user.hasUsername() -> ChooseUsernameNeeded
-                    isTemporaryPassword -> ChangePasswordNeeded
-                    !user.hasKeys() -> SetupPrimaryKeysNeeded
-                    !addresses.hasInternalAddressKey() -> SetupInternalAddressNeeded
-                    isTwoPassModeNeeded -> TwoPassNeeded
-                    else -> NoSetupNeeded
-                }
+            AccountType.Internal -> when {
+                !user.hasUsername() -> ChooseUsernameNeeded
+                isTemporaryPassword -> ChangePasswordNeeded
+                !user.hasKeys() -> SetupPrimaryKeysNeeded
+                isTwoPassModeNeeded -> TwoPassNeeded
+                fetchAddresses(userId).needsInternalUserAddressKeySetup() -> SetupInternalAddressNeeded
+                else -> NoSetupNeeded
             }
         }
     }
@@ -104,4 +101,10 @@ class SetupAccountCheck @Inject constructor(
      */
     private fun List<UserAddress>.needsExternalUserAddressKeySetup(): Boolean =
         filterExternal().filter { it.enabled }.hasMissingKeys()
+
+    /** Perform key setup if there are no internal addresses, or if some internal addresses have no keys. */
+    private fun List<UserAddress>.needsInternalUserAddressKeySetup(): Boolean {
+        val addresses = filterInternal().filter { it.enabled }
+        return addresses.isEmpty() || addresses.hasMissingKeys()
+    }
 }
