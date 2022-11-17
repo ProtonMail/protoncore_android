@@ -22,12 +22,16 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChangePasswordNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChooseUsernameNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.NoSetupNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupExternalAddressKeysNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternalAddressNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.filterExternal
 import me.proton.core.user.domain.extension.hasInternalAddressKey
 import me.proton.core.user.domain.extension.hasKeys
+import me.proton.core.user.domain.extension.hasMissingKeys
 import me.proton.core.user.domain.extension.hasUsername
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -44,6 +48,9 @@ class SetupAccountCheck @Inject constructor(
 
         /** Setup primary keys, using existing username. */
         object SetupPrimaryKeysNeeded : Result()
+
+        /** Setup new keys, for existing external addresses. */
+        object SetupExternalAddressKeysNeeded : Result()
 
         /** Setup a new internal address, using existing username. */
         object SetupInternalAddressNeeded : Result()
@@ -66,12 +73,13 @@ class SetupAccountCheck @Inject constructor(
     ): Result {
         val user = userRepository.getUser(userId, refresh = true)
         return when (requiredAccountType) {
-            AccountType.Username -> {
-                NoSetupNeeded
-            }
-            AccountType.External -> {
-                // API bug: TwoPassMode is not needed if user has no key!
-                if (isTwoPassModeNeeded && user.hasKeys()) TwoPassNeeded else NoSetupNeeded
+            AccountType.Username -> NoSetupNeeded
+            AccountType.External -> when {
+                isTemporaryPassword -> ChangePasswordNeeded
+                !user.hasKeys() -> SetupPrimaryKeysNeeded
+                isTwoPassModeNeeded -> TwoPassNeeded
+                fetchAddresses(userId).needsExternalUserAddressKeySetup() -> SetupExternalAddressKeysNeeded
+                else -> NoSetupNeeded
             }
             AccountType.Internal -> {
                 val addresses = addressRepository.getAddresses(userId, refresh = true)
@@ -86,4 +94,14 @@ class SetupAccountCheck @Inject constructor(
             }
         }
     }
+
+    private suspend fun fetchAddresses(userId: UserId): List<UserAddress> =
+        addressRepository.getAddresses(userId, refresh = true)
+
+    /** Perform key setup if some external addresses have no keys.
+     * For apps requiring external accounts, we assume that an external address
+     * is created during signup. We don't expect to be creating an external address now (only keys).
+     */
+    private fun List<UserAddress>.needsExternalUserAddressKeySetup(): Boolean =
+        filterExternal().filter { it.enabled }.hasMissingKeys()
 }

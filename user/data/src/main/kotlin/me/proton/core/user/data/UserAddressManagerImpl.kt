@@ -83,7 +83,7 @@ class UserAddressManagerImpl @Inject constructor(
         domain: String
     ) = userAddressRepository.createAddress(sessionUserId, displayName, domain)
 
-    private suspend fun createAddressKey(
+    override suspend fun createAddressKey(
         sessionUserId: SessionUserId,
         addressId: AddressId,
         isPrimary: Boolean

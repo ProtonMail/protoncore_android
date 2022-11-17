@@ -128,6 +128,7 @@ public final class me/proton/core/user/data/UserAddressKeySecretProvider_Factory
 
 public final class me/proton/core/user/data/UserAddressManagerImpl : me/proton/core/user/domain/UserAddressManager {
 	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun createAddressKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAddressesFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;

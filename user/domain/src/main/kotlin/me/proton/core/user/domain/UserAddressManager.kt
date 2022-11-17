@@ -72,6 +72,15 @@ interface UserAddressManager {
     ): UserAddress?
 
     /**
+     * Setup [key][UserAddressKey] for an existing [UserAddress] with given [addressId], remotely.
+     */
+    suspend fun createAddressKey(
+        sessionUserId: SessionUserId,
+        addressId: AddressId,
+        isPrimary: Boolean
+    ): UserAddress
+
+    /**
      * Create new primary internal [UserAddress], with a new [UserAddressKey], remotely.
      */
     suspend fun setupInternalAddress(

@@ -4,6 +4,7 @@ public final class me/proton/core/user/domain/UserAddressCryptoKt {
 }
 
 public abstract interface class me/proton/core/user/domain/UserAddressManager {
+	public abstract fun createAddressKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAddressesFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;

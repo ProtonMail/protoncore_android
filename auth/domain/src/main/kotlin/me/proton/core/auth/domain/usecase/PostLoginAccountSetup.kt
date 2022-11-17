@@ -36,6 +36,7 @@ class PostLoginAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val performSubscribe: PerformSubscribe,
     private val setupAccountCheck: SetupAccountCheck,
+    private val setupExternalAddressKeys: SetupExternalAddressKeys,
     private val setupInternalAddress: SetupInternalAddress,
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
@@ -118,6 +119,11 @@ class PostLoginAccountSetup @Inject constructor(
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
                 setupPrimaryKeys.invoke(userId, encryptedPassword, requiredAccountType)
                 unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess)
+            }
+            is SetupAccountCheck.Result.SetupExternalAddressKeysNeeded -> {
+                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess) {
+                    setupExternalAddressKeys.invoke(userId)
+                }
             }
             is SetupAccountCheck.Result.SetupInternalAddressNeeded -> {
                 unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess) {

@@ -49,6 +49,7 @@ class PostLoginAccountSetupTest {
     private lateinit var performSubscribe: PerformSubscribe
     private lateinit var setupAccountCheck: SetupAccountCheck
     private lateinit var setupInternalAddress: SetupInternalAddress
+    private lateinit var setupExternalAddressKeys: SetupExternalAddressKeys
     private lateinit var setupPrimaryKeys: SetupPrimaryKeys
     private lateinit var unlockUserPrimaryKey: UnlockUserPrimaryKey
     private lateinit var userCheck: PostLoginAccountSetup.UserCheck
@@ -69,6 +70,7 @@ class PostLoginAccountSetupTest {
         accountWorkflowHandler = mockk()
         performSubscribe = mockk()
         setupAccountCheck = mockk()
+        setupExternalAddressKeys = mockk()
         setupInternalAddress = mockk()
         setupPrimaryKeys = mockk()
         unlockUserPrimaryKey = mockk()
@@ -91,6 +93,7 @@ class PostLoginAccountSetupTest {
             accountWorkflowHandler,
             performSubscribe,
             setupAccountCheck,
+            setupExternalAddressKeys,
             setupInternalAddress,
             setupPrimaryKeys,
             unlockUserPrimaryKey,
@@ -379,6 +382,31 @@ class PostLoginAccountSetupTest {
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify { setupInternalAddress.invoke(testUserId) }
+        coVerify(exactly = 1) { onSetupSuccess() }
+    }
+
+    @Test
+    fun `external address needed`() = runBlockingTest {
+        val setupError = SetupAccountCheck.Result.SetupExternalAddressKeysNeeded
+        val sessionInfo = mockSessionInfo()
+
+        coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
+        coJustRun { setupExternalAddressKeys.invoke(any()) }
+        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
+
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
+            onSetupSuccess = onSetupSuccess
+        )
+        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
+        coVerify { setupExternalAddressKeys.invoke(testUserId) }
         coVerify(exactly = 1) { onSetupSuccess() }
     }
 
