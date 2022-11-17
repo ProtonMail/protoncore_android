@@ -111,7 +111,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
     val configFile = configuration.configFile
     val customRulesConfigFile = configuration.customRulesConfigFile
 
-    if (rootProject.name != "Proton Core") {
+    if (rootProject.name != "ProtonCore") {
         downloadDetektConfig(githubConfigFilePath = defaultConfigFilePath, to = configFile)
     }
 
