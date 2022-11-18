@@ -48,6 +48,7 @@ test/quark/src/main/resources/sensitive/*
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries/**
 .idea/misc.xml
+.idea/androidTestResultsUserPreferences.xml
 # Do not exclude project Dictionary
 !.idea/**/dictionaries/project.xml
 .idea/**/shelf
