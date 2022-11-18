@@ -28,6 +28,7 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.LoggerLogTag
 
@@ -43,6 +44,7 @@ class DohApiHandler<Api>(
     private val prefs: NetworkPrefs,
     private val wallClockMs: () -> Long,
     private val monoClockMs: () -> Long,
+    private val dohAlternativesListener: DohAlternativesListener? = null,
     private val createAltBackend: (baseUrl: String) -> ApiBackend<Api>,
 ) : ApiErrorHandler<Api> {
 
@@ -82,13 +84,19 @@ class DohApiHandler<Api>(
             else -> {
                 staticMutex.withLock {
                     val altBackend = activeAltBackend
-                    if (altBackend != null) {
-                        CoreLogger.log(LOG_TAG, "Alt backend already established")
-                        altBackend.invoke(call)
-                    } else if (shouldUseDoh()) {
-                        callWithAlternatives(call) ?: error
-                    } else {
-                        error
+                    when {
+                        !apiClient.shouldUseDoh -> error
+                        altBackend != null -> {
+                            CoreLogger.log(LOG_TAG, "Alt backend already established")
+                            altBackend.invoke(call)
+                        }
+                        shouldUseDoh() -> {
+                            val altResult = callWithAlternatives(call)
+                            if (altResult == null || altResult.isPotentialBlocking)
+                                dohAlternativesListener?.onProxiesFailed()
+                            altResult ?: error
+                        }
+                        else -> error
                     }
                 }
             }
@@ -124,8 +132,9 @@ class DohApiHandler<Api>(
         val alternatives = prefs.alternativeBaseUrls?.shuffled()
         val alternativesStart = monoClockMs()
         alternatives?.forEach { baseUrl ->
-            if (monoClockMs() - alternativesStart > apiClient.alternativesTotalTimeout) {
-                return ApiResult.Error.Timeout(true, null)
+            // Abort alt. routing if condition changed in the meantime or deadline is reached
+            if (!apiClient.shouldUseDoh || monoClockMs() - alternativesStart > apiClient.alternativesTotalTimeout) {
+                return null
             }
             val backend = createAltBackend(baseUrl)
             val result = backend.invoke(call)

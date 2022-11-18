@@ -213,6 +213,7 @@ class ApiManagerFactory(
             prefs = prefs,
             wallClockMs = ::javaWallClockMs,
             monoClockMs = ::javaMonoClockMs,
+            dohAlternativesListener,
         ) { baseUrl ->
             ProtonApiBackend(
                 baseUrl,

@@ -475,9 +475,8 @@ internal class ApiManagerTests {
     @Test
     fun `test alternatives total timeout`() = runTest(testScope.coroutineContext) {
         time = 100_000L // this will set the api call timestamp to 100K
-        coEvery { backend.invoke<TestResult>(any()) } coAnswers {
-            ApiResult.Error.Connection(true)
-        }
+        val error = ApiResult.Error.Connection(true)
+        coEvery { backend.invoke<TestResult>(any()) } coAnswers { error }
 
         coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns
             listOf("https://proxy1.com/", "https://proxy2.com/")
@@ -491,7 +490,7 @@ internal class ApiManagerTests {
         coVerify(exactly = 1) {
             altBackend1.invoke<TestResult>(any())
         }
-        assertTrue(result is ApiResult.Error.Timeout)
+        assertEquals(error, result)
     }
 
     @Test

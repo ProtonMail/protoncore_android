@@ -351,4 +351,6 @@ internal class FakeDohAlternativesListener : DohAlternativesListener {
     override suspend fun onAlternativesUnblock(alternativesBlockCall: suspend () -> Unit) {
         alternativesBlockCall()
     }
+
+    override suspend fun onProxiesFailed() {}
 }

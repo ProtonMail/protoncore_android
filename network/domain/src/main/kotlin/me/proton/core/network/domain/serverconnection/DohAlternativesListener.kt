@@ -20,5 +20,15 @@ package me.proton.core.network.domain.serverconnection
 
 interface DohAlternativesListener {
 
+    /**
+     * Called when core failed to refresh alt. proxies and gives client a chance to unblock on it's own.
+     *
+     * @param alternativesBlockCall should be executed once client successfully unblocks API access.
+     */
     suspend fun onAlternativesUnblock(alternativesBlockCall: suspend () -> Unit)
+
+    /**
+     * Called when core was unable to complete API call through proxies.
+     */
+    suspend fun onProxiesFailed()
 }
