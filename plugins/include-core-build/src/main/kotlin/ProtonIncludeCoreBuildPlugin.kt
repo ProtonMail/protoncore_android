@@ -49,22 +49,24 @@ abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
                 checkoutsDirectory.set(target.rootDir.parentFile)
                 when {
                     metaProperties.exists() -> includeBuild(parentRepoDir)
-                    commitSha != null -> include(repoDir) {
+                    commitSha != null -> include(coreRepoDir) {
                         uri.set(protonLibsUri)
                         commit.set(commitSha)
                     }
-                    config.hasIncludes() -> include(repoDir) {
+                    config.hasIncludedBuilds() -> include(coreRepoDir) {
                         uri.set(protonLibsUri)
-                        config.configure(this)
+                        config.configureCoreBuild(this)
                     }
                 }
+                // Configuration of additional IncludedGitRepo.
+                config.configureIncludedGitRepos(this)
             }
         }
     }
 
     companion object {
-        const val repoDir = "proton-libs"
-        const val parentRepoDir = "../$repoDir"
+        const val coreRepoDir = "proton-libs"
+        const val parentRepoDir = "../$coreRepoDir"
         const val metaProperties = "meta.properties"
     }
 }

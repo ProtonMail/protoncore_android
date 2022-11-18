@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import me.champeau.gradle.igp.GitIncludeExtension
 import me.champeau.gradle.igp.IncludedGitRepo
 import me.champeau.gradle.igp.internal.DefaultIncludeGitExtension
 import org.gradle.api.Action
@@ -90,6 +91,14 @@ interface ProtonIncludeCoreBuildExtension {
      */
     fun includeBuild(relativePath: String, spec: Action<ConfigurableIncludedBuild>)
 
+    /**
+     * Includes a Git repository as a Gradle included build.
+     *
+     * @param name the name of the included build.
+     * @param spec the configuration of the Git repository.
+     */
+    fun includeRepo(name: String, spec: Action<IncludedGitRepo>)
+
     companion object {
         fun Settings.createExtension(): ProtonIncludeCoreBuildExtension = extensions.create(
             ProtonIncludeCoreBuildExtension::class.java,
@@ -110,25 +119,30 @@ abstract class DefaultProtonIncludeCoreBuildExtension @Inject constructor(
     @Inject
     protected abstract fun getProviders(): ProviderFactory
 
-    private val includes: MutableList<IncludedBuild> = mutableListOf()
+    private val includedBuilds: MutableList<IncludedBuild> = mutableListOf()
+    private val includedRepos: MutableList<IncludedRepo> = mutableListOf()
 
     override fun includeBuild(spec: Action<ConfigurableIncludedBuild>) {
         includeBuild(".") { spec.execute(this) }
     }
 
     override fun includeBuild(relativePath: String, spec: Action<ConfigurableIncludedBuild>) {
-        includes.add(IncludedBuild(relativePath, spec));
+        includedBuilds.add(IncludedBuild(relativePath, spec));
+    }
+
+    override fun includeRepo(name: String, spec: Action<IncludedGitRepo>) {
+        includedRepos.add(IncludedRepo(name, spec));
     }
 
     private fun isLocalPresent() = with(getProviders()) {
         gradleProperty(localRepoProperty).orElse(systemProperty(localRepoProperty)).isPresent
     }
 
-    fun hasIncludes() = includes.isNotEmpty() ||
+    fun hasIncludedBuilds() = includedBuilds.isNotEmpty() ||
             isLocalPresent() ||
             branch.isPresent || tag.isPresent || commit.isPresent
 
-    fun configure(includedGitRepo: IncludedGitRepo) {
+    fun configureCoreBuild(includedGitRepo: IncludedGitRepo) {
         when {
             isLocalPresent() -> return
             branch.isPresent -> includedGitRepo.branch.set(branch.get())
@@ -136,8 +150,14 @@ abstract class DefaultProtonIncludeCoreBuildExtension @Inject constructor(
             commit.isPresent -> includedGitRepo.commit.set(commit.get())
         }
 
-        for (include in includes) {
+        for (include in includedBuilds) {
             includedGitRepo.includeBuild(include.directory, include.spec)
+        }
+    }
+
+    fun configureIncludedGitRepos(gitIncludeExtension: GitIncludeExtension) {
+        for (include in includedRepos) {
+            gitIncludeExtension.include(include.name, include.spec)
         }
     }
 
@@ -146,8 +166,13 @@ abstract class DefaultProtonIncludeCoreBuildExtension @Inject constructor(
         val spec: Action<ConfigurableIncludedBuild>,
     )
 
+    data class IncludedRepo(
+        val name: String,
+        val spec: Action<IncludedGitRepo>,
+    )
+
     companion object {
         private const val localRepoProperty =
-            DefaultIncludeGitExtension.LOCAL_GIT_PREFIX + ProtonIncludeCoreBuildPlugin.repoDir
+            DefaultIncludeGitExtension.LOCAL_GIT_PREFIX + ProtonIncludeCoreBuildPlugin.coreRepoDir
     }
 }
