@@ -49,19 +49,19 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
 
     @Before
     fun beforeEveryTest() {
-        viewModel = ChooseUsernameViewModel(
-            usernameDomainAvailability,
-            sendVerificationCodeToEmailDestination,
-            challengeManager,
-            signupChallengeConfig
-        )
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
     }
 
     @Test
     fun `domains are loaded correctly`() = coroutinesTest {
         // GIVEN
-        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         // WHEN
         viewModel.state.test {
             // THEN
@@ -75,6 +75,13 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @Test
     fun `domains loading connectivity error`() = coroutinesTest {
         // GIVEN
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         coEvery { usernameDomainAvailability.getDomains() } throws ApiException(
             ApiResult.Error.NoInternet()
         )
@@ -90,6 +97,13 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @Test
     fun `domains loading api error`() = coroutinesTest {
         // GIVEN
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         coEvery { usernameDomainAvailability.getDomains() } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
@@ -112,9 +126,15 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
 
     @Test
     fun `set Internal Account Type can NOT switch to External`() = coroutinesTest {
+        // WHEN
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         viewModel.selectedAccountTypeState.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             // THEN
             val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
@@ -129,9 +149,15 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
 
     @Test
     fun `set Internal Account Type can NOT switch to External a couple of tries`() = coroutinesTest {
+        // WHEN
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         viewModel.selectedAccountTypeState.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             // THEN
             val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
@@ -155,96 +181,19 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     }
 
     @Test
-    fun `set External Account Type can switch to Username`() = coroutinesTest {
-        viewModel.selectedAccountTypeState.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.External)
-            // THEN
-            val event = awaitItem()
-            assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.External, event.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfterChange = awaitItem()
-            assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, eventAfterChange.type)
-        }
-    }
-
-    @Test
-    fun `set External Account Type can switch to Username back and forth`() = coroutinesTest {
-        viewModel.selectedAccountTypeState.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.External)
-            // THEN
-            val event = awaitItem()
-            assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.External, event.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfterChange = awaitItem()
-            assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, eventAfterChange.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfter2ndChange = awaitItem()
-            assertTrue(eventAfter2ndChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.External, eventAfter2ndChange.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfter3rdChange = awaitItem()
-            assertTrue(eventAfter3rdChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, eventAfter3rdChange.type)
-        }
-    }
-
-    @Test
-    fun `set Username Account Type cannot switch to External`() = coroutinesTest {
-        viewModel.selectedAccountTypeState.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Username)
-            // THEN
-            val event = awaitItem()
-            assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, event.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfterChange = awaitItem()
-            assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, eventAfterChange.type)
-        }
-    }
-
-    @Test
-    fun `check username not initialized required account type`() = coroutinesTest {
-        // GIVEN
-        val testUsername = "test-username"
-        val testDomain = "test-domain"
-        val testEmail = "$testUsername@$testDomain"
-        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns true
-        viewModel.state.test {
-            // WHEN
-            viewModel.checkUsername(testUsername, testDomain)
-            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
-            val errorItem = awaitItem()
-            assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
-            assertEquals(
-                "currentAccountType is not set. Call setClientAppRequiredAccountType first.",
-                errorItem.error.getUserMessage(mockk())
-            )
-            cancelAndConsumeRemainingEvents()
-        }
-    }
-
-    @Test
     fun `check username for Internal is available`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns true
-        // WHEN
-        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
@@ -264,9 +213,15 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns false
         // WHEN
-        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
+        coEvery { usernameDomainAvailability.isUsernameAvailable(testEmail) } returns false
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
@@ -295,7 +250,13 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             )
         )
         // WHEN
-        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.Internal
+        )
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
@@ -313,12 +274,16 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         val testUsername = "test-username"
         coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } returns Unit
         // WHEN
-        viewModel.setClientAppRequiredAccountType(AccountType.External)
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.External
+        )
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
 
-            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = awaitItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.ExternalAccountTokenSent)
@@ -332,12 +297,16 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         val testUsername = "test-username"
         coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } throws Exception("Error with the email")
         // WHEN
-        viewModel.setClientAppRequiredAccountType(AccountType.External)
+        viewModel = ChooseUsernameViewModel(
+            usernameDomainAvailability,
+            sendVerificationCodeToEmailDestination,
+            challengeManager,
+            signupChallengeConfig,
+            AccountType.External
+        )
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
 
-            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = awaitItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)

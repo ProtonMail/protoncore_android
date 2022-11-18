@@ -57,6 +57,19 @@ class ChooseUsernameRobot : CoreRobot() {
         fun accountTypeSwitchNotDisplayed() =
             view.withId(R.id.useCurrentEmailButton).checkNotDisplayed()
 
+        fun accountTypeSwitchDisplayed() =
+            view.withId(R.id.useCurrentEmailButton).checkDisplayed()
+
+        fun internalAccountTextsDisplayedCorrectly() {
+            view.withId(R.id.subtitleText).withText(R.string.auth_one_account_all_services).checkDisplayed()
+            view.withId(R.id.footnoteText).withText(R.string.auth_signup_internal_footnote).checkDisplayed()
+        }
+
+        fun externalAccountTextsDisplayedCorrectly() {
+            view.withId(R.id.subtitleText).withText(R.string.auth_one_account_all_services).checkNotDisplayed()
+            view.withId(R.id.footnoteText).withText(R.string.auth_signup_external_footnote).checkDisplayed()
+        }
+
         fun chooseUsernameElementsDisplayed() {
             view.withId(R.id.usernameInput).closeKeyboard().checkDisplayed()
             view.withId(R.id.nextButton).checkDisplayed()

@@ -44,30 +44,33 @@ internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination,
     private val challengeManager: ChallengeManager,
-    private val challengeConfig: SignupChallengeConfig
+    private val challengeConfig: SignupChallengeConfig,
+    private var requiredAccountType: AccountType
 ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
     private val _selectedAccountTypeState = MutableSharedFlow<AccountTypeState>(replay = 1, extraBufferCapacity = 3)
-    private lateinit var clientAppRequiredAccountType: AccountType
 
-    lateinit var currentAccountType: AccountType
-        private set
+    private var currentAccountType: AccountType
 
     var domains: List<Domain>? = null
         private set
 
-    val state = _state.onSubscription { emitAll(fetchDomains()) }
+    val state = _state.onSubscription {
+        if (requiredAccountType == AccountType.Internal) {
+            emitAll(fetchDomains())
+        }
+    }
     val selectedAccountTypeState = _selectedAccountTypeState.asSharedFlow()
 
     sealed class AccountTypeState {
-        data class NewAccountType(val type: AccountType) : AccountTypeState()
+        data class NewAccountType(val type: AccountType, val minimalAccountType: AccountType) : AccountTypeState()
     }
 
     sealed class State {
         object Idle : State()
         object Processing : State()
-        data class UsernameAvailable(val username: String, val domain: String) : State()
+        data class UsernameAvailable(val username: String, val domain: String, val currentAccountType: AccountType) : State()
         data class ExternalAccountTokenSent(val email: String) : State()
         data class AvailableDomains(val domains: List<Domain>, val currentAccountType: AccountType) : State()
         sealed class Error : State() {
@@ -90,17 +93,19 @@ internal class ChooseUsernameViewModel @Inject constructor(
         viewModelScope.launch {
             challengeManager.resetFlow(challengeConfig.flowName)
         }
+        currentAccountType = requiredAccountType
+        _selectedAccountTypeState.tryEmit(AccountTypeState.NewAccountType(currentAccountType, requiredAccountType))
     }
 
     private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
-        return when (requireCurrentAccountType()) {
+        return when (currentAccountType) {
             AccountType.Username,
             AccountType.Internal -> {
                 requireNotNull(domain) { "For AccountType Internal a domain must be supplied." }
                 val email = "$username@$domain"
                 if (usernameDomainAvailability.isUsernameAvailable(email)) {
                     // if selected Internal account, domain must be set along with username
-                    State.UsernameAvailable(username, domain)
+                    State.UsernameAvailable(username, domain, currentAccountType)
                 } else {
                     State.Error.UsernameNotAvailable
                 }
@@ -113,32 +118,14 @@ internal class ChooseUsernameViewModel @Inject constructor(
         }.exhaustive
     }
 
-    private fun requireCurrentAccountType(): AccountType {
-        require(this::currentAccountType.isInitialized) {
-            "currentAccountType is not set. Call setClientAppRequiredAccountType first."
-        }
-        return currentAccountType
-    }
-
     private fun fetchDomains() = flow {
         if (domains.isNullOrEmpty()) {
             emit(State.Processing)
             domains = usernameDomainAvailability.getDomains()
         }
-        emit(State.AvailableDomains(domains!!, requireCurrentAccountType()))
+        emit(State.AvailableDomains(domains!!, currentAccountType))
     }.catch { error ->
         emit(State.Error.Message(error))
-    }
-
-    /**
-     * This is where the client need to set the [AccountType] it want's to create.
-     * Note, some clients can support [AccountType.External] (such as Drive) so the user will be allowed to switch
-     * back and forth between these.
-     */
-    fun setClientAppRequiredAccountType(accountType: AccountType) {
-        clientAppRequiredAccountType = accountType
-        currentAccountType = clientAppRequiredAccountType
-        _selectedAccountTypeState.tryEmit(AccountTypeState.NewAccountType(currentAccountType))
     }
 
     /**
@@ -146,24 +133,18 @@ internal class ChooseUsernameViewModel @Inject constructor(
      * to create [AccountType.External].
      */
     fun onUserSwitchAccountType() {
-        currentAccountType = when (clientAppRequiredAccountType) {
-            AccountType.Username -> {
-                when {
-                    currentAccountType == AccountType.External -> AccountType.Username
-                    clientAppRequiredAccountType.canSwitchToExternal() -> AccountType.External
-                    else -> AccountType.Username
-                }
-            }
+        currentAccountType = when (requiredAccountType) {
             AccountType.Internal -> AccountType.Internal
+            AccountType.Username -> AccountType.Username
             AccountType.External -> {
                 if (currentAccountType == AccountType.External) {
-                    AccountType.Username
+                    AccountType.Internal
                 } else {
                     AccountType.External
                 }
             }
         }.exhaustive
-        _selectedAccountTypeState.tryEmit(AccountTypeState.NewAccountType(currentAccountType))
+        _selectedAccountTypeState.tryEmit(AccountTypeState.NewAccountType(currentAccountType, requiredAccountType))
     }
 
     /**
@@ -180,12 +161,3 @@ internal class ChooseUsernameViewModel @Inject constructor(
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 }
-
-/**
- * Returns if the user can switch to [AccountType.External] from the client required [AccountType].
- */
-internal fun AccountType.canSwitchToExternal(): Boolean = when (this) {
-    AccountType.Username -> false
-    AccountType.External -> true
-    AccountType.Internal -> false
-}.exhaustive

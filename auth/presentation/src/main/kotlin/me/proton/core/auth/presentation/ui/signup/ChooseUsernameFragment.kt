@@ -35,11 +35,9 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseUsernameBinding
-import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
-import me.proton.core.auth.presentation.viewmodel.signup.canSwitchToExternal
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -57,13 +55,6 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
     private val viewModel by viewModels<ChooseUsernameViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupChooseUsernameBinding::bind)
-
-    private val input: SignUpInput by lazy {
-        val arguments = requireArguments()
-        val requiredAccountType = AccountType.values()[arguments.getInt(ARG_INPUT)]
-        viewModel.setClientAppRequiredAccountType(accountType = requiredAccountType)
-        SignUpInput(requiredAccountType = requiredAccountType)
-    }
 
     override fun onBackPressed() {
         signupViewModel.onFinish()
@@ -87,7 +78,6 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             nextButton.onClick(::onNextClicked)
             onAccountTypeSelection()
             useCurrentEmailButton.apply {
-                visibility = if (input.requiredAccountType.canSwitchToExternal()) View.VISIBLE else View.GONE
                 onClick { viewModel.onUserSwitchAccountType() }
             }
         }
@@ -107,7 +97,11 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                 when (it) {
                     is ChooseUsernameViewModel.State.Idle -> showLoading(false)
                     is ChooseUsernameViewModel.State.Processing -> showLoading(true)
-                    is ChooseUsernameViewModel.State.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
+                    is ChooseUsernameViewModel.State.UsernameAvailable -> onUsernameAvailable(
+                        it.username,
+                        it.domain,
+                        it.currentAccountType
+                    )
                     is ChooseUsernameViewModel.State.AvailableDomains -> onDomains(it.domains)
                     is ChooseUsernameViewModel.State.Error.Message -> onError(it.error.getUserMessage(resources))
                     is ChooseUsernameViewModel.State.Error.DomainsNotAvailable ->
@@ -116,7 +110,8 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                         onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
                     is ChooseUsernameViewModel.State.ExternalAccountTokenSent -> onExternalAccountTokenSent(it.email)
                 }.exhaustive
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onAccountTypeSelection() {
@@ -124,7 +119,11 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             when (state) {
                 is ChooseUsernameViewModel.AccountTypeState.NewAccountType -> with(binding) {
                     when (state.type) {
-                        AccountType.Username,
+                        AccountType.Username -> {
+                            internalAccountGroup.visibility = View.GONE
+                            useCurrentEmailButton.visibility = View.GONE
+                            separatorView.visibility = View.GONE
+                        }
                         AccountType.Internal -> {
                             usernameInput.apply {
                                 labelText = getString(R.string.auth_signup_username)
@@ -132,8 +131,12 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                             }
                             viewModel.domains?.let {
                                 onDomains(it)
-                                useCurrentEmailButton.text = getString(R.string.auth_signup_current_email)
                             }
+                            useCurrentEmailButton.text = getString(R.string.auth_signup_current_email)
+                            footnoteText.text = getString(R.string.auth_signup_internal_footnote)
+                            internalAccountGroup.visibility = View.VISIBLE
+                            useCurrentEmailButton.visibility =
+                                if (state.minimalAccountType == AccountType.Internal) View.GONE else View.VISIBLE
                         }
                         AccountType.External -> {
                             usernameInput.apply {
@@ -141,6 +144,8 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                                 suffixText = null
                             }
                             useCurrentEmailButton.text = getString(R.string.auth_signup_create_secure_proton_address)
+                            footnoteText.text = getString(R.string.auth_signup_external_footnote)
+                            internalAccountGroup.visibility = View.GONE
                         }
                     }.exhaustive
                 }
@@ -154,7 +159,6 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             validateUsername()
                 .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
                 .onSuccess { username ->
-                    signupViewModel.currentAccountType = viewModel.currentAccountType
                     val domain = binding.domainInput.text?.toString()?.replace("@", "")
                     viewModel.checkUsername(username, domain)
                 }
@@ -175,12 +179,13 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         parentFragmentManager.showPasswordChooser()
     }
 
-    private fun onUsernameAvailable(username: String, domain: String) {
+    private fun onUsernameAvailable(username: String, domain: String, currentAccountType: AccountType) {
         showLoading(false)
         binding.nextButton.isEnabled = true
 
         signupViewModel.username = username
         signupViewModel.domain = domain
+        signupViewModel.currentAccountType = currentAccountType
         lifecycleScope.launch {
             binding.usernameInput.flush()
         }
@@ -193,13 +198,11 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             nextButton.isEnabled = true
             useCurrentEmailButton.isEnabled = true
 
-            if (viewModel.currentAccountType == AccountType.Internal) {
-                if (viewModel.domains?.count() == 1) {
-                    usernameInput.suffixText = "@${domains.first()}"
-                    usernameInput.setOnDoneActionListener { onNextClicked() }
-                } else {
-                    domainInput.isVisible = true
-                }
+            if (viewModel.domains?.count() == 1) {
+                usernameInput.suffixText = "@${domains.first()}"
+                usernameInput.setOnDoneActionListener { onNextClicked() }
+            } else {
+                domainInput.isVisible = true
             }
 
             domainInput.apply {
@@ -228,7 +231,6 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
 
     companion object {
         const val ARG_INPUT = "arg.chooseUsernameInput"
-        const val ARG_PRODUCT = "arg.product"
 
         operator fun invoke(requiredAccountType: AccountType) = ChooseUsernameFragment().apply {
             arguments = bundleOf(

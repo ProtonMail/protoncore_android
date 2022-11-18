@@ -589,8 +589,12 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupCh
 
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupChooseUsernameBinding : androidx/viewbinding/ViewBinding {
 	public final field domainInput Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
+	public final field footnoteText Landroid/widget/TextView;
+	public final field internalAccountGroup Landroidx/constraintlayout/widget/Group;
+	public final field logoImage Landroid/widget/ImageView;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
+	public final field separatorView Landroid/view/View;
 	public final field subtitleText Landroid/widget/TextView;
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
@@ -1624,7 +1628,6 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field ARG_INPUT Ljava/lang/String;
-	public static final field ARG_PRODUCT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
@@ -2351,11 +2354,11 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewMod
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/UsernameDomainAvailability;Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/UsernameDomainAvailability;Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_HiltModules {

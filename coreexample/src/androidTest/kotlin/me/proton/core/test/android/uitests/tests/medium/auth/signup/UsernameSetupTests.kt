@@ -45,9 +45,12 @@ class UsernameSetupTests : BaseTest() {
     }
 
     @Test
-    fun cannotSwitchToExternal() {
+    fun canSwitchToExternal() {
         chooseUsernameRobot
-            .verify { accountTypeSwitchNotDisplayed() }
+            .verify {
+                accountTypeSwitchNotDisplayed()
+                internalAccountTextsDisplayedCorrectly()
+            }
     }
 
     @Test
