@@ -150,8 +150,8 @@ class GiapUpgradeTests: BaseMockTest {
 
         CoreexampleRobot()
             .plansUpgrade()
-            .toggleExpandPlan(TestPlan.Plus)
-            .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
             .apply {
                 verify<GoogleIAPRobot.Verify> {
                     googleIAPElementsDisplayed()
@@ -162,7 +162,7 @@ class GiapUpgradeTests: BaseMockTest {
             .plansCurrent()
             .verify {
                 currentPlanDetailsDisplayed()
-                planDetailsDisplayed(TestPlan.Plus)
+                planDetailsDisplayed(TestPlan.MailPlus)
             }
     }
 }

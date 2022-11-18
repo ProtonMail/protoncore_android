@@ -76,8 +76,8 @@ open class BaseTest(
         fun prepare() {
             setupDeviceForAutomation(true)
             authHelper.logoutAll()
-            Plan.Dev.text = Plan.Plus.text
-            Plan.Dev.planName = Plan.Plus.planName
+            Plan.Dev.text = Plan.MailPlus.text
+            Plan.Dev.planName = Plan.MailPlus.planName
         }
 
         /** Generally available payment providers, which are at least partially supported by Core Android. */

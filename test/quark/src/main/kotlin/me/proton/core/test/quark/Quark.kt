@@ -143,7 +143,8 @@ public class Quark constructor(
             "plan=${user.plan.planName}",
             "cycle=${cycleDurationMonths}"
         )
-        quarkRequest(PAYMENTS_SEED_SUBSCRIBER, args)
+        val response = quarkRequest(PAYMENTS_SEED_SUBSCRIBER, args)
+        println("Quark response: $response")
         return user
     }
 

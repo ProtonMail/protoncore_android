@@ -73,8 +73,8 @@ class SignupWithGoogleIapTests : BaseMockTest {
         ActivityScenario.launch<UpgradeActivity>(intent)
 
         SelectPlanRobot()
-            .toggleExpandPlan(TestPlan.Plus)
-            .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
             .verify {
                 errorSnackbarDisplayed(PaymentIapR.string.payments_iap_error_billing_client_unavailable)
             }
@@ -108,8 +108,8 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
             .skipConfirm<SelectPlanRobot>()
-            .toggleExpandPlan(TestPlan.Plus)
-            .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
             .apply {
                 verify<GoogleIAPRobot.Verify> {
                     payWithGoogleButtonIsClickable()
@@ -147,8 +147,8 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
             .skipConfirm<SelectPlanRobot>()
-            .toggleExpandPlan(TestPlan.Plus)
-            .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
             .apply {
                 verify<GoogleIAPRobot.Verify> {
                     payWithGoogleButtonIsClickable()
@@ -170,8 +170,8 @@ class SignupWithGoogleIapTests : BaseMockTest {
         ActivityScenario.launch<UpgradeActivity>(intent)
 
         SelectPlanRobot()
-            .toggleExpandPlan(TestPlan.Plus)
-            .selectPlan<GoogleIAPRobot>(TestPlan.Plus)
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
             .apply { verify { googleIAPElementsDisplayed() } }
             .switchPaymentProvider<AddCreditCardRobot>()
             .apply { verify { addCreditCardElementsDisplayed() } }
@@ -179,8 +179,8 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .apply { verify { googleIAPElementsDisplayed() } }
             .back<SelectPlanRobot>()
             .verify {
-                planDetailsDisplayed(TestPlan.Plus)
-                canSelectPlan(TestPlan.Plus)
+                planDetailsDisplayed(TestPlan.MailPlus)
+                canSelectPlan(TestPlan.MailPlus)
             }
     }
 

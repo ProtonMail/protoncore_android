@@ -89,7 +89,7 @@ class UpgradePlanTests : BaseTest() {
     fun userWithPaidPlanCardAndIAPPayment1month() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
-        val paidUserCycle1 = User(plan = Plan.Plus)
+        val paidUserCycle1 = User(plan = Plan.MailPlus)
         val cycle1 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 1
         }
@@ -105,7 +105,7 @@ class UpgradePlanTests : BaseTest() {
     fun userWithPaidPlanCardAndIAPPayment12months() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
-        val paidUserCycle12 = User(plan = Plan.Plus)
+        val paidUserCycle12 = User(plan = Plan.MailPlus)
         val cycle12 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 12
         }
@@ -121,7 +121,7 @@ class UpgradePlanTests : BaseTest() {
     fun userWithPaidPlanCardAndIAPPayment15months() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
-        val paidUserCycle15 = User(plan = Plan.Plus)
+        val paidUserCycle15 = User(plan = Plan.MailPlus)
         val cycle15 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 15
         }
@@ -137,7 +137,7 @@ class UpgradePlanTests : BaseTest() {
     fun userWithPaidPlanCardAndIAPPayment30months() {
         quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
-        val paidUserCycle15 = User(plan = Plan.Plus)
+        val paidUserCycle15 = User(plan = Plan.MailPlus)
         val cycle15 = PlanCycle.OTHER.apply {
             cycleDurationMonths = 30
         }

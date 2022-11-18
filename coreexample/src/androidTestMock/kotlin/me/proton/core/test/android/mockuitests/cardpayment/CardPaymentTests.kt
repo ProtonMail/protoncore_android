@@ -86,11 +86,11 @@ class CardPaymentTests : BaseMockTest {
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
             .skipConfirm<SelectPlanRobot>()
-            .toggleExpandPlan(Plan.Plus)
-            .selectPlan<AddCreditCardRobot>(Plan.Plus)
+            .toggleExpandPlan(Plan.MailPlus)
+            .selectPlan<AddCreditCardRobot>(Plan.MailPlus)
             .apply {
                 verify {
-                    billingDetailsDisplayed(Plan.Plus, "CHF", false)
+                    billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
                 }
             }
             .payWithCreditCard<SignupFinishedRobot>(Card.default)
@@ -122,8 +122,8 @@ class CardPaymentTests : BaseMockTest {
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
             .skipConfirm<SelectPlanRobot>()
-            .toggleExpandPlan(Plan.Plus)
-            .selectPlan<GoogleIAPRobot>(Plan.Plus)
+            .toggleExpandPlan(Plan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(Plan.MailPlus)
             .apply {
                 verify<GoogleIAPRobot.Verify> {
                     payWithGoogleButtonIsClickable()
@@ -133,7 +133,7 @@ class CardPaymentTests : BaseMockTest {
             .switchPaymentProvider<AddCreditCardRobot>()
             .apply {
                 verify {
-                    billingDetailsDisplayed(Plan.Plus, "CHF", false)
+                    billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
                 }
             }
             .payWithCreditCard<SignupFinishedRobot>(Card.default)
@@ -187,8 +187,8 @@ class CardPaymentTests : BaseMockTest {
 
         CoreexampleRobot()
             .plansUpgrade()
-            .toggleExpandPlan(Plan.Plus)
-            .selectPlan<ExistingPaymentMethodsRobot>(Plan.Plus)
+            .toggleExpandPlan(Plan.MailPlus)
+            .selectPlan<ExistingPaymentMethodsRobot>(Plan.MailPlus)
             .apply {
                 verify {
                     val expectedTitle = StringUtils.stringFromResource(
@@ -202,7 +202,7 @@ class CardPaymentTests : BaseMockTest {
             .plansCurrent()
             .verify {
                 currentPlanDetailsDisplayed()
-                planDetailsDisplayed(Plan.Plus)
+                planDetailsDisplayed(Plan.MailPlus)
             }
     }
 
@@ -247,18 +247,18 @@ class CardPaymentTests : BaseMockTest {
 
         CoreexampleRobot()
             .plansUpgrade()
-            .toggleExpandPlan(Plan.Plus)
-            .selectPlan<AddCreditCardRobot>(Plan.Plus)
+            .toggleExpandPlan(Plan.MailPlus)
+            .selectPlan<AddCreditCardRobot>(Plan.MailPlus)
             .apply {
                 verify {
-                    billingDetailsDisplayed(Plan.Plus, "CHF", false)
+                    billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
                 }
             }
             .payWithCreditCard<CoreexampleRobot>(Card.default)
             .plansCurrent()
             .verify {
                 currentPlanDetailsDisplayed()
-                planDetailsDisplayed(Plan.Plus)
+                planDetailsDisplayed(Plan.MailPlus)
             }
     }
 
@@ -300,19 +300,19 @@ class CardPaymentTests : BaseMockTest {
 
         CoreexampleRobot()
             .plansUpgrade()
-            .toggleExpandPlan(Plan.Plus)
-            .selectPlan<GoogleIAPRobot>(Plan.Plus)
+            .toggleExpandPlan(Plan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(Plan.MailPlus)
             .switchPaymentProvider<AddCreditCardRobot>()
             .apply {
                 verify {
-                    billingDetailsDisplayed(Plan.Plus, "CHF", false)
+                    billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
                 }
             }
             .payWithCreditCard<CoreexampleRobot>(Card.default)
             .plansCurrent()
             .verify {
                 currentPlanDetailsDisplayed()
-                planDetailsDisplayed(Plan.Plus)
+                planDetailsDisplayed(Plan.MailPlus)
             }
     }
 }

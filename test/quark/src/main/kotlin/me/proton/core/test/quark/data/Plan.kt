@@ -22,14 +22,22 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public enum class Plan(public var planName: String, public var text: String) {
-    Free("free", "Proton Free"),
+    @Deprecated("This plan is no longer enabled.")
     Professional("pro", "Proton Mail Professional"),
+
+    @Deprecated("This plan is no longer enabled.")
     Visionary("visionary", "Visionary"),
-    Plus("plus", "Mail Plus"),
+
+    @Deprecated("This plan is no longer enabled.")
+    Plus("plus", "ProtonMail Plus"),
+
+    Free("free", "Proton Free"),
+    MailPlus("mail2022", "Mail Plus"),
+    Unlimited("bundle2022", "Proton Unlimited"),
     Dev("", "")
 }
 
-internal fun randomPaidPlan(): Plan = Plan.values().filter { it != Plan.Free }.random()
+internal fun randomPaidPlan(): Plan = arrayOf(Plan.MailPlus, Plan.Unlimited).random()
 
 public enum class BillingCycle(
     public val value: String,

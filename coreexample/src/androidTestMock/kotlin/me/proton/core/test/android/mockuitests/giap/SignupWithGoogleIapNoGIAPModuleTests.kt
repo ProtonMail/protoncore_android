@@ -18,9 +18,7 @@
 
 package me.proton.core.test.android.mockuitests.giap
 
-import android.content.Context
 import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ApplicationProvider
 import com.android.billingclient.api.BillingClient
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -65,7 +63,6 @@ class SignupWithGoogleIapNoGIAPModuleTests {
     @Inject
     lateinit var billingClientFactory: FakeBillingClientFactory
 
-    private val appContext: Context get() = ApplicationProvider.getApplicationContext()
     private val billingClient: BillingClient get() = billingClientFactory.billingClient
     private lateinit var dispatcher: TestWebServerDispatcher
     private lateinit var webServer: MockWebServer
@@ -155,8 +152,8 @@ class SignupWithGoogleIapNoGIAPModuleTests {
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
             .skipConfirm<SelectPlanRobot>()
-            .toggleExpandPlan(Plan.Plus)
-            .selectPlan<GoogleIAPRobot>(Plan.Plus)
+            .toggleExpandPlan(Plan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(Plan.MailPlus)
             .verify { addCreditCardElementsDisplayed() }
     }
 }

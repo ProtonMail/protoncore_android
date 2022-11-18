@@ -190,8 +190,10 @@ public final class me/proton/core/test/quark/data/Plan : java/lang/Enum {
 	public static final field Companion Lme/proton/core/test/quark/data/Plan$Companion;
 	public static final field Dev Lme/proton/core/test/quark/data/Plan;
 	public static final field Free Lme/proton/core/test/quark/data/Plan;
+	public static final field MailPlus Lme/proton/core/test/quark/data/Plan;
 	public static final field Plus Lme/proton/core/test/quark/data/Plan;
 	public static final field Professional Lme/proton/core/test/quark/data/Plan;
+	public static final field Unlimited Lme/proton/core/test/quark/data/Plan;
 	public static final field Visionary Lme/proton/core/test/quark/data/Plan;
 	public final fun getPlanName ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
