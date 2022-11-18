@@ -11,6 +11,37 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.5.0] - 2022-11-18
+
+### Chores
+
+- include-core-build:
+  - Added meta.properties marker support.
+- network:
+  - Fix TimeoutOverride is not being respected.
+  - Decrease connection timeout to 3 sec.
+
+### Features
+
+- auth:
+  - Adjust account setup for Internal accounts.
+
+    - The two-pass mode is executed before setting up address keys.
+    - For Internal accounts, make sure to setup keys for all addresses.
+  - Setup keys for external accounts.
+- key:
+  - Use proper flags when creating user address key for an external account.
+  - Add constants for `PublicAddressKeyFlags` values.
+- user:
+  - Additional extension functions for `List<UserAddress>` and `UserAddress`.
+  - Use proper flags when creating user address key for an external account.
+- util-kotlin:
+  - Add `String.random()` extension.
+
+### Internationalization
+
+- Upgrade translations from crowdin (559b7749).
+
 ## [9.4.1] - 2022-11-14
 
 ### Bug Fixes
