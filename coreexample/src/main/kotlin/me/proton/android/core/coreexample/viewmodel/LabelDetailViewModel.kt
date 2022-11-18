@@ -86,7 +86,7 @@ class LabelDetailViewModel @Inject constructor(
     private fun updateLabel(): Flow<State> = flow {
         emit(State.Loading)
         val updatedLabel = requireNotNull(labelRepository.getLabel(userId, labelType, labelId))
-        labelRepository.updateLabel(userId, updatedLabel.copy(name = String.random()))
+        labelRepository.updateLabel(userId, updatedLabel.copy(name = String.random(length = 6)))
         emit(State.Updated)
         emitAll(observeLabel())
     }.catch {

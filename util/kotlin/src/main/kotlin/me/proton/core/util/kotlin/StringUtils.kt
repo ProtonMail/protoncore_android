@@ -255,7 +255,7 @@ operator fun String.times(times: Int): String {
 }
 
 fun String.Companion.random(
-    length: Long = 6,
+    length: Long = 10,
     charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 ): String =
     (1..length).map { charPool.random() }.joinToString("")
