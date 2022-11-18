@@ -23,6 +23,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import java.io.File
 
 abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
     override fun apply(target: Settings) {
@@ -34,6 +35,8 @@ abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
         val username = System.getenv("GIT_CI_USERNAME")
         val token = System.getenv("PRIVATE_TOKEN_GITLAB_API_PROTON_CI")
         val commitSha = System.getenv("CORE_COMMIT_SHA")
+        val parentPath = target.rootDir.parentFile.absolutePath
+        val metaProperties = File("$parentPath/${metaProperties}")
         target.gradle.settingsEvaluated {
             val protonLibsUri = when {
                 config.uri.isPresent -> config.uri.get()
@@ -46,6 +49,7 @@ abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
                 refreshIntervalMillis.set(config.refreshIntervalMillis.orNull)
                 checkoutsDirectory.set(target.rootDir.parentFile)
                 when {
+                    metaProperties.exists() -> includeBuild(parentRepoDir)
                     commitSha != null -> include(repoDir) {
                         uri.set(protonLibsUri)
                         commit.set(commitSha)
@@ -61,5 +65,7 @@ abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
 
     companion object {
         const val repoDir = "proton-libs"
+        const val parentRepoDir = "../$repoDir"
+        const val metaProperties = "meta.properties"
     }
 }
