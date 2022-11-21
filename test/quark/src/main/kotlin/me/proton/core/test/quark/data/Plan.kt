@@ -34,6 +34,7 @@ public enum class Plan(public var planName: String, public var text: String) {
     Free("free", "Proton Free"),
     MailPlus("mail2022", "Mail Plus"),
     Unlimited("bundle2022", "Proton Unlimited"),
+    VpnPlus("vpn2022", "VPN Plus"),
     Dev("", "")
 }
 
