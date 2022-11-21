@@ -30,7 +30,7 @@
   <string name="plans_renewal_date">Dein Abonnement wird am &lt;b&gt;%s&lt;/b&gt; automatisch verlängert</string>
   <string name="plans_expiration_date">Dein Abonnement läuft am &lt;b&gt;%s&lt;/b&gt; ab</string>
   <string name="plans_billed_yearly">*Jährlich abgerechnet mit %s</string>
-  <string name="plans_billed_monthly">Monatliche Abrechnung</string>
+  <string name="plans_billed_monthly">Monatlich abgerechnet</string>
   <string name="plans_billing_monthly">Für einen Monat</string>
   <string name="plans_billing_yearly">Für ein Jahr</string>
   <string name="plans_billing_two_years">Für zwei Jahre</string>

@@ -46,8 +46,8 @@
   <string name="settings_password_management_login_password_success">ログインパスワードが更新されました</string>
   <string name="settings_password_management_mailbox_password_success">受信箱のパスワードが更新されました</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
-  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
-  <string name="device_settings_crashreport_title">Anonymous crash reports</string>
-  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
+  <string name="device_settings_telemetry_title">匿名の情報収集</string>
+  <string name="device_settings_telemetry_hint">サービスを改善するため、匿名化されたデータを収集します。</string>
+  <string name="device_settings_crashreport_title">匿名によるクラッシュレポート</string>
+  <string name="device_settings_crashreport_hint">アプリのクラッシュ時に、原因の詳細と一緒にエンジニアへ送信されます。これはアプリの改善のためのみに使用されます。</string>
 </resources>

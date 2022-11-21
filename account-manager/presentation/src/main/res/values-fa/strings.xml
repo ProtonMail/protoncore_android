@@ -22,6 +22,6 @@
   <string name="account_switcher_action_sign_in">ورود</string>
   <string name="account_switcher_action_sign_out">خروج</string>
   <string name="account_switcher_action_remove">حذف</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
+  <string name="account_list_item_chevron_content_description">باز کردن تغییر دهنده حساب</string>
   <string name="account_view_three_dots_content_description">گزینه ها</string>
 </resources>

@@ -63,7 +63,7 @@
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">アカウントアップグレードを続行</string>
   <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
+  <string name="payments_giap_unredeemed_confirm">アップデートを確認</string>
   <string name="payments_giap_redeem_success">アカウントは正常にアップグレードされました</string>
   <string name="payments_giap_redeem_error">アップグレードを完了できませんでした。再度お試しください。</string>
   <!-- endregion -->

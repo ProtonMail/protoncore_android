@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
-  <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Torna a començar el procés.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Torna a començar el procés.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Torna a començar el procés.</string>
-  <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
-  <string name="payments_iap_error_billing_client_unavailable">The Google billing client is currently unavailable or disconnected.</string>
+  <string name="payments_iap_surcharge_info">* Inclou recàrrec per taxes i impostos addicionals del proveïdor.</string>
+  <string name="payments_iap_terms_conditions">En tocar "Compra amb Google Pay", acceptes els termes i condicions de Google Pay i acceptes configurar un pagament recurrent amb Google.</string>
+  <string name="payments_iap_invalid_google_plan">Selecció de pla invàlida. Torna a començar el procés.</string>
+  <string name="payments_iap_error_google_plan_price">Problema amb el preu de producte de Google. Torna a començar el procés.</string>
+  <string name="payments_iap_error_fetching_google_plan">S\'ha produït un problema en obtenir el producte de Google. Torna a començar el procés.</string>
+  <string name="payments_iap_error_already_owned">Ja sou propietari d\'aquest producte. Si us plau, seleccioneu un diferent.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Actualment, el client de facturació de Google no està disponible o està desconnectat.</string>
   <string name="payments_iap_general_error">S\'ha produït un error. Torna a començar el procés.</string>
 </resources>
