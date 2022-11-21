@@ -31,15 +31,15 @@ abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
         val config = target.createExtension() as DefaultProtonIncludeCoreBuildExtension
         // Configuration from CI.
         val isCI = System.getenv("CI").toBoolean()
-        val host = System.getenv("GIT_SERVER_HOST")
-        val token = System.getenv("GIT_TOKEN_READ_REPO")
+        val host = System.getenv("CI_SERVER_HOST")
+        val token = System.getenv("CI_JOB_TOKEN")
         val commitSha = System.getenv("CORE_COMMIT_SHA")
         val parentPath = target.rootDir.parentFile.absolutePath
         val metaProperties = File("$parentPath/${metaProperties}")
         target.gradle.settingsEvaluated {
             val protonLibsUri = when {
                 config.uri.isPresent -> config.uri.get()
-                isCI -> "https://username:$token@$host/proton/mobile/android/proton-libs.git"
+                isCI -> "https://gitlab-ci-token:$token@$host/proton/mobile/android/proton-libs.git"
                 else -> "https://github.com/ProtonMail/protoncore_android.git"
             }
             // Configuration for Core.
