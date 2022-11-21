@@ -209,7 +209,7 @@ data class ProtonTypography(
             fontWeight = FontWeight.W500
         ),
         captionRegular: TextStyle = TextStyle(
-            fontSize = 14.sp,
+            fontSize = 12.sp,
             fontWeight = FontWeight.W400,
             letterSpacing = 0.03.em,
             lineHeight = 16.sp
@@ -220,7 +220,7 @@ data class ProtonTypography(
         overlineRegular: TextStyle = TextStyle(
             fontSize = 10.sp,
             fontWeight = FontWeight.W400,
-            letterSpacing = 0.04.em,
+            letterSpacing = 0.03.em,
             lineHeight = 16.sp
         ),
         overlineMedium: TextStyle = overlineRegular.copy(
