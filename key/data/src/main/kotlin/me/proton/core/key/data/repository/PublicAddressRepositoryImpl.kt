@@ -73,6 +73,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
     private suspend fun insertOrUpdate(publicAddress: PublicAddress) =
         db.inTransaction {
             publicAddressDao.insertOrUpdate(publicAddress.toEntity())
+            publicAddressKeyDao.deleteByEmail(publicAddress.email)
             publicAddressKeyDao.insertOrUpdate(*publicAddress.keys.toEntityList().toTypedArray())
         }
 
