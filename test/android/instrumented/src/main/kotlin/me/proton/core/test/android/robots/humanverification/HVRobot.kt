@@ -74,7 +74,7 @@ class HVEmailRobot(version: HumanVerificationVersion) : BaseHVEmailRobot() {
     override fun getVerificationCode(): BaseHVCodeRobot = delegate.getVerificationCode()
 }
 
-abstract class HVSmsRobot(version: HumanVerificationVersion) : BaseHVSmsRobot() {
+class HVSmsRobot(version: HumanVerificationVersion) : BaseHVSmsRobot() {
     private val delegate: BaseHVSmsRobot = when (version) {
         HumanVerificationVersion.HV3 -> HV3SmsRobot()
     }
@@ -91,7 +91,7 @@ abstract class HVSmsRobot(version: HumanVerificationVersion) : BaseHVSmsRobot() 
     override fun getVerificationCode(): BaseHVCodeRobot = delegate.getVerificationCode()
 }
 
-abstract class HVSmsCountryRobot(version: HumanVerificationVersion) : BaseHVSmsCountryRobot() {
+class HVSmsCountryRobot(version: HumanVerificationVersion) : BaseHVSmsCountryRobot() {
     private val delegate: BaseHVSmsCountryRobot = when (version) {
         HumanVerificationVersion.HV3 -> HV3SmsCountryRobot()
     }
@@ -103,7 +103,7 @@ abstract class HVSmsCountryRobot(version: HumanVerificationVersion) : BaseHVSmsC
     override fun selectCountry(country: String): BaseHVSmsRobot = delegate.selectCountry(country)
 }
 
-abstract class HVCodeRobot(version: HumanVerificationVersion) : BaseHVCodeRobot() {
+class HVCodeRobot(version: HumanVerificationVersion) : BaseHVCodeRobot() {
     private val delegate: BaseHVCodeRobot = when (version) {
         HumanVerificationVersion.HV3 -> HV3CodeRobot()
     }
@@ -112,4 +112,5 @@ abstract class HVCodeRobot(version: HumanVerificationVersion) : BaseHVCodeRobot(
 
     override fun setCode(code: String): BaseHVCodeRobot = delegate.setCode(code)
     override fun <T> verifyCode(next: Class<T>): T = delegate.verifyCode(next)
+    override fun verify(block: Verify.() -> Unit) = delegate.verify(block)
 }

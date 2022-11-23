@@ -85,4 +85,10 @@ abstract class BaseHVSmsCountryRobot : CoreRobot() {
 abstract class BaseHVCodeRobot : CoreRobot() {
     abstract fun setCode(code: String): BaseHVCodeRobot
     abstract fun <T> verifyCode(next: Class<T>): T
+
+    abstract fun verify(block: Verify.() -> Unit)
+
+    interface Verify {
+        fun incorrectCode()
+    }
 }

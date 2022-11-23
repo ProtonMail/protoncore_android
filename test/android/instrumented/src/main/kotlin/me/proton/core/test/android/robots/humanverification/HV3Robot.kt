@@ -193,6 +193,16 @@ internal class HV3CodeRobot : BaseHVCodeRobot(), WithUiDevice {
             .perform(webClick())
         return next.newInstance()
     }
+
+    override fun verify(block: BaseHVCodeRobot.Verify.() -> Unit) {
+        Verify().apply(block)
+    }
+
+    private class Verify: BaseHVCodeRobot.Verify, WithUiDevice {
+        override fun incorrectCode() {
+            hasObject(By.textContains("Invalid verification code")).waitForIt()
+        }
+    }
 }
 
 private interface WithUiDevice {
