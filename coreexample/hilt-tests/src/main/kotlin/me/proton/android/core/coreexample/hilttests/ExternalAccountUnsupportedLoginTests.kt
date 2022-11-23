@@ -99,6 +99,6 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
     }
 
     companion object {
-        val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+        val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
     }
 }

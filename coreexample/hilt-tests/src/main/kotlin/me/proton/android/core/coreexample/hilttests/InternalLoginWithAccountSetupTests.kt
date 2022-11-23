@@ -149,6 +149,6 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
     }
 
     companion object {
-        private val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
     }
 }

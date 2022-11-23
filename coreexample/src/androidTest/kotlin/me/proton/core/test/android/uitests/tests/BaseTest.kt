@@ -60,8 +60,8 @@ open class BaseTest(
     }
 
     companion object {
-        val users = Users()
-        val quark = Quark(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+        val users = Users.fromDefaultResources()
+        val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
         val authHelper by lazy { protonTestEntryPoint.loginTestHelper }
 
         private val protonTestEntryPoint by lazy {

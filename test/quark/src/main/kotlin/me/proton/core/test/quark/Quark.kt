@@ -41,8 +41,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-private const val INTERNAL_API_JSON_PATH: String = "/sensitive/internal_apis.json"
-
 public class Quark constructor(
     private val host: String,
     private val proxyToken: String?,
@@ -65,20 +63,6 @@ public class Quark constructor(
         PAYMENTS_SEED_SUBSCRIBER,
         DRIVE_POPULATE_USER_WITH_DATA
     }
-
-    public constructor(
-        host: String,
-        proxyToken: String?
-    ) : this(
-        host = host,
-        proxyToken = proxyToken,
-        internalApi = Quark::class.java
-            .getResourceAsStream(INTERNAL_API_JSON_PATH)
-            .let { requireNotNull(it) { "Could not find resource file: $INTERNAL_API_JSON_PATH" } }
-            .bufferedReader()
-            .use { it.readText() }
-            .deserialize()
-    )
 
     private val client = OkHttpClient
         .Builder()
@@ -248,4 +232,42 @@ public class Quark constructor(
 
     private fun List<Pair<String, String>?>.toEncodedArgs(): Array<String> =
         filterNotNull().map { (key, value) -> "$key=${URLEncoder.encode(value, "UTF-8")}" }.toTypedArray()
+
+    public companion object {
+        public fun fromJson(
+            json: String,
+            host: String,
+            proxyToken: String?
+        ): Quark = Quark(
+            host = host,
+            proxyToken = proxyToken,
+            json.deserialize()
+        )
+
+        public fun fromJavaResources(
+            classLoader: ClassLoader,
+            resourcePath: String,
+            host: String,
+            proxyToken: String?
+        ): Quark = fromJson(
+            json = classLoader
+                .getResourceAsStream(resourcePath)
+                .let { requireNotNull(it) { "Could not find resource file: $resourcePath" } }
+                .bufferedReader()
+                .use { it.readText() },
+            host = host,
+            proxyToken = proxyToken
+        )
+
+        /** Assumes `internal_apis.json` file exists in quark module `resources/sensitive` directory. */
+        public fun fromDefaultResources(
+            host: String,
+            proxyToken: String?
+        ): Quark = fromJavaResources(
+            Quark::class.java.classLoader,
+            resourcePath = "sensitive/internal_apis.json",
+            host = host,
+            proxyToken = proxyToken
+        )
+    }
 }

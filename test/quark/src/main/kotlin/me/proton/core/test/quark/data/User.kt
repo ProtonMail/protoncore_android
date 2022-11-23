@@ -23,8 +23,6 @@ import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.deserializeList
 import me.proton.core.util.kotlin.random
 
-private const val USERS_JSON_PATH = "/sensitive/users.json"
-
 @Serializable
 public data class User(
     val name: String = randomUsername(),
@@ -55,15 +53,6 @@ public data class User(
     }
 
     public class Users constructor(private val userData: List<User>) {
-        public constructor(usersJsonAssetsPath: String = USERS_JSON_PATH) : this(
-            userData = User::class.java
-                .getResourceAsStream(usersJsonAssetsPath)
-                .let { requireNotNull(it) { "Could not find resource file: $usersJsonAssetsPath" } }
-                .bufferedReader()
-                .use { it.readText() }
-                .deserializeList<User>() as MutableList<User>
-        )
-
         public fun getUser(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): User {
             getUsers(usernameAndOnePass, predicate)
                 .let {
@@ -81,6 +70,21 @@ public data class User(
                 .filter { it.isOnePasswordWithUsername == usernameAndOnePass }
                 .filter(predicate)
         }
+
+        public companion object {
+            public fun fromJson(json: String): Users =
+                Users(json.deserializeList())
+
+            public fun fromJavaResources(classLoader: ClassLoader, resourcePath: String): Users =
+                fromJson(classLoader
+                    .getResourceAsStream(resourcePath)
+                    .let { requireNotNull(it) { "Could not find resource file: $resourcePath" } }
+                    .bufferedReader()
+                    .use { it.readText() })
+
+            /** Assumes `users.json` file exists in quark module `resources/sensitive` directory. */
+            public fun fromDefaultResources(): Users =
+                fromJavaResources(Users::class.java.classLoader, "sensitive/users.json")
+        }
     }
 }
-

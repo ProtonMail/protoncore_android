@@ -1,5 +1,5 @@
 public final class me/proton/core/test/quark/Quark {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public static final field Companion Lme/proton/core/test/quark/Quark$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$InternalApi;)V
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;
 	public final fun jailUnban ()V
@@ -19,6 +19,12 @@ public final class me/proton/core/test/quark/Quark {
 	public static synthetic fun userCreate$default (Lme/proton/core/test/quark/Quark;Lme/proton/core/test/quark/data/User;Lme/proton/core/test/quark/Quark$CreateAddress;ILjava/lang/Object;)Lkotlin/Pair;
 	public final fun userCreateAddress (JLjava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$GenKeys;)Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse;
 	public static synthetic fun userCreateAddress$default (Lme/proton/core/test/quark/Quark;JLjava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$GenKeys;ILjava/lang/Object;)Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse;
+}
+
+public final class me/proton/core/test/quark/Quark$Companion {
+	public final fun fromDefaultResources (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/quark/Quark;
+	public final fun fromJavaResources (Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/quark/Quark;
+	public final fun fromJson (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/quark/Quark;
 }
 
 public abstract class me/proton/core/test/quark/Quark$CreateAddress {
@@ -280,13 +286,18 @@ public final class me/proton/core/test/quark/data/User$Companion {
 }
 
 public final class me/proton/core/test/quark/data/User$Users {
-	public fun <init> (Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final field Companion Lme/proton/core/test/quark/data/User$Users$Companion;
 	public fun <init> (Ljava/util/List;)V
 	public final fun getUser (ZLkotlin/jvm/functions/Function1;)Lme/proton/core/test/quark/data/User;
 	public static synthetic fun getUser$default (Lme/proton/core/test/quark/data/User$Users;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/test/quark/data/User;
 	public final fun getUsers (ZLkotlin/jvm/functions/Function1;)Ljava/util/List;
 	public static synthetic fun getUsers$default (Lme/proton/core/test/quark/data/User$Users;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/util/List;
+}
+
+public final class me/proton/core/test/quark/data/User$Users$Companion {
+	public final fun fromDefaultResources ()Lme/proton/core/test/quark/data/User$Users;
+	public final fun fromJavaResources (Ljava/lang/ClassLoader;Ljava/lang/String;)Lme/proton/core/test/quark/data/User$Users;
+	public final fun fromJson (Ljava/lang/String;)Lme/proton/core/test/quark/data/User$Users;
 }
 
 public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResponse {
