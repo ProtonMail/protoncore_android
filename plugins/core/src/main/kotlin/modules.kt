@@ -64,6 +64,7 @@ public object Module {
     public const val authDomain: String = "$auth:auth-domain"
     public const val authPresentation: String = "$auth:auth-presentation"
     public const val authData: String = "$auth:auth-data"
+    public const val authTest: String = "$auth:auth-test"
 
     // Account
     public const val account: String = ":account"
