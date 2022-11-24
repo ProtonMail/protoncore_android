@@ -201,33 +201,17 @@ binary-compatibility-check:
   script:
     - ./gradlew apiCheck
 
-trigger-client-integration-tests:
-  extends: .script-job
-  stage: test
-  when: manual
-  tags:
-    - medium
-  cache: []
-  before_script:
-    - source /load-env.sh
-  script:
-    - echo "Trigger all clients integration tests"
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-
 .client-integration-tests:
-  needs:
-    - trigger-client-integration-tests
+  stage: test
   inherit:
     variables: false
   variables:
     CORE_COMMIT_SHA: $CI_COMMIT_SHA
     ORG_GRADLE_PROJECT_useCoreGitSubmodule: "true"
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 calendar-integration-tests:
   extends: .client-integration-tests
+  when: manual
   variables:
     CALENDAR_INTEGRATION_REF: develop
   trigger:
@@ -236,14 +220,16 @@ calendar-integration-tests:
 
 mail-v6-integration-tests:
   extends: .client-integration-tests
+  when: manual
   variables:
     MAIL_V6_INTEGRATION_REF: master
   trigger:
     project: android/mail/proton-mail
     branch: $MAIL_V6_INTEGRATION_REF
 
-mail-integration-tests:
+mail-v5-integration-tests:
   extends: .client-integration-tests
+  when: manual
   variables:
     MAIL_INTEGRATION_REF: develop
   trigger:
@@ -252,6 +238,7 @@ mail-integration-tests:
 
 vpn-integration-tests:
   extends: .client-integration-tests
+  when: manual
   variables:
     VPN_INTEGRATION_REF: development
   trigger:
@@ -260,11 +247,21 @@ vpn-integration-tests:
 
 drive-integration-tests:
   extends: .client-integration-tests
+  when: manual
   variables:
     DRIVE_INTEGRATION_REF: develop
   trigger:
     project: android/drive/proton-drive
     branch: $DRIVE_INTEGRATION_REF
+
+pass-integration-tests:
+  extends: .client-integration-tests
+  when: manual
+  variables:
+    PASS_INTEGRATION_REF: main
+  trigger:
+    project: android/pass/ProtonPass
+    branch: $PASS_INTEGRATION_REF
 
 ## firebase stage ##################################################################################
 .firebase-tests-common:
