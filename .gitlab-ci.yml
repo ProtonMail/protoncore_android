@@ -354,7 +354,7 @@ uitest:mocked-tests:
   extends: .firebase-tests-common
 
 uitest:hilt-tests:
-  allow_failure: false
+  allow_failure: true
   variables:
     TEST_APK: "coreexample/hilt-tests/build/outputs/apk/localProperties/debug/coreexample-hilt-tests-localProperties-debug.apk"
     TEST_TARGET: "package me.proton.android.core.coreexample.hilttests"
