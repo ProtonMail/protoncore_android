@@ -11,6 +11,36 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.6.0] - 2022-11-25
+
+### Chores
+
+- human-verification:
+  - Remove HV2.
+- include-core-build:
+  - Added Gitlab Job Token support.
+  - Added Include Git Repo support.
+
+### Bug Fixes
+
+- human-verification:
+  - Show error snack if HV failed loading.
+  - Include extra headers (e.g. proxy token) whenever the root domain matches.
+- key-data:
+  - Remove old public keys when refreshing.
+
+    When fetching public keys from the backend, we need to
+    remove old keys that were previously stored in the
+    local db and are no longer in the API response.
+- network:
+  - Notify client about alternative proxies failures.
+- presentation-compose:
+  - Update typography values according to designs.
+
+### Internationalization
+
+- Upgrade translations from crowdin (cb8fc206).
+
 ## [9.5.0] - 2022-11-18
 
 ### Chores
