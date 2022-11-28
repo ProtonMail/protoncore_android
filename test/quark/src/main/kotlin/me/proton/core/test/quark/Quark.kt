@@ -205,8 +205,18 @@ public class Quark constructor(
         return user
     }
 
+    /** WARNING:
+     * Should be used only in [me.proton.core.test.android.uitests.tests.medium.plans]
+     * or [me.proton.core.test.android.uitests.tests.medium.payments] tests,
+     * to avoid overwriting this setting.
+     */
     public fun setDefaultPaymentMethods(): Unit = setPaymentMethods(card = true, paypal = true, inApp = true)
 
+    /** WARNING:
+     * Should be used only in [me.proton.core.test.android.uitests.tests.medium.plans]
+     * or [me.proton.core.test.android.uitests.tests.medium.payments] tests,
+     * to avoid overwriting this setting.
+     */
     public fun setPaymentMethods(
         appStore: AppStore = AppStore.GooglePlay,
         card: Boolean = true,

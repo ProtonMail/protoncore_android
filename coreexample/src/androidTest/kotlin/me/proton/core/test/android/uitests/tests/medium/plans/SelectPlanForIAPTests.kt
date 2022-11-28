@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.medium.auth.signup
+package me.proton.core.test.android.uitests.tests.medium.plans
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.data.Plan.Dev

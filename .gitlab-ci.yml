@@ -326,14 +326,9 @@ uitest:login-and-hv:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.login,package me.proton.core.test.android.uitests.tests.medium.humanverification"
   extends: .firebase-tests-common
 
-uitest:payments:
+uitest:plans-and-payments:
   variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.payments"
-  extends: .firebase-tests-common
-
-uitest:plans:
-  variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.plans"
+    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.plans,package me.proton.core.test.android.uitests.tests.medium.payments"
   extends: .firebase-tests-common
 
 uitest:usersettings:

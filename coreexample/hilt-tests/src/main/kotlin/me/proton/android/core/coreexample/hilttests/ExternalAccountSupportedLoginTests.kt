@@ -38,6 +38,7 @@ import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.domain.entity.key.KeyFlags
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
 import me.proton.core.user.domain.UserManager
@@ -83,6 +84,9 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
     lateinit var accountManager: AccountManager
 
     @Inject
+    lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
     lateinit var userManager: UserManager
 
     @Inject
@@ -95,6 +99,8 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
 
     @Test
     fun loginWithExternalAccountNoKeys() {
+        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
+
         val testUser = TestUser(
             name = "",
             email = "${TestUser.randomUsername()}@externaldomain.test",
