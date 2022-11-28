@@ -2,8 +2,8 @@ public abstract interface class me/proton/core/test/android/ArchTest {
 	public abstract fun getArchRule ()Landroidx/arch/core/executor/testing/InstantTaskExecutorRule;
 }
 
-public final class me/proton/core/test/android/ArchTest$DefaultImpls {
-	public static fun getArchRule (Lme/proton/core/test/android/ArchTest;)Landroidx/arch/core/executor/testing/InstantTaskExecutorRule;
+public final class me/proton/core/test/android/ArchTestKt {
+	public static final fun ArchTest ()Lme/proton/core/test/android/ArchTest;
 }
 
 public final class me/proton/core/test/android/BuildConfig {

@@ -8,7 +8,7 @@ import org.junit.Rule
  * It applies [InstantTaskExecutorRule]
  * Example:
 ```
-class MyClassTest : ArchTest {
+class MyClassTest : ArchTest by ArchTest() {
     // test cases
 }
 ```
@@ -16,7 +16,10 @@ class MyClassTest : ArchTest {
  * @author Davide Farella
  */
 interface ArchTest {
-
     @get:Rule
-    val archRule get() = InstantTaskExecutorRule()
+    val archRule: InstantTaskExecutorRule
+}
+
+fun ArchTest(): ArchTest = object : ArchTest {
+    override val archRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 }

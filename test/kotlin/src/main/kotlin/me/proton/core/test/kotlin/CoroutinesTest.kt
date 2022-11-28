@@ -21,9 +21,10 @@
 package me.proton.core.test.kotlin
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import me.proton.core.util.kotlin.DispatcherProvider
 import org.junit.Rule
@@ -35,12 +36,12 @@ import kotlin.coroutines.CoroutineContext
  * An interface meant to be implemented by a Test Suite that uses Complex Concurrency via Coroutines.
  * Example:
 ```
-class MyClassTest : CoroutinesTest {
+class MyClassTest : CoroutinesTest by CoroutinesTest() {
 
-    @Test
-    fun `some test`() = coroutinesTest {
-        // testing structured concurrency here!
-    }
+@Test
+fun `some test`() = coroutinesTest {
+// testing structured concurrency here!
+}
 }
 ```
  *
@@ -50,49 +51,46 @@ class MyClassTest : CoroutinesTest {
  */
 interface CoroutinesTest {
 
-    @get:Rule val coroutinesRule: CoroutinesTestRule
-        get() = CoroutinesTestRule(dispatchers)
+    @get:Rule
+    val coroutinesRule: CoroutinesTestRule
 
-    val dispatchers: DispatcherProvider
-        get() = TestDispatcherProvider
+    /** Dispatchers used for a given test.
+     * This property is available only during the test execution (after the test has started).
+     */
+    val dispatchers: DispatcherProvider get() = coroutinesRule.dispatchers
 
     /**
      * Use this for ensure that the test block is running on the provided dispatcher and avoid errors like
      * `Job has not completed yet`
      */
     fun coroutinesTest(
-        context: CoroutineContext = dispatchers.Main,
-        block: suspend TestCoroutineScope.() -> Unit
-    ) = runBlockingTest(context, block)
-
-    // TODO: remove in 0.2
-    @Deprecated("Use from 'dispatchers'", ReplaceWith("dispatchers.Main"))
-    val mainDispatcher get() = dispatchers.Main
-    // TODO: remove in 0.2
-    @Deprecated("Use from 'dispatchers'", ReplaceWith("dispatchers.Io"))
-    val ioDispatcher get() = dispatchers.Io
-    // TODO: remove in 0.2
-    @Deprecated("Use from 'dispatchers'", ReplaceWith("dispatchers.Comp"))
-    val compDispatcher get() = dispatchers.Comp
+        context: CoroutineContext = coroutinesRule.dispatchers.Main,
+        block: suspend TestScope.() -> Unit
+    ) = runTest(context, testBody = block)
 }
 
-/** @see CoroutinesTest */
-// TODO: remove in 0.2
-@Deprecated(
-    "Not needed anymore. One test can implement 'CoroutinesTest' without providing a concrete implementation"
-)
-val coroutinesTest = object : CoroutinesTest {}
+/** Helper for constructing a [CoroutinesTest]. */
+fun CoroutinesTest(dispatchers: () -> DispatcherProvider = { TestDispatcherProvider() }): CoroutinesTest =
+    object : CoroutinesTest {
+        override val coroutinesRule: CoroutinesTestRule = CoroutinesTestRule(dispatchers)
+    }
+
+/** A [CoroutinesTest] that uses [UnconfinedTestDispatcher]. */
+@Suppress("FunctionName")
+fun UnconfinedCoroutinesTest(): CoroutinesTest = CoroutinesTest { TestDispatcherProvider(UnconfinedTestDispatcher()) }
 
 /**
  * A JUnit Test Rule that set a Main Dispatcher
  * @author Davide Farella
  */
 class CoroutinesTestRule internal constructor(
-    val dispatchers: DispatcherProvider = TestDispatcherProvider
+    val dispatchersFactory: () -> DispatcherProvider = { TestDispatcherProvider() }
 ) : TestWatcher() {
+    lateinit var dispatchers: DispatcherProvider
 
     override fun starting(description: Description) {
         super.starting(description)
+        dispatchers = dispatchersFactory()
         Dispatchers.setMain(dispatchers.Main)
     }
 

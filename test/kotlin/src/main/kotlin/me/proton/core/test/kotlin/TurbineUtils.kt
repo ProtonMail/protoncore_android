@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,31 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.test.kotlin
 
-plugins {
-    protonKotlinLibrary
-}
+import app.cash.turbine.ReceiveTurbine
+import app.cash.turbine.test
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
-proton {
-    apiModeDisabled()
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.kotlinUtil),
-        `coroutines-test`,
-        junit,
-        mockWebServer
-    )
-
-    implementation(
-        `coroutines-core`,
-        `kotlin-test`,
-        `retrofit-kotlin-serialization`,
-        turbine
-    )
+fun <T> TestScope.flowTest(flow: Flow<T>, validate: suspend ReceiveTurbine<T>.() -> Unit): Job {
+    return launch(UnconfinedTestDispatcher(testScheduler)) {
+        flow.test(validate = validate)
+    }
 }

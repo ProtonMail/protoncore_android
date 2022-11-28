@@ -23,18 +23,19 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import me.proton.core.util.kotlin.DispatcherProvider
 import org.junit.Test
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class CoroutinesTestTest : CoroutinesTest {
+internal class CoroutinesTestTest : CoroutinesTest by CoroutinesTest() {
 
     @Test
     fun `verify test completes correctly with injected scope`() = coroutinesTest {
         val time = measureTimeMillis {
-            val sut = StructuredConcurrencyTestClass(dispatchers, this)
+            val sut = StructuredConcurrencyTestClass(coroutinesRule.dispatchers, this)
             advanceUntilIdle()
             assertEquals(15, sut.result)
         }
@@ -44,7 +45,7 @@ internal class CoroutinesTestTest : CoroutinesTest {
     @Test
     fun `verify test completes correctly with standalone scope`() = coroutinesTest {
         val time = measureTimeMillis {
-            val sut = StructuredConcurrencyTestClass(dispatchers)
+            val sut = StructuredConcurrencyTestClass(coroutinesRule.dispatchers)
             advanceUntilIdle()
             assertEquals(15, sut.result)
         }

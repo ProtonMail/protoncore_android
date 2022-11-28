@@ -9,30 +9,28 @@ public final class me/proton/core/test/kotlin/BuildRetrofitApi {
 
 public abstract interface class me/proton/core/test/kotlin/CoroutinesTest {
 	public abstract fun coroutinesTest (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
-	public abstract fun getCompDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public abstract fun getCoroutinesRule ()Lme/proton/core/test/kotlin/CoroutinesTestRule;
 	public abstract fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
-	public abstract fun getIoDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public abstract fun getMainDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 }
 
 public final class me/proton/core/test/kotlin/CoroutinesTest$DefaultImpls {
 	public static fun coroutinesTest (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
 	public static synthetic fun coroutinesTest$default (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
-	public static fun getCompDispatcher (Lme/proton/core/test/kotlin/CoroutinesTest;)Lkotlinx/coroutines/CoroutineDispatcher;
-	public static fun getCoroutinesRule (Lme/proton/core/test/kotlin/CoroutinesTest;)Lme/proton/core/test/kotlin/CoroutinesTestRule;
 	public static fun getDispatchers (Lme/proton/core/test/kotlin/CoroutinesTest;)Lme/proton/core/util/kotlin/DispatcherProvider;
-	public static fun getIoDispatcher (Lme/proton/core/test/kotlin/CoroutinesTest;)Lkotlinx/coroutines/CoroutineDispatcher;
-	public static fun getMainDispatcher (Lme/proton/core/test/kotlin/CoroutinesTest;)Lkotlinx/coroutines/CoroutineDispatcher;
 }
 
 public final class me/proton/core/test/kotlin/CoroutinesTestKt {
-	public static final fun getCoroutinesTest ()Lme/proton/core/test/kotlin/CoroutinesTest;
+	public static final fun CoroutinesTest (Lkotlin/jvm/functions/Function0;)Lme/proton/core/test/kotlin/CoroutinesTest;
+	public static synthetic fun CoroutinesTest$default (Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lme/proton/core/test/kotlin/CoroutinesTest;
+	public static final fun UnconfinedCoroutinesTest ()Lme/proton/core/test/kotlin/CoroutinesTest;
 }
 
 public final class me/proton/core/test/kotlin/CoroutinesTestRule : org/junit/rules/TestWatcher {
+	public field dispatchers Lme/proton/core/util/kotlin/DispatcherProvider;
 	public fun <init> ()V
 	public final fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
+	public final fun getDispatchersFactory ()Lkotlin/jvm/functions/Function0;
+	public final fun setDispatchers (Lme/proton/core/util/kotlin/DispatcherProvider;)V
 }
 
 public final class me/proton/core/test/kotlin/MockWebServerExtKt {
@@ -40,19 +38,28 @@ public final class me/proton/core/test/kotlin/MockWebServerExtKt {
 }
 
 public final class me/proton/core/test/kotlin/TestCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {
-	public static final field INSTANCE Lme/proton/core/test/kotlin/TestCoroutineScopeProvider;
-	public fun getGlobalDefaultSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
-	public fun getGlobalIOSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;)V
+	public synthetic fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun getGlobalDefaultSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+	public fun getGlobalDefaultSupervisedScope ()Lkotlinx/coroutines/test/TestScope;
+	public synthetic fun getGlobalIOSupervisedScope ()Lkotlinx/coroutines/CoroutineScope;
+	public fun getGlobalIOSupervisedScope ()Lkotlinx/coroutines/test/TestScope;
 }
 
 public final class me/proton/core/test/kotlin/TestDispatcherProvider : me/proton/core/util/kotlin/DispatcherProvider {
-	public static final field INSTANCE Lme/proton/core/test/kotlin/TestDispatcherProvider;
-	public final fun cleanupTestCoroutines ()V
+	public fun <init> (Lkotlinx/coroutines/test/TestDispatcher;)V
+	public synthetic fun <init> (Lkotlinx/coroutines/test/TestDispatcher;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlinx/coroutines/test/TestDispatcher;Lkotlinx/coroutines/test/TestDispatcher;Lkotlinx/coroutines/test/TestDispatcher;)V
 	public synthetic fun getComp ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public fun getComp ()Lkotlinx/coroutines/test/TestCoroutineDispatcher;
+	public fun getComp ()Lkotlinx/coroutines/test/TestDispatcher;
 	public synthetic fun getIo ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public fun getIo ()Lkotlinx/coroutines/test/TestCoroutineDispatcher;
+	public fun getIo ()Lkotlinx/coroutines/test/TestDispatcher;
 	public synthetic fun getMain ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public fun getMain ()Lkotlinx/coroutines/test/TestCoroutineDispatcher;
+	public fun getMain ()Lkotlinx/coroutines/test/TestDispatcher;
+}
+
+public final class me/proton/core/test/kotlin/TurbineUtilsKt {
+	public static final fun flowTest (Lkotlinx/coroutines/test/TestScope;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
 }
 
