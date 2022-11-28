@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="crypto_keystore_error_title">Encryption error</string>
-  <string name="crypto_keystore_error_message">This device uses a faulty implementation of Android Keystore, which we use to keep your data safe. This means your data can be compromised if an attacker gets physical access to this device. What would you like to do?</string>
-  <string name="crypto_keystore_error_continue_action">Continue</string>
-  <string name="crypto_keystore_error_more_info_action">Get more information</string>
-  <string name="crypto_keystore_error_logout_action">Log out</string>
-  <string name="crypto_keystore_error_exit_action">Exit</string>
+  <string name="crypto_keystore_error_title">خطای رمزگذاری</string>
+  <string name="crypto_keystore_error_message">این دستگاه از یک روش پیاده سازی معیوب برای مخزن کلید Android استفاده میکند، که ما از آن برای ایمن نگه داشتن داده شما استفاده میکنیم. این به آن معناست که داده شما میتواند به خطر بیافتد اگر یک مهاجم به دستگاه شما دسترسی فیزیکی پیدا کند. دوست دارید چه کار کنید؟</string>
+  <string name="crypto_keystore_error_continue_action">ادامه</string>
+  <string name="crypto_keystore_error_more_info_action">دریافت اطلاعات بیشتر</string>
+  <string name="crypto_keystore_error_logout_action">خروج از حساب</string>
+  <string name="crypto_keystore_error_exit_action">خروج</string>
 </resources>

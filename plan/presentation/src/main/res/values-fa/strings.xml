@@ -17,35 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Select a Plan</string>
-  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
-  <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
+  <string name="plans_select_a_plan">یک طرح انتخاب کنید</string>
+  <string name="plans_select_a_plan_subtitle">یک طرح سرویس برای همه سرویس‌های Proton</string>
+  <string name="plans_fetching_general_error">خطای در واکشی طرح سرویس ها رخ داد.</string>
+  <string name="plans_payment_error">خطایی در پرداخت رخ داد. لطفا بعدا دوباره امتحان کنید یا یک طرح سرویس رایگان ایجاد کنید.</string>
   <string name="plans_free_name">رایگان</string>
-  <string name="plan_price_monthly">per month</string>
-  <string name="plan_price_annually">per year</string>
+  <string name="plan_price_monthly">هر ماه</string>
+  <string name="plan_price_annually">در سال</string>
   <string name="plans_current_plan">طرح کنونی</string>
-  <string name="plans_upgrade_plan">Upgrade your plan</string>
+  <string name="plans_upgrade_plan">طرح خود را ارتقا دهید</string>
   <string name="plans_subscription">اشتراک</string>
-  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_billed_yearly">*Billed annually at %s</string>
-  <string name="plans_billed_monthly">Billed monthly</string>
-  <string name="plans_billing_monthly">For 1 month</string>
-  <string name="plans_billing_yearly">For 1 year</string>
-  <string name="plans_billing_two_years">For 2 years</string>
+  <string name="plans_renewal_date">طرح سرویس شما به صورت اتومات در &lt;b&gt;%s&lt;/b&gt; تمدید خواهد شد</string>
+  <string name="plans_expiration_date">طرح سرویس شما در &lt;b&gt;%s&lt;/b&gt; منقضی خواهد شد</string>
+  <string name="plans_billed_yearly">صورتحساب سالانه به مقدار %s</string>
+  <string name="plans_billed_monthly">صورتحساب ماهانه</string>
+  <string name="plans_billing_monthly">برای ۱ ماه</string>
+  <string name="plans_billing_yearly">برای ۱ سال</string>
+  <string name="plans_billing_two_years">برای ۲ سال</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">For %d month</item>
-    <item quantity="other">For %d months</item>
+    <item quantity="one">برای %d ماه</item>
+    <item quantity="other">برای %d ماه</item>
   </plurals>
   <string name="plans_upgrade_your_plan">طرح خود را ارتقا دهید</string>
-  <string name="plans_proton_for_free">Get Proton for free</string>
-  <string name="plans_get_proton">Get %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
-  <string name="plans_used_space">%s of %s</string>
-  <string name="plans_payments_info_not_available">n/a</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
+  <string name="plans_proton_for_free">دریافت رایگان Proton</string>
+  <string name="plans_get_proton">%s را دریافت کنید</string>
+  <string name="plans_manage_your_subscription">اشتراک خود را در <a href="https://account.protonmail.com">account.protonmail.com</a> مدیریت کنید</string>
+  <string name="plans_used_space">%s از %s</string>
+  <string name="plans_payments_info_not_available">در دسترس/ نیست</string>
+  <string name="plans_manage_your_subscription_google">اشتراک شما توسط Google Play مدیریت میشود.</string>
+  <string name="plans_manage_your_subscription_other">نمیتوان اشتراک را از داخل برنامه موبایل مدیریت کرد.</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
@@ -106,19 +106,19 @@
   <string name="plan_id_free_header">The basic for private and secure communications.</string>
   <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_countries">63 countries</string>
-  <string name="plan_id_vpnbasic_high_speed">High speed</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Streaming service support</string>
+  <string name="plan_id_vpnbasic_countries">۶۳ کشور</string>
+  <string name="plan_id_vpnbasic_high_speed">سرعت بالا</string>
+  <string name="plan_id_vpnplus_adblock">مسدودکننده آگهی (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">پشتیبانی از سرویس استریم</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_countries">63 countries</string>
-  <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string name="plan_id_vpnplus_countries">۶۳ کشور</string>
+  <string name="plan_id_vpnplus_highest_speed">بالاترین سرعت</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Multi-user support</string>
+  <string name="plan_id_professional_multiuser">پشتیبانی چند کاربره</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Unlimited folders, labels, and filters</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">پوشه‌ها، برچسب‌ها و فیلترهای نامحدود</string>
   <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
   <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
   <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>

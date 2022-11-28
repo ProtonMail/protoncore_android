@@ -20,17 +20,17 @@
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">رایانامه بازیابی</string>
   <string name="settings_recovery_email_current">تنظیم مجدد / رایانشانی اطلاع رسانی کنونی</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
-  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+  <string name="settings_recovery_email_new">ایمیل بازیابی/اعلان جدید</string>
+  <string name="settings_recovery_email_confirm">تایید ایمیل بازنشانی/اعلان</string>
+  <string name="settings_recovery_email_new_hint">آدرس ایمیل را وارد کنید</string>
+  <string name="settings_recovery_email_confirm_hint">آدرس ایمیل را دوباره وارد کنید</string>
   <string name="settings_save">ذخیره</string>
   <string name="settings_password_required">گذرواژه ورود خود را وارد کنید</string>
   <string name="settings_password_required_ok">تایید</string>
   <string name="settings_not_set">تنظیم نشده</string>
-  <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
-  <string name="settings_validation_email">Email is invalid.</string>
-  <string name="settings_general_error">An error occurred.</string>
+  <string name="settings_recovery_email_error_no_match">ایمیل ریکاوری و تأیید ایمیل ریکاوری با هم یکسان نیستند.</string>
+  <string name="settings_validation_email">ایمیل نامعتبر است.</string>
+  <string name="settings_general_error">خطایی رخ داد.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">تغییر رمز عبور</string>
   <string name="settings_password_management_change_mailbox_password">تغییر گذرواژه نامه‌دان</string>
@@ -40,14 +40,14 @@
   <string name="settings_login_password_hint_new_confirm">تایید گذرواژه ورود جدید</string>
   <string name="settings_mailbox_password_hint_new">رمز عبور جدید صندوق پستی</string>
   <string name="settings_mailbox_password_hint_new_confirm">تایید گذرواژه نامه‌دان جدید</string>
-  <string name="settings_change_password_error">A change password error has occurred.</string>
-  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_change_password_error">خطایی در تغییر گذرواژه رخ داد.</string>
+  <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
-  <string name="settings_password_management_login_password_success">Login password updated</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_login_password_success">گذرواژه ورود بروزرسانی شد</string>
+  <string name="settings_password_management_mailbox_password_success">گذرواژهٔ صندوق پیام بروزرسانی شد</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
-  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
-  <string name="device_settings_crashreport_title">Anonymous crash reports</string>
-  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
+  <string name="device_settings_telemetry_title">دورسنجی ناشناس</string>
+  <string name="device_settings_telemetry_hint">ما برای بهبود سرویس های خود، گاهی داده نحوه استفاده را به صورت ناشناس شده جمع‌آوری میکنیم.</string>
+  <string name="device_settings_crashreport_title">گزارش‌های ناشناس توقف ناگهانی</string>
+  <string name="device_settings_crashreport_hint">اگر برنامه به طور ناگهانی متوقف شود، گزارشی همراه با جزئیات دلیل وقوع آن به مهندسین ما ارسال میشود. ما از اینها تنها برای بهبود برنامه استفاده میکنیم.</string>
 </resources>

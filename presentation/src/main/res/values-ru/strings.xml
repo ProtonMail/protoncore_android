@@ -20,7 +20,7 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Невозможно найти браузер для открытия ссылки.</string>
   <string name="presentation_force_update_title">Требуется обновление</string>
-  <string name="presentation_force_update_message">Эта версия приложения уже не поддерживается, пожалуйста, обновите его, чтобы продолжить им пользоваться.</string>
+  <string name="presentation_force_update_message">Эта версия приложения уже не поддерживается, обновите его, чтобы продолжить им пользоваться.</string>
   <string name="presentation_force_update_learn_more">Подробнее</string>
   <string name="presentation_force_update_update">Обновить</string>
   <string name="presentation_market_missing">Не могу найти приложение на вашем устройстве. Пожалуйста, перейдите в магазин приложений и установите его.</string>

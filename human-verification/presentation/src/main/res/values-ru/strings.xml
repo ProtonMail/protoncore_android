@@ -20,9 +20,9 @@
   <!-- base common strings -->
   <string name="human_verification_help">Помощь</string>
   <string name="human_verification_title">Проверка пользователя</string>
-  <string name="human_verification_main_subtitle">Чтобы предотвратить неправомерное использование, пожалуйста, пройдите одну из доступных проверок того, что вы не робот</string>
+  <string name="human_verification_main_subtitle">Чтобы предотвратить неправомерное использование, пройдите одну из доступных проверок того, что вы не робот</string>
   <string name="human_verification_enter_code_subtitle">Введите код подтверждения, отправленный на $%s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Введите проверочный код, который был отправлен на $%s. Если вы не нашли его во входящих, пожалуйста, проверьте спам.</string>
+  <string name="human_verification_enter_code_subtitle_email">Введите проверочный код, который был отправлен на $%s. Если вы не нашли его во Входящих, пожалуйста, проверьте Спам.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Введите имеющийся у вас проверочный код:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Электронная почта</string>
@@ -45,13 +45,13 @@
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Запросить приглашение</string>
-  <string name="human_verification_help_manual">Если у вас возникли проблемы с созданием учетной записи, пожалуйста, запросите приглашение и мы ответим в течение одного рабочего дня.</string>
+  <string name="human_verification_help_manual">Если у вас возникли проблемы с созданием аккаунта, пожалуйста, запросите приглашение и мы ответим в течение одного рабочего дня.</string>
   <string name="human_verification_help_website_title">Посетить наш справочный центр</string>
   <string name="human_verification_help_website">Подробнее о проверке \"Я не робот\" и зачем мы ее используем.</string>
-  <string name="human_verification_sending_failed">Не удалось отправить проверочный код. Попробуйте еще раз.</string>
+  <string name="human_verification_sending_failed">Не удалось отправить код подтверждения. Попробуйте еще раз.</string>
   <string name="human_verification_incorrect_code">Неверный код. Пожалуйста, попробуйте еще раз.</string>
   <string name="human_verification_resent_code">Мы отправили вам другой код.</string>
-  <string name="human_verification_captcha_failed">Проверка CAPTCHA не удалась. Пожалуйста, попробуйте еще раз или выберите другой способ проверки.</string>
+  <string name="human_verification_captcha_failed">Проверка CAPTCHA не удалась. Попробуйте еще раз или выберите другой способ проверки.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Нет подключения. Невозможно загрузить CAPTCHA.</string>
   <string name="human_verification_action_retry">Повторить</string>
