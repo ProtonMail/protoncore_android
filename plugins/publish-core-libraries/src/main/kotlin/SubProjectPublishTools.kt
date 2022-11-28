@@ -32,9 +32,9 @@ internal fun Project.setupSubProjectPublishing(groupName: String, versionName: S
     afterEvaluate {
         if (publishOption.shouldBePublishedAsLib) {
             setupCoordinates(groupName, versionName)
-            println("Setup publishing for $group:$name:$versionName")
+            logger.info("Setup publishing for $group:$name:$versionName")
         } else {
-            println("Ignoring publishing for $name")
+            logger.info("Ignoring publishing for $name")
         }
     }
 }

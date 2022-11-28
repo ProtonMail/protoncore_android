@@ -24,7 +24,6 @@ include(
     "core",
     "detekt",
     "jacoco",
-    "kotlin",
     "tests",
     "include-core-build",
     "publish-core-libraries"

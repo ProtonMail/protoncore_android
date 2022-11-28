@@ -33,7 +33,7 @@ internal fun Project.runCommand(
     val byteOut = ByteArrayOutputStream()
     val commandAsList = command.split("\\s".toRegex()).plus(args)
     val commandListPrefix = if (isWindows()) listOf("cmd", "/c") else emptyList()
-    println("Executing command:\'${(commandListPrefix + commandAsList).joinToString(separator = " ")}\'")
+    logger.info("Executing command:\'${(commandListPrefix + commandAsList).joinToString(separator = " ")}\'")
     exec {
         workingDir = currentWorkingDir
         commandLine = commandListPrefix + commandAsList

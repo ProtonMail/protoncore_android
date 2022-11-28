@@ -45,6 +45,10 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation(libs.arturbosch.detekt)
-    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.serialization.json) {
+        // Pick a version that is compatible with `embeddedKotlinVersion`:
+        // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
+        version { require("1.3.1") }
+    }
     implementation(libs.easyGradle.dsl)
 }

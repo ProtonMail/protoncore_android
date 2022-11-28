@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /*
  * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
@@ -47,6 +49,10 @@ dependencies {
     implementation(gradleApi())
     implementation(libs.vanniktech.mavenPublish)
     implementation(libs.dokka.gradle)
-    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.serialization.json) {
+        // Pick a version that is compatible with `embeddedKotlinVersion`:
+        // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
+        version { require("1.3.1") }
+    }
     implementation(libs.gradleNexus.publish)
 }

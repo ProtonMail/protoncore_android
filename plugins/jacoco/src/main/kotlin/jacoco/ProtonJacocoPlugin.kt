@@ -256,10 +256,10 @@ class ProtonJacocoPlugin : Plugin<Project> {
             val isJacocoRegistered = tasks.findByName(JacocoReportTaskName) != null
 
             if (!isJacocoRegistered) {
-                println("Registering Jacoco for $name")
+                logger.info("Registering Jacoco for $name")
                 tasks.register(JacocoReportTaskName, jacocoConfig)
             } else {
-                println("Configuring registered Jacoco for $name")
+                logger.info("Configuring registered Jacoco for $name")
                 tasks.getByName(JacocoReportTaskName, jacocoConfig)
             }
         }

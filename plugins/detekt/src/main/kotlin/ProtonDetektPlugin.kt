@@ -31,6 +31,7 @@ import net.rubygrapefruit.platform.file.FilePermissionException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.logging.Logger
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
@@ -106,7 +107,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
     configuration.customRulesConfigFileProperty.convention(File(rootDir, "config/detekt/custom-rules.yml"))
     configuration.mergedReportNameProperty.convention("mergedReport.json")
     configuration.reportDirProperty.convention(File(rootDir, "config/detekt/reports"))
-    configuration.thresholdProperty.convention(null)
+    configuration.thresholdProperty.convention(null as Int?)
 
     val configFile = configuration.configFile
     val customRulesConfigFile = configuration.customRulesConfigFile
@@ -115,7 +116,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
         downloadDetektConfig(githubConfigFilePath = defaultConfigFilePath, to = configFile)
     }
 
-    applyCustomThresholdIfAvailable(thresholdProperty = configuration.thresholdProperty, configFile = configFile)
+    applyCustomThresholdIfAvailable(thresholdProperty = configuration.thresholdProperty, configFile = configFile, logger)
 
     if (!configFile.exists()) {
         println("Detekt configuration file not found!")
@@ -308,16 +309,16 @@ private fun downloadDetektConfig(githubConfigFilePath: String, to: File) {
     }
 }
 
-private fun applyCustomThresholdIfAvailable(thresholdProperty: Property<Int>, configFile: File) {
+private fun applyCustomThresholdIfAvailable(thresholdProperty: Property<Int>, configFile: File, logger: Logger) {
     if (thresholdProperty.isPresent) {
         val threshold = thresholdProperty.get()
-        println("Applying custom threshold of $threshold")
+        logger.info("Applying custom threshold of $threshold")
         val newContent = configFile.readText()
             .replace(Regex(" {2}maxIssues: \\d+"), "  maxIssues: $threshold")
         configFile.writeText(newContent)
 
     } else {
-        println("No custom threshold found, using default threshold.")
+        logger.info("No custom threshold found, using default threshold.")
     }
 }
 

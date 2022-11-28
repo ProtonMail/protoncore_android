@@ -75,10 +75,10 @@ private fun Project.setupChildPublishing(groupName: String, versionName: String)
             checkGradlePluginForPublishing()
             val gradle = extensions.getByType<GradlePluginDevelopmentExtension>()
             gradle.plugins.forEach { pluginDeclaration ->
-                println("Setup publishing for plugin id=\'${pluginDeclaration.id}\' version=\'$versionName\'")
+                logger.info("Setup publishing for plugin id=\'${pluginDeclaration.id}\' version=\'$versionName\'")
             }
         } else {
-            println("Ignoring publishing for plugin project $name")
+            logger.info("Ignoring publishing for plugin project $name")
         }
     }
 }
