@@ -29,7 +29,6 @@ import me.proton.core.challenge.data.deviceRegion
 import me.proton.core.challenge.data.deviceStorage
 import me.proton.core.challenge.data.deviceTimezone
 import me.proton.core.challenge.data.deviceTimezoneOffset
-import me.proton.core.challenge.data.deviceUID
 import me.proton.core.challenge.data.isDeviceRooted
 import me.proton.core.challenge.data.nightMode
 import me.proton.core.challenge.domain.CHALLENGE_VERSION
@@ -41,7 +40,6 @@ sealed class AuthChallengeFrame {
     abstract val appLanguage: String
     abstract val timezone: String
     abstract val deviceName: Long
-    abstract val uid: String
     abstract val regionCode: String
     abstract val timezoneOffset: Int
     abstract val rooted: Boolean
@@ -60,8 +58,6 @@ sealed class AuthChallengeFrame {
         override val timezone: String,
         @SerialName("deviceName")
         override val deviceName: Long,
-        @SerialName("uuid")
-        override val uid: String,
         @SerialName("regionCode")
         override val regionCode: String,
         @SerialName("timezoneOffset")
@@ -100,7 +96,6 @@ sealed class AuthChallengeFrame {
                         appLanguage = appLanguage(),
                         timezone = deviceTimezone(),
                         deviceName = deviceModelName(),
-                        uid = context.deviceUID(),
                         regionCode = context.deviceRegion(),
                         timezoneOffset = deviceTimezoneOffset(),
                         rooted = isDeviceRooted(),

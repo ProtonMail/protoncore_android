@@ -542,7 +542,6 @@ public abstract class me/proton/core/user/data/api/request/UserChallengeFrame {
 	public abstract fun getStorage ()D
 	public abstract fun getTimezone ()Ljava/lang/String;
 	public abstract fun getTimezoneOffset ()I
-	public abstract fun getUid ()Ljava/lang/String;
 	public abstract fun getVersion ()Ljava/lang/String;
 	public static final fun write$Self (Lme/proton/core/user/data/api/request/UserChallengeFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
@@ -553,28 +552,27 @@ public final class me/proton/core/user/data/api/request/UserChallengeFrame$Compa
 
 public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame : me/proton/core/user/data/api/request/UserChallengeFrame {
 	public static final field Companion Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Z
-	public final fun component11 ()Ljava/lang/String;
-	public final fun component12 ()Ljava/util/List;
-	public final fun component13 ()I
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()I
+	public final fun component13 ()Ljava/util/List;
 	public final fun component14 ()Ljava/util/List;
-	public final fun component15 ()Ljava/util/List;
-	public final fun component16 ()Lme/proton/core/user/data/api/request/ChallengeFrameType;
+	public final fun component15 ()Lme/proton/core/user/data/api/request/ChallengeFrameType;
+	public final fun component16 ()Ljava/util/List;
 	public final fun component17 ()Ljava/util/List;
-	public final fun component18 ()Ljava/util/List;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J
 	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()I
-	public final fun component7 ()Z
-	public final fun component8 ()Ljava/lang/String;
-	public final fun component9 ()D
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;
+	public final fun component5 ()I
+	public final fun component6 ()Z
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()D
+	public final fun component9 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeRecoveryFrame;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAppLanguage ()Ljava/lang/String;
 	public final fun getClickOnField ()I
@@ -592,7 +590,6 @@ public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserC
 	public final fun getTimeOnField ()Ljava/util/List;
 	public fun getTimezone ()Ljava/lang/String;
 	public fun getTimezoneOffset ()I
-	public fun getUid ()Ljava/lang/String;
 	public fun getVersion ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -618,28 +615,27 @@ public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserC
 
 public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame : me/proton/core/user/data/api/request/UserChallengeFrame {
 	public static final field Companion Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Z
-	public final fun component11 ()Ljava/lang/String;
-	public final fun component12 ()Ljava/util/List;
-	public final fun component13 ()I
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()I
+	public final fun component13 ()Ljava/util/List;
 	public final fun component14 ()Ljava/util/List;
-	public final fun component15 ()Ljava/util/List;
-	public final fun component16 ()Lme/proton/core/user/data/api/request/ChallengeFrameType;
+	public final fun component15 ()Lme/proton/core/user/data/api/request/ChallengeFrameType;
+	public final fun component16 ()Ljava/util/List;
 	public final fun component17 ()Ljava/util/List;
-	public final fun component18 ()Ljava/util/List;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J
 	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()I
-	public final fun component7 ()Z
-	public final fun component8 ()Ljava/lang/String;
-	public final fun component9 ()D
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;
+	public final fun component5 ()I
+	public final fun component6 ()Z
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()D
+	public final fun component9 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;Lme/proton/core/user/data/api/request/ChallengeFrameType;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UserChallengeFrame$UserChallengeUsernameFrame;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAppLanguage ()Ljava/lang/String;
 	public final fun getClickOnField ()I
@@ -657,7 +653,6 @@ public final class me/proton/core/user/data/api/request/UserChallengeFrame$UserC
 	public final fun getTimeOnField ()Ljava/util/List;
 	public fun getTimezone ()Ljava/lang/String;
 	public fun getTimezoneOffset ()I
-	public fun getUid ()Ljava/lang/String;
 	public fun getVersion ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

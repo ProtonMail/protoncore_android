@@ -51,8 +51,6 @@ public fun deviceModelName(): Long =
         Build.DEVICE
     ).rollingHash()
 
-public fun Context.deviceUID(): String = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-
 public fun appLanguage(): String = LocaleListCompat.getDefault()[0]!!.language
 
 public fun deviceTimezone(): String = TimeZone.getDefault().id
