@@ -131,7 +131,7 @@ class ExistingPaymentMethodTests(
         val userWithCard by lazy { quark.seedUserWithCreditCard() }
         val userWithPaypal by lazy { users.getUser { it.paypal.isNotEmpty() } }
 
-        @get:Parameterized.Parameters(name = "appStore={0}, card={1}, paypal={2}, inApp={3}")
+        @get:Parameterized.Parameters(name = "appStore_{0}_card_{1}_paypal_{2}_inApp_{3}")
         @get:JvmStatic
         val data = listOf(
             //      appStore,            card, paypal, inApp
