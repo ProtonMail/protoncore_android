@@ -43,11 +43,6 @@ public final class me/proton/core/test/android/MainThreadExecutorService : java/
 	public fun submit (Ljava/util/concurrent/Callable;)Ljava/util/concurrent/Future;
 }
 
-public final class me/proton/core/test/android/RunBlockingWithTimeoutKt {
-	public static final fun runBlockingWithTimeout (JLkotlin/jvm/functions/Function2;)Ljava/lang/Object;
-	public static synthetic fun runBlockingWithTimeout$default (JLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
 public final class me/proton/core/test/android/api/FakeNetworkManager : me/proton/core/network/domain/NetworkManager {
 	public fun <init> ()V
 	public fun getNetworkStatus ()Lme/proton/core/network/domain/NetworkStatus;
