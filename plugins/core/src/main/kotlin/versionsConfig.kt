@@ -122,7 +122,7 @@ public const val `hamcrest version`: String =                   "2.2"
 public const val `uiautomator version`: String =                "2.2.0"         // Released: Oct 25, 2018
 public const val `preference version`: String =                 "1.1.1"         // Released: Apr 15, 2020
 public const val `json-simple version`: String =                "1.1.1"         // Released: Mar 21, 2012
-public const val `turbine version`: String =                    "0.7.0"
+public const val `turbine version`: String =                    "0.9.0"
 public const val `junit version`: String =                      "4.13.2"
 public const val `junit-ktx version`: String =                  "1.1.3"
 // endregion
