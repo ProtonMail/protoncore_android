@@ -31,12 +31,14 @@ import me.proton.core.key.data.extension.toPrivateKeySaltList
 import me.proton.core.key.domain.entity.key.PrivateKeySalt
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
 
 class KeySaltRepositoryImpl @Inject constructor(
     db: KeySaltDatabase,
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    scopeProvider: CoroutineScopeProvider
 ) : KeySaltRepository {
 
     private val keySaltDao = db.keySaltDao()
@@ -53,7 +55,7 @@ class KeySaltRepositoryImpl @Inject constructor(
             delete = { userId -> keySaltDao.deleteByUserId(userId) },
             deleteAll = { keySaltDao.deleteAll() }
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     override suspend fun getKeySalts(sessionUserId: SessionUserId, refresh: Boolean): List<PrivateKeySalt> =
         (if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)).toPrivateKeySaltList()

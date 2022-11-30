@@ -42,6 +42,7 @@ import me.proton.core.label.domain.entity.toUpdateLabel
 import me.proton.core.label.domain.repository.LabelLocalDataSource
 import me.proton.core.label.domain.repository.LabelRemoteDataSource
 import me.proton.core.label.domain.repository.LabelRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,6 +51,7 @@ class LabelRepositoryImpl @Inject constructor(
     private val remoteDataSource: LabelRemoteDataSource,
     private val localDataSource: LabelLocalDataSource,
     private val workManager: WorkManager,
+    scopeProvider: CoroutineScopeProvider
 ) : LabelRepository {
 
     private data class StoreKey(val userId: UserId, val type: LabelType)
@@ -68,7 +70,7 @@ class LabelRepositoryImpl @Inject constructor(
                 localDataSource.upsertLabel(labels.plus(key.getFetchedTagLabel()))
             },
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     override fun observeLabels(userId: UserId, type: LabelType, refresh: Boolean): Flow<DataResult<List<Label>>> =
         StoreKey(userId = userId, type = type).let { key ->

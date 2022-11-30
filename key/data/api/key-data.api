@@ -896,7 +896,7 @@ public final class me/proton/core/key/data/entity/SignedKeyListEntity {
 }
 
 public final class me/proton/core/key/data/repository/KeySaltRepositoryImpl : me/proton/core/key/domain/repository/KeySaltRepository {
-	public fun <init> (Lme/proton/core/key/data/db/KeySaltDatabase;Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Lme/proton/core/key/data/db/KeySaltDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun clear (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKeySalts (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -910,7 +910,7 @@ public final class me/proton/core/key/data/repository/PrivateKeyRepositoryImpl :
 }
 
 public final class me/proton/core/key/data/repository/PublicAddressRepositoryImpl : me/proton/core/key/domain/repository/PublicAddressRepository {
-	public fun <init> (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPublicAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/repository/Source;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

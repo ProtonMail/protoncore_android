@@ -1008,7 +1008,7 @@ public final class me/proton/core/user/data/repository/DomainRepositoryImpl_Fact
 
 public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl : me/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener, me/proton/core/user/domain/repository/UserAddressRepository {
 	public static final field Companion Lme/proton/core/user/data/repository/UserAddressRepositoryImpl$Companion;
-	public fun <init> (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun <init> (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun addAddresses (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAddresses (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1028,15 +1028,15 @@ public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl
 }
 
 public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserAddressRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserAddressRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/user/data/repository/UserAddressRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/data/repository/UserAddressRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/user/data/repository/UserAddressRepositoryImpl;
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/proton/core/user/domain/repository/UserRepository {
-	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;)V
+	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun addOnPassphraseChangedListener (Lme/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener;)V
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1055,10 +1055,10 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/user/data/repository/UserRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;)Lme/proton/core/user/data/repository/UserRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/user/data/repository/UserRepositoryImpl;
 }
 

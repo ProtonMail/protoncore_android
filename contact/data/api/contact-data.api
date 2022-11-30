@@ -960,7 +960,7 @@ public final class me/proton/core/contact/data/local/db/entity/relation/ContactW
 }
 
 public final class me/proton/core/contact/data/repository/ContactRepositoryImpl : me/proton/core/contact/domain/repository/ContactRepository {
-	public fun <init> (Lme/proton/core/contact/domain/repository/ContactRemoteDataSource;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;)V
+	public fun <init> (Lme/proton/core/contact/domain/repository/ContactRemoteDataSource;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun createContact (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteContacts (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllContactEmails (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;

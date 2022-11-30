@@ -38,6 +38,7 @@ import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccess
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,6 +46,7 @@ import javax.inject.Singleton
 class ContactRepositoryImpl @Inject constructor(
     private val remoteDataSource: ContactRemoteDataSource,
     private val localDataSource: ContactLocalDataSource,
+    scopeProvider: CoroutineScopeProvider
 ) : ContactRepository {
 
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
@@ -69,7 +71,7 @@ class ContactRepositoryImpl @Inject constructor(
             delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     private val contactsStore: ProtonStore<UserId, List<Contact>> = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
@@ -87,7 +89,7 @@ class ContactRepositoryImpl @Inject constructor(
             delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     override fun observeContactWithCards(
         userId: UserId,

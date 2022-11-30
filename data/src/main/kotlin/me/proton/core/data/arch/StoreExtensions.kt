@@ -22,6 +22,7 @@ import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import kotlin.coroutines.cancellation.CancellationException
 
 private suspend fun <T> catchWithStackTrace(block: suspend () -> T): T {
@@ -52,4 +53,5 @@ class ProtonStore<Key : Any, Output : Any>(
 /**
  * Used to build a [ProtonStore] instead of the default [RealStore].
  */
-fun <Key : Any, Output : Any> StoreBuilder<Key, Output>.buildProtonStore() = ProtonStore(build())
+fun <Key : Any, Output : Any> StoreBuilder<Key, Output>.buildProtonStore(scopeProvider: CoroutineScopeProvider) =
+    ProtonStore(scope(scopeProvider.GlobalIOSupervisedScope).build())

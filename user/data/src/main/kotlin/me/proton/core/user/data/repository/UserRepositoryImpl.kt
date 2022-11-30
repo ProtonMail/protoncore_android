@@ -61,6 +61,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,7 +71,8 @@ class UserRepositoryImpl @Inject constructor(
     private val provider: ApiProvider,
     @ApplicationContext private val context: Context,
     private val cryptoContext: CryptoContext,
-    private val product: Product
+    private val product: Product,
+    scopeProvider: CoroutineScopeProvider
 ) : UserRepository {
 
     private val onPassphraseChangedListeners = mutableSetOf<PassphraseRepository.OnPassphraseChangedListener>()
@@ -91,7 +93,7 @@ class UserRepositoryImpl @Inject constructor(
             delete = null, // Not used.
             deleteAll = null // Not used.
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     private suspend fun invalidateMemCache(userId: UserId) =
         store.clear(userId)

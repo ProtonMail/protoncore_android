@@ -468,7 +468,7 @@ public abstract interface class me/proton/core/label/data/remote/worker/UpdateLa
 }
 
 public final class me/proton/core/label/data/repository/LabelRepositoryImpl : me/proton/core/label/domain/repository/LabelRepository {
-	public fun <init> (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Landroidx/work/WorkManager;)V
+	public fun <init> (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Landroidx/work/WorkManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun createLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/NewLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -480,10 +480,10 @@ public final class me/proton/core/label/data/repository/LabelRepositoryImpl : me
 }
 
 public final class me/proton/core/label/data/repository/LabelRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/label/data/repository/LabelRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/label/data/repository/LabelRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/label/data/repository/LabelRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Landroidx/work/WorkManager;)Lme/proton/core/label/data/repository/LabelRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Landroidx/work/WorkManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/label/data/repository/LabelRepositoryImpl;
 }
 

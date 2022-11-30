@@ -45,11 +45,13 @@ import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 class UserSettingsRepositoryImpl @Inject constructor(
     db: UserSettingsDatabase,
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    scopeProvider: CoroutineScopeProvider
 ) : UserSettingsRepository {
 
     private val userSettingsDao = db.userSettingsDao()
@@ -66,7 +68,7 @@ class UserSettingsRepositoryImpl @Inject constructor(
             delete = { key -> delete(key) },
             deleteAll = { deleteAll() }
         )
-    ).disableCache().buildProtonStore() // We don't want potential stale data from memory cache
+    ).disableCache().buildProtonStore(scopeProvider) // We don't want potential stale data from memory cache
 
     private fun observeByUserId(userId: UserId): Flow<UserSettings?> =
         userSettingsDao.observeByUserId(userId).map { it?.fromEntity() }

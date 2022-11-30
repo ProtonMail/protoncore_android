@@ -38,11 +38,13 @@ import me.proton.core.usersettings.data.extension.toEntity
 import me.proton.core.usersettings.domain.entity.Organization
 import me.proton.core.usersettings.domain.entity.OrganizationKeys
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 class OrganizationRepositoryImpl @Inject constructor(
     db: OrganizationDatabase,
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    scopeProvider: CoroutineScopeProvider
 ) : OrganizationRepository {
 
     private val organizationDao = db.organizationDao()
@@ -60,7 +62,7 @@ class OrganizationRepositoryImpl @Inject constructor(
             delete = { key -> deleteOrganization(key) },
             deleteAll = { deleteAllOrganizations() }
         )
-    ).disableCache().buildProtonStore() // We don't want potential stale data from memory cache
+    ).disableCache().buildProtonStore(scopeProvider) // We don't want potential stale data from memory cache
 
     private val storeOrganizationKeys = StoreBuilder.from(
         fetcher = Fetcher.of { key: UserId ->
@@ -74,7 +76,7 @@ class OrganizationRepositoryImpl @Inject constructor(
             delete = { key -> deleteOrganizationKeys(key) },
             deleteAll = { deleteAllOrganizationKeys() }
         )
-    ).disableCache().buildProtonStore() // We don't want potential stale data from memory cache
+    ).disableCache().buildProtonStore(scopeProvider) // We don't want potential stale data from memory cache
 
     private fun observeOrganizationByUserId(userId: UserId): Flow<Organization?> =
         organizationDao.observeByUserId(userId).map { it?.fromEntity() }

@@ -52,6 +52,7 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,7 +62,8 @@ class UserAddressRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val userRepository: UserRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
-    private val context: CryptoContext
+    private val context: CryptoContext,
+    scopeProvider: CoroutineScopeProvider
 ) : UserAddressRepository, PassphraseRepository.OnPassphraseChangedListener {
 
     private val addressDao = db.addressDao()
@@ -87,7 +89,7 @@ class UserAddressRepositoryImpl @Inject constructor(
             delete = null, // Not used.
             deleteAll = null // Not used.
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     init {
         userRepository.addOnPassphraseChangedListener(this)

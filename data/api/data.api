@@ -19,7 +19,7 @@ public final class me/proton/core/data/arch/ProtonStore : com/dropbox/android/ex
 }
 
 public final class me/proton/core/data/arch/StoreExtensionsKt {
-	public static final fun buildProtonStore (Lcom/dropbox/android/external/store4/StoreBuilder;)Lme/proton/core/data/arch/ProtonStore;
+	public static final fun buildProtonStore (Lcom/dropbox/android/external/store4/StoreBuilder;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/data/arch/ProtonStore;
 }
 
 public final class me/proton/core/data/arch/StoreResponseMapperKt {

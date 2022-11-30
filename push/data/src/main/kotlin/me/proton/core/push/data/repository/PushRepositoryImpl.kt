@@ -40,6 +40,7 @@ import me.proton.core.push.domain.entity.PushObjectType
 import me.proton.core.push.domain.local.PushLocalDataSource
 import me.proton.core.push.domain.remote.PushRemoteDataSource
 import me.proton.core.push.domain.repository.PushRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,6 +49,7 @@ public class PushRepositoryImpl @Inject constructor(
     private val remoteDataSource: PushRemoteDataSource,
     private val localDataSource: PushLocalDataSource,
     private val workManager: WorkManager,
+    scopeProvider: CoroutineScopeProvider
 ) : PushRepository {
     private data class StoreKey(val userId: UserId, val pushType: PushObjectType)
 
@@ -69,7 +71,7 @@ public class PushRepositoryImpl @Inject constructor(
         // Cache is disabled, because we have to allow to delete by PushId,
         // but our StoreKey doesn't contain a PushId.
         .disableCache()
-        .buildProtonStore()
+        .buildProtonStore(scopeProvider)
 
     override suspend fun deletePush(userId: UserId, pushId: PushId) {
         localDataSource.getPush(userId, pushId)?.let {

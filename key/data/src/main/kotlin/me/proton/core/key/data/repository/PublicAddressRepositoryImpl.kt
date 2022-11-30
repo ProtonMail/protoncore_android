@@ -36,11 +36,13 @@ import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.CacheOverride
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 class PublicAddressRepositoryImpl @Inject constructor(
     private val db: PublicAddressDatabase,
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    scopeProvider: CoroutineScopeProvider
 ) : PublicAddressRepository {
 
     private val publicAddressDao = db.publicAddressDao()
@@ -64,7 +66,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
             delete = { key -> delete(key.email) },
             deleteAll = { deleteAll() }
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     private fun getPublicAddressLocal(email: String): Flow<PublicAddress?> =
         publicAddressWithKeysDao.findWithKeysByEmail(email)

@@ -942,7 +942,7 @@ public final class me/proton/core/mailsettings/data/extension/MailSettingsMapper
 }
 
 public final class me/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl : me/proton/core/mailsettings/domain/repository/MailSettingsRepository {
-	public fun <init> (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;)V
+	public fun <init> (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun getMailSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMailSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun updateAttachPublicKey (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -973,11 +973,11 @@ public final class me/proton/core/mailsettings/data/repository/MailSettingsRepos
 }
 
 public final class me/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;)Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/mailsettings/data/worker/UpdateSettingsWorker$Enqueuer;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/mailsettings/data/repository/MailSettingsRepositoryImpl;
 }
 
 public abstract class me/proton/core/mailsettings/data/worker/SettingsProperty {

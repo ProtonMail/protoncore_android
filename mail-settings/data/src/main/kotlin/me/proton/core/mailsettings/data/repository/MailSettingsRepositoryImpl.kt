@@ -49,6 +49,7 @@ import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.toInt
 import javax.inject.Inject
 
@@ -56,7 +57,8 @@ import javax.inject.Inject
 class MailSettingsRepositoryImpl @Inject constructor(
     db: MailSettingsDatabase,
     private val apiProvider: ApiProvider,
-    private val settingsWorker: UpdateSettingsWorker.Enqueuer
+    private val settingsWorker: UpdateSettingsWorker.Enqueuer,
+    scopeProvider: CoroutineScopeProvider
 ) : MailSettingsRepository {
 
     private val mailSettingsDao = db.mailSettingsDao()
@@ -73,7 +75,7 @@ class MailSettingsRepositoryImpl @Inject constructor(
             delete = { key -> delete(key) },
             deleteAll = { deleteAll() }
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     private fun observeByUserId(userId: UserId): Flow<MailSettings?> =
         mailSettingsDao.observeByUserId(userId).map { it?.fromEntity() }

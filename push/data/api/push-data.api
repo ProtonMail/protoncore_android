@@ -157,7 +157,7 @@ public abstract interface class me/proton/core/push/data/remote/worker/FetchPush
 }
 
 public final class me/proton/core/push/data/repository/PushRepositoryImpl : me/proton/core/push/domain/repository/PushRepository {
-	public fun <init> (Lme/proton/core/push/domain/remote/PushRemoteDataSource;Lme/proton/core/push/domain/local/PushLocalDataSource;Landroidx/work/WorkManager;)V
+	public fun <init> (Lme/proton/core/push/domain/remote/PushRemoteDataSource;Lme/proton/core/push/domain/local/PushLocalDataSource;Landroidx/work/WorkManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun deletePush (Lme/proton/core/domain/entity/UserId;Lme/proton/core/push/domain/entity/PushId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllPushes (Lme/proton/core/domain/entity/UserId;Lme/proton/core/push/domain/entity/PushObjectType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/push/domain/entity/PushObjectType;)V
@@ -165,10 +165,10 @@ public final class me/proton/core/push/data/repository/PushRepositoryImpl : me/p
 }
 
 public final class me/proton/core/push/data/repository/PushRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/push/data/repository/PushRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/push/data/repository/PushRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/push/data/repository/PushRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/push/domain/remote/PushRemoteDataSource;Lme/proton/core/push/domain/local/PushLocalDataSource;Landroidx/work/WorkManager;)Lme/proton/core/push/data/repository/PushRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/push/domain/remote/PushRemoteDataSource;Lme/proton/core/push/domain/local/PushLocalDataSource;Landroidx/work/WorkManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/push/data/repository/PushRepositoryImpl;
 }
 

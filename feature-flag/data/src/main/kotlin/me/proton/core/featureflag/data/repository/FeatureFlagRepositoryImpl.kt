@@ -35,6 +35,7 @@ import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,6 +44,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val localDataSource: FeatureFlagLocalDataSource,
     private val remoteDataSource: FeatureFlagRemoteDataSource,
     private val workManager: WorkManager,
+    scopeProvider: CoroutineScopeProvider
 ) : FeatureFlagRepository {
 
     private data class StoreKey(val userId: UserId?, val featureIds: Set<FeatureId>)
@@ -62,7 +64,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
                 localDataSource.upsert(fetched + unknownFlags)
             },
         )
-    ).buildProtonStore()
+    ).buildProtonStore(scopeProvider)
 
     override fun observe(
         userId: UserId?,
