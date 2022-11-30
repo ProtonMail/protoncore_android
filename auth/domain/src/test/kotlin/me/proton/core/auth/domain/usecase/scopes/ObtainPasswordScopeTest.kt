@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
@@ -106,7 +106,7 @@ class ObtainPasswordScopeTest {
     }
 
     @Test
-    fun testUnlockingPasswordNo2FASuccess() = runBlockingTest {
+    fun testUnlockingPasswordNo2FASuccess() = runTest {
         val result = useCase.invoke(testUserId, testUsername, testPasswordEncrypted, null)
 
         coVerify { authRepository.getAuthInfo(testUserId, testUsername) }
@@ -114,7 +114,7 @@ class ObtainPasswordScopeTest {
     }
 
     @Test
-    fun testUnlockingPassword2FASuccess() = runBlockingTest {
+    fun testUnlockingPassword2FASuccess() = runTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
@@ -130,7 +130,7 @@ class ObtainPasswordScopeTest {
     }
 
     @Test
-    fun testUnlockingPasswordNo2FAFailure() = runBlockingTest {
+    fun testUnlockingPasswordNo2FAFailure() = runTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
@@ -146,7 +146,7 @@ class ObtainPasswordScopeTest {
     }
 
     @Test
-    fun testUnlockingPassword2FAFailure() = runBlockingTest {
+    fun testUnlockingPassword2FAFailure() = runTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
@@ -162,7 +162,7 @@ class ObtainPasswordScopeTest {
     }
 
     @Test
-    fun testUnlockingPasswordThrowsException() = runBlockingTest {
+    fun testUnlockingPasswordThrowsException() = runTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,

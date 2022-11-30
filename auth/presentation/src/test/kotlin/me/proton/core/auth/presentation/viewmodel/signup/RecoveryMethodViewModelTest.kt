@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -27,15 +26,15 @@ import me.proton.core.auth.domain.usecase.signup.ValidatePhone
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
+class RecoveryMethodViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
     private val validateEmail = mockk<ValidateEmail>(relaxed = true)
     private val validatePhone = mockk<ValidatePhone>(relaxed = true)
@@ -54,7 +53,7 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
         val testEmail = "test-email"
         coEvery { validateEmail.invoke(testEmail) } returns true
 
-        viewModel.validationResult.test {
+        flowTest(viewModel.validationResult) {
             // WHEN
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
             viewModel.validateRecoveryDestinationInput()
@@ -76,7 +75,7 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
         val testEmail = "test-email"
         coEvery { validateEmail.invoke(testEmail) } returns false
 
-        viewModel.validationResult.test {
+        flowTest(viewModel.validationResult) {
             // WHEN
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
             viewModel.validateRecoveryDestinationInput()
@@ -107,7 +106,7 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             )
         )
 
-        viewModel.validationResult.test {
+        flowTest(viewModel.validationResult) {
             // WHEN
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
             viewModel.validateRecoveryDestinationInput()
@@ -128,7 +127,7 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
         val testPhone = "test-phone"
         coEvery { validatePhone.invoke(testPhone) } returns true
 
-        viewModel.validationResult.test {
+        flowTest(viewModel.validationResult) {
             // WHEN
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.SMS, testPhone)
             viewModel.validateRecoveryDestinationInput()
@@ -150,7 +149,7 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
         val testPhone = "test-phone"
         coEvery { validatePhone.invoke(testPhone) } returns false
 
-        viewModel.validationResult.test {
+        flowTest(viewModel.validationResult) {
             // WHEN
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.SMS, testPhone)
             viewModel.validateRecoveryDestinationInput()
@@ -181,7 +180,7 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             )
         )
 
-        viewModel.validationResult.test {
+        flowTest(viewModel.validationResult) {
             // WHEN
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.SMS, testPhone)
             viewModel.validateRecoveryDestinationInput()

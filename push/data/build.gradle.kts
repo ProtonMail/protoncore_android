@@ -60,6 +60,7 @@ dependencies {
         project(Module.cryptoAndroid),
         project(Module.cryptoCommon),
         project(Module.keyDomain),
+        project(Module.kotlinTest),
         `android-test-core`,
         `android-work-testing`,
         `coroutines-test`,

@@ -21,7 +21,7 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -61,7 +61,7 @@ class PerformSecondFactorTest {
     }
 
     @Test
-    fun `second factor happy path`() = runBlockingTest {
+    fun `second factor happy path`() = runTest {
         // WHEN
         val scopeInfo = useCase.invoke(SessionId(testSessionId), testSecondFactorCode)
         // THEN
@@ -70,7 +70,7 @@ class PerformSecondFactorTest {
     }
 
     @Test
-    fun `second factor happy path invocations are correct`() = runBlockingTest {
+    fun `second factor happy path invocations are correct`() = runTest {
         // WHEN
         useCase.invoke(SessionId(testSessionId), testSecondFactorCode)
         // THEN
@@ -83,7 +83,7 @@ class PerformSecondFactorTest {
     }
 
     @Test
-    fun `second factor error response`() = runBlockingTest {
+    fun `second factor error response`() = runTest {
         // GIVEN
         coEvery {
             authRepository.performSecondFactor(

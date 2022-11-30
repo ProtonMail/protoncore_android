@@ -59,7 +59,7 @@ class PrivateKeyRepositoryImplTest {
 
     // endregion
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
     fun beforeEveryTest() {

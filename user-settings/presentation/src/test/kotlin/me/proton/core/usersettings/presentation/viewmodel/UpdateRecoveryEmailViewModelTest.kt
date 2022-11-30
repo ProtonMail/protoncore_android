@@ -18,7 +18,6 @@
 
 package me.proton.core.usersettings.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -31,6 +30,7 @@ import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.User
 import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
@@ -44,7 +44,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
+class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
     private val getUserSettingsUseCase = mockk<GetUserSettings>()
     private val performUpdateRecoveryEmailUseCase = mockk<PerformUpdateRecoveryEmail>()
@@ -113,7 +113,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             email = null
         )
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
@@ -127,7 +127,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get current recovery email non-empty handled correctly`() = coroutinesTest {
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
@@ -151,7 +151,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
@@ -177,7 +177,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "", testPassword, "")
             // THEN
@@ -203,7 +203,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
             // THEN
@@ -229,7 +229,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "123456")
             // THEN
@@ -264,7 +264,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
             // THEN

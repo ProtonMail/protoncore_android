@@ -23,11 +23,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.assertNotNull
-import junit.framework.Assert.assertNull
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -38,6 +35,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
@@ -45,8 +43,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
-class HV3ViewModelTest : CoroutinesTest {
+class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
@@ -96,7 +96,7 @@ class HV3ViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `getHumanVerificationExtraParams with no primary user returns empty extra params`() = runBlocking {
+    fun `getHumanVerificationExtraParams with no primary user returns empty extra params`() = coroutinesTest {
         every { accountRepository.getPrimaryUserId() } returns emptyFlow<UserId>()
         val params = viewModel.getHumanVerificationExtraParams()
         assertNull(params.defaultCountry)
@@ -105,7 +105,7 @@ class HV3ViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `getHumanVerificationExtraParams with primary user returns extra parameters`() = runBlocking {
+    fun `getHumanVerificationExtraParams with primary user returns extra parameters`() = coroutinesTest {
         every { accountRepository.getPrimaryUserId() } returns flowOf(UserId("some_user_id"))
         val settingsMock = mockk<UserSettings>().apply {
             every { locale } returns "en_US"
@@ -120,7 +120,7 @@ class HV3ViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `getHumanVerificationExtraParams returns useVPNTheme when product is Vpn`() = runBlocking {
+    fun `getHumanVerificationExtraParams returns useVPNTheme when product is Vpn`() = coroutinesTest {
         viewModel = HV3ViewModel(
             humanVerificationWorkflowHandler,
             accountRepository,

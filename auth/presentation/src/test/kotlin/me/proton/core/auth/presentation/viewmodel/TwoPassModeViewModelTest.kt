@@ -31,13 +31,13 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertTrue
 
-class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
-
+class TwoPassModeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
     // region mocks
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)

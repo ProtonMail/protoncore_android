@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -68,7 +68,7 @@ class GetCurrentSubscriptionTest {
     }
 
     @Test
-    fun `get subscription returns success`() = runBlockingTest {
+    fun `get subscription returns success`() = runTest {
         // GIVEN
         coEvery { repository.getSubscription(testUserId) } returns testSubscription
         // WHEN
@@ -80,7 +80,7 @@ class GetCurrentSubscriptionTest {
     }
 
     @Test
-    fun `get subscription returns error`() = runBlockingTest {
+    fun `get subscription returns error`() = runTest {
         // GIVEN
         coEvery { repository.getSubscription(testUserId) } throws ApiException(
             ApiResult.Error.Connection(
@@ -98,7 +98,7 @@ class GetCurrentSubscriptionTest {
     }
 
     @Test
-    fun `get subscription returns no active subscription`() = runBlockingTest {
+    fun `get subscription returns no active subscription`() = runTest {
         // GIVEN
         coEvery { repository.getSubscription(testUserId) } throws ApiException(
             ApiResult.Error.Http(

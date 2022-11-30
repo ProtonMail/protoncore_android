@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
@@ -105,7 +105,7 @@ class ObtainLockedScopeTest {
     }
 
     @Test
-    fun testUnlockingSuccess() = runBlockingTest {
+    fun testUnlockingSuccess() = runTest {
         val result = useCase.invoke(testUserId, testUsername, testPasswordEncrypted)
 
         coVerify { authRepository.getAuthInfo(testUserId, testUsername) }
@@ -113,7 +113,7 @@ class ObtainLockedScopeTest {
     }
 
     @Test
-    fun testUnlockingFailure() = runBlockingTest {
+    fun testUnlockingFailure() = runTest {
         coEvery {
             userRepository.unlockUserForLockedScope(
                 testUserId,
@@ -128,7 +128,7 @@ class ObtainLockedScopeTest {
     }
 
     @Test
-    fun testUnlockingException() = runBlockingTest {
+    fun testUnlockingException() = runTest {
         coEvery {
             userRepository.unlockUserForLockedScope(
                 testUserId,

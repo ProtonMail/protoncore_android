@@ -62,6 +62,7 @@ dependencies {
         project(Module.accountDomain),
         project(Module.keyDomain),
         `android-test-core`,
+        `coroutines-test`,
         junit,
         robolectric,
         `room-ktx`

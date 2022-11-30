@@ -36,7 +36,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
+class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val usernameDomainAvailability = mockk<UsernameDomainAvailability>(relaxed = true)

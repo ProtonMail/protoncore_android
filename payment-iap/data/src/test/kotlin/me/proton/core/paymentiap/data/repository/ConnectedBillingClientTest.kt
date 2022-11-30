@@ -23,14 +23,14 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryPurchasesAsync
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -48,7 +48,7 @@ internal class ConnectedBillingClientTest {
     }
 
     @Test
-    fun `connection established on demand`() = runBlockingTest {
+    fun `connection established on demand`() = runTest {
         val job = launch(start = CoroutineStart.UNDISPATCHED) {
             tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>(), mockk()) }
         }
@@ -60,7 +60,7 @@ internal class ConnectedBillingClientTest {
     }
 
     @Test
-    fun `connection already established`() = runBlockingTest {
+    fun `connection already established`() = runTest {
         tested.onBillingSetupFinished(BillingResult())
         tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>(), mockk()) }
 
@@ -69,14 +69,14 @@ internal class ConnectedBillingClientTest {
     }
 
     @Test(expected = IllegalStateException::class)
-    fun `cannot use destroyed client`() = runBlockingTest {
+    fun `cannot use destroyed client`() = runTest {
         tested.destroy()
         tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>()) }
     }
 
     @Test
-    fun `cannot establish connection`() = runBlockingTest {
-        val result = async(start = CoroutineStart.UNDISPATCHED) {
+    fun `cannot establish connection`() = runTest(UnconfinedTestDispatcher()) {
+        val result = async(SupervisorJob()) {
             tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>()) }
         }
 
@@ -89,7 +89,7 @@ internal class ConnectedBillingClientTest {
     }
 
     @Test
-    fun `reconnect after connection is lost`() = runBlockingTest {
+    fun `reconnect after connection is lost`() = runTest {
         tested.onBillingSetupFinished(BillingResult())
         tested.onBillingServiceDisconnected()
 
@@ -105,8 +105,8 @@ internal class ConnectedBillingClientTest {
     }
 
     @Test
-    fun `connection is lost`() = runBlockingTest {
-        val deferredResult = async {
+    fun `connection is lost`() = runTest {
+        val deferredResult = async(UnconfinedTestDispatcher(testScheduler)) {
             assertFailsWith<BillingClientError> {
                 tested.withClient { it.launchBillingFlow(mockk(), mockk()) }
             }

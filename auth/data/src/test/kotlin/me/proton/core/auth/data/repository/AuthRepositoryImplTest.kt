@@ -87,7 +87,7 @@ class AuthRepositoryImplTest {
 
     private val product = Product.Mail
 
-    private val testDispatcherProvider = TestDispatcherProvider
+    private val testDispatcherProvider = TestDispatcherProvider()
 
     // endregion
     @Before

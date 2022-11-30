@@ -18,7 +18,7 @@
 
 package me.proton.core.plan.data.api
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.domain.entity.MASK_CALENDAR
 import me.proton.core.plan.domain.entity.MASK_DRIVE
@@ -51,7 +51,7 @@ class PlansApiTest {
     }
 
     @Test
-    fun `get plans with vendor plan names`() = runBlocking {
+    fun `get plans with vendor plan names`() = runTest {
         // Given
         webServer.enqueueFromResourceFile("GET/payments/v4/plans.json", javaClass.classLoader)
 
@@ -89,7 +89,7 @@ class PlansApiTest {
     }
 
     @Test
-    fun `get plans without vendor plan names`() = runBlocking {
+    fun `get plans without vendor plan names`() = runTest {
         // Given
         webServer.enqueueFromResourceFile("GET/payments/v4/plans-no-vendors.json", javaClass.classLoader)
 

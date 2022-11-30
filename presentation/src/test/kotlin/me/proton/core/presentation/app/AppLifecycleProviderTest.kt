@@ -22,11 +22,10 @@ import android.os.Looper
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import me.proton.core.test.kotlin.flowTest
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
@@ -73,23 +72,21 @@ class AppLifecycleProviderTest {
         val tested = make(lifecycleOwner)
         waitForMainThreadIdle()
 
-        launch {
-            // Transition to foreground
-            lifecycleOwner.registry.currentState = Lifecycle.State.RESUMED
-
-            // Transition to background
-            lifecycleOwner.registry.currentState = Lifecycle.State.CREATED
-
-            // Transition to foreground
-            lifecycleOwner.registry.currentState = Lifecycle.State.STARTED
-        }
-
-        tested.state.test {
+        flowTest(tested.state) {
             assertEquals(AppLifecycleProvider.State.Background, awaitItem()) // initial state
             assertEquals(AppLifecycleProvider.State.Foreground, awaitItem())
             assertEquals(AppLifecycleProvider.State.Background, awaitItem())
             assertEquals(AppLifecycleProvider.State.Foreground, awaitItem())
         }
+
+        // Transition to foreground
+        lifecycleOwner.registry.currentState = Lifecycle.State.RESUMED
+
+        // Transition to background
+        lifecycleOwner.registry.currentState = Lifecycle.State.CREATED
+
+        // Transition to foreground
+        lifecycleOwner.registry.currentState = Lifecycle.State.STARTED
     }
 
     private fun make(

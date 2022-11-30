@@ -21,7 +21,7 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
@@ -64,7 +64,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     }
 
     @Test
-    fun `create payment token upgrade success response`() = runBlockingTest {
+    fun `create payment token upgrade success response`() = runTest {
         val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentMethodId)
 
         coVerify(exactly = 1) {
@@ -84,7 +84,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     }
 
     @Test
-    fun `create payment token sign up success response`() = runBlockingTest {
+    fun `create payment token sign up success response`() = runTest {
         val result = useCase.invoke(null, testAmount, testCurrency, testPaymentMethodId)
 
         coVerify(exactly = 1) {
@@ -104,7 +104,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     }
 
     @Test
-    fun `create token returns chargeable`() = runBlockingTest {
+    fun `create token returns chargeable`() = runTest {
         val createTokenChargeableResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
@@ -126,7 +126,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     }
 
     @Test
-    fun `create payment token negative amount response`() = runBlockingTest {
+    fun `create payment token negative amount response`() = runTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(testUserId, -1, testCurrency, testPaymentMethodId)
         }

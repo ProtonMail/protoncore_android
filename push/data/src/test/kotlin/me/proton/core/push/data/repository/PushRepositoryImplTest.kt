@@ -28,21 +28,21 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.spyk
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import me.proton.core.push.data.local.PushLocalDataSourceImpl
 import me.proton.core.push.data.testing.TestDatabase
 import me.proton.core.push.data.testing.allTestPushes
 import me.proton.core.push.data.testing.prepare
-import me.proton.core.push.data.testing.testPush1
 import me.proton.core.push.data.testing.testPush2
 import me.proton.core.push.data.testing.testPushesMessages
 import me.proton.core.push.data.testing.testUserId
-import me.proton.core.push.domain.entity.Push
 import me.proton.core.push.domain.entity.PushObjectType
 import me.proton.core.push.domain.local.PushLocalDataSource
 import me.proton.core.push.domain.remote.PushRemoteDataSource
+import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.AfterTest
@@ -52,7 +52,7 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
-internal class PushRepositoryImplTest {
+internal class PushRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest() {
     private lateinit var localDataSource: PushLocalDataSource
     private lateinit var remoteDataSource: PushRemoteDataSource
     private lateinit var tested: PushRepositoryImpl
@@ -69,7 +69,8 @@ internal class PushRepositoryImplTest {
         localDataSource = PushLocalDataSourceImpl(testDb)
         remoteDataSource = mockk()
         workManager = mockk(relaxed = true)
-        tested = PushRepositoryImpl(remoteDataSource, localDataSource, workManager)
+        tested =
+            PushRepositoryImpl(remoteDataSource, localDataSource, workManager, TestCoroutineScopeProvider(dispatchers))
     }
 
     @AfterTest
@@ -79,7 +80,7 @@ internal class PushRepositoryImplTest {
     }
 
     @Test
-    fun `get Pushes by type, remotely`() = runBlocking {
+    fun `get Pushes by type, remotely`() = coroutinesTest {
         coEvery { remoteDataSource.getAllPushes(testUserId) } answers { allTestPushes }
 
         val results = tested.getAllPushes(testUserId, PushObjectType.Messages)
@@ -92,7 +93,7 @@ internal class PushRepositoryImplTest {
     }
 
     @Test
-    fun `delete a Push`() = runBlocking {
+    fun `delete a Push`() = coroutinesTest {
         coEvery { remoteDataSource.getAllPushes(testUserId) } answers { allTestPushes }
         every { workManager.enqueue(any<WorkRequest>()) } returns mockk()
 
@@ -109,7 +110,7 @@ internal class PushRepositoryImplTest {
     }
 
     @Test
-    fun `delete a Push, then refresh remotely`() = runBlocking {
+    fun `delete a Push, then refresh remotely`() = coroutinesTest {
         coEvery { remoteDataSource.getAllPushes(testUserId) } answers { allTestPushes }
         every { workManager.enqueue(any<WorkRequest>()) } returns mockk()
 
@@ -130,7 +131,7 @@ internal class PushRepositoryImplTest {
     }
 
     @Test
-    fun `delete users pushes`() = runBlocking {
+    fun `delete users pushes`() = coroutinesTest {
         coEvery { remoteDataSource.getAllPushes(testUserId) } answers { allTestPushes }
         every { workManager.enqueue(any<WorkRequest>()) } returns mockk()
 
@@ -150,7 +151,7 @@ internal class PushRepositoryImplTest {
     }
 
     @Test
-    fun `get all remotely, then get all by type, locally`() = runBlocking {
+    fun `get all remotely, then get all by type, locally`() = coroutinesTest {
         coEvery { remoteDataSource.getAllPushes(testUserId) } returns allTestPushes
         tested.getAllPushes(testUserId, PushObjectType.Messages)
 
@@ -161,9 +162,12 @@ internal class PushRepositoryImplTest {
     }
 
     @Test
-    fun `delete a Push while observing pushes by type`() = runBlocking {
+    fun `delete a Push while observing pushes by type`() = coroutinesTest {
+        coEvery { remoteDataSource.getAllPushes(testUserId) } answers { allTestPushes }
+        tested.getAllPushes(testUserId, PushObjectType.Messages)
+
         val deletedItem = testPush2
-        val job = launch {
+        val job = launch(start = CoroutineStart.UNDISPATCHED) {
             tested.observeAllPushes(testUserId, PushObjectType.Messages).test {
                 assertContentEquals(testPushesMessages, awaitItem())
                 assertContentEquals(testPushesMessages - deletedItem, awaitItem())

@@ -18,10 +18,10 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.yield
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.domain.entity.UserId
@@ -29,6 +29,8 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
+import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.User
 import org.junit.Before
 import org.junit.Test
@@ -36,11 +38,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
-class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
+class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
 
     // region mocks
-    private val accountWorkflowHandler = mockk<AccountWorkflowHandler>(relaxed = true)
-    private val usernameDomainAvailability = mockk<UsernameDomainAvailability>(relaxed = true)
+    private lateinit var accountWorkflowHandler: AccountWorkflowHandler
+    private lateinit var usernameDomainAvailability: UsernameDomainAvailability
     // endregion
 
     private val userId = UserId("userId")
@@ -50,6 +52,8 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
+        accountWorkflowHandler = mockk(relaxed = true)
+        usernameDomainAvailability = mockk(relaxed = true)
         viewModel = ChooseAddressViewModel(accountWorkflowHandler, usernameDomainAvailability)
         coEvery { usernameDomainAvailability.getUser(any()) } returns user
         coEvery { user.name } returns null
@@ -59,7 +63,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
     fun `available domains happy path`() = coroutinesTest {
         // GIVEN
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.setUserId(userId)
 
@@ -78,16 +82,17 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `available domains error path`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } throws ApiException(
-            ApiResult.Error.NoInternet()
-        )
-        viewModel.state.test {
+        coEvery { usernameDomainAvailability.getDomains() } coAnswers {
+            yield()
+            throw ApiException(ApiResult.Error.NoInternet())
+        }
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.setUserId(userId)
 
             // THEN
-            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
-            assertTrue(awaitItem() is ChooseAddressViewModel.State.Error.Message)
+            awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Processing, "Actual state is $it") }
+            awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Error.Message, "Actual state is $it") }
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -98,11 +103,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
         coEvery { usernameDomainAvailability.isUsernameAvailable(any(), any()) } returns true
-        viewModel.state.test {
-            // WHEN
-            viewModel.setUserId(userId)
-            viewModel.checkUsername("test-username", "domain")
-
+        flowTest(viewModel.state) {
             // THEN
             assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
             assertTrue(awaitItem() is ChooseAddressViewModel.State.Data)
@@ -115,6 +116,10 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.setUserId(userId)
+        viewModel.checkUsername("test-username", "domain")
     }
 
     @Test
@@ -122,20 +127,18 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
         coEvery { usernameDomainAvailability.isUsernameAvailable(any(), any()) } throws Exception("not available")
-        viewModel.state.test {
-            // WHEN
-            viewModel.setUserId(userId)
-            viewModel.checkUsername("test-username", "domain")
-
+        flowTest(viewModel.state) {
             // THEN
-            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
-            assertTrue(awaitItem() is ChooseAddressViewModel.State.Data)
-            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
-
-            val state = awaitItem()
-            assertTrue(state is ChooseAddressViewModel.State.Error.Message)
+            awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Processing, "Actual state is $it") }
+            awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Data, "Actual state is $it") }
+            awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Processing, "Actual state is $it") }
+            awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Error.Message, "Actual state is $it") }
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.setUserId(userId)
+        viewModel.checkUsername("test-username", "domain")
     }
 }

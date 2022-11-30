@@ -63,6 +63,7 @@ dependencies {
     // Test
     testImplementation(
         project(Module.androidTest),
+        project(Module.kotlinTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,

@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.TestCase.assertNotNull
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiManager
@@ -52,7 +52,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test missing scope LOCKED called`() = runBlockingTest {
+    fun `test missing scope LOCKED called`() = runTest {
         val apiResult = ApiResult.Error.Http(
             HTTP_FORBIDDEN,
             "Missing Scope",
@@ -80,7 +80,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test missing scope PASSWORD called`() = runBlockingTest {
+    fun `test missing scope PASSWORD called`() = runTest {
         val apiResult = ApiResult.Error.Http(
             HTTP_FORBIDDEN,
             "Missing Scope",
@@ -107,7 +107,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test missing scope LOCKED and PASSWORD called handled properly`() = runBlockingTest {
+    fun `test missing scope LOCKED and PASSWORD called handled properly`() = runTest {
         val apiResult = ApiResult.Error.Http(
             HTTP_FORBIDDEN,
             "Missing Scope",
@@ -135,7 +135,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test missing scope called but retry api failed`() = runBlockingTest {
+    fun `test missing scope called but retry api failed`() = runTest {
         val apiResult = ApiResult.Error.Http(
             HTTP_FORBIDDEN,
             "Missing Scope",
@@ -162,7 +162,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test missing scope not called on other errors`() = runBlockingTest {
+    fun `test missing scope not called on other errors`() = runTest {
         val apiResult = ApiResult.Error.Http(
             422,
             "Some error",
@@ -185,7 +185,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test no proton data does not crash the handler`() = runBlockingTest {
+    fun `test no proton data does not crash the handler`() = runTest {
         val apiResult = ApiResult.Error.Http(
             422,
             "Some error",
@@ -205,7 +205,7 @@ class MissingScopeHandlerTest {
     }
 
     @Test
-    fun `test connectivity error does not invoke missing scope handler`() = runBlockingTest {
+    fun `test connectivity error does not invoke missing scope handler`() = runTest {
         val apiResult = ApiResult.Error.Connection(false)
 
         val missingScopeHandler = MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)

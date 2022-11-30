@@ -23,17 +23,18 @@ import app.cash.turbine.test
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class MutableSharedFlowSavedStateTest {
     @Test
-    fun mutableSharedFlowWithValue() = runBlockingTest {
+    fun mutableSharedFlowWithValue() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle()
-        val scope = TestCoroutineScope()
-        val flow by handle.flowState(MutableSharedFlow<String>(), scope)
+        val flowSavedState = handle.flowState(MutableSharedFlow<String>(), this)
+        val flow by flowSavedState
         val deferred = async {
             flow.test {
                 assertEquals("one", awaitItem())
@@ -42,13 +43,15 @@ class MutableSharedFlowSavedStateTest {
         flow.emit("one")
         deferred.await()
         assertEquals("one", handle["property_flow"])
+
+        flowSavedState.stop()
     }
 
     @Test
-    fun mutableSharedFlowWithNull() = runBlockingTest {
+    fun mutableSharedFlowWithNull() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle()
-        val scope = TestCoroutineScope()
-        val flow by handle.flowState(MutableSharedFlow<String?>(), scope)
+        val flowSavedState = handle.flowState(MutableSharedFlow<String?>(), this)
+        val flow by flowSavedState
         val deferred = async {
             flow.test {
                 assertEquals(null, awaitItem())
@@ -57,13 +60,15 @@ class MutableSharedFlowSavedStateTest {
         flow.emit(null)
         deferred.await()
         assertNull(handle["property_flow"])
+
+        flowSavedState.stop()
     }
 
     @Test
-    fun mutableSharedFlowWithMultipleValues() = runBlockingTest {
+    fun mutableSharedFlowWithMultipleValues() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle()
-        val scope = TestCoroutineScope()
-        val flow by handle.flowState(MutableSharedFlow<String>(), scope)
+        val flowSavedState = handle.flowState(MutableSharedFlow<String>(), this)
+        val flow by flowSavedState
         val deferred = async {
             flow.test {
                 assertEquals("one", awaitItem())
@@ -77,18 +82,21 @@ class MutableSharedFlowSavedStateTest {
         flow.emit("two")
         deferred.await()
         assertEquals("two", handle["property_flow"])
+
+        flowSavedState.stop()
     }
 
     @Test
-    fun restoredMutableSharedFlow() = runBlockingTest {
+    fun restoredMutableSharedFlow() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle(mapOf("property_flow" to "one"))
-        val scope = TestCoroutineScope()
         var restored: String? = null
-        val flow by handle.flowState(MutableSharedFlow<String>(), scope) {
+        val flowSavedState = handle.flowState(MutableSharedFlow<String>(), this) {
             restored = it
         }
+        val flow by flowSavedState
         val deferred = async {
             flow.test {
+                assertEquals("one", awaitItem())
                 assertEquals("two", awaitItem())
             }
         }
@@ -97,16 +105,18 @@ class MutableSharedFlowSavedStateTest {
 
         deferred.await()
         assertEquals("one", restored)
+
+        flowSavedState.stop()
     }
 
     @Test
-    fun restoredMutableSharedFlowWithReplay() = runBlockingTest {
+    fun restoredMutableSharedFlowWithReplay() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle(mapOf("property_flow" to "one"))
-        val scope = TestCoroutineScope()
         var restored: String? = null
-        val flow by handle.flowState(MutableSharedFlow<String>(replay = 1), scope) {
+        val flowSavedState = handle.flowState(MutableSharedFlow<String>(replay = 1), this) {
             restored = it
         }
+        val flow by flowSavedState
         val collectorA = async {
             flow.test {
                 assertEquals("one", awaitItem())
@@ -124,14 +134,15 @@ class MutableSharedFlowSavedStateTest {
 
         awaitAll(collectorA, collectorB)
         assertEquals("one", restored)
+        flowSavedState.stop()
     }
 
     @Test
-    fun restoredMutableSharedFlowWithNull() = runBlockingTest {
+    fun restoredMutableSharedFlowWithNull() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle(mapOf("property_flow" to null))
-        val scope = TestCoroutineScope()
         var restored: String? = ""
-        val flow by handle.flowState(MutableSharedFlow<String?>(replay = 1), scope) { restored = it }
+        val flowSavedState = handle.flowState(MutableSharedFlow<String?>(replay = 1), this) { restored = it }
+        val flow by flowSavedState
         val deferred = async {
             flow.test {
                 assertEquals(null, awaitItem())
@@ -141,13 +152,15 @@ class MutableSharedFlowSavedStateTest {
         flow.emit("one")
         deferred.await()
         assertEquals(null, restored)
+
+        flowSavedState.stop()
     }
 
     @Test
-    fun restoredValueWithCustomKey() = runBlockingTest {
+    fun restoredValueWithCustomKey() = runTest(UnconfinedTestDispatcher()) {
         val handle = SavedStateHandle(mapOf("custom_key" to "one"))
-        val scope = TestCoroutineScope()
-        val flow by handle.flowState(MutableSharedFlow<String>(replay = 1), scope, "custom_key")
+        val flowSavedState = handle.flowState(MutableSharedFlow<String>(replay = 1), this, "custom_key")
+        val flow by flowSavedState
         val deferred = async {
             flow.test {
                 assertEquals("one", awaitItem())
@@ -157,5 +170,7 @@ class MutableSharedFlowSavedStateTest {
 
         flow.emit("two")
         deferred.await()
+
+        flowSavedState.stop()
     }
 }

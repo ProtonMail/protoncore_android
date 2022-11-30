@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -46,13 +45,14 @@ import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
+class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val accountManager = mockk<AccountManager>(relaxed = true)
@@ -124,10 +124,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
     fun `unlock scope success is handled correctly`() = coroutinesTest {
         // GIVEN
         coEvery { obtainLockedScope.invoke(testUserId, testUsername, testPasswordEncrypted) } returns true
-        viewModel.state.test {
-            // WHEN
-            viewModel.unlock(testUserId, Scope.LOCKED, testPassword, null)
-
+        flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
@@ -135,6 +132,9 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.unlock(testUserId, Scope.LOCKED, testPassword, null)
     }
 
     @Test
@@ -148,10 +148,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             )
         )
 
-        viewModel.state.test {
-            // WHEN
-            viewModel.unlock(testUserId, Scope.LOCKED, testPassword, null)
-
+        flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
@@ -160,16 +157,16 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.unlock(testUserId, Scope.LOCKED, testPassword, null)
     }
 
     @Test
     fun `password scope no 2FA success is handled correctly`() = coroutinesTest {
         // GIVEN
         coEvery { obtainPasswordScope.invoke(testUserId, testUsername, testPasswordEncrypted, null) } returns true
-        viewModel.state.test {
-            // WHEN
-            viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, null)
-
+        flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
@@ -177,6 +174,9 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, null)
     }
 
     @Test
@@ -196,10 +196,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
                 ApiResult.Error.ProtonData(ResponseCodes.NOT_ALLOWED, "Invalid input")
             )
         )
-        viewModel.state.test {
-            // WHEN
-            viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, null)
-
+        flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
@@ -209,6 +206,9 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, null)
     }
 
     @Test
@@ -222,10 +222,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
                 test2FACode
             )
         } returns true
-        viewModel.state.test {
-            // WHEN
-            viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, test2FACode)
-
+        flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
@@ -233,6 +230,9 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, test2FACode)
     }
 
     @Test
@@ -252,10 +252,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
                 ApiResult.Error.ProtonData(ResponseCodes.NOT_ALLOWED, "Invalid input")
             )
         )
-        viewModel.state.test {
-            // WHEN
-            viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, test2FACode)
-
+        flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
@@ -265,5 +262,8 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+
+        // WHEN
+        viewModel.unlock(testUserId, Scope.PASSWORD, testPassword, test2FACode)
     }
 }

@@ -84,7 +84,7 @@ class UpdateSettingsWorkerTest {
         every { this@mockk.create(any(), MailSettingsApi::class) } returns TestApiManager(mailSettingsApi)
     }
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     private val worker = UpdateSettingsWorker(
         context,

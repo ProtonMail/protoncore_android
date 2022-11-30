@@ -47,7 +47,7 @@ class AuthSignupRepositoryImplTest {
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: AuthRepositoryImpl

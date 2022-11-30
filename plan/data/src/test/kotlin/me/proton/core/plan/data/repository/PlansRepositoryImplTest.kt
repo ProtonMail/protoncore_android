@@ -55,7 +55,7 @@ class PlansRepositoryImplTest {
     private val testUserId = "test-user-id"
     // endregion
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
     fun beforeEveryTest() {

@@ -21,7 +21,6 @@ package me.proton.core.contact.tests
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import kotlinx.coroutines.runBlocking
 import me.proton.core.label.data.local.LabelLocalDataSourceImpl
 import me.proton.core.label.domain.repository.LabelLocalDataSource
 import org.junit.After
@@ -39,13 +38,9 @@ open class LabelDatabaseTests {
         localDataSource = LabelLocalDataSourceImpl(db)
     }
 
-    fun givenUser0InDb() {
-        // Room does not support runBlockingTest (especially for transactions) so have to use runBlocking.
-        // Assuming we have an user.
-        runBlocking {
-            db.accountDao().insertOrUpdate(User0.accountEntity)
-            db.userDao().insertOrUpdate(User0.userEntity)
-        }
+    suspend fun givenUser0InDb() {
+        db.accountDao().insertOrUpdate(User0.accountEntity)
+        db.userDao().insertOrUpdate(User0.userEntity)
     }
 
     @After

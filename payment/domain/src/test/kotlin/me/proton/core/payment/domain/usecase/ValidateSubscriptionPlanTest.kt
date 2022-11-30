@@ -21,7 +21,7 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -68,7 +68,7 @@ class ValidateSubscriptionPlanTest {
     }
 
     @Test
-    fun `upgrade plan success test`() = runBlockingTest {
+    fun `upgrade plan success test`() = runTest {
         val result = useCase.invoke(
             userId = testUserId,
             codes = null,
@@ -90,7 +90,7 @@ class ValidateSubscriptionPlanTest {
     }
 
     @Test
-    fun `sign up payment success test`() = runBlockingTest {
+    fun `sign up payment success test`() = runTest {
         val user = null
         val result = useCase.invoke(
             userId = user,
@@ -113,7 +113,7 @@ class ValidateSubscriptionPlanTest {
     }
 
     @Test
-    fun `sign up payment no plans error handled correctly`() = runBlockingTest {
+    fun `sign up payment no plans error handled correctly`() = runTest {
         val user = null
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(

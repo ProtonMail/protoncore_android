@@ -21,7 +21,7 @@ package me.proton.core.network.domain.handlers
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
@@ -36,7 +36,7 @@ class ProtonForceUpdateHandlerTest {
     private val apiClient = mockk<ApiClient>(relaxed = true)
 
     @Test
-    fun `test force update called on bad version error`() = runBlockingTest {
+    fun `test force update called on bad version error`() = runTest {
         val apiResult = ApiResult.Error.Http(
             403,
             "Force update",
@@ -61,7 +61,7 @@ class ProtonForceUpdateHandlerTest {
     }
 
     @Test
-    fun `test force update called on invalid api version`() = runBlockingTest {
+    fun `test force update called on invalid api version`() = runTest {
         val apiResult = ApiResult.Error.Http(
             403,
             "Force update",
@@ -86,7 +86,7 @@ class ProtonForceUpdateHandlerTest {
     }
 
     @Test
-    fun `test force update not invoked on other errors`() = runBlockingTest {
+    fun `test force update not invoked on other errors`() = runTest {
         val apiResult = ApiResult.Error.Connection(false)
 
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")

@@ -28,7 +28,7 @@ import io.mockk.slot
 import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -141,7 +141,7 @@ class EventManagerImplTest {
             val deserializerSlot = slot<EventDeserializer>()
             every { create(capture(deserializerSlot)) } answers {
                 EventManagerImpl(
-                    TestCoroutineScopeProvider,
+                    TestCoroutineScopeProvider(),
                     appLifecycleProvider,
                     accountManager,
                     eventWorkerManager,
@@ -181,7 +181,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callCorrectPrepareUpdateDeleteCreateForUser1() = runBlocking {
+    fun callCorrectPrepareUpdateDeleteCreateForUser1() = runTest {
         // WHEN
         user1Manager.process()
         // THEN
@@ -224,7 +224,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callCorrectPrepareUpdateDeleteCreateForUser2() = runBlocking {
+    fun callCorrectPrepareUpdateDeleteCreateForUser2() = runTest {
         // WHEN
         user2Manager.process()
         // THEN
@@ -268,7 +268,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callCorrectSuccess() = runBlocking {
+    fun callCorrectSuccess() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
             EventMetadata(
@@ -310,7 +310,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callCorrectFailure() = runBlocking {
+    fun callCorrectFailure() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
             EventMetadata(
@@ -356,7 +356,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callOnPrepareThrowException() = runBlocking {
+    fun callOnPrepareThrowException() = runTest {
         // GIVEN
         coEvery { userEventListener.onPrepare(user1Config, any()) } throws Exception("IOException")
         // WHEN
@@ -372,7 +372,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callOnUpdateThrowException() = runBlocking {
+    fun callOnUpdateThrowException() = runTest {
         // GIVEN
         coEvery { userEventListener.onUpdate(user1Config, any()) } throws Exception("SqlForeignKeyException")
         // WHEN
@@ -389,7 +389,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callOnResetAllThrowException() = runBlocking {
+    fun callOnResetAllThrowException() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
             EventMetadata(
@@ -410,7 +410,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callOnResetAllCallFirstGetLatestEventId() = runBlocking {
+    fun callOnResetAllCallFirstGetLatestEventId() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
             EventMetadata(
@@ -432,7 +432,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callOnResetAllDoNotCallFirstGetLatestEventIdIfNextEventIdIsNotNull() = runBlocking {
+    fun callOnResetAllDoNotCallFirstGetLatestEventIdIfNextEventIdIsNotNull() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
             EventMetadata(
@@ -455,7 +455,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun preventMultiSubscribe() = runBlocking {
+    fun preventMultiSubscribe() = runTest {
         // GIVEN
         user1Manager.subscribe(userEventListener)
         user1Manager.subscribe(userEventListener)
@@ -471,7 +471,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun preventEventIfNoUser() = runBlocking {
+    fun preventEventIfNoUser() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns emptyList()
         // WHEN
@@ -485,7 +485,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun tryCastEventManagerConfig() = runBlocking {
+    fun tryCastEventManagerConfig() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } returns
             EventsResponse(TestEvents.calendarFullEventsResponse)
@@ -504,7 +504,7 @@ class EventManagerImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun fetchThrowApiExceptionForceUpdate() = runBlocking {
+    fun fetchThrowApiExceptionForceUpdate() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(400, "Bad Request", ApiResult.Error.ProtonData(APP_VERSION_BAD, "Please Update"))
@@ -516,7 +516,7 @@ class EventManagerImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun fetchThrowApiExceptionIsUnauthorized() = runBlocking {
+    fun fetchThrowApiExceptionIsUnauthorized() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(401, "Unauthorized")
@@ -528,7 +528,7 @@ class EventManagerImplTest {
     }
 
     @Test(expected = ApiException::class)
-    fun fetchThrowApiExceptionRetryable() = runBlocking {
+    fun fetchThrowApiExceptionRetryable() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Connection()
@@ -540,7 +540,7 @@ class EventManagerImplTest {
     }
 
     @Test(expected = Exception::class)
-    fun fetchThrowException() = runBlocking {
+    fun fetchThrowException() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws Exception()
         // WHEN
@@ -550,7 +550,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun fetchThrowApiExceptionNotRetryable() = runBlocking {
+    fun fetchThrowApiExceptionNotRetryable() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(404, "Not Found")

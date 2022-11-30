@@ -20,7 +20,7 @@ package me.proton.core.user.data
 
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -100,7 +100,7 @@ class UserAddressKeySecretProviderTest {
     }
 
     @Test
-    fun getPassphraseWontReturnTokenWithWrongFormat() = runBlockingTest {
+    fun getPassphraseWontReturnTokenWithWrongFormat() = runTest {
         // GIVEN
         val userKey = mockk<UserKey>(relaxed = true) {
             every { privateKey } returns mockk(relaxed = true) {

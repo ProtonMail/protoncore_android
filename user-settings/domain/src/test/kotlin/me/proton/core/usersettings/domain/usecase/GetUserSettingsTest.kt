@@ -20,7 +20,7 @@ package me.proton.core.usersettings.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -71,7 +71,7 @@ class GetUserSettingsTest {
     }
 
     @Test
-    fun `get user settings returns success`() = runBlockingTest {
+    fun `get user settings returns success`() = runTest {
         // GIVEN
         coEvery { repository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
         // WHEN
@@ -84,7 +84,7 @@ class GetUserSettingsTest {
     }
 
     @Test
-    fun `get user settings returns error`() = runBlockingTest {
+    fun `get user settings returns error`() = runTest {
         // GIVEN
         coEvery { repository.getUserSettings(testUserId, any()) } throws ApiException(
             ApiResult.Error.Connection(

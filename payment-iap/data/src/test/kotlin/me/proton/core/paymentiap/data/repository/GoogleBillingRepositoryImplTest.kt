@@ -28,12 +28,11 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.test.kotlin.TestDispatcherProvider
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -48,36 +47,31 @@ internal class GoogleBillingRepositoryImplTest {
     fun setUp() {
         billingClientFactory = FakeBillingClientFactory()
         factory = FakeConnectedBillingClientFactory()
-        tested = GoogleBillingRepositoryImpl(factory, TestDispatcherProvider)
-    }
-
-    @AfterTest
-    fun tearDown() {
-        TestDispatcherProvider.cleanupTestCoroutines()
+        tested = GoogleBillingRepositoryImpl(factory, TestDispatcherProvider())
     }
 
     @Test
-    fun `repository is destroyed after use`() = runBlockingTest {
+    fun `repository is destroyed after use`() = runTest {
         tested.use {}
         verify { factory.connectedBillingClient.destroy() }
         verify { tested.destroy() }
     }
 
     @Test
-    fun `acknowledge a purchase`() = runBlockingTest {
+    fun `acknowledge a purchase`() = runTest {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns BillingResult()
         tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
     }
 
     @Test(expected = BillingClientError::class)
-    fun `fails to acknowledge a purchase`() = runBlockingTest {
+    fun `fails to acknowledge a purchase`() = runTest {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns
             BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.ERROR).build()
         tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
     }
 
     @Test
-    fun `get product details`() = runBlockingTest {
+    fun `get product details`() = runTest {
         val productDetails = mockk<ProductDetails>()
         val productDetailsResult = ProductDetailsResult(BillingResult(), listOf(productDetails))
         coEvery { factory.connectedBillingClient.withClient<ProductDetailsResult>(any()) } returns productDetailsResult
@@ -86,13 +80,13 @@ internal class GoogleBillingRepositoryImplTest {
     }
 
     @Test
-    fun `launch billing flow`() = runBlockingTest {
+    fun `launch billing flow`() = runTest {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns BillingResult()
         tested.use { it.launchBillingFlow(mockk(), mockk()) }
     }
 
     @Test
-    fun `query subscription purchases`() = runBlockingTest {
+    fun `query subscription purchases`() = runTest {
         val purchaseList = listOf(mockk<Purchase>())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
         coEvery { factory.connectedBillingClient.withClient<PurchasesResult>(any()) } returns purchaseResult
@@ -105,7 +99,7 @@ internal class GoogleBillingRepositoryImplTest {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } throws BillingClientError(
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE, "test error"
         )
-        runBlockingTest {
+        runTest {
             assertFailsWith<BillingClientError> {
                 tested.use { it.launchBillingFlow(mockk(), mockk()) }
             }

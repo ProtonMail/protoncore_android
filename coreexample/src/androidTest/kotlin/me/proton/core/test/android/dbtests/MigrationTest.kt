@@ -25,7 +25,7 @@ import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.platform.app.InstrumentationRegistry
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import me.proton.android.core.coreexample.db.AppDatabase
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import org.junit.Rule
@@ -63,7 +63,7 @@ class MigrationTest {
     }
 
     @Test
-    fun migrateHVEntities_22_23() = runBlocking {
+    fun migrateHVEntities_22_23() = runTest {
         val db = helper.createDatabase(testDb, 22)
         db.insertHVEntity_v22("c-1", HumanVerificationState.HumanVerificationNeeded)
         db.insertHVEntity_v22("c-2", HumanVerificationState.HumanVerificationFailed)

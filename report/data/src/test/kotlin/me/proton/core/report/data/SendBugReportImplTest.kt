@@ -44,7 +44,7 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-internal class SendBugReportImplTest : CoroutinesTest {
+internal class SendBugReportImplTest : CoroutinesTest by CoroutinesTest() {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
 
@@ -116,7 +116,9 @@ internal class SendBugReportImplTest : CoroutinesTest {
     }
 
     private fun mockWorkInfoStates(vararg workInfo: WorkInfo) {
-        every { workManager.getWorkInfoByIdLiveData(any()) } returns liveData<WorkInfo>(dispatchers.Main) {
+        every {
+            workManager.getWorkInfoByIdLiveData(any())
+        } returns liveData<WorkInfo>(coroutinesRule.dispatchers.Main) {
             workInfo.forEach {
                 emit(it)
                 yield()

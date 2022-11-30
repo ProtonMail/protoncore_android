@@ -40,7 +40,8 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.data.di.AlternativeApiPins
@@ -87,10 +88,10 @@ internal class PinningTests {
     internal val apiClient: ApiClient = TestApiClient()
 
     @BindValue
-    internal val coroutineScopeProvider: CoroutineScopeProvider = TestCoroutineScopeProvider
+    internal val dispatcherProvider: DispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
 
     @BindValue
-    internal val dispatcherProvider: DispatcherProvider = TestDispatcherProvider
+    internal val coroutineScopeProvider: CoroutineScopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
 
     @BindValue
     internal val missingScopeListener: MissingScopeListener = mockk()
@@ -167,67 +168,67 @@ internal class PinningTests {
     }
 
     @Test
-    fun `calling api protonmail com, failure`() = runBlocking {
+    fun `calling api protonmail com, failure`() = runTest {
         assertFailure(baseApiUrl = "https://api.protonmail.ch")
     }
 
     @Test
-    fun `calling api protonmail ch, success`() = runBlocking {
+    fun `calling api protonmail ch, success`() = runTest {
         assertSuccess(baseApiUrl = "https://api.protonmail.ch")
     }
 
     @Test
-    fun `calling api protonvpn ch, success`() = runBlocking {
+    fun `calling api protonvpn ch, success`() = runTest {
         assertSuccess(baseApiUrl = "https://api.protonvpn.ch")
     }
 
     @Test
-    fun `calling verify protonmail com, success`() = runBlocking {
+    fun `calling verify protonmail com, success`() = runTest {
         assertSuccess(baseApiUrl = "https://verify.protonmail.com")
     }
 
     @Test
-    fun `calling verify protonvpn com, success`() = runBlocking {
+    fun `calling verify protonvpn com, success`() = runTest {
         assertSuccess(baseApiUrl = "https://verify.protonvpn.com")
     }
 
     @Test
-    fun `calling proton me, success`() = runBlocking {
+    fun `calling proton me, success`() = runTest(dispatcherProvider.Main) {
         assertSuccess(baseApiUrl = "https://verify.proton.me")
     }
 
     @Test
-    fun `calling verify api protonmail com, success`() = runBlocking {
+    fun `calling verify api protonmail com, success`() = runTest {
         assertSuccess(baseApiUrl = "https://verify-api.protonmail.com")
     }
 
     @Test
-    fun `calling verify api protonvpn com, success`() = runBlocking {
+    fun `calling verify api protonvpn com, success`() = runTest {
         assertSuccess(baseApiUrl = "https://verify-api.protonvpn.com")
     }
 
     @Test
-    fun `calling verify api proton me, success`() = runBlocking {
+    fun `calling verify api proton me, success`() = runTest {
         assertSuccess(baseApiUrl = "https://verify-api.proton.me")
     }
 
     @Test
-    fun `calling mail api proton me, success`() = runBlocking {
+    fun `calling mail api proton me, success`() = runTest {
         assertSuccess(baseApiUrl = "https://mail-api.proton.me")
     }
 
     @Test
-    fun `calling drive api proton me, success`() = runBlocking {
+    fun `calling drive api proton me, success`() = runTest {
         assertSuccess(baseApiUrl = "https://drive-api.proton.me")
     }
 
     @Test
-    fun `calling calendar api proton me, success`() = runBlocking {
+    fun `calling calendar api proton me, success`() = runTest {
         assertSuccess(baseApiUrl = "https://calendar-api.proton.me")
     }
 
     @Test
-    fun `calling vpn api proton me, success`() = runBlocking {
+    fun `calling vpn api proton me, success`() = runTest {
         assertSuccess(baseApiUrl = "https://vpn-api.proton.me")
     }
 }

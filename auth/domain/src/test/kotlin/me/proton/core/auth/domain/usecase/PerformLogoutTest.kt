@@ -21,7 +21,7 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
@@ -42,7 +42,7 @@ class PerformLogoutTest {
     }
 
     @Test
-    fun `logout happy path`() = runBlockingTest {
+    fun `logout happy path`() = runTest {
         // WHEN
         val response = useCase.invoke(SessionId(testSessionId))
         // THEN
@@ -50,7 +50,7 @@ class PerformLogoutTest {
     }
 
     @Test
-    fun `logout happy path invocations are correct`() = runBlockingTest {
+    fun `logout happy path invocations are correct`() = runTest {
         // WHEN
         useCase.invoke(SessionId(testSessionId))
         // THEN

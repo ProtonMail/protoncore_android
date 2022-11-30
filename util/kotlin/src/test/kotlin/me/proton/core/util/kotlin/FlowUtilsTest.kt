@@ -20,14 +20,18 @@ package me.proton.core.util.kotlin
 
 import app.cash.turbine.test
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertContentEquals
+import kotlin.test.assertTrue
 
 class FlowUtilsTest {
     @Test
-    fun `catches known error`() = runBlockingTest {
+    fun `catches known error`() = runTest {
         flow {
             emit(1)
             throw TestError
@@ -41,7 +45,7 @@ class FlowUtilsTest {
     }
 
     @Test
-    fun `does not catch unknown error`() = runBlockingTest {
+    fun `does not catch unknown error`() = runTest {
         flow {
             emit(1)
             error("random error")
@@ -54,7 +58,7 @@ class FlowUtilsTest {
     }
 
     @Test
-    fun `re-catches unknown error`() = runBlockingTest {
+    fun `re-catches unknown error`() = runTest {
         flow {
             emit(1)
             error("random error")
@@ -70,23 +74,29 @@ class FlowUtilsTest {
     }
 
     @Test
-    fun `retries after detecting known error`() = runBlockingTest {
+    fun `retries after detecting known error`() = runTest {
         var retryCount = 0
-        flow {
-            emit(1)
-            throw TestError
-        }.retryOnceWhen({ it is TestError }) {
-            retryCount += 1
-        }.test {
-            assertEquals(1, awaitItem())
-            assertEquals(1, awaitItem())
-            assertEquals(TestError, awaitError())
+        val emitted = mutableListOf<Int>()
+        var errorCaught = false
+        try {
+            flow {
+                emit(1)
+                throw TestError
+            }.retryOnceWhen({ it is TestError }) {
+                retryCount += 1
+            }.onEach {
+                emitted.add(it)
+            }.collect()
+        } catch (_: TestError) {
+            errorCaught = true
         }
+        assertContentEquals(listOf(1, 1), emitted)
+        assertTrue(errorCaught, "TestError has not been caught.")
         assertEquals(1, retryCount)
     }
 
     @Test
-    fun `does not retry after encountering unknown error`() = runBlockingTest {
+    fun `does not retry after encountering unknown error`() = runTest {
         var retryCount = 0
         flow {
             emit(1)

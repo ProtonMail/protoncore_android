@@ -20,7 +20,7 @@ package me.proton.core.country.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.country.domain.entity.Country
 import me.proton.core.country.domain.repository.CountriesRepository
 import org.junit.Before
@@ -46,7 +46,7 @@ class GetCountryTest {
     }
 
     @Test
-    fun `get country code returns success`() = runBlockingTest {
+    fun `get country code returns success`() = runTest {
         coEvery { repository.getCountry(testCountryName) } returns Country(testCountryCode, "name")
         val result = useCase.invoke(testCountryName)
         assertNotNull(result)

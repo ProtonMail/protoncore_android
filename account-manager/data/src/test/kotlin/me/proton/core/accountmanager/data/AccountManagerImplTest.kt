@@ -20,7 +20,7 @@ package me.proton.core.accountmanager.data
 import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -69,7 +69,7 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `add user with session`() = runBlockingTest {
+    fun `add user with session`() = runTest {
         coEvery { mocks.accountRepository.getSessionIdOrNull(any()) } returns null
 
         accountManager.addAccount(account1, session1)
@@ -78,7 +78,7 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `add user with existing session`() = runBlockingTest {
+    fun `add user with existing session`() = runTest {
         coEvery { mocks.accountRepository.getSessionIdOrNull(any()) } returns session1.sessionId
         coEvery { mocks.accountRepository.getAccountOrNull(any<SessionId>()) } returns account1
 
@@ -90,7 +90,7 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `on handleTwoPassModeSuccess`() = runBlockingTest {
+    fun `on handleTwoPassModeSuccess`() = runTest {
         mocks.setupAccountRepository()
 
         accountManager.handleTwoPassModeSuccess(account1.userId)
@@ -101,7 +101,7 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `on handleTwoPassModeFailed`() = runBlockingTest {
+    fun `on handleTwoPassModeFailed`() = runTest {
         mocks.setupAccountRepository()
 
         accountManager.handleTwoPassModeFailed(account1.userId)
@@ -112,7 +112,7 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `on handleSecondFactorSuccess`() = runBlockingTest {
+    fun `on handleSecondFactorSuccess`() = runTest {
         mocks.setupAccountRepository()
 
         val newScopes = listOf("scope1", "scope2")
@@ -131,7 +131,7 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `on handleSecondFactorFailed`() = runBlockingTest {
+    fun `on handleSecondFactorFailed`() = runTest {
         mocks.setupAccountRepository()
         mocks.setupAuthRepository()
 

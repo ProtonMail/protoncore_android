@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.country.domain.entity.Country
@@ -27,11 +26,12 @@ import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
+class RecoverySMSViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
     private val defaultCountryCode = mockk<DefaultCountry>(relaxed = true)
     // endregion
@@ -52,7 +52,7 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `calling code returns success`() = coroutinesTest {
         coEvery { defaultCountryCode.invoke() } returns country
-        viewModel.countryCallingCode.test() {
+        flowTest(viewModel.countryCallingCode) {
             viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(awaitItem())
             assertIs<ViewModelResult.Processing>(awaitItem())
@@ -64,7 +64,7 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `calling code returns correct data`() = coroutinesTest {
         coEvery { defaultCountryCode.invoke() } returns country
-        viewModel.countryCallingCode.test() {
+        flowTest(viewModel.countryCallingCode) {
             viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(awaitItem())
             assertIs<ViewModelResult.Processing>(awaitItem())
@@ -76,7 +76,7 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `use case throws no countries exception`() = coroutinesTest {
         coEvery { defaultCountryCode.invoke() } returns null
-        viewModel.countryCallingCode.test() {
+        flowTest(viewModel.countryCallingCode) {
             viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(awaitItem())
             assertIs<ViewModelResult.Processing>(awaitItem())

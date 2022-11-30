@@ -25,7 +25,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkStatic
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.db.ChallengeFramesDao
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
@@ -60,7 +60,7 @@ public class ChallengeRepositoryImplTest {
     }
 
     @Test
-    public fun `insert new frame details works correctly`(): Unit = runBlockingTest {
+    public fun `insert new frame details works correctly`(): Unit = runTest {
         // Given
         val flow = "test-flow"
         val frame = "test-frame"

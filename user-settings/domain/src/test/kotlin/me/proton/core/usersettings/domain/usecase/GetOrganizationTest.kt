@@ -20,7 +20,7 @@ package me.proton.core.usersettings.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.entity.Organization
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
@@ -72,7 +72,7 @@ class GetOrganizationTest {
     }
 
     @Test
-    fun `get organization returns success`() = runBlockingTest {
+    fun `get organization returns success`() = runTest {
         // GIVEN
         coEvery { repository.getOrganization(testUserId, any()) } returns testOrganization
         // WHEN

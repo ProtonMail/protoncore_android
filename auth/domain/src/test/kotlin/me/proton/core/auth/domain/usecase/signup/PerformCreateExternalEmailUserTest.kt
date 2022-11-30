@@ -24,7 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -89,7 +89,7 @@ class PerformCreateExternalEmailUserTest {
     }
 
     @Test
-    fun `create external user success`() = runBlockingTest {
+    fun `create external user success`() = runTest {
         useCase.invoke(
             testEmail,
             keyStoreCrypto.encrypt(testPassword),
@@ -123,7 +123,7 @@ class PerformCreateExternalEmailUserTest {
     }
 
     @Test
-    fun `create external user empty email`() = runBlockingTest {
+    fun `create external user empty email`() = runTest {
         val throwable = assertFailsWith<IllegalArgumentException> {
             useCase.invoke(
                 "   ",
@@ -139,7 +139,7 @@ class PerformCreateExternalEmailUserTest {
     }
 
     @Test
-    fun `user already exists`() = runBlockingTest {
+    fun `user already exists`() = runTest {
         val apiException = mockk<ApiException>()
         coEvery {
             userRepository.createExternalEmailUser(any(), any(), any(), any(), any())

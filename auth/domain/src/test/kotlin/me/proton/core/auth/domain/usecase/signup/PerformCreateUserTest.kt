@@ -24,7 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
@@ -94,7 +94,7 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `create user no recovery success`() = runBlockingTest {
+    fun `create user no recovery success`() = runTest {
         coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
         useCase.invoke(
             testUsername,
@@ -138,7 +138,7 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `create user email recovery success`() = runBlockingTest {
+    fun `create user email recovery success`() = runTest {
         coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
         useCase.invoke(
             testUsername,
@@ -183,7 +183,7 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `create user phone recovery success`() = runBlockingTest {
+    fun `create user phone recovery success`() = runTest {
         coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
         useCase.invoke(
             testUsername,
@@ -228,7 +228,7 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `create user phone and email recovery success`() = runBlockingTest {
+    fun `create user phone and email recovery success`() = runTest {
         val throwable = assertFailsWith<IllegalArgumentException> {
             useCase.invoke(
                 testUsername,
@@ -248,7 +248,7 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `user already exists and cannot log in`() = runBlockingTest {
+    fun `user already exists and cannot log in`() = runTest {
         val apiException = mockk<ApiException>()
 
         coEvery {

@@ -70,6 +70,7 @@ dependencies {
         project(Module.keyDomain),
         `android-test-core`,
         `androidx-collection`,
+        `coroutines-test`,
         junit,
         robolectric,
         `room-ktx`,

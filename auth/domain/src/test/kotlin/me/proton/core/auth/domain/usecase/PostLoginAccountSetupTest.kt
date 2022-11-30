@@ -24,7 +24,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
@@ -104,7 +104,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `user unlocked`() = runBlockingTest {
+    fun `user unlocked`() = runTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
@@ -126,7 +126,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `user unlock failed, recoverable`() = runBlockingTest {
+    fun `user unlock failed, recoverable`() = runTest {
         val sessionInfo = mockSessionInfo()
         val unlockError = mockk<UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase>()
 
@@ -149,7 +149,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `user unlock failed, non-recoverable `() = runBlockingTest {
+    fun `user unlock failed, non-recoverable `() = runTest {
         val sessionInfo = mockSessionInfo()
         val unlockError = mockk<UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey>()
 
@@ -173,7 +173,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `needs second factor`() = runBlockingTest {
+    fun `needs second factor`() = runTest {
         val sessionInfo = mockSessionInfo(secondFactorNeeded = true)
         val result = tested.invoke(
             sessionInfo.userId,
@@ -189,7 +189,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `subscription setup with billing details`() = runBlockingTest {
+    fun `subscription setup with billing details`() = runTest {
         val sessionInfo = mockSessionInfo()
         val billingDetails = BillingDetails(
             amount = 99,
@@ -246,7 +246,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `user check error`() = runBlockingTest {
+    fun `user check error`() = runTest {
         val setupError = mockk<PostLoginAccountSetup.UserCheckResult.Error>()
         val sessionInfo = mockSessionInfo()
 
@@ -270,7 +270,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `two pass needed`() = runBlockingTest {
+    fun `two pass needed`() = runTest {
         val setupError = SetupAccountCheck.Result.TwoPassNeeded
         val sessionInfo = mockSessionInfo()
 
@@ -292,7 +292,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `change pass needed`() = runBlockingTest {
+    fun `change pass needed`() = runTest {
         val setupError = SetupAccountCheck.Result.ChangePasswordNeeded
         val sessionInfo = mockSessionInfo(temporaryPassword = true)
 
@@ -314,7 +314,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `choose username needed`() = runBlockingTest {
+    fun `choose username needed`() = runTest {
         val setupError = SetupAccountCheck.Result.ChooseUsernameNeeded
         val sessionInfo = mockSessionInfo()
 
@@ -336,7 +336,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `primary keys needed`() = runBlockingTest {
+    fun `primary keys needed`() = runTest {
         val setupError = SetupAccountCheck.Result.SetupPrimaryKeysNeeded
         val sessionInfo = mockSessionInfo()
 
@@ -361,7 +361,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `internal address needed`() = runBlockingTest {
+    fun `internal address needed`() = runTest {
         val setupError = SetupAccountCheck.Result.SetupInternalAddressNeeded
         val sessionInfo = mockSessionInfo()
 
@@ -386,7 +386,7 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `external address needed`() = runBlockingTest {
+    fun `external address needed`() = runTest {
         val setupError = SetupAccountCheck.Result.SetupExternalAddressKeysNeeded
         val sessionInfo = mockSessionInfo()
 

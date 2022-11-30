@@ -21,7 +21,7 @@ package me.proton.core.payment.data
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -58,7 +58,7 @@ class PaymentManagerImplTest {
     }
 
     @Test
-    fun `getPaymentProviders just return getAvailablePaymentProviders`() = runBlockingTest {
+    fun `getPaymentProviders just return getAvailablePaymentProviders`() = runTest {
         // GIVEN
         currentPaymentProviders = setOf(PaymentProvider.CardPayment)
 
@@ -70,7 +70,7 @@ class PaymentManagerImplTest {
     }
 
     @Test
-    fun `isUpgradeAvailable return true if AvailablePaymentProviders isNotEmpty`() = runBlockingTest {
+    fun `isUpgradeAvailable return true if AvailablePaymentProviders isNotEmpty`() = runTest {
         // GIVEN
         currentPaymentProviders = setOf(PaymentProvider.CardPayment)
 
@@ -82,7 +82,7 @@ class PaymentManagerImplTest {
     }
 
     @Test
-    fun `isUpgradeAvailable return false if AvailablePaymentProviders isEmpty`() = runBlockingTest {
+    fun `isUpgradeAvailable return false if AvailablePaymentProviders isEmpty`() = runTest {
         // GIVEN
         currentPaymentProviders = emptySet()
 
@@ -94,7 +94,7 @@ class PaymentManagerImplTest {
     }
 
     @Test
-    fun `isSubscriptionAvailable return true if User Role is NoOrganization`() = runBlockingTest {
+    fun `isSubscriptionAvailable return true if User Role is NoOrganization`() = runTest {
         // GIVEN
         currentRole = Role.NoOrganization
 
@@ -106,7 +106,7 @@ class PaymentManagerImplTest {
     }
 
     @Test
-    fun `isSubscriptionAvailable return true if User Role is OrganizationAdmin`() = runBlockingTest {
+    fun `isSubscriptionAvailable return true if User Role is OrganizationAdmin`() = runTest {
         // GIVEN
         currentRole = Role.OrganizationAdmin
 
@@ -118,7 +118,7 @@ class PaymentManagerImplTest {
     }
 
     @Test
-    fun `isSubscriptionAvailable return false if User Role is OrganizationMember`() = runBlockingTest {
+    fun `isSubscriptionAvailable return false if User Role is OrganizationMember`() = runTest {
         // GIVEN
         currentRole = Role.OrganizationMember
 

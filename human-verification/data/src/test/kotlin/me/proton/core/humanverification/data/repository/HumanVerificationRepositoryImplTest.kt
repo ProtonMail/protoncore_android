@@ -25,7 +25,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkStatic
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -89,7 +89,7 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `cannot insert invalid entity`() = runBlockingTest {
+    fun `cannot insert invalid entity`() = runTest {
         val details = HumanVerificationDetails(
             mockk(),
             listOf("captcha"),
@@ -102,7 +102,7 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `set human verification details`() = runBlockingTest {
+    fun `set human verification details`() = runTest {
         val humanVerificationDetails = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
@@ -132,7 +132,7 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `set human verification details with success state`() = runBlockingTest {
+    fun `set human verification details with success state`() = runTest {
         val state = HumanVerificationState.HumanVerificationSuccess
         val humanVerificationDetails = HumanVerificationDetails(
             clientId = clientId,
@@ -160,7 +160,7 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `set human verification details with success state and token details`() = runBlockingTest {
+    fun `set human verification details with success state and token details`() = runTest {
         val state = HumanVerificationState.HumanVerificationSuccess
         val tokenType = "token-type"
         val tokenCode = "token-code"
@@ -190,7 +190,7 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `update state`() = runBlockingTest {
+    fun `update state`() = runTest {
         val state = HumanVerificationState.HumanVerificationSuccess
         val tokenType = "token-type"
         val tokenCode = "token-code"

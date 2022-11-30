@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,8 +40,7 @@ import kotlin.test.assertEquals
  */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.P])
-class ObserveTest : CoroutinesTest {
-
+class ObserveTest : CoroutinesTest by UnconfinedCoroutinesTest() {
     private val prefs = ApplicationProvider.getApplicationContext<Context>()
         .getSharedPreferences("test", Context.MODE_PRIVATE)
 
@@ -73,7 +73,7 @@ class ObserveTest : CoroutinesTest {
 
         // given
         val flow = prefs.observe()
-        val result = mutableListOf<Pair< String?, Map<String, Any?> >>()
+        val result = mutableListOf<Pair<String?, Map<String, Any?>>>()
 
         val expected = listOf(
             null to emptyMap(),

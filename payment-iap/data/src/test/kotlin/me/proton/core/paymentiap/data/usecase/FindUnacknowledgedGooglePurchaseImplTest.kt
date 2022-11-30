@@ -24,7 +24,7 @@ import com.android.billingclient.api.Purchase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
@@ -47,13 +47,13 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `no purchases`() = runBlockingTest {
+    fun `no purchases`() = runTest {
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns emptyList()
         assertTrue(tested().isEmpty())
     }
 
     @Test
-    fun `acknowledged purchase`() = runBlockingTest {
+    fun `acknowledged purchase`() = runTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns true
@@ -63,7 +63,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `unacknowledged purchase`() = runBlockingTest {
+    fun `unacknowledged purchase`() = runTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
@@ -74,7 +74,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `unacknowledged purchase with unmatched product`() = runBlockingTest {
+    fun `unacknowledged purchase with unmatched product`() = runTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
@@ -86,7 +86,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `unacknowledged purchase with matched product`() = runBlockingTest {
+    fun `unacknowledged purchase with matched product`() = runTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
@@ -98,7 +98,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `unacknowledged purchase with unmatched user`() = runBlockingTest {
+    fun `unacknowledged purchase with unmatched user`() = runTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
@@ -111,7 +111,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `unacknowledged purchase with matched user`() = runBlockingTest {
+    fun `unacknowledged purchase with matched user`() = runTest {
         val purchase = mockk<Purchase> {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { isAcknowledged } returns false
@@ -122,7 +122,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `multiple unacknowledged purchases`() = runBlockingTest {
+    fun `multiple unacknowledged purchases`() = runTest {
         val purchaseA = mockk<Purchase> {
             every { purchaseTime } returns 1200
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
@@ -140,7 +140,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `returns empty list if Billing service is unavailable`() = runBlockingTest {
+    fun `returns empty list if Billing service is unavailable`() = runTest {
         coEvery { googleBillingRepository.querySubscriptionPurchases() } throws BillingClientError(
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
             "Unavailable"
@@ -149,7 +149,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     }
 
     @Test
-    fun `rethrows an error`() = runBlockingTest {
+    fun `rethrows an error`() = runTest {
         coEvery { googleBillingRepository.querySubscriptionPurchases() } throws BillingClientError(
             BillingClient.BillingResponseCode.ERROR,
             "Error"

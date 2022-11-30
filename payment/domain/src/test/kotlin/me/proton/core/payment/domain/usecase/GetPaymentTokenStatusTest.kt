@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -57,14 +57,14 @@ class GetPaymentTokenStatusTest {
     }
 
     @Test
-    fun `payment token status for upgrade returns success chargeable`() = runBlockingTest {
+    fun `payment token status for upgrade returns success chargeable`() = runTest {
         val result = useCase.invoke(testUserId, testPaymentToken)
         assertNotNull(result)
         assertEquals(PaymentTokenStatus.PENDING, result.status)
     }
 
     @Test
-    fun `payment token status for sign up returns success chargeable`() = runBlockingTest {
+    fun `payment token status for sign up returns success chargeable`() = runTest {
         coEvery {
             repository.getPaymentTokenStatus(null, testPaymentToken)
         } returns testDefaultPaymentTokenStatusResult
@@ -74,7 +74,7 @@ class GetPaymentTokenStatusTest {
     }
 
     @Test
-    fun `payment token status empty token handled correctly`() = runBlockingTest {
+    fun `payment token status empty token handled correctly`() = runTest {
         coEvery {
             repository.getPaymentTokenStatus(null, ProtonPaymentToken(""))
         } returns testDefaultPaymentTokenStatusResult
@@ -84,7 +84,7 @@ class GetPaymentTokenStatusTest {
     }
 
     @Test
-    fun `payment token status error handled correctly`() = runBlockingTest {
+    fun `payment token status error handled correctly`() = runTest {
         coEvery {
             repository.getPaymentTokenStatus(null, testPaymentToken)
         } throws ApiException(ApiResult.Error.Connection(false, RuntimeException("Test error")))

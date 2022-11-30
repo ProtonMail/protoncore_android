@@ -20,7 +20,7 @@ package me.proton.core.humanverification.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Rule
@@ -43,7 +43,7 @@ class SendVerificationCodeToPhoneDestinationTest {
     private val testPhoneNumber = "+123456789"
 
     @Test
-    fun `send verification token to API sms`() = runBlockingTest {
+    fun `send verification token to API sms`() = runTest {
         val useCase = SendVerificationCodeToPhoneDestination(remoteRepository)
         coEvery { remoteRepository.sendVerificationCodePhoneNumber(any(), any(), any()) } returns Unit
 
@@ -51,7 +51,7 @@ class SendVerificationCodeToPhoneDestinationTest {
     }
 
     @Test
-    fun `send verification token to API sms invalid`() = runBlockingTest {
+    fun `send verification token to API sms invalid`() = runTest {
         val useCase = SendVerificationCodeToPhoneDestination(remoteRepository)
 
         thrown.expect(Exception::class.java)

@@ -25,6 +25,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.KeyApi
@@ -39,6 +40,7 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -56,7 +58,7 @@ class PublicAddressRepositoryImplTest {
     private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
 
     private val publicAddressDao = mockk<PublicAddressDao>()
     private val publicAddressWithKeysDao = mockk<PublicAddressWithKeysDao>()
@@ -83,7 +85,8 @@ class PublicAddressRepositoryImplTest {
         }
         repositoryImpl = PublicAddressRepositoryImpl(
             db,
-            apiProvider
+            apiProvider,
+            TestCoroutineScopeProvider(dispatcherProvider)
         )
     }
 

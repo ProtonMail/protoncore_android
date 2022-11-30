@@ -29,15 +29,16 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
-import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
+import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -45,7 +46,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
+class PaymentTokenApprovalViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
     private val getPaymentTokenStatus = mockk<GetPaymentTokenStatus>(relaxed = true)
     private val networkManager = mockk<NetworkManager>()
@@ -77,12 +78,14 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `network manager returns different flow of has and has not connection`() = coroutinesTest {
         every { networkManager.observe() } returns flowOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered)
-        viewModel.networkConnectionState.test {
-            viewModel.watchNetwork()
+        val job = flowTest(viewModel.networkConnectionState) {
             assertNull(awaitItem())
             assertFalse(awaitItem()!!)
             assertTrue(awaitItem()!!)
         }
+
+        viewModel.watchNetwork()
+        job.join()
     }
 
     @Test
@@ -109,18 +112,19 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                 testToken
             )
         } returns PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
-        val testReturnHost = "test-return-host"
-        viewModel.approvalState.test {
-            // WHEN
-            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-            // THEN
-            assertFalse(result)
+
+        val job = flowTest(viewModel.approvalState) {
             assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
             assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
             val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
             assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
         }
+
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, "test-return-host")
+        assertFalse(result)
+
+        job.join()
     }
 
     @Test
@@ -135,18 +139,19 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                 testToken
             )
         } returns PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.FAILED)
-        val testReturnHost = "test-return-host"
-        viewModel.approvalState.test {
-            // WHEN
-            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-            // THEN
-            assertFalse(result)
+
+        val job = flowTest(viewModel.approvalState) {
             assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
             assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
             val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
             assertEquals(PaymentTokenStatus.FAILED, approvalStatus.paymentTokenStatus)
         }
+
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, "test-return-host")
+        assertFalse(result)
+
+        job.join()
     }
 
     @Test
@@ -165,18 +170,19 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        val testReturnHost = "test-return-host"
-        viewModel.approvalState.test {
-            // WHEN
-            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-            // THEN
-            assertFalse(result)
+
+        val job = flowTest(viewModel.approvalState) {
             assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
             assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
             val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Error)
             assertEquals("proton error", approvalStatus.error.getUserMessage(mockk()))
         }
+
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, "test-return-host")
+        assertFalse(result)
+
+        job.join()
     }
 
     @Test
@@ -185,21 +191,27 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-host"
         every { testUri.getQueryParameter("cancel") } returns "0"
-        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentTokenResult.PaymentTokenStatusResult(
+        coEvery {
+            getPaymentTokenStatus.invoke(
+                testUserId,
+                testToken
+            )
+        } returns PaymentTokenResult.PaymentTokenStatusResult(
             PaymentTokenStatus.CHARGEABLE
         )
-        val testReturnHost = "test-host"
-        viewModel.approvalState.test {
-            // WHEN
-            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-            // THEN
-            assertFalse(result)
+
+        val job = flowTest(viewModel.approvalState) {
             assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
             assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
             val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
             assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
         }
+
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, "test-host")
+        assertFalse(result)
+
+        job.join()
     }
 
     @Test

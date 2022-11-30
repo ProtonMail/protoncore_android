@@ -38,7 +38,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
+class ExternalValidationTokenCodeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
     private val resendVerificationCodeToDestination = mockk<ResendVerificationCodeToDestination>(relaxed = true)
     private val checkCreationTokenValidity = mockk<CheckCreationTokenValidity>(relaxed = true)

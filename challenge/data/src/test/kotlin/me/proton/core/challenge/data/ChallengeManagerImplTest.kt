@@ -21,7 +21,7 @@ package me.proton.core.challenge.data
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
@@ -41,7 +41,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `reset flow calls repository delete`(): Unit = runBlockingTest {
+    public fun `reset flow calls repository delete`(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         coEvery { repository.deleteFrames(testFlow) } returns Unit
@@ -52,7 +52,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `get frames by flow returns correctly`(): Unit = runBlockingTest {
+    public fun `get frames by flow returns correctly`(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         val testChallengeFrame = ChallengeFrameDetails(
@@ -76,7 +76,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `get frames by flow and frame name returns correctly`(): Unit = runBlockingTest {
+    public fun `get frames by flow and frame name returns correctly`(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         val testChallengeFrame = ChallengeFrameDetails(
@@ -102,7 +102,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `insert new frame works correctly`(): Unit = runBlockingTest {
+    public fun `insert new frame works correctly`(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         val challengeFrame = "test-frame"

@@ -26,13 +26,13 @@ import me.proton.core.country.domain.usecase.LoadCountries
 import me.proton.core.country.presentation.utils.testCountries
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class CountryPickerViewModelTest : ArchTest, CoroutinesTest {
-
+class CountryPickerViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
 

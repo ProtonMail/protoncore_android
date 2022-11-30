@@ -21,7 +21,7 @@ package me.proton.core.domain.arch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.util.kotlin.invoke
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -58,7 +58,7 @@ internal class MapperTest {
     }
 
     @Test
-    fun `models Flow API`() = runBlockingTest {
+    fun `models Flow API`() = runTest {
         val uiModels = flowOf(BusinessModel(10), BusinessModel(15), BusinessModel(20))
             .map { testMapper { it.toUiModel() } }
             .toList()

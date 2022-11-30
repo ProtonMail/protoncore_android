@@ -22,8 +22,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.test.core.app.ApplicationProvider
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 
 object TestAccountManagerDatabase {
@@ -32,12 +32,6 @@ object TestAccountManagerDatabase {
      * Build a multi-threaded Room Database, without touching default dispatchers.
      *
      * [RoomDatabase.inTransaction] do not support a single threaded model (unlikely to be fixed in future).
-     *
-     * [TestCoroutineDispatcher] is single threaded, and [runBlockingTest] don't support more than one thread.
-     *
-     * We are currently forced to use runBlocking + withTimeout (to avoid waiting indefinitely).
-     *
-     * @see <a href="https://medium.com/@eyalg/testing-androidx-room-kotlin-coroutines-2d1faa3e674f">Explanation</a>
      */
     fun buildMultiThreaded(): AccountManagerDatabase {
         val context = ApplicationProvider.getApplicationContext<Context>()

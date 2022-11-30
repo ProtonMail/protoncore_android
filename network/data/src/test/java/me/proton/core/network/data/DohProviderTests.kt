@@ -25,9 +25,8 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.currentTime
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockNetworkPrefs
@@ -50,9 +49,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-// Can't use runBlockingTest with MockWebServer. See:
-// https://github.com/square/retrofit/issues/3330
-// https://github.com/Kotlin/kotlinx.coroutines/issues/1204
 @Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class DohProviderTests {
@@ -89,7 +85,7 @@ internal class DohProviderTests {
     }
 
     @Test
-    fun `test ok call`() = runBlocking {
+    fun `test ok call`() = runTest {
         val txtBytes = "proxy.com".toByteArray()
         val txtBlob = byteArrayOf(txtBytes.size.toByte(), *txtBytes)
         val dnsMessage = DnsMessage.builder()
@@ -108,7 +104,7 @@ internal class DohProviderTests {
     }
 
     @Test
-    fun `test services called in parallel`() = runBlockingTest {
+    fun `test services called in parallel`() = runTest {
         val service1 = mockk<DohService>()
         coEvery { service1.getAlternativeBaseUrls(any(), any()) } coAnswers {
             delay(10_000)

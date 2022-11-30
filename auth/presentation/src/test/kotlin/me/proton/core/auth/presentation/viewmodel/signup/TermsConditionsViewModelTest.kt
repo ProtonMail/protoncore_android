@@ -32,7 +32,7 @@ import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class TermsConditionsViewModelTest : ArchTest, CoroutinesTest {
+class TermsConditionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     private val networkManager = mockk<NetworkManager>(relaxed = true)
     private val networkStatus = MutableStateFlow<NetworkStatus>(NetworkStatus.Metered)

@@ -24,7 +24,7 @@ import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import me.proton.core.domain.entity.UserId
@@ -62,7 +62,7 @@ internal class PostMetricsWorkerTest {
     }
 
     @Test
-    fun `worker posts the metrics to the backend`() = runBlockingTest {
+    fun `worker posts the metrics to the backend`() = runTest {
         // given
         every { params.inputData.getString(PostMetricsWorker.INPUT_USER_ID) } returns userId.id
         every { params.inputData.getString(PostMetricsWorker.INPUT_METRICS) } returns metrics.serialize()

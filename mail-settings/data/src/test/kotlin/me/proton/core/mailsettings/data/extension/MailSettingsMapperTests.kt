@@ -18,7 +18,7 @@
 
 package me.proton.core.mailsettings.data.extension
 
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.domain.type.StringEnum
@@ -106,7 +106,7 @@ class MailSettingsMapperTests {
     }
 
     @Test
-    fun `mailSettingsMapper fromResponse all known`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse all known`() = runTest {
         // GIVEN
         val response = response.copy()
         val expected = expected.copy()
@@ -117,7 +117,7 @@ class MailSettingsMapperTests {
     }
 
     @Test
-    fun `mailSettingsMapper fromResponse autoSaveContacts false`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse autoSaveContacts false`() = runTest {
         // GIVEN
         val response = response.copy(
             autoSaveContacts = 0
@@ -132,7 +132,7 @@ class MailSettingsMapperTests {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `mailSettingsMapper fromResponse autoSaveContacts unknown`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse autoSaveContacts unknown`() = runTest {
         // GIVEN
         val response = response.copy(
             autoSaveContacts = 1234
@@ -143,7 +143,7 @@ class MailSettingsMapperTests {
     }
 
     @Test
-    fun `mailSettingsMapper fromResponse composerMode unknown`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse composerMode unknown`() = runTest {
         // GIVEN
         val response = response.copy(
             composerMode = 1234
@@ -158,7 +158,7 @@ class MailSettingsMapperTests {
     }
 
     @Test
-    fun `mailSettingsMapper fromResponse draftMimeType unknown`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse draftMimeType unknown`() = runTest {
         // GIVEN
         val response = response.copy(
             draftMimeType = "1234"
@@ -173,7 +173,7 @@ class MailSettingsMapperTests {
     }
 
     @Test
-    fun `mailSettingsMapper fromResponse toEntity fromEntity all ok`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse toEntity fromEntity all ok`() = runTest {
         // GIVEN
         val response = response.copy()
         val expected = expected.copy()
@@ -184,7 +184,7 @@ class MailSettingsMapperTests {
     }
 
     @Test
-    fun `mailSettingsMapper fromResponse toEntity fromEntity composerMode unknown`() = runBlockingTest {
+    fun `mailSettingsMapper fromResponse toEntity fromEntity composerMode unknown`() = runTest {
         // GIVEN
         val response = response.copy(
             composerMode = 1234

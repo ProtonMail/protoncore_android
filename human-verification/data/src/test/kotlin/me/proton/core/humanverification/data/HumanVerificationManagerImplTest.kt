@@ -25,7 +25,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
@@ -68,7 +68,7 @@ class HumanVerificationManagerImplTest {
     }
 
     @Test
-    fun `on handleHumanVerificationSuccess`() = runBlockingTest {
+    fun `on handleHumanVerificationSuccess`() = runTest {
         val tokenType = "newTokenType"
         val tokenCode = "newTokenCode"
 
@@ -119,7 +119,7 @@ class HumanVerificationManagerImplTest {
     }
 
     @Test
-    fun `on handleHumanVerificationFailed`() = runBlockingTest {
+    fun `on handleHumanVerificationFailed`() = runTest {
         val humanVerificationDetailsNeeded = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),

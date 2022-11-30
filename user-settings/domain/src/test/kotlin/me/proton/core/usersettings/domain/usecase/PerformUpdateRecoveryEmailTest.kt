@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -123,7 +123,7 @@ class PerformUpdateRecoveryEmailTest {
     }
 
     @Test
-    fun `update recovery email empty returns success`() = runBlockingTest {
+    fun `update recovery email empty returns success`() = runTest {
         // GIVEN
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
             username = testUsername,
@@ -165,7 +165,7 @@ class PerformUpdateRecoveryEmailTest {
     }
 
     @Test
-    fun `update recovery non empty email returns success`() = runBlockingTest {
+    fun `update recovery non empty email returns success`() = runTest {
         // GIVEN
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
             username = testUsername,

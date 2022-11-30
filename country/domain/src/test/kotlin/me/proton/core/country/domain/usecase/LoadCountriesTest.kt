@@ -20,7 +20,7 @@ package me.proton.core.country.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.country.domain.entity.Country
 import me.proton.core.country.domain.repository.CountriesRepository
 import org.junit.Before
@@ -44,7 +44,7 @@ class LoadCountriesTest {
     }
 
     @Test
-    fun `get countries returns success non empty list`() = runBlockingTest {
+    fun `get countries returns success non empty list`() = runTest {
         coEvery { repository.getAllCountriesSorted() } returns
             listOf(Country(name = "test-country-1", code = "test-code-1"), Country(name = "test-country-2", code =  "test-code-2"))
         val result = useCase.invoke()
@@ -54,7 +54,7 @@ class LoadCountriesTest {
     }
 
     @Test
-    fun `get countries returns success empty list`() = runBlockingTest {
+    fun `get countries returns success empty list`() = runTest {
         coEvery { repository.getAllCountriesSorted() } returns emptyList()
         val result = useCase.invoke()
         assertEquals(0, result.size)

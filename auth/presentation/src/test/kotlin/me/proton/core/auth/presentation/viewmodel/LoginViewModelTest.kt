@@ -45,7 +45,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class LoginViewModelTest : ArchTest, CoroutinesTest {
+class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val accountHandler = mockk<AccountWorkflowHandler>()

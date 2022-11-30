@@ -21,13 +21,13 @@ package me.proton.core.network.data.cookie
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import okhttp3.Cookie
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -41,18 +41,17 @@ class MemoryCookieStorageTest : CookieStorageTest<MemoryCookieStorage>() {
 class DiskCookieStorageTest : CookieStorageTest<DiskCookieStorage>() {
     override fun makeCookieStore(): DiskCookieStorage {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        return DiskCookieStorage(context, "test-prefs-cookie-store", TestCoroutineScopeProvider)
-    }
-
-    override fun cleanup() {
-        TestDispatcherProvider.cleanupTestCoroutines()
+        return DiskCookieStorage(
+            context,
+            "test-prefs-cookie-store",
+            TestCoroutineScopeProvider(TestDispatcherProvider(UnconfinedTestDispatcher()))
+        )
     }
 }
 
 abstract class CookieStorageTest<C : CookieStorage> {
     private lateinit var tested: C
 
-    protected open fun cleanup() {}
     protected abstract fun makeCookieStore(): C
 
     @BeforeTest
@@ -60,26 +59,21 @@ abstract class CookieStorageTest<C : CookieStorage> {
         tested = makeCookieStore()
     }
 
-    @AfterTest
-    fun tearDown() {
-        cleanup()
-    }
-
     @Test
-    fun `empty cookie store`() = runBlockingTest {
+    fun `empty cookie store`() = runTest {
         assertTrue(tested.all().toList().isEmpty())
         tested.remove(makeCookie())
     }
 
     @Test
-    fun `store and remove a single cookie`() = runBlockingTest {
+    fun `store and remove a single cookie`() = runTest {
         val cookie = makeCookie()
         tested.set(cookie)
         assertContentEquals(listOf(cookie), tested.all().toList())
     }
 
     @Test
-    fun `store multiple cookies`() = runBlockingTest {
+    fun `store multiple cookies`() = runTest {
         val cookieA = makeCookie(name = "a")
         val cookieB = makeCookie(name = "b")
         tested.set(cookieA)
@@ -89,7 +83,7 @@ abstract class CookieStorageTest<C : CookieStorage> {
     }
 
     @Test
-    fun `remove a cookie`() = runBlockingTest {
+    fun `remove a cookie`() = runTest {
         val cookieA = makeCookie(name = "a")
         val cookieB = makeCookie(name = "b")
         tested.set(cookieA)
@@ -100,7 +94,7 @@ abstract class CookieStorageTest<C : CookieStorage> {
     }
 
     @Test
-    fun `update a cookie`() = runBlockingTest {
+    fun `update a cookie`() = runTest {
         val cookie = makeCookie()
         tested.set(cookie)
 

@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
@@ -43,7 +43,7 @@ internal class AcknowledgeGooglePlayPurchaseImplTest {
     }
 
     @Test
-    fun `acknowledges a purchase`() = runBlockingTest {
+    fun `acknowledges a purchase`() = runTest {
         val paymentToken = ProtonPaymentToken("payment-token")
         val purchaseToken = GooglePurchaseToken("google-purchase-token")
         coEvery { googlePurchaseRepository.findGooglePurchaseToken(paymentToken) } returns purchaseToken
@@ -55,7 +55,7 @@ internal class AcknowledgeGooglePlayPurchaseImplTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `fails to find a corresponding payment token`() = runBlockingTest {
+    fun `fails to find a corresponding payment token`() = runTest {
         val paymentToken = ProtonPaymentToken("payment-token")
         coEvery { googlePurchaseRepository.findGooglePurchaseToken(paymentToken) } returns null
         tested(paymentToken)

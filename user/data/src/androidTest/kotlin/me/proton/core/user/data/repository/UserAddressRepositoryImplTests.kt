@@ -26,6 +26,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
@@ -51,7 +53,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
-import me.proton.core.test.android.runBlockingWithTimeout
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
@@ -110,8 +112,6 @@ class UserAddressRepositoryImplTests {
 
     private val product = Product.Mail
 
-    private val dispatcherProvider = TestDispatcherProvider
-
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -124,9 +124,12 @@ class UserAddressRepositoryImplTests {
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
         every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 
+        val dispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
+        val scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
+
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, scopeProvider)
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             userRepository,
@@ -138,7 +141,8 @@ class UserAddressRepositoryImplTests {
             apiProvider,
             userRepository,
             userAddressKeySecretProvider,
-            cryptoContext
+            cryptoContext,
+            scopeProvider
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
@@ -162,7 +166,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddresses() = runBlockingWithTimeout {
+    fun getAddresses() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -189,7 +193,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun observeAddresses() = runBlockingWithTimeout {
+    fun observeAddresses() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -215,7 +219,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddressesBlocking() = runBlockingWithTimeout {
+    fun getAddressesBlocking() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -234,7 +238,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddressesBlocking_useKeys_userLocked() = runBlockingWithTimeout {
+    fun getAddressesBlocking_useKeys_userLocked() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -258,7 +262,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddressesBlocking_useKeys_userUnLocked() = runBlockingWithTimeout {
+    fun getAddressesBlocking_useKeys_userUnLocked() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -287,7 +291,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddressesBlocking_useKeys_userUnLocked_token_signature() = runBlockingWithTimeout {
+    fun getAddressesBlocking_useKeys_userUnLocked_token_signature() = runTest {
         // GIVEN
         val encryptedWithTestKeysKey1PrivateKey =
             """
@@ -339,7 +343,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun getAddressesBlocking_useKeys_userLocked_token_signature(): Unit = runBlockingWithTimeout {
+    fun getAddressesBlocking_useKeys_userLocked_token_signature(): Unit = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User2.response)
@@ -362,7 +366,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun assert_flags_canVerify_canEncrypt_isActive_primary_address() = runBlockingWithTimeout {
+    fun assert_flags_canVerify_canEncrypt_isActive_primary_address() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -416,7 +420,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun assert_flags_canVerify_canEncrypt_isActive_secondary_address() = runBlockingWithTimeout {
+    fun assert_flags_canVerify_canEncrypt_isActive_secondary_address() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -470,7 +474,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun assert_not_unlockable_are_not_active_even_if_specified() = runBlockingWithTimeout {
+    fun assert_not_unlockable_are_not_active_even_if_specified() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -500,7 +504,7 @@ class UserAddressRepositoryImplTests {
     }
 
     @Test
-    fun assert_remote_api_called_only_the_first_time_then_rely_on_db() = runBlockingWithTimeout {
+    fun assert_remote_api_called_only_the_first_time_then_rely_on_db() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)

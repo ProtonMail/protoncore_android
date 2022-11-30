@@ -18,8 +18,10 @@
 
 package me.proton.core.presentation.savedstate
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +55,7 @@ class MutableSharedFlowSavedState<T>(
     private val savedStateHandleKey: String?
 ) : ReadOnlyProperty<Any?, MutableSharedFlow<T>> {
     private var isInitialized = false
+    private var observerJob: Job? = null
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): MutableSharedFlow<T> {
         if (!isInitialized) {
@@ -62,6 +65,11 @@ class MutableSharedFlowSavedState<T>(
             observeFlowValues(key)
         }
         return mutableSharedFlow
+    }
+
+    @VisibleForTesting
+    internal fun stop() {
+        observerJob?.cancel()
     }
 
     private fun loadSavedState(key: String) = coroutineScope.launch {
@@ -74,7 +82,7 @@ class MutableSharedFlowSavedState<T>(
     }
 
     private fun observeFlowValues(key: String) {
-        mutableSharedFlow
+        observerJob = mutableSharedFlow
             .onEach { savedStateHandle.set(key, it) }
             .launchIn(coroutineScope)
     }

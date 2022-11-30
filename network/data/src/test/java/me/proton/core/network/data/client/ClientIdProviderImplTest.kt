@@ -21,7 +21,7 @@ package me.proton.core.network.data.client
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -32,7 +32,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class ClientIdProviderImplTest : CoroutinesTest {
+class ClientIdProviderImplTest : CoroutinesTest by CoroutinesTest() {
 
     lateinit var provider: ClientIdProviderImpl
     private val cookieJar = mockk<ProtonCookieStore>()
@@ -47,7 +47,7 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `cookieSessionId extension fun searchs for Session-Id cookie value in list`() = runBlockingTest {
+    fun `cookieSessionId extension fun searchs for Session-Id cookie value in list`() = runTest {
         // GIVEN
         val cookies = flowOf(sessionCookie)
         // WHEN
@@ -57,7 +57,7 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `If a Session-Id cookie with the right Uri is found, we use it`() = runBlockingTest {
+    fun `If a Session-Id cookie with the right Uri is found, we use it`() = runTest {
         // GIVEN
         every { cookieJar.get(any()) } returns flowOf(sessionCookie)
         // WHEN
@@ -67,7 +67,7 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `If a Session-Id cookie with the right Uri is not found, we use the fallback one`() = runBlockingTest {
+    fun `If a Session-Id cookie with the right Uri is not found, we use the fallback one`() = runTest {
         // GIVEN
         every { cookieJar.get(any()) } returns flowOf()
         every { cookieJar.all() } returns flowOf(fallbackCookie)
@@ -78,7 +78,7 @@ class ClientIdProviderImplTest : CoroutinesTest {
     }
 
     @Test
-    fun `If no Session-Id cookie is found and fallback one is null, sessionId will be null too`() = runBlockingTest {
+    fun `If no Session-Id cookie is found and fallback one is null, sessionId will be null too`() = runTest {
         // GIVEN
         every { cookieJar.get(any()) } returns flowOf()
         every { cookieJar.all() } returns flowOf()

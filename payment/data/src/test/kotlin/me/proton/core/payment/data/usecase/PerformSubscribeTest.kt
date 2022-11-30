@@ -21,7 +21,7 @@ package me.proton.core.payment.data.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
@@ -92,7 +92,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `payment token not provided with amount bigger than zero is handled correctly`() = runBlockingTest {
+    fun `payment token not provided with amount bigger than zero is handled correctly`() = runTest {
         val throwable = assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
@@ -113,7 +113,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `negative amount is handled correctly`() = runBlockingTest {
+    fun `negative amount is handled correctly`() = runTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
@@ -129,7 +129,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `negative amount google managed is handled correctly`() = runBlockingTest {
+    fun `negative amount google managed is handled correctly`() = runTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
@@ -145,7 +145,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `no plans is handled correctly`() = runBlockingTest {
+    fun `no plans is handled correctly`() = runTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
@@ -161,7 +161,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `no plans google managed is handled correctly`() = runBlockingTest {
+    fun `no plans google managed is handled correctly`() = runTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
@@ -177,7 +177,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `happy path is handled correctly`() = runBlockingTest {
+    fun `happy path is handled correctly`() = runTest {
         val result = useCase.invoke(
             userId = testUserId,
             amount = 1,
@@ -204,7 +204,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `happy path google managed is handled correctly`() = runBlockingTest {
+    fun `happy path google managed is handled correctly`() = runTest {
         val result = useCase.invoke(
             userId = testUserId,
             amount = 1,
@@ -231,7 +231,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `happy path 0 amount is handled correctly`() = runBlockingTest {
+    fun `happy path 0 amount is handled correctly`() = runTest {
         val result = useCase.invoke(
             userId = testUserId,
             amount = 0,
@@ -258,7 +258,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `repository returns error handled correctly`() = runBlockingTest {
+    fun `repository returns error handled correctly`() = runTest {
         coEvery {
             repository.createOrUpdateSubscription(
                 sessionUserId = testUserId,
@@ -289,7 +289,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `payment token is cleared on successful subscription`() = runBlockingTest {
+    fun `payment token is cleared on successful subscription`() = runTest {
         useCase.invoke(
             userId = testUserId,
             amount = 48,
@@ -305,7 +305,7 @@ class PerformSubscribeTest {
     }
 
     @Test
-    fun `null payment token is not cleared on successful subscription`() = runBlockingTest {
+    fun `null payment token is not cleared on successful subscription`() = runTest {
         useCase.invoke(
             userId = testUserId,
             amount = 0,

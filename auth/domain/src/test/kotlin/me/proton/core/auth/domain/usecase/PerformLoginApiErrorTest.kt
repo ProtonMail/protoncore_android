@@ -24,7 +24,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -104,7 +104,7 @@ class PerformLoginApiErrorTest {
     }
 
     @Test(expected = ApiException::class)
-    fun `login info error invocations work correctly`() = runBlockingTest {
+    fun `login info error invocations work correctly`() = runTest {
         // WHEN
         useCase.invoke(testUsername, testPassword)
         // THEN
@@ -130,7 +130,7 @@ class PerformLoginApiErrorTest {
     }
 
     @Test
-    fun `login info error events work correctly`() = runBlockingTest {
+    fun `login info error events work correctly`() = runTest {
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
             useCase.invoke(testUsername, testPassword)
@@ -140,7 +140,7 @@ class PerformLoginApiErrorTest {
     }
 
     @Test(expected = ApiException::class)
-    fun `login error invocations work correctly`() = runBlockingTest {
+    fun `login error invocations work correctly`() = runTest {
         // GIVEN
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
         // WHEN

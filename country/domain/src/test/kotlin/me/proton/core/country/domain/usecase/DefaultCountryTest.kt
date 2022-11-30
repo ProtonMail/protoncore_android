@@ -20,7 +20,7 @@ package me.proton.core.country.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.country.domain.repository.CountriesRepository
 import me.proton.core.country.domain.utils.testCountries
 import org.junit.Assert.assertEquals
@@ -32,7 +32,7 @@ class DefaultCountryTest {
     private val localRepository = mockk<CountriesRepository>()
 
     @Test
-    fun `returns the default country code successfully`() = runBlockingTest {
+    fun `returns the default country code successfully`() = runTest {
         val expectedResult = null
         val useCase = DefaultCountry(localRepository)
         coEvery { localRepository.getAllCountriesSorted() } returns testCountries
@@ -42,7 +42,7 @@ class DefaultCountryTest {
     }
 
     @Test
-    fun `empty flow throws exception`() = runBlockingTest {
+    fun `empty flow throws exception`() = runTest {
         coEvery { localRepository.getAllCountriesSorted() } returns emptyList()
         val useCase = DefaultCountry(localRepository)
         val result = useCase.invoke()

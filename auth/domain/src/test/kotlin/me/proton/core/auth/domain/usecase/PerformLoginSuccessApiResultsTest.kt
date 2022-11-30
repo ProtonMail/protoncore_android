@@ -23,7 +23,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -97,7 +97,7 @@ class PerformLoginSuccessApiResultsTest {
     }
 
     @Test
-    fun `login happy path invocations works correctly`() = runBlockingTest {
+    fun `login happy path invocations works correctly`() = runTest {
         coEvery { challengeManager.getFramesByFlowName(loginChallengeConfig.flowName) } returns emptyList()
         useCase.invoke(testUsername, testPassword)
 
@@ -124,13 +124,13 @@ class PerformLoginSuccessApiResultsTest {
     }
 
     @Test
-    fun `login happy path events work correctly`() = runBlockingTest {
+    fun `login happy path events work correctly`() = runTest {
         val sessionInfo = useCase.invoke(testUsername, testPassword)
         assertNotNull(sessionInfo)
     }
 
     @Test
-    fun `correct handling single password account second factor returned`() = runBlockingTest {
+    fun `correct handling single password account second factor returned`() = runTest {
         coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
             secondFactor = SecondFactor.Enabled(emptySet())
         )
@@ -140,7 +140,7 @@ class PerformLoginSuccessApiResultsTest {
     }
 
     @Test
-    fun `correct handling two password account second factor returned`() = runBlockingTest {
+    fun `correct handling two password account second factor returned`() = runTest {
         coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
             passwordMode = 2,
             secondFactor = SecondFactor.Enabled(emptySet())

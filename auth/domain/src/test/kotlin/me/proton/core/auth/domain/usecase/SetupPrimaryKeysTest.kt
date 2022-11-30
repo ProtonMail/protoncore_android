@@ -23,7 +23,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -90,7 +90,7 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
-    fun `primary key already exists`() = runBlockingTest {
+    fun `primary key already exists`() = runTest {
         userManager.mockGetUser(mockUser(withPrimaryPrivateKey = true))
 
         tested.invoke(testUserId, encryptedPassword, mockk())
@@ -104,7 +104,7 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
-    fun `setup primary keys for internal account`() = runBlockingTest {
+    fun `setup primary keys for internal account`() = runTest {
         authRepository.mockRandomModulus()
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
@@ -129,7 +129,7 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
-    fun `setup primary keys for external account`() = runBlockingTest {
+    fun `setup primary keys for external account`() = runTest {
         authRepository.mockRandomModulus()
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
@@ -154,7 +154,7 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
-    fun `fails to recover from error when creating address`() = runBlockingTest {
+    fun `fails to recover from error when creating address`() = runTest {
         authRepository.mockRandomModulus()
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
@@ -173,7 +173,7 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
-    fun `fails to recover from error when setting up keys`() = runBlockingTest {
+    fun `fails to recover from error when setting up keys`() = runTest {
         authRepository.mockRandomModulus()
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
@@ -192,7 +192,7 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
-    fun `rethrows other exceptions`() = runBlockingTest {
+    fun `rethrows other exceptions`() = runTest {
         val data = ApiResult.Error.ProtonData(APP_VERSION_BAD, "Unsupported API version")
         val apiException = ApiException(ApiResult.Error.Http(400, "Bad request", data))
         coEvery { userManager.getUser(testUserId, any()) } throws apiException

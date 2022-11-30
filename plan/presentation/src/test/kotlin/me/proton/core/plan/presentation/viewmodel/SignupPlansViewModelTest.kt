@@ -18,15 +18,14 @@
 
 package me.proton.core.plan.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.spyk
 import me.proton.core.domain.entity.Product
-import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
@@ -38,12 +37,13 @@ import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
+class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>(relaxed = true)
@@ -124,9 +124,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             testPlan,
             testPlan.copy(id = "plan-name-2", name = "plan-name-2")
         )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -142,6 +140,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-name-1", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -151,9 +153,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             testPlan,
             testPlan.copy(id = "plan-name-2", name = "plan-name-2")
         )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -169,6 +169,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-name-1", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -186,9 +190,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
                 true,
                 paymentOrchestrator
             )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -198,6 +200,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 0) { getPlanDefaultUseCaseSpy.invoke(any()) }
             coVerify(exactly = 0) { getPlansUseCase.invoke(any()) }
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -215,9 +221,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
                 true,
                 paymentOrchestrator
             )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -229,6 +233,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-default", planTwo.name)
             assertEquals("plan-name-2", planOne.name)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -247,9 +255,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
                 true,
                 paymentOrchestrator
             )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -263,6 +269,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-name-3", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -281,9 +291,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
                 true,
                 paymentOrchestrator
             )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -295,6 +303,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-default", planTwo.name) // default is always last
             assertEquals("plan-name-2", planOne.name)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -303,9 +315,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             testPlan,
             testPlan.copy(id = "plan-name-2", name = "plan-name-2", cycle = 15)
         )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -324,6 +334,10 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(15, planTwo.cycle!!.cycleDurationMonths)
             assertIs<PlanDetailsItem.FreePlanDetailsItem>(planThree)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 
     @Test
@@ -331,9 +345,7 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getPlansUseCase.invoke(any()) } returns listOf(
             testPlan.copy(id = "plan-name-2", name = "plan-name-2", cycle = 100)
         )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getAllPlansForSignup()
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -349,5 +361,9 @@ class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(100, planOne.cycle!!.cycleDurationMonths)
             assertIs<PlanDetailsItem.FreePlanDetailsItem>(planTwo)
         }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
     }
 }

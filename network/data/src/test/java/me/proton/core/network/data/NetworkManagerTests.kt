@@ -19,7 +19,8 @@ package me.proton.core.network.data
 
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.util.MockNetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import kotlin.test.BeforeTest
@@ -38,16 +39,16 @@ internal class NetworkManagerTests {
     }
 
     @Test
-    fun `test multiple observers`() = runBlockingTest {
+    fun `test multiple observers`() = runTest {
         val stateFlow = networkManager.observe()
         val collectedStates1 = mutableListOf<NetworkStatus>()
         val collectedStates2 = mutableListOf<NetworkStatus>()
 
-        val flow1 = launch { stateFlow.toList(collectedStates1) }
+        val flow1 = launch(UnconfinedTestDispatcher(testScheduler)) { stateFlow.toList(collectedStates1) }
 
         networkManager.networkStatus = NetworkStatus.Unmetered
 
-        val flow2 = launch { stateFlow.toList(collectedStates2) }
+        val flow2 = launch(UnconfinedTestDispatcher(testScheduler)) { stateFlow.toList(collectedStates2) }
 
         networkManager.networkStatus = NetworkStatus.Metered
         networkManager.networkStatus = NetworkStatus.Disconnected
@@ -59,7 +60,12 @@ internal class NetworkManagerTests {
         flow2.cancel()
 
         assertEquals(
-            listOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered, NetworkStatus.Metered, NetworkStatus.Disconnected),
+            listOf(
+                NetworkStatus.Disconnected,
+                NetworkStatus.Unmetered,
+                NetworkStatus.Metered,
+                NetworkStatus.Disconnected
+            ),
             collectedStates1.toList()
         )
         assertEquals(
@@ -71,12 +77,12 @@ internal class NetworkManagerTests {
     }
 
     @Test
-    fun `test notify current state`() = runBlockingTest {
+    fun `test notify current state`() = runTest {
         networkManager.networkStatus = NetworkStatus.Unmetered
         val stateFlow = networkManager.observe()
         val collectedStates = mutableListOf<NetworkStatus>()
 
-        val flow = launch { stateFlow.toList(collectedStates) }
+        val flow = launch(UnconfinedTestDispatcher(testScheduler)) { stateFlow.toList(collectedStates) }
         networkManager.networkStatus = NetworkStatus.Disconnected
         flow.cancel()
 

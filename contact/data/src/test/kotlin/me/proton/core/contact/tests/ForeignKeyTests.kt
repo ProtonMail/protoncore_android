@@ -20,7 +20,7 @@ package me.proton.core.contact.tests
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -29,7 +29,7 @@ import org.robolectric.RobolectricTestRunner
 class ForeignKeyTests : ContactDatabaseTests() {
 
     @Test
-    fun `contact is deleted on foreign key deletion`() = runBlocking {
+    fun `contact is deleted on foreign key deletion`() = runTest {
         givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() != null)
@@ -38,7 +38,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `contact card deleted on foreign key deletion`() = runBlocking {
+    fun `contact card deleted on foreign key deletion`() = runTest {
         givenUser0InDb()
         val hasContactCard = suspend {
             db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull()?.cards?.any {
@@ -53,7 +53,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `contact email is deleted on foreign key deletion`() = runBlocking {
+    fun `contact email is deleted on foreign key deletion`() = runTest {
         givenUser0InDb()
         val hasContactEmail = suspend {
             db.contactEmailDao().observeAllContactsEmails(User0.userId).first().any {
@@ -68,7 +68,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `contact email label cross ref deleted on foreign key deletion`() = runBlocking {
+    fun `contact email label cross ref deleted on foreign key deletion`() = runTest {
         givenUser0InDb()
         val testContactEmail = User0.Contact0.ContactEmail0
         val hasLabels = suspend {

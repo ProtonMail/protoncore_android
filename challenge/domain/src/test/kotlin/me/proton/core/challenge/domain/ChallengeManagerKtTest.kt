@@ -24,7 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -46,7 +46,7 @@ public class ChallengeManagerKtTest {
     )
 
     @Test
-    public fun `test use flow result is correct`(): Unit = runBlockingTest {
+    public fun `test use flow result is correct`(): Unit = runTest {
         val blockLambda: (List<ChallengeFrameDetails>) -> String = {
             "test-result"
         }
@@ -63,7 +63,7 @@ public class ChallengeManagerKtTest {
     }
 
     @Test
-    public fun `test use flow order is correct`(): Unit = runBlockingTest {
+    public fun `test use flow order is correct`(): Unit = runTest {
         val blockLambda = mockk<(List<ChallengeFrameDetails>) -> String>()
 
         every { blockLambda.invoke(any()) } returns "test-string"

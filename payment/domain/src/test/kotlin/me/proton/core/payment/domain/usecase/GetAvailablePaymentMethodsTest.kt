@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Details
@@ -71,7 +71,7 @@ class GetAvailablePaymentMethodsTest {
     }
 
     @Test
-    fun `get payment methods returns non empty list success`() = runBlockingTest {
+    fun `get payment methods returns non empty list success`() = runTest {
         val result = useCase.invoke(testUserId)
         assertNotNull(result)
         assertEquals(2, result.size)
@@ -80,7 +80,7 @@ class GetAvailablePaymentMethodsTest {
     }
 
     @Test
-    fun `get payment methods returns empty list success`() = runBlockingTest {
+    fun `get payment methods returns empty list success`() = runTest {
         coEvery {
             repository.getAvailablePaymentMethods(testUserId)
         } returns emptyList()

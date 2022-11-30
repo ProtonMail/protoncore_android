@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -154,7 +154,7 @@ class PerformUpdateLoginPasswordTest {
     }
 
     @Test
-    fun `update login password returns success`() = runBlockingTest {
+    fun `update login password returns success`() = runTest {
         // GIVEN
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
             username = testUsername,

@@ -70,7 +70,7 @@ class UserVerificationRepositoryImplTest {
 
     private lateinit var remoteRepository: UserVerificationRepository
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
     fun before() {

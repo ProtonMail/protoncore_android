@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -35,13 +34,14 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
-
+class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
     // region mocks
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
@@ -82,7 +82,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val requiredAccountType = AccountType.Internal
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
         coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.startSecondFactorFlow(
                 testUserId,
@@ -107,7 +107,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         every { testSessionResult.isTwoPassModeNeeded } returns true
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
         coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns twoPassNeeded
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.startSecondFactorFlow(
                 testUserId,

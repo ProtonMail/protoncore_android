@@ -19,11 +19,11 @@
 package me.proton.core.payment.presentation.viewmodel
 
 import android.content.Context
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
 import io.mockk.verify
 import me.proton.core.country.domain.entity.Country
 import me.proton.core.country.domain.usecase.GetCountry
@@ -58,12 +58,13 @@ import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
+class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val validateSubscription = mockk<ValidateSubscriptionPlan>(relaxed = true)
@@ -143,20 +144,22 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
         coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.values().toSet()
         viewModel =
-            PaymentOptionsViewModel(
-                context,
-                getAvailablePaymentMethods,
-                getAvailablePaymentProviders,
-                getCurrentSubscription,
-                validateSubscription,
-                createPaymentToken,
-                createPaymentTokenWithNewPayPal,
-                createPaymentTokenWithExistingPayMethod,
-                createPaymentTokenWithGoogleIAP,
-                performSubscribe,
-                getCountryCode,
-                humanVerificationManager,
-                clientIdProvider
+            spyk(
+                PaymentOptionsViewModel(
+                    context,
+                    getAvailablePaymentMethods,
+                    getAvailablePaymentProviders,
+                    getCurrentSubscription,
+                    validateSubscription,
+                    createPaymentToken,
+                    createPaymentTokenWithNewPayPal,
+                    createPaymentTokenWithExistingPayMethod,
+                    createPaymentTokenWithGoogleIAP,
+                    performSubscribe,
+                    getCountryCode,
+                    humanVerificationManager,
+                    clientIdProvider
+                )
             )
     }
 
@@ -165,9 +168,8 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         every { context.getString(any()) } returns "google"
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
-        viewModel.availablePaymentMethodsState.test {
-            // WHEN
-            viewModel.getAvailablePaymentMethods(testUserId)
+
+        val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
@@ -176,6 +178,10 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(3, paymentMethodsStatus.availablePaymentMethods.size)
             assertEquals("google", paymentMethodsStatus.availablePaymentMethods[2].id)
         }
+
+        // WHEN
+        viewModel.getAvailablePaymentMethods(testUserId)
+        job.join()
     }
 
     @Test
@@ -184,9 +190,8 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         every { context.getString(any()) } returns "google"
         coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns setOf(PaymentProvider.CardPayment)
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
-        viewModel.availablePaymentMethodsState.test {
-            // WHEN
-            viewModel.getAvailablePaymentMethods(testUserId)
+
+        val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
@@ -195,6 +200,10 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(3, paymentMethodsStatus.availablePaymentMethods.size)
             assertEquals("google", paymentMethodsStatus.availablePaymentMethods[2].id)
         }
+
+        // WHEN
+        viewModel.getAvailablePaymentMethods(testUserId)
+        job.join()
     }
 
     @Test
@@ -218,17 +227,22 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
                 clientIdProvider
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
-        viewModel.availablePaymentMethodsState.test {
-            // WHEN
-            viewModel.getAvailablePaymentMethods(testUserId)
+
+        val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
-            coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
             val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
             assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
         }
+
+        // WHEN
+        viewModel.getAvailablePaymentMethods(testUserId)
+        job.join()
+
+        // THEN
+        coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
     }
 
     @Test
@@ -252,17 +266,22 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
                 clientIdProvider
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
-        viewModel.availablePaymentMethodsState.test {
-            // WHEN
-            viewModel.getAvailablePaymentMethods(testUserId)
+
+        val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
-            coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
             val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
             assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
         }
+
+        // WHEN
+        viewModel.getAvailablePaymentMethods(testUserId)
+        job.join()
+
+        // THEN
+        coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
     }
 
     @Test
@@ -290,11 +309,9 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
                 clientIdProvider
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
-        viewModel.availablePaymentMethodsState.test {
-            // WHEN
-            viewModel.getAvailablePaymentMethods(testUserId)
+
+        val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
-            coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
             val paymentMethodsStatus = awaitItem()
@@ -302,6 +319,13 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(1, paymentMethodsStatus.availablePaymentMethods.size)
             assertEquals("google", paymentMethodsStatus.availablePaymentMethods[0].id)
         }
+
+        // WHEN
+        viewModel.getAvailablePaymentMethods(testUserId)
+        job.join()
+
+        // THEN
+        coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
     }
 
     @Test
@@ -317,9 +341,8 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        viewModel.availablePaymentMethodsState.test {
-            // WHEN
-            viewModel.getAvailablePaymentMethods(testUserId)
+
+        val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
@@ -327,6 +350,10 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.General)
             assertEquals("proton error", paymentMethodsStatus.error.getUserMessage(mockk()))
         }
+
+        // WHEN
+        viewModel.getAvailablePaymentMethods(testUserId)
+        job.join()
     }
 
     @Test

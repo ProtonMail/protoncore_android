@@ -26,7 +26,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
@@ -36,11 +36,13 @@ import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertTrue
 
-internal class CryptoValidatorErrorViewModelTest : ArchTest, CoroutinesTest {
+internal class CryptoValidatorErrorViewModelTest : ArchTest by ArchTest(),
+    CoroutinesTest by UnconfinedCoroutinesTest() {
 
     lateinit var viewModel: CryptoValidatorErrorViewModel
     private val accountManager = mockk<AccountManager> {
@@ -63,7 +65,7 @@ internal class CryptoValidatorErrorViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `hasAccounts returns a flow with the current accounts`() = runBlocking {
+    fun `hasAccounts returns a flow with the current accounts`() = runTest {
         // WHEN
         val hasAccounts = viewModel.hasAccounts
         // THEN
@@ -72,7 +74,7 @@ internal class CryptoValidatorErrorViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `hasAccounts returns false if there are no accounts`() = runBlocking {
+    fun `hasAccounts returns false if there are no accounts`() = runTest {
         // GIVEN
         every { accountManager.getAccounts() } returns flowOf(emptyList())
         // WHEN
@@ -96,7 +98,7 @@ internal class CryptoValidatorErrorViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `removeAllAccounts removes all accounts`() = runBlocking {
+    fun `removeAllAccounts removes all accounts`() = runTest {
         // GIVEN
         coEvery { accountManager.removeAccount(any()) } returns Unit
         // WHEN

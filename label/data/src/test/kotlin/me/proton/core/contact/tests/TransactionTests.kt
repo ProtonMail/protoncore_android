@@ -19,7 +19,7 @@
 package me.proton.core.contact.tests
 
 import android.database.sqlite.SQLiteConstraintException
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import me.proton.core.label.data.local.toLabel
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +29,7 @@ import org.robolectric.RobolectricTestRunner
 class TransactionTests : LabelDatabaseTests() {
 
     @Test
-    fun `delete all users delete all labels`() = runBlocking {
+    fun `delete all users delete all labels`() = runTest {
         givenUser0InDb()
         db.labelDao().insertOrUpdate(User0.label0Entity)
         db.userDao().delete(User0.userEntity)
@@ -38,12 +38,12 @@ class TransactionTests : LabelDatabaseTests() {
     }
 
     @Test(expected = SQLiteConstraintException::class)
-    fun `upsert label throws if user not present`() = runBlocking {
+    fun `upsert label throws if user not present`() = runTest {
         localDataSource.upsertLabel(listOf(User0.label0Entity.toLabel()))
     }
 
     @Test
-    fun `upsert label doesn't throws if user is present`() = runBlocking {
+    fun `upsert label doesn't throws if user is present`() = runTest {
         givenUser0InDb()
         localDataSource.upsertLabel(listOf(User0.label0Entity.toLabel()))
         assert(db.labelDao().getAll(User0.userId, User0.label0Type.value).isNotEmpty())

@@ -18,12 +18,11 @@
 
 package me.proton.core.report.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport
@@ -31,13 +30,14 @@ import me.proton.core.report.presentation.entity.BugReportFormState
 import me.proton.core.report.presentation.entity.ExitSignal
 import me.proton.core.report.presentation.entity.ReportFormData
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-internal class BugReportViewModelTest : CoroutinesTest {
+internal class BugReportViewModelTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var tested: BugReportViewModel
     private lateinit var sendBugReport: SendBugReport
 
@@ -55,7 +55,7 @@ internal class BugReportViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `send bug report successfully`() = runBlockingTest {
+    fun `send bug report successfully`() = runTest {
         val requestId = "123"
         val expectedResults = mockBugReportResults(
             SendBugReport.Result.Initialized(requestId),
@@ -65,16 +65,14 @@ internal class BugReportViewModelTest : CoroutinesTest {
             SendBugReport.Result.Sent(requestId)
         )
 
-        val formStateJob = launch {
-            tested.bugReportFormState.test {
-                assertIs<BugReportFormState.Idle>(awaitItem())
-                assertIs<BugReportFormState.Processing>(awaitItem())
-                expectedResults.forEach { expected ->
-                    assertEquals(expected, assertIs<BugReportFormState.SendingResult>(awaitItem()).result)
-                }
-                expectNoEvents()
-                cancel()
+        val formStateJob = flowTest(tested.bugReportFormState) {
+            assertIs<BugReportFormState.Idle>(awaitItem())
+            assertIs<BugReportFormState.Processing>(awaitItem())
+            expectedResults.forEach { expected ->
+                assertEquals(expected, assertIs<BugReportFormState.SendingResult>(awaitItem()).result)
             }
+            expectNoEvents()
+            cancel()
         }
         tested.trySendingBugReport(
             testReportFormData,
@@ -87,7 +85,7 @@ internal class BugReportViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `sending bug report failed`() = runBlockingTest {
+    fun `sending bug report failed`() = runTest {
         val requestId = "123"
         val expectedResults = mockBugReportResults(
             SendBugReport.Result.Initialized(requestId),
@@ -95,16 +93,14 @@ internal class BugReportViewModelTest : CoroutinesTest {
             SendBugReport.Result.Failed(requestId, "Failed")
         )
 
-        val formStateJob = launch {
-            tested.bugReportFormState.test {
-                assertIs<BugReportFormState.Idle>(awaitItem())
-                assertIs<BugReportFormState.Processing>(awaitItem())
-                expectedResults.forEach { expected ->
-                    assertEquals(expected, assertIs<BugReportFormState.SendingResult>(awaitItem()).result)
-                }
-                expectNoEvents()
-                cancel()
+        val formStateJob = flowTest(tested.bugReportFormState) {
+            assertIs<BugReportFormState.Idle>(awaitItem())
+            assertIs<BugReportFormState.Processing>(awaitItem())
+            expectedResults.forEach { expected ->
+                assertEquals(expected, assertIs<BugReportFormState.SendingResult>(awaitItem()).result)
             }
+            expectNoEvents()
+            cancel()
         }
         tested.trySendingBugReport(
             testReportFormData.copy(),
@@ -117,19 +113,17 @@ internal class BugReportViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `invalid form data`() = runBlockingTest {
-        val formStateJob = launch {
-            tested.bugReportFormState.test {
-                assertIs<BugReportFormState.Idle>(awaitItem())
-                assertIs<BugReportFormState.Processing>(awaitItem())
-                val formError = assertIs<BugReportFormState.FormError>(awaitItem())
-                assertContentEquals(
-                    listOf(BugReportValidationError.DescriptionMissing),
-                    formError.errors
-                )
-                expectNoEvents()
-                cancel()
-            }
+    fun `invalid form data`() = runTest {
+        val formStateJob = flowTest(tested.bugReportFormState) {
+            assertIs<BugReportFormState.Idle>(awaitItem())
+            assertIs<BugReportFormState.Processing>(awaitItem())
+            val formError = assertIs<BugReportFormState.FormError>(awaitItem())
+            assertContentEquals(
+                listOf(BugReportValidationError.DescriptionMissing),
+                formError.errors
+            )
+            expectNoEvents()
+            cancel()
         }
         val invalidFormData = testReportFormData.copy(description = "")
         tested.trySendingBugReport(
@@ -143,68 +137,58 @@ internal class BugReportViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `exit with form data`() = runBlockingTest {
-        val exitSignalJob = launch {
-            tested.exitSignal.test {
-                assertEquals(ExitSignal.ExitNow, awaitItem())
-            }
+    fun `exit with form data`() = runTest {
+        val exitSignalJob = flowTest(tested.exitSignal) {
+            assertEquals(ExitSignal.ExitNow, awaitItem())
         }
         tested.tryExit()
         exitSignalJob.join()
     }
 
     @Test
-    fun `exit with empty form data`() = runBlockingTest {
-        val exitSignalJob = launch {
-            tested.exitSignal.test {
-                assertEquals(ExitSignal.ExitNow, awaitItem())
-            }
+    fun `exit with empty form data`() = runTest {
+        val exitSignalJob = flowTest(tested.exitSignal) {
+            assertEquals(ExitSignal.ExitNow, awaitItem())
         }
         tested.tryExit(ReportFormData("", ""))
         exitSignalJob.join()
     }
 
     @Test
-    fun `exit with non-empty form data`() = runBlockingTest {
-        val exitSignalJob = launch {
-            tested.exitSignal.test {
-                assertEquals(ExitSignal.Ask, awaitItem())
-            }
+    fun `exit with non-empty form data`() = runTest {
+        val exitSignalJob = flowTest(tested.exitSignal) {
+            assertEquals(ExitSignal.Ask, awaitItem())
         }
         tested.tryExit(ReportFormData("Subject", ""))
         exitSignalJob.join()
     }
 
     @Test
-    fun `force exit with non-empty form data`() = runBlockingTest {
-        val exitSignalJob = launch {
-            tested.exitSignal.test {
-                assertEquals(ExitSignal.ExitNow, awaitItem())
-            }
+    fun `force exit with non-empty form data`() = runTest {
+        val exitSignalJob = flowTest(tested.exitSignal) {
+            assertEquals(ExitSignal.ExitNow, awaitItem())
         }
         tested.tryExit(ReportFormData("", "Description"), force = true)
         exitSignalJob.join()
     }
 
     @Test
-    fun `revalidate subject`() = runBlockingTest {
-        val formStateJob = launch {
-            tested.bugReportFormState.test {
-                assertIs<BugReportFormState.Idle>(awaitItem())
-                assertIs<BugReportFormState.Processing>(awaitItem())
-                val formErrors = assertIs<BugReportFormState.FormError>(awaitItem())
-                assertContentEquals(
-                    listOf(BugReportValidationError.SubjectMissing, BugReportValidationError.DescriptionMissing),
-                    formErrors.errors
-                )
-                val errorsAfterRevalidation = assertIs<BugReportFormState.FormError>(awaitItem())
-                assertContentEquals(
-                    listOf(BugReportValidationError.DescriptionMissing),
-                    errorsAfterRevalidation.errors
-                )
-                expectNoEvents()
-                cancel()
-            }
+    fun `revalidate subject`() = runTest {
+        val formStateJob = flowTest(tested.bugReportFormState) {
+            assertIs<BugReportFormState.Idle>(awaitItem())
+            assertIs<BugReportFormState.Processing>(awaitItem())
+            val formErrors = assertIs<BugReportFormState.FormError>(awaitItem())
+            assertContentEquals(
+                listOf(BugReportValidationError.SubjectMissing, BugReportValidationError.DescriptionMissing),
+                formErrors.errors
+            )
+            val errorsAfterRevalidation = assertIs<BugReportFormState.FormError>(awaitItem())
+            assertContentEquals(
+                listOf(BugReportValidationError.DescriptionMissing),
+                errorsAfterRevalidation.errors
+            )
+            expectNoEvents()
+            cancel()
         }
         val invalidFormData = ReportFormData(subject = "", description = "")
         tested.trySendingBugReport(
@@ -214,29 +198,28 @@ internal class BugReportViewModelTest : CoroutinesTest {
             country = null,
             isp = null
         )
+        runCurrent()
         tested.revalidateSubject("Test subject")
         formStateJob.join()
     }
 
     @Test
-    fun `revalidate description`() = runBlockingTest {
-        val formStateJob = launch {
-            tested.bugReportFormState.test {
-                assertIs<BugReportFormState.Idle>(awaitItem())
-                assertIs<BugReportFormState.Processing>(awaitItem())
-                val formErrors = assertIs<BugReportFormState.FormError>(awaitItem())
-                assertContentEquals(
-                    listOf(BugReportValidationError.SubjectMissing, BugReportValidationError.DescriptionMissing),
-                    formErrors.errors
-                )
-                val errorsAfterRevalidation = assertIs<BugReportFormState.FormError>(awaitItem())
-                assertContentEquals(
-                    listOf(BugReportValidationError.SubjectMissing),
-                    errorsAfterRevalidation.errors
-                )
-                expectNoEvents()
-                cancel()
-            }
+    fun `revalidate description`() = runTest {
+        val formStateJob = flowTest(tested.bugReportFormState) {
+            assertIs<BugReportFormState.Idle>(awaitItem())
+            assertIs<BugReportFormState.Processing>(awaitItem())
+            val formErrors = assertIs<BugReportFormState.FormError>(awaitItem())
+            assertContentEquals(
+                listOf(BugReportValidationError.SubjectMissing, BugReportValidationError.DescriptionMissing),
+                formErrors.errors
+            )
+            val errorsAfterRevalidation = assertIs<BugReportFormState.FormError>(awaitItem())
+            assertContentEquals(
+                listOf(BugReportValidationError.SubjectMissing),
+                errorsAfterRevalidation.errors
+            )
+            expectNoEvents()
+            cancel()
         }
         val invalidFormData = ReportFormData(subject = "", description = "")
         tested.trySendingBugReport(
@@ -246,6 +229,7 @@ internal class BugReportViewModelTest : CoroutinesTest {
             country = null,
             isp = null
         )
+        runCurrent()
         tested.revalidateDescription("Test description")
         formStateJob.join()
     }

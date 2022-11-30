@@ -27,6 +27,8 @@ import io.mockk.slot
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
@@ -57,7 +59,6 @@ import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -123,7 +124,8 @@ internal class ApiManagerTests {
     private var wallTime = 0L
 
     private lateinit var prefs: NetworkPrefs
-    private val testScope = TestCoroutineScopeProvider.GlobalDefaultSupervisedScope
+    private val dispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(dispatcher)
 
     @BeforeTest
     fun before() {
@@ -193,7 +195,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test basic call`() = runTest(testScope.coroutineContext) {
+    fun `test basic call`() = runTest(dispatcher) {
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Success)
         assertEquals(5, result.value.number)
@@ -201,7 +203,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test retry`() = runTest(testScope.coroutineContext) {
+    fun `test retry`() = runTest(dispatcher) {
         apiClient.shouldUseDoh = false
         apiClient.backoffRetryCount = 2
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
@@ -215,7 +217,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test too many retries`() = runTest(testScope.coroutineContext) {
+    fun `test too many retries`() = runTest(dispatcher) {
         apiClient.shouldUseDoh = false
         apiClient.backoffRetryCount = 1
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
@@ -228,7 +230,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test force no retry`() = runTest(testScope.coroutineContext) {
+    fun `test force no retry`() = runTest(dispatcher) {
         apiClient.shouldUseDoh = false
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
             ApiResult.Error.Timeout(true),
@@ -239,7 +241,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test token refresh`() = runTest(testScope.coroutineContext) {
+    fun `test token refresh`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } answers {
             if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
                 ApiResult.Success(TestResult(5, "foo"))
@@ -253,7 +255,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test token refresh on concurrent calls`() = runTest(testScope.coroutineContext) {
+    fun `test token refresh on concurrent calls`() = runTest(dispatcher) {
         var count401 = 0
         coEvery { backend.invoke<TestResult>(any()) } coAnswers {
             if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
@@ -282,7 +284,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test failed token refresh`() = runTest(testScope.coroutineContext) {
+    fun `test failed token refresh`() = runTest(dispatcher) {
         val oldAccessToken = session.accessToken
         coEvery { backend.invoke<TestResult>(any()) } answers {
             if (session.accessToken == oldAccessToken)
@@ -296,7 +298,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test old request token refresh`() = runTest(testScope.coroutineContext) {
+    fun `test old request token refresh`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } answers {
             if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
                 ApiResult.Success(TestResult(5, "foo"))
@@ -325,7 +327,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test force update app too old`() = runTest(testScope.coroutineContext) {
+    fun `test force update app too old`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returns
             ApiResult.Error.Http(
                 400, "",
@@ -337,7 +339,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test force update api too old`() = runTest(testScope.coroutineContext) {
+    fun `test force update api too old`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returns
             ApiResult.Error.Http(
                 400, "",
@@ -349,7 +351,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test too many requests recovered`() = runTest(testScope.coroutineContext) {
+    fun `test too many requests recovered`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
             ApiResult.Error.Http(429, "Too Many Request", retryAfter = 1.seconds),
             ApiResult.Error.Http(429, "Too Many Request", retryAfter = 2.seconds),
@@ -366,7 +368,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `service unavailable`() = runTest(testScope.coroutineContext) {
+    fun `service unavailable`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
             ApiResult.Error.Http(503, "Service Unavailable", retryAfter = 60.seconds),
             ApiResult.Success(TestResult(5, "foo"))
@@ -381,7 +383,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `basic doh scenario`() = runTest(testScope.coroutineContext) {
+    fun `basic doh scenario`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Timeout(true)
         coEvery { backend.isPotentiallyBlocked() } returns true
         coEvery { altBackend1.invoke<TestResult>(any()) } returns success5foo
@@ -407,7 +409,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test token refresh via doh`() = runTest(testScope.coroutineContext) {
+    fun `test token refresh via doh`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Timeout(true)
         coEvery { backend.isPotentiallyBlocked() } returns true
         coEvery { altBackend1.invoke<TestResult>(any()) } answers {
@@ -433,7 +435,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test doh ping ok`() = runTest(testScope.coroutineContext) {
+    fun `test doh ping ok`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
         // when isPotentiallyBlocked == false DoH logic won't be applied
         coEvery { backend.isPotentiallyBlocked() } returns false
@@ -446,7 +448,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test doh off`() = runTest(testScope.coroutineContext) {
+    fun `test doh off`() = runTest(dispatcher) {
         apiClient.shouldUseDoh = false
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
         coEvery { backend.isPotentiallyBlocked() } returns true
@@ -460,7 +462,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test no DoH on client error`() = runTest(testScope.coroutineContext) {
+    fun `test no DoH on client error`() = runTest(dispatcher) {
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Http(400, "")
         coEvery { backend.isPotentiallyBlocked() } returns true
         coEvery { altBackend1.invoke<TestResult>(any()) } returns success5foo
@@ -473,7 +475,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test alternatives total timeout`() = runTest(testScope.coroutineContext) {
+    fun `test alternatives total timeout`() = runTest(dispatcher) {
         time = 100_000L // this will set the api call timestamp to 100K
         val error = ApiResult.Error.Connection(true)
         coEvery { backend.invoke<TestResult>(any()) } coAnswers { error }
@@ -494,7 +496,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test doh proxy refresh throttling`() = runTest(testScope.coroutineContext) {
+    fun `test doh proxy refresh throttling`() = runTest(dispatcher) {
         coEvery { dohAlternativesListener.onAlternativesUnblock(any()) } returns Unit
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
         coEvery { backend.isPotentiallyBlocked() } returns true
@@ -516,7 +518,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test doh alternatives failed but client supports gh`() = runTest(testScope.coroutineContext) {
+    fun `test doh alternatives failed but client supports gh`() = runTest(dispatcher) {
         val dohProvider = DohProvider(
             baseUrl,
             apiClient,
@@ -559,7 +561,7 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test exception thrown doh is working properly`() = runTest(testScope.coroutineContext) {
+    fun `test exception thrown doh is working properly`() = runTest(dispatcher) {
         val dohProvider = DohProvider(
             baseUrl,
             apiClient,

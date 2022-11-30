@@ -20,7 +20,7 @@ package me.proton.core.plan.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.entity.MASK_MAIL
@@ -72,7 +72,7 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans for Mail returns success`() = runBlockingTest {
+    fun `get plans for Mail returns success`() = runTest {
         // GIVEN
         coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(services = MASK_MAIL))
         // WHEN
@@ -83,7 +83,7 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans for Mail does not returns VPN plans`() = runBlockingTest {
+    fun `get plans for Mail does not returns VPN plans`() = runTest {
         // GIVEN
         coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(services = MASK_VPN))
         // WHEN
@@ -93,7 +93,7 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans for VPN does not return mail plans but returns combo`() = runBlockingTest {
+    fun `get plans for VPN does not return mail plans but returns combo`() = runTest {
         // GIVEN
         useCase = GetPlans(plansRepository = repository, product = Product.Vpn, productExclusivePlans = false)
         coEvery { repository.getPlans(testUserId) } returns listOf(
@@ -108,7 +108,7 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans for VPN does not return mail plans nor combo when exclusive is true`() = runBlockingTest {
+    fun `get plans for VPN does not return mail plans nor combo when exclusive is true`() = runTest {
         // GIVEN
         useCase = GetPlans(plansRepository = repository, product = Product.Vpn, productExclusivePlans = true)
         coEvery { repository.getPlans(testUserId) } returns listOf(
@@ -122,7 +122,7 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans returns empty because of disabled plans`() = runBlockingTest {
+    fun `get plans returns empty because of disabled plans`() = runTest {
         // GIVEN
         coEvery { repository.getPlans(testUserId) } returns listOf(testPlan.copy(enabled = false))
         // WHEN
@@ -132,7 +132,7 @@ class GetPlansTest {
     }
 
     @Test
-    fun `get plans returns success no user id`() = runBlockingTest {
+    fun `get plans returns success no user id`() = runTest {
         // GIVEN
         coEvery { repository.getPlans(null) } returns listOf(testPlan.copy(services = MASK_MAIL))
         // WHEN

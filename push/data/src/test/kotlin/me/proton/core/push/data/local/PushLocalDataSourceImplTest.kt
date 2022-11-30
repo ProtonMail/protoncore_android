@@ -23,7 +23,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.push.data.local.db.toPush
 import me.proton.core.push.data.testing.TestDatabase
@@ -68,7 +68,7 @@ internal class PushLocalDataSourceImplTest {
     }
 
     @Test
-    fun `merge pushes`() = runBlocking {
+    fun `merge pushes`() = runTest {
         tested.upsertPushes(testPush1)
         assertContentEquals(emptyList(), tested.observeAllPushes(testUserId, PushObjectType.Messages).first())
         assertContentEquals(
@@ -93,7 +93,7 @@ internal class PushLocalDataSourceImplTest {
     }
 
     @Test
-    fun `merge empty pushes`() = runBlocking {
+    fun `merge empty pushes`() = runTest {
         tested.upsertPushes(*allTestPushes.toTypedArray())
         assertContentEquals(listOf(testPush2), tested.observeAllPushes(testUserId, PushObjectType.Messages).first())
         assertContentEquals(
@@ -119,7 +119,7 @@ internal class PushLocalDataSourceImplTest {
     }
 
     @Test
-    fun `delete all pushes`() = runBlocking {
+    fun `delete all pushes`() = runTest {
         tested.upsertPushes(*testPushesMessages.toTypedArray())
         assertContentEquals(testPushesMessages, tested.observeAllPushes(testUserId, PushObjectType.Messages).first())
         tested.deleteAllPushes()
@@ -127,7 +127,7 @@ internal class PushLocalDataSourceImplTest {
     }
 
     @Test
-    fun `delete pushes by type`() = runBlocking {
+    fun `delete pushes by type`() = runTest {
         tested.upsertPushes(*testPushesMessages.toTypedArray())
         assertContentEquals(testPushesMessages, tested.observeAllPushes(testUserId, PushObjectType.Messages).first())
         tested.deletePushesByType(testUserId, PushObjectType.Messages)
@@ -135,7 +135,7 @@ internal class PushLocalDataSourceImplTest {
     }
 
     @Test
-    fun `delete pushes by user`() = runBlocking {
+    fun `delete pushes by user`() = runTest {
         val otherUserId = UserId("z")
         testDb.accountDao().insertOrUpdate(testAccountEntity(otherUserId))
         testDb.userDao().insertOrUpdate(testUserEntity(otherUserId))
@@ -159,7 +159,7 @@ internal class PushLocalDataSourceImplTest {
     }
 
     @Test
-    fun `delete push by id`() = runBlocking {
+    fun `delete push by id`() = runTest {
         tested.upsertPushes(*allTestPushes.toTypedArray())
 
         tested.observeAllPushes(testUserId, PushObjectType.Messages).test {

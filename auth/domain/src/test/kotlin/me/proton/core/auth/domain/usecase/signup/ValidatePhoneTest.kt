@@ -21,7 +21,7 @@ package me.proton.core.auth.domain.usecase.signup
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.repository.AuthRepository
 import org.junit.Before
 import org.junit.Test
@@ -43,7 +43,7 @@ class ValidatePhoneTest {
     }
 
     @Test
-    fun `validate phone happy path`() = runBlockingTest {
+    fun `validate phone happy path`() = runTest {
         // WHEN
         val response = useCase.invoke(testPhoneNumber)
         // THEN
@@ -51,7 +51,7 @@ class ValidatePhoneTest {
     }
 
     @Test
-    fun `validate empty phone returns error`() = runBlockingTest {
+    fun `validate empty phone returns error`() = runTest {
         // WHEN
         val response = useCase.invoke("")
         // THEN
@@ -59,7 +59,7 @@ class ValidatePhoneTest {
     }
 
     @Test
-    fun `validate phone happy path invocations are correct`() = runBlockingTest {
+    fun `validate phone happy path invocations are correct`() = runTest {
         // WHEN
         useCase.invoke(testPhoneNumber)
         // THEN

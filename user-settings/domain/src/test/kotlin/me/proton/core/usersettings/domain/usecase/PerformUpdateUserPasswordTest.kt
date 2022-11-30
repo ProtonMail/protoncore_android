@@ -21,7 +21,7 @@ package me.proton.core.usersettings.domain.usecase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -170,7 +170,7 @@ class PerformUpdateUserPasswordTest {
     }
 
     @Test
-    fun `update mailbox password no username fails`() = runBlockingTest {
+    fun `update mailbox password no username fails`() = runTest {
         coEvery { userRepository.getUser(testUserId) } returns testUser.copy(name = null)
 
         assertFailsWith(IllegalArgumentException::class) {

@@ -30,6 +30,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.usersettings.data.api.OrganizationApi
 import me.proton.core.usersettings.data.api.response.OrganizationResponse
@@ -61,7 +62,7 @@ class OrganizationRepositoryImplTest {
     private val testUserId = "test-user-id"
     // endregion
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
     fun beforeEveryTest() {
@@ -73,7 +74,7 @@ class OrganizationRepositoryImplTest {
             organizationApi
         )
 
-        repository = OrganizationRepositoryImpl(db, apiProvider)
+        repository = OrganizationRepositoryImpl(db, apiProvider, TestCoroutineScopeProvider(dispatcherProvider))
     }
 
     @Test

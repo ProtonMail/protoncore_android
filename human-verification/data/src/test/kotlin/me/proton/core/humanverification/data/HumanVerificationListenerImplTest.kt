@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
@@ -77,7 +77,7 @@ class HumanVerificationListenerImplTest {
     }
 
     @Test
-    fun `on onHumanVerificationNeeded success`() = runBlockingTest {
+    fun `on onHumanVerificationNeeded success`() = runTest {
         val humanVerificationApiDetails = HumanVerificationAvailableMethods(
             verificationMethods = listOf(VerificationMethod.EMAIL),
             verificationToken = "token"
@@ -96,7 +96,7 @@ class HumanVerificationListenerImplTest {
     }
 
     @Test
-    fun `on onHumanVerificationNeeded failed`() = runBlockingTest {
+    fun `on onHumanVerificationNeeded failed`() = runTest {
         val humanVerificationApiDetails = HumanVerificationAvailableMethods(
             verificationMethods = listOf(VerificationMethod.EMAIL),
             verificationToken = "token"

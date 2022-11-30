@@ -19,7 +19,7 @@
 package me.proton.core.push.data
 
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
@@ -51,7 +51,7 @@ internal class PushEventListenerTest {
     }
 
     @Test
-    fun `no push events`() = runBlockingTest {
+    fun `no push events`() = runTest {
         val userId = UserId("test-user-id")
         val config = EventManagerConfig.Core(userId)
         val response = EventsResponse("""{ "More": 0 }""")
@@ -60,7 +60,7 @@ internal class PushEventListenerTest {
     }
 
     @Test
-    fun `empty push events`() = runBlockingTest {
+    fun `empty push events`() = runTest {
         val userId = UserId("test-user-id")
         val config = EventManagerConfig.Core(userId)
         val response = EventsResponse("""{ "Pushes": [] }""")
@@ -69,7 +69,7 @@ internal class PushEventListenerTest {
     }
 
     @Test
-    fun `null push events`() = runBlockingTest {
+    fun `null push events`() = runTest {
         val userId = UserId("test-user-id")
         val config = EventManagerConfig.Core(userId)
         val response = EventsResponse("""{ "Pushes": null }""")
@@ -78,7 +78,7 @@ internal class PushEventListenerTest {
     }
 
     @Test
-    fun `create event`() = runBlockingTest {
+    fun `create event`() = runTest {
         val userId = UserId("test-user-id")
         val config = EventManagerConfig.Core(userId)
         val response = EventsResponse(
@@ -117,7 +117,7 @@ internal class PushEventListenerTest {
     }
 
     @Test
-    fun `delete event`() = runBlockingTest {
+    fun `delete event`() = runTest {
         val userId = UserId("test-user-id")
         val config = EventManagerConfig.Core(userId)
         val response = EventsResponse(

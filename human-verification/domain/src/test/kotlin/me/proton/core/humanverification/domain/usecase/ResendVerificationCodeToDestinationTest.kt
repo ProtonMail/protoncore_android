@@ -20,7 +20,7 @@ package me.proton.core.humanverification.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.network.domain.session.SessionId
@@ -63,19 +63,19 @@ class ResendVerificationCodeToDestinationTest {
     }
 
     @Test
-    fun `send verification token with token type email`() = runBlockingTest {
+    fun `send verification token with token type email`() = runTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
         useCase.invoke(sessionId, testEmail, TokenType.EMAIL)
     }
 
     @Test
-    fun `send verification token with token type sms`() = runBlockingTest {
+    fun `send verification token with token type sms`() = runTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
         useCase.invoke(sessionId, testPhoneNumber, TokenType.SMS)
     }
 
     @Test
-    fun `send verification token with token type invalid option`() = runBlockingTest {
+    fun `send verification token with token type invalid option`() = runTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
 
         thrown.expect(Exception::class.java)

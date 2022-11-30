@@ -20,7 +20,7 @@ package me.proton.core.humanverification.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
@@ -54,7 +54,7 @@ class CheckCreationTokenValidityTest {
     }
 
     @Test
-    fun `code verification with email success`() = runBlockingTest {
+    fun `code verification with email success`() = runTest {
         coEvery {
             userVerificationRepository.checkCreationTokenValidity(
                 sessionId,
@@ -67,7 +67,7 @@ class CheckCreationTokenValidityTest {
     }
 
     @Test(expected = Exception::class)
-    fun `code verification with email error`() = runBlockingTest {
+    fun `code verification with email error`() = runTest {
         coEvery {
             userVerificationRepository.checkCreationTokenValidity(sessionId, testToken, TokenType.EMAIL)
         } throws Exception("test error")
@@ -76,7 +76,7 @@ class CheckCreationTokenValidityTest {
     }
 
     @Test
-    fun `code verification with sms success`() = runBlockingTest {
+    fun `code verification with sms success`() = runTest {
         coEvery {
             userVerificationRepository.checkCreationTokenValidity(
                 sessionId,
@@ -89,7 +89,7 @@ class CheckCreationTokenValidityTest {
     }
 
     @Test(expected = Exception::class)
-    fun `code verification with sms error`() = runBlockingTest {
+    fun `code verification with sms error`() = runTest {
         coEvery {
             userVerificationRepository.checkCreationTokenValidity(
                 sessionId,

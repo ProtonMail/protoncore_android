@@ -21,11 +21,11 @@ package me.proton.core.crypto.android.keystore
 import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.decryptOrElse
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.test.android.runBlockingWithTimeout
 import org.junit.Before
 import org.junit.Test
 import java.security.GeneralSecurityException
@@ -64,7 +64,7 @@ internal class AndroidKeyStoreCryptoAndroidTest {
     }
 
     @Test
-    fun encryptDecryptBenchmarkAverageTimeIsBelow30Millis() = runBlockingWithTimeout(3_000) {
+    fun encryptDecryptBenchmarkAverageTimeIsBelow30Millis() = runTest {
         // GIVEN
         val repeat = 100
         val data = "testing"

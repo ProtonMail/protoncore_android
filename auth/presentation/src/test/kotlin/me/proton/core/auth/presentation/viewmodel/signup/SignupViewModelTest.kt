@@ -52,7 +52,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
-class SignupViewModelTest : ArchTest, CoroutinesTest {
+class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val humanVerificationExternalInput = mockk<HumanVerificationExternalInput>(relaxed = true)

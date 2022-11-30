@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
@@ -57,7 +57,7 @@ class HumanVerificationHandlerTest {
     }
 
     @Test
-    fun `test human verification called`() = runBlockingTest {
+    fun `test human verification called`() = runTest {
         val humanVerificationDetails =
             HumanVerificationAvailableMethods(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
         val apiResult = ApiResult.Error.Http(
@@ -95,7 +95,7 @@ class HumanVerificationHandlerTest {
     }
 
     @Test
-    fun `test human verification called but retry api failed`() = runBlockingTest {
+    fun `test human verification called but retry api failed`() = runTest {
         val humanVerificationDetails =
             HumanVerificationAvailableMethods(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
         val apiResult = ApiResult.Error.Http(
@@ -133,7 +133,7 @@ class HumanVerificationHandlerTest {
     }
 
     @Test
-    fun `test human verification not called on other errors`() = runBlockingTest {
+    fun `test human verification not called on other errors`() = runTest {
         val apiResult = ApiResult.Error.Http(
             422,
             "Some error",
@@ -159,7 +159,7 @@ class HumanVerificationHandlerTest {
     }
 
     @Test
-    fun `test no proton data does not crash the handler`() = runBlockingTest {
+    fun `test no proton data does not crash the handler`() = runTest {
         val apiResult = ApiResult.Error.Http(
             422,
             "Some error",
@@ -182,7 +182,7 @@ class HumanVerificationHandlerTest {
     }
 
     @Test
-    fun `test connectivity error does not invoke human verification`() = runBlockingTest {
+    fun `test connectivity error does not invoke human verification`() = runTest {
         val apiResult = ApiResult.Error.Connection(
             false
         )

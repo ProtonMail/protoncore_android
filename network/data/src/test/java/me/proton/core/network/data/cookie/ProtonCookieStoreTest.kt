@@ -21,7 +21,8 @@ package me.proton.core.network.data.cookie
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
@@ -44,24 +45,23 @@ class ProtonCookieStoreTest {
     @BeforeTest
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        diskStorage = DiskCookieStorage(context, "test-prefs-cookie-store", TestCoroutineScopeProvider)
+        diskStorage = DiskCookieStorage(
+            context,
+            "test-prefs-cookie-store",
+            TestCoroutineScopeProvider(TestDispatcherProvider(UnconfinedTestDispatcher()))
+        )
         memoryStorage = MemoryCookieStorage()
         tested = ProtonCookieStore(persistentStorage = diskStorage, sessionStorage = memoryStorage)
     }
 
-    @AfterTest
-    fun tearDown() {
-        TestDispatcherProvider.cleanupTestCoroutines()
-    }
-
     @Test
-    fun `empty cookie jar`() = runBlockingTest {
+    fun `empty cookie jar`() = runTest {
         assertContentEquals(emptyList(), tested.all().toList())
         assertContentEquals(emptyList(), tested.loadForRequest(plainUrlA))
     }
 
     @Test
-    fun `set a single cookie`() = runBlockingTest {
+    fun `set a single cookie`() = runTest {
         val cookies = listOf(makeCookie(url = secureUrlA))
         tested.saveFromResponse(secureUrlA, cookies)
 
@@ -72,7 +72,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `set a persistent and non-persistent cookie`() = runBlockingTest {
+    fun `set a persistent and non-persistent cookie`() = runTest {
         val persistentCookies = listOf(makeCookie(name = "c1", url = secureUrlA))
         val sessionCookies = listOf(makeCookie(name = "c2", url = secureUrlA, expiresAt = null))
         val cookies = persistentCookies + sessionCookies
@@ -85,7 +85,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `set multiple cookies`() = runBlockingTest {
+    fun `set multiple cookies`() = runTest {
         val cookies = listOf(makeCookie(url = secureUrlA), makeCookie(url = secureUrlA, name = "test-cookie-2"))
         tested.saveFromResponse(plainUrlA, cookies)
 
@@ -96,7 +96,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `update a single cookie`() = runBlockingTest {
+    fun `update a single cookie`() = runTest {
         tested.saveFromResponse(secureUrlA, listOf(makeCookie(url = secureUrlA)))
 
         val updatedCookies = listOf(makeCookie(url = secureUrlA, value = "updated-value"))
@@ -109,7 +109,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `set a cookie with same name, but different domain`() = runBlockingTest {
+    fun `set a cookie with same name, but different domain`() = runTest {
         val cookiesA = listOf(makeCookie(url = secureUrlA))
         val cookiesB = listOf(makeCookie(url = secureUrlB))
         tested.saveFromResponse(secureUrlA, cookiesA)
@@ -123,7 +123,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `update a cookie with same name, but different url scheme`() = runBlockingTest {
+    fun `update a cookie with same name, but different url scheme`() = runTest {
         tested.saveFromResponse(plainUrlA, listOf(makeCookie(url = secureUrlA)))
         val updatedCookies = listOf(makeCookie(url = plainUrlA))
         tested.saveFromResponse(secureUrlA, updatedCookies)
@@ -136,7 +136,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `update a cookie with same name, but different path`() = runBlockingTest {
+    fun `update a cookie with same name, but different path`() = runTest {
         val rootCookies = listOf(makeCookie(url = secureUrlA))
         val subPathCookies = listOf(makeCookie(url = secureUrlASubPath))
         tested.saveFromResponse(secureUrlA, rootCookies)
@@ -150,7 +150,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `non-secure cookie can be obtained for http and https urls`() = runBlockingTest {
+    fun `non-secure cookie can be obtained for http and https urls`() = runTest {
         val cookies = listOf(makeCookie(url = plainUrlA))
         tested.saveFromResponse(plainUrlA, cookies)
 
@@ -162,7 +162,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `secure cookie can be obtained only for https urls`() = runBlockingTest {
+    fun `secure cookie can be obtained only for https urls`() = runTest {
         val cookies = listOf(makeCookie(url = secureUrlA))
         tested.saveFromResponse(secureUrlA, cookies)
 
@@ -174,7 +174,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `expired cookie is deleted`() = runBlockingTest {
+    fun `expired cookie is deleted`() = runTest {
         val cookies = listOf(makeCookie(url = plainUrlA))
         tested.saveFromResponse(plainUrlA, cookies)
         assertContentEquals(cookies, tested.loadForRequest(plainUrlA))
@@ -188,7 +188,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `non-persistent cookie is only stored in memory`() = runBlockingTest {
+    fun `non-persistent cookie is only stored in memory`() = runTest {
         val cookies = listOf(makeCookie(url = plainUrlA, expiresAt = null))
         tested.saveFromResponse(plainUrlA, cookies)
 
@@ -199,7 +199,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `change from persistent to session cookie`() = runBlockingTest {
+    fun `change from persistent to session cookie`() = runTest {
         val persistentCookies = listOf(makeCookie(url = plainUrlA))
         tested.saveFromResponse(plainUrlA, persistentCookies)
 
@@ -218,7 +218,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `change from session to persistent cookie`() = runBlockingTest {
+    fun `change from session to persistent cookie`() = runTest {
         val sessionCookies = listOf(makeCookie(url = plainUrlA, expiresAt = null))
         tested.saveFromResponse(plainUrlA, sessionCookies)
 
@@ -237,7 +237,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `load cookies from disk store`() = runBlockingTest {
+    fun `load cookies from disk store`() = runTest {
         val cookies = listOf(makeCookie(url = secureUrlA))
         diskStorage.set(cookies.first())
 
@@ -248,7 +248,7 @@ class ProtonCookieStoreTest {
     }
 
     @Test
-    fun `load expired cookie from disk store`() = runBlockingTest {
+    fun `load expired cookie from disk store`() = runTest {
         val cookies = listOf(makeCookie(url = secureUrlA, expiresAt = System.currentTimeMillis() - 1))
         diskStorage.set(cookies.first())
 

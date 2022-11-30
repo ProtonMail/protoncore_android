@@ -23,7 +23,7 @@ import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
@@ -55,7 +55,7 @@ class CreateLoginSessionTest {
     }
 
     @Test
-    fun `basic login session`() = runBlockingTest {
+    fun `basic login session`() = runTest {
         setupMocks()
 
         val sessionInfo = tested.invoke(testUsername, testPassword, AccountType.Internal)
@@ -76,7 +76,7 @@ class CreateLoginSessionTest {
     }
 
     @Test
-    fun `login session with 2fa`() = runBlockingTest {
+    fun `login session with 2fa`() = runTest {
         setupMocks(SecondFactor.Enabled(setOf(SecondFactorMethod.Authenticator)))
 
         val sessionInfo = tested.invoke(testUsername, testPassword, AccountType.Internal)

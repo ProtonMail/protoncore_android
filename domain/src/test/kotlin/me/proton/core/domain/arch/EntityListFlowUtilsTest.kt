@@ -20,7 +20,7 @@ package me.proton.core.domain.arch
 
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.arch.extension.onEntityChanged
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -30,7 +30,7 @@ class EntityListFlowUtilsTest {
     data class Entity(val id: Int, val property1: String, val property2: String)
 
     @Test
-    fun `on entity changed`() = runBlockingTest {
+    fun `on entity changed`() = runTest {
 
         val flowOfLists = flowOf(
             listOf(
@@ -62,7 +62,7 @@ class EntityListFlowUtilsTest {
     }
 
     @Test
-    fun `on property changed`() = runBlockingTest {
+    fun `on property changed`() = runTest {
 
         val flowOfLists = flowOf(
             listOf(

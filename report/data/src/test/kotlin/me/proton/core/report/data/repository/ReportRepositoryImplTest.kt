@@ -61,7 +61,7 @@ internal class ReportRepositoryImplTest {
         Product.Mail
     )
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
     fun setUp() {

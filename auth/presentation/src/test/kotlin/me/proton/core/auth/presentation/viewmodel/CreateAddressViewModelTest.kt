@@ -29,6 +29,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.usersettings.domain.usecase.SetupUsername
 import org.junit.Before
 import org.junit.Test
@@ -36,8 +37,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 @ExperimentalCoroutinesApi
-class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
-
+class CreateAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
     // region mocks
     private val postLoginAccountSetup = mockk<PostLoginAccountSetup>()
     private val setupUsername = mockk<SetupUsername>()

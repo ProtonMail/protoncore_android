@@ -18,7 +18,7 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -73,7 +73,7 @@ class SessionManagerImplTest {
     }
 
     @Test
-    fun `on onSessionTokenRefreshed`() = runBlockingTest {
+    fun `on onSessionTokenRefreshed`() = runTest {
         mocks.setupAccountRepository()
 
         val newAccessToken = "newAccessToken"
@@ -95,7 +95,7 @@ class SessionManagerImplTest {
     }
 
     @Test
-    fun `on onSessionForceLogout`() = runBlockingTest {
+    fun `on onSessionForceLogout`() = runTest {
         mocks.setupAccountRepository()
 
         sessionManager.onSessionForceLogout(session1)

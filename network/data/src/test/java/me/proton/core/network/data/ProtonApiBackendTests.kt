@@ -17,19 +17,15 @@
  */
 package me.proton.core.network.data
 
-import java.net.HttpURLConnection
 import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.currentTime
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockNetworkPrefs
@@ -65,6 +61,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.net.HttpURLConnection
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -72,14 +69,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
-// Can't use runBlockingTest with MockWebServer. See:
-// https://github.com/square/retrofit/issues/3330
-// https://github.com/Kotlin/kotlinx.coroutines/issues/1204
 @Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
 
-    private val scope = CoroutineScope(TestCoroutineDispatcher())
+    private val scope = TestScope(StandardTestDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
     private lateinit var apiManagerFactory: ApiManagerFactory
@@ -202,7 +196,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test ok call`() = runBlocking {
+    fun `test ok call`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "Number": 5, "String": "foo" }"""
@@ -217,7 +211,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test http error`() = runBlocking {
+    fun `test http error`() = runTest {
         webServer.prepareResponse(404)
 
         val result = backend(ApiManager.Call(0) { test() })
@@ -226,7 +220,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test too many requests`() = runBlocking {
+    fun `test too many requests`() = runTest {
         val response = MockResponse()
             .setResponseCode(429)
             .setHeader("Retry-After", "5")
@@ -239,7 +233,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test proton error`() = runBlocking {
+    fun `test proton error`() = runTest {
         webServer.prepareResponse(
             401,
             """{ "Code": 10, "Error": "darn!" }"""
@@ -254,7 +248,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test Accept header override`() = runBlocking {
+    fun `test Accept header override`() = runTest {
         webServer.prepareResponse(HttpURLConnection.HTTP_OK, "plain")
 
         val result = backend(ApiManager.Call(0) { testPlain() })
@@ -265,7 +259,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test extra field ignored`() = runBlocking {
+    fun `test extra field ignored`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "Number": 5, "String": "foo", "Extra": "bar" }"""
@@ -280,7 +274,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test missing field`() = runBlocking {
+    fun `test missing field`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "NumberTypo": 5, "String": "foo" }"""
@@ -291,7 +285,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test default val`() = runBlocking {
+    fun `test default val`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "Number": 5, "String": "foo" }"""
@@ -302,7 +296,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `can deserialize false from 0`() = runBlocking {
+    fun `can deserialize false from 0`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "Number": 5, "String": "foo", Bool: 0 }"""
@@ -313,7 +307,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `can deserialize true from 1`() = runBlocking {
+    fun `can deserialize true from 1`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "Number": 5, "String": "foo", Bool: 1 }"""
@@ -324,7 +318,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `can deserialize true from 5`() = runBlocking {
+    fun `can deserialize true from 5`() = runTest {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
             """{ "Number": 5, "String": "foo", Bool: 5 }"""
@@ -335,7 +329,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test pinning error`() = runBlocking {
+    fun `test pinning error`() = runTest {
         val badBackend = createBackend {
             testTlsHelper.initPinning(it, TestTLSHelper.BAD_PINS)
         }
@@ -350,7 +344,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test spki leaf pinning ok`() = runBlocking {
+    fun `test spki leaf pinning ok`() = runTest {
         val altBackend = createBackend { builder ->
             testTlsHelper.setupSPKIleafPinning(
                 builder,
@@ -370,7 +364,7 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `test spki leaf pinning error`() = runBlocking {
+    fun `test spki leaf pinning error`() = runTest {
         val badAltBackend = createBackend { builder ->
             testTlsHelper.setupSPKIleafPinning(builder, TestTLSHelper.BAD_PINS.toList().map {
                 it.removePrefix("sha256/")
@@ -387,9 +381,14 @@ internal class ProtonApiBackendTests {
     }
 
     @Test
-    fun `Headers in extraHeaderProvider are included in requests`() = runBlocking {
+    fun `Headers in extraHeaderProvider are included in requests`() = runTest {
         val extraHeader = "my-header" to "some value"
         every { extraHeaderProvider.headers }.answers { listOf(extraHeader) }
+
+        webServer.prepareResponse(
+            HttpURLConnection.HTTP_OK,
+            """{ "Number": 5, "String": "foo" }"""
+        )
 
         backend(ApiManager.Call(0) { test() })
 

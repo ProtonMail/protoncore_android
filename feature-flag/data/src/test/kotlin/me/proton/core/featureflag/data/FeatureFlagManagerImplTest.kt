@@ -27,7 +27,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId
 import me.proton.core.featureflag.data.testdata.UserIdTestData
@@ -60,7 +60,7 @@ class FeatureFlagManagerImplTest {
     }
 
     @Test
-    fun observeReturnsValueFromRepository() = runBlockingTest {
+    fun observeReturnsValueFromRepository() = runTest {
         // Given
         val repositoryFeatureFlag = newFlag(featureId, true)
         every { repository.observe(any(), any<FeatureId>(), false) } returns flowOf(repositoryFeatureFlag)
@@ -74,7 +74,7 @@ class FeatureFlagManagerImplTest {
     }
 
     @Test
-    fun getReturnsValueFromRepository() = runBlockingTest {
+    fun getReturnsValueFromRepository() = runTest {
         // Given
         val repositoryFeatureFlag = newFlag(featureId, true)
         coEvery { repository.get(any(), any<FeatureId>()) } returns repositoryFeatureFlag
@@ -88,7 +88,7 @@ class FeatureFlagManagerImplTest {
     }
 
     @Test
-    fun prefetchCallsRepository() = runBlockingTest {
+    fun prefetchCallsRepository() = runTest {
         // Given
         coEvery { repository.prefetch(any(), any()) } just Runs
 

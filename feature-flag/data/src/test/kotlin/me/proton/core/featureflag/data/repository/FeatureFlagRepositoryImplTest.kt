@@ -34,8 +34,6 @@ import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.db.FeatureFlagDao
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
@@ -66,16 +64,16 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
-import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
+import me.proton.core.test.kotlin.flowTest
 import org.junit.Assert.assertNull
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.ExperimentalTime
 
-class FeatureFlagRepositoryImplTest {
+class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
     private val featureFlagDao = mockk<FeatureFlagDao> {
         coEvery { this@mockk.insertOrUpdate(any<FeatureFlagEntity>()) } just Runs
@@ -103,18 +101,21 @@ class FeatureFlagRepositoryImplTest {
     private lateinit var remote: FeatureFlagRemoteDataSource
     private lateinit var repository: FeatureFlagRepository
 
-    private val dispatcherProvider = TestDispatcherProvider
-
     @Before
     fun setUp() {
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, coroutinesRule.dispatchers)
         local = spyk(FeatureFlagLocalDataSourceImpl(database))
         remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider))
-        repository = FeatureFlagRepositoryImpl(local, remote, workManager)
+        repository = FeatureFlagRepositoryImpl(
+            local,
+            remote,
+            workManager,
+            TestCoroutineScopeProvider(coroutinesRule.dispatchers)
+        )
     }
 
     @Test
-    fun featureFlagIsReturnedFromDbWhenAvailable() = runTest(dispatcherProvider.Main) {
+    fun featureFlagIsReturnedFromDbWhenAvailable() = coroutinesTest {
         // Given
         val dbFlow = flowOf(listOf(enabledFeatureEntity))
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
@@ -129,7 +130,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun getUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runTest(dispatcherProvider.Main) {
+    fun getUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = coroutinesTest {
         // Given
         val nullUserId: UserId? = null
         val dbFlow = flowOf(
@@ -156,7 +157,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun observeUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = runTest(dispatcherProvider.Main) {
+    fun observeUserSpecificFeatureFlagIsReturnedFromDbWhenGlobalIsAlsoAvailable() = coroutinesTest {
         // Given
         val nullUserId: UserId? = null
         val dbFlow = flowOf(
@@ -185,7 +186,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun featureFlagValueIsObservedInDb() = runTest(dispatcherProvider.Main) {
+    fun featureFlagValueIsObservedInDb() = coroutinesTest {
         // Given
         val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
@@ -212,21 +213,19 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    @OptIn(ExperimentalTime::class)
-    @Ignore("Fails on CI")
-    fun featureFlagValueIsFetchedFromApiAndObservedInDbWhenNotAlreadyAvailableLocally() = runBlocking {
+    fun featureFlagValueIsFetchedFromApiAndObservedInDbWhenNotAlreadyAvailableLocally() = coroutinesTest {
         // Given
         val mutableDbFlow = MutableStateFlow<List<FeatureFlagEntity>>(emptyList())
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
 
         // When
-        repository.observe(userId, featureId).test(timeout = 2000.milliseconds) {
+        flowTest(repository.observe(userId, featureId)) {
             // Then
             // First item is emitted from DB is null
             assertNull(awaitItem())
 
             // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
-            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(enabledFeatureEntity) }
+            coVerify { featureFlagDao.insertOrUpdate(enabledFeatureEntity) }
 
             // Inserting the API response into DB causes it to be emitted
             mutableDbFlow.emit(listOf(enabledFeatureEntity))
@@ -237,9 +236,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    @OptIn(ExperimentalTime::class)
-    @Ignore("Fails on CI")
-    fun featureFlagValuesAreFetchedFromApiWhenNotAllAvailableLocally() = runBlocking {
+    fun featureFlagValuesAreFetchedFromApiWhenNotAllAvailableLocally() = coroutinesTest {
         // Given
         val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
         coEvery { featureFlagDao.observe(userId.withGlobal(), any()) } returns mutableDbFlow
@@ -256,7 +253,7 @@ class FeatureFlagRepositoryImplTest {
             assert(awaitItem().isEmpty())
 
             // Corresponding entities that the mocked API response.
-            coVerify(timeout = 500) { featureFlagDao.insertOrUpdate(enabledFeatureEntity, disabledFeatureEntity) }
+            coVerify { featureFlagDao.insertOrUpdate(enabledFeatureEntity, disabledFeatureEntity) }
 
             // Inserting the API response into DB causes it to be emitted.
             mutableDbFlow.emit(listOf(enabledFeatureEntity, disabledFeatureEntity))
@@ -271,9 +268,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    @OptIn(ExperimentalTime::class)
-    @Ignore("Fails on CI")
-    fun upsertUnknownRequestedFlagsInDbAsUnknown() = runBlocking {
+    fun upsertUnknownRequestedFlagsInDbAsUnknown() = coroutinesTest {
         // Given
         val nullUserId: UserId? = null
         val unknownId = FeatureId("unknown")
@@ -295,7 +290,7 @@ class FeatureFlagRepositoryImplTest {
             assert(awaitItem().isEmpty())
 
             // Corresponding entities that the mocked API response.
-            coVerify(timeout = 500) {
+            coVerify {
                 featureFlagDao.insertOrUpdate(
                     enabledFeatureEntity,
                     unknownFlagEntity
@@ -316,7 +311,7 @@ class FeatureFlagRepositoryImplTest {
     }
 
     @Test
-    fun prefetchFeatureFlagsEnqueueFetchWorker() = runTest(dispatcherProvider.Main) {
+    fun prefetchFeatureFlagsEnqueueFetchWorker() = coroutinesTest {
         val featureIdsString = "${featureId.id},${featureId1.id}"
         coEvery { featuresApi.getFeatureFlags(featureIdsString) } returns GetFeaturesResponse(
             resultCode = 1000,

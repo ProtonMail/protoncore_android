@@ -23,7 +23,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.network.domain.ApiException
@@ -48,7 +48,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `payments status unknown`() = runBlockingTest {
+    fun `payments status unknown`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         mockPaymentStatus(PaymentStatus(null, null, null))
 
@@ -59,7 +59,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `all payment status disabled`() = runBlockingTest {
+    fun `all payment status disabled`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
         mockPaymentStatus(PaymentStatus(card = false, inApp = false, paypal = false))
@@ -71,7 +71,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `payments enabled and all providers available`() = runBlockingTest {
+    fun `payments enabled and all providers available`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
         mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = true))
@@ -83,7 +83,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `all payments enabled but missing Google IAP library`() = runBlockingTest {
+    fun `all payments enabled but missing Google IAP library`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(false)
         mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = true))
@@ -95,7 +95,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `only Proton Card payments enabled`() = runBlockingTest {
+    fun `only Proton Card payments enabled`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
         mockPaymentStatus(PaymentStatus(card = true, inApp = false, paypal = false))
@@ -107,7 +107,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `only Google IAP enabled`() = runBlockingTest {
+    fun `only Google IAP enabled`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         mockGoogleIAP(true)
         mockPaymentStatus(PaymentStatus(card = false, inApp = true, paypal = false))
@@ -119,7 +119,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `Google IAP is not available on F-Droid builds`() = runBlockingTest {
+    fun `Google IAP is not available on F-Droid builds`() = runTest {
         tested = makeTested(AppStore.FDroid)
         mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = true))
 
@@ -131,7 +131,7 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
-    fun `does not throw an API exception`() = runBlockingTest {
+    fun `does not throw an API exception`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         coEvery { getPaymentStatus.invoke(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
 

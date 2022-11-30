@@ -18,7 +18,6 @@
 
 package me.proton.core.plan.presentation.viewmodel
 
-import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -28,13 +27,13 @@ import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
-import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
@@ -47,6 +46,7 @@ import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.usersettings.domain.entity.Organization
@@ -54,10 +54,9 @@ import me.proton.core.usersettings.domain.usecase.GetOrganization
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
+class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val checkUnredeemedGooglePurchase = mockk<CheckUnredeemedGooglePurchase>(relaxed = true)
@@ -239,9 +238,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `get plans for upgrade currently free success handled correctly`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -251,14 +248,16 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(1, plansStatus.plans.size)
             assertEquals("plan-name-1", plansStatus.plans[0].name)
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
     fun `get plans for upgrade currently free current plan success handled correctly`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
-        viewModel.subscribedPlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+        val job = flowTest(viewModel.subscribedPlansState) {
             // THEN
             assertIs<UpgradePlansViewModel.SubscribedPlansState.Idle>(awaitItem())
             assertIs<UpgradePlansViewModel.SubscribedPlansState.Processing>(awaitItem())
@@ -268,15 +267,18 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals("plan-default", plan.name)
             assertEquals(1, plan.storage)
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
     fun `get plans for upgrade currently free payments off handled`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
         coEvery { getAvailablePaymentProviders.invoke() } returns emptySet()
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -285,6 +287,10 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(0, plansStatus.plans.size)
             coVerify(exactly = 1) { getPlanDefaultUseCase(any()) }
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
@@ -304,9 +310,8 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             true,
             paymentOrchestrator
         )
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -314,6 +319,10 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             assertEquals(0, plansStatus.plans.size)
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
@@ -337,9 +346,8 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 true,
                 paymentOrchestrator
             )
-            viewModel.availablePlansState.test {
-                // WHEN
-                viewModel.getCurrentSubscribedPlans(testUserId)
+
+            val job = flowTest(viewModel.availablePlansState) {
                 // THEN
                 assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
                 assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -347,14 +355,16 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
                 assertEquals(2, plansStatus.plans.size)
             }
+
+            // WHEN
+            viewModel.getCurrentSubscribedPlans(testUserId)
+            job.join()
         }
 
     @Test
     fun `get plans for upgrade currently paid plan success handled correctly`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -362,15 +372,17 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             assertEquals(0, plansStatus.plans.size)
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
     fun `get plans for upgrade currently paid payments off`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns testSubscription
         coEvery { getAvailablePaymentProviders.invoke() } returns emptySet()
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -378,14 +390,16 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             assertEquals(0, plansStatus.plans.size)
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
     fun `get plans for upgrade no active subscription handled correctly`() = coroutinesTest {
         coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentSubscribedPlans(testUserId)
+        val job = flowTest(viewModel.availablePlansState) {
             // THEN
             assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
             assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -395,6 +409,10 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
             val planPaid = plansStatus.plans[0]
             assertEquals("plan-name-1", planPaid.name)
         }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
     }
 
     @Test
@@ -418,9 +436,7 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 true,
                 paymentOrchestrator
             )
-            viewModel.availablePlansState.test {
-                // WHEN
-                viewModel.getCurrentSubscribedPlans(testUserId)
+            val job = flowTest(viewModel.availablePlansState) {
                 // THEN
                 assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
                 assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
@@ -430,6 +446,10 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
                 val planPaid = plansStatus.plans[0]
                 assertEquals("plan-name-1", planPaid.name)
             }
+
+            // WHEN
+            viewModel.getCurrentSubscribedPlans(testUserId)
+            job.join()
         }
 
     @Test
@@ -457,17 +477,19 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         val currentPlanResult = viewModel.createCurrentPlan(
             plan = testPlan,
             user = testUser,
-            paymentMethods = listOf(PaymentMethod(
-                id = "test-payment-method-id",
-                type = PaymentMethodType.CARD,
-                details = Details.CardDetails(
-                    Card.CardReadOnly(
-                        brand = "visa", last4 = "1234", expirationMonth = "01",
-                        expirationYear = "2021", name = "Test",
-                        country = "Test Country", zip = "123"
+            paymentMethods = listOf(
+                PaymentMethod(
+                    id = "test-payment-method-id",
+                    type = PaymentMethodType.CARD,
+                    details = Details.CardDetails(
+                        Card.CardReadOnly(
+                            brand = "visa", last4 = "1234", expirationMonth = "01",
+                            expirationYear = "2021", name = "Test",
+                            country = "Test Country", zip = "123"
+                        )
                     )
                 )
-            )),
+            ),
             organization = null,
             endDate = mockk()
         )
@@ -501,17 +523,19 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         val currentPlanResult = viewModel.createCurrentPlan(
             plan = testPlan,
             user = testUser,
-            paymentMethods = listOf(PaymentMethod(
-                id = "test-payment-method-id",
-                type = PaymentMethodType.CARD,
-                details = Details.CardDetails(
-                    Card.CardReadOnly(
-                        brand = "visa", last4 = "1234", expirationMonth = "01",
-                        expirationYear = "2021", name = "Test",
-                        country = "Test Country", zip = "123"
+            paymentMethods = listOf(
+                PaymentMethod(
+                    id = "test-payment-method-id",
+                    type = PaymentMethodType.CARD,
+                    details = Details.CardDetails(
+                        Card.CardReadOnly(
+                            brand = "visa", last4 = "1234", expirationMonth = "01",
+                            expirationYear = "2021", name = "Test",
+                            country = "Test Country", zip = "123"
+                        )
                     )
                 )
-            )),
+            ),
             organization = null,
             endDate = mockk()
         )
@@ -544,17 +568,19 @@ class UpgradePlansViewModelTest : ArchTest, CoroutinesTest {
         val currentPlanResult = viewModel.createCurrentPlan(
             plan = testPlan,
             user = testUser,
-            paymentMethods = listOf(PaymentMethod(
-                id = "test-payment-method-id",
-                type = PaymentMethodType.CARD,
-                details = Details.CardDetails(
-                    Card.CardReadOnly(
-                        brand = "visa", last4 = "1234", expirationMonth = "01",
-                        expirationYear = "2021", name = "Test",
-                        country = "Test Country", zip = "123"
+            paymentMethods = listOf(
+                PaymentMethod(
+                    id = "test-payment-method-id",
+                    type = PaymentMethodType.CARD,
+                    details = Details.CardDetails(
+                        Card.CardReadOnly(
+                            brand = "visa", last4 = "1234", expirationMonth = "01",
+                            expirationYear = "2021", name = "Test",
+                            country = "Test Country", zip = "123"
+                        )
                     )
                 )
-            )),
+            ),
             organization = null,
             endDate = mockk()
         )

@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.data.api
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.CreateSubscription
@@ -53,7 +53,7 @@ class PaymentsApiTest {
     }
 
     @Test
-    fun `create payment token from Google purchase token`() = runBlocking {
+    fun `create payment token from Google purchase token`() = runTest {
         // Given
         webServer.enqueueFromResourceFile("GET/payments/v4/tokens.json", javaClass.classLoader)
 
@@ -108,7 +108,7 @@ class PaymentsApiTest {
     }
 
     @Test
-    fun `get current subscription with customer ID`() = runBlocking {
+    fun `get current subscription with customer ID`() = runTest {
         // Given
         webServer.enqueueFromResourceFile("GET/payments/v4/subscription.json", javaClass.classLoader)
 
@@ -122,7 +122,7 @@ class PaymentsApiTest {
     }
 
     @Test
-    fun `create subscription`() = runBlocking {
+    fun `create subscription`() = runTest {
         // Given
         webServer.enqueueFromResourceFile("POST/payments/v4/subscription.json", javaClass.classLoader)
 

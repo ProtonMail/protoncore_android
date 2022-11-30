@@ -67,7 +67,7 @@ internal class MetricsRepositoryImplTest {
 
     lateinit var metricsRepository: MetricsRepositoryImpl
 
-    private val dispatcherProvider = TestDispatcherProvider
+    private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
     fun setUp() {

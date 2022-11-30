@@ -21,7 +21,7 @@ package me.proton.core.contact.tests
 import android.database.sqlite.SQLiteConstraintException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
@@ -34,7 +34,7 @@ import org.robolectric.RobolectricTestRunner
 class TransactionTests : ContactDatabaseTests() {
 
     @Test
-    fun `delete contact delete contact and emails`() = runBlocking {
+    fun `delete contact delete contact and emails`() = runTest {
         givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
@@ -44,7 +44,7 @@ class TransactionTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `delete all contacts from user also delete all contacts and emails from user`() = runBlocking {
+    fun `delete all contacts from user also delete all contacts and emails from user`() = runTest {
         givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
@@ -54,7 +54,7 @@ class TransactionTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `delete all contacts delete all contacts and emails`() = runBlocking {
+    fun `delete all contacts delete all contacts and emails`() = runTest {
         givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
@@ -64,7 +64,7 @@ class TransactionTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `merge contacts apply correct diff`() = runBlocking {
+    fun `merge contacts apply correct diff`() = runTest {
         givenUser0InDb()
         val baseEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("a"), emptyList()))
         val updatedEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("b"), emptyList()))
@@ -77,7 +77,7 @@ class TransactionTests : ContactDatabaseTests() {
     }
 
     @Test
-    fun `merge contacts with cards apply correct diff`() = runBlocking {
+    fun `merge contacts with cards apply correct diff`() = runTest {
         givenUser0InDb()
         val baseCards = listOf(contactCard("card-a"))
         val updatedCards = listOf(contactCard("card-b"))
@@ -98,26 +98,26 @@ class TransactionTests : ContactDatabaseTests() {
     }
 
     @Test(expected = SQLiteConstraintException::class)
-    fun `upsert contacts throws if user not present`() = runBlocking {
+    fun `upsert contacts throws if user not present`() = runTest {
         localDataSource.upsertContacts(User0.Contact0.contact)
     }
 
     @Test
-    fun `upsert contacts doesn't throws if user is present`() = runBlocking {
+    fun `upsert contacts doesn't throws if user is present`() = runTest {
         givenUser0InDb()
         localDataSource.upsertContacts(User0.Contact0.contact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == User0.Contact0.contact)
     }
 
     @Test
-    fun `delete many contacts`() = runBlocking {
+    fun `delete many contacts`() = runTest {
         givenUser0InDb()
         val contactIds = (1..LARGE_N).map { ContactId("id_$it") }
         localDataSource.deleteContacts(*contactIds.toTypedArray())
     }
 
     @Test
-    fun `merge many contacts`() = runBlocking {
+    fun `merge many contacts`() = runTest {
         givenUser0InDb()
         val contacts = (1..LARGE_N).map { makeContact(it, User0.userId) }
         localDataSource.mergeContacts(*contacts.toTypedArray())

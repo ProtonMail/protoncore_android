@@ -25,9 +25,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
@@ -110,7 +109,7 @@ internal class HumanVerificationTests {
             }
         """.trimIndent()
 
-    private val scope = CoroutineScope(TestCoroutineDispatcher())
+    private val scope = TestScope()
 
     private val testTlsHelper = TestTLSHelper()
     private lateinit var apiManagerFactory: ApiManagerFactory
@@ -217,7 +216,7 @@ internal class HumanVerificationTests {
     }
 
     @Test
-    fun `test human verification returned`() = runBlocking {
+    fun `test human verification returned`() = runTest {
         webServer.prepareResponse(
             422,
             humanVerificationResponse
@@ -247,7 +246,7 @@ internal class HumanVerificationTests {
     }
 
     @Test
-    fun `test human verification for cookie returned`() = runBlocking {
+    fun `test human verification for cookie returned`() = runTest {
         val clientId = MockClientId.getForCookie(CookieSessionId("test-cookie-id"))
         every { cookieJar.loadForRequest(any()) } returns listOf(testSessionCookie())
         coEvery { clientIdProvider.getClientId(any()) } returns clientId
@@ -285,7 +284,7 @@ internal class HumanVerificationTests {
     }
 
     @Test
-    fun `test other details returned`() = runBlocking {
+    fun `test other details returned`() = runTest {
         webServer.prepareResponse(
             422,
             otherDetailsResponse
@@ -310,7 +309,7 @@ internal class HumanVerificationTests {
     }
 
     @Test
-    fun `test human verification headers for sessionId`() = runBlocking {
+    fun `test human verification headers for sessionId`() = runTest {
         webServer.prepareResponse(
             422,
             humanVerificationResponse
@@ -341,7 +340,7 @@ internal class HumanVerificationTests {
     }
 
     @Test
-    fun `test human verification headers for cookieId`() = runBlocking {
+    fun `test human verification headers for cookieId`() = runTest {
         val clientId = MockClientId.getForCookie(CookieSessionId("test-cookie-id"))
         every { cookieJar.loadForRequest(any()) } returns listOf(testSessionCookie())
         coEvery { clientIdProvider.getClientId(any()) } returns clientId

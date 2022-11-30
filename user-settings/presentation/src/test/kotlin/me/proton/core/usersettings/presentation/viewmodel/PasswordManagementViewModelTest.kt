@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
@@ -44,7 +45,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
+class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
     private val getUserSettingsUseCase = mockk<GetUserSettings>()
     private val performUpdateLoginPassword = mockk<PerformUpdateLoginPassword>()
@@ -161,7 +162,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
         coEvery { performUpdateLoginPassword.invoke(testUserId, any(), any(), any()) } returns testUserSettingsResponse
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.updateLoginPassword(testUserId, testPassword, testNewPassword)
             // THEN
@@ -199,7 +200,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
         coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.init(testUserId)
             viewModel.updateMailboxPassword(testUserId, testLoginPassword, testNewMailboxPassword)
@@ -239,7 +240,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
         coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
 
-        viewModel.state.test {
+        flowTest(viewModel.state) {
             // WHEN
             viewModel.init(testUserId)
             viewModel.updateMailboxPassword(testUserId, testLoginPassword, testNewMailboxPassword)

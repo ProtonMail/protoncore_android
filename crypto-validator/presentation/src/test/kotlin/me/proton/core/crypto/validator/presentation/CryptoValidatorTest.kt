@@ -24,19 +24,19 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import io.mockk.verify
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
 import me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
+internal class CryptoValidatorTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
 
     lateinit var keyStoreValidator: CryptoValidator
     private val application = mockk<Application>()
@@ -57,7 +57,7 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
             application,
             keyStoreCrypto,
             cryptoPrefs,
-            TestCoroutineScopeProvider
+            TestCoroutineScopeProvider(coroutinesRule.dispatchers)
         )
     }
 
@@ -90,7 +90,7 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `Waits until app is in foreground`() = runBlockingTest {
+    fun `Waits until app is in foreground`() = runTest {
         // GIVEN
         every { cryptoPrefs.useInsecureKeystore } returns false
         // WHEN
@@ -100,7 +100,7 @@ internal class CryptoValidatorTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `If KeyStoreCrypto is not using KeyStore, shows an error screen`() = runBlockingTest {
+    fun `If KeyStoreCrypto is not using KeyStore, shows an error screen`() = runTest {
         // GIVEN
         every { keyStoreCrypto.isUsingKeyStore() } returns false
         every { cryptoPrefs.useInsecureKeystore } returns false

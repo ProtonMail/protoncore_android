@@ -24,13 +24,20 @@ import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.Test
 
 class StoreExtensionsTest {
 
@@ -48,27 +55,40 @@ class StoreExtensionsTest {
         coEvery { this@mockk.invoke(any(), any()) } returns Unit
     }
 
-    private val store: ProtonStore<String, String> = StoreBuilder.from(
-        fetcher = fetcher,
-        sourceOfTruth = SourceOfTruth.of(
-            reader = reader,
-            writer = writer,
-            delete = { },
-            deleteAll = { },
-        )
-    )
-        .scope(TestCoroutineScope())
-        .buildProtonStore()
+    private lateinit var store: ProtonStore<String, String>
+
+    @BeforeTest
+    fun setUp() {
+        val dispatcher = StandardTestDispatcher()
+        val scopeProvider = TestCoroutineScopeProvider(TestDispatcherProvider(dispatcher))
+        Dispatchers.setMain(dispatcher)
+        store = StoreBuilder
+            .from(
+                fetcher = fetcher,
+                sourceOfTruth = SourceOfTruth.of(
+                    reader = reader,
+                    writer = writer,
+                    delete = { },
+                    deleteAll = { },
+                )
+            )
+            .buildProtonStore(scopeProvider)
+    }
+
+    @AfterTest
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
-    fun getValueWithoutException() = runBlockingTest {
+    fun getValueWithoutException() = runTest {
         // When
         val value = store.get("key")
         assertEquals(expected = "value", actual = value)
     }
 
     @Test
-    fun getThrowInnerException() = runBlockingTest {
+    fun getThrowInnerException() = runTest {
         // Given
         coEvery { reader.invoke(any()) } throws TestException("test")
 
@@ -80,7 +100,7 @@ class StoreExtensionsTest {
     }
 
     @Test
-    fun freshThrowInnerException() = runBlockingTest {
+    fun freshThrowInnerException() = runTest {
         // Given
         coEvery { fetcher.invoke(any()) } returns flowOf(FetcherResult.Error.Exception(TestException("test")))
 
@@ -92,7 +112,7 @@ class StoreExtensionsTest {
     }
 
     @Test
-    fun freshThrowInnerException2() = runBlockingTest {
+    fun freshThrowInnerException2() = runTest {
         // Given
         coEvery { fetcher.invoke(any()) } throws TestException("test")
 

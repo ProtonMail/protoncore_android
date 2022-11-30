@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
@@ -48,7 +50,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
-import me.proton.core.test.android.runBlockingWithTimeout
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
@@ -98,8 +100,6 @@ class UserRepositoryImplTests {
         expectedServerProof = "test-server-proof"
     )
 
-    private val dispatcherProvider = TestDispatcherProvider
-
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -110,9 +110,12 @@ class UserRepositoryImplTests {
         coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
 
+        val dispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
+        val scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
+
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, scopeProvider)
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
@@ -135,7 +138,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUser_locked() = runBlockingWithTimeout {
+    fun getUser_locked() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -156,7 +159,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun observeUser_locked() = runBlockingWithTimeout {
+    fun observeUser_locked() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -175,7 +178,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUser_locked_keys_assert_isActive_only_if_canUnlock() = runBlockingWithTimeout {
+    fun getUser_locked_keys_assert_isActive_only_if_canUnlock() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
 
@@ -195,7 +198,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUser_unlocked() = runBlockingWithTimeout {
+    fun getUser_unlocked() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
         val passphrase = TestUsers.User1.Key1.passphrase
@@ -224,7 +227,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun observeUser_unlocked() = runBlockingWithTimeout {
+    fun observeUser_unlocked() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
         val passphrase = TestUsers.User1.Key1.passphrase
@@ -251,7 +254,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUser_unlocked_keys_assert_isActive_only_if_canUnlock() = runBlockingWithTimeout {
+    fun getUser_unlocked_keys_assert_isActive_only_if_canUnlock() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
         val passphrase = TestUsers.User1.Key1.passphrase
@@ -276,7 +279,7 @@ class UserRepositoryImplTests {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun setPassphrase_userDoesNotExist() = runBlockingWithTimeout {
+    fun setPassphrase_userDoesNotExist() = runTest {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -291,7 +294,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun clearPassphrase() = runBlockingWithTimeout {
+    fun clearPassphrase() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
         val passphrase = TestUsers.User1.Key1.passphrase
@@ -319,7 +322,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUserBlocking_returnCached() = runBlockingWithTimeout {
+    fun getUserBlocking_returnCached() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
 
@@ -344,7 +347,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUserBlocking_refresh() = runBlockingWithTimeout {
+    fun getUserBlocking_refresh() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
         val updatedCredit = -10
@@ -370,7 +373,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun getUserBlocking_refreshDoNotOverridePassphrase() = runBlockingWithTimeout {
+    fun getUserBlocking_refreshDoNotOverridePassphrase() = runTest {
         // GIVEN
         val userId = TestUsers.User1.id
         val updatedCredit = -10
@@ -401,7 +404,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun unlockUser_lockedScope() = runBlockingWithTimeout {
+    fun unlockUser_lockedScope() = runTest {
         // GIVEN
         coEvery { userApi.unlockLockedScope(any()) } answers {
             SRPAuthenticationResponse(
@@ -421,7 +424,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun unlockUser_no2fa_passwordScope() = runBlockingWithTimeout {
+    fun unlockUser_no2fa_passwordScope() = runTest {
         // GIVEN
         coEvery { userApi.unlockPasswordScope(any()) } answers {
             SRPAuthenticationResponse(
@@ -442,7 +445,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun unlockUser_2fa_passwordScope() = runBlockingWithTimeout {
+    fun unlockUser_2fa_passwordScope() = runTest {
         // GIVEN
         coEvery {
             userApi.unlockPasswordScope(
@@ -472,7 +475,7 @@ class UserRepositoryImplTests {
     }
 
     @Test
-    fun unlockUser_wrong_server_proof(): Unit = runBlockingWithTimeout {
+    fun unlockUser_wrong_server_proof(): Unit = runTest {
         // GIVEN
         coEvery { userApi.unlockLockedScope(any()) } answers {
             SRPAuthenticationResponse(
