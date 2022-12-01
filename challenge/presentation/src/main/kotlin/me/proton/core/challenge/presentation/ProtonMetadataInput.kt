@@ -26,18 +26,24 @@ import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnKeyListener
+import android.view.View.OnTouchListener
 import android.widget.TextView
 import androidx.core.content.withStyledAttributes
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.presentation.ProtonCopyPasteEditText.OnCopyPasteListener
 import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding
+import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding.*
 import me.proton.core.presentation.ui.view.ProtonInput
 import javax.inject.Inject
 
 @AndroidEntryPoint
-public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPasteListener {
+public class ProtonMetadataInput : ProtonInput,
+    TextWatcher, OnKeyListener, OnTouchListener, OnCopyPasteListener {
 
     @Inject
     public lateinit var challengeManager: ChallengeManager
@@ -47,7 +53,7 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
     override val binding: ViewBinding
         get() {
             if (inputMetadataBinding == null) {
-                inputMetadataBinding = ProtonMetadataInputBinding.inflate(LayoutInflater.from(context), this)
+                inputMetadataBinding = inflate(LayoutInflater.from(context), this)
             }
             return inputMetadataBinding!!
         }
@@ -61,105 +67,48 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
     override val label: TextView
         get() = (binding as ProtonMetadataInputBinding).label
 
-    private var lastFocusOn: Long = 0
-    private var focusList = mutableListOf<Int>()
+    private var lastFocusTimeMillis: Long = 0
+    private var clickCount: Int = 0
+
+    private val focusList = mutableListOf<Int>()
+    private val keyList = mutableListOf<String>()
+    private val copyList = mutableListOf<String>()
+    private val pasteList = mutableListOf<String>()
 
     private lateinit var flow: String
-
     private lateinit var frame: String
 
-    private var clicksCounter: Int = 0
-
-    private val copies: List<String>
-        get() = input.copyList
-
-    private val pastes: List<String>
-        get() = input.pasteList
-
-    private val keys: MutableList<String> = mutableListOf()
-
-    public constructor(context: Context) : super(context) {
+    public constructor(
+        context: Context,
+    ) : super(context) {
         init(context)
     }
 
-    public constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    public constructor(
+        context: Context,
+        attrs: AttributeSet,
+    ) : super(context, attrs) {
         init(context, attrs)
     }
 
-    public constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    public constructor(
+        context: Context,
+        attrs: AttributeSet,
+        defStyle: Int,
+    ) : super(context, attrs, defStyle) {
         init(context, attrs)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun init(context: Context, attrs: AttributeSet? = null) {
         context.withStyledAttributes(attrs, R.styleable.ChallengeInput) {
             flow = getString(R.styleable.ChallengeInput_challengeFlow) ?: ""
             frame = getString(R.styleable.ChallengeInput_challengeFrame) ?: ""
         }
-
-        enableMetrics()
-        input.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN) {
-                val char = when (keyCode) {
-                    KeyEvent.KEYCODE_DEL -> BACKSPACE
-                    KeyEvent.KEYCODE_TAB -> TAB
-                    KeyEvent.KEYCODE_SHIFT_LEFT,
-                    KeyEvent.KEYCODE_SHIFT_RIGHT -> SHIFT
-                    KeyEvent.KEYCODE_CAPS_LOCK -> CAPS
-                    KeyEvent.KEYCODE_DPAD_LEFT -> ARROW_LEFT
-                    KeyEvent.KEYCODE_DPAD_RIGHT -> ARROW_RIGHT
-                    KeyEvent.KEYCODE_DPAD_UP -> ARROW_UP
-                    KeyEvent.KEYCODE_DPAD_DOWN -> ARROW_DOWN
-                    KeyEvent.KEYCODE_COPY -> COPY
-                    KeyEvent.KEYCODE_PASTE -> PASTE
-                    else -> null
-                }
-                if (char != null) {
-                    keys.add(char)
-                }
-            }
-            false
-        }
-
-        addTextChangedListener(object : TextWatcher {
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // noop
-            }
-
-            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                val range = IntRange(start, start + count - 1)
-                val newText = text.substring(range)
-                val rangeCount = range.count()
-                if (rangeCount > 1) {
-                    if (newText == DOT_COM) {
-                        // .com is an exception
-                        keys += newText.toCharArray().map { it.toString() }
-                    } else {
-                        keys += newText.toCharArray()[rangeCount - 1].toString()
-                    }
-                    return
-                }
-                if (text.isNotEmpty()) {
-                    keys += newText.toCharArray().map { it.toString() }
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                // noop
-            }
-
-        })
-        input.setCopyPasteListener(this)
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun enableMetrics() {
-        input.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                clicksCounter++
-            }
-            super.onTouchEvent(event)
-        }
+        input.setOnTouchListener(this)
+        input.setOnKeyListener(this)
+        input.addTextChangedListener(this)
+        input.setOnCopyPasteListener(this)
     }
 
     public suspend fun flush() {
@@ -167,29 +116,80 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
             flow = flow,
             challengeFrame = frame,
             focusTime = focusList,
-            clicks = clicksCounter,
-            copies = copies,
-            pastes = pastes,
-            keys = keys
+            clicks = clickCount,
+            copies = copyList,
+            pastes = pasteList,
+            keys = keyList
         )
     }
 
-    override fun onCopyHappened() {
-        keys.add(COPY)
+    override fun onTouch(view: View, event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP) {
+            clickCount++
+        }
+        return false
     }
 
-    override fun onPasteHappened() {
-        keys.removeLastOrNull()
-        keys.add(PASTE)
+    override fun onKey(view: View, keyCode: Int, event: KeyEvent): Boolean {
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            val char = when (keyCode) {
+                // KeyEvent.KEYCODE_DEL -> BACKSPACE -> handled onTextChanged.
+                KeyEvent.KEYCODE_TAB -> TAB
+                KeyEvent.KEYCODE_SHIFT_LEFT -> SHIFT
+                KeyEvent.KEYCODE_SHIFT_RIGHT -> SHIFT
+                KeyEvent.KEYCODE_CAPS_LOCK -> CAPS
+                KeyEvent.KEYCODE_DPAD_LEFT -> ARROW_LEFT
+                KeyEvent.KEYCODE_DPAD_RIGHT -> ARROW_RIGHT
+                KeyEvent.KEYCODE_DPAD_UP -> ARROW_UP
+                KeyEvent.KEYCODE_DPAD_DOWN -> ARROW_DOWN
+                KeyEvent.KEYCODE_COPY -> COPY
+                KeyEvent.KEYCODE_PASTE -> PASTE
+                else -> null
+            }
+            if (char != null) {
+                keyList.add(char)
+            }
+        }
+        return false
     }
 
-    override fun onFocusChanged(focused: Boolean) {
-        lastFocusOn = if (focused) {
-            System.currentTimeMillis()
-        } else {
-            val lastFocusTime = (System.currentTimeMillis() - lastFocusOn) / 1000
-            focusList.add(lastFocusTime.toInt())
-            0
+    override fun onCopyText(text: String) {
+        keyList.add(COPY)
+        copyList.add(text)
+    }
+
+    override fun onPasteText(text: String) {
+        // handled onTextChanged.
+    }
+
+    override fun onFocus(focused: Boolean) {
+        lastFocusTimeMillis = when {
+            focused -> System.currentTimeMillis()
+            else -> 0L.also {
+                focusList.add(((System.currentTimeMillis() - lastFocusTimeMillis) / 1000).toInt())
+            }
+        }
+    }
+
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+    override fun afterTextChanged(s: Editable) {}
+    override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+        val diffCount = count - before
+        when {
+            diffCount == 0 -> Unit
+            diffCount > 1 -> {
+                val range = IntRange(start, start + count - 1)
+                val newText = text.substring(range)
+                keyList.add(PASTE)
+                pasteList.add(newText)
+            }
+            diffCount < 0 -> {
+                keyList.add(BACKSPACE)
+            }
+            // diffCount == 1
+            else -> {
+                keyList.add(text[input.selectionStart - 1].toString())
+            }
         }
     }
 
@@ -204,6 +204,5 @@ public class ProtonMetadataInput : ProtonInput, ProtonCopyPasteEditText.CopyPast
         private const val ARROW_RIGHT = "ArrowRight"
         private const val ARROW_UP = "ArrowUp"
         private const val ARROW_DOWN = "ArrowDOWN"
-        private const val DOT_COM = ".com"
     }
 }

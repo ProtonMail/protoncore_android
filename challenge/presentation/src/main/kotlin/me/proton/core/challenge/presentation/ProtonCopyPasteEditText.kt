@@ -19,6 +19,7 @@
 package me.proton.core.challenge.presentation
 
 import android.content.ClipDescription
+import android.content.ClipDescription.MIMETYPE_TEXT_HTML
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
@@ -32,65 +33,72 @@ import com.google.android.material.textfield.TextInputEditText
 public class ProtonCopyPasteEditText : TextInputEditText {
 
     private val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    private var copyPasteListener: CopyPasteListener? = null
+    private var copyPasteListener: OnCopyPasteListener? = null
 
-    internal val copyList: MutableList<String> = mutableListOf()
-    internal val pasteList: MutableList<String> = mutableListOf()
+    public constructor(
+        context: Context
+    ) : super(context)
 
-    public constructor(context: Context) : super(context)
+    public constructor(
+        context: Context,
+        attrs: AttributeSet
+    ) : super(context, attrs)
 
-    public constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    public constructor(
+        context: Context,
+        attrs: AttributeSet,
+        defStyle: Int
+    ) : super(context, attrs, defStyle)
 
-    public constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+    public fun setOnCopyPasteListener(listener: OnCopyPasteListener) {
+        copyPasteListener = listener
+    }
 
     override fun onTextContextMenuItem(id: Int): Boolean {
         val consumed = super.onTextContextMenuItem(id)
         when (id) {
-            android.R.id.copy,
+            android.R.id.copy -> onCopy()
             android.R.id.cut -> onCopy()
             android.R.id.paste -> onPaste()
         }
         return consumed
     }
 
+    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect)
+        copyPasteListener?.onFocus(focused)
+    }
+
     private fun onCopy() {
-        if (checkClipboardAndAddToList(copyList)) {
-            copyPasteListener?.onCopyHappened()
-        }
+        getTextFromClipboard()?.let { copyPasteListener?.onCopyText(it) }
     }
 
     private fun onPaste() {
-        if (checkClipboardAndAddToList(pasteList)) {
-            copyPasteListener?.onPasteHappened()
-        }
+        getTextFromClipboard()?.let { copyPasteListener?.onPasteText(it) }
     }
 
-    private fun checkClipboardAndAddToList(list: MutableList<String>): Boolean {
-        val clipDescription = clipboard.primaryClipDescription
-        return when {
-            !clipboard.hasPrimaryClip() -> false
-            clipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) == true ||
-                clipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML) == true -> {
-                val item = clipboard.primaryClip?.getItemAt(0)
-                list.add(item?.text.toString())
-                true
-            }
-            else -> false
-        }
+    private val primaryClip
+        get() = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+
+    private val primaryClipDescription
+        get() = clipboard.primaryClipDescription
+
+    private fun ClipDescription?.hasText() = when {
+        this == null -> false
+        hasMimeType(MIMETYPE_TEXT_PLAIN) -> true
+        hasMimeType(MIMETYPE_TEXT_HTML) -> true
+        else -> false
     }
 
-    public fun setCopyPasteListener(listener: CopyPasteListener) {
-        copyPasteListener = listener
+    private fun getTextFromClipboard(): String? = when {
+        !clipboard.hasPrimaryClip() -> null
+        primaryClipDescription.hasText() -> primaryClip
+        else -> null
     }
 
-    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
-        super.onFocusChanged(focused, direction, previouslyFocusedRect)
-        copyPasteListener?.onFocusChanged(focused)
-    }
-
-    public interface CopyPasteListener {
-        public fun onCopyHappened()
-        public fun onPasteHappened()
-        public fun onFocusChanged(focused: Boolean)
+    public interface OnCopyPasteListener {
+        public fun onCopyText(text: String)
+        public fun onPasteText(text: String)
+        public fun onFocus(focused: Boolean)
     }
 }

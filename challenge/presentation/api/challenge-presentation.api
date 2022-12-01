@@ -22,26 +22,31 @@ public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun onTextContextMenuItem (I)Z
-	public final fun setCopyPasteListener (Lme/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener;)V
+	public final fun setOnCopyPasteListener (Lme/proton/core/challenge/presentation/ProtonCopyPasteEditText$OnCopyPasteListener;)V
 }
 
-public abstract interface class me/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener {
-	public abstract fun onCopyHappened ()V
-	public abstract fun onFocusChanged (Z)V
-	public abstract fun onPasteHappened ()V
+public abstract interface class me/proton/core/challenge/presentation/ProtonCopyPasteEditText$OnCopyPasteListener {
+	public abstract fun onCopyText (Ljava/lang/String;)V
+	public abstract fun onFocus (Z)V
+	public abstract fun onPasteText (Ljava/lang/String;)V
 }
 
-public final class me/proton/core/challenge/presentation/ProtonMetadataInput : me/proton/core/presentation/ui/view/ProtonInput, me/proton/core/challenge/presentation/ProtonCopyPasteEditText$CopyPasteListener {
+public final class me/proton/core/challenge/presentation/ProtonMetadataInput : me/proton/core/presentation/ui/view/ProtonInput, android/text/TextWatcher, android/view/View$OnKeyListener, android/view/View$OnTouchListener, me/proton/core/challenge/presentation/ProtonCopyPasteEditText$OnCopyPasteListener {
 	public field challengeManager Lme/proton/core/challenge/domain/ChallengeManager;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun afterTextChanged (Landroid/text/Editable;)V
+	public fun beforeTextChanged (Ljava/lang/CharSequence;III)V
 	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChallengeManager ()Lme/proton/core/challenge/domain/ChallengeManager;
 	public synthetic fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
-	public fun onCopyHappened ()V
-	public fun onFocusChanged (Z)V
-	public fun onPasteHappened ()V
+	public fun onCopyText (Ljava/lang/String;)V
+	public fun onFocus (Z)V
+	public fun onKey (Landroid/view/View;ILandroid/view/KeyEvent;)Z
+	public fun onPasteText (Ljava/lang/String;)V
+	public fun onTextChanged (Ljava/lang/CharSequence;III)V
+	public fun onTouch (Landroid/view/View;Landroid/view/MotionEvent;)Z
 	public final fun setChallengeManager (Lme/proton/core/challenge/domain/ChallengeManager;)V
 }
 
