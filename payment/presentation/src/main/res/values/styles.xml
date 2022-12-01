@@ -25,10 +25,7 @@
     </style>
     <!--  region Buttons -->
     <style name="ProtonButton.GPay" parent="ProtonButton">
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:textColor">@color/btn_text_selector</item>
+        <item name="android:textColor">@color/btn_gpay_text_selector</item>
         <item name="backgroundTint">@color/btn_gpay_background_selector</item>
-        <item name="cornerRadius">@dimen/default_corner_radius</item>
     </style>
 </resources>
