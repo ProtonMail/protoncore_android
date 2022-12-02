@@ -33,6 +33,7 @@ import javax.inject.Inject
  *
  * @author Dino Kadrikj.
  */
+@Deprecated("Not used anymore.")
 class SendVerificationCodeToEmailDestination @Inject constructor(
     private val userVerificationRepository: UserVerificationRepository
 ) {

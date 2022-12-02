@@ -95,6 +95,8 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
         signupViewModel.setPassword(confirmPasswordInput.text.toString())
         if (signupViewModel.currentAccountType == AccountType.External) {
             parentFragmentManager.showExternalAccountEnterCode(destination = signupViewModel.externalEmail!!)
+            // TODO remove the above (showExternalAccountEnterCode);
+            //  email is already verified by HV3, so proceed to plans/account creation?.
         } else {
             parentFragmentManager.showRecoveryMethodChooser()
         }

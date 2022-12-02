@@ -33,6 +33,8 @@ interface UserRepository : PassphraseRepository {
 
     suspend fun isUsernameAvailable(username: String): Boolean
 
+    suspend fun isExternalEmailAvailable(email: String): Boolean
+
     /**
      * Add a [User], locally.
      *

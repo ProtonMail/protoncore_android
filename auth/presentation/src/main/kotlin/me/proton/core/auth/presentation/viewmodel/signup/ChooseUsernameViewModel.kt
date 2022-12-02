@@ -30,10 +30,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.usecase.ExternalEmailAvailability
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.challenge.domain.ChallengeManager
-import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
@@ -42,9 +42,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
-    private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
+    private val externalEmailAvailability: ExternalEmailAvailability,
     private var requiredAccountType: AccountType
 ) : ProtonViewModel() {
 
@@ -112,7 +112,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
             }
             AccountType.External -> {
                 // for External accounts, the email is the username
-                sendVerificationCodeToEmailDestination(emailAddress = username)
+                externalEmailAvailability(email = username)
                 State.ExternalAccountTokenSent(username)
             }
         }.exhaustive

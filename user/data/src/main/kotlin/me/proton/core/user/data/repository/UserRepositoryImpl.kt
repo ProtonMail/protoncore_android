@@ -143,6 +143,11 @@ class UserRepositoryImpl @Inject constructor(
             usernameAvailable(username).isSuccess()
         }.valueOrThrow
 
+    override suspend fun isExternalEmailAvailable(email: String): Boolean =
+        provider.get<UserApi>().invoke {
+            externalEmailAvailable(email).isSuccess()
+        }.valueOrThrow
+
     /**
      * Create new [User]. Used during signup.
      */

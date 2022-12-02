@@ -43,6 +43,9 @@ interface UserApi : BaseRetrofitApi {
         @Query("ParseDomain") parseDomain: Int = 1
     ): GenericResponse
 
+    @GET("core/v4/users/availableExternal")
+    suspend fun externalEmailAvailable(@Query("Name") email: String): GenericResponse
+
     @POST("v4/users")
     suspend fun createUser(@Body userRequest: CreateUserRequest): UsersResponse
 
