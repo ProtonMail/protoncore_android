@@ -21,7 +21,8 @@ package me.proton.core.label.domain.entity
 enum class LabelType(val value: Int) {
     MessageLabel(1),
     ContactGroup(2),
-    MessageFolder(3);
+    MessageFolder(3),
+    SystemFolder(4);
 
     companion object {
         val map = values().associateBy { it.value }

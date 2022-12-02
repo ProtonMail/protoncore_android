@@ -68,6 +68,7 @@ public final class me/proton/core/label/domain/entity/LabelType : java/lang/Enum
 	public static final field ContactGroup Lme/proton/core/label/domain/entity/LabelType;
 	public static final field MessageFolder Lme/proton/core/label/domain/entity/LabelType;
 	public static final field MessageLabel Lme/proton/core/label/domain/entity/LabelType;
+	public static final field SystemFolder Lme/proton/core/label/domain/entity/LabelType;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/label/domain/entity/LabelType;
 	public static fun values ()[Lme/proton/core/label/domain/entity/LabelType;
