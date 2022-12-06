@@ -138,16 +138,6 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
 
-    override suspend fun isUsernameAvailable(username: String): Boolean =
-        provider.get<UserApi>().invoke {
-            usernameAvailable(username).isSuccess()
-        }.valueOrThrow
-
-    override suspend fun isExternalEmailAvailable(email: String): Boolean =
-        provider.get<UserApi>().invoke {
-            externalEmailAvailable(email).isSuccess()
-        }.valueOrThrow
-
     /**
      * Create new [User]. Used during signup.
      */
@@ -231,6 +221,16 @@ class UserRepositoryImpl @Inject constructor(
             response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "getting password scope failed" }
             response.isSuccess()
         }.valueOrThrow
+
+    override suspend fun checkUsernameAvailable(username: String) =
+        provider.get<UserApi>().invoke {
+            usernameAvailable(username)
+        }.throwIfError()
+
+    override suspend fun checkExternalEmailAvailable(email: String) =
+        provider.get<UserApi>().invoke {
+            externalEmailAvailable(email)
+        }.throwIfError()
 
     // region PassphraseRepository
 

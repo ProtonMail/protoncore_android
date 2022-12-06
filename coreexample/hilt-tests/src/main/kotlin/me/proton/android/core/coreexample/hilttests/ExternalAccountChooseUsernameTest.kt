@@ -36,7 +36,7 @@ import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
-import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
 import me.proton.core.test.quark.Quark
 import org.junit.Rule
 import kotlin.test.BeforeTest
@@ -47,7 +47,7 @@ import me.proton.core.test.quark.data.User as TestUser
 @UninstallModules(ApplicationModule::class)
 open class ExternalAccountChooseUsernameTest {
 
-    private val chooseUsernameRobot = ChooseUsernameRobot()
+    private val chooseExternalEmailRobot = ChooseExternalEmailRobot()
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
@@ -91,10 +91,9 @@ open class ExternalAccountChooseUsernameTest {
 
     @Test
     fun externalAccountSignupCorrectUI() = withSignupActivity(AccountType.External) {
-        chooseUsernameRobot
+        chooseExternalEmailRobot
             .apply {
                 verify {
-                    domainInputNotDisplayed()
                     accountTypeSwitchDisplayed()
                     externalAccountTextsDisplayedCorrectly()
                 }

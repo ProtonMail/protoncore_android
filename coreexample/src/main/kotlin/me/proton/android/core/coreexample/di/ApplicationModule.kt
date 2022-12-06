@@ -40,13 +40,11 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideProduct(): Product =
-        Product.Mail
+    fun provideProduct(): Product = Product.Mail
 
     @Provides
     @Singleton
-    fun provideRequiredAccountType(): AccountType =
-        AccountType.Internal
+    fun provideRequiredAccountType(): AccountType = AccountType.Internal
 
     @Provides
     @ClientSecret

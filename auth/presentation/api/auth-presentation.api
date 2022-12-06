@@ -42,15 +42,19 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_TwoPassMo
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_signup_ChooseExternalEmailFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_signup_ChooseInternalEmailFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_signup_ChoosePasswordFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_signup_ChooseUsernameFragment_GeneratedInjector {
-	public fun <init> ()V
-}
-
-public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_signup_ExternalValidationTokenCodeFragment_GeneratedInjector {
 	public fun <init> ()V
 }
 
@@ -98,14 +102,6 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Cr
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ExternalValidationTokenCodeViewModel_HiltModules_BindsModule {
-	public fun <init> ()V
-}
-
-public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ExternalValidationTokenCodeViewModel_HiltModules_KeyModule {
-	public fun <init> ()V
-}
-
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_LoginViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -127,6 +123,22 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Tw
 }
 
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_TwoPassModeViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_signup_ChooseExternalEmailViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_signup_ChooseExternalEmailViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_signup_ChooseInternalEmailViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_signup_ChooseInternalEmailViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -573,6 +585,42 @@ public final class me/proton/core/auth/presentation/databinding/FragmentRecovery
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentRecoverySmsBinding;
 }
 
+public final class me/proton/core/auth/presentation/databinding/FragmentSignupChooseExternalEmailBinding : androidx/viewbinding/ViewBinding {
+	public final field emailInput Lme/proton/core/challenge/presentation/ProtonMetadataInput;
+	public final field footnoteText Landroid/widget/TextView;
+	public final field logoImage Landroid/widget/ImageView;
+	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field scrollContent Landroidx/core/widget/NestedScrollView;
+	public final field separatorView Landroid/view/View;
+	public final field switchButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field titleText Landroid/widget/TextView;
+	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseExternalEmailBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseExternalEmailBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseExternalEmailBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/FragmentSignupChooseInternalEmailBinding : androidx/viewbinding/ViewBinding {
+	public final field domainInput Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
+	public final field footnoteText Landroid/widget/TextView;
+	public final field logoImage Landroid/widget/ImageView;
+	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field scrollContent Landroidx/core/widget/NestedScrollView;
+	public final field separatorView Landroid/view/View;
+	public final field subtitleText Landroid/widget/TextView;
+	public final field switchButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field titleText Landroid/widget/TextView;
+	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
+	public final field usernameInput Lme/proton/core/challenge/presentation/ProtonMetadataInput;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseInternalEmailBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseInternalEmailBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseInternalEmailBinding;
+}
+
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupChoosePasswordBinding : androidx/viewbinding/ViewBinding {
 	public final field confirmPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
@@ -588,17 +636,11 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupCh
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupChooseUsernameBinding : androidx/viewbinding/ViewBinding {
-	public final field domainInput Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
-	public final field footnoteText Landroid/widget/TextView;
-	public final field internalAccountGroup Landroidx/constraintlayout/widget/Group;
 	public final field logoImage Landroid/widget/ImageView;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
-	public final field separatorView Landroid/view/View;
-	public final field subtitleText Landroid/widget/TextView;
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
-	public final field useCurrentEmailButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field usernameInput Lme/proton/core/challenge/presentation/ProtonMetadataInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupChooseUsernameBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
@@ -633,19 +675,6 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupRe
 	public fun getRoot ()Landroid/widget/FrameLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding;
-}
-
-public final class me/proton/core/auth/presentation/databinding/FragmentSignupValidationTokenCodeBinding : androidx/viewbinding/ViewBinding {
-	public final field requestReplacementButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field title Landroid/widget/TextView;
-	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
-	public final field verificationCodeEditText Lme/proton/core/presentation/ui/view/ProtonInput;
-	public final field verifyButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupValidationTokenCodeBinding;
-	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentSignupValidationTokenCodeBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentSignupValidationTokenCodeBinding;
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentTermsConditionsBinding : androidx/viewbinding/ViewBinding {
@@ -1616,6 +1645,39 @@ public final class me/proton/core/auth/presentation/ui/UtilsKt {
 	public static synthetic fun showPasswordChangeDialog$default (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;ZILjava/lang/Object;)V
 }
 
+public final class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public fun <init> ()V
+	public fun onBackPressed ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public fun showLoading (Z)V
+}
+
+public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment_GeneratedInjector {
+	public abstract fun injectChooseExternalEmailFragment (Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public field requiredAccountType Lme/proton/core/account/domain/entity/AccountType;
+	public fun <init> ()V
+	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
+	public fun onBackPressed ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setRequiredAccountType (Lme/proton/core/account/domain/entity/AccountType;)V
+	public fun showLoading (Z)V
+}
+
+public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment_GeneratedInjector {
+	public abstract fun injectChooseInternalEmailFragment (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;)V
+	public static fun injectRequiredAccountType (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;Lme/proton/core/account/domain/entity/AccountType;)V
+}
+
 public final class me/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public fun <init> ()V
 	public fun onBackPressed ()V
@@ -1627,16 +1689,10 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
-	public static final field ARG_INPUT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public fun showLoading (Z)V
-}
-
-public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion {
-	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment_GeneratedInjector {
@@ -1650,24 +1706,34 @@ public final class me/proton/core/auth/presentation/ui/signup/CreatingUserFragme
 	public fun onBackPressed ()V
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
-	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment$Companion;
-	public fun <init> ()V
-	public fun onBackPressed ()V
-	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
-	public fun showLoading (Z)V
-}
-
-public final class me/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment$Companion {
-	public final fun invoke (Ljava/lang/String;)Lme/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment;
-}
-
-public abstract interface class me/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment_GeneratedInjector {
-	public abstract fun injectExternalValidationTokenCodeFragment (Lme/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment;)V
-}
-
 public final class me/proton/core/auth/presentation/ui/signup/FragmentOrchestratorKt {
 	public static final fun registerSkipRecoveryDialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function0;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+}
+
+public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_ChooseExternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
+public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_ChooseInternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
 public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_ChoosePasswordFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1684,19 +1750,6 @@ public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_ChoosePass
 }
 
 public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_ChooseUsernameFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getContext ()Landroid/content/Context;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-	public fun onAttach (Landroid/app/Activity;)V
-	public fun onAttach (Landroid/content/Context;)V
-	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
-}
-
-public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_ExternalValidationTokenCodeFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
@@ -1883,7 +1936,7 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Terms
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/UsernameDomainAvailability;)V
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;)V
 	public final fun checkUsername (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)Z
@@ -1924,10 +1977,6 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$UsernameNotAvailable : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$UsernameNotAvailable;
-}
-
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
 	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Idle;
 }
@@ -1954,7 +2003,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/UsernameDomainAvailability;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_HiltModules {
@@ -2131,42 +2180,6 @@ public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewM
 public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_HiltModules_KeyModule_ProvideFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Ljava/lang/String;
-	public static fun provide ()Ljava/lang/String;
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)V
-	public final fun getToken (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-	public final fun getValidationState ()Lkotlinx/coroutines/flow/SharedFlow;
-	public final fun getVerificationCodeResendState ()Lkotlinx/coroutines/flow/SharedFlow;
-	public final fun resendCode (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
-	public final fun validateToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;)Lkotlinx/coroutines/Job;
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel;
-	public static fun newInstance (Lme/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination;Lme/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity;)Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel;
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules {
-}
-
-public abstract class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel;)Landroidx/lifecycle/ViewModel;
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules$KeyModule {
-	public static fun provide ()Ljava/lang/String;
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/ExternalValidationTokenCodeViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
@@ -2353,12 +2366,66 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewMod
 	public static fun provide ()Ljava/lang/String;
 }
 
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/UsernameDomainAvailability;Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_HiltModules {

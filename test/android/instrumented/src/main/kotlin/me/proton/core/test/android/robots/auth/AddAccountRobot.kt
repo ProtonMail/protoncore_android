@@ -23,6 +23,8 @@ import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromReso
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.login.LoginRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.SignupRobot
 
 /**
  * [AddAccountRobot] class contains welcome screen actions and verifications implementation.
@@ -37,9 +39,9 @@ class AddAccountRobot : CoreRobot() {
 
     /**
      * Clicks 'create account' button
-     * @return [ChooseUsernameRobot]
+     * @return [SignupRobot]
      */
-    fun createAccount(): ChooseUsernameRobot = clickElement(R.id.sign_up)
+    fun createAccount(): SignupRobot = clickElement(R.id.sign_up)
 
     fun learnMoreAboutExternalAccountLinking(): AddAccountRobot =
         clickElement(stringFromResource(R.string.auth_login_external_account_unsupported_help_action))

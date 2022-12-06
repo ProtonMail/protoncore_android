@@ -102,7 +102,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
             addAccount.onClick { startActivity(Intent(this@MainActivity, AddAccountActivity::class.java)) }
             signIn.onClick { accountViewModel.signIn() }
-            signup.onClick { accountViewModel.onSignUpClicked() }
+            signupInternal.onClick { accountViewModel.onInternalSignUpClicked() }
             signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
             signupUsername.onClick { accountViewModel.onUsernameSignUpClicked() }
             forceUpdate.onClick {

@@ -16,13 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase
+package me.proton.core.test.android.robots.auth.signup
 
-import me.proton.core.user.domain.repository.UserRepository
-import javax.inject.Inject
+import me.proton.core.test.android.robots.CoreRobot
 
-class ExternalEmailAvailability @Inject constructor(private val userRepository: UserRepository) {
-    suspend operator fun invoke(email: String) {
-        userRepository.isExternalEmailAvailable(email)
-    }
+class SignupRobot : CoreRobot() {
+    fun chooseUsername() = ChooseUsernameRobot()
+    fun chooseInternalEmail() = ChooseInternalEmailRobot()
+    fun chooseExternalEmail() = ChooseExternalEmailRobot()
 }

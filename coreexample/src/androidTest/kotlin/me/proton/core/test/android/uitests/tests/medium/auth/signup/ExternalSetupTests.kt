@@ -21,7 +21,8 @@ package me.proton.core.test.android.uitests.tests.medium.auth.signup
 import me.proton.core.test.quark.data.Plan.Dev
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.CoreRobot
-import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.CodeVerificationRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
@@ -34,7 +35,8 @@ import org.junit.Test
 
 class ExternalSetupTests : BaseTest() {
 
-    private val chooseUsernameRobotExt = ChooseUsernameRobot()
+    private val chooseExternalEmailRobot = ChooseExternalEmailRobot()
+    private val chooseInternalEmailRobot = ChooseInternalEmailRobot()
 
     @Before
     fun closeWelcomeScreen() {
@@ -45,23 +47,23 @@ class ExternalSetupTests : BaseTest() {
 
         CoreexampleRobot()
             .signupExternal()
-            .verify { chooseUsernameElementsDisplayed() }
+            .verify { chooseExternalEmailElementsDisplayed() }
     }
 
     @Test
     fun switchToInternalAndBack() {
-        chooseUsernameRobotExt
+        chooseExternalEmailRobot
             .switchSignupType()
             .verify {
-                chooseUsernameElementsDisplayed()
+                chooseInternalEmailElementsDisplayed()
                 suffixNotDisplayed()
                 switchToExternalDisplayed()
             }
 
-        chooseUsernameRobotExt
+        chooseInternalEmailRobot
             .switchSignupType()
             .verify {
-                chooseUsernameElementsDisplayed()
+                chooseExternalEmailElementsDisplayed()
                 switchToSecureDisplayed()
             }
     }
@@ -72,7 +74,7 @@ class ExternalSetupTests : BaseTest() {
         val user = User(name = "${String.random()}@example.lt")
         val defaultCode = quark.defaultVerificationCode
 
-        val codeVerificationRobot = chooseUsernameRobotExt
+        val codeVerificationRobot = chooseExternalEmailRobot
             .username(user.name)
             .next()
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)

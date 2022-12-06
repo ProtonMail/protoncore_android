@@ -79,7 +79,6 @@ fun FragmentManager.showCreatingUser(
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, creatingUserFragment, TAG_CREATING_USER)
-        addToBackStack(null)
     }
     creatingUserFragment
 }
@@ -90,7 +89,6 @@ fun FragmentManager.removeCreatingUser() {
             setCustomAnimations(0, 0)
             remove(it)
         }
-        popBackStack()
     }
 }
 

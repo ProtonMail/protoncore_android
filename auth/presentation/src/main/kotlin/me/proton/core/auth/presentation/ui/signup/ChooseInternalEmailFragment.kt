@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -31,10 +32,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.databinding.FragmentSignupChooseUsernameBinding
+import me.proton.core.auth.presentation.databinding.FragmentSignupChooseInternalEmailBinding
 import me.proton.core.auth.presentation.ui.onLongState
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.*
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.State
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -44,14 +46,19 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_username) {
+class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choose_internal_email) {
 
-    private val viewModel by viewModels<ChooseUsernameViewModel>()
+    @Inject
+    lateinit var requiredAccountType: AccountType
+
+    private val viewModel by viewModels<ChooseInternalEmailViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
-    private val binding by viewBinding(FragmentSignupChooseUsernameBinding::bind)
+    private val binding by viewBinding(FragmentSignupChooseInternalEmailBinding::bind)
 
     override fun onBackPressed() {
         signupViewModel.onFinish()
@@ -73,6 +80,21 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             }
 
             nextButton.onClick(::onNextClicked)
+            switchButton.onClick(::onSwitchClicked)
+
+            when (requiredAccountType) {
+                AccountType.Username -> Unit
+                AccountType.Internal -> {
+                    switchButton.visibility = View.GONE
+                    separatorView.visibility = View.GONE
+                    footnoteText.visibility = View.GONE
+                }
+                AccountType.External -> {
+                    switchButton.visibility = View.VISIBLE
+                    separatorView.visibility = View.VISIBLE
+                    footnoteText.visibility = View.VISIBLE
+                }
+            }
         }
 
         viewModel.state
@@ -82,11 +104,13 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                 when (it) {
                     is State.Idle -> showLoading(false)
                     is State.Processing -> showLoading(true)
-                    is State.Success -> onUsernameAvailable(it.username)
+                    is State.Domains -> onDomains(it.domains)
+                    is State.Success -> onUsernameAvailable(it.username, it.domain)
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
+                    is State.Error.DomainsNotAvailable -> onError(getString(R.string.auth_create_address_error_no_available_domain))
                 }.exhaustive
             }
-            .onLongState(State.Processing) {
+            .onLongState(ChooseUsernameViewModel.State.Processing) {
                 requireContext().showToast(getString(R.string.auth_long_signup))
             }
             .launchIn(lifecycleScope)
@@ -97,15 +121,42 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             hideKeyboard()
             validateUsername()
                 .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
-                .onSuccess { username -> viewModel.checkUsername(username) }
+                .onSuccess { username ->
+                    val domain = binding.domainInput.text.toString().replace("@", "")
+                    viewModel.checkUsername(username, domain)
+                }
         }
     }
 
-    private fun onUsernameAvailable(username: String) {
+    private fun onSwitchClicked() {
+        parentFragmentManager.replaceByExternalEmailChooser()
+    }
+
+    private fun onDomains(domains: List<Domain>) {
+        showLoading(false)
+        with(binding) {
+            nextButton.isEnabled = true
+            switchButton.isEnabled = true
+
+            if (domains.count() == 1) {
+                usernameInput.suffixText = "@${domains.first()}"
+                usernameInput.setOnDoneActionListener { onNextClicked() }
+            }
+
+            domainInput.apply {
+                val items = domains.map { "@$it" }
+                text = items.firstOrNull()
+                setAdapter(ArrayAdapter(context, R.layout.list_item_domain, R.id.title, items))
+            }
+        }
+    }
+
+    private fun onUsernameAvailable(username: String, domain: String) {
         showLoading(false)
         binding.nextButton.isEnabled = true
-        signupViewModel.currentAccountType = AccountType.Username
+        signupViewModel.currentAccountType = AccountType.Internal
         signupViewModel.username = username
+        signupViewModel.domain = domain
         lifecycleScope.launch { binding.usernameInput.flush() }
         parentFragmentManager.showPasswordChooser()
     }

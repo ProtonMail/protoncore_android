@@ -34,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
@@ -74,9 +75,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     lateinit var product: Product
 
     private val input: SignUpInput by lazy {
-        val value = requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) as SignUpInput
-        signUpViewModel.currentAccountType = value.requiredAccountType
-        value
+        requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) as SignUpInput
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +83,11 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         signUpViewModel.register(this)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
+            when (input.requiredAccountType) {
+                AccountType.Username -> supportFragmentManager.showUsernameChooser()
+                AccountType.Internal -> supportFragmentManager.showInternalEmailChooser()
+                AccountType.External -> supportFragmentManager.showExternalEmailChooser()
+            }
         }
 
         signUpViewModel.state
@@ -169,10 +172,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     private fun onCreateUserSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
-        supportFragmentManager.popAllBackStackFragments()
-
-        binding.lottieProgress.visibility = View.VISIBLE
-
         val subscriptionDetails = signUpViewModel.subscriptionDetails
         val billingDetails = subscriptionDetails?.billingResult?.let {
             BillingDetails(

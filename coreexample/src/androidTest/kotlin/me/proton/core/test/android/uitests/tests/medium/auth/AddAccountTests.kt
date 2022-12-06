@@ -43,8 +43,9 @@ class AddAccountTests : BaseTest() {
     fun navigateToSignup() {
         addAccountRobot
             .createAccount()
+            .chooseInternalEmail()
             .verify {
-                chooseUsernameElementsDisplayed()
+                chooseInternalEmailElementsDisplayed()
                 domainInputDisplayed()
             }
     }

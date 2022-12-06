@@ -18,7 +18,6 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground">
@@ -34,8 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationContentDescription="@string/presentation_close"
-            app:navigationIcon="@drawable/ic_proton_close"
-            tools:title="Title" />
+            app:navigationIcon="@drawable/ic_proton_close" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -75,16 +73,16 @@
                 app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
             <me.proton.core.challenge.presentation.ProtonMetadataInput
-                android:id="@+id/usernameInput"
+                android:id="@+id/emailInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_large_plus"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:inputType="text|textNoSuggestions"
+                android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:challengeFlow="signup"
                 app:challengeFrame="username"
-                app:label="@string/auth_signup_username"
+                app:label="@string/auth_signup_email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleText" />
@@ -97,7 +95,42 @@
                 android:text="@string/auth_signup_next"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/usernameInput" />
+                app:layout_constraintTop_toBottomOf="@id/emailInput" />
+
+            <View
+                android:id="@+id/separatorView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/gap_large_plus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nextButton"
+                android:layout_marginBottom="16dp"
+                android:background="@color/separator_norm" />
+
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/switchButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large_plus"
+                android:text="@string/auth_signup_create_secure_proton_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separatorView" />
+
+            <TextView
+                android:id="@+id/footnoteText"
+                style="@style/Proton.Text.DefaultSmall.Weak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/gap_large"
+                android:gravity="center"
+                android:text="@string/auth_signup_external_footnote"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

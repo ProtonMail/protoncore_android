@@ -561,7 +561,7 @@ public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$
 
 public final class me/proton/core/test/android/robots/auth/AddAccountRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
-	public final fun createAccount ()Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
+	public final fun createAccount ()Lme/proton/core/test/android/robots/auth/signup/SignupRobot;
 	public final fun learnMoreAboutExternalAccountLinking ()Lme/proton/core/test/android/robots/auth/AddAccountRobot;
 	public final fun signIn ()Lme/proton/core/test/android/robots/auth/login/LoginRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/AddAccountRobot$Verify;
@@ -572,30 +572,6 @@ public final class me/proton/core/test/android/robots/auth/AddAccountRobot$Verif
 	public final fun addAccountElementsDisplayed ()V
 	public final fun unsupportedExternalAccountAlertDisplayed ()V
 	public final fun unsupportedExternalAccountBrowserLinkOpened ()V
-}
-
-public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot : me/proton/core/test/android/robots/CoreRobot {
-	public fun <init> ()V
-	public final fun next ()Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
-	public final fun setUsername (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
-	public final fun switchSignupType ()Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
-	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
-	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot$Verify;
-}
-
-public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
-	public fun <init> ()V
-	public final fun accountTypeSwitchDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun accountTypeSwitchNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun chooseUsernameElementsDisplayed ()V
-	public final fun domainInputDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun domainInputNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun externalAccountTextsDisplayedCorrectly ()V
-	public final fun internalAccountTextsDisplayedCorrectly ()V
-	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun suffixNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/robots/auth/login/HelpRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -638,6 +614,60 @@ public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot : me
 
 public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun next ()Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun setUsername (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun switchSignupType ()Lme/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot;
+	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun accountTypeSwitchDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun accountTypeSwitchNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun chooseExternalEmailElementsDisplayed ()V
+	public final fun externalAccountTextsDisplayedCorrectly ()V
+	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun next ()Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun setUsername (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun switchSignupType ()Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot;
+	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun accountTypeSwitchDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun accountTypeSwitchNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun chooseInternalEmailElementsDisplayed ()V
+	public final fun domainInputDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun domainInputNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun internalAccountTextsDisplayedCorrectly ()V
+	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun suffixNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/ChooseUsernameRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun next ()Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun setUsername (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/ChooseUsernameRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/ChooseUsernameRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/ChooseUsernameRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun chooseUsernameElementsDisplayed ()V
 }
 
 public final class me/proton/core/test/android/robots/auth/signup/CodeVerificationRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -697,6 +727,13 @@ public final class me/proton/core/test/android/robots/auth/signup/SignupFinished
 	public final fun signupFinishedDisplayed ()V
 }
 
+public final class me/proton/core/test/android/robots/auth/signup/SignupRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun chooseExternalEmail ()Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot;
+	public final fun chooseInternalEmail ()Lme/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot;
+	public final fun chooseUsername ()Lme/proton/core/test/android/robots/auth/signup/ChooseUsernameRobot;
+}
+
 public class me/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun setPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot;
@@ -722,7 +759,12 @@ public abstract interface class me/proton/core/test/android/robots/humanverifica
 public abstract class me/proton/core/test/android/robots/humanverification/BaseHVCodeRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public abstract fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public abstract fun verify (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun verifyCode (Ljava/lang/Class;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/test/android/robots/humanverification/BaseHVCodeRobot$Verify {
+	public abstract fun incorrectCode ()V
 }
 
 public abstract class me/proton/core/test/android/robots/humanverification/BaseHVEmailRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -765,10 +807,11 @@ public final class me/proton/core/test/android/robots/humanverification/HVCaptch
 	public fun verify (Lkotlin/jvm/functions/Function1;)V
 }
 
-public abstract class me/proton/core/test/android/robots/humanverification/HVCodeRobot : me/proton/core/test/android/robots/humanverification/BaseHVCodeRobot {
+public final class me/proton/core/test/android/robots/humanverification/HVCodeRobot : me/proton/core/test/android/robots/humanverification/BaseHVCodeRobot {
 	public fun <init> ()V
 	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
 	public fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVCodeRobot;
+	public fun verify (Lkotlin/jvm/functions/Function1;)V
 	public fun verifyCode (Ljava/lang/Class;)Ljava/lang/Object;
 }
 
@@ -794,7 +837,7 @@ public final class me/proton/core/test/android/robots/humanverification/HVRobotK
 	public static final fun setDEFAULT_HV_VERSION (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
 }
 
-public abstract class me/proton/core/test/android/robots/humanverification/HVSmsCountryRobot : me/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot {
+public final class me/proton/core/test/android/robots/humanverification/HVSmsCountryRobot : me/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot {
 	public fun <init> ()V
 	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
 	public fun dismiss ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
@@ -802,7 +845,7 @@ public abstract class me/proton/core/test/android/robots/humanverification/HVSms
 	public fun selectCountry (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/BaseHVSmsRobot;
 }
 
-public abstract class me/proton/core/test/android/robots/humanverification/HVSmsRobot : me/proton/core/test/android/robots/humanverification/BaseHVSmsRobot {
+public final class me/proton/core/test/android/robots/humanverification/HVSmsRobot : me/proton/core/test/android/robots/humanverification/BaseHVSmsRobot {
 	public fun <init> ()V
 	public fun <init> (Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;)V
 	public fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/BaseHVSmsCountryRobot;

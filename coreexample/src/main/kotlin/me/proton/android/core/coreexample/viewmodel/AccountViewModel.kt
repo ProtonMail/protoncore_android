@@ -165,18 +165,12 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Starts account creation for Mail account type (Internal)
-     */
-    fun onSignUpClicked() {
+    fun onInternalSignUpClicked() {
         viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow()
+            authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.Internal)
         }
     }
 
-    /**
-     * Starts account creation for VPN account type (Username only).
-     */
     fun onExternalSignUpClicked() {
         viewModelScope.launch {
             authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.External)

@@ -31,7 +31,7 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ChooseUsernameViewModel @Inject constructor(
+internal class ChooseExternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
 ) : ProtonViewModel() {
 
@@ -41,16 +41,16 @@ internal class ChooseUsernameViewModel @Inject constructor(
     sealed class State {
         object Idle : State()
         object Processing : State()
-        data class Success(val username: String) : State()
+        data class Success(val email: String) : State()
         sealed class Error : State() {
             data class Message(val error: Throwable) : Error()
         }
     }
 
-    fun checkUsername(username: String) = flow {
+    fun checkExternalEmail(email: String) = flow {
         emit(State.Processing)
-        accountAvailability.checkUsername(username)
-        emit(State.Success(username))
+        accountAvailability.checkExternalEmail(email)
+        emit(State.Success(email))
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {

@@ -25,7 +25,8 @@ import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
-import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.PasswordSetupRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.humanverification.HVCodeRobot
@@ -55,8 +56,7 @@ public abstract class ExternalAccountSignupTests {
 
     @Test
     internal fun happyPath() = withSignupActivity(AccountType.External) {
-        ChooseUsernameRobot()
-            .apply { verify { domainInputNotDisplayed() } }
+        ChooseExternalEmailRobot()
             .username(testUser.email)
             .next()
 
@@ -71,8 +71,7 @@ public abstract class ExternalAccountSignupTests {
 
     @Test
     internal fun incorrectEmailVerificationCode() = withSignupActivity(AccountType.External) {
-        ChooseUsernameRobot()
-            .apply { verify { domainInputNotDisplayed() } }
+        ChooseExternalEmailRobot()
             .username(testUser.email)
             .next()
 
@@ -84,7 +83,7 @@ public abstract class ExternalAccountSignupTests {
 
     @Test
     internal fun externalSignupNotSupported() = withSignupActivity(AccountType.Internal) {
-        ChooseUsernameRobot()
+        ChooseInternalEmailRobot()
             .apply {
                 verify {
                     domainInputDisplayed()

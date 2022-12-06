@@ -70,8 +70,6 @@ internal class SignupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var _currentAccountTypeOrdinal: Int by savedStateHandle.state(AccountType.Internal.ordinal)
-
     private val _state by savedStateHandle.flowState(
         mutableSharedFlow = MutableSharedFlow<State>(replay = 1).apply { tryEmit(State.Idle) },
         coroutineScope = viewModelScope,
@@ -82,12 +80,7 @@ internal class SignupViewModel @Inject constructor(
     private var _password: EncryptedString? by savedStateHandle.state(null)
 
     var subscriptionDetails: SubscriptionDetails? by savedStateHandle.state(null)
-
-    var currentAccountType: AccountType
-        get() = AccountType.values()[_currentAccountTypeOrdinal]
-        set(value) {
-            _currentAccountTypeOrdinal = value.ordinal
-        }
+    var currentAccountType: AccountType by savedStateHandle.state(AccountType.Internal)
     var username: String? by savedStateHandle.state(null)
     var domain: String? by savedStateHandle.state(null)
     var externalEmail: String? by savedStateHandle.state(null)

@@ -28,6 +28,8 @@ import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
 private const val TAG_USERNAME_CHOOSER = "username_chooser_fragment"
+private const val TAG_INTERNAL_EMAIL_CHOOSER = "internal_email_chooser_fragment"
+private const val TAG_EXTERNAL_EMAIL_CHOOSER = "external_email_chooser_fragment"
 private const val TAG_PASSWORD_CHOOSER = "password_chooser_fragment"
 private const val TAG_RECOVERY_CHOOSER = "recovery_chooser_fragment"
 private const val TAG_SKIP_RECOVERY_DIALOG = "skip_recovery_dialog"
@@ -82,15 +84,57 @@ internal fun FragmentManager.showTermsConditions() {
 
 internal fun FragmentManager.showUsernameChooser(
     containerId: Int = android.R.id.content,
-    requiredAccountType: AccountType
 ) = findFragmentByTag(TAG_USERNAME_CHOOSER) ?: run {
-    val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType)
+    val fragment = ChooseUsernameFragment()
     inTransaction {
         setCustomAnimations(0, 0)
-        add(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)
-        addToBackStack(TAG_USERNAME_CHOOSER)
+        add(containerId, fragment, TAG_USERNAME_CHOOSER)
     }
-    chooserUsernameFragment
+    fragment
+}
+
+internal fun FragmentManager.showInternalEmailChooser(
+    containerId: Int = android.R.id.content,
+) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
+    val fragment = ChooseInternalEmailFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
+    }
+    fragment
+}
+
+internal fun FragmentManager.showExternalEmailChooser(
+    containerId: Int = android.R.id.content,
+) = findFragmentByTag(TAG_EXTERNAL_EMAIL_CHOOSER) ?: run {
+    val fragment = ChooseExternalEmailFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, fragment, TAG_EXTERNAL_EMAIL_CHOOSER)
+    }
+    fragment
+}
+
+internal fun FragmentManager.replaceByInternalEmailChooser(
+    containerId: Int = android.R.id.content,
+) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
+    val fragment = ChooseInternalEmailFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        replace(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
+    }
+    fragment
+}
+
+internal fun FragmentManager.replaceByExternalEmailChooser(
+    containerId: Int = android.R.id.content,
+) = findFragmentByTag(TAG_EXTERNAL_EMAIL_CHOOSER) ?: run {
+    val fragment = ChooseExternalEmailFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        replace(containerId, fragment, TAG_EXTERNAL_EMAIL_CHOOSER)
+    }
+    fragment
 }
 
 internal fun FragmentManager.showPasswordChooser(

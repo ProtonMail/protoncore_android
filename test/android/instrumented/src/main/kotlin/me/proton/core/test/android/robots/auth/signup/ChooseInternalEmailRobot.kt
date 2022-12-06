@@ -16,61 +16,54 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.auth
+package me.proton.core.test.android.robots.auth.signup
 
 import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
-import me.proton.core.test.android.robots.auth.signup.PasswordSetupRobot
 
 /**
- * [ChooseUsernameRobot] class contains username setup actions and verifications implementation.
- * The view is displayed automatically when a user without username (eg. external email account) logs in
+ * [ChooseInternalEmailRobot] class contains internal setup actions and verifications implementation.
  */
-class ChooseUsernameRobot : CoreRobot() {
+class ChooseInternalEmailRobot : CoreRobot() {
 
     /**
      * Sets the value of username input to [name]
-     * @return [ChooseUsernameRobot]
+     * @return [ChooseInternalEmailRobot]
      */
-    fun username(name: String): ChooseUsernameRobot = addText(R.id.usernameInput, name)
+    fun username(name: String): ChooseInternalEmailRobot = addText(R.id.usernameInput, name)
 
     /**
      * Clicks 'next' button
-     * @return [ChooseUsernameRobot]
+     * @return [ChooseInternalEmailRobot]
      */
     fun next(): PasswordSetupRobot = clickElement(R.id.nextButton)
 
     /**
      * Sets the username and clicks 'next'
-     * @return [ChooseUsernameRobot]
+     * @return [ChooseInternalEmailRobot]
      */
     fun setUsername(name: String): PasswordSetupRobot = username(name).next()
 
     /**
      * Switches signup type between external and internal
-     * @return [ChooseUsernameRobot]
+     * @return [ChooseExternalEmailRobot]
      */
-    fun switchSignupType(): ChooseUsernameRobot = clickElement(R.id.useCurrentEmailButton)
+    fun switchSignupType(): ChooseExternalEmailRobot = clickElement(R.id.switchButton)
 
     class Verify : CoreVerify() {
         fun accountTypeSwitchNotDisplayed() =
-            view.withId(R.id.useCurrentEmailButton).checkNotDisplayed()
+            view.withId(R.id.switchButton).checkNotDisplayed()
 
         fun accountTypeSwitchDisplayed() =
-            view.withId(R.id.useCurrentEmailButton).checkDisplayed()
+            view.withId(R.id.switchButton).checkDisplayed()
 
         fun internalAccountTextsDisplayedCorrectly() {
             view.withId(R.id.subtitleText).withText(R.string.auth_one_account_all_services).checkDisplayed()
             view.withId(R.id.footnoteText).withText(R.string.auth_signup_internal_footnote).checkDisplayed()
         }
 
-        fun externalAccountTextsDisplayedCorrectly() {
-            view.withId(R.id.subtitleText).withText(R.string.auth_one_account_all_services).checkNotDisplayed()
-            view.withId(R.id.footnoteText).withText(R.string.auth_signup_external_footnote).checkDisplayed()
-        }
-
-        fun chooseUsernameElementsDisplayed() {
+        fun chooseInternalEmailElementsDisplayed() {
             view.withId(R.id.usernameInput).closeKeyboard().checkDisplayed()
             view.withId(R.id.nextButton).checkDisplayed()
         }
@@ -79,7 +72,7 @@ class ChooseUsernameRobot : CoreRobot() {
             view.withText(R.string.auth_signup_create_secure_proton_address).checkDisplayed()
 
         fun switchToExternalDisplayed() =
-            view.withText(R.string.auth_signup_create_account).checkDisplayed()
+            view.withText(R.string.auth_signup_current_email).checkDisplayed()
 
         fun suffixDisplayed(suffix: String) =
             view.withAncestor(view.withId(R.id.usernameInput))

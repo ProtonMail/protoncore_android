@@ -74,6 +74,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
+            <TextView
+                android:id="@+id/subtitleText"
+                style="@style/ProtonTextView.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/auth_subtitle_top_margin"
+                android:gravity="center"
+                android:text="@string/auth_one_account_all_services"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleText"/>
+
             <me.proton.core.challenge.presentation.ProtonMetadataInput
                 android:id="@+id/usernameInput"
                 android:layout_width="match_parent"
@@ -81,13 +94,27 @@
                 android:layout_marginTop="@dimen/gap_large_plus"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:inputType="text|textNoSuggestions"
+                android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:challengeFlow="signup"
                 app:challengeFrame="username"
                 app:label="@string/auth_signup_username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleText" />
+                app:layout_constraintTop_toBottomOf="@id/subtitleText" />
+
+            <!-- Workaround: descendantFocusability="blocksDescendants" -->
+            <!-- See: https://issuetracker.google.com/issues/209938896 -->
+            <me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
+                android:id="@+id/domainInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large"
+                android:descendantFocusability="blocksDescendants"
+                android:inputType="none"
+                app:label="@string/auth_signup_domain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/usernameInput" />
 
             <me.proton.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/nextButton"
@@ -97,7 +124,42 @@
                 android:text="@string/auth_signup_next"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/usernameInput" />
+                app:layout_constraintTop_toBottomOf="@id/domainInput" />
+
+            <View
+                android:id="@+id/separatorView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/gap_large_plus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nextButton"
+                android:layout_marginBottom="16dp"
+                android:background="@color/separator_norm" />
+
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/switchButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large_plus"
+                android:text="@string/auth_signup_current_email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separatorView" />
+
+            <TextView
+                android:id="@+id/footnoteText"
+                style="@style/Proton.Text.DefaultSmall.Weak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/gap_large"
+                android:gravity="center"
+                android:text="@string/auth_signup_internal_footnote"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
@@ -42,7 +42,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChooseAddressViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
-    private val usernameDomainAvailability: UsernameDomainAvailability
+    private val accountAvailability: AccountAvailability
 ) : ProtonViewModel() {
 
     private val userIdFlow = MutableStateFlow<UserId?>(null)
@@ -58,7 +58,6 @@ class ChooseAddressViewModel @Inject constructor(
         data class Data(val username: String?, val domains: List<Domain>) : State()
         sealed class Error : State() {
             object DomainsNotAvailable : Error()
-            object UsernameNotAvailable : Error()
             data class Message(val error: Throwable) : Error()
         }
     }
@@ -66,12 +65,12 @@ class ChooseAddressViewModel @Inject constructor(
     init {
         userIdFlow.asStateFlow().filterNotNull().transformLatest { userId ->
             emit(State.Processing)
-            val domains = usernameDomainAvailability.getDomains()
+            val domains = accountAvailability.getDomains()
             if (domains.isEmpty()) {
                 emit(State.Error.DomainsNotAvailable)
                 return@transformLatest
             }
-            val user = usernameDomainAvailability.getUser(userId)
+            val user = accountAvailability.getUser(userId)
             emit(State.Data(user.name, domains))
         }.catch { error ->
             emit(State.Error.Message(error))
@@ -91,11 +90,8 @@ class ChooseAddressViewModel @Inject constructor(
     fun checkUsername(username: String, domain: Domain) = flow {
         emit(State.Processing)
         val userId = checkNotNull(userIdFlow.value)
-        if (usernameDomainAvailability.isUsernameAvailable(userId, username)) {
-            emit(State.Success(username, domain))
-        } else {
-            emit(State.Error.UsernameNotAvailable)
-        }
+        accountAvailability.checkUsername(userId, username)
+        emit(State.Success(username, domain))
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {

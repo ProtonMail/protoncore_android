@@ -25,28 +25,34 @@ import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 /**
- * Availability of domains and username for the address creation purposes (signup).
+ * Availability of accounts (username, internal username@domain, external email).
  */
-class UsernameDomainAvailability @Inject constructor(
+class AccountAvailability @Inject constructor(
     private val userRepository: UserRepository,
-    private val domainRepository: DomainRepository
+    private val domainRepository: DomainRepository,
 ) {
     suspend fun getDomains(): List<Domain> = domainRepository.getAvailableDomains()
 
     suspend fun getUser(userId: UserId) = userRepository.getUser(userId)
 
-    suspend fun isUsernameAvailable(userId: UserId, username: String): Boolean {
+    suspend fun checkUsername(userId: UserId, username: String) {
         check(username.isNotBlank()) { "Username must not be blank." }
 
         val user = userRepository.getUser(userId)
-        if (user.name == username) return true
+        if (user.name == username) return
 
-        return userRepository.isUsernameAvailable(username)
+        return userRepository.checkUsernameAvailable(username)
     }
 
-    suspend fun isUsernameAvailable(username: String): Boolean {
+    suspend fun checkUsername(username: String) {
         check(username.isNotBlank()) { "Username must not be blank." }
 
-        return userRepository.isUsernameAvailable(username)
+        return userRepository.checkUsernameAvailable(username)
+    }
+
+    suspend fun checkExternalEmail(email: String) {
+        check(email.isNotBlank()) { "Email must not be blank." }
+
+        userRepository.checkExternalEmailAvailable(email)
     }
 }

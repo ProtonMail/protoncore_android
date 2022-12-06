@@ -28,13 +28,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.databinding.FragmentSignupChooseUsernameBinding
+import me.proton.core.auth.presentation.databinding.FragmentSignupChooseExternalEmailBinding
 import me.proton.core.auth.presentation.ui.onLongState
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.*
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.State
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -42,16 +42,16 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.showToast
-import me.proton.core.presentation.utils.validateUsername
+import me.proton.core.presentation.utils.validateEmail
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_username) {
+class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choose_external_email) {
 
-    private val viewModel by viewModels<ChooseUsernameViewModel>()
+    private val viewModel by viewModels<ChooseExternalEmailViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
-    private val binding by viewBinding(FragmentSignupChooseUsernameBinding::bind)
+    private val binding by viewBinding(FragmentSignupChooseExternalEmailBinding::bind)
 
     override fun onBackPressed() {
         signupViewModel.onFinish()
@@ -64,15 +64,16 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         binding.apply {
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
-            usernameInput.apply {
+            emailInput.apply {
                 setOnFocusLostListener { _, _ ->
-                    validateUsername()
+                    validateEmail()
                         .onFailure { setInputError() }
                         .onSuccess { clearInputError() }
                 }
             }
 
             nextButton.onClick(::onNextClicked)
+            switchButton.onClick(::onSwitchClicked)
         }
 
         viewModel.state
@@ -82,31 +83,34 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                 when (it) {
                     is State.Idle -> showLoading(false)
                     is State.Processing -> showLoading(true)
-                    is State.Success -> onUsernameAvailable(it.username)
+                    is State.Success -> onExternalEmailAvailable(it.email)
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
             }
-            .onLongState(State.Processing) {
+            .onLongState(ChooseUsernameViewModel.State.Processing) {
                 requireContext().showToast(getString(R.string.auth_long_signup))
             }
             .launchIn(lifecycleScope)
     }
 
     private fun onNextClicked() {
-        with(binding.usernameInput) {
+        with(binding.emailInput) {
             hideKeyboard()
-            validateUsername()
-                .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
-                .onSuccess { username -> viewModel.checkUsername(username) }
+            validateEmail()
+                .onFailure { setInputError() }
+                .onSuccess { email -> viewModel.checkExternalEmail(email) }
         }
     }
 
-    private fun onUsernameAvailable(username: String) {
+    private fun onSwitchClicked() {
+        parentFragmentManager.replaceByInternalEmailChooser()
+    }
+
+    private fun onExternalEmailAvailable(email: String) {
         showLoading(false)
         binding.nextButton.isEnabled = true
-        signupViewModel.currentAccountType = AccountType.Username
-        signupViewModel.username = username
-        lifecycleScope.launch { binding.usernameInput.flush() }
+        signupViewModel.currentAccountType = AccountType.External
+        signupViewModel.externalEmail = email
         parentFragmentManager.showPasswordChooser()
     }
 

@@ -28,29 +28,50 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.entity.Domain
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ChooseUsernameViewModel @Inject constructor(
+internal class ChooseInternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
 ) : ProtonViewModel() {
 
+    private val mutableDomains = MutableStateFlow<List<Domain>>(emptyList())
     private val mutableState = MutableStateFlow<State>(State.Idle)
+
     val state = mutableState.asStateFlow()
 
     sealed class State {
         object Idle : State()
         object Processing : State()
-        data class Success(val username: String) : State()
+        data class Domains(val domains: List<String>) : State()
+        data class Success(val username: String, val domain: String) : State()
         sealed class Error : State() {
+            object DomainsNotAvailable : Error()
             data class Message(val error: Throwable) : Error()
         }
     }
 
-    fun checkUsername(username: String) = flow {
+    init {
+        fetchDomains()
+    }
+
+    private fun fetchDomains() = flow {
+        if (mutableDomains.value.isEmpty()) {
+            emit(State.Processing)
+            mutableDomains.value = accountAvailability.getDomains()
+        }
+        emit(State.Domains(mutableDomains.value))
+    }.catch { error ->
+        emit(State.Error.Message(error))
+    }.onEach {
+        mutableState.tryEmit(it)
+    }.launchIn(viewModelScope)
+
+    fun checkUsername(username: String, domain: String) = flow {
         emit(State.Processing)
-        accountAvailability.checkUsername(username)
-        emit(State.Success(username))
+        accountAvailability.checkUsername("$username@$domain")
+        emit(State.Success(username, domain))
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {

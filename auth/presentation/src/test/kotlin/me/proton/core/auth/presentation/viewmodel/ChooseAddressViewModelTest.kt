@@ -23,7 +23,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.yield
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -42,7 +42,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
 
     // region mocks
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
-    private lateinit var usernameDomainAvailability: UsernameDomainAvailability
+    private lateinit var accountAvailability: AccountAvailability
     // endregion
 
     private val userId = UserId("userId")
@@ -53,16 +53,16 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
     @Before
     fun beforeEveryTest() {
         accountWorkflowHandler = mockk(relaxed = true)
-        usernameDomainAvailability = mockk(relaxed = true)
-        viewModel = ChooseAddressViewModel(accountWorkflowHandler, usernameDomainAvailability)
-        coEvery { usernameDomainAvailability.getUser(any()) } returns user
+        accountAvailability = mockk(relaxed = true)
+        viewModel = ChooseAddressViewModel(accountWorkflowHandler, accountAvailability)
+        coEvery { accountAvailability.getUser(any()) } returns user
         coEvery { user.name } returns null
     }
 
     @Test
     fun `available domains happy path`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
+        coEvery { accountAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
         flowTest(viewModel.state) {
             // WHEN
             viewModel.setUserId(userId)
@@ -82,7 +82,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
     @Test
     fun `available domains error path`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } coAnswers {
+        coEvery { accountAvailability.getDomains() } coAnswers {
             yield()
             throw ApiException(ApiResult.Error.NoInternet())
         }
@@ -101,8 +101,8 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
     @Test
     fun `username availability happy path`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
-        coEvery { usernameDomainAvailability.isUsernameAvailable(any(), any()) } returns true
+        coEvery { accountAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
+        coEvery { accountAvailability.checkUsername(any(), any()) } returns Unit
         flowTest(viewModel.state) {
             // THEN
             assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
@@ -125,8 +125,8 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
     @Test
     fun `unavailable username`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
-        coEvery { usernameDomainAvailability.isUsernameAvailable(any(), any()) } throws Exception("not available")
+        coEvery { accountAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
+        coEvery { accountAvailability.checkUsername(any(), any()) } throws Exception("not available")
         flowTest(viewModel.state) {
             // THEN
             awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Processing, "Actual state is $it") }

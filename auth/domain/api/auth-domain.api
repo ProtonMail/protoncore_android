@@ -237,6 +237,15 @@ public final class me/proton/core/auth/domain/testing/LoginTestHelper {
 	public final fun logoutAll ()V
 }
 
+public final class me/proton/core/auth/domain/usecase/AccountAvailability {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/DomainRepository;)V
+	public final fun checkExternalEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun checkUsername (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun checkUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/auth/domain/usecase/CreateLoginSession {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLogin;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -463,14 +472,6 @@ public final class me/proton/core/auth/domain/usecase/UserCheckAction$OpenUrl : 
 	public final fun getUrl ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/auth/domain/usecase/UsernameDomainAvailability {
-	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/DomainRepository;)V
-	public final fun getDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun isUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun isUsernameAvailable (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/GetAuthInfo {

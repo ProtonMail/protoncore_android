@@ -19,7 +19,7 @@
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
 import me.proton.core.test.android.robots.CoreRobot
-import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.util.kotlin.random
@@ -28,7 +28,7 @@ import org.junit.Test
 
 class InternalSetupTests : BaseTest() {
 
-    private val chooseUsernameRobot = ChooseUsernameRobot()
+    private val chooseInternalEmailRobot = ChooseInternalEmailRobot()
 
     @Before
     fun navigateToSignup() {
@@ -37,16 +37,16 @@ class InternalSetupTests : BaseTest() {
             .clickBackBtn()
 
         CoreexampleRobot()
-            .signup()
+            .signupInternal()
             .verify {
-                chooseUsernameElementsDisplayed()
+                chooseInternalEmailElementsDisplayed()
                 domainInputDisplayed()
             }
     }
 
     @Test
     fun navigateToPasswordSetup() {
-        chooseUsernameRobot
+        chooseInternalEmailRobot
             .username(String.random())
             .next()
             .verify { passwordSetupElementsDisplayed() }
@@ -55,7 +55,7 @@ class InternalSetupTests : BaseTest() {
     @Test
     fun usernameAlreadyExists() {
         val existentUsername = users.getUser().name
-        chooseUsernameRobot
+        chooseInternalEmailRobot
             .username(existentUsername)
             .next()
             .verify { errorSnackbarDisplayed("Username already used") }

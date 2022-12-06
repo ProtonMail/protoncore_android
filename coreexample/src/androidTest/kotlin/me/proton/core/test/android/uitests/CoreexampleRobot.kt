@@ -31,7 +31,10 @@ import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
-import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.SignupRobot
 import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
@@ -49,8 +52,8 @@ open class CoreexampleRobot : CoreRobot() {
     }
 
     fun humanVerification(): HVRobot = scrollToAndClick(R.id.trigger_human_ver)
-    fun signup(): ChooseUsernameRobot = scrollToAndClick(R.id.signup)
-    fun signupExternal(): ChooseUsernameRobot = scrollToAndClick(R.id.signupExternal)
+    fun signupInternal(): ChooseInternalEmailRobot = scrollToAndClick(R.id.signupInternal)
+    fun signupExternal(): ChooseExternalEmailRobot = scrollToAndClick(R.id.signupExternal)
     fun signupUsername(): ChooseUsernameRobot = scrollToAndClick(R.id.signupUsername)
     inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
     inline fun <reified T> clickUserButton(

@@ -31,10 +31,6 @@ import me.proton.core.user.domain.entity.User
 
 interface UserRepository : PassphraseRepository {
 
-    suspend fun isUsernameAvailable(username: String): Boolean
-
-    suspend fun isExternalEmailAvailable(email: String): Boolean
-
     /**
      * Add a [User], locally.
      *
@@ -140,4 +136,18 @@ interface UserRepository : PassphraseRepository {
         srpSession: String,
         twoFactorCode: String?
     ): Boolean
+
+    /**
+     * Check username availability, remotely.
+     *
+     * @throws ApiException if corresponding username is not available.
+     */
+    suspend fun checkUsernameAvailable(username: String)
+
+    /**
+     * Check external email availability, remotely.
+     *
+     * @throws ApiException if corresponding external email is not available.
+     */
+    suspend fun checkExternalEmailAvailable(email: String)
 }

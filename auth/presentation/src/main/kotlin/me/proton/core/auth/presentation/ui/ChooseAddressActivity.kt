@@ -36,6 +36,7 @@ import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.CreateAddressInput
 import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
+import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.*
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -89,15 +90,12 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is ChooseAddressViewModel.State.Idle -> showLoading(false)
-                    is ChooseAddressViewModel.State.Processing -> showLoading(true)
-                    is ChooseAddressViewModel.State.Success -> onUsernameAvailable(it.username, it.domain)
-                    is ChooseAddressViewModel.State.Data -> onData(it.username, it.domains)
-                    is ChooseAddressViewModel.State.Error.Message -> showError(it.error.getUserMessage(resources))
-                    is ChooseAddressViewModel.State.Error.DomainsNotAvailable ->
-                        showError(getString(R.string.auth_create_address_error_no_available_domain))
-                    is ChooseAddressViewModel.State.Error.UsernameNotAvailable ->
-                        onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
+                    is State.Idle -> showLoading(false)
+                    is State.Processing -> showLoading(true)
+                    is State.Success -> onUsernameAvailable(it.username, it.domain)
+                    is State.Data -> onData(it.username, it.domains)
+                    is State.Error.Message -> showError(it.error.getUserMessage(resources))
+                    is State.Error.DomainsNotAvailable -> showError(getString(R.string.auth_create_address_error_no_available_domain))
                 }.exhaustive
             }.launchIn(lifecycleScope)
     }

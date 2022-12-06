@@ -20,7 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
 import me.proton.core.test.quark.data.Plan.Dev
 import me.proton.core.test.android.robots.CoreRobot
-import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot.RecoveryMethodType
 import me.proton.core.test.android.robots.humanverification.HVRobot
@@ -42,7 +42,7 @@ class RecoveryMethodsSetupTests : BaseTest() {
             .clickBackBtn()
 
         CoreexampleRobot()
-            .signup()
+            .signupInternal()
             .verify { domainInputDisplayed() }
 
         ChooseUsernameRobot()

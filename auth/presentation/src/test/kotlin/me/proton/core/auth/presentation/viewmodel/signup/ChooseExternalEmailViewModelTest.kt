@@ -22,53 +22,58 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.auth.domain.usecase.AccountAvailability
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.*
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
+class ChooseExternalEmailViewModelTest : ArchTest, CoroutinesTest {
 
     private val accountAvailability = mockk<AccountAvailability>(relaxed = true)
 
-    private lateinit var viewModel: ChooseUsernameViewModel
+    private lateinit var viewModel: ChooseExternalEmailViewModel
 
     @Test
-    fun `check username success`() = coroutinesTest {
+    fun `check email success`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { accountAvailability.checkUsername(testUsername) } returns Unit
-        // WHEN
-        viewModel = ChooseUsernameViewModel(accountAvailability)
+        val testDomain = "test-domain"
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { accountAvailability.checkExternalEmail(testEmail) } returns Unit
+        viewModel = ChooseExternalEmailViewModel(accountAvailability)
         viewModel.state.test {
-            viewModel.checkUsername(testUsername)
+            viewModel.checkExternalEmail(testEmail)
             // THEN
-            assertTrue(expectMostRecentItem() is State.Success)
+            val item = expectMostRecentItem() as State.Success
+            assertEquals(testEmail, item.email)
             cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
-    fun `check username error`() = coroutinesTest {
+    fun `check email error`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { accountAvailability.checkUsername(testUsername) } throws ApiException(
+        val testDomain = "test-domain"
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { accountAvailability.checkExternalEmail(testEmail) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
                 ApiResult.Error.ProtonData(
                     code = 12106,
-                    error = "username not available"
+                    error = "email not available"
                 )
             )
         )
         // WHEN
-        viewModel = ChooseUsernameViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability)
         viewModel.state.test {
-            viewModel.checkUsername(testUsername)
+            viewModel.checkExternalEmail(testEmail)
             // THEN
             assertTrue(expectMostRecentItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
