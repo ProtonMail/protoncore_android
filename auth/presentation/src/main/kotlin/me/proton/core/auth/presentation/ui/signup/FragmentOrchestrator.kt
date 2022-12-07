@@ -21,7 +21,6 @@ package me.proton.core.auth.presentation.ui.signup
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
@@ -33,7 +32,6 @@ private const val TAG_EXTERNAL_EMAIL_CHOOSER = "external_email_chooser_fragment"
 private const val TAG_PASSWORD_CHOOSER = "password_chooser_fragment"
 private const val TAG_RECOVERY_CHOOSER = "recovery_chooser_fragment"
 private const val TAG_SKIP_RECOVERY_DIALOG = "skip_recovery_dialog"
-private const val TAG_EXTERNAL_ACCOUNT_ENTER_CODE = "external_account_enter_code_fragment"
 private const val TAG_EMAIL_RECOVERY_FRAGMENT = "email_recovery_fragment"
 private const val TAG_SMS_RECOVERY_FRAGMENT = "skip_recovery_fragment"
 private const val TAG_TERMS_CONDITIONS_FRAGMENT = "terms_conditions_fragment"
@@ -147,19 +145,6 @@ internal fun FragmentManager.showPasswordChooser(
         addToBackStack(TAG_PASSWORD_CHOOSER)
     }
     chooserPasswordFragment
-}
-
-internal fun FragmentManager.showExternalAccountEnterCode(
-    containerId: Int = android.R.id.content,
-    destination: String
-) = findFragmentByTag(TAG_EXTERNAL_ACCOUNT_ENTER_CODE) ?: run {
-    val enterCodeFragment = ExternalValidationTokenCodeFragment(destination)
-    inTransaction {
-        setCustomAnimations(0, 0)
-        add(containerId, enterCodeFragment, TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
-        addToBackStack(TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
-    }
-    enterCodeFragment
 }
 
 internal fun FragmentManager.showRecoveryMethodChooser(

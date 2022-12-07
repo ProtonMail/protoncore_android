@@ -130,10 +130,6 @@ internal class SignupViewModel @Inject constructor(
         _state.tryEmit(State.CreateUserInputReady)
     }
 
-    fun setExternalAccountEmailValidationDone() {
-        _state.tryEmit(State.CreateUserInputReady)
-    }
-
     fun onCreateUserCancelled() {
         _state.tryEmit(State.Error.CreateUserCanceled)
     }
