@@ -18,17 +18,26 @@
 
 package me.proton.android.core.coreexample.hilttests
 
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.api.CoreExampleApiClient
+import me.proton.android.core.coreexample.di.ApplicationModule
+import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
 import me.proton.android.core.coreexample.hilttests.usecase.PerformUiLogin
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.domain.entity.AppStore
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
@@ -45,9 +54,30 @@ import kotlin.test.assertTrue
 import me.proton.core.test.quark.data.User as TestUser
 
 @HiltAndroidTest
+@UninstallModules(ApplicationModule::class)
 class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, tries = 1) {
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @BindValue
+    val apiClient: CoreExampleApiClient = AndroidTestApiClient(
+        appName = "android-mail",
+        productName = "ProtonMail",
+        versionName = "3.0.0"
+    )
+
+    @BindValue
+    val appStore: AppStore = AppStore.GooglePlay
+
+    @BindValue
+    val product: Product = Product.Mail
+
+    @BindValue
+    val accountType: AccountType = AccountType.Internal
+
+    @BindValue
+    @ClientSecret
+    val clientSecret: String = ""
 
     @Inject
     lateinit var accountManager: AccountManager

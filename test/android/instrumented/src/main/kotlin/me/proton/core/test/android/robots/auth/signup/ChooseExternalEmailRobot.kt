@@ -23,16 +23,15 @@ import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
 /**
- * [ChooseExternalEmailRobot] class contains username setup actions and verifications implementation.
- * The view is displayed automatically when a user without username (eg. external email account) logs in
+ * [ChooseExternalEmailRobot] class contains external email setup actions and verifications implementation.
  */
 class ChooseExternalEmailRobot : CoreRobot() {
 
     /**
-     * Sets the value of username input to [name]
+     * Sets the value of email input to [email]
      * @return [ChooseExternalEmailRobot]
      */
-    fun username(name: String): ChooseExternalEmailRobot = addText(R.id.usernameInput, name)
+    fun email(email: String): ChooseExternalEmailRobot = addText(R.id.emailInput, email)
 
     /**
      * Clicks 'next' button
@@ -41,10 +40,10 @@ class ChooseExternalEmailRobot : CoreRobot() {
     fun next(): PasswordSetupRobot = clickElement(R.id.nextButton)
 
     /**
-     * Sets the username and clicks 'next'
+     * Sets the email and clicks 'next'
      * @return [ChooseExternalEmailRobot]
      */
-    fun setUsername(name: String): PasswordSetupRobot = username(name).next()
+    fun setEmail(name: String): PasswordSetupRobot = email(name).next()
 
     /**
      * Switches signup type between external and internal

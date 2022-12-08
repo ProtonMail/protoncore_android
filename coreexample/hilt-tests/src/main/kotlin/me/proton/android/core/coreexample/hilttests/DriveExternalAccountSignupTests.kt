@@ -32,8 +32,10 @@ import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.test.ExternalAccountSignupTests
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.test.quark.Quark
 import org.junit.Rule
+import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
@@ -43,6 +45,9 @@ class DriveExternalAccountSignupTests : ExternalAccountSignupTests() {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    override lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     @BindValue
     val apiClient: CoreExampleApiClient = AndroidTestApiClient(
@@ -63,4 +68,9 @@ class DriveExternalAccountSignupTests : ExternalAccountSignupTests() {
     @BindValue
     @ClientSecret
     val clientSecret: String = ""
+
+    override fun setUp() {
+        hiltRule.inject()
+        super.setUp()
+    }
 }

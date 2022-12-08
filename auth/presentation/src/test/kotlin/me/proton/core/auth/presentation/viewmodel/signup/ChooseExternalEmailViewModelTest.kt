@@ -31,7 +31,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ChooseExternalEmailViewModelTest : ArchTest, CoroutinesTest {
+class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     private val accountAvailability = mockk<AccountAvailability>(relaxed = true)
 
@@ -48,7 +48,8 @@ class ChooseExternalEmailViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
-            val item = expectMostRecentItem() as State.Success
+            assertTrue(awaitItem() is State.Idle)
+            val item = awaitItem() as State.Success
             assertEquals(testEmail, item.email)
             cancelAndConsumeRemainingEvents()
         }
@@ -75,7 +76,8 @@ class ChooseExternalEmailViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
-            assertTrue(expectMostRecentItem() is State.Error.Message)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }
     }

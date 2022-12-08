@@ -46,7 +46,8 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             // THEN
-            assertTrue(expectMostRecentItem() is State.Success)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Success)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -70,7 +71,8 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             // THEN
-            assertTrue(expectMostRecentItem() is State.Error.Message)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }
     }

@@ -75,7 +75,7 @@ class ExternalSetupTests : BaseTest() {
         val defaultCode = quark.defaultVerificationCode
 
         val codeVerificationRobot = chooseExternalEmailRobot
-            .username(user.name)
+            .email(user.name)
             .next()
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)
             .setCode(defaultCode)

@@ -25,6 +25,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.PasswordSetupRobot
@@ -39,12 +40,14 @@ import me.proton.core.test.quark.data.User as TestUser
  * Only for apps that provide [AccountType.External].
  */
 public abstract class ExternalAccountSignupTests {
+    protected abstract val extraHeaderProvider: ExtraHeaderProvider
     protected abstract val quark: Quark
 
     private lateinit var testUser: TestUser
 
     @BeforeTest
-    internal fun setUp() {
+    public open fun setUp() {
+        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
         testUser = TestUser(
             name = "",
             email = "${TestUser.randomUsername()}@externaldomain.test",
@@ -57,22 +60,21 @@ public abstract class ExternalAccountSignupTests {
     @Test
     internal fun happyPath() = withSignupActivity(AccountType.External) {
         ChooseExternalEmailRobot()
-            .username(testUser.email)
+            .email(testUser.email)
             .next()
 
         HVCodeRobot()
             .setCode("666666")
             .verifyCode(PasswordSetupRobot::class.java)
             .apply { verify { passwordSetupElementsDisplayed() } }
-            .setAndConfirmPassword<HVCodeRobot>(testUser.password)
-            .verifyCode(SignupFinishedRobot::class.java)
+            .setAndConfirmPassword<SignupFinishedRobot>(testUser.password)
             .verify { signupFinishedDisplayed() }
     }
 
     @Test
     internal fun incorrectEmailVerificationCode() = withSignupActivity(AccountType.External) {
         ChooseExternalEmailRobot()
-            .username(testUser.email)
+            .email(testUser.email)
             .next()
 
         HVCodeRobot()
@@ -85,10 +87,7 @@ public abstract class ExternalAccountSignupTests {
     internal fun externalSignupNotSupported() = withSignupActivity(AccountType.Internal) {
         ChooseInternalEmailRobot()
             .apply {
-                verify {
-                    domainInputDisplayed()
-                    accountTypeSwitchNotDisplayed()
-                }
+                verify { domainInputDisplayed() }
             }
             .username(testUser.email)
             .next()

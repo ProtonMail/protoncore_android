@@ -618,10 +618,10 @@ public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot$Veri
 
 public final class me/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
+	public final fun email (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot;
 	public final fun next ()Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
-	public final fun setUsername (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
 	public final fun switchSignupType ()Lme/proton/core/test/android/robots/auth/signup/ChooseInternalEmailRobot;
-	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot$Verify;
 }
 

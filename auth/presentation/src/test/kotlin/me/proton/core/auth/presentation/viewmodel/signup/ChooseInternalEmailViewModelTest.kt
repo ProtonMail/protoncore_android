@@ -33,7 +33,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ChooseInternalEmailViewModelTest : ArchTest, CoroutinesTest {
+class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     private val accountAvailability = mockk<AccountAvailability>(relaxed = true)
 
@@ -51,7 +51,8 @@ class ChooseInternalEmailViewModelTest : ArchTest, CoroutinesTest {
         // WHEN
         viewModel.state.test {
             // THEN
-            val domainsItem = expectMostRecentItem() as State.Domains
+            assertTrue(awaitItem() is State.Idle)
+            val domainsItem = awaitItem() as State.Domains
             assertEquals(listOf("protonmail.com", "protonmail.ch"), domainsItem.domains)
             cancelAndConsumeRemainingEvents()
         }
@@ -67,7 +68,8 @@ class ChooseInternalEmailViewModelTest : ArchTest, CoroutinesTest {
         // WHEN
         viewModel.state.test {
             // THEN
-            assertTrue(expectMostRecentItem() is State.Error)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Error)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -89,7 +91,8 @@ class ChooseInternalEmailViewModelTest : ArchTest, CoroutinesTest {
         // WHEN
         viewModel.state.test {
             // THEN
-            val errorItem = expectMostRecentItem() as State.Error.Message
+            assertTrue(awaitItem() is State.Idle)
+            val errorItem = awaitItem() as State.Error.Message
             assertEquals("domains error", errorItem.error.getUserMessage(mockk()))
             cancelAndConsumeRemainingEvents()
         }
@@ -106,7 +109,8 @@ class ChooseInternalEmailViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            val item = expectMostRecentItem() as State.Success
+            assertTrue(awaitItem() is State.Idle)
+            val item = awaitItem() as State.Success
             assertEquals(testUsername, item.username)
             assertEquals(testDomain, item.domain)
             cancelAndConsumeRemainingEvents()
@@ -134,7 +138,8 @@ class ChooseInternalEmailViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectMostRecentItem() is State.Error.Message)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }
     }
