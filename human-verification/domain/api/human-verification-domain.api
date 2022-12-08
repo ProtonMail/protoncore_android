@@ -58,33 +58,6 @@ public final class me/proton/core/humanverification/domain/repository/HumanVerif
 	public static synthetic fun updateHumanVerificationState$default (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationState;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
-public abstract interface class me/proton/core/humanverification/domain/repository/UserVerificationRepository {
-	public abstract fun checkCreationTokenValidity (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun sendVerificationCodeEmailAddress (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun sendVerificationCodePhoneNumber (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity {
-	public fun <init> (Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
-	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination {
-	public fun <init> (Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;)V
-	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination {
-	public fun <init> (Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;)V
-	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/humanverification/domain/usecase/SendVerificationCodeToPhoneDestination {
-	public fun <init> (Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;)V
-	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public abstract interface class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider {
 	public abstract fun overrideRequest (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLjava/io/InputStream;Ljava/lang/String;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
 }

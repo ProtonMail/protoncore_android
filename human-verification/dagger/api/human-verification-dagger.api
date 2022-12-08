@@ -17,6 +17,5 @@ public abstract interface class me/proton/core/humanverification/dagger/CoreHuma
 	public abstract fun provideHumanVerificationProvider (Lme/proton/core/humanverification/data/HumanVerificationProviderImpl;)Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;
 	public abstract fun provideHumanVerificationRepository (Lme/proton/core/humanverification/data/repository/HumanVerificationRepositoryImpl;)Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;
 	public abstract fun provideNetworkRequestOverrider (Lme/proton/core/humanverification/data/utils/NetworkRequestOverriderImpl;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
-	public abstract fun provideUserVerificationRepository (Lme/proton/core/humanverification/data/repository/UserVerificationRepositoryImpl;)Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;
 }
 

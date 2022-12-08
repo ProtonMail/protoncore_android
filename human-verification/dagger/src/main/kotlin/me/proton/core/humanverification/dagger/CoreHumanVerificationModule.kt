@@ -26,14 +26,12 @@ import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
 import me.proton.core.humanverification.data.HumanVerificationProviderImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRepositoryImpl
-import me.proton.core.humanverification.data.repository.UserVerificationRepositoryImpl
 import me.proton.core.humanverification.data.utils.NetworkRequestOverriderImpl
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
 import me.proton.core.humanverification.domain.HumanVerificationExternalInputImpl
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
-import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -61,10 +59,6 @@ public interface CoreHumanVerificationModule {
     @Binds
     @Singleton
     public fun provideHumanVerificationRepository(impl: HumanVerificationRepositoryImpl): HumanVerificationRepository
-
-    @Binds
-    @Singleton
-    public fun provideUserVerificationRepository(impl: UserVerificationRepositoryImpl): UserVerificationRepository
 
     @Binds
     @Singleton
