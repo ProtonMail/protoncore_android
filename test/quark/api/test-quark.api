@@ -1,6 +1,8 @@
 public final class me/proton/core/test/quark/Quark {
 	public static final field Companion Lme/proton/core/test/quark/Quark$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$InternalApi;)V
+	public final fun expireSession (Ljava/lang/String;Z)V
+	public static synthetic fun expireSession$default (Lme/proton/core/test/quark/Quark;Ljava/lang/String;ZILjava/lang/Object;)V
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;
 	public final fun jailUnban ()V
 	public final fun populateUserWithData (Lme/proton/core/test/quark/data/User;)Lme/proton/core/test/quark/data/User;
@@ -90,6 +92,7 @@ public final class me/proton/core/test/quark/Quark$InternalApi$Companion {
 
 public final class me/proton/core/test/quark/Quark$InternalApiEndpoint : java/lang/Enum {
 	public static final field DRIVE_POPULATE_USER_WITH_DATA Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
+	public static final field EXPIRE_SESSION Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field JAIL_UNBAN Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field PAYMENTS_SEED_PAYMENT_METHOD Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field PAYMENTS_SEED_SUBSCRIBER Lme/proton/core/test/quark/Quark$InternalApiEndpoint;

@@ -29,6 +29,7 @@ import me.proton.core.test.quark.Quark.InternalApiEndpoint.PAYMENTS_SEED_SUBSCRI
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.SYSTEM_ENV
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE_ADDRESS
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.EXPIRE_SESSION
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.randomPaidPlan
 import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse
@@ -61,7 +62,8 @@ public class Quark constructor(
         USER_CREATE_ADDRESS,
         PAYMENTS_SEED_PAYMENT_METHOD,
         PAYMENTS_SEED_SUBSCRIBER,
-        DRIVE_POPULATE_USER_WITH_DATA
+        DRIVE_POPULATE_USER_WITH_DATA,
+        EXPIRE_SESSION
     }
 
     private val client = OkHttpClient
@@ -203,6 +205,14 @@ public class Quark constructor(
         )
         quarkRequest(DRIVE_POPULATE_USER_WITH_DATA, args)
         return user
+    }
+
+    public fun expireSession(username: String, expireRefreshToken: Boolean = false){
+        val args = arrayOf(
+            "User=${username}",
+            if(expireRefreshToken) "--refresh=null" else ""
+        )
+        quarkRequest(EXPIRE_SESSION, args)
     }
 
     /** WARNING:
