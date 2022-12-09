@@ -11,6 +11,46 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.7.0] - 2022-12-09
+
+### Breaking Changes
+
+**Refactoring**
+
+- test: API changes for various test helpers.
+    - If your test inherits `ArchTest` or `CoroutineTest`, apply a default delegate, e.g. `class MyClass: ArchTest by ArchTest()`. This is to ensure we can get a reference to the same object, which would not be possible with properties without a backing field.
+    - Remove `mainDispatcher`, `ioDispatcher` and `compDispatcher` from `CoroutinesTest` (use `coroutinesRule.dispatchers.<dispatcher>` instead).
+    - Change `TestDispatcherProvider` and `TestCoroutineScopeProvider` from objects into classes.
+    - Remove `TestDispatcherProvider.cleanupTestCoroutines` — not needed anymore when using `runTest`.
+    - Added `TestScope.flowTest` helper (`TurbineUtils.kt`) to run Turbine test inside an unconfined test dispatcher.
+
+- test-android: Remove `runBlockingWithTimeout` (use `runTest` instead).
+
+**Fixes**
+
+- labels: Support newly added LabelType.SystemFolder.
+
+### Chores
+
+- Update `turbine` to 0.9.0.
+- Update `kotlin-coroutines` to 1.6.4.
+
+  Note: some APIs from `kotlinx-coroutines-test` are deprecated, and will become an error in 1.7.0.
+
+### Features
+
+- auth: Fix GPay dark mode.
+
+### Bug Fixes
+
+- challenge:
+  - Removed "uuid" from Challenge frames (ANDROID_ID).
+  - Improve Key/Paste/Copy handling logic.
+
+### Internationalization
+
+- Upgrade translations from crowdin (213e46d3).
+
 ## [9.6.0] - 2022-11-25
 
 ### Chores
