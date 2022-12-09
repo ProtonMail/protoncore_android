@@ -118,6 +118,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     private fun onNextClicked() {
         with(binding.usernameInput) {
+            lifecycleScope.launch { flush() }
             hideKeyboard()
             validateUsername()
                 .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
@@ -157,7 +158,6 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         signupViewModel.currentAccountType = AccountType.Internal
         signupViewModel.username = username
         signupViewModel.domain = domain
-        lifecycleScope.launch { binding.usernameInput.flush() }
         parentFragmentManager.showPasswordChooser()
     }
 

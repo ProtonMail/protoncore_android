@@ -28,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseExternalEmailBinding
@@ -95,6 +96,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     private fun onNextClicked() {
         with(binding.emailInput) {
+            lifecycleScope.launch { flush() }
             hideKeyboard()
             validateEmail()
                 .onFailure { setInputError() }

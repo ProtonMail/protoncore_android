@@ -19,6 +19,8 @@
 package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.domain.useFlow
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
@@ -33,7 +35,9 @@ class PerformCreateExternalEmailUser @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val srpCrypto: SrpCrypto,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val challengeManager: ChallengeManager,
+    private val challengeConfig: SignupChallengeConfig
 ) {
 
     suspend operator fun invoke(
@@ -52,13 +56,16 @@ class PerformCreateExternalEmailUser @Inject constructor(
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
-            return userRepository.createExternalEmailUser(
-                email = email,
-                password = password,
-                referrer = referrer,
-                type = CreateUserType.Normal,
-                auth = auth
-            ).userId
+            return challengeManager.useFlow(challengeConfig.flowName) { frames ->
+                userRepository.createExternalEmailUser(
+                    email = email,
+                    password = password,
+                    referrer = referrer,
+                    type = CreateUserType.Normal,
+                    auth = auth,
+                    frames = frames
+                ).userId
+            }
         }
     }
 }

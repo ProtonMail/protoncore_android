@@ -27,6 +27,7 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
@@ -47,7 +48,7 @@ class PerformCreateExternalEmailUserTest {
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-
+    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -63,7 +64,7 @@ class PerformCreateExternalEmailUserTest {
     )
 
     // endregion
-
+    private val signupChallengeConfig = SignupChallengeConfig()
     private lateinit var useCase: PerformCreateExternalEmailUser
 
     @Before
@@ -73,7 +74,9 @@ class PerformCreateExternalEmailUserTest {
             authRepository,
             userRepository,
             srpCrypto,
-            keyStoreCrypto
+            keyStoreCrypto,
+            challengeManager,
+            signupChallengeConfig
         )
         every {
             srpCrypto.calculatePasswordVerifier(testEmail, any(), any(), any())
@@ -84,7 +87,7 @@ class PerformCreateExternalEmailUserTest {
         coEvery { authRepository.randomModulus() } returns testModulus
 
         coEvery {
-            userRepository.createExternalEmailUser(any(), any(), any(), any(), any())
+            userRepository.createExternalEmailUser(any(), any(), any(), any(), any(), any())
         } returns mockk(relaxed = true)
     }
 
@@ -114,6 +117,7 @@ class PerformCreateExternalEmailUserTest {
                 capture(passwordSlot),
                 any(),
                 capture(typeSlot),
+                any(),
                 any()
             )
         }
@@ -142,7 +146,7 @@ class PerformCreateExternalEmailUserTest {
     fun `user already exists`() = runTest {
         val apiException = mockk<ApiException>()
         coEvery {
-            userRepository.createExternalEmailUser(any(), any(), any(), any(), any())
+            userRepository.createExternalEmailUser(any(), any(), any(), any(), any(), any())
         } throws apiException
 
         val result = assertFailsWith(ApiException::class) {

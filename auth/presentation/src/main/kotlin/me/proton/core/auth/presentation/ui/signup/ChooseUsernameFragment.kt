@@ -94,6 +94,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
 
     private fun onNextClicked() {
         with(binding.usernameInput) {
+            lifecycleScope.launch { flush() }
             hideKeyboard()
             validateUsername()
                 .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
@@ -106,7 +107,6 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         binding.nextButton.isEnabled = true
         signupViewModel.currentAccountType = AccountType.Username
         signupViewModel.username = username
-        lifecycleScope.launch { binding.usernameInput.flush() }
         parentFragmentManager.showPasswordChooser()
     }
 

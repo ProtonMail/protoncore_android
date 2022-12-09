@@ -160,18 +160,10 @@ class UserRepositoryImpl @Inject constructor(
             type.value,
             AuthRequest.from(auth),
             domain,
-            getFrameMap(frames)
+            getUserSignUpFrameMap(frames)
         )
         createUser(request).user.toUser()
     }.valueOrThrow
-
-    private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, UserChallengeFrame?> {
-        val nameUsername = "${product.framePrefix()}-0"
-        val nameRecovery = "${product.framePrefix()}-1"
-        val usernameFrame = UserChallengeFrame.UserChallengeUsernameFrame.from(context, frames.getOrNull(0))
-        val recoveryFrame = UserChallengeFrame.UserChallengeRecoveryFrame.from(context, frames.getOrNull(1))
-        return mapOf(nameUsername to usernameFrame, nameRecovery to recoveryFrame)
-    }
 
     /**
      * Create new [User]. Used during signup.
@@ -181,9 +173,16 @@ class UserRepositoryImpl @Inject constructor(
         password: EncryptedString,
         referrer: String?,
         type: CreateUserType,
-        auth: Auth
+        auth: Auth,
+        frames: List<ChallengeFrameDetails>
     ): User = provider.get<UserApi>().invoke {
-        val request = CreateExternalUserRequest(email, referrer, type.value, AuthRequest.from(auth))
+        val request = CreateExternalUserRequest(
+            email,
+            referrer,
+            type.value,
+            AuthRequest.from(auth),
+            getUserSignUpFrameMap(frames)
+        )
         createExternalUser(request).user.toUser()
     }.valueOrThrow
 
@@ -256,5 +255,21 @@ class UserRepositoryImpl @Inject constructor(
         onPassphraseChangedListeners.add(listener)
     }
 
-    //endregion
+    // endregion
+
+    // region Challenge frame
+
+    private suspend fun getUserSignUpFrameMap(frames: List<ChallengeFrameDetails>): Map<String, UserChallengeFrame?> {
+        val prefix = product.framePrefix()
+        val usernameFrame = frames.find { it.challengeFrame == "username" && it.flow == "signup" }
+        val recoveryFrame = frames.find { it.challengeFrame == "recovery" && it.flow == "signup" }
+        requireNotNull(usernameFrame)
+        // recoveryFrame is optional.
+        return mapOf(
+            "$prefix-0" to UserChallengeFrame.UserChallengeUsernameFrame.from(context, usernameFrame),
+            "$prefix-1" to UserChallengeFrame.UserChallengeRecoveryFrame.from(context, recoveryFrame)
+        )
+    }
+
+    // endregion
 }

@@ -110,7 +110,8 @@ interface UserRepository : PassphraseRepository {
         password: EncryptedString,
         referrer: String?,
         type: CreateUserType,
-        auth: Auth
+        auth: Auth,
+        frames: List<ChallengeFrameDetails>
     ): User
 
     /**

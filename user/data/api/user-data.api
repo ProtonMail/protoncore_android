@@ -315,18 +315,20 @@ public final class me/proton/core/user/data/api/request/CreateAddressRequest$Com
 
 public final class me/proton/core/user/data/api/request/CreateExternalUserRequest {
 	public static final field Companion Lme/proton/core/user/data/api/request/CreateExternalUserRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()I
 	public final fun component4 ()Lme/proton/core/key/data/api/request/AuthRequest;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
+	public final fun component5 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/util/Map;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAuth ()Lme/proton/core/key/data/api/request/AuthRequest;
 	public final fun getEmail ()Ljava/lang/String;
+	public final fun getPayload ()Ljava/util/Map;
 	public final fun getReferrer ()Ljava/lang/String;
 	public final fun getType ()I
 	public fun hashCode ()I
@@ -1043,7 +1045,7 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 	public fun checkExternalEmailAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun checkUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
