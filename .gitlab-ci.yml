@@ -71,6 +71,7 @@ prepare-environment:
         echo HOST="$DYNAMIC_DOMAIN" >> local.properties
         mkdir -p $SENSITIVE_DIR
         cat $TEST_USERS > $SENSITIVE_DIR/users.json
+        cat $TEST_USERS_VPN_USERNAME > $SENSITIVE_DIR/users-vpn-username.json
         cat $TEST_INTERNAL_API_V4 > $SENSITIVE_DIR/internal_apis.json
       else
         echo "No need to prepare env"

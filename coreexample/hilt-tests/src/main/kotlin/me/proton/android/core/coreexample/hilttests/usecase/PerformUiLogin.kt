@@ -18,14 +18,8 @@
 
 package me.proton.android.core.coreexample.hilttests.usecase
 
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
@@ -33,10 +27,7 @@ import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-private const val ACCOUNT_WAIT_MS = 30L * 1000
-private const val WAIT_DELAY_MS = 250L
-
-class PerformUiLogin @Inject constructor(private val accountManager: AccountManager) {
+class PerformUiLogin @Inject constructor(private val waitForPrimaryAccount: WaitForPrimaryAccount) {
     operator fun invoke(usernameOrEmail: String, password: String, mailboxPass: String? = null): Account {
         AddAccountRobot()
             .signIn()
@@ -50,19 +41,9 @@ class PerformUiLogin @Inject constructor(private val accountManager: AccountMana
                 .unlock<CoreRobot>()
         }
 
-        val account = runBlocking { waitForAccount() }
+        val account = waitForPrimaryAccount()
         assertNotNull(account)
         assertEquals(AccountState.Ready, account.state)
         return account
-    }
-
-    private suspend fun waitForAccount(): Account? = withTimeoutOrNull(ACCOUNT_WAIT_MS) {
-        var account: Account?
-        while (true) {
-            account = accountManager.getPrimaryAccount().firstOrNull()
-            if (account != null) break
-            delay(WAIT_DELAY_MS)
-        }
-        account
     }
 }
