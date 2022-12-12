@@ -64,7 +64,7 @@
   <string name="auth_forgot_password">He olvidado mi contraseña</string>
   <string name="auth_login_general_error">Se ha producido un error.</string>
   <string name="auth_login_external_account_unsupported_title">Es necesaria una dirección Proton</string>
-  <string name="auth_login_external_account_unsupported_message">Obtén una dirección de Proton Mail enlazada a esta cuenta en la configuración web de Proton.</string>
+  <string name="auth_login_external_account_unsupported_message">Obtenga una dirección de Proton Mail vinculada a esta cuenta en su configuración web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Más información</string>
   <string name="auth_login_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_mailbox_empty_credentials">Las credenciales no deben estar vacías.</string>

@@ -38,7 +38,7 @@
   <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
   <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
   <string name="payments_method_google">Google</string>
-  <string name="payments_method_continue">Continue</string>
+  <string name="payments_method_continue">ادامه</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">جزئیات پرداخت</string>
@@ -55,8 +55,8 @@
   <string name="payments_choose_country">انتخاب کشور</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">پی‌پال</string>
-  <string name="payments_info_not_available">n/a</string>
-  <string name="payments_billing_yearly">For 1 year</string>
+  <string name="payments_info_not_available">در دسترس/ نیست</string>
+  <string name="payments_billing_yearly">برای ۱ سال</string>
   <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
   <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
   <!-- endregion -->

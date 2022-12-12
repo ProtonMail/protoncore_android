@@ -39,7 +39,7 @@
   <string name="settings_login_password_hint_new">گذرواژه ورود جدید</string>
   <string name="settings_login_password_hint_new_confirm">تایید گذرواژه ورود جدید</string>
   <string name="settings_mailbox_password_hint_new">رمز عبور جدید صندوق پستی</string>
-  <string name="settings_mailbox_password_hint_new_confirm">تایید گذرواژه نامه‌دان جدید</string>
+  <string name="settings_mailbox_password_hint_new_confirm">تایید گذرواژه جدید صندوق پیام</string>
   <string name="settings_change_password_error">خطایی در تغییر گذرواژه رخ داد.</string>
   <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>

@@ -139,7 +139,7 @@
   <string name="auth_signup_congratulations_subtitle">Sua conta da Proton foi criada com sucesso.\nAproveite o mundo da privacidade.</string>
   <string name="auth_signup_congratulations">Parabéns!</string>
   <string name="auth_signup_start_using_proton">Iniciar usando o Proton</string>
-  <string name="auth_signup_start_using_calendar">Iniciar usando Proton Calendar</string>
+  <string name="auth_signup_start_using_calendar">Começar com Proton Calendar</string>
   <string name="auth_signup_start_using_mail">Iniciar usando o Proton Mail</string>
   <string name="auth_signup_start_using_drive">Iniciar usando o Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Iniciar usando o Proton VPN</string>

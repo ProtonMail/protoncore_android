@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Защитите свою приватность с Proton</string>
   <string name="welcome_subtitle">Шифрование сохраняет конфиденциальность ваших данных. Ваши данные действительно принадлежат вам.</string>
-  <string name="welcome_title_mail">Защитите свою конфиденциальность с ProtonMail</string>
+  <string name="welcome_title_mail">Защитите свою конфиденциальность с Proton Mail</string>
   <string name="welcome_subtitle_mail">Зашифрованная электронная почта, обеспечивающая конфиденциальность вашей переписки. Ваш почтовый ящик действительно принадлежит вам.</string>
   <string name="welcome_subtitle_mail_alt">Конфиденциальность. Безопасность. Удобство. Зашифрованная электронная почта, которая дает вам полный контроль над вашими личными данными.</string>
   <string name="welcome_title_drive">Защитите свою конфиденциальность с помощью Proton Drive</string>
@@ -98,9 +98,9 @@
   <string name="auth_one_account_all_services">Один аккаунт для всех служб Proton.</string>
   <string name="auth_create_account">Создать аккаунт</string>
   <string name="auth_long_signup">Выполняется вход, подождите…</string>
-  <string name="auth_long_login">Подождите…</string>
+  <string name="auth_long_login">Пожалуйста, подождите…</string>
   <!-- signup related strings -->
-  <string name="auth_signup_create_account">Создание аккаунта Proton</string>
+  <string name="auth_signup_create_account">Создать аккаунт Proton</string>
   <string name="auth_signup_current_email">Использовать ваш текущий адрес электронной почты</string>
   <string name="auth_signup_create_secure_proton_address">Вместо этого создайте защищенный адрес Proton Mail</string>
   <string name="auth_signup_username">Имя пользователя</string>
@@ -110,7 +110,7 @@
   <string name="auth_signup_choose_password">Создать пароль</string>
   <string name="auth_signup_repeat_password">Повторите пароль</string>
   <string name="auth_signup_recovery_method_title">Задать метод для аварийного восстановления (по желанию)</string>
-  <string name="auth_signup_recovery_method_title_mandatory">Установите метод восстановления</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Задать метод восстановления</string>
   <string name="auth_signup_recovery_method_subtitle">Мы отправим инструкции для аварийного восстановления доступа на эту почту или телефон, если по каким-то причинам вы не сможете получить доступ к вашему аккаунту.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">Мы вышлем инструкции по восстановлению на этот адрес электронной почты, если ваш аккаунт будет заблокирован.</string>
   <string name="auth_signup_recovery_method_email">Электронная почта</string>

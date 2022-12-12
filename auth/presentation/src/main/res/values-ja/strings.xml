@@ -26,7 +26,7 @@
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_subtitle_drive_alt">ファイルを保管する最も安全な方法。強力な暗号化を使いファイルのアップロード、同期および共有が利用できます。</string>
   <string name="welcome_title_calendar">Proton Calender でプライバシーを保護</string>
-  <string name="welcome_subtitle_calendar">暗号化されたカレンダーでイベントをプライベートかつ、安心安全に保ちます。</string>
+  <string name="welcome_subtitle_calendar">暗号化されたカレンダーで予定をプライベートかつ、安心安全に保ちます。</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
   <string name="welcome_title_vpn">Proton VPN でプライバシーを保護</string>
   <string name="welcome_subtitle_vpn">インターネット接続を暗号化し、プライバシーを保護する高速スイス VPN。</string>
@@ -50,13 +50,13 @@
   <string name="auth_help_other">問題が解決しませんか? 直接お問い合わせる。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
   <string name="auth_2fa_title">2 要素認証</string>
-  <string name="auth_2fa_label">2要素認証コード</string>
+  <string name="auth_2fa_label">2 要素認証コード</string>
   <string name="auth_2fa_recovery_code_label">回復用コード</string>
-  <string name="auth_2fa_assistive_text">6 桁のコードを入力.</string>
+  <string name="auth_2fa_assistive_text">6 桁のコードを入力します。</string>
   <string name="auth_2fa_recovery_code_assistive_text">8 文字の回復コードを入力してください。</string>
   <string name="auth_2fa_action">認証</string>
   <string name="auth_2fa_use_recovery_code">回復用コードを使用</string>
-  <string name="auth_2fa_use_2fa_code">2要素認証コードを使用</string>
+  <string name="auth_2fa_use_2fa_code">2 要素認証コードを使用</string>
   <string name="auth_2fa_error_empty_code">2 段階コードは空にできません</string>
   <string name="auth_mailbox_title">メールボックスのロック解除</string>
   <string name="auth_mailbox_password_label">メールボックスのパスワード</string>
