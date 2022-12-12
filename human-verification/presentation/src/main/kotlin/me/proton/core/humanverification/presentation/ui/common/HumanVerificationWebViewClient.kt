@@ -21,6 +21,7 @@ package me.proton.core.humanverification.presentation.ui.common
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.net.http.SslError
+import android.webkit.CookieManager
 import android.webkit.SslErrorHandler
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -172,6 +173,12 @@ class HumanVerificationWebViewClient(
         } else {
             response.responseHeaders
         }
+
+        // Copy the set-cookie headers from the overridden request into the default cookie manager
+        // to ensure they are sent on requests the web app makes
+        val cookieHeaders = response.responseHeaders.filter { (key) -> key.lowercase() == "set-cookie" }
+        val cookieManager = CookieManager.getInstance();
+        cookieHeaders.entries.forEach { entry -> cookieManager.setCookie(url, entry.value) }
 
         // HTTP/2 removed Reason-Phrase from the spec, but the constructor
         // for WebResourceResponse would throw if it received a blank string.
