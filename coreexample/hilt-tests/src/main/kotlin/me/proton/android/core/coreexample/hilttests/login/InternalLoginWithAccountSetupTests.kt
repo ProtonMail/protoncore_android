@@ -119,7 +119,7 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
             Quark.CreateAddress.WithKey()
         )
         val domains = runBlocking { domainRepository.getAvailableDomains() }
-        val email = "${response.name}@${domains.last()}"
+        val email = "${response.name}_2@${domains.first()}"
 
         quark.userCreateAddress(response.decryptedUserId, mailboxPass, email, Quark.GenKeys.None)
 

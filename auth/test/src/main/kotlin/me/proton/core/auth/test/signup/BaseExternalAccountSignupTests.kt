@@ -20,18 +20,23 @@ package me.proton.core.auth.test.signup
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.PasswordSetupRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.humanverification.HVCodeRobot
+import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.data.Plan
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import me.proton.core.test.quark.data.User as TestUser
@@ -39,14 +44,15 @@ import me.proton.core.test.quark.data.User as TestUser
 /** Tests for signing up with an external account.
  * Only for apps that provide [AccountType.External].
  */
-public abstract class BaseExternalAccountSignupTests {
-    protected abstract val extraHeaderProvider: ExtraHeaderProvider
-    protected abstract val quark: Quark
-
-    private lateinit var testUser: TestUser
+@Suppress("OptionalUnit")
+public interface BaseExternalAccountSignupTests {
+    public val extraHeaderProvider: ExtraHeaderProvider
+    public val getAvailablePaymentProviders: GetAvailablePaymentProviders
+    public val quark: Quark
+    public var testUser: TestUser
 
     @BeforeTest
-    public open fun setUp() {
+    public fun setUp() {
         extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
         testUser = TestUser(
             name = "",
@@ -58,7 +64,7 @@ public abstract class BaseExternalAccountSignupTests {
     }
 
     @Test
-    internal fun happyPath() = withSignupActivity(AccountType.External) {
+    public fun happyPath(): Unit = withSignupActivity(AccountType.External) {
         ChooseExternalEmailRobot()
             .email(testUser.email)
             .next()
@@ -67,12 +73,21 @@ public abstract class BaseExternalAccountSignupTests {
             .setCode("666666")
             .verifyCode(PasswordSetupRobot::class.java)
             .apply { verify { passwordSetupElementsDisplayed() } }
-            .setAndConfirmPassword<SignupFinishedRobot>(testUser.password)
+            .setAndConfirmPassword<CoreRobot>(testUser.password)
+
+        val paymentProviders = runBlocking { getAvailablePaymentProviders() }
+        if (paymentProviders.isNotEmpty()) {
+            SelectPlanRobot()
+                .toggleExpandPlan(Plan.Free)
+                .selectPlan<CoreRobot>(Plan.Free)
+        }
+
+        SignupFinishedRobot()
             .verify { signupFinishedDisplayed() }
     }
 
     @Test
-    internal fun incorrectEmailVerificationCode() = withSignupActivity(AccountType.External) {
+    public fun incorrectEmailVerificationCode(): Unit = withSignupActivity(AccountType.External) {
         ChooseExternalEmailRobot()
             .email(testUser.email)
             .next()
@@ -84,7 +99,7 @@ public abstract class BaseExternalAccountSignupTests {
     }
 
     @Test
-    internal fun externalSignupNotSupported() = withSignupActivity(AccountType.Internal) {
+    public fun externalSignupNotSupported(): Unit = withSignupActivity(AccountType.Internal) {
         ChooseInternalEmailRobot()
             .apply {
                 verify { domainInputDisplayed() }
@@ -96,8 +111,26 @@ public abstract class BaseExternalAccountSignupTests {
             }
     }
 
-    protected companion object {
-        protected fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
+    @Test
+    public fun switchToInternalAndBack(): Unit = withSignupActivity(AccountType.External) {
+        ChooseExternalEmailRobot()
+            .switchSignupType()
+            .verify {
+                chooseInternalEmailElementsDisplayed()
+                suffixNotDisplayed()
+                switchToExternalDisplayed()
+            }
+
+        ChooseInternalEmailRobot()
+            .switchSignupType()
+            .verify {
+                chooseExternalEmailElementsDisplayed()
+                switchToSecureDisplayed()
+            }
+    }
+
+    private companion object {
+        private fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
             ActivityScenario.launch(
                 StartSignup().createIntent(
                     ApplicationProvider.getApplicationContext(),
@@ -105,7 +138,7 @@ public abstract class BaseExternalAccountSignupTests {
                 )
             )
 
-        protected inline fun withSignupActivity(
+        private inline fun withSignupActivity(
             accountType: AccountType,
             body: (ActivityScenario<SignupActivity>) -> Unit
         ) {

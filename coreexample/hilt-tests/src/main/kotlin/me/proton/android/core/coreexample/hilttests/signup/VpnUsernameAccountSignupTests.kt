@@ -36,6 +36,7 @@ import me.proton.core.auth.test.signup.BaseUsernameAccountSignupTests
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
@@ -68,6 +69,9 @@ class VpnUsernameAccountSignupTests : BaseUsernameAccountSignupTests,
 
     @BindValue
     val accountType: AccountType = AccountType.Username
+
+    @Inject
+    override lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
 
     @Inject
     lateinit var waitForPrimaryAccount: WaitForPrimaryAccount

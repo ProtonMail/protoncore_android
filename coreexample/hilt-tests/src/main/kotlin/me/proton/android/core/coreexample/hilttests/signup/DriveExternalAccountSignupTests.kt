@@ -32,13 +32,17 @@ import me.proton.core.auth.test.signup.BaseExternalAccountSignupTests
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.data.User
 import org.junit.Rule
 import javax.inject.Inject
+import kotlin.test.BeforeTest
 
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
-class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests() {
+class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests {
+    override lateinit var testUser: User
 
     override val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
 
@@ -47,6 +51,9 @@ class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests() {
 
     @Inject
     override lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    override lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
 
     @BindValue
     val apiClient: CoreExampleApiClient = DriveApiClient
@@ -60,6 +67,7 @@ class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests() {
     @BindValue
     val accountType: AccountType = AccountType.External
 
+    @BeforeTest
     override fun setUp() {
         hiltRule.inject()
         super.setUp()
