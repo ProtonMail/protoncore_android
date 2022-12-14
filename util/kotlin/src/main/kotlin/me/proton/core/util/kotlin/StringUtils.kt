@@ -254,6 +254,7 @@ operator fun String.times(times: Int): String {
     return builder.toString()
 }
 
+/** Generate random string with a given [length]. Not cryptographically secure. */
 fun String.Companion.random(
     length: Long = 10,
     charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
