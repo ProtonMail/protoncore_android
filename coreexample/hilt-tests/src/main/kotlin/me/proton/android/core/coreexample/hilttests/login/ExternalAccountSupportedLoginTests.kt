@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.hilttests
+package me.proton.android.core.coreexample.hilttests.login
 
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -29,12 +29,11 @@ import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
-import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
+import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
 import me.proton.android.core.coreexample.hilttests.usecase.PerformUiLogin
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.domain.entity.key.KeyFlags
@@ -61,11 +60,7 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
     val hiltRule = HiltAndroidRule(this)
 
     @BindValue
-    val apiClient: CoreExampleApiClient = AndroidTestApiClient(
-        appName = "android-drive",
-        productName = "ProtonDrive",
-        versionName = "1.0.0"
-    )
+    val apiClient: CoreExampleApiClient = DriveApiClient
 
     @BindValue
     val appStore: AppStore = AppStore.GooglePlay
@@ -75,10 +70,6 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
 
     @BindValue
     val accountType: AccountType = AccountType.External
-
-    @BindValue
-    @ClientSecret
-    val clientSecret: String = ""
 
     @Inject
     lateinit var accountManager: AccountManager
@@ -95,12 +86,11 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
     @BeforeTest
     fun prepare() {
         hiltRule.inject()
+        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
     }
 
     @Test
     fun loginWithExternalAccountNoKeys() {
-        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
-
         val testUser = TestUser(
             name = "",
             email = "${TestUser.randomUsername()}@externaldomain.test",

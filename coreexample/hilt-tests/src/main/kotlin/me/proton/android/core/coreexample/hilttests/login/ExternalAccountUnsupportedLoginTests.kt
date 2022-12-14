@@ -1,22 +1,23 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
- * This file is part of Proton AG and ProtonCore.
+ * Copyright (c) 2022 Proton AG
  *
- * ProtonCore is free software: you can redistribute it and/or modify
+ * This file is part of Proton Mail.
+ *
+ * Proton Mail is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * ProtonCore is distributed in the hope that it will be useful,
+ * Proton Mail is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Proton Mail. If not, see https://www.gnu.org/licenses/.
  */
 
-package me.proton.android.core.coreexample.hilttests
+package me.proton.android.core.coreexample.hilttests.login
 
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -27,9 +28,8 @@ import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
-import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
+import me.proton.android.core.coreexample.hilttests.di.MailApiClient
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -52,11 +52,7 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
     lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     @BindValue
-    val apiClient: CoreExampleApiClient = AndroidTestApiClient(
-        appName = "android-mail",
-        productName = "ProtonMail",
-        versionName = "3.0.0"
-    )
+    val apiClient: CoreExampleApiClient = MailApiClient
 
     @BindValue
     val appStore: AppStore = AppStore.GooglePlay
@@ -66,10 +62,6 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
 
     @BindValue
     val accountType: AccountType = AccountType.Internal
-
-    @BindValue
-    @ClientSecret
-    val clientSecret: String = ""
 
     private lateinit var user: User
 

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.test
+package me.proton.core.auth.test.signup
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -39,7 +39,7 @@ import me.proton.core.test.quark.data.User as TestUser
 /** Tests for signing up with an external account.
  * Only for apps that provide [AccountType.External].
  */
-public abstract class ExternalAccountSignupTests {
+public abstract class BaseExternalAccountSignupTests {
     protected abstract val extraHeaderProvider: ExtraHeaderProvider
     protected abstract val quark: Quark
 

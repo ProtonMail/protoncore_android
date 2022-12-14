@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.hilttests
+package me.proton.android.core.coreexample.hilttests.signup
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -28,9 +28,8 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
-import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
+import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
@@ -48,16 +47,13 @@ import me.proton.core.test.quark.data.User as TestUser
 open class ExternalAccountChooseUsernameTest {
 
     private val chooseExternalEmailRobot = ChooseExternalEmailRobot()
+    private lateinit var testUser: TestUser
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
     @BindValue
-    val apiClient: CoreExampleApiClient = AndroidTestApiClient(
-        appName = "android-drive",
-        productName = "ProtonDrive",
-        versionName = "1.0.0"
-    )
+    val apiClient: CoreExampleApiClient = DriveApiClient
 
     @BindValue
     val appStore: AppStore = AppStore.GooglePlay
@@ -68,16 +64,10 @@ open class ExternalAccountChooseUsernameTest {
     @BindValue
     val accountType: AccountType = AccountType.External
 
-    @BindValue
-    @ClientSecret
-    val clientSecret: String = ""
-
     @BeforeTest
     fun prepare() {
         hiltRule.inject()
     }
-
-    private lateinit var testUser: TestUser
 
     @BeforeTest
     fun setUp() {

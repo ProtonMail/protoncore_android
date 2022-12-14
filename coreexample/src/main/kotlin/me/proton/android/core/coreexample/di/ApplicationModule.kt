@@ -45,10 +45,6 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideRequiredAccountType(): AccountType = AccountType.Internal
-
-    @Provides
-    @ClientSecret
-    fun provideClientSecret(): String = ""
 }
 
 @Module

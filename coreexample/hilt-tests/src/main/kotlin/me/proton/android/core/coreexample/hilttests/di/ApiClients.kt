@@ -16,13 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.hilttests.mocks
+package me.proton.android.core.coreexample.hilttests.di
 
-import me.proton.android.core.coreexample.api.CoreExampleApiClient
+import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
 
-class AndroidTestApiClient(
-    override val appName: String,
-    override val productName: String,
-    override val versionName: String,
-    override val shouldUseDoh: Boolean = false
-) : CoreExampleApiClient()
+internal val CalendarApiClient = AndroidTestApiClient(
+    appName = "android-calendar",
+    productName = "ProtonCalendar",
+    versionName = "2.3.11"
+)
+
+internal val DriveApiClient = AndroidTestApiClient(
+    appName = "android-drive",
+    productName = "ProtonDrive",
+    versionName = "1.0.0"
+)
+
+internal val MailApiClient = AndroidTestApiClient(
+    appName = "android-mail",
+    productName = "ProtonMail",
+    versionName = "3.0.9"
+)
+
+internal val VpnApiClient = AndroidTestApiClient(
+    appName = "android-vpn",
+    productName = "ProtonVPN",
+    versionName = "4.4.73.0"
+)

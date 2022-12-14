@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.hilttests
+package me.proton.android.core.coreexample.hilttests.signup
 
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -26,10 +26,9 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
-import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
+import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.ClientSecret
-import me.proton.core.auth.test.ExternalAccountSignupTests
+import me.proton.core.auth.test.signup.BaseExternalAccountSignupTests
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -39,7 +38,7 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
-class DriveExternalAccountSignupTests : ExternalAccountSignupTests() {
+class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests() {
 
     override val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
 
@@ -50,11 +49,7 @@ class DriveExternalAccountSignupTests : ExternalAccountSignupTests() {
     override lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     @BindValue
-    val apiClient: CoreExampleApiClient = AndroidTestApiClient(
-        appName = "android-drive",
-        productName = "ProtonDrive",
-        versionName = "1.0.0"
-    )
+    val apiClient: CoreExampleApiClient = DriveApiClient
 
     @BindValue
     val appStore: AppStore = AppStore.GooglePlay
@@ -64,10 +59,6 @@ class DriveExternalAccountSignupTests : ExternalAccountSignupTests() {
 
     @BindValue
     val accountType: AccountType = AccountType.External
-
-    @BindValue
-    @ClientSecret
-    val clientSecret: String = ""
 
     override fun setUp() {
         hiltRule.inject()
