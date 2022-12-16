@@ -27,6 +27,8 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val ACCOUNT_WAIT_MS = 30L * 1000
 private const val WAIT_DELAY_MS = 250L
@@ -35,9 +37,15 @@ class WaitForPrimaryAccount @Inject constructor(private val accountManager: Acco
     /** Waits for the primary account to be in the given [state].
      * @param state If `null`, the account can be in any state.
      */
-    operator fun invoke(state: AccountState? = AccountState.Ready): Account? = runBlocking { waitForAccount(state) }
+    operator fun invoke(
+        state: AccountState? = AccountState.Ready,
+        timeout: Duration = ACCOUNT_WAIT_MS.milliseconds
+    ): Account? = runBlocking { waitForAccount(state, timeout) }
 
-    private suspend fun waitForAccount(state: AccountState?): Account? = withTimeoutOrNull(ACCOUNT_WAIT_MS) {
+    private suspend fun waitForAccount(
+        state: AccountState?,
+        timeout: Duration
+    ): Account? = withTimeoutOrNull(timeout) {
         var account: Account?
         while (true) {
             account = accountManager.getPrimaryAccount().firstOrNull()
