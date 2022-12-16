@@ -291,6 +291,7 @@ pass-integration-tests:
       --timeout 25m
       --results-dir=$RESULTS_DIR
       --num-flaky-test-attempts=$FLAKY_TEST_RERUN
+      --environment-variables listener=me.proton.core.test.android.ToastingRunListener
       ${EXTRA_OPTIONS}
   after_script:
     - mkdir -p screenshots
