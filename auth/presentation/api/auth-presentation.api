@@ -192,8 +192,8 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 	public final fun setOnSecondFactorResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnSignUpResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnTwoPassModeResult (Lkotlin/jvm/functions/Function1;)V
-	public final fun startAddAccountWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)V
-	public static synthetic fun startAddAccountWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun startAddAccountWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)V
+	public static synthetic fun startAddAccountWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun startChooseAddressWorkflow (Lme/proton/core/account/domain/entity/Account;)V
 	public final fun startConfirmPasswordWorkflow (Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;)V
 	public final fun startLoginWorkflow (Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;)V
@@ -700,14 +700,16 @@ public final class me/proton/core/auth/presentation/databinding/ListItemDomainBi
 
 public final class me/proton/core/auth/presentation/entity/AddAccountInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)V
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)V
 	public final fun component1 ()Lme/proton/core/account/domain/entity/AccountType;
-	public final fun component2 ()Lme/proton/core/domain/entity/Product;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/AddAccountInput;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
+	public final fun component2 ()Lme/proton/core/account/domain/entity/AccountType;
+	public final fun component3 ()Lme/proton/core/domain/entity/Product;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/AddAccountInput;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCreatableAccountType ()Lme/proton/core/account/domain/entity/AccountType;
 	public final fun getLoginUsername ()Ljava/lang/String;
 	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
@@ -1250,7 +1252,7 @@ public final class me/proton/core/auth/presentation/entity/signup/SignUpInput : 
 	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SignUpInput;Lme/proton/core/account/domain/entity/AccountType;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
+	public final fun getCreatableAccountType ()Lme/proton/core/account/domain/entity/AccountType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -1646,10 +1648,16 @@ public final class me/proton/core/auth/presentation/ui/UtilsKt {
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public static final field ARG_INPUT_ACCOUNT_TYPE Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public fun showLoading (Z)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment$Companion {
+	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment_GeneratedInjector {
@@ -1657,25 +1665,20 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
-	public field requiredAccountType Lme/proton/core/account/domain/entity/AccountType;
+	public static final field ARG_INPUT_ACCOUNT_TYPE Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment$Companion;
 	public fun <init> ()V
-	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
-	public final fun setRequiredAccountType (Lme/proton/core/account/domain/entity/AccountType;)V
 	public fun showLoading (Z)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment$Companion {
+	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment_GeneratedInjector {
 	public abstract fun injectChooseInternalEmailFragment (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;)V
-}
-
-public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
-	public synthetic fun injectMembers (Ljava/lang/Object;)V
-	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;)V
-	public static fun injectRequiredAccountType (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;Lme/proton/core/account/domain/entity/AccountType;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {

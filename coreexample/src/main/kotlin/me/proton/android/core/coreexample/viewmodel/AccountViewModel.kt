@@ -148,7 +148,11 @@ class AccountViewModel @Inject constructor(
     fun signIn(username: String? = null) =
         authOrchestrator.startLoginWorkflow(accountType, username = username)
 
-    fun add() = authOrchestrator.startAddAccountWorkflow(accountType, product)
+    fun add() = authOrchestrator.startAddAccountWorkflow(
+        requiredAccountType = accountType,
+        creatableAccountType = accountType,
+        product = product
+    )
 
     fun onAccountClicked(userId: UserId) {
         viewModelScope.launch {
@@ -167,19 +171,19 @@ class AccountViewModel @Inject constructor(
 
     fun onInternalSignUpClicked() {
         viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.Internal)
+            authOrchestrator.startSignupWorkflow(creatableAccountType = AccountType.Internal)
         }
     }
 
     fun onExternalSignUpClicked() {
         viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.External)
+            authOrchestrator.startSignupWorkflow(creatableAccountType = AccountType.External)
         }
     }
 
     fun onUsernameSignUpClicked() {
         viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.Username)
+            authOrchestrator.startSignupWorkflow(creatableAccountType = AccountType.Username)
         }
     }
 }

@@ -68,7 +68,7 @@ class AuthOrchestrator @Inject constructor() {
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
     private var onSignUpResultListener: ((result: SignUpResult?) -> Unit)? = {}
-    internal var onConfirmPasswordResultListener: ((result: ConfirmPasswordResult?) -> Unit)? = {}
+    private var onConfirmPasswordResultListener: ((result: ConfirmPasswordResult?) -> Unit)? = {}
 
     fun setOnAddAccountResult(block: (result: AddAccountResult?) -> Unit) {
         onAddAccountResultListener = block
@@ -248,11 +248,17 @@ class AuthOrchestrator @Inject constructor() {
      */
     fun startAddAccountWorkflow(
         requiredAccountType: AccountType,
+        creatableAccountType: AccountType,
         product: Product,
         loginUsername: String? = null
     ) {
         checkRegistered(addAccountWorkflowLauncher).launch(
-            AddAccountInput(requiredAccountType, product, loginUsername)
+            AddAccountInput(
+                requiredAccountType = requiredAccountType,
+                creatableAccountType = creatableAccountType,
+                product = product,
+                loginUsername = loginUsername
+            )
         )
     }
 
@@ -261,7 +267,11 @@ class AuthOrchestrator @Inject constructor() {
      *
      * @see [onLoginResult]
      */
-    fun startLoginWorkflow(requiredAccountType: AccountType, username: String? = null, password: String? = null) {
+    fun startLoginWorkflow(
+        requiredAccountType: AccountType,
+        username: String? = null,
+        password: String? = null
+    ) {
         checkRegistered(loginWorkflowLauncher).launch(
             LoginInput(requiredAccountType, username, password)
         )
@@ -321,9 +331,9 @@ class AuthOrchestrator @Inject constructor() {
     /**
      * Starts the SignUp workflow.
      */
-    fun startSignupWorkflow(requiredAccountType: AccountType = AccountType.Internal) {
+    fun startSignupWorkflow(creatableAccountType: AccountType = AccountType.Internal) {
         checkRegistered(signUpWorkflowLauncher).launch(
-            SignUpInput(requiredAccountType)
+            SignUpInput(creatableAccountType)
         )
     }
 
@@ -335,7 +345,8 @@ class AuthOrchestrator @Inject constructor() {
         checkRegistered(confirmPasswordWorkflowLauncher).launch(
             ConfirmPasswordInput(
                 userId = scopeMissing.userId.id,
-                missingScopes = scopeMissing.missingScopes.map { it.value })
+                missingScopes = scopeMissing.missingScopes.map { it.value }
+            )
         )
     }
     // endregion

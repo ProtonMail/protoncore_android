@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -35,7 +36,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseInternalEmailBinding
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.*
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.State
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.utils.getUserMessage
@@ -48,17 +49,17 @@ import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choose_internal_email) {
 
-    @Inject
-    lateinit var requiredAccountType: AccountType
-
     private val viewModel by viewModels<ChooseInternalEmailViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupChooseInternalEmailBinding::bind)
+
+    private val creatableAccountType by lazy {
+        AccountType.valueOf(requireNotNull(requireArguments().getString(ARG_INPUT_ACCOUNT_TYPE)))
+    }
 
     override fun onBackPressed() {
         signupViewModel.onFinish()
@@ -82,7 +83,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             nextButton.onClick(::onNextClicked)
             switchButton.onClick(::onSwitchClicked)
 
-            when (requiredAccountType) {
+            when (creatableAccountType) {
                 AccountType.Username -> Unit
                 AccountType.Internal -> {
                     switchButton.visibility = View.GONE
@@ -130,7 +131,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     }
 
     private fun onSwitchClicked() {
-        parentFragmentManager.replaceByExternalEmailChooser()
+        parentFragmentManager.replaceByExternalEmailChooser(creatableAccountType)
     }
 
     private fun onDomains(domains: List<Domain>) {
@@ -171,6 +172,18 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             nextButton.setLoading()
         } else {
             nextButton.setIdle()
+        }
+    }
+
+    companion object {
+        const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
+
+        operator fun invoke(
+            creatableAccountType: AccountType
+        ) = ChooseInternalEmailFragment().apply {
+            arguments = bundleOf(
+                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name
+            )
         }
     }
 }

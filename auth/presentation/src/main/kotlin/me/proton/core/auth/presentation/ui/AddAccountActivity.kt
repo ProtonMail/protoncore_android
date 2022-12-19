@@ -52,20 +52,23 @@ class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(
         input?.requiredAccountType ?: AccountType.Internal
     }
 
+    private val creatableAccountType: AccountType by lazy {
+        input?.creatableAccountType ?: AccountType.Internal
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authOrchestrator.register(this)
 
-        /* A Lottie animation will be added in the next iteration.
-        binding.lottie.addAnimatorUpdateListener {
-            it.doOnEnd { binding.lottie.animate().alpha(0f).setListener(null) }
-        }
-        */
+        // A Lottie animation will be added in the next iteration.
+        // binding.lottie.addAnimatorUpdateListener {
+        //     it.doOnEnd { binding.lottie.animate().alpha(0f).setListener(null) }
+        // }
 
         binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType, input?.loginUsername) }
         authOrchestrator.onLoginResult { if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn) }
 
-        binding.signUp.onClick { authOrchestrator.startSignupWorkflow(requiredAccountType) }
+        binding.signUp.onClick { authOrchestrator.startSignupWorkflow(creatableAccountType) }
         authOrchestrator.onOnSignUpResult { if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignUp) }
     }
 

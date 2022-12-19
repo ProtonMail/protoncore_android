@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -34,7 +35,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseExternalEmailBinding
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.*
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.utils.getUserMessage
@@ -53,6 +54,10 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     private val viewModel by viewModels<ChooseExternalEmailViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupChooseExternalEmailBinding::bind)
+
+    private val creatableAccountType by lazy {
+        AccountType.valueOf(requireNotNull(requireArguments().getString(ARG_INPUT_ACCOUNT_TYPE)))
+    }
 
     override fun onBackPressed() {
         signupViewModel.onFinish()
@@ -105,7 +110,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     }
 
     private fun onSwitchClicked() {
-        parentFragmentManager.replaceByInternalEmailChooser()
+        parentFragmentManager.replaceByInternalEmailChooser(creatableAccountType)
     }
 
     private fun onExternalEmailAvailable(email: String) {
@@ -126,6 +131,18 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             nextButton.setLoading()
         } else {
             nextButton.setIdle()
+        }
+    }
+
+    companion object {
+        const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
+
+        operator fun invoke(
+            creatableAccountType: AccountType
+        ) = ChooseExternalEmailFragment().apply {
+            arguments = bundleOf(
+                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name
+            )
         }
     }
 }

@@ -22,7 +22,6 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -48,7 +47,6 @@ import me.proton.core.auth.presentation.ui.showCongrats
 import me.proton.core.auth.presentation.ui.showCreatingUser
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -80,16 +78,25 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         signUpViewModel.register(this)
 
         if (savedInstanceState == null) {
-            when (input.requiredAccountType) {
-                AccountType.Username -> supportFragmentManager.showUsernameChooser()
-                AccountType.Internal -> supportFragmentManager.showInternalEmailChooser()
-                AccountType.External -> supportFragmentManager.showExternalEmailChooser()
+            with(supportFragmentManager) {
+                when (input.creatableAccountType) {
+                    AccountType.Username -> showUsernameChooser()
+                    AccountType.Internal -> showInternalEmailChooser(input.creatableAccountType)
+                    AccountType.External -> showExternalEmailChooser(input.creatableAccountType)
+                }
             }
         }
 
+        observeSignupViewModelState()
+        observeLoginViewModelState()
+        setPlanResultListener()
+    }
+
+    private fun observeSignupViewModelState() {
         signUpViewModel.state
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
@@ -98,14 +105,16 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is SignupViewModel.State.Idle -> Unit
                     is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady()
                     is SignupViewModel.State.CreateUserProcessing -> onCreateUserProcessing()
-                    is SignupViewModel.State.CreateUserSuccess -> onCreateUserSuccess(it.username, it.password)
+                    is SignupViewModel.State.CreateUserSuccess -> onCreateUserSuccess(it)
                     is SignupViewModel.State.Error.CreateUserCanceled -> Unit
                     is SignupViewModel.State.Error.PlanChooserCanceled -> Unit
                     is SignupViewModel.State.Error.Message -> onCreateUserError(it.message)
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
+    }
 
+    private fun observeLoginViewModelState() {
         loginViewModel.state
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
@@ -116,14 +125,14 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is LoginViewModel.State.Error -> onLoginError(it.error.getUserMessage(resources))
                     is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
                     is LoginViewModel.State.InvalidPassword -> onLoginError(it.error.getUserMessage(resources))
-                    is LoginViewModel.State.ExternalAccountNotSupported -> { }
+                    is LoginViewModel.State.ExternalAccountNotSupported -> {}
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
+    }
 
-        supportFragmentManager.setFragmentResultListener(
-            KEY_PLAN_SELECTED, this
-        ) { _, bundle ->
+    private fun setPlanResultListener() {
+        supportFragmentManager.setFragmentResultListener(KEY_PLAN_SELECTED, this) { _, bundle ->
             val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
             val billingResult = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
             if (plan != null) {
@@ -171,7 +180,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             }
     }
 
-    private fun onCreateUserSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
+    private fun onCreateUserSuccess(state: SignupViewModel.State.CreateUserSuccess) {
         val subscriptionDetails = signUpViewModel.subscriptionDetails
         val billingDetails = subscriptionDetails?.billingResult?.let {
             BillingDetails(
@@ -185,8 +194,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }
 
         loginViewModel.startLoginWorkflowWithEncryptedPassword(
-            loginUsername,
-            encryptedPassword,
+            state.username,
+            state.password,
             signUpViewModel.currentAccountType,
             billingDetails
         )

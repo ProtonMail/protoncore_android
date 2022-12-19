@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui.signup
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
@@ -50,7 +51,7 @@ fun FragmentManager.registerSkipRecoveryDialogResultLauncher(
 }
 
 internal fun FragmentManager.showEmailRecoveryMethodFragment(
-    containerId: Int = android.R.id.content,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_EMAIL_RECOVERY_FRAGMENT) ?: run {
     val emailRecoveryFragment = RecoveryEmailFragment()
     inTransaction {
@@ -61,7 +62,7 @@ internal fun FragmentManager.showEmailRecoveryMethodFragment(
 }
 
 internal fun FragmentManager.showSMSRecoveryMethodFragment(
-    containerId: Int = android.R.id.content,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_SMS_RECOVERY_FRAGMENT) ?: run {
     val smsRecoveryFragment = RecoverySMSFragment()
     inTransaction {
@@ -81,7 +82,7 @@ internal fun FragmentManager.showTermsConditions() {
 }
 
 internal fun FragmentManager.showUsernameChooser(
-    containerId: Int = android.R.id.content,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_USERNAME_CHOOSER) ?: run {
     val fragment = ChooseUsernameFragment()
     inTransaction {
@@ -92,9 +93,10 @@ internal fun FragmentManager.showUsernameChooser(
 }
 
 internal fun FragmentManager.showInternalEmailChooser(
-    containerId: Int = android.R.id.content,
+    creatableAccountType: AccountType,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseInternalEmailFragment()
+    val fragment = ChooseInternalEmailFragment(creatableAccountType)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
@@ -103,9 +105,10 @@ internal fun FragmentManager.showInternalEmailChooser(
 }
 
 internal fun FragmentManager.showExternalEmailChooser(
-    containerId: Int = android.R.id.content,
+    creatableAccountType: AccountType,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_EXTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseExternalEmailFragment()
+    val fragment = ChooseExternalEmailFragment(creatableAccountType)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, fragment, TAG_EXTERNAL_EMAIL_CHOOSER)
@@ -114,9 +117,10 @@ internal fun FragmentManager.showExternalEmailChooser(
 }
 
 internal fun FragmentManager.replaceByInternalEmailChooser(
-    containerId: Int = android.R.id.content,
+    creatableAccountType: AccountType,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseInternalEmailFragment()
+    val fragment = ChooseInternalEmailFragment(creatableAccountType)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
@@ -125,9 +129,10 @@ internal fun FragmentManager.replaceByInternalEmailChooser(
 }
 
 internal fun FragmentManager.replaceByExternalEmailChooser(
-    containerId: Int = android.R.id.content,
+    creatableAccountType: AccountType,
+    containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_EXTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseExternalEmailFragment()
+    val fragment = ChooseExternalEmailFragment(creatableAccountType)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, fragment, TAG_EXTERNAL_EMAIL_CHOOSER)

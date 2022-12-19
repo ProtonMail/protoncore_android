@@ -24,5 +24,5 @@ import me.proton.core.account.domain.entity.AccountType
 
 @Parcelize
 data class SignUpInput(
-    val requiredAccountType: AccountType
+    val creatableAccountType: AccountType
 ) : Parcelable
