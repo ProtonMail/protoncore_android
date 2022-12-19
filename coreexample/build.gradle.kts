@@ -227,7 +227,9 @@ dependencies {
         `room-compiler`,
     )
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
+    debugImplementation(
+        leakCanary
+    )
 
     // Test
     testImplementation(

@@ -151,6 +151,10 @@ public final class me/proton/core/util/kotlin/ProtonCoreConfig : me/proton/core/
 	public final fun setDefaultJsonStringFormat (Lkotlinx/serialization/StringFormat;)V
 }
 
+public final class me/proton/core/util/kotlin/SerializationUtilsKt {
+	public static final fun getSerializer ()Lkotlinx/serialization/StringFormat;
+}
+
 public final class me/proton/core/util/kotlin/StringUtilsKt {
 	public static final field EMPTY_STRING Ljava/lang/String;
 	public static final fun containsNoCase (Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z

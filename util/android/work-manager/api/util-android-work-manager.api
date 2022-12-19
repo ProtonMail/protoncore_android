@@ -9,8 +9,13 @@ public final class me/proton/core/util/android/workmanager/ObserveExtensionsKt {
 	public static final fun observe (Landroidx/work/WorkRequest;Landroidx/work/WorkManager;Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function1;)V
 }
 
+public final class me/proton/core/util/android/workmanager/SerializationExtensionsKt {
+	public static final field SERIALIZED_DATA_KEY Ljava/lang/String;
+}
+
 public final class me/proton/core/util/android/workmanager/WorkRequestObserver {
 	public fun <init> ()V
+	public final fun getSuccessCallback ()Lkotlin/jvm/functions/Function1;
 	public final fun onFailure (Lkotlin/jvm/functions/Function0;)V
 	public final fun onStateChange (Lkotlin/jvm/functions/Function1;)V
 	public final fun onSuccess (Lkotlin/jvm/functions/Function1;)V

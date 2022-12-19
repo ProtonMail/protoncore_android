@@ -50,15 +50,15 @@ public val DependencyHandler.`compose-animation-core`: Any
 public val DependencyHandler.`compose-compiler`: Any
     get() = compose("compiler")
 public val DependencyHandler.`compose-foundation`: Any
-    get() = compose("foundation")
+    get() = compose("foundation", version = `composeFoundation version`)
 public val DependencyHandler.`compose-foundation-layout`: Any
-    get() = compose("foundation", "layout")
+    get() = compose("foundation", "layout", version = `composeFoundation version`)
 public val DependencyHandler.`compose-material`: Any
-    get() = compose("material")
+    get() = compose("material", version = `composeMaterial version`)
+public val DependencyHandler.`compose-material-icons-core`: Any
+    get() = compose("material", moduleSuffix = "icons-core", version = `composeMaterial version`)
 public val DependencyHandler.`compose-material3`: Any
     get() = compose("material3", version = `material3 version`)
-public val DependencyHandler.`compose-material-icons-core`: Any
-    get() = compose("material", moduleSuffix = "icons-core")
 public val DependencyHandler.`compose-runtime`: Any
     get() = compose("runtime")
 public val DependencyHandler.`compose-ui`: Any
@@ -118,6 +118,8 @@ public val DependencyHandler.googleTink: Any
     get() = google("crypto.tink", module = "tink-android") version `googleTink version`
 public val DependencyHandler.guavaListenableFuture: Any
     get() = dependency("com.google.guava", module = "listenablefuture") version `guavaListenableFuture version`
+public val DependencyHandler.leakCanary: Any
+    get() = dependency("com.squareup.leakcanary", module = "leakcanary-android") version `leakCanary version`
 public val DependencyHandler.`lint-core`: Any
     get() = lint()
 public val DependencyHandler.`lint-api`: Any

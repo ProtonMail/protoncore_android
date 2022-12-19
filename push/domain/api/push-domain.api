@@ -72,18 +72,6 @@ public final class me/proton/core/push/domain/entity/PushObjectType : java/lang/
 	public static fun values ()[Lme/proton/core/push/domain/entity/PushObjectType;
 }
 
-public final class me/proton/core/push/domain/entity/PushObjectType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/push/domain/entity/PushObjectType$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/push/domain/entity/PushObjectType;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/push/domain/entity/PushObjectType;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
 public final class me/proton/core/push/domain/entity/PushObjectType$Companion {
 	public final fun getMap ()Ljava/util/Map;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;

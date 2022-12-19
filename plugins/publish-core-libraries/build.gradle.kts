@@ -49,10 +49,6 @@ dependencies {
     implementation(gradleApi())
     implementation(libs.vanniktech.mavenPublish)
     implementation(libs.dokka.gradle)
-    implementation(libs.kotlin.serialization.json) {
-        // Pick a version that is compatible with `embeddedKotlinVersion`:
-        // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
-        version { require("1.3.1") }
-    }
+    implementation(libs.kotlin.serialization.json)
     implementation(libs.gradleNexus.publish)
 }

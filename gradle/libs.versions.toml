@@ -1,15 +1,16 @@
 [versions]
 androidGradle = "7.3.1"
 arturboschDetektGradle = "1.19.0"
-benManesVersions = "0.41.0"
-daggerHiltAndroid = "2.44"
-dependencyAnalysis = "1.11.1"
+benManesVersions = "0.44.0"
+daggerHiltAndroid = "2.44.2"
+dependencyAnalysis = "1.17.0"
 easyGradle = "2.8"
 gradleNexusPublish = "1.1.0"
-kotlin = "1.6.21"
+kotlin = "1.7.20"
+kotlinDokka = "1.7.20"
 kotlinCoroutines = "1.6.4"
-kotlinSerialization = "1.3.3"
-kotlinBinaryCompatibilityValidator = "0.8.0"
+kotlinSerialization = "1.4.1"
+kotlinBinaryCompatibilityValidator = "0.12.1"
 vanniktechPublish = "0.18.0"
 
 [plugins]
@@ -24,7 +25,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradle" }
 arturbosch-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "arturboschDetektGradle" }
 dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHiltAndroid" }
-dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin" }
+dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlinDokka" }
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }
 easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", version.ref = "easyGradle" }
 gradleNexus-publish = { module = "io.github.gradle-nexus:publish-plugin", version.ref = "gradleNexusPublish" }

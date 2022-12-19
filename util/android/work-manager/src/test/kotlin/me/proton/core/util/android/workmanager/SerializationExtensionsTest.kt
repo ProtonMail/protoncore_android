@@ -29,6 +29,8 @@ import kotlin.test.assertFailsWith
 
 class SerializationExtensionsTest {
 
+    private val Data.content get() = keyValueMap.values.first()
+
     @Test
     fun `can create WorkData with explicit serializer`() {
         val input = TestWorkInput("hello", 15)
@@ -90,6 +92,4 @@ class SerializationExtensionsTest {
             message
         )
     }
-
-    private val Data.content get() = keyValueMap.values.first()
 }

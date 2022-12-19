@@ -99,7 +99,7 @@ abstract class ProtonDetektConfiguration {
  */
 private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
-    `detekt version` = "1.21.0"
+    `detekt version` = "1.22.0"
 
     val defaultConfigFilePath = "config/detekt/config.yml"
 

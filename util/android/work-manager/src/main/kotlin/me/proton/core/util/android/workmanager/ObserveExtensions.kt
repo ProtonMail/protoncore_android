@@ -19,12 +19,16 @@ internal fun WorkRequest.observe(
         val state = info.state
         if (state != lastState) {
             lastState = state
-            observer.stateCallback(state)
+            observer.stateCallback.invoke(state)
         }
-        @Suppress("NON_EXHAUSTIVE_WHEN")
+
         when (state) {
-            WorkInfo.State.SUCCEEDED -> observer.successCallback(info.outputData)
-            WorkInfo.State.FAILED -> observer.failureCallback()
+            WorkInfo.State.ENQUEUED,
+            WorkInfo.State.RUNNING -> Unit
+            WorkInfo.State.BLOCKED,
+            WorkInfo.State.CANCELLED,
+            WorkInfo.State.FAILED -> observer.failureCallback.invoke()
+            WorkInfo.State.SUCCEEDED -> observer.successCallback.invoke(info.outputData)
         }
     }
 }

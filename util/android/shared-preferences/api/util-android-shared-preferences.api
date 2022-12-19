@@ -14,6 +14,7 @@ public final class me/proton/core/util/android/sharedpreferences/DelegationExten
 	public static synthetic fun boolean$default (Landroid/content/SharedPreferences;ZLjava/lang/String;ILjava/lang/Object;)Lkotlin/properties/ReadWriteProperty;
 	public static synthetic fun boolean$default (Lme/proton/core/util/android/sharedpreferences/SharedPreferencesDelegationExtensions;Ljava/lang/String;ILjava/lang/Object;)Lkotlin/properties/ReadWriteProperty;
 	public static synthetic fun boolean$default (Lme/proton/core/util/android/sharedpreferences/SharedPreferencesDelegationExtensions;ZLjava/lang/String;ILjava/lang/Object;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun getExt (Landroid/content/SharedPreferences;)Lme/proton/core/util/android/sharedpreferences/SharedPreferencesDelegationExtensions;
 	public static final fun int (Landroid/content/SharedPreferences;ILjava/lang/String;)Lkotlin/properties/ReadWriteProperty;
 	public static final fun int (Landroid/content/SharedPreferences;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
 	public static final fun int (Lme/proton/core/util/android/sharedpreferences/SharedPreferencesDelegationExtensions;ILjava/lang/String;)Lkotlin/properties/ReadWriteProperty;
