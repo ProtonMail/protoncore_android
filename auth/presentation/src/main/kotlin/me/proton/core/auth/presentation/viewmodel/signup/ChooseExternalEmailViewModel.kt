@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ChooseExternalEmailViewModel @Inject constructor(
-    private val accountAvailability: AccountAvailability,
+    private val accountAvailability: AccountAvailability
 ) : ProtonViewModel() {
 
     private val mutableState = MutableStateFlow<State>(State.Idle)

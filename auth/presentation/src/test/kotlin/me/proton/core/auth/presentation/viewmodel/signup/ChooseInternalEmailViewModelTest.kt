@@ -52,6 +52,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             val domainsItem = awaitItem() as State.Domains
             assertEquals(listOf("protonmail.com", "protonmail.ch"), domainsItem.domains)
             cancelAndConsumeRemainingEvents()
@@ -69,6 +70,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Error)
             cancelAndConsumeRemainingEvents()
         }
@@ -92,6 +94,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             val errorItem = awaitItem() as State.Error.Message
             assertEquals("domains error", errorItem.error.getUserMessage(mockk()))
             cancelAndConsumeRemainingEvents()
@@ -110,6 +113,9 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
+            assertTrue(awaitItem() is State.Domains)
+            assertTrue(awaitItem() is State.Processing)
             val item = awaitItem() as State.Success
             assertEquals(testUsername, item.username)
             assertEquals(testDomain, item.domain)
@@ -139,6 +145,9 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
+            assertTrue(awaitItem() is State.Domains)
+            assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }

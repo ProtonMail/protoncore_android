@@ -49,6 +49,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             viewModel.checkExternalEmail(testEmail)
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             val item = awaitItem() as State.Success
             assertEquals(testEmail, item.email)
             cancelAndConsumeRemainingEvents()
@@ -77,6 +78,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             viewModel.checkExternalEmail(testEmail)
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }

@@ -22,7 +22,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.auth.domain.usecase.AccountAvailability
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.*
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.State
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.android.ArchTest
@@ -47,6 +47,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             viewModel.checkUsername(testUsername)
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Success)
             cancelAndConsumeRemainingEvents()
         }
@@ -72,6 +73,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             viewModel.checkUsername(testUsername)
             // THEN
             assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }
