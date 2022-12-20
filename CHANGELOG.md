@@ -11,6 +11,44 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.7.1] - 2022-12-20
+
+### Features
+
+- auth:
+  - External Address Cap A/B support for Sign In and Sign Up. You now have 2 parameters:
+    ```kotlin
+    authOrchestrator.startAddAccountWorkflow(
+        requiredAccountType = AccountType.Internal, // For Sign In.
+        creatableAccountType = AccountType.Internal, // For Sign Up.
+        product = product
+    )
+    ```
+    For example, Drive could allow Sign In External Address but Sign Up Internal Address only:
+    ```kotlin
+    authOrchestrator.startAddAccountWorkflow(
+        requiredAccountType = AccountType.External, // For Sign In.
+        creatableAccountType = AccountType.Internal, // For Sign Up.
+        product = Product.Drive
+    )
+    ```
+  - Added Challenge Payload to Create External Account.
+
+### Bug Fixes
+
+- human-verification: Copy set-cookie headers in overridden webview requests.
+
+### Internationalization
+
+- Upgrade translations from crowdin (b7080093).
+
+### Refactoring
+
+- auth:
+  - Removed unneeded ExternalAccountEnterCode.
+  - Split ChooseUsername, ChooseInternalEmail and ChooseExternalEmail.
+- human-verification: Removed unneeded classes.
+
 ## [9.7.0] - 2022-12-09
 
 ### Breaking Changes
