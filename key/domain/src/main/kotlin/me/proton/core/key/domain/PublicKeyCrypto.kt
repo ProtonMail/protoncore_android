@@ -34,6 +34,10 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
  * Verify [signature] of [text] is correctly signed using this [PublicKey].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @see [PrivateKeyRing.signText]
  */
@@ -41,8 +45,9 @@ fun PublicKey.verifyText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(text, signature, key, time)
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(text, signature, key, time, trimTrailingSpaces)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKey].
@@ -77,6 +82,10 @@ fun PublicKey.verifyFile(
  * return the timestamp if it is, null otherwise.
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @see [PrivateKeyRing.signText]
  */
@@ -84,9 +93,10 @@ fun PublicKey.getVerifiedTimestampOfText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
 ): Long? = if (isActive && canVerify) {
-    context.pgpCrypto.getVerifiedTimestampOfText(text, signature, key, time)
+    context.pgpCrypto.getVerifiedTimestampOfText(text, signature, key, time, trimTrailingSpaces)
 } else {
     null
 }

@@ -297,12 +297,17 @@ fun KeyHolderContext.decryptAndVerifyHashKeyOrNull(
 /**
  * Sign [text] using [PrivateKeyRing].
  *
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [KeyHolderContext.verifyText]
  */
-fun KeyHolderContext.signText(text: String): Signature =
-    privateKeyRing.signText(text)
+fun KeyHolderContext.signText(text: String, trimTrailingSpaces: Boolean = true): Signature =
+    privateKeyRing.signText(text, trimTrailingSpaces)
 
 /**
  * Sign [data] using [PrivateKeyRing].
@@ -328,6 +333,11 @@ fun KeyHolderContext.signFile(file: File): Signature =
  * Sign [text] using [PrivateKeyRing]
  * and then encrypt the signature with [encryptionKeyRing].
  *
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [KeyHolderContext.verifyTextEncrypted]
@@ -335,11 +345,12 @@ fun KeyHolderContext.signFile(file: File): Signature =
 fun KeyHolderContext.signTextEncrypted(
     text: String,
     encryptionKeyRing: PublicKeyRing = publicKeyRing,
+    trimTrailingSpaces: Boolean = true
 ): EncryptedSignature =
     privateKeyRing.signTextEncrypted(
-        context,
         text,
-        encryptionKeyRing
+        encryptionKeyRing,
+        trimTrailingSpaces
     )
 
 /**
@@ -352,7 +363,7 @@ fun KeyHolderContext.signTextEncrypted(
  */
 fun KeyHolderContext.signDataEncrypted(
     data: ByteArray,
-    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+    encryptionKeyRing: PublicKeyRing = publicKeyRing
 ): EncryptedSignature =
     privateKeyRing.signDataEncrypted(
         context,
@@ -370,7 +381,7 @@ fun KeyHolderContext.signDataEncrypted(
  */
 fun KeyHolderContext.signFileEncrypted(
     file: File,
-    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+    encryptionKeyRing: PublicKeyRing = publicKeyRing
 ): EncryptedSignature =
     privateKeyRing.signFileEncrypted(
         context,
@@ -383,6 +394,10 @@ fun KeyHolderContext.signFileEncrypted(
  * and then verify it is a valid signature of [text] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @see [KeyHolderContext.signTextEncrypted]
  */
@@ -390,13 +405,14 @@ fun KeyHolderContext.verifyTextEncrypted(
     text: String,
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
 ): Boolean = privateKeyRing.verifyTextEncrypted(
-    context,
     text,
     encryptedSignature,
     verificationKeyRing,
-    time
+    time,
+    trimTrailingSpaces
 )
 
 /**
@@ -445,6 +461,10 @@ fun KeyHolderContext.verifyFileEncrypted(
  * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -453,8 +473,9 @@ fun KeyHolderContext.verifyFileEncrypted(
 fun KeyHolderContext.verifyText(
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = publicKeyRing.verifyText(context, text, signature, time)
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
+): Boolean = publicKeyRing.verifyText(context, text, signature, time, trimTrailingSpaces)
 
 /**
  * Verify [signature] of [data] is correctly signed using [PublicKeyRing].
@@ -488,11 +509,14 @@ fun KeyHolderContext.verifyFile(
 ): Boolean =
     publicKeyRing.verifyFile(context, file, signature, time)
 
-
 /**
  * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @return the timestamp if at least one [PublicKey] verify [signature], null otherwise
  *
@@ -501,8 +525,9 @@ fun KeyHolderContext.verifyFile(
 fun KeyHolderContext.getVerifiedTimestampOfText(
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Long? = publicKeyRing.getVerifiedTimestampOfText(context, text, signature, time)
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
+): Long? = publicKeyRing.getVerifiedTimestampOfText(context, text, signature, time, trimTrailingSpaces)
 
 /**
  * Verify [signature] of [data] is correctly signed using [PublicKeyRing].
@@ -851,7 +876,7 @@ fun KeyHolderContext.decryptAndVerifyData(
     data: DataPacket,
     keyPacket: KeyPacket,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now,
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedData = decryptSessionKey(keyPacket).use { sessionKey ->
     sessionKey.decryptAndVerifyData(context, data, verifyKeyRing.keys.map { it.key }, time)
 }
@@ -871,7 +896,7 @@ fun KeyHolderContext.decryptAndVerifyData(
     data: DataPacket,
     sessionKey: SessionKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now,
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedData =
     sessionKey.decryptAndVerifyData(context, data, verifyKeyRing.keys.map { it.key }, time)
 

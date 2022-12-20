@@ -328,11 +328,16 @@ interface PGPCrypto {
     /**
      * Sign [plainText] using [unlockedKey].
      *
+     * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+     * before signing the message.
+     * Trimming trailing spaces used to be the default behavior of the library.
+     * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+     *
      * @throws [CryptoException] if [plainText] cannot be signed.
      *
      * @see [verifyText]
      */
-    fun signText(plainText: String, unlockedKey: Unarmored): Signature
+    fun signText(plainText: String, unlockedKey: Unarmored, trimTrailingSpaces: Boolean = true): Signature
 
     /**
      * Sign [data] using [unlockedKey].
@@ -355,6 +360,11 @@ interface PGPCrypto {
     /**
      * Sign [plainText] using [unlockedKey] and encrypt the signature using [encryptionKeys].
      *
+     * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+     * before signing the message.
+     * Trimming trailing spaces used to be the default behavior of the library.
+     * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+     *
      * @throws [CryptoException] if [plainText] cannot be signed.
      *
      * @see [verifyTextEncrypted]
@@ -362,7 +372,8 @@ interface PGPCrypto {
     fun signTextEncrypted(
         plainText: String,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        trimTrailingSpaces: Boolean = true
     ): EncryptedSignature
 
     /**
@@ -395,6 +406,10 @@ interface PGPCrypto {
      * Verify [signature] of [plainText] is correctly signed using [publicKey].
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+     * before verifying the message.
+     * Trimming trailing spaces used to be the default behavior of the library.
+     * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
      * @see [signText]
      */
@@ -402,7 +417,8 @@ interface PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        trimTrailingSpaces: Boolean = true
     ): Boolean
 
     /**
@@ -438,6 +454,10 @@ interface PGPCrypto {
      * Returns the timestamp of the signature, or null if the signature is invalid
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+     * before verifying the message.
+     * Trimming trailing spaces used to be the default behavior of the library.
+     * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
      * @see [signText]
      */
@@ -445,7 +465,8 @@ interface PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        trimTrailingSpaces: Boolean = true
     ): Long?
 
     /**
@@ -468,6 +489,10 @@ interface PGPCrypto {
      * and then verify it is a valid signature of [plainText] using [publicKeys].
      *
      * @param time time for encrypted signature validation, default to [VerificationTime.Now].
+     * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+     * before verifying the message.
+     * Trimming trailing spaces used to be the default behavior of the library.
+     * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
      * @see [signTextEncrypted]
      */
@@ -476,7 +501,8 @@ interface PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        trimTrailingSpaces: Boolean = true
     ): Boolean
 
     /**

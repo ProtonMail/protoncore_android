@@ -193,7 +193,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun getPublicKey (Ljava/lang/String;)Ljava/lang/String;
 	public abstract fun getUnarmored (Ljava/lang/String;)[B
 	public abstract fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
-	public abstract fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
+	public abstract fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Z)Ljava/lang/Long;
 	public abstract fun isPrivateKey (Ljava/lang/String;)Z
 	public abstract fun isPublicKey (Ljava/lang/String;)Z
 	public abstract fun isValidKey (Ljava/lang/String;)Z
@@ -202,8 +202,8 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun signDataEncrypted ([B[BLjava/util/List;)Ljava/lang/String;
 	public abstract fun signFile (Ljava/io/File;[B)Ljava/lang/String;
 	public abstract fun signFileEncrypted (Ljava/io/File;[BLjava/util/List;)Ljava/lang/String;
-	public abstract fun signText (Ljava/lang/String;[B)Ljava/lang/String;
-	public abstract fun signTextEncrypted (Ljava/lang/String;[BLjava/util/List;)Ljava/lang/String;
+	public abstract fun signText (Ljava/lang/String;[BZ)Ljava/lang/String;
+	public abstract fun signTextEncrypted (Ljava/lang/String;[BLjava/util/List;Z)Ljava/lang/String;
 	public abstract fun unlock (Ljava/lang/String;[B)Lme/proton/core/crypto/common/pgp/UnlockedKey;
 	public abstract fun updatePrivateKeyPassphrase (Ljava/lang/String;[B[B)Ljava/lang/String;
 	public abstract fun updateTime (J)V
@@ -211,8 +211,8 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun verifyDataEncrypted ([BLjava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
 	public abstract fun verifyFile (Lme/proton/core/crypto/common/pgp/DecryptedFile;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
 	public abstract fun verifyFileEncrypted (Ljava/io/File;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
-	public abstract fun verifyText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
-	public abstract fun verifyTextEncrypted (Ljava/lang/String;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
+	public abstract fun verifyText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Z)Z
+	public abstract fun verifyTextEncrypted (Ljava/lang/String;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;Z)Z
 }
 
 public final class me/proton/core/crypto/common/pgp/PGPCrypto$DefaultImpls {
@@ -224,13 +224,15 @@ public final class me/proton/core/crypto/common/pgp/PGPCrypto$DefaultImpls {
 	public static synthetic fun generateRandomBytes$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;JILjava/lang/Object;)[B
 	public static synthetic fun getArmored$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLme/proton/core/crypto/common/pgp/PGPHeader;ILjava/lang/Object;)Ljava/lang/String;
 	public static synthetic fun getVerifiedTimestampOfData$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Ljava/lang/Long;
-	public static synthetic fun getVerifiedTimestampOfText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Ljava/lang/Long;
+	public static synthetic fun getVerifiedTimestampOfText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ZILjava/lang/Object;)Ljava/lang/Long;
+	public static synthetic fun signText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[BZILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun signTextEncrypted$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[BLjava/util/List;ZILjava/lang/Object;)Ljava/lang/String;
 	public static synthetic fun verifyData$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
 	public static synthetic fun verifyDataEncrypted$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;[BLjava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
 	public static synthetic fun verifyFile$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Lme/proton/core/crypto/common/pgp/DecryptedFile;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
 	public static synthetic fun verifyFileEncrypted$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/io/File;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
-	public static synthetic fun verifyText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
-	public static synthetic fun verifyTextEncrypted$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ILjava/lang/Object;)Z
+	public static synthetic fun verifyText$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ZILjava/lang/Object;)Z
+	public static synthetic fun verifyTextEncrypted$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ZILjava/lang/Object;)Z
 }
 
 public final class me/proton/core/crypto/common/pgp/PGPCrypto$KeyType : java/lang/Enum {
@@ -267,7 +269,8 @@ public final class me/proton/core/crypto/common/pgp/PGPCryptoOrNullKt {
 	public static final fun lockOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;[B[B)Ljava/lang/String;
 	public static final fun signDataOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;[B[B)Ljava/lang/String;
 	public static final fun signFileOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/io/File;[B)Ljava/lang/String;
-	public static final fun signTextOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B)Ljava/lang/String;
+	public static final fun signTextOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[BZ)Ljava/lang/String;
+	public static synthetic fun signTextOrNull$default (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[BZILjava/lang/Object;)Ljava/lang/String;
 	public static final fun unlockOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B)Lme/proton/core/crypto/common/pgp/UnlockedKey;
 	public static final fun updatePrivateKeyPassphraseOrNull (Lme/proton/core/crypto/common/pgp/PGPCrypto;Ljava/lang/String;[B[B)Ljava/lang/String;
 }
@@ -299,6 +302,12 @@ public final class me/proton/core/crypto/common/pgp/SessionKey : java/io/Closeab
 	public final fun getKey ()[B
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/crypto/common/pgp/TrimStringKt {
+	public static final fun isTrailingSpace (C)Z
+	public static final fun trimLinesEnd (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/String;
+	public static synthetic fun trimLinesEnd$default (Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/String;
 }
 
 public abstract interface class me/proton/core/crypto/common/pgp/UnlockedKey : java/io/Closeable {

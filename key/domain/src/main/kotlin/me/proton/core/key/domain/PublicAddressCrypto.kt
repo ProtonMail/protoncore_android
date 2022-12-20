@@ -35,6 +35,10 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
  * Verify [signature] of [text] is correctly signed using this [PublicAddress.publicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -44,8 +48,9 @@ fun PublicAddress.verifyText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = publicKeyRing().verifyText(context, text, signature, time)
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
+): Boolean = publicKeyRing().verifyText(context, text, signature, time, trimTrailingSpaces)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicAddress.publicKeyRing].
@@ -67,6 +72,10 @@ fun PublicAddress.verifyData(
  * Verify [signature] of [text] is correctly signed using this [PublicAddress.publicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
  *
@@ -76,8 +85,9 @@ fun PublicAddress.getVerifiedTimestampOfText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Long? = publicKeyRing().getVerifiedTimestampOfText(context, text, signature, time)
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
+): Long? = publicKeyRing().getVerifiedTimestampOfText(context, text, signature, time, trimTrailingSpaces)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicAddress.publicKeyRing].

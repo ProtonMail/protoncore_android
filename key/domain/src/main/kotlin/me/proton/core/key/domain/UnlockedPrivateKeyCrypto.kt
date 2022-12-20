@@ -173,12 +173,17 @@ fun UnlockedPrivateKey.decryptSessionKeyOrNull(context: CryptoContext, keyPacket
 /**
  * Sign [text] using this [UnlockedPrivateKey].
  *
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [PublicKey.verifyText]
  */
-fun UnlockedPrivateKey.signText(context: CryptoContext, text: String): Signature =
-    context.pgpCrypto.signText(text, unlockedKey.value)
+fun UnlockedPrivateKey.signText(context: CryptoContext, text: String, trimTrailingSpaces: Boolean = true): Signature =
+    context.pgpCrypto.signText(text, unlockedKey.value, trimTrailingSpaces)
 
 /**
  * Sign [data] using this [UnlockedPrivateKey].
@@ -204,6 +209,11 @@ fun UnlockedPrivateKey.signFile(context: CryptoContext, file: File): Signature =
  * Sign [text] using this [UnlockedPrivateKey]
  * and then encrypt the signature with [encryptionKeyRing].
  *
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [UnlockedPrivateKey.verifyTextEncrypted]
@@ -211,11 +221,13 @@ fun UnlockedPrivateKey.signFile(context: CryptoContext, file: File): Signature =
 fun UnlockedPrivateKey.signTextEncrypted(
     context: CryptoContext,
     text: String,
-    encryptionKeyRing: PublicKeyRing
+    encryptionKeyRing: PublicKeyRing,
+    trimTrailingSpaces: Boolean = true
 ): EncryptedSignature = context.pgpCrypto.signTextEncrypted(
     text,
     unlockedKey.value,
-    encryptionKeyRing.keys.map { it.key }
+    encryptionKeyRing.keys.map { it.key },
+    trimTrailingSpaces
 )
 
 /**
@@ -258,6 +270,11 @@ fun UnlockedPrivateKey.signFileEncrypted(
  * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
  * and then verify it is a valid signature of [text] using [verificationKeyRing]
  *
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
  *
  * @see [UnlockedPrivateKey.signTextEncrypted]
@@ -267,13 +284,15 @@ fun UnlockedPrivateKey.verifyTextEncrypted(
     text: String,
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
 ): Boolean = context.pgpCrypto.verifyTextEncrypted(
     text,
     encryptedSignature,
     unlockedKey.value,
     verificationKeyRing.keys.map { it.key },
-    time
+    time,
+    trimTrailingSpaces
 )
 
 /**
@@ -333,7 +352,7 @@ fun UnlockedPrivateKey.lock(
     isPrimary: Boolean = true,
     isActive: Boolean = true,
     canEncrypt: Boolean = true,
-    canVerify: Boolean = true,
+    canVerify: Boolean = true
 ): PrivateKey = passphrase.decrypt(context.keyStoreCrypto).use { decrypted ->
     context.pgpCrypto.lock(unlockedKey.value, decrypted.array).let {
         PrivateKey(

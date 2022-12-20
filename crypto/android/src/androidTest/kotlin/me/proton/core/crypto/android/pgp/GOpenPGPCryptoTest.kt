@@ -1006,4 +1006,158 @@ internal class GOpenPGPCryptoTest {
     fun isPublicKeyWithRandomData() {
         assertFalse(crypto.isPublicKey("RANDOM DATA"))
     }
+
+    @Test
+    fun signDetachedTrimTrailingSpaces() {
+        // given
+        val plainText = "this is a test\nWith spaces:   \nAnd trailing tabs:\t"
+        val publicKey = TestKey.privateKeyPublicKey
+        // when
+        val signature = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            crypto.signText(
+                plainText,
+                unlockedKey.value,
+                trimTrailingSpaces = true
+            )
+        }
+        // then
+        assertTrue {
+            crypto.verifyText(
+                plainText,
+                signature,
+                publicKey,
+                trimTrailingSpaces = true
+            )
+        }
+        assertFalse {
+            crypto.verifyText(
+                plainText,
+                signature,
+                publicKey,
+                trimTrailingSpaces = false
+            )
+        }
+    }
+
+    @Test
+    fun verifyDetachedGopenpgpv2_4_10() {
+        // given
+        crypto.updateTime(1671550000)
+        val plainText = "This is a test\nWith trailing spaces:    \n  With leading spaces\nWith trailing tabs:\t\t\n\tWith leading tabs\nWith trailing carriage returns:\r\n\rWith leading carriage returns\n\t \r With a mix \t\r\n"
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.4.10
+            Comment: https://gopenpgp.org
+
+            wsBzBAABCgAnBQJjocOZCZARwx6OXgf00BYhBCDPNjtY7JnnIuU+xBHDHo5eB/TQ
+            AACGgwf7Bx6J7JLZ2G6RFvr/wtl0DENZxUVS4H3wZPEIuVTh3/Lzd5BHfWN/mD+q
+            Sz0BcjRNxAI+nDY2/J8HPIibNg1NDlUgrgxK0NPLS1DMWmtoW3JTF5sfFMyiVGxo
+            RH4oluOe/UQcfxYTbMr8/EX8Gc9kdx4U7MqQNEc9CM5VIuxrfMpSZ2hvn5zlwexQ
+            WdnWjVWePpbwpltX98wTlAtU93XARUgeIMrzkhEBc1sNSg6/ynECLENm8EMxWQmj
+            9lpaROb2Fw50G7S1YjSUlc7WK+e4+IIP3Fqw/b21Kd1BasHS92OuHZNalbxyJA0F
+            V6Zkmvzj3h9CucLSJw1Bo6ZJTDbkBQ==
+            =fVs7
+            -----END PGP SIGNATURE-----
+        """.trimIndent()
+        val publicKey = TestKey.privateKeyPublicKey
+        // when
+        val verifiedWithTrimming = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            trimTrailingSpaces = true
+        )
+        val verifiedWithoutTrimming = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            trimTrailingSpaces = false
+        )
+        // then
+        assertTrue(verifiedWithTrimming)
+        assertFalse(verifiedWithoutTrimming)
+    }
+
+    @Test
+    fun verifyDetachedGopenpgpv2_5_0() {
+        // given
+        crypto.updateTime(1671550000)
+        val plainText = "This is a test\n" +
+            "With trailing spaces:    \n" +
+            "  With leading spaces\n" +
+            "With trailing tabs:\t\t\n" +
+            "\tWith leading tabs\n" +
+            "With trailing carriage returns:\r\n" +
+            "\rWith leading carriage returns\n" +
+            "\t \r With a mix \t\r\n"
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.5.0
+            Comment: https://gopenpgp.org
+            
+            wsBzBAEBCgAnBQJjocO4CZARwx6OXgf00BYhBCDPNjtY7JnnIuU+xBHDHo5eB/TQ
+            AACLDQgAiGesYiKYkZCiFvytCmsFa/yTaOh96YaOlGwdXErbwsmEu6ZJfjoLp+Bp
+            bBfpWDIrr93J3J8r9GVLAPrr3Eln3H4gyTNGXsfoCBjAE/25Ly7UtxrXjOonwW49
+            QrbtlZ+t8QzdVdLAppi1LNPgt3PEUQozhHF1PvJUgb97fHTnDydOUD1CKl5zskTl
+            fgRmTojIVqmPkG9VMWdc1sYyPixqTvaXp/Si0YVuHrH/NAjX1VHBLbRanVnd+Gnv
+            2FlchBhWOipboS9Z6wf/4i83ZdOW61xqquUXwNI/K1ZadmS8X/+ojRO93V3FNWmR
+            27KgLumCX2j+vKvb6E3YMWTmTfrxsg==
+            =kmgZ
+            -----END PGP SIGNATURE-----
+        """.trimIndent()
+        val publicKey = TestKey.privateKeyPublicKey
+        // when
+        val verifiedWithTrimming = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            trimTrailingSpaces = true
+        )
+        val verifiedWithoutTrimming = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            trimTrailingSpaces = false
+        )
+        val timestamp = crypto.getVerifiedTimestampOfData(
+            plainText.toByteArray(),
+            signature,
+            publicKey
+        )
+        // then
+        assertFalse(verifiedWithTrimming)
+        assertTrue(verifiedWithoutTrimming)
+    }
+
+    @Test
+    fun signDetachedNoTrimTrailingSpaces() {
+        // given
+        val plainText = "this is a test\nWith spaces:   \nAnd trailing tabs:\t"
+        val publicKey = TestKey.privateKeyPublicKey
+        // when
+        val signature = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            crypto.signText(
+                plainText,
+                unlockedKey.value,
+                trimTrailingSpaces = false
+            )
+        }
+        // then
+        assertFalse {
+            crypto.verifyText(
+                plainText,
+                signature,
+                publicKey,
+                trimTrailingSpaces = true
+            )
+        }
+        assertTrue {
+            crypto.verifyText(
+                plainText,
+                signature,
+                publicKey,
+                trimTrailingSpaces = false
+            )
+        }
+    }
 }

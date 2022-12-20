@@ -101,7 +101,7 @@ open class TestCryptoContext : CryptoContext {
             }
 
         // Concat text+key for testing purpose.
-        override fun signText(plainText: String, unlockedKey: Unarmored): Signature =
+        override fun signText(plainText: String, unlockedKey: Unarmored, trimTrailingSpaces: Boolean): Signature =
             "sign([$plainText], with=${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
@@ -116,9 +116,10 @@ open class TestCryptoContext : CryptoContext {
         override fun signTextEncrypted(
             plainText: String,
             unlockedKey: Unarmored,
-            encryptionKeys: List<Armored>
+            encryptionKeys: List<Armored>,
+            trimTrailingSpaces: Boolean
         ): EncryptedSignature {
-            val signature = signText(plainText, unlockedKey)
+            val signature = signText(plainText, unlockedKey, trimTrailingSpaces)
             return "encrypt([$signature], with=${encryptionKeys.joinToString(", ")})"
                 .encryptMessage(encryptionKeys.first())
         }
@@ -143,7 +144,8 @@ open class TestCryptoContext : CryptoContext {
             plainText: String,
             signature: Signature,
             publicKey: Armored,
-            time: VerificationTime
+            time: VerificationTime,
+            trimTrailingSpaces: Boolean
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
             return plainText == decryptedSignature.extractMessage()
@@ -174,7 +176,8 @@ open class TestCryptoContext : CryptoContext {
             plainText: String,
             signature: Armored,
             publicKey: Armored,
-            time: VerificationTime
+            time: VerificationTime,
+            trimTrailingSpaces: Boolean
         ): Long? {
             val decryptedSignature = signature.decryptMessage(publicKey)
             if (plainText == decryptedSignature.extractMessage()) {
@@ -201,7 +204,8 @@ open class TestCryptoContext : CryptoContext {
             encryptedSignature: EncryptedSignature,
             privateKey: Unarmored,
             publicKeys: List<Armored>,
-            time: VerificationTime
+            time: VerificationTime,
+            trimTrailingSpaces: Boolean
         ): Boolean = runCatching {
             val decryptedSignature = encryptedSignature.decryptMessage(privateKey)
             val signature = decryptedSignature.extractMessage()
@@ -237,7 +241,7 @@ open class TestCryptoContext : CryptoContext {
 
         override fun getEncryptedPackets(message: EncryptedMessage): List<EncryptedPacket> = listOf(
             EncryptedPacket("keyPacket".toByteArray(), PacketType.Key),
-            EncryptedPacket("dataPacket".toByteArray(), PacketType.Data),
+            EncryptedPacket("dataPacket".toByteArray(), PacketType.Data)
         )
 
         override fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String =
@@ -278,7 +282,8 @@ open class TestCryptoContext : CryptoContext {
 
         override fun encryptData(data: ByteArray, sessionKey: SessionKey): DataPacket =
             "BINARY([${data.fromByteArray()}]+${sessionKey.key})"
-                .encryptMessage(sessionKey.key).toByteArray()
+                .encryptMessage(sessionKey.key)
+                .toByteArray()
 
         override fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
             destination.apply { appendBytes(source.readBytes()) }
@@ -301,9 +306,10 @@ open class TestCryptoContext : CryptoContext {
             "BINARY([${data.fromByteArray()}]+$publicKey+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
-        override fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey,  unlockedKey: Unarmored): DataPacket =
+        override fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey, unlockedKey: Unarmored): DataPacket =
             "BINARY([${data.fromByteArray()}]+${sessionKey.key}+${unlockedKey.fromByteArray()})"
-                .encryptMessage(unlockedKey).toByteArray()
+                .encryptMessage(unlockedKey)
+                .toByteArray()
 
         override fun encryptAndSignDataWithCompression(
             data: ByteArray,
@@ -354,7 +360,7 @@ open class TestCryptoContext : CryptoContext {
             data: DataPacket,
             sessionKey: SessionKey,
             publicKeys: List<Armored>,
-            time: VerificationTime,
+            time: VerificationTime
         ): DecryptedData = DecryptedData(
             data.decrypt(sessionKey.key).let { decrypted ->
                 check(String(decrypted).startsWith("BINARY"))
@@ -427,17 +433,13 @@ open class TestCryptoContext : CryptoContext {
             salt: String,
             modulus: String,
             serverEphemeral: String
-        ): SrpProofs {
-            return SrpProofs(mockk(), mockk(), mockk())
-        }
+        ): SrpProofs = SrpProofs(mockk(), mockk(), mockk())
 
         override fun calculatePasswordVerifier(
             username: String,
             password: ByteArray,
             modulusId: String,
             modulus: String
-        ): Auth {
-            return Auth(mockk(), mockk(), mockk(), mockk())
-        }
+        ): Auth = Auth(mockk(), mockk(), mockk(), mockk())
     }
 }

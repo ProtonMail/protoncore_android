@@ -64,6 +64,10 @@ fun PublicKeyRing.encryptSessionKey(context: CryptoContext, sessionKey: SessionK
  * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -73,8 +77,9 @@ fun PublicKeyRing.verifyText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = keys.any { it.verifyText(context, text, signature, time) }
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
+): Boolean = keys.any { it.verifyText(context, text, signature, time, trimTrailingSpaces) }
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKeyRing].
@@ -112,19 +117,25 @@ fun PublicKeyRing.verifyFile(
  * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
  *
  * @see [PrivateKeyRing.signText]
  */
+
 fun PublicKeyRing.getVerifiedTimestampOfText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    trimTrailingSpaces: Boolean = true
 ): Long? = keys
     .asSequence()
-    .mapNotNull { key -> key.getVerifiedTimestampOfText(context, text, signature, time) }
+    .mapNotNull { key -> key.getVerifiedTimestampOfText(context, text, signature, time, trimTrailingSpaces) }
     .firstOrNull()
 
 /**

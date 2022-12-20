@@ -189,7 +189,7 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: decryptSessionKeyWithPassword")
     }
 
-    override fun signText(plainText: String, unlockedKey: Unarmored): Signature {
+    override fun signText(plainText: String, unlockedKey: Unarmored, trimTrailingSpaces: Boolean): Signature {
         return "${plainText.hashCode()}"
     }
 
@@ -204,7 +204,8 @@ class FakePGPCrypto : PGPCrypto {
     override fun signTextEncrypted(
         plainText: String,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        trimTrailingSpaces: Boolean
     ): EncryptedSignature {
         TODO("Not yet implemented: signTextEncrypted")
     }
@@ -229,7 +230,8 @@ class FakePGPCrypto : PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean
     ): Boolean {
         return "${plainText.hashCode()}" == signature
     }
@@ -251,7 +253,8 @@ class FakePGPCrypto : PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean
     ): Long? {
         TODO("Not yet implemented: getVerifiedTimestampOfText")
     }
@@ -270,7 +273,8 @@ class FakePGPCrypto : PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean
     ): Boolean {
         TODO("Not yet implemented: verifyTextEncrypted")
     }

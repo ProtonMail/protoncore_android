@@ -67,7 +67,7 @@ fun PGPCrypto.decryptDataOrNull(
  */
 fun PGPCrypto.decryptDataOrNull(
     data: DataPacket,
-    sessionKey: SessionKey,
+    sessionKey: SessionKey
 ): ByteArray? = runCatching { decryptData(data, sessionKey) }.getOrNull()
 
 /**
@@ -92,14 +92,20 @@ fun PGPCrypto.decryptSessionKeyOrNull(
 ): SessionKey? = runCatching { decryptSessionKey(keyPacket, unlockedKey) }.getOrNull()
 
 /**
+ * @param trimTrailingSpaces: If set to true, each line end will be trimmed of all trailing spaces and tabs,
+ * before signing the message.
+ * Trimming trailing spaces used to be the default behavior of the library.
+ * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ *
  * @return [Signature], or `null` if [plainText] cannot be signed.
  *
  * @see [PGPCrypto.signText]
  */
 fun PGPCrypto.signTextOrNull(
     plainText: String,
-    unlockedKey: Unarmored
-): Signature? = runCatching { signText(plainText, unlockedKey) }.getOrNull()
+    unlockedKey: Unarmored,
+    trimTrailingSpaces: Boolean = true
+): Signature? = runCatching { signText(plainText, unlockedKey, trimTrailingSpaces) }.getOrNull()
 
 /**
  * @return [Signature], or `null` if [data] cannot be signed.
@@ -204,7 +210,7 @@ fun PGPCrypto.encryptAndSignDataWithCompressionOrNull(
 fun PGPCrypto.encryptAndSignDataOrNull(
     data: ByteArray,
     sessionKey: SessionKey,
-    publicKey: Unarmored,
+    publicKey: Unarmored
 ): DataPacket? = runCatching { encryptAndSignData(data, sessionKey, publicKey) }.getOrNull()
 
 /**
@@ -246,7 +252,7 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
     data: DataPacket,
     sessionKey: SessionKey,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now,
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedData? = runCatching { decryptAndVerifyData(data, sessionKey, publicKeys, time) }.getOrNull()
 
 /**
