@@ -58,8 +58,53 @@ open class ContactEventListener : EventListener<String, ContactWithCardsResource
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        // Db.inTransaction(block)
-        return block()
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = block()
+
+    override suspend fun onPrepare(
+        config: EventManagerConfig,
+        entities: List<ContactWithCardsResource>
+    ) {
+        super.onPrepare(config, entities)
+    }
+
+    override suspend fun onCreate(
+        config: EventManagerConfig,
+        entities: List<ContactWithCardsResource>
+    ) {
+        super.onCreate(config, entities)
+    }
+
+    override suspend fun onUpdate(
+        config: EventManagerConfig,
+        entities: List<ContactWithCardsResource>
+    ) {
+        super.onUpdate(config, entities)
+    }
+
+    override suspend fun onPartial(
+        config: EventManagerConfig,
+        entities: List<ContactWithCardsResource>
+    ) {
+        super.onPartial(config, entities)
+    }
+
+    override suspend fun onDelete(config: EventManagerConfig, keys: List<String>) {
+        super.onDelete(config, keys)
+    }
+
+    override suspend fun onResetAll(config: EventManagerConfig) {
+        super.onResetAll(config)
+    }
+
+    override suspend fun onSuccess(config: EventManagerConfig) {
+        super.onSuccess(config)
+    }
+
+    override suspend fun onFailure(config: EventManagerConfig) {
+        super.onFailure(config)
+    }
+
+    override suspend fun onComplete(config: EventManagerConfig) {
+        super.onComplete(config)
     }
 }
