@@ -100,7 +100,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
-            addAccount.onClick { startActivity(Intent(this@MainActivity, AddAccountActivity::class.java)) }
+            addAccount.onClick { accountViewModel.add() }
             signIn.onClick { accountViewModel.signIn() }
             signupInternal.onClick { accountViewModel.onInternalSignUpClicked() }
             signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
@@ -137,7 +137,6 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction()
                 .flowWithLifecycle(lifecycle)
-                .distinctUntilChanged()
                 .onEach {
                     when (it) {
                         is AccountSwitcherViewModel.Action.Add -> accountViewModel.signIn()
@@ -169,9 +168,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         accountViewModel.secureSessionScopes
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
-            .onEach {
-                binding.scopeStatus.text = it.toString()
-            }
+            .onEach { binding.scopeStatus.text = it.toString() }
             .launchIn(lifecycleScope)
 
         secureScopesViewModel.state
@@ -182,9 +179,8 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
         reportsViewModel.bugReportSent
             .flowWithLifecycle(lifecycle)
-            .onEach {
-                binding.root.successSnack(it)
-            }.launchIn(lifecycleScope)
+            .onEach { binding.root.successSnack(it) }
+            .launchIn(lifecycleScope)
 
         plansViewModel.state
             .flowWithLifecycle(lifecycle)
