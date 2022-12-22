@@ -11,6 +11,44 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.8.0] - 2022-12-22
+
+### Chores
+
+- Updated Project-wide Gradle settings (enableJetifier=false).
+- Upgraded Libraries versions.
+
+  - AndroidX Activity: 1.6.1.
+  - AndroidX AppCompat: 1.5.1.
+  - AndroidX Collection: 1.2.0.
+  - AndroidX Compose: 1.3.2.
+  - AndroidX Compose Foundation: 1.3.1.
+  - AndroidX Compose Material: 1.3.1.
+  - AndroidX Compose Material3: 1.0.1.
+  - AndroidX ConstraintLayout: 2.1.4.
+  - AndroidX CoordinatorLayout: 1.2.0.
+  - AndroidX Core KTX: 1.9.0.
+  - AndroidX Espresso: 3.5.0.
+  - AndroidX Fragment: 1.5.5.
+  - AndroidX RecyclerView: 1.2.1.
+  - AndroidX Room: 2.4.3.
+  - AndroidX Test: 1.5.0.
+  - AndroidX Test Monitor: 1.6.0.
+  - AndroidX Test Orchestrator: 1.4.2.
+  - AndroidX Test UiAutomator: 2.3.0-alpha01.
+  - Dagger Hilt: 2.44.2.
+  - Detekt: 1.22.0.
+  - Google Tink: 1.7.0.
+  - Kotlin: 1.7.20.
+  - Kotlin Serialization: 1.4.1.
+  - Material Components For Android: 1.7.0.
+  - Mockk: 1.13.3.
+  - OkHttp: 4.10.0.
+  - Robolectric: 4.9.1.
+  - Store4: 4.0.5.
+  - Turbine: 0.12.1.
+- Upgraded Gradle Wrapper to 7.6.
+
 ## [9.7.1] - 2022-12-20
 
 ### Features
