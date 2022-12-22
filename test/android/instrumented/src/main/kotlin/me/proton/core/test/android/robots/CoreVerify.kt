@@ -21,6 +21,7 @@ package me.proton.core.test.android.robots
 import android.widget.TextView
 import androidx.annotation.StringRes
 import me.proton.core.presentation.R
+import me.proton.core.test.android.instrumented.utils.StringUtils
 
 /**
  * [CoreVerify] Contains common core specific verifications implementation
@@ -28,14 +29,12 @@ import me.proton.core.presentation.R
 open class CoreVerify : CoreRobot() {
     fun errorSnackbarDisplayed(@StringRes stringRes: Int) {
         view
-            .withId(R.id.snackbar_text)
-            .checkContains(stringRes)
+            .withSnackbarText(StringUtils.stringFromResource(stringRes))
     }
 
     fun errorSnackbarDisplayed(text: String) {
         view
-            .withId(R.id.snackbar_text)
-            .checkContains(text)
+            .withSnackbarText(text)
     }
 
     fun inputErrorDisplayed(@StringRes stringRes: Int, scroll: Boolean = false) {
@@ -49,7 +48,6 @@ open class CoreVerify : CoreRobot() {
 
     fun snackbarDisplayed(@StringRes stringRes: Int) {
         view
-            .withId(R.id.snackbar_text)
-            .checkContains(stringRes)
+            .withSnackbarText(StringUtils.stringFromResource(stringRes))
     }
 }

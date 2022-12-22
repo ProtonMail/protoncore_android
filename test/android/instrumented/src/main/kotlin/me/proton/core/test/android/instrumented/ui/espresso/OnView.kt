@@ -225,6 +225,15 @@ class OnView : ConditionWatcher {
         matchers.add(ViewMatchers.withSubstring(substring))
     }
 
+    fun withSnackbarText(text: String) = apply {
+        matchers.add(
+            CoreMatchers.allOf(
+                ViewMatchers.withId(com.google.android.material.R.id.snackbar_text),
+                ViewMatchers.withText(text)
+            )
+        )
+    }
+
     fun withSpinnerText(spinnerText: String) = apply {
         matchers.add(ViewMatchers.withSpinnerText(spinnerText))
     }

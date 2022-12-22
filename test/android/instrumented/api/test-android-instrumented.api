@@ -421,6 +421,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnView :
 	public final fun withParentIndex (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withResourceName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withRootMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withSnackbarText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withSpinnerText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withSubstring (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withTag (Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
