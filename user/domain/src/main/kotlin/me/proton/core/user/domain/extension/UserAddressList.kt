@@ -42,7 +42,7 @@ fun List<UserAddress>.firstInternalOrNull() = filterInternal().firstOrNull()
 /**
  * @return true if migrated/new key format must be generated, false otherwise.
  */
-fun List<UserAddress>.generateNewKeyFormat() = isEmpty() || hasMigratedKey()
+fun List<UserAddress>.generateNewKeyFormat() = all { it.keys.isEmpty() } || hasMigratedKey()
 
 /**
  * @return true if at least one [UserAddress] is migrated into the new key format, false otherwise.
