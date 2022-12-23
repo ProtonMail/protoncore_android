@@ -20,15 +20,15 @@ package me.proton.core.auth.data.api
 
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginInfoRequest
-import me.proton.core.auth.data.api.response.LoginInfoResponse
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
-import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
-import me.proton.core.auth.data.api.response.SecondFactorResponse
+import me.proton.core.auth.data.api.response.LoginInfoResponse
+import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
+import me.proton.core.auth.data.api.response.SecondFactorResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.TimeoutOverride

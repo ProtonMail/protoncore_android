@@ -26,7 +26,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 
 fun Session.toSessionEntity(
-    userId: UserId,
+    userId: UserId?,
     product: Product,
     keyStoreCrypto: KeyStoreCrypto
 ): SessionEntity = SessionEntity(

@@ -19,7 +19,7 @@ public final class me/proton/core/account/data/db/AccountDao_Impl : me/proton/co
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/account/data/entity/AccountEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateAccountState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateSessionState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateSessionState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/account/data/db/AccountMetadataDao_Impl : me/proton/core/account/data/db/AccountMetadataDao {
@@ -50,6 +50,7 @@ public final class me/proton/core/account/data/db/SessionDao_Impl : me/proton/co
 	public fun get (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getRequiredConverters ()Ljava/util/List;
 	public fun getSessionId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUnauthenticatedSessionId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertOrIgnore ([Lme/proton/core/account/data/entity/SessionEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -108,6 +109,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_22_23 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_23_24 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_24_25 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_25_26 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_2_3 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;

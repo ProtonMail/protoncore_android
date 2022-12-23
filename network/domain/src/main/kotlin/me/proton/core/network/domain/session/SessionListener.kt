@@ -21,9 +21,9 @@ package me.proton.core.network.domain.session
 interface SessionListener {
 
     /**
-     * Called when [Session] scopes have been successfully refreshed.
+     * Called when a [Session] token has been successfully created.
      */
-    suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>)
+    suspend fun onSessionTokenCreated(session: Session)
 
     /**
      * Called when a [Session] token has been successfully refreshed.
@@ -31,7 +31,12 @@ interface SessionListener {
     suspend fun onSessionTokenRefreshed(session: Session)
 
     /**
-     * Called when a [Session] has been forced to logout.
+     * Called when [Session] scopes have been successfully refreshed.
+     */
+    suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>)
+
+    /**
+     * Called when a [Session] has been forced to logout (session is not deleted).
      */
     suspend fun onSessionForceLogout(session: Session)
 }

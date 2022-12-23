@@ -44,21 +44,26 @@ object MockClientId {
 
 class MockSessionListener(
     private val onScopesRefreshed: (sessionId: SessionId, scopes: List<String>) -> Unit = { _, _ -> },
+    private val onTokenCreated: (Session) -> Unit = { },
     private val onTokenRefreshed: (Session) -> Unit = { },
-    private val onForceLogout: (Session) -> Unit = { },
-//    private val onVerificationNeeded: (Session, HumanVerificationApiDetails?) -> SessionListener.HumanVerificationResult = { _, _ ->
-//        SessionListener.HumanVerificationResult.Success
-//    }
+    private val onForceLogout: (Session) -> Unit = { }
 ) : SessionListener {
-    override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) =
-        onScopesRefreshed(sessionId, scopes)
+    override suspend fun onSessionScopesRefreshed(
+        sessionId: SessionId,
+        scopes: List<String>
+    ) = onScopesRefreshed(sessionId, scopes)
 
-    override suspend fun onSessionTokenRefreshed(session: Session) = onTokenRefreshed(session)
-    override suspend fun onSessionForceLogout(session: Session) = onForceLogout(session)
-//    override suspend fun onHumanVerificationNeeded(
-//        session: Session,
-//        details: HumanVerificationApiDetails
-//    ): SessionListener.HumanVerificationResult = onVerificationNeeded(session, details)
+    override suspend fun onSessionTokenCreated(
+        session: Session
+    ) = onTokenCreated(session)
+
+    override suspend fun onSessionTokenRefreshed(
+        session: Session
+    ) = onTokenRefreshed(session)
+
+    override suspend fun onSessionForceLogout(
+        session: Session
+    ) = onForceLogout(session)
 }
 
 class MockApiClient : ApiClient {

@@ -27,7 +27,6 @@ import me.proton.core.network.domain.session.SessionId
 data class SessionInfo(
     val username: String,
     val accessToken: String,
-    val expiresIn: Long,
     val tokenType: String,
     val scope: String,
     val scopes: List<String>,

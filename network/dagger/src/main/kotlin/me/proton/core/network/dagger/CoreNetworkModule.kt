@@ -29,6 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
@@ -72,6 +73,7 @@ public class CoreNetworkModule {
     @Suppress("LongParameterList")
     internal fun provideApiFactory(
         @ApplicationContext context: Context,
+        product: Product,
         apiClient: ApiClient,
         clientIdProvider: ClientIdProvider,
         serverTimeListener: ServerTimeListener,
@@ -93,6 +95,8 @@ public class CoreNetworkModule {
         @SharedOkHttpClient okHttpClient: OkHttpClient
     ): ApiManagerFactory {
         return ApiManagerFactory(
+            context,
+            product,
             apiUrl,
             apiClient,
             clientIdProvider,

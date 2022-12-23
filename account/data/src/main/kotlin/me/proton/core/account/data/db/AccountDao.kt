@@ -49,8 +49,8 @@ abstract class AccountDao : BaseDao<AccountEntity>() {
     @Query("UPDATE AccountEntity SET state = :state WHERE userId = :userId")
     abstract suspend fun updateAccountState(userId: UserId, state: AccountState)
 
-    @Query("UPDATE AccountEntity SET sessionState = :state WHERE sessionId = :sessionId")
-    abstract suspend fun updateSessionState(sessionId: SessionId, state: SessionState)
+    @Query("UPDATE AccountEntity SET sessionState = :state WHERE userId = :userId")
+    abstract suspend fun updateSessionState(userId: UserId, state: SessionState)
 
     @Query("UPDATE AccountEntity SET sessionId = :sessionId WHERE userId = :userId")
     abstract suspend fun addSession(userId: UserId, sessionId: SessionId)

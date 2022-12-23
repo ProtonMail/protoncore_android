@@ -20,7 +20,6 @@ package me.proton.core.auth.data.repository
 
 import android.content.Context
 import me.proton.core.auth.data.api.AuthenticationApi
-import me.proton.core.auth.data.api.request.AuthChallengeFrame
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
@@ -35,6 +34,7 @@ import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -86,7 +86,7 @@ class AuthRepositoryImpl(
     /**
      * Returns session scopes.
      */
-    override suspend fun getScopes(sessionId: SessionId): List<String> =
+    override suspend fun getScopes(sessionId: SessionId?): List<String> =
         provider.get<AuthenticationApi>(sessionId).invoke {
             getScopes().scopes
         }.valueOrThrow
@@ -121,12 +121,11 @@ class AuthRepositoryImpl(
         response.toSessionInfo(username)
     }.valueOrThrow
 
-    private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, AuthChallengeFrame?> {
+    private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, ChallengeFrame?> {
         val name = "${product.framePrefix()}-0"
-        val frame = AuthChallengeFrame.AuthChallengeUsernameFrame.from(context, frames.getOrNull(0))
+        val frame = ChallengeFrame.Username.from(context, frames.getOrNull(0))
         return mapOf(name to frame)
     }
-
 
     /**
      * Performs the second factor request for the Accounts that have second factor enabled.
@@ -156,9 +155,6 @@ class AuthRepositoryImpl(
             performSecondFactor(request).toScopeInfo()
         }.valueOrThrow
 
-    /**
-     * Revokes the session for the user.
-     */
     override suspend fun revokeSession(sessionId: SessionId): Boolean =
         provider.get<AuthenticationApi>(sessionId).invoke(forceNoRetryOnConnectionErrors = true) {
             revokeSession(

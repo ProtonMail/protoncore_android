@@ -29,8 +29,11 @@ import retrofit2.http.Tag
 
 interface BaseRetrofitApi {
 
+    @POST("auth/v4/sessions")
+    suspend fun requestToken(@Body request: RequestTokenRequest): TokenResponse
+
     @POST("auth/refresh")
-    suspend fun refreshToken(@Body body: RefreshTokenRequest): RefreshTokenResponse
+    suspend fun refreshToken(@Body body: RefreshTokenRequest): TokenResponse
 
     @GET("tests/ping")
     suspend fun ping(@Tag timeoutOverride: TimeoutOverride)

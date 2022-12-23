@@ -118,10 +118,12 @@ class AccountRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
 
     override suspend fun getAccountOrNull(userId: UserId): Account? =
-        accountDao.getByUserId(userId)?.let { account -> account.toAccount(getAccountInfo(account)) }
+        accountDao.getByUserId(userId)
+            ?.let { account -> account.toAccount(getAccountInfo(account)) }
 
     override suspend fun getAccountOrNull(sessionId: SessionId): Account? =
-        accountDao.getBySessionId(sessionId)?.let { account -> account.toAccount(getAccountInfo(account)) }
+        accountDao.getBySessionId(sessionId)
+            ?.let { account -> account.toAccount(getAccountInfo(account)) }
 
     override fun getSessions(): Flow<List<Session>> =
         sessionDao.findAll(product).map { list ->
@@ -136,8 +138,8 @@ class AccountRepositoryImpl @Inject constructor(
     override suspend fun getSessionOrNull(sessionId: SessionId): Session? =
         sessionDao.get(sessionId)?.toSession(keyStoreCrypto)
 
-    override suspend fun getSessionIdOrNull(userId: UserId): SessionId? =
-        sessionDao.getSessionId(userId)
+    override suspend fun getSessionIdOrNull(userId: UserId?): SessionId? =
+        userId?.let { sessionDao.getSessionId(userId) } ?: sessionDao.getUnauthenticatedSessionId()
 
     override suspend fun createOrUpdateAccountSession(account: Account, session: Session) {
         require(session.isValid()) {
@@ -156,7 +158,7 @@ class AccountRepositoryImpl @Inject constructor(
         // Update/raise provided state with session.
         db.inTransaction {
             val sessionState = account.sessionState ?: SessionState.Authenticated
-            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, keyStoreCrypto))
+            createOrUpdateSession(account.userId, session)
             accountDao.addSession(account.userId, session.sessionId)
             account.details.session?.let { setSessionDetails(session.sessionId, it) }
             updateAccountState(account.userId, account.state)
@@ -211,22 +213,35 @@ class AccountRepositoryImpl @Inject constructor(
         getAccountOrNull(sessionId)?.let { updateAccountState(it.userId, state) }
     }
 
-    override suspend fun updateSessionState(sessionId: SessionId, state: SessionState) {
+    override suspend fun updateSessionState(userId: UserId, state: SessionState) {
         db.inTransaction {
-            accountDao.updateSessionState(sessionId, state)
+            accountDao.updateSessionState(userId, state)
         }
-        getAccountOrNull(sessionId)?.let { tryEmitSessionStateChanged(it) }
+        getAccountOrNull(userId)?.let { tryEmitSessionStateChanged(it) }
     }
 
-    override suspend fun updateSessionScopes(sessionId: SessionId, scopes: List<String>) =
-        sessionDao.updateScopes(sessionId, CommonConverters.fromListOfStringToString(scopes).orEmpty())
+    override suspend fun updateSessionState(sessionId: SessionId, state: SessionState) {
+        getAccountOrNull(sessionId)?.let { updateSessionState(it.userId, state) }
+    }
 
-    override suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String) =
-        sessionDao.updateToken(
-            sessionId,
-            accessToken.encrypt(keyStoreCrypto),
-            refreshToken.encrypt(keyStoreCrypto)
+    override suspend fun createOrUpdateSession(userId: UserId?, session: Session) =
+        sessionDao.insertOrUpdate(session.toSessionEntity(userId, product, keyStoreCrypto))
+
+    override suspend fun updateSessionScopes(sessionId: SessionId, scopes: List<String>) =
+        sessionDao.updateScopes(
+            sessionId = sessionId,
+            scopes = CommonConverters.fromListOfStringToString(scopes).orEmpty()
         )
+
+    override suspend fun updateSessionToken(
+        sessionId: SessionId,
+        accessToken: String,
+        refreshToken: String
+    ) = sessionDao.updateToken(
+        sessionId = sessionId,
+        accessToken = accessToken.encrypt(keyStoreCrypto),
+        refreshToken = refreshToken.encrypt(keyStoreCrypto)
+    )
 
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountMetadataDao.observeLatestPrimary(product)
@@ -267,7 +282,11 @@ class AccountRepositoryImpl @Inject constructor(
     override suspend fun addMigration(userId: UserId, migration: String) =
         db.inTransaction {
             val metadata = accountMetadataDao.getByUserId(product, userId)
-            accountMetadataDao.updateMigrations(product, userId, metadata?.migrations.orEmpty() + migration)
+            accountMetadataDao.updateMigrations(
+                product = product,
+                userId = userId,
+                migrations = metadata?.migrations.orEmpty() + migration
+            )
             accountDao.updateAccountState(userId, AccountState.MigrationNeeded)
         }.also {
             getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }

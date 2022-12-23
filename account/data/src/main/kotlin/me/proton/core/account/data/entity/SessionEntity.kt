@@ -45,7 +45,7 @@ import me.proton.core.network.domain.session.SessionId
     ]
 )
 data class SessionEntity(
-    val userId: UserId,
+    val userId: UserId?,
     val sessionId: SessionId,
     val accessToken: EncryptedString,
     val refreshToken: EncryptedString,

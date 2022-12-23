@@ -23,6 +23,7 @@ import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.extension.dropTable
 import me.proton.core.data.room.db.extension.dropTableColumn
+import me.proton.core.data.room.db.extension.recreateTable
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface AccountDatabase : Database {
@@ -114,6 +115,25 @@ interface AccountDatabase : Database {
                 database.execSQL("UPDATE AccountMetadataEntity SET migrations = 'DecryptPassphrase'")
                 // Change all Ready account to MigrationNeeded.
                 database.execSQL("UPDATE AccountEntity SET state = 'MigrationNeeded' WHERE state = 'Ready'")
+            }
+        }
+
+        /**
+         * - Added nullability for [SessionEntity.userId].
+         */
+        val MIGRATION_5 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.recreateTable(
+                    table = "SessionEntity",
+                    createTable = {
+                        execSQL("CREATE TABLE IF NOT EXISTS `SessionEntity` (`userId` TEXT, `sessionId` TEXT NOT NULL, `accessToken` TEXT NOT NULL, `refreshToken` TEXT NOT NULL, `scopes` TEXT NOT NULL, `product` TEXT NOT NULL, PRIMARY KEY(`sessionId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                    },
+                    createIndices = {
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_SessionEntity_sessionId` ON `SessionEntity` (`sessionId`)")
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_SessionEntity_userId` ON `SessionEntity` (`userId`)")
+                    },
+                    columns = listOf("userId", "sessionId", "accessToken", "refreshToken", "scopes", "product")
+                )
             }
         }
     }

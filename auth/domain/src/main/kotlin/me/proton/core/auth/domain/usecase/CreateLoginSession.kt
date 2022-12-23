@@ -78,7 +78,7 @@ class CreateLoginSession @Inject constructor(
             sessionId = sessionInfo.sessionId,
             accessToken = sessionInfo.accessToken,
             refreshToken = sessionInfo.refreshToken,
-            scopes = sessionInfo.scopes
+            scopes = sessionInfo.scopes,
         )
         accountWorkflow.handleSession(account, session)
     }

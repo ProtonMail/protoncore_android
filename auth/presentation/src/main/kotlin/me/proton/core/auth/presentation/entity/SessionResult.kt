@@ -27,7 +27,6 @@ import me.proton.core.auth.domain.entity.SessionInfo
 data class SessionResult(
     val username: String,
     val accessToken: String,
-    val expiresIn: Long,
     val tokenType: String,
     val scope: String,
     val scopes: List<String>,
@@ -48,7 +47,6 @@ data class SessionResult(
         fun from(sessionInfo: SessionInfo): SessionResult = SessionResult(
             username = sessionInfo.username,
             accessToken = sessionInfo.accessToken,
-            expiresIn = sessionInfo.expiresIn,
             tokenType = sessionInfo.tokenType,
             scope = sessionInfo.scope,
             scopes = sessionInfo.scopes,

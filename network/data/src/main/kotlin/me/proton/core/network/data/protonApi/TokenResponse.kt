@@ -16,13 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.request
+package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
 
 @Serializable
-data class ChallengeFrameType(
-    @SerialName("name")
-    val name: String
-)
+data class TokenResponse(
+    @SerialName("AccessToken")
+    val accessToken: String,
+    @SerialName("RefreshToken")
+    val refreshToken: String,
+    @SerialName("TokenType")
+    val tokenType: String,
+    @SerialName("Scopes")
+    val scopes: List<String>,
+    @SerialName("UID")
+    val sessionId: String
+) {
+    fun toSession(): Session = Session(
+        accessToken = accessToken,
+        refreshToken = refreshToken,
+        scopes = scopes,
+        sessionId = SessionId(sessionId)
+    )
+}

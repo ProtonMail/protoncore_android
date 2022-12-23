@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.plus
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
@@ -43,7 +44,7 @@ import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.MissingScopeHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
-import me.proton.core.network.domain.handlers.RefreshTokenHandler
+import me.proton.core.network.domain.handlers.TokenErrorHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -69,6 +70,8 @@ import kotlin.reflect.KClass
  */
 @Suppress("LongParameterList")
 class ApiManagerFactory(
+    private val context: Context,
+    private val product: Product,
     private val baseUrl: HttpUrl,
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
@@ -133,7 +136,7 @@ class ApiManagerFactory(
         monoClockMs: () -> Long,
         dohApiHandler: DohApiHandler<Api>,
     ): List<ApiErrorHandler<Api>> {
-        val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
+        val tokenErrorHandler = TokenErrorHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val missingScopeHandler =
             MissingScopeHandler<Api>(sessionId, sessionProvider, missingScopeListener)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
@@ -144,7 +147,7 @@ class ApiManagerFactory(
         return listOf(
             dohApiHandler,
             missingScopeHandler,
-            refreshTokenHandler,
+            tokenErrorHandler,
             forceUpdateHandler,
             humanVerificationInvalidHandler,
             humanVerificationNeededHandler,
@@ -173,6 +176,8 @@ class ApiManagerFactory(
             initPinning(builder, baseUrl.host, certificatePins)
         }
         val primaryBackend = ProtonApiBackend(
+            context,
+            product,
             baseUrl.toString(),
             apiClient,
             clientIdProvider,
@@ -185,7 +190,6 @@ class ApiManagerFactory(
             interfaceClass,
             networkManager,
             pinningStrategy,
-            ::javaWallClockMs,
             prefs,
             cookieStore,
             extraHeaderProvider,
@@ -216,6 +220,8 @@ class ApiManagerFactory(
             dohAlternativesListener,
         ) { baseUrl ->
             ProtonApiBackend(
+                context,
+                product,
                 baseUrl,
                 apiClient,
                 clientIdProvider,
@@ -228,7 +234,6 @@ class ApiManagerFactory(
                 interfaceClass,
                 networkManager,
                 alternativePinningStrategy,
-                ::javaWallClockMs,
                 prefs,
                 cookieStore,
                 extraHeaderProvider,

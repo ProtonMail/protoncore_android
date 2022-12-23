@@ -118,6 +118,7 @@ public abstract interface class me/proton/core/account/domain/repository/Account
 	public abstract fun addMigration (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun clearSessionDetails (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createOrUpdateAccountSession (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createOrUpdateSession (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAccount (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
@@ -140,6 +141,7 @@ public abstract interface class me/proton/core/account/domain/repository/Account
 	public abstract fun updateAccountState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateAccountState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateSessionScopes (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateSessionState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateSessionState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateSessionToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

@@ -39,10 +39,12 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.BaseProtonApiUrl
@@ -85,6 +87,9 @@ internal class PinningTests {
     val hiltRule = HiltAndroidRule(this)
 
     @BindValue
+    internal val product: Product = Product.Mail
+
+    @BindValue
     internal val apiClient: ApiClient = TestApiClient()
 
     @BindValue
@@ -106,7 +111,9 @@ internal class PinningTests {
     internal val sessionListener: SessionListener = mockk()
 
     @BindValue
-    internal val sessionProvider: SessionProvider = mockk()
+    internal val sessionProvider: SessionProvider = mockk {
+        coEvery { getSessionId(null) } returns null
+    }
 
     @BindValue
     internal val extraHeaderProvider: ExtraHeaderProvider = ExtraHeaderProviderImpl()

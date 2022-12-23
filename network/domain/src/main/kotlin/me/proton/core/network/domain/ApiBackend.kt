@@ -39,6 +39,13 @@ interface ApiBackend<Api> {
     suspend fun refreshSession(session: Session): ApiResult<Session>
 
     /**
+     * Request an unauthenticated [Session] (accessToken, refreshToken, ...).
+     *
+     * @return [ApiResult] with new [Session].
+     */
+    suspend fun requestSession(): ApiResult<Session>
+
+    /**
      * Lightweight call checking if API might be blocked.
      * @return [true] if API is not reachable and error might indicate blocking.
      */

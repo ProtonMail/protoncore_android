@@ -27,7 +27,7 @@ public abstract class me/proton/core/account/data/db/AccountDao : me/proton/core
 	public abstract fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun removeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateAccountState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun updateSessionState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateSessionState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/account/data/db/AccountDatabase : me/proton/core/data/room/db/Database {
@@ -44,6 +44,7 @@ public final class me/proton/core/account/data/db/AccountDatabase$Companion {
 	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_3 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_4 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_5 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/account/data/db/AccountMetadataDao : me/proton/core/data/room/db/BaseDao {
@@ -62,6 +63,7 @@ public abstract class me/proton/core/account/data/db/SessionDao : me/proton/core
 	public abstract fun findBySessionId (Lme/proton/core/network/domain/session/SessionId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun get (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSessionId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUnauthenticatedSessionId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateScopes (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -172,6 +174,7 @@ public final class me/proton/core/account/data/repository/AccountRepositoryImpl 
 	public fun addMigration (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearSessionDetails (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createOrUpdateAccountSession (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createOrUpdateSession (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAccount (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
@@ -194,6 +197,7 @@ public final class me/proton/core/account/data/repository/AccountRepositoryImpl 
 	public fun updateAccountState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateAccountState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateSessionScopes (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateSessionState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateSessionState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateSessionToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

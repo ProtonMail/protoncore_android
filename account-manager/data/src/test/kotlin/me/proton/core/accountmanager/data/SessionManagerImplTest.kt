@@ -36,11 +36,12 @@ class SessionManagerImplTest {
     private lateinit var accountManager: AccountManagerImpl
     private lateinit var sessionManager: SessionManagerImpl
 
+    private val scopes = listOf("full", "calendar", "mail")
     private val session1 = Session(
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        scopes = listOf("full", "calendar", "mail")
+        scopes = scopes
     )
 
     private val account1 = Account(
@@ -78,20 +79,24 @@ class SessionManagerImplTest {
 
         val newAccessToken = "newAccessToken"
         val newRefreshToken = "newRefreshToken"
+        val newScopes = listOf("scope1", "scope2")
 
         sessionManager.onSessionTokenRefreshed(
             session1.refreshWith(
                 accessToken = newAccessToken,
-                refreshToken = newRefreshToken
+                refreshToken = newRefreshToken,
+                scopes = newScopes
             )
         )
 
         val sessionLists = accountManager.getSessions().toList()
-        assertEquals(2, sessionLists.size)
+        assertEquals(3, sessionLists.size)
         assertEquals(session1.accessToken, sessionLists[0][0].accessToken)
         assertEquals(session1.refreshToken, sessionLists[0][0].refreshToken)
+        assertEquals(session1.scopes, sessionLists[0][0].scopes)
         assertEquals(newAccessToken, sessionLists[1][0].accessToken)
         assertEquals(newRefreshToken, sessionLists[1][0].refreshToken)
+        assertEquals(newScopes, sessionLists[2][0].scopes)
     }
 
     @Test

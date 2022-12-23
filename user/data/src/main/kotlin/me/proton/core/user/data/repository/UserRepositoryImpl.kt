@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.extension.requireValidProof
+import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.context.CryptoContext
@@ -51,7 +52,6 @@ import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
-import me.proton.core.user.data.api.request.UserChallengeFrame
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -259,15 +259,15 @@ class UserRepositoryImpl @Inject constructor(
 
     // region Challenge frame
 
-    private suspend fun getUserSignUpFrameMap(frames: List<ChallengeFrameDetails>): Map<String, UserChallengeFrame?> {
+    private suspend fun getUserSignUpFrameMap(frames: List<ChallengeFrameDetails>): Map<String, ChallengeFrame?> {
         val prefix = product.framePrefix()
         val usernameFrame = frames.find { it.challengeFrame == "username" && it.flow == "signup" }
         val recoveryFrame = frames.find { it.challengeFrame == "recovery" && it.flow == "signup" }
         requireNotNull(usernameFrame)
         // recoveryFrame is optional.
         return mapOf(
-            "$prefix-0" to UserChallengeFrame.UserChallengeUsernameFrame.from(context, usernameFrame),
-            "$prefix-1" to UserChallengeFrame.UserChallengeRecoveryFrame.from(context, recoveryFrame)
+            "$prefix-0" to ChallengeFrame.Username.from(context, usernameFrame),
+            "$prefix-1" to ChallengeFrame.Recovery.from(context, recoveryFrame)
         )
     }
 

@@ -32,7 +32,7 @@ class SessionProviderImpl @Inject constructor(
     override suspend fun getSession(sessionId: SessionId): Session? =
         accountRepository.getSessionOrNull(sessionId)
 
-    override suspend fun getSessionId(userId: UserId): SessionId? =
+    override suspend fun getSessionId(userId: UserId?): SessionId? =
         accountRepository.getSessionIdOrNull(userId)
 
     override suspend fun getUserId(sessionId: SessionId): UserId? =

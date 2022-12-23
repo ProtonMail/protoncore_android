@@ -70,6 +70,234 @@ public final class me/proton/core/challenge/data/entity/ChallengeFrameEntity {
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract class me/proton/core/challenge/data/frame/ChallengeFrame {
+	public static final field Companion Lme/proton/core/challenge/data/frame/ChallengeFrame$Companion;
+	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public abstract fun getAppLanguage ()Ljava/lang/String;
+	public abstract fun getDarkMode ()Z
+	public abstract fun getDeviceName ()J
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getKeyboards ()Ljava/util/List;
+	public abstract fun getRegionCode ()Ljava/lang/String;
+	public abstract fun getRooted ()Z
+	public abstract fun getStorage ()D
+	public abstract fun getTimezone ()Ljava/lang/String;
+	public abstract fun getTimezoneOffset ()I
+	public abstract fun getVersion ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Device : me/proton/core/challenge/data/frame/ChallengeFrame {
+	public static final field Companion Lme/proton/core/challenge/data/frame/ChallengeFrame$Device$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
+	public final fun component11 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()J
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
+	public final fun component7 ()Z
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()D
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAppLanguage ()Ljava/lang/String;
+	public fun getDarkMode ()Z
+	public fun getDeviceName ()J
+	public fun getFontSize ()Ljava/lang/String;
+	public fun getKeyboards ()Ljava/util/List;
+	public fun getRegionCode ()Ljava/lang/String;
+	public fun getRooted ()Z
+	public fun getStorage ()D
+	public fun getTimezone ()Ljava/lang/String;
+	public fun getTimezoneOffset ()I
+	public fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Device$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/challenge/data/frame/ChallengeFrame$Device$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Device$Companion {
+	public final fun build (Landroid/content/Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Recovery : me/proton/core/challenge/data/frame/ChallengeFrame {
+	public static final field Companion Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()Lme/proton/core/challenge/data/frame/FrameType;
+	public final fun component13 ()Ljava/util/List;
+	public final fun component14 ()I
+	public final fun component15 ()Ljava/util/List;
+	public final fun component16 ()Ljava/util/List;
+	public final fun component17 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()J
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
+	public final fun component7 ()Z
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()D
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAppLanguage ()Ljava/lang/String;
+	public final fun getClickOnField ()I
+	public final fun getCopyField ()Ljava/util/List;
+	public fun getDarkMode ()Z
+	public fun getDeviceName ()J
+	public fun getFontSize ()Ljava/lang/String;
+	public final fun getFrame ()Lme/proton/core/challenge/data/frame/FrameType;
+	public final fun getKeyDownField ()Ljava/util/List;
+	public fun getKeyboards ()Ljava/util/List;
+	public final fun getPasteField ()Ljava/util/List;
+	public fun getRegionCode ()Ljava/lang/String;
+	public fun getRooted ()Z
+	public fun getStorage ()D
+	public final fun getTimeOnField ()Ljava/util/List;
+	public fun getTimezone ()Ljava/lang/String;
+	public fun getTimezoneOffset ()I
+	public fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Recovery$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Recovery$Companion {
+	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Username : me/proton/core/challenge/data/frame/ChallengeFrame {
+	public static final field Companion Lme/proton/core/challenge/data/frame/ChallengeFrame$Username$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()Lme/proton/core/challenge/data/frame/FrameType;
+	public final fun component13 ()Ljava/util/List;
+	public final fun component14 ()I
+	public final fun component15 ()Ljava/util/List;
+	public final fun component16 ()Ljava/util/List;
+	public final fun component17 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()J
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
+	public final fun component7 ()Z
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()D
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;IZLjava/lang/String;DZLjava/util/List;Lme/proton/core/challenge/data/frame/FrameType;Ljava/util/List;ILjava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAppLanguage ()Ljava/lang/String;
+	public final fun getClickOnField ()I
+	public final fun getCopyField ()Ljava/util/List;
+	public fun getDarkMode ()Z
+	public fun getDeviceName ()J
+	public fun getFontSize ()Ljava/lang/String;
+	public final fun getFrame ()Lme/proton/core/challenge/data/frame/FrameType;
+	public final fun getKeyDownField ()Ljava/util/List;
+	public fun getKeyboards ()Ljava/util/List;
+	public final fun getPasteField ()Ljava/util/List;
+	public fun getRegionCode ()Ljava/lang/String;
+	public fun getRooted ()Z
+	public fun getStorage ()D
+	public final fun getTimeOnField ()Ljava/util/List;
+	public fun getTimezone ()Ljava/lang/String;
+	public fun getTimezoneOffset ()I
+	public fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Username$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/challenge/data/frame/ChallengeFrame$Username$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/ChallengeFrame$Username$Companion {
+	public final fun from (Landroid/content/Context;Lme/proton/core/challenge/domain/entity/ChallengeFrameDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/FrameType {
+	public static final field Companion Lme/proton/core/challenge/data/frame/FrameType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/challenge/data/frame/FrameType;
+	public static synthetic fun copy$default (Lme/proton/core/challenge/data/frame/FrameType;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/challenge/data/frame/FrameType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/challenge/data/frame/FrameType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/challenge/data/frame/FrameType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/challenge/data/frame/FrameType$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/challenge/data/frame/FrameType;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/challenge/data/frame/FrameType;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/challenge/data/frame/FrameType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/challenge/data/repository/ChallengeRepositoryImpl : me/proton/core/challenge/domain/repository/ChallengeRepository {
 	public fun <init> (Lme/proton/core/challenge/data/db/ChallengeDatabase;)V
 	public fun deleteFrames (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

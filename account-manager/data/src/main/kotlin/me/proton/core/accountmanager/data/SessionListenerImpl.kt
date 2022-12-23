@@ -30,13 +30,18 @@ class SessionListenerImpl @Inject constructor(
     private val accountRepository: AccountRepository
 ) : SessionListener {
 
-    override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) {
-        accountRepository.updateSessionScopes(sessionId, scopes)
+    override suspend fun onSessionTokenCreated(session: Session) {
+        accountRepository.createOrUpdateSession(userId = null, session = session)
     }
 
     override suspend fun onSessionTokenRefreshed(session: Session) {
         accountRepository.updateSessionToken(session.sessionId, session.accessToken, session.refreshToken)
         accountRepository.updateSessionState(session.sessionId, SessionState.Authenticated)
+        accountRepository.updateSessionScopes(session.sessionId, session.scopes)
+    }
+
+    override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) {
+        accountRepository.updateSessionScopes(sessionId, scopes)
     }
 
     override suspend fun onSessionForceLogout(session: Session) {
@@ -44,5 +49,6 @@ class SessionListenerImpl @Inject constructor(
         accountRepository.getAccountOrNull(session.sessionId)?.let { account ->
             accountRepository.updateAccountState(account.userId, AccountState.Disabled)
         }
+        accountRepository.deleteSession(session.sessionId)
     }
 }

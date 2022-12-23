@@ -30,6 +30,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockNetworkManager
@@ -50,7 +52,7 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.handlers.DohApiHandler
-import me.proton.core.network.domain.handlers.RefreshTokenHandler
+import me.proton.core.network.domain.handlers.TokenErrorHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -138,7 +140,10 @@ internal class ApiManagerTests {
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
         coEvery { clientIdProvider.getClientId(any()) } returns clientId
-        coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
+        coEvery { sessionProvider.getSessionId(any()) } answers {
+            // If userId == null -> null (for unauth session tests, see TokenErrorHandlerTest).
+            if (firstArg<UserId?>() != null) session.sessionId else null
+        }
         coEvery { sessionProvider.getSession(any()) } returns session
 
 
@@ -147,6 +152,8 @@ internal class ApiManagerTests {
 
         apiManagerFactory =
             ApiManagerFactory(
+                mockk(),
+                Product.Mail,
                 baseUrl.toHttpUrl(),
                 apiClient,
                 clientIdProvider,
@@ -191,7 +198,7 @@ internal class ApiManagerTests {
         every { altBackend1.baseUrl } returns proxy1url
 
         // Assume no token has been refreshed between each tests.
-        runBlocking { RefreshTokenHandler.reset(session.sessionId) }
+        runBlocking { TokenErrorHandler.reset(session.sessionId) }
     }
 
     @Test

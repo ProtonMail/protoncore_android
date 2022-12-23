@@ -20,6 +20,7 @@ package me.proton.core.user.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.key.data.api.request.AuthRequest
 
 @Serializable
@@ -33,5 +34,5 @@ data class CreateExternalUserRequest(
     @SerialName("Auth")
     val auth: AuthRequest,
     @SerialName("Payload")
-    val payload: Map<String, UserChallengeFrame?>
+    val payload: Map<String, ChallengeFrame?>
 )

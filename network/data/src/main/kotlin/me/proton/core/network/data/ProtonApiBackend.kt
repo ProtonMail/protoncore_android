@@ -17,13 +17,18 @@
  */
 package me.proton.core.network.data
 
+import android.content.Context
 import kotlinx.coroutines.runBlocking
+import me.proton.core.challenge.data.frame.ChallengeFrame
+import me.proton.core.challenge.domain.framePrefix
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.interceptor.CacheOverrideInterceptor
 import me.proton.core.network.data.interceptor.DoHCookieInterceptor
 import me.proton.core.network.data.interceptor.ServerErrorInterceptor
 import me.proton.core.network.data.interceptor.ServerTimeInterceptor
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
+import me.proton.core.network.data.protonApi.RequestTokenRequest
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
@@ -35,9 +40,11 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.domain.session.ResolvedSession
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.network.domain.session.getResolvedSession
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Interceptor
@@ -45,7 +52,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Converter
 import retrofit2.Retrofit
-import java.util.Locale
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
@@ -63,7 +70,10 @@ import kotlin.reflect.KClass
  * @param securityStrategy Strategy function introducing to okhttp builder pinning and other
  *   security features.
  */
+@Suppress("LongParameterList")
 internal class ProtonApiBackend<Api : BaseRetrofitApi>(
+    private val context: Context,
+    private val product: Product,
     override val baseUrl: String,
     private val client: ApiClient,
     private val clientIdProvider: ClientIdProvider,
@@ -76,7 +86,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     interfaceClass: KClass<Api>,
     private val networkManager: NetworkManager,
     securityStrategy: (OkHttpClient.Builder) -> Unit,
-    wallClockMs: () -> Long,
     private val networkPrefs: NetworkPrefs,
     private val cookieStore: ProtonCookieStore?,
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
@@ -113,34 +122,42 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         var chain = chain
         val tag = chain.request().tag(TimeoutOverride::class.java)
         tag?.let { timeout ->
-            timeout.connectionTimeoutSeconds?.let { chain = chain.withConnectTimeout(it, TimeUnit.SECONDS) }
+            timeout.connectionTimeoutSeconds?.let {
+                chain = chain.withConnectTimeout(it, TimeUnit.SECONDS)
+            }
             timeout.readTimeoutSeconds?.let { chain = chain.withReadTimeout(it, TimeUnit.SECONDS) }
-            timeout.writeTimeoutSeconds?.let { chain = chain.withWriteTimeout(it, TimeUnit.SECONDS) }
+            timeout.writeTimeoutSeconds?.let {
+                chain = chain.withWriteTimeout(it, TimeUnit.SECONDS)
+            }
         }
         return chain
     }
 
-    private fun prepareHeaders(original: Request): Request.Builder {
+    private fun prepareHeaders(original: Request): Request.Builder = runBlocking {
         val request = original.newBuilder()
             .header("x-pm-appversion", client.appVersionHeader)
             .header("x-pm-locale", Locale.getDefault().language)
             .header("User-Agent", client.userAgent)
             .method(original.method, original.body)
+
         if (original.header("Accept") == null) {
             request.header("Accept", "application/vnd.protonmail.v1+json")
         }
 
-        sessionId?.let { runBlocking { sessionProvider.getSession(it) } }?.let { session ->
-            session.sessionId.id.takeIfNotBlank()?.let { uid ->
-                request.header("x-pm-uid", uid)
+        when (val resolved = sessionProvider.getResolvedSession(sessionId)) {
+            is ResolvedSession.Found -> {
+                resolved.session.sessionId.id.takeIfNotBlank()?.let { uid ->
+                    request.header("x-pm-uid", uid)
+                }
+                resolved.session.accessToken.takeIfNotBlank()?.let { accessToken ->
+                    request.header("Authorization", "Bearer $accessToken")
+                }
             }
-            session.accessToken.takeIfNotBlank()?.let { accessToken ->
-                request.header("Authorization", "Bearer $accessToken")
-            }
+            is ResolvedSession.NotFound -> Unit
         }
-        val clientId = runBlocking { clientIdProvider.getClientId(sessionId) }
-        if (clientId != null) {
-            runBlocking { humanVerificationProvider.getHumanVerificationDetails(clientId) }?.let { details ->
+
+        clientIdProvider.getClientId(sessionId)?.let { clientId ->
+            humanVerificationProvider.getHumanVerificationDetails(clientId)?.let { details ->
                 details.tokenType?.let { tokenType ->
                     request.header("x-pm-human-verification-token-type", tokenType)
                 }
@@ -154,7 +171,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             request.header(it.first, it.second)
         }
 
-        return request
+        return@runBlocking request
     }
 
     override suspend fun <T> invoke(call: ApiManager.Call<Api, T>): ApiResult<T> =
@@ -165,7 +182,12 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
 
     override suspend fun refreshSession(session: Session): ApiResult<Session> {
         val result = invokeInternal {
-            refreshToken(RefreshTokenRequest(uid = session.sessionId.id, refreshToken = session.refreshToken))
+            refreshToken(
+                RefreshTokenRequest(
+                    uid = session.sessionId.id,
+                    refreshToken = session.refreshToken
+                )
+            )
         }
         return when (result) {
             is ApiResult.Success -> {
@@ -173,7 +195,30 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 ApiResult.Success(
                     session.refreshWith(
                         accessToken = result.value.accessToken,
-                        refreshToken = result.value.refreshToken
+                        refreshToken = result.value.refreshToken,
+                        scopes = result.value.scopes
+                    )
+                )
+            }
+            is ApiResult.Error -> result
+        }
+    }
+
+    override suspend fun requestSession(): ApiResult<Session> {
+        val name = "${product.framePrefix()}-0"
+        val frame = ChallengeFrame.Device.build(context)
+        val result = invokeInternal {
+            requestToken(RequestTokenRequest(payload = mapOf(name to frame))).toSession()
+        }
+        return when (result) {
+            is ApiResult.Success -> {
+                CoreLogger.log(LogTag.REQUEST_TOKEN, "UnAuth tokens requested.")
+                ApiResult.Success(
+                    Session(
+                        sessionId = result.value.sessionId,
+                        accessToken = result.value.accessToken,
+                        refreshToken = result.value.refreshToken,
+                        scopes = result.value.scopes
                     )
                 )
             }

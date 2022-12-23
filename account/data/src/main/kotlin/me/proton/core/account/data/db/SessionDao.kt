@@ -41,7 +41,10 @@ abstract class SessionDao : BaseDao<SessionEntity>() {
     abstract suspend fun get(sessionId: SessionId): SessionEntity?
 
     @Query("SELECT sessionId FROM SessionEntity WHERE userId = :userId")
-    abstract suspend fun getSessionId(userId: UserId): SessionId?
+    abstract suspend fun getSessionId(userId: UserId?): SessionId?
+
+    @Query("SELECT sessionId FROM SessionEntity WHERE userId IS NULL")
+    abstract suspend fun getUnauthenticatedSessionId(): SessionId?
 
     @Query("DELETE FROM SessionEntity WHERE sessionId = :sessionId")
     abstract suspend fun delete(sessionId: SessionId)

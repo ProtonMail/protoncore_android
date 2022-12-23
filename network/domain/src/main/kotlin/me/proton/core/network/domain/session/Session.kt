@@ -22,7 +22,7 @@ data class Session(
     val sessionId: SessionId,
     val accessToken: String,
     val refreshToken: String,
-    val scopes: List<String>
+    val scopes: List<String>,
 ) {
     fun isValid() = listOf(
         sessionId.id,
@@ -30,8 +30,13 @@ data class Session(
         refreshToken
     ).all { it.isNotBlank() }
 
-    fun refreshWith(accessToken: String, refreshToken: String) = copy(
+    fun refreshWith(
+        accessToken: String,
+        refreshToken: String,
+        scopes: List<String>
+    ) = copy(
         accessToken = accessToken,
-        refreshToken = refreshToken
+        refreshToken = refreshToken,
+        scopes = scopes
     )
 }

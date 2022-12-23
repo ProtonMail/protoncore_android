@@ -82,7 +82,7 @@ interface AuthRepository {
      * Get session scopes.
      */
     suspend fun getScopes(
-        sessionId: SessionId
+        sessionId: SessionId?
     ): List<String>
 
     /**

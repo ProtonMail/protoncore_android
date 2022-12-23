@@ -35,6 +35,8 @@ dependencies {
     api(
         project(Module.kotlinUtil),
         project(Module.networkDomain),
+        project(Module.challengeData),
+        project(Module.challengeDomain),
         project(Module.sharedPreferencesUtil),
         `coroutines-core`,
         `javax-inject`,

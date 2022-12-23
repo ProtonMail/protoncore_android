@@ -20,6 +20,7 @@ package me.proton.core.auth.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.challenge.data.frame.ChallengeFrame
 
 @Serializable
 data class LoginRequest(
@@ -34,5 +35,5 @@ data class LoginRequest(
     @SerialName("SRPSession")
     val srpSession: String,
     @SerialName("Payload")
-    val payload: Map<String, AuthChallengeFrame?>
+    val payload: Map<String, ChallengeFrame?>
 )

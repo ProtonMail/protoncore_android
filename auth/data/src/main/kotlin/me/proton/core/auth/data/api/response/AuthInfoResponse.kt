@@ -35,7 +35,7 @@ data class AuthInfoResponse(
     @SerialName("SRPSession")
     val srpSession: String,
     @SerialName("2FA")
-    val secondFactorInfo: SecondFactorInfoResponse
+    val secondFactorInfo: SecondFactorInfoResponse? = null
 ) {
     fun toAuthInfo(username: String): AuthInfo = AuthInfo(
         username = username,
@@ -44,6 +44,6 @@ data class AuthInfoResponse(
         version = version,
         salt = salt,
         srpSession = srpSession,
-        secondFactor = secondFactorInfo.toSecondFactor()
+        secondFactor = secondFactorInfo?.toSecondFactor()
     )
 }

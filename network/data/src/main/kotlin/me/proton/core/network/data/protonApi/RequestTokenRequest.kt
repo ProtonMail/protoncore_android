@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,29 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api.request
+package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.challenge.data.frame.ChallengeFrame
-import me.proton.core.key.data.api.request.AuthRequest
 
 @Serializable
-data class CreateUserRequest(
-    @SerialName("Username")
-    val username: String,
-    @SerialName("Email")
-    val email: String?,
-    @SerialName("Phone")
-    val phone: String?,
-    @SerialName("Referrer")
-    val referrer: String?,
-    @SerialName("Type")
-    val type: Int,
-    @SerialName("Auth")
-    val auth: AuthRequest,
-    @SerialName("Domain")
-    val domain: String?,
+data class RequestTokenRequest(
     @SerialName("Payload")
-    val payload: Map<String, ChallengeFrame?>
+    val payload: Map<String, ChallengeFrame.Device?>
 )

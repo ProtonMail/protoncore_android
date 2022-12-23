@@ -71,7 +71,7 @@ interface AccountRepository {
     /**
      * Get [SessionId], by userId.
      */
-    suspend fun getSessionIdOrNull(userId: UserId): SessionId?
+    suspend fun getSessionIdOrNull(userId: UserId?): SessionId?
 
     /**
      * Create or update an [Account], locally.
@@ -113,9 +113,19 @@ interface AccountRepository {
     suspend fun updateAccountState(sessionId: SessionId, state: AccountState)
 
     /**
-     * Update [SessionState], locally.
+     * Update [SessionState], by [sessionId], locally.
      */
     suspend fun updateSessionState(sessionId: SessionId, state: SessionState)
+
+    /**
+     * Update [SessionState], by [userId], locally.
+     */
+    suspend fun updateSessionState(userId: UserId, state: SessionState)
+
+    /**
+     * Create or Update a session, locally.
+     */
+    suspend fun createOrUpdateSession(userId: UserId?, session: Session)
 
     /**
      * Update session scopes, locally.

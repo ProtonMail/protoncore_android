@@ -42,6 +42,9 @@ object LogTag {
     /** Tag for token refresh. */
     val REFRESH_TOKEN = LoggerLogTag("core.network.token.refresh")
 
+    /** Tag for token request (unauthenticated). */
+    val REQUEST_TOKEN = LoggerLogTag("core.network.token.request")
+
     /** Tag for Server time parse error. */
     val SERVER_TIME_PARSE_ERROR = LoggerLogTag("core.network.server.time.error")
 }

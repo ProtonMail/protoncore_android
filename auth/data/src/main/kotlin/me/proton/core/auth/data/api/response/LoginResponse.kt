@@ -28,8 +28,6 @@ import me.proton.core.network.domain.session.SessionId
 data class LoginResponse(
     @SerialName("AccessToken")
     val accessToken: String,
-    @SerialName("ExpiresIn")
-    val expiresIn: Long,
     @SerialName("TokenType")
     val tokenType: String,
     @SerialName("Scope")
@@ -58,7 +56,6 @@ data class LoginResponse(
     fun toSessionInfo(username: String): SessionInfo = SessionInfo(
         username = username,
         accessToken = accessToken,
-        expiresIn = expiresIn,
         tokenType = tokenType,
         scope = scope,
         scopes = scopes,
