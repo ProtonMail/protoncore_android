@@ -92,6 +92,14 @@ interface ApiClient {
     val enableDebugLogging: Boolean
 
     /**
+     * DNS record type to be used with DoH queries.
+     */
+    enum class DohRecordType {
+        TXT, A
+    }
+    val dohRecordType get() = DohRecordType.TXT
+
+    /**
      * Tells client to force update (this client will no longer be accepted by the API).
      *
      * @param errorMessage the localized error message the user should see.

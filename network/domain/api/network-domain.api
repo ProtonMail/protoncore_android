@@ -13,6 +13,7 @@ public abstract interface class me/proton/core/network/domain/ApiClient {
 	public abstract fun getBackoffRetryCount ()I
 	public abstract fun getCallTimeoutSeconds ()J
 	public abstract fun getConnectTimeoutSeconds ()J
+	public abstract fun getDohRecordType ()Lme/proton/core/network/domain/ApiClient$DohRecordType;
 	public abstract fun getDohServiceTimeoutMs ()J
 	public abstract fun getEnableDebugLogging ()Z
 	public abstract fun getPingTimeoutSeconds ()I
@@ -29,11 +30,19 @@ public final class me/proton/core/network/domain/ApiClient$DefaultImpls {
 	public static fun getBackoffRetryCount (Lme/proton/core/network/domain/ApiClient;)I
 	public static fun getCallTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getConnectTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getDohRecordType (Lme/proton/core/network/domain/ApiClient;)Lme/proton/core/network/domain/ApiClient$DohRecordType;
 	public static fun getDohServiceTimeoutMs (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getPingTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)I
 	public static fun getProxyValidityPeriodMs (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getReadTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getWriteTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
+}
+
+public final class me/proton/core/network/domain/ApiClient$DohRecordType : java/lang/Enum {
+	public static final field A Lme/proton/core/network/domain/ApiClient$DohRecordType;
+	public static final field TXT Lme/proton/core/network/domain/ApiClient$DohRecordType;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/network/domain/ApiClient$DohRecordType;
+	public static fun values ()[Lme/proton/core/network/domain/ApiClient$DohRecordType;
 }
 
 public abstract interface class me/proton/core/network/domain/ApiErrorHandler {

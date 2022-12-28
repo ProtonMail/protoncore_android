@@ -30,6 +30,7 @@ import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
 import org.minidns.dnsmessage.DnsMessage
 import org.minidns.dnsmessage.Question
+import org.minidns.record.A
 import org.minidns.record.Record
 import org.minidns.record.TXT
 import retrofit2.Converter
@@ -42,7 +43,7 @@ import java.util.concurrent.TimeUnit
 class DnsOverHttpsProviderRFC8484(
     baseOkHttpClient: OkHttpClient,
     private val baseUrl: String,
-    client: ApiClient,
+    private val client: ApiClient,
     private val networkManager: NetworkManager
 ) : DohService {
 
@@ -65,7 +66,7 @@ class DnsOverHttpsProviderRFC8484(
                 type: Type,
                 annotations: Array<Annotation>,
                 retrofit: Retrofit
-            ): Converter<ResponseBody, *>? = Converter<ResponseBody, DnsMessage> { body ->
+            ): Converter<ResponseBody, *> = Converter<ResponseBody, DnsMessage> { body ->
                 body.use {
                     DnsMessage(it.bytes())
                 }
@@ -84,7 +85,11 @@ class DnsOverHttpsProviderRFC8484(
         val primaryURI = URI(primaryBaseUrl)
         val base32domain = Base32().encodeAsString(primaryURI.host.toByteArray()).trim('=')
         val sessionPrefix = sessionId?.let { "${sessionId.id}." } ?: ""
-        val question = Question("${sessionPrefix}d$base32domain.protonpro.xyz", Record.TYPE.TXT)
+        val recordType = when (client.dohRecordType) {
+            ApiClient.DohRecordType.TXT -> Record.TYPE.TXT
+            ApiClient.DohRecordType.A -> Record.TYPE.A
+        }
+        val question = Question("${sessionPrefix}d$base32domain.protonpro.xyz", recordType)
         val queryMessage = DnsMessage.builder()
             .setRecursionDesired(true)
             .setQuestion(question)
@@ -101,7 +106,12 @@ class DnsOverHttpsProviderRFC8484(
             val answers = response.value.answerSection
             return try {
                 answers
-                    .mapNotNull { (it.payload as? TXT)?.text }
+                    .mapNotNull {
+                        when (client.dohRecordType) {
+                            ApiClient.DohRecordType.TXT -> (it.payload as? TXT)?.text
+                            ApiClient.DohRecordType.A -> (it.payload as? A)?.toString()
+                        }
+                    }
                     .map { URI("https", it, primaryURI.path, null).toString() }
                     .takeIf { it.isNotEmpty() }
             } catch (e: URISyntaxException) {
