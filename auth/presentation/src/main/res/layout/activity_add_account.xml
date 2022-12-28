@@ -110,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="?attr/add_account_subtitle"
-                android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
 
         </LinearLayout>
