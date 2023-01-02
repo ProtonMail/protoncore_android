@@ -35,15 +35,15 @@
   <string name="plans_billing_yearly">1 évre</string>
   <string name="plans_billing_two_years">2 évre</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">For %d month</item>
-    <item quantity="other">For %d months</item>
+    <item quantity="one">%d hónapra</item>
+    <item quantity="other">%d hónapra</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Váltás nagyobb csomagra</string>
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
   <string name="plans_manage_your_subscription">Az elfizetését az <a href="https://account.protonmail.com">account.protonmail.com</a> címen kezelheti</string>
   <string name="plans_used_space">%s / %s</string>
-  <string name="plans_payments_info_not_available">n/a</string>
+  <string name="plans_payments_info_not_available">nem elérhető</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
   <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>

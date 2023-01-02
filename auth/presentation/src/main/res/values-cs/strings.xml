@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Vytvořte si Proton účet</string>
   <string name="auth_signup_current_email">Místo toho použijte vaši aktuální e-mailovou adresu</string>
-  <string name="auth_signup_create_secure_proton_address">Namísto toho vytvořit zabezpečenou Proton Mail adresu</string>
+  <string name="auth_signup_external_footnote">S adresou Proton můžete využívat všechny služby Proton</string>
+  <string name="auth_signup_internal_footnote">Abyste mohli používat Proton Mail a Proton Calendar, potřebujete e-mailovou adresu Proton</string>
+  <string name="auth_signup_create_secure_proton_address">Získat novou šifrovanou e-mailovou adresu</string>
   <string name="auth_signup_username">Uživatelské jméno</string>
   <string name="auth_signup_domain">Doména</string>
   <string name="auth_signup_email">E-mail</string>

@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Buat Akun Proton Anda</string>
   <string name="auth_signup_current_email">Gunakan alamat email Anda saat ini</string>
-  <string name="auth_signup_create_secure_proton_address">Buat alamat Proton Mail yang aman</string>
+  <string name="auth_signup_external_footnote">Dengan alamat Proton, Anda dapat menggunakan seluruh layanan Proton</string>
+  <string name="auth_signup_internal_footnote">Anda akan butuh alamat Proton untuk dapat menggunakan Proton Mail dan Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Dapatkan alamat email terenkripsi baru</string>
   <string name="auth_signup_username">Nama pengguna</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">Email</string>

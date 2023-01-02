@@ -98,11 +98,13 @@
   <string name="auth_one_account_all_services">Uma conta para todos os serviços Proton.</string>
   <string name="auth_create_account">Criar uma conta</string>
   <string name="auth_long_signup">Signing in, please wait…</string>
-  <string name="auth_long_login">Por favor, aguarde…</string>
+  <string name="auth_long_login">Please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Criar conta Proton</string>
   <string name="auth_signup_current_email">Utilizar o seu email actual</string>
-  <string name="auth_signup_create_secure_proton_address">Criar um endereço seguro do Proton Mail</string>
+  <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
+  <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Get a new encrypted email address</string>
   <string name="auth_signup_username">Utilizador</string>
   <string name="auth_signup_domain">Domínio</string>
   <string name="auth_signup_email">Correio</string>

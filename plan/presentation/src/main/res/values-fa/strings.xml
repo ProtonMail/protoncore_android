@@ -87,7 +87,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN رایگان در یک دستگاه</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">VPN پرسرعت بر روی #proton_vpn# دستگاه</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# high-speed VPN connection</item>
@@ -104,7 +104,7 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">بنایی برای ارتباطات خصوصی و امن.</string>
-  <string name="plan_id_plus_header">نامه‌دان کامل با محافظت پیشرفته.</string>
+  <string name="plan_id_plus_header">صندوق پیام کامل با محافظت پیشرفته.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">۶۳ کشور</string>
   <string name="plan_id_vpnbasic_high_speed">سرعت بالا</string>
@@ -120,7 +120,7 @@
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">پوشه‌ها، برچسب‌ها و فیلترهای نامحدود</string>
   <string name="highest_vpn_speed" comment="new_plans">بالاترین سرعت VPN</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
+  <string name="servers_in_countries" comment="new_plans">بیش از 1500 سرور در ۶۳ کشور</string>
   <string name="ad_blocker" comment="new_plans">مسدودکنندهٔ آگهی تعبیه شده (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">به سرویس‌های پخش آنلاین به صورت جهانی دسترسی پیدا کنید</string>
   <string name="secure_core" comment="new_plans">سرورهای Secure Core</string>

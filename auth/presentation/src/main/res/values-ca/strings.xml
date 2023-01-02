@@ -97,12 +97,14 @@
   <string name="auth_account_not_found_error">Error amb el compte</string>
   <string name="auth_one_account_all_services">Un compte per a tots els serveis Proton.</string>
   <string name="auth_create_account">Crea un compte</string>
-  <string name="auth_long_signup">S\'està iniciant, espereu…</string>
-  <string name="auth_long_login">Espereu…</string>
+  <string name="auth_long_signup">Signing in, please wait…</string>
+  <string name="auth_long_login">Please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creeu el vostre compte Proton</string>
   <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual</string>
-  <string name="auth_signup_create_secure_proton_address">Crea una adreça de Proton Mail segura</string>
+  <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
+  <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Get a new encrypted email address</string>
   <string name="auth_signup_username">Nom d\'usuari</string>
   <string name="auth_signup_domain">Domini</string>
   <string name="auth_signup_email">Correu electrònic</string>

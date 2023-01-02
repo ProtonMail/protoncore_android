@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Opret din Proton-konto</string>
   <string name="auth_signup_current_email">Brug din nuværende e-mail i stedet</string>
-  <string name="auth_signup_create_secure_proton_address">Opret en sikker Proton Mail-adresse i stedet</string>
+  <string name="auth_signup_external_footnote">Med en Proton-adresse kan du bruge alle Proton-tjenester</string>
+  <string name="auth_signup_internal_footnote">Du skal have en Proton-adresse for at bruge Proton Mail og Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Få en ny krypteret e-mailadresse</string>
   <string name="auth_signup_username">Brugernavn</string>
   <string name="auth_signup_domain">Domæne</string>
   <string name="auth_signup_email">E-mail</string>

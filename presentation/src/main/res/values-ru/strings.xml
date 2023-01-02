@@ -25,7 +25,7 @@
   <string name="presentation_force_update_update">Обновить</string>
   <string name="presentation_market_missing">Не могу найти приложение на вашем устройстве. Пожалуйста, перейдите в магазин приложений и установите его.</string>
   <string name="presentation_authenticate">Аутентифицировать</string>
-  <string name="presentation_signin_to_continue">Войдите чтобы продолжить</string>
+  <string name="presentation_signin_to_continue">Войдите, чтобы продолжить</string>
   <string name="presentation_alert_title">Внимание</string>
   <string name="presentation_alert_ok">ОК</string>
   <string name="presentation_alert_enter">Ввести</string>
@@ -42,6 +42,6 @@
   <string name="presentation_skip">Пропустить</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Не удалось подключиться к серверу.</string>
-  <string name="presentation_check_your_connection">Проверить подключение</string>
+  <string name="presentation_check_your_connection">Проверьте подключение</string>
   <string name="presentation_connectivity_issues">Проблемы с подключением</string>
 </resources>

@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crea tu cuenta Proton</string>
   <string name="auth_signup_current_email">Usa tu correo electrónico actual en su lugar</string>
-  <string name="auth_signup_create_secure_proton_address">Crear una dirección segura de Proton Mail en su lugar</string>
+  <string name="auth_signup_external_footnote">Con una dirección de Proton, puedes utilizar todos los servicios de Proton</string>
+  <string name="auth_signup_internal_footnote">Necesitarás una dirección de Proton para utilizar Proton Mail y Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Obtén una nueva dirección de correo electrónico cifrada</string>
   <string name="auth_signup_username">Nombre de usuario</string>
   <string name="auth_signup_domain">Dominio</string>
   <string name="auth_signup_email">Correo electrónico</string>

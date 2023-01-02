@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">建立您的 Proton 帳號</string>
   <string name="auth_signup_current_email">改為使用您目前的電郵位址</string>
-  <string name="auth_signup_create_secure_proton_address">另行創建安全防護的 ProtonMail 電郵位址</string>
+  <string name="auth_signup_external_footnote">使用 Proton 地址，您可以使用所有 Proton 服務</string>
+  <string name="auth_signup_internal_footnote">您需要 Proton 地址才能使用 Proton Mail 與 Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">取得新的加密電子郵件地址</string>
   <string name="auth_signup_username">使用者名稱</string>
   <string name="auth_signup_domain">網域</string>
   <string name="auth_signup_email">電郵</string>

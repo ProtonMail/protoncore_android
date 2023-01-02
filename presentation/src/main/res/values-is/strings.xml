@@ -30,18 +30,18 @@
   <string name="presentation_alert_ok">Í lagi</string>
   <string name="presentation_alert_enter">Setja inn</string>
   <string name="presentation_alert_cancel">Hætta við</string>
-  <string name="presentation_alert_submit">Submit</string>
+  <string name="presentation_alert_submit">Senda inn</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
+  <string name="presentation_menu_item_title_report_a_bug">Tilkynna vandamál</string>
   <string name="presentation_menu_item_title_settings">Stillingar</string>
-  <string name="presentation_menu_item_title_subscription">Subscription</string>
+  <string name="presentation_menu_item_title_subscription">Áskrift</string>
   <string name="presentation_menu_item_title_sign_out">Skrá út</string>
   <!-- Other -->
-  <string name="presentation_back">Back</string>
+  <string name="presentation_back">Til baka</string>
   <string name="presentation_close">Loka</string>
   <string name="presentation_skip">Sleppa</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Could not connect to server.</string>
+  <string name="presentation_general_connection_error">Gat ekki tengst við þjón.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
 </resources>

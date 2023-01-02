@@ -26,19 +26,19 @@
   <string name="payments_error_cvc">Please enter valid security code.</string>
   <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
   <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
-  <string name="payments_error_invalid_session">Invalid session.</string>
+  <string name="payments_error_invalid_session">Ógild setustaða.</string>
   <string name="payments_no_payment_provider">No active payment provider found.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choose your payment method</string>
   <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
-  <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
-  <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Borga %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Borga með</string>
   <string name="payments_method_icon">Payment method icon.</string>
   <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
   <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
   <string name="payments_method_google">Google</string>
-  <string name="payments_method_continue">Continue</string>
+  <string name="payments_method_continue">Halda áfram</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Nánar um greiðslu</string>
@@ -52,11 +52,11 @@
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
   <string name="payments_paying_in_process">Paying</string>
-  <string name="payments_choose_country">Select country</string>
+  <string name="payments_choose_country">Velja skal land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">n/a</string>
-  <string name="payments_billing_yearly">For 1 year</string>
+  <string name="payments_info_not_available">ekki tiltækt</string>
+  <string name="payments_billing_yearly">Í eitt ár</string>
   <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
   <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
   <!-- endregion -->

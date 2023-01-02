@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Stvorite svoj Proton račun</string>
   <string name="auth_signup_current_email">Use your current email instead</string>
-  <string name="auth_signup_create_secure_proton_address">Create a secure Proton Mail address instead</string>
+  <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
+  <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Get a new encrypted email address</string>
   <string name="auth_signup_username">Korisničko ime</string>
   <string name="auth_signup_domain">Domain</string>
   <string name="auth_signup_email">E-pošta</string>

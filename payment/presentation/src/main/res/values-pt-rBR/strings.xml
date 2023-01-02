@@ -52,7 +52,7 @@
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">País</string>
   <string name="payments_paying_in_process">Pagando</string>
-  <string name="payments_choose_country">Selecione o país</string>
+  <string name="payments_choose_country">Selecionar país</string>
   <string name="payment_cc_list_item">%1$s - %2$s (validade %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n/a</string>

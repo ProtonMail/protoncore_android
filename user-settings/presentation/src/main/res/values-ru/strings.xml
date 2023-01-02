@@ -28,7 +28,7 @@
   <string name="settings_password_required">Введите свой пароль для входа</string>
   <string name="settings_password_required_ok">ОК</string>
   <string name="settings_not_set">Не задано</string>
-  <string name="settings_recovery_email_error_no_match">Восстановление и резервный адрес электронной почты не совпадают.</string>
+  <string name="settings_recovery_email_error_no_match">Резервный адрес и его подтверждение не совпадают.</string>
   <string name="settings_validation_email">Недопустимый адрес электронной почты.</string>
   <string name="settings_general_error">Произошла ошибка.</string>
   <!-- login and mailbox password settings -->
@@ -47,7 +47,7 @@
   <string name="settings_password_management_mailbox_password_success">Пароль почтового ящика обновлен</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Анонимная телеметрия</string>
-  <string name="device_settings_telemetry_hint">Иногда мы собираем анонимные данные для улучшения наших служб.</string>
+  <string name="device_settings_telemetry_hint">Иногда мы собираем обезличенные данные для улучшения наших сервисов.</string>
   <string name="device_settings_crashreport_title">Анонимные отчеты о сбоях</string>
-  <string name="device_settings_crashreport_hint">В случае сбоя приложения нашим инженерам будет отправлен отчет с подробным описанием причины. Мы будем использовать их только для улучшения приложения.</string>
+  <string name="device_settings_crashreport_hint">Если приложение завершится с ошибкой, нашим инженерам будет отправлен отчёт с подробной причиной. Мы используем его только для улучшения нашего приложения.</string>
 </resources>

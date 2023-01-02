@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Utwórz konto Proton</string>
   <string name="auth_signup_current_email">Użyj swojego obecnego adresu e-mail</string>
-  <string name="auth_signup_create_secure_proton_address">Utwórz bezpieczny adres Proton Mail</string>
+  <string name="auth_signup_external_footnote">Dzięki adresowi Proton możesz używać wszystkich usług Proton</string>
+  <string name="auth_signup_internal_footnote">Potrzebujesz adresu Proton, aby używać usług Proton Mail i Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Uzyskaj nowy szyfrowany adres e-mail</string>
   <string name="auth_signup_username">Nazwa użytkownika</string>
   <string name="auth_signup_domain">Domena</string>
   <string name="auth_signup_email">Adres e-mail</string>
@@ -138,7 +140,7 @@
   <string name="auth_signup_token_code_resent">Kod tokena został ponownie wysłany.</string>
   <string name="auth_signup_congratulations_subtitle">Konto Proton zostało utworzone.\nCiesz się prywatnością.</string>
   <string name="auth_signup_congratulations">Gratulacje!</string>
-  <string name="auth_signup_start_using_proton">Zacznij korzystać z usługi Proton</string>
+  <string name="auth_signup_start_using_proton">Zacznij korzystać z usług Proton</string>
   <string name="auth_signup_start_using_calendar">Zacznij korzystać z aplikacji Proton Calendar</string>
   <string name="auth_signup_start_using_mail">Zacznij korzystać z aplikacji Proton Mail</string>
   <string name="auth_signup_start_using_drive">Zacznij korzystać z aplikacji Proton Drive</string>

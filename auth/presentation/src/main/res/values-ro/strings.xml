@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creare cont Proton</string>
   <string name="auth_signup_current_email">Folosire adresă de e-mail actuală</string>
-  <string name="auth_signup_create_secure_proton_address">Creați în schimb o adresă sigură Proton Mail</string>
+  <string name="auth_signup_external_footnote">Cu o adresă Proton puteți accesa toate serviciile Proton</string>
+  <string name="auth_signup_internal_footnote">Aveți nevoie de o adresă Proton pentru a utiliza Proton Mail și Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Obțineți o adresă nouă de e-mail criptată</string>
   <string name="auth_signup_username">Nume utilizator</string>
   <string name="auth_signup_domain">Domeniu</string>
   <string name="auth_signup_email">E-mail</string>

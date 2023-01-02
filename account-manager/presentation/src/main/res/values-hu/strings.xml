@@ -17,11 +17,11 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Váltás:</string>
+  <string name="account_switcher_section_switch_to">Váltás</string>
   <string name="account_switcher_action_add_account">Fiók hozzáadása</string>
   <string name="account_switcher_action_sign_in">Bejelentkezés</string>
   <string name="account_switcher_action_sign_out">Kijelentkezés</string>
   <string name="account_switcher_action_remove">Eltávolítás</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
-  <string name="account_view_three_dots_content_description">Options</string>
+  <string name="account_list_item_chevron_content_description">Fiókváltó megnyitása</string>
+  <string name="account_view_three_dots_content_description">Beállítások</string>
 </resources>

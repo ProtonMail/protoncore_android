@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Proton hesabınızı oluşturun</string>
   <string name="auth_signup_current_email">Bunun yerine var olan e-posta adresinizi kullanın</string>
-  <string name="auth_signup_create_secure_proton_address">Bunun yerine güvenli bir Proton Mail adresi oluşturun</string>
+  <string name="auth_signup_external_footnote">Bir Proton adresi ile tüm Proton hizmetlerini kullanabilirsiniz</string>
+  <string name="auth_signup_internal_footnote">Proton Mail ve Proton Calendar uygulamalarını kullanabilmek için bir Proton adresiniz olmalıdır</string>
+  <string name="auth_signup_create_secure_proton_address">Yeni bir şifrelenmiş e-posta adresi alın</string>
   <string name="auth_signup_username">Kullanıcı adı</string>
   <string name="auth_signup_domain">Etki alanı</string>
   <string name="auth_signup_email">E-posta</string>

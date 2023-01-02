@@ -22,28 +22,28 @@
   <string name="plans_fetching_general_error">Villa kom upp við að sækja áskriftarleiðir.</string>
   <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">Free</string>
-  <string name="plan_price_monthly">per month</string>
-  <string name="plan_price_annually">per year</string>
+  <string name="plan_price_monthly">á mánuði</string>
+  <string name="plan_price_annually">á ári</string>
   <string name="plans_current_plan">Núverandi áskriftarleið</string>
-  <string name="plans_upgrade_plan">Upgrade your plan</string>
+  <string name="plans_upgrade_plan">Uppfærðu áskriftina þína</string>
   <string name="plans_subscription">Áskrift</string>
-  <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_renewal_date">Áskriftin þín mun endurnýjast sjálfkrafa þann &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Billed annually at %s</string>
   <string name="plans_billed_monthly">Billed monthly</string>
-  <string name="plans_billing_monthly">For 1 month</string>
-  <string name="plans_billing_yearly">For 1 year</string>
-  <string name="plans_billing_two_years">For 2 years</string>
+  <string name="plans_billing_monthly">Í 1 mánuð</string>
+  <string name="plans_billing_yearly">Í 1 ár</string>
+  <string name="plans_billing_two_years">Í 2 ár</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">For %d month</item>
-    <item quantity="other">For %d months</item>
+    <item quantity="one">Í %d mánuð</item>
+    <item quantity="other">Í %d mánuði</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Uppfærðu áskriftina þína</string>
-  <string name="plans_proton_for_free">Get Proton for free</string>
-  <string name="plans_get_proton">Get %s</string>
+  <string name="plans_proton_for_free">Fáðu Proton ókeypis</string>
+  <string name="plans_get_proton">Fáðu %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
-  <string name="plans_used_space">%s of %s</string>
-  <string name="plans_payments_info_not_available">n/a</string>
+  <string name="plans_used_space">%s af %s</string>
+  <string name="plans_payments_info_not_available">ekki tiltækt</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
   <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
@@ -106,25 +106,25 @@
   <string name="plan_id_free_header">The basic for private and secure communications.</string>
   <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_countries">63 countries</string>
-  <string name="plan_id_vpnbasic_high_speed">High speed</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnbasic_countries">63 lönd</string>
+  <string name="plan_id_vpnbasic_high_speed">Hár hraði</string>
+  <string name="plan_id_vpnplus_adblock">Auglýsingabani (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Streaming service support</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_countries">63 countries</string>
+  <string name="plan_id_vpnplus_countries">63 lönd</string>
   <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Multi-user support</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Unlimited folders, labels, and filters</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Ótakmarkaðar möppur, merkimiðar og síur</string>
   <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
-  <string name="ad_blocker" comment="new_plans">Built-in ad-blocker (NetShield)</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ netþjónar í 63 löndum</string>
+  <string name="ad_blocker" comment="new_plans">Innbyggður auglýsingabani (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
   <string name="secure_core" comment="new_plans">Secure Core servers</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor yfir VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>

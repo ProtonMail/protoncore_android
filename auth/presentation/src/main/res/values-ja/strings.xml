@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Proton アカウントを作成</string>
   <string name="auth_signup_current_email">代わりに現在のメールアドレスを使用</string>
-  <string name="auth_signup_create_secure_proton_address">代わりに安全な Proton Mail アドレスを作成</string>
+  <string name="auth_signup_external_footnote">ひとつのProtonアドレスで、すべてのProtonサービスを利用できます</string>
+  <string name="auth_signup_internal_footnote">Proton MailとProton Calendarの利用には、Protonアドレスがひとつ必要です</string>
+  <string name="auth_signup_create_secure_proton_address">新しい暗号化メールアドレスを取得する</string>
   <string name="auth_signup_username">ユーザー名</string>
   <string name="auth_signup_domain">ドメイン</string>
   <string name="auth_signup_email">メールアドレス</string>

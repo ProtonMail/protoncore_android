@@ -20,22 +20,22 @@
   <string name="core_report_bug_activity_title">گزارش یک مشکل</string>
   <string name="core_report_bug_close">بستن</string>
   <string name="core_report_bug_subject_field_hint">موضوع</string>
-  <string name="core_report_bug_subject_field_required">Enter a subject</string>
-  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_subject_field_required">یک موضوع وارد کنید</string>
+  <string name="core_report_bug_description_field_hint">چه اشتباهی پیش آمد؟ حداقل ۱۰ نویسه</string>
+  <string name="core_report_bug_description_field_placeholder">لطفا مشکل را تا جایی که میتوانید با جزئیات شرح دهید. اگر با پیام خطا رو به رو شدید، به ما بگویید که پیام چه میگفت.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Enter at least %d character</item>
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="one">حداقل %d نویسه وارد کنید</item>
+    <item quantity="other">حداقل %d نویسه وارد کنید</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
-  <string name="core_report_bug_discard_changes_cancel">ادامه ویرایش</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_title">بستن گزارش اشکال؟</string>
+  <string name="core_report_bug_discard_changes_description">اگر شما این صفحه را ترک کنید، گزارش شما ذخیره نمیشود.</string>
+  <string name="core_report_bug_discard_changes_cancel">ادامه نوشتن</string>
+  <string name="core_report_bug_discard_changes_confirm">بستن بدون دخیره کردن</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">حداکثر %d نویسه</item>
+    <item quantity="other">حداکثر %d نویسه</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
+  <string name="core_report_bug_general_error">مشکلی پیش آمد، لطفا چند دقیقه بعد دوباره امتحان کنید.</string>
   <string name="core_report_bug_send">ارسال گزارش</string>
   <string name="core_report_bug_success">از گزارش شما متشکریم</string>
 </resources>

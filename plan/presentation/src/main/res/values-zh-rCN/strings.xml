@@ -64,19 +64,20 @@
     <item quantity="other">#proton_addresses# 个邮箱地址 / 用户</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_addresses# addresses</item>
+    <item quantity="other">%d / #proton_addresses# 个邮箱地址</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="other">支持 #proton_domains# 个自有域名</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# 个私人日历</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="other">%d / #proton_calendars# 个日历</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">单设备免费 VPN
+#proton_vpn# 台设备可同时接入高速 VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 台设备可接入高速 VPN</item>
@@ -85,7 +86,7 @@
     <item quantity="other">#proton_users# 位用户</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="other">%d / #proton_users# 位用户</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -110,11 +111,11 @@
   <string name="ad_blocker" comment="new_plans">内置广告过滤器（NetShield）</string>
   <string name="streaming_services_access" comment="new_plans">畅享全球流媒体服务</string>
   <string name="secure_core" comment="new_plans">安全的核心服务器</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor + VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">包含多种高级功能的安全邮箱，充分满足您的日常通讯需求。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隐私和安全是我们的首要任务。</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">各项 Proton 服务深度融合，为您提供全方位的隐私保护。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>欧元</item>

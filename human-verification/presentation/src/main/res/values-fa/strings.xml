@@ -20,13 +20,13 @@
   <!-- base common strings -->
   <string name="human_verification_help">راهنما</string>
   <string name="human_verification_title">اعتبارسنجی</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_main_subtitle">برای جلوگیری از سوء استفاده، لطفا با استفاده از یکی از روشهای زیر تایید کنید که انسان هستید</string>
   <string name="human_verification_enter_code_subtitle">کد تاییدی که به %s ارسال شد را وارد نمایید.</string>
   <string name="human_verification_enter_code_subtitle_email">کد تأییدی که به %s ارسال شد وارد کنید. اگر ایمیل را در صندوق ورودی خود پیدا نمیکنید، لطفاً پوشه هرزنامه خود را بررسی کنید.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">لطفا کد اعتبارسنجی که در حال حاضر دارید وارد کنید:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">ایمیل</string>
-  <string name="human_verification_option_email_subtitle">Your email will only be used for this one-time verification. If you don\'t find the email in your inbox, please check your spam folder.</string>
+  <string name="human_verification_option_email_subtitle">از ایمیل شما فقط برای این اعتبارسنجی یک-باره استفاده خواهد شد. اگر شما ایمیل دریافتی را در صندوق ورودی خود پیدا نمیکنید، لطف پوشه هرزنامه خود را چک کنید.</string>
   <string name="human_verification_option_sms">شماره تلفن</string>
   <string name="human_verification_option_sms_subtitle">از شماره تلفن شما فقط برای این تایید یکبار مصرف استفاده خواهد شد.</string>
   <string name="human_verification_get_verification_code">دریافت کد تایید</string>
@@ -49,11 +49,11 @@
   <string name="human_verification_help_website_title">از مرکز راهنمایی ما دیدن کنید</string>
   <string name="human_verification_help_website">در مورد اعتبارسنجی و این که چرا ما آن را درخواست میکنیم بیشتر یاد بگیرید.</string>
   <string name="human_verification_sending_failed">ارسال کد اعتبارسنجی ناموفق بود. لطفا دوباره امتحان کنید.</string>
-  <string name="human_verification_incorrect_code">Incorrect code. Please try again.</string>
+  <string name="human_verification_incorrect_code">کد نادرست است. لطفا دوباره امتحان کنید.</string>
   <string name="human_verification_resent_code">یک کد دیگر برای شما فرستادیم.</string>
   <string name="human_verification_captcha_failed">اعتبارسنجی CAPTCHA ناموفق بود. لطفا یکبار دیگر امتحان کنید یا روش اعتبارسنجی دیگری انتخاب کنید.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">اتصال برقرار نیست. CAPTCHA بارگیری نشد.</string>
   <string name="human_verification_action_retry">تلاش مجدد</string>
-  <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
+  <string name="human_verification_method_loading_failed">نمیتوان روش فعلی اعتبارسنجی را بارگیری کرد. اگر مشکل پابرجا بود، لطفا اگر روش های دیگر در دسترس هستند یکی از آنها را امتحان کنید یا صفحه کمک را چک کنید.</string>
 </resources>

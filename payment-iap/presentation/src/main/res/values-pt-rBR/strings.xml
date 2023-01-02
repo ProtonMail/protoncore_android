@@ -20,7 +20,7 @@
   <string name="payments_iap_surcharge_info">* Inclui sobretaxa para taxas e impostos adicionais do provedor.</string>
   <string name="payments_iap_terms_conditions">Ao tocar em "Comprar com o Google Pay", você concorda com os termos e condições do Google Pay e concorda em configurar um pagamento recorrente com o Google.</string>
   <string name="payments_iap_invalid_google_plan">Nome de plano inválido selecionado. Por favor, reinicie o processo.</string>
-  <string name="payments_iap_error_google_plan_price">Problema com o preço do produto Google. Por favor, reinicie o processo.</string>
+  <string name="payments_iap_error_google_plan_price">Problema com o preço do produto do Google. Por favor, reinicie o processo.</string>
   <string name="payments_iap_error_fetching_google_plan">Problema ao buscar o produto do Google. Por favor, reinicie o processo.</string>
   <string name="payments_iap_error_already_owned">Você já possui este produto. Por favor, selecione um diferente.</string>
   <string name="payments_iap_error_billing_client_unavailable">O cliente de faturamento do Google está indisponível ou desconectado no momento.</string>

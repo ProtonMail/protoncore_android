@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">このバージョンのアプリはサポートされていません。使用を継続するにはアップグレードしてください。</string>
   <string name="presentation_force_update_learn_more">より詳しく</string>
   <string name="presentation_force_update_update">更新</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_market_missing">デバイスにインストールされているマーケット アプリケーションを見つけすことができません。ストアに移動しアプリケーションをアップデートしてください。</string>
   <string name="presentation_authenticate">認証</string>
   <string name="presentation_signin_to_continue">サインインして続行</string>
   <string name="presentation_alert_title">警告</string>

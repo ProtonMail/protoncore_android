@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
-  <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
+  <string name="payments_iap_surcharge_info">* 包括额外的供应商费用和税收的附加费用。</string>
+  <string name="payments_iap_terms_conditions">如果您点击了“使用 Google Pay 购买”，视为您接受 Google Pay 的条款和条件，并同意使用 Google 设立定期付款。</string>
   <string name="payments_iap_invalid_google_plan">选择了无效的计划名称。 请重启该进程。</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. 请重启该进程。</string>
+  <string name="payments_iap_error_google_plan_price">获取 Google 产品价格时出现问题。 请重启该进程。</string>
   <string name="payments_iap_error_fetching_google_plan">获取 Google 产品时出现问题。 请重启该进程。</string>
   <string name="payments_iap_error_already_owned">您已获得该产品。 请选择其它的。</string>
   <string name="payments_iap_error_billing_client_unavailable">Google计费客户端目前不可用或已断开连接。</string>

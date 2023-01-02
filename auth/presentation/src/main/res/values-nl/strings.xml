@@ -102,7 +102,9 @@
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Maak uw Proton Account aan</string>
   <string name="auth_signup_current_email">Gebruik in plaats daarvan uw huidige e-mail</string>
-  <string name="auth_signup_create_secure_proton_address">Maak in plaats daarvan een veilig Proton Mail e-mailadres</string>
+  <string name="auth_signup_external_footnote">Met een Proton-e-mailadres kan u alle Proton-diensten gebruiken</string>
+  <string name="auth_signup_internal_footnote">U zal een Proton-e-mailadres nodig hebben om Proton Mail en Proton Calender te gebruiken</string>
+  <string name="auth_signup_create_secure_proton_address">Verkrijg een nieuw versleuteld e-mailadres</string>
   <string name="auth_signup_username">Gebruikersnaam</string>
   <string name="auth_signup_domain">Domein</string>
   <string name="auth_signup_email">E-mail</string>

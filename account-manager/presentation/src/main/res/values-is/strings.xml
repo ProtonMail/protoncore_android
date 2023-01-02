@@ -22,6 +22,6 @@
   <string name="account_switcher_action_sign_in">Skrá inn</string>
   <string name="account_switcher_action_sign_out">Skrá út</string>
   <string name="account_switcher_action_remove">Fjarlægja</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
-  <string name="account_view_three_dots_content_description">Options</string>
+  <string name="account_list_item_chevron_content_description">Opnaðu reikningsskipti</string>
+  <string name="account_view_three_dots_content_description">Valkostir</string>
 </resources>

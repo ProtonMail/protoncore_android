@@ -97,12 +97,14 @@
   <string name="auth_account_not_found_error">账户出错</string>
   <string name="auth_one_account_all_services">一个账户即可登录所有 Proton 服务。</string>
   <string name="auth_create_account">创建账户</string>
-  <string name="auth_long_signup">登录中，请稍后…</string>
+  <string name="auth_long_signup">登录中，请稍候…</string>
   <string name="auth_long_login">请稍候…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">创建您的账户</string>
   <string name="auth_signup_current_email">使用您已有的邮箱地址</string>
-  <string name="auth_signup_create_secure_proton_address">创建一个安全的 Proton Mail 邮箱地址</string>
+  <string name="auth_signup_external_footnote">通过 Proton 地址，你可以使用所有 Proton 服务</string>
+  <string name="auth_signup_internal_footnote">你需要 Proton 地址来使用 Proton Mail 和 Proton Calendar 服务</string>
+  <string name="auth_signup_create_secure_proton_address">获取新的加密邮箱地址</string>
   <string name="auth_signup_username">用户名</string>
   <string name="auth_signup_domain">域名</string>
   <string name="auth_signup_email">邮箱</string>
