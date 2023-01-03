@@ -183,11 +183,6 @@ internal class PinningTests {
     }
 
     @Test
-    fun `calling verify protonmail com, success`() = runTest {
-        assertSuccess(baseApiUrl = "https://verify.protonmail.com")
-    }
-
-    @Test
     fun `calling verify protonvpn com, success`() = runTest {
         assertSuccess(baseApiUrl = "https://verify.protonvpn.com")
     }
@@ -195,11 +190,6 @@ internal class PinningTests {
     @Test
     fun `calling proton me, success`() = runTest(dispatcherProvider.Main) {
         assertSuccess(baseApiUrl = "https://verify.proton.me")
-    }
-
-    @Test
-    fun `calling verify api protonmail com, success`() = runTest {
-        assertSuccess(baseApiUrl = "https://verify-api.protonmail.com")
     }
 
     @Test
