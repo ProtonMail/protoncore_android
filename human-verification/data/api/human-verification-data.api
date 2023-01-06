@@ -5,7 +5,7 @@ public final class me/proton/core/humanverification/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/humanverification/data/HumanVerificationListenerImpl : me/proton/core/network/domain/humanverification/HumanVerificationListener {
+public class me/proton/core/humanverification/data/HumanVerificationListenerImpl : me/proton/core/network/domain/humanverification/HumanVerificationListener {
 	public fun <init> (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
 	public fun onHumanVerificationInvalid (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationNeeded (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

@@ -30,7 +30,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import javax.inject.Inject
 
-class HumanVerificationListenerImpl @Inject constructor(
+open class HumanVerificationListenerImpl @Inject constructor(
     private val humanVerificationRepository: HumanVerificationRepository
 ) : HumanVerificationListener {
 
