@@ -37,7 +37,7 @@
   <string name="auth_current_login_password">Mot de passe de connexion actuel</string>
   <string name="auth_enter_six_digit_code">Saisissez le code à 6 chiffres</string>
   <string name="auth_second_factor_code">Code à deux facteurs</string>
-  <string name="auth_email_username">Username or email</string>
+  <string name="auth_email_username">Nom d\'utilisateur ou adresse courriel</string>
   <string name="auth_account_details">Saisissez les informations de votre compte Proton.</string>
   <string name="auth_sign_in">Se connecter</string>
   <string name="auth_sign_in_action">Se connecter</string>
@@ -97,14 +97,14 @@
   <string name="auth_account_not_found_error">Erreur avec le compte</string>
   <string name="auth_one_account_all_services">Un seul compte pour tous les services Proton.</string>
   <string name="auth_create_account">Créer un compte</string>
-  <string name="auth_long_signup">Signing in, please wait…</string>
-  <string name="auth_long_login">Please wait…</string>
+  <string name="auth_long_signup">Connexion, veuillez patienter…</string>
+  <string name="auth_long_login">Veuillez patienter…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Créez votre compte Proton</string>
   <string name="auth_signup_current_email">Utiliser plutôt votre adresse courriel actuelle</string>
-  <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
-  <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
-  <string name="auth_signup_create_secure_proton_address">Get a new encrypted email address</string>
+  <string name="auth_signup_external_footnote">Avec une adresse Proton, vous pouvez utiliser tous les services Proton</string>
+  <string name="auth_signup_internal_footnote">Vous aurez besoin d\'une adresse Proton pour utiliser Proton Mail et Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Obtenir une nouvelle adresse électronique chiffrée</string>
   <string name="auth_signup_username">Nom d\'utilisateur</string>
   <string name="auth_signup_domain">Domaine</string>
   <string name="auth_signup_email">Courriel</string>

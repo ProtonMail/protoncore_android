@@ -48,12 +48,12 @@
   <string name="human_verification_help_manual">Si vous avez des difficultés à créer votre compte, vous pouvez demander une invitation et nous vous répondrons dans un délai d\'un jour ouvrable.</string>
   <string name="human_verification_help_website_title">Consultez notre espace Aide &amp; Support</string>
   <string name="human_verification_help_website">En savoir plus sur la vérification humaine et pourquoi nous la demandons.</string>
-  <string name="human_verification_sending_failed">L\'envoi du code de vérification a échoué, nous vous invitons à réessayer.</string>
+  <string name="human_verification_sending_failed">Le code de vérification n\'a pas pu être envoyé, nous vous invitons à réessayer.</string>
   <string name="human_verification_incorrect_code">Le code n\'est pas correct, nous vous invitons à réessayer.</string>
   <string name="human_verification_resent_code">Nous vous avons envoyé un autre code.</string>
   <string name="human_verification_captcha_failed">La vérification du CAPTCHA a échoué. Nous vous invitons à réessayer ou à choisir une autre option de vérification.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">Aucune connexion. Impossible de charger le CAPTCHA.</string>
+  <string name="human_verification_captcha_no_connectivity">Aucune connexion. Le CAPTCHA n\'a pas pu être chargé.</string>
   <string name="human_verification_action_retry">Réessayer</string>
   <string name="human_verification_method_loading_failed">Impossible de charger la méthode de vérification actuelle. Si le problème persiste, nous vous invitons à essayer l\'une des autres méthodes si elles sont disponibles ou à consulter l\'écran Aide.</string>
 </resources>

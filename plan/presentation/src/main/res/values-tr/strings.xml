@@ -103,7 +103,7 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Kişisel ve gizli iletişimin temelleri.</string>
+  <string name="plan_id_free_header">Gizli ve güvenli iletişimin temelleri.</string>
   <string name="plan_id_plus_header">Gelişmiş koruma ile tam özellikli posta kutusu.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 ülke</string>
@@ -127,8 +127,8 @@
   <string name="tor_vpn" comment="new_plans">VPN üzerinden Tor</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Günlük iletişim gereksinimleriniz için gelişmiş özellikleri olan güvenli e-posta.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Kişisel gizliliğinizi korumak ve güvenliğinizi sağlamak önceliğimizdir.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Tüm Proton hizmetlerinin bir arada olduğu kapsamlı kişisel gizlilik ve güvenlik.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Gizliliğinizi korumak ve güvenliğinizi sağlamak önceliğimizdir.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Tüm Proton hizmetlerinin bir arada olduğu kapsamlı gizlilik ve güvenlik.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

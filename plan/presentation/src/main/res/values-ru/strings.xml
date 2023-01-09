@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Единый тариф для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
   <string name="plans_payment_error">Произошла ошибка при оплате. Повторите попытку позже или выберите бесплатный тариф.</string>
-  <string name="plans_free_name">Бесплатный</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">в месяц</string>
   <string name="plan_price_annually">в год</string>
   <string name="plans_current_plan">Текущий тариф</string>

@@ -17,26 +17,26 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">Proton ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_title">Proton ile gizliliğinizi koruyun</string>
   <string name="welcome_subtitle">Şifreleme, verilerinizi gizli tutar. Verileriniz tamamıyla size aittir.</string>
-  <string name="welcome_title_mail">Proton Mail ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_title_mail">Proton Mail ile gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_mail">Görüşmelerinizi gizli tutan şifrelenmiş e-posta. Gelen kutunuz tamamıyla size ait.</string>
-  <string name="welcome_subtitle_mail_alt">Kişisel gizlilik. Güvenlik. Kolaylık. Kişisel verileriniz üzerinde tam kontrol sağlayan şifrelenmiş e-posta.</string>
-  <string name="welcome_title_drive">Proton Drive ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_subtitle_mail_alt">Gizlilik. Güvenlik. Kolaylık. Kişisel verileriniz üzerinde tam kontrol sağlayan şifrelenmiş e-posta.</string>
+  <string name="welcome_title_drive">Proton Drive ile gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_drive">Bulut depolamanın rahatlığı ve şifreleme teknolojisinin güvenliği. Sonunda güvenebileceğiniz bir bulut depolama çözümü var.</string>
   <string name="welcome_subtitle_drive_alt">Dosyalarınızı saklamanın en güvenli yolu. Güncel en güçlü şifreleme ile dosyalarınızı yükleyin, eşitleyin ve paylaşın.</string>
-  <string name="welcome_title_calendar">Proton Calendar ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_title_calendar">Proton Calendar ile gizliliğinizi koruyun</string>
   <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
   <string name="welcome_subtitle_calendar_alt">Uçtan uca şifrelenmiş takvimimiz, kontrolü size bırakarak planlarınızı uygulamanıza yardımcı olur.</string>
-  <string name="welcome_title_vpn">Proton VPN ile kişisel gizliliğinizi koruyun</string>
-  <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
-  <string name="welcome_subtitle_vpn_alt">Kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN. En yüksek güvenlik, 1.600 üzerinde sunucu ve sınırlamasız.</string>
-  <string name="welcome_privacy_by_default">Kişisel gizliliğe odaklanmış</string>
+  <string name="welcome_title_vpn">Proton VPN ile gizliliğinizi koruyun</string>
+  <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
+  <string name="welcome_subtitle_vpn_alt">Gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN. En yüksek güvenlik, 1.600 üzerinde sunucu ve sınırlamasız.</string>
+  <string name="welcome_privacy_by_default">Gizlilik odaklı</string>
   <string name="auth_password_label">Parola</string>
   <string name="auth_password_help">Parola en az 8 karakter uzunluğunda olmalıdır</string>
   <string name="auth_current_login_password">Geçerli oturum açma parolası</string>
   <string name="auth_enter_six_digit_code">6 rakamlı kodu yazın</string>
-  <string name="auth_second_factor_code">İki aşamalı kimlik doğrulama kodu</string>
+  <string name="auth_second_factor_code">İki aşamalı doğrulama kodu</string>
   <string name="auth_email_username">Kullanıcı adı ya da e-posta</string>
   <string name="auth_account_details">Proton hesabınızın bilgilerini yazın.</string>
   <string name="auth_sign_in">Oturum aç</string>
@@ -49,15 +49,15 @@
   <string name="auth_help_option_other">Diğer oturum açma sorunları</string>
   <string name="auth_help_other">Hala yardım gerekiyor mu? Doğrudan bizimle görüşün.</string>
   <string name="auth_help_option_customer_support">Müşteri desteği</string>
-  <string name="auth_2fa_title">İki aşamalı kimlik doğrulama</string>
-  <string name="auth_2fa_label">İki aşamalı kimlik doğrulama kodu</string>
+  <string name="auth_2fa_title">İki aşamalı doğrulama</string>
+  <string name="auth_2fa_label">İki aşamalı doğrulama kodu</string>
   <string name="auth_2fa_recovery_code_label">Kurtarma kodu</string>
   <string name="auth_2fa_assistive_text">6 rakamlı kodu yazın.</string>
   <string name="auth_2fa_recovery_code_assistive_text">8 karakterli kurtarma kodunu yazın.</string>
   <string name="auth_2fa_action">Kimliği doğrula</string>
   <string name="auth_2fa_use_recovery_code">Kurtarma kodunu kullan</string>
-  <string name="auth_2fa_use_2fa_code">İki aşamalı kimlik doğrulama kodu kullanılsın</string>
-  <string name="auth_2fa_error_empty_code">İki aşamalı kimlik doğrulama kodu boş bırakılamaz</string>
+  <string name="auth_2fa_use_2fa_code">İki aşamalı doğrulama kodu kullanılsın</string>
+  <string name="auth_2fa_error_empty_code">İki aşamalı doğrulama kodu boş bırakılamaz</string>
   <string name="auth_mailbox_title">Posta kutunuzun kilidini açın</string>
   <string name="auth_mailbox_password_label">Posta kutusu parolası</string>
   <string name="auth_mailbox_unlock_action">Kilidi aç</string>
@@ -92,7 +92,7 @@
   <string name="auth_password_chooser_description">Proton uygulamasını bir kuruluş üyesi olarak kullanmak için, öncelikle tarayıcı üzerinden Proton oturumu açıp parolanızı değiştirmelisiniz.</string>
   <string name="auth_password_chooser_change">Parolayı değiştir</string>
   <string name="auth_user_check_one_free_error">Yalnızca bir ücretsiz Proton hesabına izin verilir.</string>
-  <string name="auth_user_check_delinquent_error">Ödenmemiş bir fatura nedeniyle hesabınız askıya alındı.</string>
+  <string name="auth_user_check_delinquent_error">Süresi geçmiş bir fatura nedeniyle hesabınız askıya alındı.</string>
   <string name="auth_user_check_delinquent_action">Faturayı öde</string>
   <string name="auth_account_not_found_error">Hesap ile ilgili hata</string>
   <string name="auth_one_account_all_services">Tüm Proton hizmetleri için tek hesap.</string>
@@ -138,7 +138,7 @@
   <string name="auth_signup_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın:</string>
   <string name="auth_signup_error_human_verification_failed">Kişinin gerçekliği doğrulanamadı.</string>
   <string name="auth_signup_token_code_resent">Kod yeniden gönderildi.</string>
-  <string name="auth_signup_congratulations_subtitle">Proton hesabınız açıldı.\nKişisel gizlilik dünyasının tadını çıkarın.</string>
+  <string name="auth_signup_congratulations_subtitle">Proton hesabınız açıldı.\nGizliliğe saygı duyulan bir dünyanın tadını çıkarın.</string>
   <string name="auth_signup_congratulations">Tebrikler!</string>
   <string name="auth_signup_start_using_proton">Proton kullanmaya başlayın</string>
   <string name="auth_signup_start_using_calendar">Proton Calendar kullanmaya başlayın</string>
