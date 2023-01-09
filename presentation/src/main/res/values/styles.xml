@@ -253,6 +253,7 @@
     <style name="ProtonButton.Borderless.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:theme">@style/Proton.ThemeOverlay.ColorPrimaryAccent</item>
         <item name="textAllCaps">false</item>
         <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
@@ -292,7 +293,7 @@
         <item name="android:insetBottom">8dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:textAppearance">@style/Proton.Text.Caption</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/text_norm_selector</item>
         <item name="rippleColor">@color/ripple_norm</item>
         <item name="backgroundTint">@color/btn_secondary_background_selector</item>
