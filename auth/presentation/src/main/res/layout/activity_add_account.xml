@@ -85,9 +85,7 @@
             android:id="@+id/texts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
             android:layout_marginTop="@dimen/gap_large_plus"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +106,8 @@
                 style="@style/Proton.Text.Default.Weak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_huge"
+                android:layout_marginEnd="@dimen/gap_huge"
                 android:gravity="center"
                 android:text="?attr/add_account_subtitle"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -164,7 +164,7 @@
                 app:srcCompat="@drawable/logo_proton_with_effect" />
 
             <TextView
-                style="@style/Proton.Text.Caption"
+                style="@style/Proton.Text.Caption.Strong"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
