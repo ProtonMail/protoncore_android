@@ -36,6 +36,11 @@ protonDagger {
 protonTestsOptions.unitTestFlavor = "dev"
 
 android {
+    buildFeatures.compose = true
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = `compose version`
+    }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

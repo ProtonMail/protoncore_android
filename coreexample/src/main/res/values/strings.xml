@@ -20,6 +20,7 @@
     <string name="app_name">CoreExample</string>
     <string name="human_verification">Human Verification</string>
     <string name="custom_views">Custom Views</string>
+    <string name="proton_compose_ui">Compose UI Views</string>
     <string name="text_styles">Text styles</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>

@@ -67,6 +67,14 @@
                     android:layout_weight="1"
                     android:text="@string/text_styles" />
 
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/composeUi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="@string/proton_compose_ui" />
+
             </LinearLayout>
 
             <LinearLayout

@@ -92,6 +92,9 @@
             android:name=".ui.CustomViewsActivity"
             android:configChanges="orientation" />
         <activity
+            android:name=".ui.ComposeViewsActivity"
+            android:configChanges="orientation" />
+        <activity
             android:name=".ui.TextStylesActivity"
             android:configChanges="orientation" />
         <activity

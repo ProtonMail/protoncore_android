@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
+import me.proton.android.core.coreexample.ui.ComposeViewsActivity
 import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.LabelsActivity
@@ -99,6 +100,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
+            composeUi.onClick { startActivity(Intent(this@MainActivity, ComposeViewsActivity::class.java)) }
             textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
             addAccount.onClick { accountViewModel.add() }
             signIn.onClick { accountViewModel.signIn() }
