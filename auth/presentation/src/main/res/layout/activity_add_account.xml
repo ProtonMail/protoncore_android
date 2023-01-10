@@ -103,7 +103,7 @@
 
             <TextView
                 android:id="@+id/subtitle"
-                style="@style/Proton.Text.Default.Weak"
+                style="@style/Proton.Text.DefaultSmall.Weak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/gap_huge"

@@ -71,12 +71,13 @@
     </style>
 
     <style name="Proton.Text.Default">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/text_norm_selector</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:letterSpacing">0.02</item>
-        <item name="lineHeight">20sp</item>
+        <item name="android:textColor">@color/text_norm_selector</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+        <item name="lineHeight">24sp</item>
     </style>
 
     <style name="Proton.Text.Default.Bold">
