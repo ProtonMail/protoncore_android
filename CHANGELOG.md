@@ -11,6 +11,34 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.8.1] - 2023-01-11
+
+### Features
+
+- crypto:
+  - Add parameter to trim spaces for detached signatures.
+
+    Add a parameter to control whether trailing spaces should be trimmed
+    from content when generating and verifying text detached signatures.
+    
+    The default value of the parameter keeps the behavior as it was before.
+- gopenpgp:
+  - Update to gopenpgp v2.5.0 and go-srp v0.0.5.
+- human-verification:
+  - Let clients extend HumanVerificationListenerImpl.
+- network:
+  - Support DNS A records for DoH responses.
+
+### Bug Fixes
+
+- user:
+  - Fixed Key format generation logic if 1 address 0 keys (Key Migration Phase 2).
+
+### Internationalization
+
+- Upgrade translations from crowdin (31ed3514).
+- Upgrade translations from crowdin (215a5774).
+
 ## [9.8.0] - 2022-12-22
 
 ### Chores
