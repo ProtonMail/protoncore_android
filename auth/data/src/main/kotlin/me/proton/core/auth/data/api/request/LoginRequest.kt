@@ -26,8 +26,6 @@ import me.proton.core.challenge.data.frame.ChallengeFrame
 data class LoginRequest(
     @SerialName("Username")
     val username: String,
-    @SerialName("ClientSecret")
-    val clientSecret: String,
     @SerialName("ClientEphemeral")
     val clientEphemeral: String,
     @SerialName("ClientProof")

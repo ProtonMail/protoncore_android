@@ -18,7 +18,7 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import me.proton.core.auth.domain.ClientSecret
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -34,12 +34,12 @@ import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 class PerformUpdateRecoveryEmail @Inject constructor(
+    private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val userSettingsRepository: UserSettingsRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
-    @ClientSecret private val clientSecret: String
 ) {
     suspend operator fun invoke(
         sessionUserId: SessionUserId,
@@ -49,9 +49,8 @@ class PerformUpdateRecoveryEmail @Inject constructor(
     ): UserSettings {
         val user = userRepository.getUser(sessionUserId)
         val username = user.nameNotNull()
-
-        val loginInfo = authRepository.getLoginInfo(username, clientSecret)
-
+        val account = accountRepository.getAccountOrNull(sessionUserId)
+        val loginInfo = authRepository.getAuthInfo(requireNotNull(account?.sessionId), username)
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
                 username = username,

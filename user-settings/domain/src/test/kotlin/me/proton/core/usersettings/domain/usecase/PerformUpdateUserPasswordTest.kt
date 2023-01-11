@@ -22,7 +22,8 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
@@ -32,6 +33,7 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
@@ -42,6 +44,7 @@ import kotlin.test.assertFailsWith
 
 class PerformUpdateUserPasswordTest {
     // region mocks
+    private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val organizationRepository = mockk<OrganizationRepository>(relaxed = true)
@@ -52,16 +55,11 @@ class PerformUpdateUserPasswordTest {
     // endregion
 
     // region test data
+    private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
-    private val testClientSecret = "test-client-secret"
     private val testUsername = "test-username"
     private val testSecondFactor = "123456"
     private val testKeySalt = "test-keysalt"
-    private val testSrpProofs = SrpProofs(
-        clientEphemeral = "test-client-ephemeral",
-        clientProof = "test-client-proof",
-        expectedServerProof = "test-server-proof"
-    )
     private val testSrpSession = "test-srp-session"
     private val testLoginPassword = "test-login-password"
     private val testNewMailboxPassword = "test-new-mailbox-password"
@@ -107,10 +105,10 @@ class PerformUpdateUserPasswordTest {
 
         useCase = PerformUpdateUserPassword(
             context = cryptoContext,
+            accountRepository = accountRepository,
             authRepository = authRepository,
             userRepository = userRepository,
             organizationRepository = organizationRepository,
-            clientSecret = testClientSecret,
             userManager = userManager
         )
 
@@ -126,13 +124,18 @@ class PerformUpdateUserPasswordTest {
             )
         } returns true
 
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
+        coEvery { accountRepository.getAccountOrNull(any<SessionId>()) } returns mockk {
+            every { sessionId } returns testSessionId
+        }
+
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,
             version = 1,
             salt = testSalt,
-            srpSession = testSrpSession
+            srpSession = testSrpSession,
+            secondFactor = null
         )
         coEvery { authRepository.randomModulus() } returns Modulus(
             modulusId = testModulusId,
@@ -166,7 +169,7 @@ class PerformUpdateUserPasswordTest {
                 modulus = testModulus,
                 serverEphemeral = testServerEphemeral
             )
-        } returns testSrpProofs
+        } returns mockk()
     }
 
     @Test

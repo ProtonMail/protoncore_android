@@ -25,7 +25,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
-import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
@@ -33,6 +33,7 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
 import org.junit.Test
@@ -51,10 +52,10 @@ class PerformLoginApiErrorTest {
 
     // endregion
     // region test data
+    private val testSessionId = SessionId("test-sessionId")
     private val testUsername = "test-username"
     private val testPassword = "test-password"
 
-    private val testClientSecret = "test-secret"
     private val testModulus = "test-modulus"
     private val testEphemeral = "test-ephemeral"
     private val testSalt = "test-salt"
@@ -67,13 +68,14 @@ class PerformLoginApiErrorTest {
         expectedServerProof = "test-expectedServerProof",
     )
 
-    private val loginInfoResult = LoginInfo(
+    private val loginInfoResult = AuthInfo(
         username = testUsername,
         modulus = testModulus,
         serverEphemeral = testEphemeral,
         version = testVersion,
         salt = testSalt,
-        srpSession = testSrpSession
+        srpSession = testSrpSession,
+        secondFactor = null
     )
 
     private val loginChallengeConfig = LoginChallengeConfig()
@@ -83,18 +85,18 @@ class PerformLoginApiErrorTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret, challengeManager, loginChallengeConfig)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } throws ApiException(
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 401,
                 message = "auth-info error",
                 proton = ApiResult.Error.ProtonData(1234, "error")
             )
         )
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } throws ApiException(
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 401,
                 message = "auth-info error",
@@ -121,7 +123,6 @@ class PerformLoginApiErrorTest {
         coVerify {
             authRepository.performLogin(
                 testUsername,
-                testClientSecret,
                 testSrpProofs,
                 testSrpSession,
                 frames = emptyList()
@@ -142,15 +143,14 @@ class PerformLoginApiErrorTest {
     @Test(expected = ApiException::class)
     fun `login error invocations work correctly`() = runTest {
         // GIVEN
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns loginInfoResult
         // WHEN
         useCase.invoke(testUsername, testPassword)
         // THEN
-        coVerify { authRepository.getLoginInfo(testUsername, testClientSecret) }
+        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
         coVerify(exactly = 1) {
             authRepository.performLogin(
                 testUsername,
-                testClientSecret,
                 testSrpProofs,
                 testSrpSession,
                 frames = emptyList()

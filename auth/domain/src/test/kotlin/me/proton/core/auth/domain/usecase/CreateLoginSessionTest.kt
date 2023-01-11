@@ -101,7 +101,6 @@ class CreateLoginSessionTest {
             SessionInfo(
                 testUsername,
                 "access-token",
-                100,
                 "token-type",
                 "scope",
                 listOf("scope1", "scope2"),

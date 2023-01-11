@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -34,16 +35,15 @@ class ObtainPasswordScope @Inject constructor(
 ) {
     suspend operator fun invoke(
         userId: UserId,
+        sessionId: SessionId,
         username: String,
         password: EncryptedString,
         twoFactorCode: String?
     ): Boolean {
-        // first we obtain auth info
         val authInfo = authRepository.getAuthInfo(
-            userId = userId,
+            sessionId = sessionId,
             username = username
         )
-
         password.decrypt(context.keyStoreCrypto).toByteArray().use {
             val clientProofs = context.srpCrypto.generateSrpProofs(
                 username = username,

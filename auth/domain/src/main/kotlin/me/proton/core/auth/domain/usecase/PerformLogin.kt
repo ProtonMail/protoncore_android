@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
@@ -38,7 +37,6 @@ class PerformLogin @Inject constructor(
     private val authRepository: AuthRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
-    @ClientSecret private val clientSecret: String,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: LoginChallengeConfig
 ) {
@@ -46,9 +44,9 @@ class PerformLogin @Inject constructor(
         username: String,
         password: EncryptedString
     ): SessionInfo {
-        val loginInfo = authRepository.getLoginInfo(
+        val loginInfo = authRepository.getAuthInfo(
+            sessionId = null,
             username = username,
-            clientSecret = clientSecret
         )
         password.decrypt(keyStoreCrypto).toByteArray().use {
             val srpProofs: SrpProofs = srpCrypto.generateSrpProofs(
@@ -63,7 +61,6 @@ class PerformLogin @Inject constructor(
                 authRepository.performLogin(
                     frames = frames,
                     username = username,
-                    clientSecret = clientSecret,
                     srpProofs = srpProofs,
                     srpSession = loginInfo.srpSession
                 )

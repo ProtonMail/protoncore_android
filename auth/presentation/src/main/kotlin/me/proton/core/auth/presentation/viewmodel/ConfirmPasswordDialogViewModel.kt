@@ -78,11 +78,9 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             emit(State.Error.InvalidAccount)
             return@flow
         }
-        val authInfo = getAuthInfo(account.userId, account.username)
+        val authInfo = getAuthInfo(requireNotNull(account.sessionId), account.username)
         val isSecondFactorNeeded = when (missingScope) {
-            Scope.PASSWORD -> {
-                authInfo.secondFactor is SecondFactor.Enabled
-            }
+            Scope.PASSWORD -> authInfo.secondFactor is SecondFactor.Enabled
             Scope.LOCKED -> false
         }.exhaustive
         emit(State.SecondFactorResult(isSecondFactorNeeded))
@@ -101,20 +99,22 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         }
         val result = when (missingScope) {
             Scope.PASSWORD -> obtainPasswordScope(
-                account.userId,
-                account.username,
-                password.encrypt(keyStoreCrypto),
-                twoFactorCode
+                userId = account.userId,
+                sessionId = requireNotNull(account.sessionId),
+                username = account.username,
+                password = password.encrypt(keyStoreCrypto),
+                twoFactorCode = twoFactorCode
             )
-            Scope.LOCKED -> obtainLockedScope(account.userId, account.username, password.encrypt(keyStoreCrypto))
+            Scope.LOCKED -> obtainLockedScope(
+                userId = account.userId,
+                sessionId = requireNotNull(account.sessionId),
+                username = account.username,
+                password = password.encrypt(keyStoreCrypto)
+            )
         }.exhaustive
 
         if (result) {
-            emit(
-                State.Success(
-                    if (result) MissingScopeState.ScopeObtainSuccess else MissingScopeState.ScopeObtainFailed
-                )
-            )
+            emit(State.Success(MissingScopeState.ScopeObtainSuccess))
         } else {
             emit(State.Error.Unknown)
         }

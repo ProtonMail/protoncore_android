@@ -52,7 +52,8 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
+class ConfirmPasswordDialogViewModelTest :
+    ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
     private val accountManager = mockk<AccountManager>(relaxed = true)
@@ -70,6 +71,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
     private val testPasswordEncrypted = "test-password-encrypted"
     private val test2FACode = "test-2fa"
     private val testUserId = UserId(testUserIdString)
+    private val testSessionId = SessionId("test-sessionId")
 
     private val testAccount = Account(
         userId = testUserId,
@@ -77,7 +79,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
         email = "test-email",
         state = AccountState.Ready,
         sessionState = SessionState.Authenticated,
-        sessionId = SessionId("test-session-id"),
+        sessionId = testSessionId,
         details = AccountDetails(
             account = null,
             session = null
@@ -104,7 +106,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
         every { keyStoreCrypto.encrypt(testPassword) } returns testPasswordEncrypted
         every { keyStoreCrypto.decrypt(testPasswordEncrypted) } returns testPassword
         coEvery { accountManager.getAccount(testUserId) } returns flowOf(testAccount)
-        coEvery { obtainAuthInfo.invoke(testUserId, testUsername) } returns testAuthInfo
+        coEvery { obtainAuthInfo.invoke(testSessionId, testUsername) } returns testAuthInfo
         viewModel = ConfirmPasswordDialogViewModel(
             accountManager,
             keyStoreCrypto,
@@ -123,7 +125,14 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
     @Test
     fun `unlock scope success is handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { obtainLockedScope.invoke(testUserId, testUsername, testPasswordEncrypted) } returns true
+        coEvery {
+            obtainLockedScope.invoke(
+                testUserId,
+                testSessionId,
+                testUsername,
+                testPasswordEncrypted
+            )
+        } returns true
         flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -140,7 +149,14 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
     @Test
     fun `unlock scope failure is handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { obtainLockedScope.invoke(testUserId, testUsername, testPasswordEncrypted) } throws ApiException(
+        coEvery {
+            obtainLockedScope.invoke(
+                testUserId,
+                testSessionId,
+                testUsername,
+                testPasswordEncrypted
+            )
+        } throws ApiException(
             ApiResult.Error.Http(
                 400,
                 "Bad request",
@@ -165,7 +181,15 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
     @Test
     fun `password scope no 2FA success is handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { obtainPasswordScope.invoke(testUserId, testUsername, testPasswordEncrypted, null) } returns true
+        coEvery {
+            obtainPasswordScope.invoke(
+                testUserId,
+                testSessionId,
+                testUsername,
+                testPasswordEncrypted,
+                null
+            )
+        } returns true
         flowTest(viewModel.state) {
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -185,6 +209,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
         coEvery {
             obtainPasswordScope.invoke(
                 testUserId,
+                testSessionId,
                 testUsername,
                 testPasswordEncrypted,
                 null
@@ -217,6 +242,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
         coEvery {
             obtainPasswordScope.invoke(
                 testUserId,
+                testSessionId,
                 testUsername,
                 testPasswordEncrypted,
                 test2FACode
@@ -241,6 +267,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTes
         coEvery {
             obtainPasswordScope.invoke(
                 testUserId,
+                testSessionId,
                 testUsername,
                 testPasswordEncrypted,
                 test2FACode

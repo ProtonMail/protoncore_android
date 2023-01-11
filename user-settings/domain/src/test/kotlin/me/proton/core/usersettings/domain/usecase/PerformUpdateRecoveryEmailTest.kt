@@ -23,12 +23,14 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
@@ -42,6 +44,7 @@ import kotlin.test.assertNotNull
 
 class PerformUpdateRecoveryEmailTest {
     // region mocks
+    private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val userSettingsRepository = mockk<UserSettingsRepository>(relaxed = true)
@@ -50,17 +53,11 @@ class PerformUpdateRecoveryEmailTest {
     // endregion
 
     // region test data
+    private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
-    private val testClientSecret = "test-client-secret"
     private val testUsername = "test-username"
     private val testPassword = "test-password"
     private val testSecondFactor = "123456"
-    private val testSrpProofs = SrpProofs(
-        clientEphemeral = "test-client-ephemeral",
-        clientProof = "test-client-proof",
-        expectedServerProof = "test-server-proof"
-    )
-
     private val testSrpSession = "test-srp-session"
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
@@ -103,12 +100,12 @@ class PerformUpdateRecoveryEmailTest {
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
         useCase = PerformUpdateRecoveryEmail(
+            accountRepository,
             authRepository,
             userRepository,
             userSettingsRepository,
             srpCrypto,
-            keyStoreCrypto,
-            testClientSecret
+            keyStoreCrypto
         )
 
         coEvery {
@@ -120,18 +117,23 @@ class PerformUpdateRecoveryEmailTest {
                 any()
             )
         } returns testUserSettingsResponse
+
+        coEvery { accountRepository.getAccountOrNull(any<SessionId>()) } returns mockk {
+            every { sessionId } returns testSessionId
+        }
     }
 
     @Test
     fun `update recovery email empty returns success`() = runTest {
         // GIVEN
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,
             version = 1,
             salt = testSalt,
-            srpSession = testSrpSession
+            srpSession = testSrpSession,
+            secondFactor = null
         )
 
         every {
@@ -143,7 +145,7 @@ class PerformUpdateRecoveryEmailTest {
                 modulus = testModulus,
                 serverEphemeral = testServerEphemeral
             )
-        } returns testSrpProofs
+        } returns mockk()
 
         // WHEN
         val result = useCase.invoke(
@@ -156,8 +158,8 @@ class PerformUpdateRecoveryEmailTest {
             userSettingsRepository.updateRecoveryEmail(
                 sessionUserId = testUserId,
                 email = "",
-                srpProofs = testSrpProofs,
-                srpSession = testSrpSession,
+                srpProofs = any(),
+                srpSession = any(),
                 secondFactorCode = testSecondFactor
             )
         }
@@ -167,13 +169,14 @@ class PerformUpdateRecoveryEmailTest {
     @Test
     fun `update recovery non empty email returns success`() = runTest {
         // GIVEN
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,
             version = 1,
             salt = testSalt,
-            srpSession = testSrpSession
+            srpSession = testSrpSession,
+            secondFactor = null
         )
 
         every {
@@ -185,7 +188,8 @@ class PerformUpdateRecoveryEmailTest {
                 modulus = testModulus,
                 serverEphemeral = testServerEphemeral
             )
-        } returns testSrpProofs
+        } returns mockk()
+
         // WHEN
         val result = useCase.invoke(
             sessionUserId = testUserId,
@@ -197,8 +201,8 @@ class PerformUpdateRecoveryEmailTest {
             userSettingsRepository.updateRecoveryEmail(
                 sessionUserId = testUserId,
                 email = "",
-                srpProofs = testSrpProofs,
-                srpSession = testSrpSession,
+                srpProofs = any(),
+                srpSession = any(),
                 secondFactorCode = testSecondFactor
             )
         }

@@ -32,6 +32,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
@@ -52,10 +53,12 @@ class ObtainLockedScopeTest {
 
     // region test data
     private val testUserIdString = "test-user-id"
+    private val testSessionIdString = "test-session-id"
     private val testUsername = "test-username"
     private val testPassword = "test-password"
     private val testPasswordEncrypted = "test-password-encrypted"
     private val testUserId = UserId(testUserIdString)
+    private val testSessionId = SessionId(testSessionIdString)
     private val testModulus = "test-modulus"
     private val testEphemeral = "test-ephemeral"
     private val testSalt = "test-salt"
@@ -93,7 +96,7 @@ class ObtainLockedScopeTest {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
 
-        coEvery { authRepository.getAuthInfo(testUserId, testUsername) } returns authInfoResult
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns authInfoResult
         coEvery {
             userRepository.unlockUserForLockedScope(
                 testUserId,
@@ -106,9 +109,9 @@ class ObtainLockedScopeTest {
 
     @Test
     fun testUnlockingSuccess() = runTest {
-        val result = useCase.invoke(testUserId, testUsername, testPasswordEncrypted)
+        val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted)
 
-        coVerify { authRepository.getAuthInfo(testUserId, testUsername) }
+        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
         assertTrue(result)
     }
 
@@ -121,9 +124,9 @@ class ObtainLockedScopeTest {
                 authInfoResult.srpSession
             )
         } returns false
-        val result = useCase.invoke(testUserId, testUsername, testPasswordEncrypted)
+        val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted)
 
-        coVerify { authRepository.getAuthInfo(testUserId, testUsername) }
+        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
         assertFalse(result)
     }
 
@@ -145,7 +148,7 @@ class ObtainLockedScopeTest {
 
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            useCase.invoke(testUserId, testUsername, testPasswordEncrypted)
+            useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted)
         }
 
         // THEN

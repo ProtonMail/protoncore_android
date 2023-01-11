@@ -19,12 +19,11 @@
 package me.proton.core.auth.data.api
 
 import me.proton.core.auth.data.api.request.EmailValidationRequest
-import me.proton.core.auth.data.api.request.LoginInfoRequest
+import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
-import me.proton.core.auth.data.api.response.LoginInfoResponse
 import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
@@ -41,10 +40,7 @@ import retrofit2.http.Tag
 interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/info")
-    suspend fun getLoginInfo(@Body request: LoginInfoRequest): LoginInfoResponse
-
-    @POST("auth/info")
-    suspend fun getAuthInfo(): AuthInfoResponse
+    suspend fun getAuthInfo(@Body request: AuthInfoRequest): AuthInfoResponse
 
     @GET("auth/modulus")
     suspend fun getRandomModulus(): ModulusResponse

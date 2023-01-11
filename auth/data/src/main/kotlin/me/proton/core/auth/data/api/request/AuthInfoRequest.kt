@@ -16,14 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain
+package me.proton.core.auth.data.api.request
 
-import javax.inject.Qualifier
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-/**
- * Hilt Qualifier annotation for ClientSecret value providing.
- * @author Dino Kadrikj.
- */
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class ClientSecret
+@Serializable
+data class AuthInfoRequest(
+    @SerialName("Username")
+    val username: String? = null
+)

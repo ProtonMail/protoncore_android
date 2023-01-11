@@ -14,9 +14,6 @@ public abstract interface class me/proton/core/auth/domain/AccountWorkflowHandle
 	public abstract fun handleUnlockFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface annotation class me/proton/core/auth/domain/ClientSecret : java/lang/annotation/Annotation {
-}
-
 public final class me/proton/core/auth/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/auth/domain/LogTag;
 	public static final field INVALID_SRP_PROOF Ljava/lang/String;
@@ -62,27 +59,6 @@ public final class me/proton/core/auth/domain/entity/BillingDetails {
 	public final fun getPlanName ()Ljava/lang/String;
 	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
 	public final fun getToken-oTEqFM4 ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/auth/domain/entity/LoginInfo {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()I
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/domain/entity/LoginInfo;
-	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/LoginInfo;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/LoginInfo;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getModulus ()Ljava/lang/String;
-	public final fun getSalt ()Ljava/lang/String;
-	public final fun getServerEphemeral ()Ljava/lang/String;
-	public final fun getSrpSession ()Ljava/lang/String;
-	public final fun getUsername ()Ljava/lang/String;
-	public final fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -216,10 +192,9 @@ public final class me/proton/core/auth/domain/extension/ServerProofKt {
 }
 
 public abstract interface class me/proton/core/auth/domain/repository/AuthRepository {
-	public abstract fun getAuthInfo (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getLoginInfo (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAuthInfo (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun performLogin (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun randomModulus (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun revokeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -261,7 +236,7 @@ public final class me/proton/core/auth/domain/usecase/LoginChallengeConfig$Compa
 }
 
 public final class me/proton/core/auth/domain/usecase/PerformLogin {
-	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Ljava/lang/String;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;)V
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -474,17 +449,17 @@ public final class me/proton/core/auth/domain/usecase/UserCheckAction$OpenUrl : 
 
 public final class me/proton/core/auth/domain/usecase/scopes/GetAuthInfo {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/ObtainLockedScope {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/RemoveSecurityScopes {

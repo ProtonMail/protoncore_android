@@ -20,13 +20,17 @@ package me.proton.core.auth.domain.usecase.scopes
 
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 class GetAuthInfo @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(userId: UserId, username: String): AuthInfo = authRepository.getAuthInfo(
-        userId = userId, username = username
+    suspend operator fun invoke(
+        sessionId: SessionId,
+        username: String
+    ): AuthInfo = authRepository.getAuthInfo(
+        sessionId = sessionId,
+        username = username
     )
 }

@@ -18,7 +18,7 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import me.proton.core.auth.domain.ClientSecret
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -34,10 +34,10 @@ import javax.inject.Inject
 
 class PerformUpdateLoginPassword @Inject constructor(
     context: CryptoContext,
+    private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val userSettingsRepository: UserSettingsRepository,
-    @ClientSecret private val clientSecret: String
 ) {
     private val keyStore = context.keyStoreCrypto
     private val srp = context.srpCrypto
@@ -50,10 +50,9 @@ class PerformUpdateLoginPassword @Inject constructor(
     ): UserSettings {
         val user = userRepository.getUser(userId)
         val username = user.nameNotNull()
-
-        val loginInfo = authRepository.getLoginInfo(username, clientSecret)
+        val account = accountRepository.getAccountOrNull(userId)
+        val loginInfo = authRepository.getAuthInfo(requireNotNull(account?.sessionId), username)
         val modulus = authRepository.randomModulus()
-
         password.decrypt(keyStore).toByteArray().use { decryptedPassword ->
             newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
                 val clientProofs: SrpProofs = srp.generateSrpProofs(

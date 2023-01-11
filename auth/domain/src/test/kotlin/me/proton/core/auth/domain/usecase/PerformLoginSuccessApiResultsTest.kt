@@ -24,7 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
-import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -54,7 +54,6 @@ class PerformLoginSuccessApiResultsTest {
     private val testUsername = "test-username"
     private val testPassword = "test-password"
 
-    private val testClientSecret = "test-secret"
     private val testModulus = "test-modulus"
     private val testEphemeral = "test-ephemeral"
     private val testSalt = "test-salt"
@@ -67,15 +66,14 @@ class PerformLoginSuccessApiResultsTest {
         expectedServerProof = "test-expectedServerProof",
     )
 
-    private val loginInfoResult = LoginInfo(
+    private val loginInfoResult = AuthInfo(
         username = testUsername, modulus = testModulus, serverEphemeral = testEphemeral, version = testVersion,
-        salt = testSalt, srpSession = testSrpSession
+        salt = testSalt, srpSession = testSrpSession, secondFactor = null
     )
     private val sessionInfoResult = SessionInfo(
-        username = testUsername, accessToken = "", expiresIn = 1, tokenType = "", scope = "", scopes = emptyList(),
-        sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "", localId = 1, passwordMode = 1,
-        secondFactor = null,
-        temporaryPassword = false,
+        username = testUsername, accessToken = "", tokenType = "", scope = "", scopes = emptyList(),
+        sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "",
+        localId = 1, passwordMode = 1, secondFactor = null, temporaryPassword = false,
     )
 
     private val loginChallengeConfig = LoginChallengeConfig()
@@ -86,14 +84,14 @@ class PerformLoginSuccessApiResultsTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret, challengeManager, loginChallengeConfig)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult
+        coEvery { authRepository.getAuthInfo(null, testUsername) } returns loginInfoResult
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult
     }
 
     @Test
@@ -101,11 +99,10 @@ class PerformLoginSuccessApiResultsTest {
         coEvery { challengeManager.getFramesByFlowName(loginChallengeConfig.flowName) } returns emptyList()
         useCase.invoke(testUsername, testPassword)
 
-        coVerify { authRepository.getLoginInfo(testUsername, testClientSecret) }
+        coVerify { authRepository.getAuthInfo(null, testUsername) }
         coVerify(exactly = 1) {
             authRepository.performLogin(
                 testUsername,
-                testClientSecret,
                 testSrpProofs,
                 testSrpSession,
                 frames = emptyList()
@@ -131,7 +128,7 @@ class PerformLoginSuccessApiResultsTest {
 
     @Test
     fun `correct handling single password account second factor returned`() = runTest {
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
             secondFactor = SecondFactor.Enabled(emptySet())
         )
 
@@ -141,7 +138,7 @@ class PerformLoginSuccessApiResultsTest {
 
     @Test
     fun `correct handling two password account second factor returned`() = runTest {
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
             passwordMode = 2,
             secondFactor = SecondFactor.Enabled(emptySet())
         )

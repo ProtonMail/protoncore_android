@@ -20,18 +20,16 @@ package me.proton.core.auth.data.repository
 
 import android.content.Context
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
-import me.proton.core.auth.data.api.request.LoginInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
 import me.proton.core.auth.domain.entity.AuthInfo
-import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
-import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.data.frame.ChallengeFrame
@@ -39,78 +37,41 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.SessionId
 
-/**
- * Implementation of the [AuthRepository].
- * Provides implementation of the all auth related API routes.
- */
 class AuthRepositoryImpl(
     private val provider: ApiProvider,
     private val context: Context,
     private val product: Product
 ) : AuthRepository {
 
-    /**
-     * Fetches the login info object for a particular [username] account.
-     * The results are needed for further BL decisions on the login process.
-     *
-     * @param username the account's username trying to make a login request.
-     * @param clientSecret client/app specific string.
-     *
-     * @return [LoginInfo] object containing meta-data for further login process operations.
-     */
-    override suspend fun getLoginInfo(username: String, clientSecret: String): LoginInfo =
-        provider.get<AuthenticationApi>().invoke {
-            val request = LoginInfoRequest(username, clientSecret)
-            getLoginInfo(request).toLoginInfo(username)
+    override suspend fun getAuthInfo(sessionId: SessionId?, username: String): AuthInfo =
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            val request = AuthInfoRequest(username)
+            getAuthInfo(request).toAuthInfo(username)
         }.valueOrThrow
 
-    override suspend fun getAuthInfo(userId: SessionUserId, username: String): AuthInfo =
-        provider.get<AuthenticationApi>(userId).invoke {
-            getAuthInfo().toAuthInfo(username)
-        }.valueOrThrow
-
-    /**
-     * Returns new random modulus generated from the API.
-     */
     override suspend fun randomModulus(): Modulus =
         provider.get<AuthenticationApi>().invoke {
             getRandomModulus().toModulus()
         }.valueOrThrow
 
-    /**
-     * Returns session scopes.
-     */
     override suspend fun getScopes(sessionId: SessionId?): List<String> =
         provider.get<AuthenticationApi>(sessionId).invoke {
             getScopes().scopes
         }.valueOrThrow
 
-    /**
-     * Performs the login request to the API to try to get a valid Access Token and Session for the Account/username.
-     *
-     * @param username the account's username trying to make a login request.
-     * @param clientSecret client/app specific string.
-     * @param srpProofs Base64 encoded values needed for the SRP authentication protocol.
-     * @param srpSession the SRPSession returned from the [getLoginInfo] API result.
-     *
-     * @return [SessionInfo] login result containing the Access and Refresh tokens and additional meta-data.
-     */
     override suspend fun performLogin(
         username: String,
-        clientSecret: String,
         srpProofs: SrpProofs,
         srpSession: String,
         frames: List<ChallengeFrameDetails>
     ) = provider.get<AuthenticationApi>().invoke {
         val request = LoginRequest(
             username,
-            clientSecret,
             srpProofs.clientEphemeral,
             srpProofs.clientProof,
             srpSession,
@@ -127,14 +88,6 @@ class AuthRepositoryImpl(
         return mapOf(name to frame)
     }
 
-    /**
-     * Performs the second factor request for the Accounts that have second factor enabled.
-     *
-     * @param sessionId the session Id for the current user making this request.
-     * @param secondFactorProof the [SecondFactorProof] object containing the 2FA details.
-     *
-     * @return [ScopeInfo] object containing full list of available scopes for the user.
-     */
     override suspend fun performSecondFactor(
         sessionId: SessionId,
         secondFactorProof: SecondFactorProof

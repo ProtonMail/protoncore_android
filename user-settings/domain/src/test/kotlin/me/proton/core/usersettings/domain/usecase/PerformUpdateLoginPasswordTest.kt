@@ -23,7 +23,8 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
@@ -32,6 +33,7 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
@@ -45,6 +47,7 @@ import kotlin.test.assertNotNull
 
 class PerformUpdateLoginPasswordTest {
     // region mocks
+    private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val repository = mockk<UserSettingsRepository>(relaxed = true)
@@ -54,16 +57,11 @@ class PerformUpdateLoginPasswordTest {
     // endregion
 
     // region test data
+    private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
-    private val testClientSecret = "test-client-secret"
     private val testUsername = "test-username"
     private val testPassword = "test-password"
     private val testSecondFactor = "123456"
-    private val testSrpProofs = SrpProofs(
-        clientEphemeral = "test-client-ephemeral",
-        clientProof = "test-client-proof",
-        expectedServerProof = "test-server-proof"
-    )
     private val testSrpSession = "test-srp-session"
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
@@ -132,42 +130,43 @@ class PerformUpdateLoginPasswordTest {
         every { cryptoContext.keyStoreCrypto } returns keyStoreCrypto
 
         useCase = PerformUpdateLoginPassword(
+            context = cryptoContext,
+            accountRepository = accountRepository,
             authRepository = authRepository,
             userRepository = userRepository,
-            userSettingsRepository = repository,
-            clientSecret = testClientSecret,
-            context = cryptoContext
+            userSettingsRepository = repository
         )
-
 
         coEvery {
             repository.updateLoginPassword(
                 sessionUserId = testUserId,
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = any(),
+                secondFactorCode = testSecondFactor,
                 auth = testAuth
             )
         } returns testUserSettingsResponse
 
         coEvery { userRepository.getUser(any()) } returns testUser
-    }
+        coEvery { accountRepository.getAccountOrNull(any<SessionId>()) } returns mockk {
+            every { sessionId } returns testSessionId
+        }
 
-    @Test
-    fun `update login password returns success`() = runTest {
-        // GIVEN
-        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns LoginInfo(
+        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,
             version = 1,
             salt = testSalt,
-            srpSession = testSrpSession
+            srpSession = testSrpSession,
+            secondFactor = null
         )
+
         coEvery { authRepository.randomModulus() } returns Modulus(
             modulusId = testModulusId,
             modulus = testModulus
         )
+
         every {
             srpCrypto.generateSrpProofs(
                 username = testUsername,
@@ -177,11 +176,20 @@ class PerformUpdateLoginPasswordTest {
                 modulus = testModulus,
                 serverEphemeral = testServerEphemeral
             )
-        } returns testSrpProofs
-        every {
-            srpCrypto.calculatePasswordVerifier(testUsername, testNewPassword.toByteArray(), testModulusId, testModulus)
-        } returns testAuth
+        } returns mockk()
 
+        every {
+            srpCrypto.calculatePasswordVerifier(
+                username = testUsername,
+                password = testNewPassword.toByteArray(),
+                modulusId = testModulusId,
+                modulus = testModulus
+            )
+        } returns testAuth
+    }
+
+    @Test
+    fun `update login password returns success`() = runTest {
         // WHEN
         val result = useCase.invoke(
             userId = testUserId,
@@ -193,8 +201,8 @@ class PerformUpdateLoginPasswordTest {
         coVerify(exactly = 1) {
             repository.updateLoginPassword(
                 sessionUserId = testUserId,
-                srpProofs = testSrpProofs,
-                srpSession = testSrpSession,
+                srpProofs = any(),
+                srpSession = any(),
                 secondFactorCode = testSecondFactor,
                 auth = testAuth
             )

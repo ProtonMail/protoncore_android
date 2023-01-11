@@ -19,32 +19,22 @@
 package me.proton.core.auth.domain.repository
 
 import me.proton.core.auth.domain.entity.AuthInfo
-import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.session.SessionId
 
 interface AuthRepository {
 
     /**
-     * Get Login Info needed to start the login process.
-     */
-    suspend fun getLoginInfo(
-        username: String,
-        clientSecret: String
-    ): LoginInfo
-
-    /**
-     * Get Auth Info needed to obtain the security [Password and Locked] scopes.
+     * Get Authentication Info (e.g. needed during login or password/locked scope).
      */
     suspend fun getAuthInfo(
-        userId: SessionUserId,
-        username: String
+        sessionId: SessionId?,
+        username: String,
     ): AuthInfo
 
     /**
@@ -52,7 +42,6 @@ interface AuthRepository {
      */
     suspend fun performLogin(
         username: String,
-        clientSecret: String,
         srpProofs: SrpProofs,
         srpSession: String,
         frames: List<ChallengeFrameDetails>
