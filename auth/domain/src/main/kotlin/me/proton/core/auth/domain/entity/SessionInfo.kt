@@ -28,7 +28,6 @@ data class SessionInfo(
     val username: String,
     val accessToken: String,
     val tokenType: String,
-    val scope: String,
     val scopes: List<String>,
     val sessionId: SessionId,
     val userId: UserId,

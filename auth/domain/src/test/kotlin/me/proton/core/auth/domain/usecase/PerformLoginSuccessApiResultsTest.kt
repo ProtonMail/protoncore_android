@@ -71,9 +71,10 @@ class PerformLoginSuccessApiResultsTest {
         salt = testSalt, srpSession = testSrpSession, secondFactor = null
     )
     private val sessionInfoResult = SessionInfo(
-        username = testUsername, accessToken = "", tokenType = "", scope = "", scopes = emptyList(),
-        sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "",
-        localId = 1, passwordMode = 1, secondFactor = null, temporaryPassword = false,
+        username = testUsername, accessToken = "", tokenType = "", scopes = emptyList(),
+        sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "", localId = 1, passwordMode = 1,
+        secondFactor = null,
+        temporaryPassword = false,
     )
 
     private val loginChallengeConfig = LoginChallengeConfig()

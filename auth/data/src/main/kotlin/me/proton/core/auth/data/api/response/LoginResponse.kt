@@ -30,8 +30,6 @@ data class LoginResponse(
     val accessToken: String,
     @SerialName("TokenType")
     val tokenType: String,
-    @SerialName("Scope")
-    val scope: String,
     @SerialName("Scopes")
     val scopes: List<String>,
     @SerialName("UID")
@@ -57,7 +55,6 @@ data class LoginResponse(
         username = username,
         accessToken = accessToken,
         tokenType = tokenType,
-        scope = scope,
         scopes = scopes,
         sessionId = SessionId(sessionId),
         userId = UserId(userId),

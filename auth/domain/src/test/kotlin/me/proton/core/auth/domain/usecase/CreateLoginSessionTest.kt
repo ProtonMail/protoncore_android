@@ -102,7 +102,6 @@ class CreateLoginSessionTest {
                 testUsername,
                 "access-token",
                 "token-type",
-                "scope",
                 listOf("scope1", "scope2"),
                 SessionId("session-id"),
                 UserId("user-id"),
