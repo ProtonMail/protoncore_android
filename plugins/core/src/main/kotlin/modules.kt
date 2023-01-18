@@ -54,6 +54,7 @@ public object Module {
     public const val networkDagger: String = "$network:network-dagger"
     public const val networkDomain: String = "$network:network-domain"
     public const val networkData: String = "$network:network-data"
+    public const val networkPresentation: String = "$network:network-presentation"
     // endregion
 
     // region Features

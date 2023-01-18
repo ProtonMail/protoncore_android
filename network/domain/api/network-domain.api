@@ -276,6 +276,10 @@ public final class me/proton/core/network/domain/TimeoutOverride {
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class me/proton/core/network/domain/UnAuthSessionsRepository {
+	public abstract fun requestToken (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract class me/proton/core/network/domain/client/ClientId {
 	public static final field Companion Lme/proton/core/network/domain/client/ClientId$Companion;
 	public final fun getId ()Ljava/lang/String;
@@ -645,10 +649,21 @@ public abstract interface class me/proton/core/network/domain/session/SessionLis
 public abstract interface class me/proton/core/network/domain/session/SessionProvider {
 	public abstract fun getSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSessionId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSessions (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUserId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/domain/session/SessionProviderKt {
 	public static final fun getResolvedSession (Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/domain/session/unauth/LogTag {
+	public static final field INSTANCE Lme/proton/core/network/domain/session/unauth/LogTag;
+	public static final field REQUEST_TOKEN Ljava/lang/String;
+}
+
+public final class me/proton/core/network/domain/session/unauth/OpportunisticUnAuthTokenRequest {
+	public fun <init> (Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/UnAuthSessionsRepository;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

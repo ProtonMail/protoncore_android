@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,46 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
-        project(Module.networkDagger),
-        project(Module.networkData),
+        project(Module.kotlinUtil),
+        appcompat,
+        `hilt-android`,
+        `startup-runtime`
+    )
+
+    implementation(
+        project(Module.accountDomain),
+        project(Module.domain),
+        project(Module.presentation),
+
+        activity,
+        `coroutines-core`,
+        `hilt-androidx-annotations`,
+        `lifecycle-common`,
+        `lifecycle-runtime`,
+        `lifecycle-viewModel`,
+        material,
+    )
+
+    testImplementation(
+        project(Module.androidTest),
         project(Module.networkDomain),
-        project(Module.networkPresentation)
+        project(Module.kotlinTest),
+        `android-arch-testing`,
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
     )
 }
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }

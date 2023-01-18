@@ -27,6 +27,7 @@ import me.proton.android.core.coreexample.init.WorkManagerInitializer
 import me.proton.core.auth.presentation.MissingScopeInitializer
 import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 
 @HiltAndroidApp
@@ -41,6 +42,7 @@ class CoreExampleApp : Application() {
             initializeComponent(UnredeemedPurchaseInitializer::class.java)
             initializeComponent(MissingScopeInitializer::class.java)
             initializeComponent(HumanVerificationInitializer::class.java)
+            initializeComponent(UnAuthSessionFetcherInitializer::class.java)
         }
     }
 }

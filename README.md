@@ -149,6 +149,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:network-dagger                       |
 | me.proton.core:network-data                         |
 | me.proton.core:network-domain                       |
+| me.proton.core:network-presentation                 |
 | me.proton.core:payment                              |
 | me.proton.core:payment-dagger                       |
 | me.proton.core:payment-data                         |

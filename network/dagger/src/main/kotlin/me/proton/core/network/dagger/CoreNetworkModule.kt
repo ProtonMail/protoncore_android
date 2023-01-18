@@ -34,6 +34,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.data.UnAuthSessionsRepositoryImpl
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.cookie.DiskCookieStorage
@@ -46,6 +47,7 @@ import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.UnAuthSessionsRepository
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -150,6 +152,9 @@ public interface CoreNetworkBindsModule {
 
     @Binds
     public fun provideClientVersionValidator(impl: ClientVersionValidatorImpl): ClientVersionValidator
+
+    @Binds
+    public fun provideUnAuthSessionRepository(repository: UnAuthSessionsRepositoryImpl): UnAuthSessionsRepository
 }
 
 @Module

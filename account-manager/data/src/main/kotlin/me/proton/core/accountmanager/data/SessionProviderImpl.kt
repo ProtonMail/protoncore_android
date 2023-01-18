@@ -18,6 +18,7 @@
 
 package me.proton.core.accountmanager.data
 
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
@@ -31,6 +32,9 @@ class SessionProviderImpl @Inject constructor(
 
     override suspend fun getSession(sessionId: SessionId): Session? =
         accountRepository.getSessionOrNull(sessionId)
+
+    override suspend fun getSessions(): List<Session> =
+        accountRepository.getSessions().firstOrNull().orEmpty()
 
     override suspend fun getSessionId(userId: UserId?): SessionId? =
         accountRepository.getSessionIdOrNull(userId)

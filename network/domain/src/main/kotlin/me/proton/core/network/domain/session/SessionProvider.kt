@@ -27,6 +27,11 @@ interface SessionProvider {
     suspend fun getSession(sessionId: SessionId): Session?
 
     /**
+     * Get all [Session].
+     */
+    suspend fun getSessions(): List<Session>
+
+    /**
      * Get [SessionId], if exist, by [userId].
      */
     suspend fun getSessionId(userId: UserId?): SessionId?

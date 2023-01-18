@@ -44,6 +44,7 @@ public final class me/proton/core/network/dagger/CoreBaseNetworkModule_ProvideOk
 public abstract interface class me/proton/core/network/dagger/CoreNetworkBindsModule {
 	public abstract fun provideClientIdProvider (Lme/proton/core/network/data/client/ClientIdProviderImpl;)Lme/proton/core/network/domain/client/ClientIdProvider;
 	public abstract fun provideClientVersionValidator (Lme/proton/core/network/data/client/ClientVersionValidatorImpl;)Lme/proton/core/network/domain/client/ClientVersionValidator;
+	public abstract fun provideUnAuthSessionRepository (Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl;)Lme/proton/core/network/domain/UnAuthSessionsRepository;
 }
 
 public final class me/proton/core/network/dagger/CoreNetworkCryptoModule {

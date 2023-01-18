@@ -115,6 +115,19 @@ public final class me/proton/core/network/data/PublicKeyPin$Companion {
 	public final fun fromSha256HashBase64 (Ljava/lang/String;)Lme/proton/core/network/data/PublicKeyPin;
 }
 
+public final class me/proton/core/network/data/UnAuthSessionsRepositoryImpl : me/proton/core/network/domain/UnAuthSessionsRepository {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)V
+	public fun requestToken (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/data/UnAuthSessionsRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl;
+}
+
 public final class me/proton/core/network/data/client/ClientIdProviderImpl : me/proton/core/network/domain/client/ClientIdProvider {
 	public fun <init> (Lokhttp3/HttpUrl;Lme/proton/core/network/data/ProtonCookieStore;)V
 	public fun getClientId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
