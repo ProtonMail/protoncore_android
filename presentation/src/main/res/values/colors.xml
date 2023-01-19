@@ -79,44 +79,84 @@
     <color name="puerto_rico">#4AB89A</color>
 
     <color name="purple_base">#8080FF</color>
-    <color name="purple_strong">#5151FB</color>
-    <color name="purple_intense">#2E2EFA</color>
+    <color name="purple_strong">#6A6AFB</color>
+    <color name="purple_intense">#5555F6</color>
 
-    <color name="strawberry_base">#EC3E7C</color>
-    <color name="strawberry_strong">#D91C5F</color>
-    <color name="strawberry_intense">#B91852</color>
+    <color name="enzian_base">#5252CC</color>
+    <color name="enzian_strong">#4444C1</color>
+    <color name="enzian_intense">#4141AA</color>
 
     <color name="pink_base">#DB60D6</color>
-    <color name="pink_strong">#CC3EC6</color>
-    <color name="pink_intense">#B530B0</color>
+    <color name="pink_strong">#D152CC</color>
+    <color name="pink_intense">#C544C0</color>
 
-    <color name="slateblue_base">#415DF0</color>
-    <color name="slateblue_strong">#1A3AE5</color>
-    <color name="slateblue_intense">#1632C5</color>
+    <color name="plum_base">#A839A4</color>
+    <color name="plum_strong">#8F388C</color>
+    <color name="plum_intense">#793576</color>
 
-    <color name="pacific_base">#179FD9</color>
-    <color name="pacific_strong">#177BA6</color>
-    <color name="pacific_intense">#126487</color>
+    <color name="strawberry_base">#EC3E7C</color>
+    <color name="strawberry_strong">#E32B6D</color>
+    <color name="strawberry_intense">#CC2862</color>
 
-    <color name="reef_base">#1DA583</color>
-    <color name="reef_strong">#19765F</color>
-    <color name="reef_intense">#135847</color>
-
-    <color name="fern_base">#3CBB3A</color>
-    <color name="fern_strong">#339032</color>
-    <color name="fern_intense">#2A7529</color>
-
-    <color name="olive_base">#B4A40E</color>
-    <color name="olive_strong">#81760E</color>
-    <color name="olive_intense">#61590A</color>
-
-    <color name="sahara_base">#936D58</color>
-    <color name="sahara_strong">#6E5749</color>
-    <color name="sahara_intense">#59463B</color>
+    <color name="cerise_base">#BA1E55</color>
+    <color name="cerise_strong">#9E1F4B</color>
+    <color name="cerise_intense">#841F42</color>
 
     <color name="carrot_base">#F78400</color>
-    <color name="carrot_strong">#BD6705</color>
-    <color name="carrot_intense">#9A5404</color>
+    <color name="carrot_strong">#D67505</color>
+    <color name="carrot_intense">#B8670A</color>
+
+    <color name="copper_base">#C44800</color>
+    <color name="copper_strong">#A43F04</color>
+    <color name="copper_intense">#883607</color>
+
+    <color name="sahara_base">#936D58</color>
+    <color name="sahara_strong">#7D6354</color>
+    <color name="sahara_intense">#6A584E</color>
+
+    <color name="soil_base">#54473F</color>
+    <color name="soil_strong">#433C38</color>
+    <color name="soil_intense">#32302F</color>
+
+    <color name="slateblue_base">#415DF0</color>
+    <color name="slateblue_strong">#304EE8</color>
+    <color name="slateblue_intense">#203EDF</color>
+
+    <color name="cobalt_base">#273EB2</color>
+    <color name="cobalt_strong">#283B9A</color>
+    <color name="cobalt_intense">#273682</color>
+
+    <color name="pacific_base">#179FD9</color>
+    <color name="pacific_strong">#1A8CBC</color>
+    <color name="pacific_intense">#1B79A1</color>
+
+    <color name="ocean_base">#0A77A6</color>
+    <color name="ocean_strong">#0C668D</color>
+    <color name="ocean_intense">#0D5472</color>
+
+    <color name="reef_base">#1DA583</color>
+    <color name="reef_strong">#1D8B6F</color>
+    <color name="reef_intense">#1D725D</color>
+
+    <color name="pine_base">#0F735A</color>
+    <color name="pine_strong">#0E5845</color>
+    <color name="pine_intense">#0D4033</color>
+
+    <color name="fern_base">#3CBB3A</color>
+    <color name="fern_strong">#3BA239</color>
+    <color name="fern_intense">#398B37</color>
+
+    <color name="forest_base">#258723</color>
+    <color name="forest_strong">#226E21</color>
+    <color name="forest_intense">#1F571E</color>
+
+    <color name="olive_base">#B4A40E</color>
+    <color name="olive_strong">#988B10</color>
+    <color name="olive_intense">#7E7311</color>
+
+    <color name="pickle_base">#807304</color>
+    <color name="pickle_strong">#655C06</color>
+    <color name="pickle_intense">#4B4407</color>
 
     <!-- design color aliases -->
 
@@ -210,41 +250,71 @@
     <!-- Accent colors for rebranding -->
     <array name="accent_colors_base">
         <item>@color/purple_base</item>
+        <item>@color/enzian_base</item>
         <item>@color/pink_base</item>
+        <item>@color/plum_base</item>
         <item>@color/strawberry_base</item>
+        <item>@color/cerise_base</item>
         <item>@color/carrot_base</item>
+        <item>@color/copper_base</item>
         <item>@color/sahara_base</item>
+        <item>@color/soil_base</item>
         <item>@color/slateblue_base</item>
+        <item>@color/cobalt_base</item>
         <item>@color/pacific_base</item>
+        <item>@color/ocean_base</item>
         <item>@color/reef_base</item>
+        <item>@color/pine_base</item>
         <item>@color/fern_base</item>
+        <item>@color/forest_base</item>
         <item>@color/olive_base</item>
+        <item>@color/pickle_base</item>
     </array>
 
     <array name="accent_colors_strong">
         <item>@color/purple_strong</item>
+        <item>@color/enzian_strong</item>
         <item>@color/pink_strong</item>
+        <item>@color/plum_strong</item>
         <item>@color/strawberry_strong</item>
+        <item>@color/cerise_strong</item>
         <item>@color/carrot_strong</item>
+        <item>@color/copper_strong</item>
         <item>@color/sahara_strong</item>
+        <item>@color/soil_strong</item>
         <item>@color/slateblue_strong</item>
+        <item>@color/cobalt_strong</item>
         <item>@color/pacific_strong</item>
+        <item>@color/ocean_strong</item>
         <item>@color/reef_strong</item>
+        <item>@color/pine_strong</item>
         <item>@color/fern_strong</item>
+        <item>@color/forest_strong</item>
         <item>@color/olive_strong</item>
+        <item>@color/pickle_strong</item>
     </array>
 
     <array name="accent_colors_intense">
         <item>@color/purple_intense</item>
+        <item>@color/enzian_intense</item>
         <item>@color/pink_intense</item>
+        <item>@color/plum_intense</item>
         <item>@color/strawberry_intense</item>
+        <item>@color/cerise_intense</item>
         <item>@color/carrot_intense</item>
+        <item>@color/copper_intense</item>
         <item>@color/sahara_intense</item>
+        <item>@color/soil_intense</item>
         <item>@color/slateblue_intense</item>
+        <item>@color/cobalt_intense</item>
         <item>@color/pacific_intense</item>
+        <item>@color/ocean_intense</item>
         <item>@color/reef_intense</item>
+        <item>@color/pine_intense</item>
         <item>@color/fern_intense</item>
+        <item>@color/forest_intense</item>
         <item>@color/olive_intense</item>
+        <item>@color/pickle_intense</item>
     </array>
 
     <!--End of Global Colors -->

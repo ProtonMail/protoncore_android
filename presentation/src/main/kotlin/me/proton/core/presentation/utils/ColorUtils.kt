@@ -38,7 +38,7 @@ object ProtonColorUtils {
         val hslConversion = floatArrayOf(
             hsl[0],
             hsl[1] - 0.05f,
-            hsl[2] - 0.1f,
+            hsl[2] - 0.05f,
         )
         return ColorUtils.HSLToColor(hslConversion)
     }
@@ -48,8 +48,8 @@ object ProtonColorUtils {
         val hsl = rgbToHsl(color)
         val hslConversion = floatArrayOf(
             hsl[0],
-            hsl[1] - 0.05f,
-            hsl[2] - 0.17f,
+            hsl[1] - 0.10f,
+            hsl[2] - 0.10f,
         )
         return ColorUtils.HSLToColor(hslConversion)
     }

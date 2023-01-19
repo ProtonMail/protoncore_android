@@ -427,14 +427,24 @@ public final class me/proton/core/compose/theme/AccentColors {
 	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/compose/theme/AccentColors;
 	public final fun getCarrot ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getCerise ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getCobalt ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getCopper ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getEnzian ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getFern ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getForest ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getOcean ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getOlive ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getPacific ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getPickle ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getPine ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getPink ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getPlum ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getPurple ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getReef ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getSahara ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getSlateBlue ()Lme/proton/core/compose/theme/ProtonAccentColor;
+	public final fun getSoil ()Lme/proton/core/compose/theme/ProtonAccentColor;
 	public final fun getStrawberry ()Lme/proton/core/compose/theme/ProtonAccentColor;
 }
 

@@ -83,15 +83,25 @@ private object ProtonPalette {
 
     // New accent colors for rebranding
     val PurpleBase = Color(0xFF8080FF)
-    val StrawberryBase = Color(0xFFEC3E7C)
+    val EnzianBase = Color(0xFF5252CC)
     val PinkBase = Color(0xFFDB60D6)
-    val SlateBlueBase = Color(0xFF415DF0)
-    val PacificBase = Color(0xFF179FD9)
-    val ReefBase = Color(0xFF1DA583)
-    val FernBase = Color(0xFF3CBB3A)
-    val OliveBase = Color(0xFFB4A40E)
-    val SaharaBase = Color(0xFF936D58)
+    val PlumBase = Color(0xFFA839A4)
+    val StrawberryBase = Color(0xFFEC3E7C)
+    val CeriseBase = Color(0xFFBA1E55)
     val CarrotBase = Color(0xFFF78400)
+    val CopperBase = Color(0xFFC44800)
+    val SaharaBase = Color(0xFF936D58)
+    val SoilBase = Color(0xFF54473F)
+    val SlateBlueBase = Color(0xFF415DF0)
+    val CobaltBase = Color(0xFF273EB2)
+    val PacificBase = Color(0xFF179FD9)
+    val OceanBase = Color(0xFF0A77A6)
+    val ReefBase = Color(0xFF1DA583)
+    val PineBase = Color(0xFF0F735A)
+    val FernBase = Color(0xFF3CBB3A)
+    val ForestBase = Color(0xFF258723)
+    val OliveBase = Color(0xFFB4A40E)
+    val PickleBase = Color(0xFF807304)
 }
 
 @Stable
@@ -694,15 +704,25 @@ internal fun ProtonColors.updateColorsFrom(other: ProtonColors) {
 
 object AccentColors {
     val Purple = ProtonAccentColor(ProtonPalette.PurpleBase)
+    val Enzian = ProtonAccentColor(ProtonPalette.EnzianBase)
     val Pink = ProtonAccentColor(ProtonPalette.PinkBase)
+    val Plum = ProtonAccentColor(ProtonPalette.PlumBase)
     val Strawberry = ProtonAccentColor(ProtonPalette.StrawberryBase)
+    val Cerise = ProtonAccentColor(ProtonPalette.CeriseBase)
     val Carrot = ProtonAccentColor(ProtonPalette.CarrotBase)
+    val Copper = ProtonAccentColor(ProtonPalette.CopperBase)
     val Sahara = ProtonAccentColor(ProtonPalette.SaharaBase)
+    val Soil = ProtonAccentColor(ProtonPalette.SoilBase)
     val SlateBlue = ProtonAccentColor(ProtonPalette.SlateBlueBase)
+    val Cobalt = ProtonAccentColor(ProtonPalette.CobaltBase)
     val Pacific = ProtonAccentColor(ProtonPalette.PacificBase)
+    val Ocean = ProtonAccentColor(ProtonPalette.OceanBase)
     val Reef = ProtonAccentColor(ProtonPalette.ReefBase)
+    val Pine = ProtonAccentColor(ProtonPalette.PineBase)
     val Fern = ProtonAccentColor(ProtonPalette.FernBase)
+    val Forest = ProtonAccentColor(ProtonPalette.ForestBase)
     val Olive = ProtonAccentColor(ProtonPalette.OliveBase)
+    val Pickle = ProtonAccentColor(ProtonPalette.PickleBase)
 }
 
 data class ProtonAccentColor(
