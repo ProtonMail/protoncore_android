@@ -429,11 +429,14 @@ formatting:
   StringTemplate:
     active: true
     autoCorrect: true
-  TrailingComma:
+  TrailingCommaOnCallSite:
     active: true
     autoCorrect: true
-    allowTrailingComma: false
-    allowTrailingCommaOnCallSite: false
+    useTrailingCommaOnCallSite: false
+  TrailingCommaOnDeclarationSite:
+    active: true
+    autoCorrect: true
+    useTrailingCommaOnDeclarationSite: false
   TypeArgumentListSpacing:
     active: true
     autoCorrect: true
