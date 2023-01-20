@@ -32,6 +32,7 @@ detekt = { module = "io.gitlab.arturbosch.detekt:detekt", version.ref = "detekt"
 detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
 detekt-codeanalysis = { module = "pm.algirdas.detekt:codeanalysis", version.ref = "detekt-codeanalysis" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-rules-libraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
 
 dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlinDokka" }
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }

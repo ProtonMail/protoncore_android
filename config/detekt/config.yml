@@ -448,6 +448,15 @@ formatting:
     autoCorrect: true
     indentSize: 4
 
+libraries:
+  active: true
+  ForbiddenPublicDataClass:
+    active: false
+  LibraryEntitiesShouldNotBePublic:
+    active: false
+  LibraryCodeMustSpecifyReturnType:
+    active: true
+
 naming:
   active: true
   BooleanPropertyNaming:

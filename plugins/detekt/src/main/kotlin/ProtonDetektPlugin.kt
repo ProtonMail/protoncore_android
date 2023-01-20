@@ -157,6 +157,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
         sub.dependencies {
             add("detekt", libs.findLibrary("detekt-cli").get())
             add("detektPlugins", libs.findLibrary("detekt-formatting").get())
+            add("detektPlugins", libs.findLibrary("detekt-rules-libraries").get())
         }
     }
 
