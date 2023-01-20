@@ -4,6 +4,8 @@ arturboschDetektGradle = "1.19.0"
 benManesVersions = "0.44.0"
 daggerHiltAndroid = "2.44.2"
 dependencyAnalysis = "1.17.0"
+detekt = "1.22.0"
+detekt-codeanalysis = "0.2.0"
 easyGradle = "2.8"
 gradleNexusPublish = "1.1.0"
 kotlin = "1.7.20"
@@ -25,6 +27,12 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradle" }
 arturbosch-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "arturboschDetektGradle" }
 dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHiltAndroid" }
+
+detekt = { module = "io.gitlab.arturbosch.detekt:detekt", version.ref = "detekt" }
+detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
+detekt-codeanalysis = { module = "pm.algirdas.detekt:codeanalysis", version.ref = "detekt-codeanalysis" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
 dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlinDokka" }
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }
 easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", version.ref = "easyGradle" }
