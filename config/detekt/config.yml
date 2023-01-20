@@ -392,8 +392,8 @@ formatting:
   NoWildcardImports:
     active: false
   NullableTypeSpacing:
-    active: false
-    autoCorrect: false
+    active: true
+    autoCorrect: true
   PackageName:
     active: true
     autoCorrect: true
@@ -978,3 +978,53 @@ style:
     #   for error, it's better to limit them as much as possible
     # ANY OTHER EXCLUSION IS FORBIDDEN!!!!
     excludeImports: ['studio.forface.easygradle.dsl.*', 'studio.forface.easygradle.dsl.android.*']
+
+TwitterCompose:
+  CompositionLocalAllowlist:
+    active: true
+    # You can optionally define a list of CompositionLocals that are allowed here
+    # allowedCompositionLocals: LocalSomething,LocalSomethingElse
+  CompositionLocalNaming:
+    active: true
+  ContentEmitterReturningValues:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  # https://twitter.github.io/compose-rules/rules/#avoid-modifier-extension-factory-functions
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: false
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+      # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  MutableParams:
+    active: true
+  # https://twitter.github.io/compose-rules/rules/#naming-composable-functions-properly
+  ComposableNaming:
+    active: true
+    # You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
+    # allowedComposableFunctionNames: .*Presenter,.*MoleculePresenter
+  ComposableParamOrder:
+    active: true
+  PreviewNaming:
+    active: true
+  PreviewPublic:
+    active: true
+    # You can optionally disable that only previews with @PreviewParameter are flagged
+    # previewPublicOnlyIfParams: false
+  RememberMissing:
+    active: true
+  UnstableCollections:
+    active: true
+  # https://twitter.github.io/compose-rules/rules/#hoist-all-the-things
+  ViewModelForwarding:
+    active: true
+  # https://twitter.github.io/compose-rules/rules/#viewmodels
+  ViewModelInjection:
+    active: true
