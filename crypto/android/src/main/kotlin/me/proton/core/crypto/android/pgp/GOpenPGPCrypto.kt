@@ -42,6 +42,7 @@ import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.DecryptedMimeMessage
 import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -604,6 +605,23 @@ class GOpenPGPCrypto : PGPCrypto {
         decryptMessage(message, unlockedKey) { it.string }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
+    override fun decryptMimeMessage(
+        message: EncryptedMessage,
+        unlockedKeys: List<Unarmored>
+    ): DecryptedMimeMessage = runCatching{
+        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
+        return newKeys(unlockedKeys).use { keys ->
+            newKeyRing(keys).use { decryptionKeyRing ->
+                DecryptMimeMessage().invoke(
+                    pgpMessage,
+                    decryptionKeyRing.value,
+                    verificationKeyRing = null,
+                    verificationTime = 0
+                )
+            }
+        }
+    }.getOrElse { throw CryptoException("Mime message cannot be decrypted.", it) }
+
     override fun decryptData(
         message: EncryptedMessage,
         unlockedKey: Unarmored
@@ -639,6 +657,26 @@ class GOpenPGPCrypto : PGPCrypto {
             )
         }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptAndVerifyMimeMessage(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        time: VerificationTime
+    ): DecryptedMimeMessage = runCatching{
+        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
+        val verificationKeyRing = publicKeys.keyRing()
+        newKeys(unlockedKeys).use { keys ->
+            newKeyRing(keys).use { decryptionKeyRing ->
+                DecryptMimeMessage().invoke(
+                    pgpMessage,
+                    decryptionKeyRing.value,
+                    verificationKeyRing,
+                    time.toUtcSeconds()
+                )
+            }
+        }
+    }.getOrElse { throw CryptoException("Mime message cannot be decrypted.", it) }
 
     override fun decryptAndVerifyData(
         message: EncryptedMessage,

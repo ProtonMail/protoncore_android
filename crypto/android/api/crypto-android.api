@@ -46,10 +46,12 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun decryptAndVerifyData (Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedData;
 	public fun decryptAndVerifyData ([BLme/proton/core/crypto/common/pgp/SessionKey;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedData;
 	public fun decryptAndVerifyFile (Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedFile;
+	public fun decryptAndVerifyMimeMessage (Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedMimeMessage;
 	public fun decryptAndVerifyText (Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Lme/proton/core/crypto/common/pgp/DecryptedText;
 	public fun decryptData (Ljava/lang/String;[B)[B
 	public fun decryptData ([BLme/proton/core/crypto/common/pgp/SessionKey;)[B
 	public fun decryptFile (Ljava/io/File;Ljava/io/File;Lme/proton/core/crypto/common/pgp/SessionKey;)Lme/proton/core/crypto/common/pgp/DecryptedFile;
+	public fun decryptMimeMessage (Ljava/lang/String;Ljava/util/List;)Lme/proton/core/crypto/common/pgp/DecryptedMimeMessage;
 	public fun decryptSessionKey ([B[B)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public fun decryptSessionKeyWithPassword ([B[B)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public fun decryptText (Ljava/lang/String;[B)Ljava/lang/String;
@@ -113,6 +115,7 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPUnlockedKey : me/pr
 }
 
 public final class me/proton/core/crypto/android/pgp/VerificationStatusKt {
+	public static final fun toVerificationStatus (J)Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static final fun toVerificationStatus (Lcom/proton/gopenpgp/crypto/SignatureVerificationError;)Lme/proton/core/crypto/common/pgp/VerificationStatus;
 }
 

@@ -26,9 +26,13 @@ import me.proton.core.crypto.common.pgp.exception.CryptoException
 fun SignatureVerificationError?.toVerificationStatus(): VerificationStatus = when {
     // No error -> success.
     this == null -> VerificationStatus.Success
-    status == Constants.SIGNATURE_OK -> VerificationStatus.Success
-    status == Constants.SIGNATURE_NOT_SIGNED -> VerificationStatus.NotSigned
-    status == Constants.SIGNATURE_NO_VERIFIER -> VerificationStatus.NotMatchKey
-    status == Constants.SIGNATURE_FAILED -> VerificationStatus.Failure
-    else -> throw CryptoException("Unknown SignatureVerificationError status: $status")
+    else -> status.toVerificationStatus()
+}
+
+fun Long.toVerificationStatus(): VerificationStatus = when (this) {
+    Constants.SIGNATURE_OK -> VerificationStatus.Success
+    Constants.SIGNATURE_NOT_SIGNED -> VerificationStatus.NotSigned
+    Constants.SIGNATURE_NO_VERIFIER -> VerificationStatus.NotMatchKey
+    Constants.SIGNATURE_FAILED -> VerificationStatus.Failure
+    else -> throw CryptoException("Unknown SignatureVerificationError status: $this")
 }

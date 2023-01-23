@@ -206,6 +206,16 @@ interface PGPCrypto {
     fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String
 
     /**
+     * Decrypt a PGP/MIME [message] using [unlockedKeys], and parse the decrypted content.
+     *
+     * @throws [CryptoException] if [message] cannot be decrypted.
+     *
+     * @return a [DecryptedMimeMessage] with the parsed content.
+     *
+     */
+    fun decryptMimeMessage(message: EncryptedMessage, unlockedKeys: List<Unarmored>): DecryptedMimeMessage
+
+    /**
      * Decrypt [message] as [ByteArray] using [unlockedKey].
      *
      * @throws [CryptoException] if [message] cannot be decrypted.
@@ -251,6 +261,25 @@ interface PGPCrypto {
         unlockedKeys: List<Unarmored>,
         time: VerificationTime = VerificationTime.Now
     ): DecryptedText
+
+    /**
+     * Decrypt a PGP/MIME [message] using [unlockedKeys], verify using [publicKeys], and parse the decrypted content.
+     *
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     *
+     * @throws [CryptoException] if [message] cannot be decrypted.
+     *
+     * @return a [DecryptedMimeMessage] with the parsed content and [VerificationStatus]
+     *
+     * @see [DecryptedMimeMessage]
+     * @see [VerificationStatus]
+     */
+    fun decryptAndVerifyMimeMessage(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        time: VerificationTime = VerificationTime.Now
+    ): DecryptedMimeMessage
 
     /**
      * Decrypt [message] as [ByteArray] using [unlockedKeys] and verify using [publicKeys].
