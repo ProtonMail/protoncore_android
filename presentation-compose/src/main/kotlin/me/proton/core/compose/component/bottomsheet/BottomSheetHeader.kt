@@ -19,7 +19,7 @@ package me.proton.core.compose.component.bottomsheet
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +33,7 @@ fun BottomSheetHeader(
 ) {
     Box(
         modifier = modifier
-            .height(ProtonDimens.DefaultBottomSheetHeaderMinHeight)
+            .defaultMinSize(minHeight = ProtonDimens.DefaultBottomSheetHeaderMinHeight)
             .padding(horizontal = ProtonDimens.DefaultSpacing),
         contentAlignment = Alignment.CenterStart,
         content = content,
