@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.DecryptedMimeMessage
 import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -144,6 +145,10 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: decryptFile")
     }
 
+    override fun decryptMimeMessage(message: EncryptedMessage, unlockedKeys: List<Unarmored>): DecryptedMimeMessage {
+        TODO("Not yet implemented: decryptMimeMessage")
+    }
+
     override fun decryptAndVerifyText(
         message: EncryptedMessage,
         publicKeys: List<Armored>,
@@ -179,6 +184,15 @@ class FakePGPCrypto : PGPCrypto {
         time: VerificationTime
     ): DecryptedFile {
         TODO("Not yet implemented: decryptAndVerifyFile")
+    }
+
+    override fun decryptAndVerifyMimeMessage(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        time: VerificationTime
+    ): DecryptedMimeMessage {
+        TODO("Not yet implemented: decryptAndVerifyMimeMessage")
     }
 
     override fun decryptSessionKey(keyPacket: KeyPacket, unlockedKey: Unarmored): SessionKey {
