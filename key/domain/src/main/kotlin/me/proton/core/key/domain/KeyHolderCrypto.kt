@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.DecryptedMimeMessage
 import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -858,6 +859,40 @@ fun KeyHolderContext.decryptAndVerifyData(
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         time
     )
+
+/**
+ * Decrypt and parse a PGP/MIME [message] using [KeyHolderContext.privateKeyRing].
+ *
+ * @throws [CryptoException] if [message] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyMimeMessage]
+ */
+fun KeyHolderContext.decryptMimeMessage(message: EncryptedMessage): DecryptedMimeMessage {
+    return context.pgpCrypto.decryptMimeMessage(
+        message,
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value }
+    )
+}
+
+/**
+ * Decrypt and parse a PGP/MIME [message] using [KeyHolderContext.privateKeyRing], and verify using [verifyKeyRing].
+ *
+ * @throws [CryptoException] if [message] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptMimeMessage]
+ */
+fun KeyHolderContext.decryptAndVerifyMimeMessage(
+    message: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): DecryptedMimeMessage {
+    return context.pgpCrypto.decryptAndVerifyMimeMessage(
+        message,
+        verifyKeyRing.keys.map { it.key },
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        time
+    )
+}
 
 /**
  * Decrypt [data] as [ByteArray] using [keyPacket] and verify using [verifyKeyRing].

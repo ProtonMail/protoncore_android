@@ -28,6 +28,8 @@ import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.DecryptedMimeBody
+import me.proton.core.crypto.common.pgp.DecryptedMimeMessage
 import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -250,6 +252,22 @@ open class TestCryptoContext : CryptoContext {
                 decrypted.extractMessage()
             }
 
+        override fun decryptMimeMessage(
+            message: EncryptedMessage,
+            unlockedKeys: List<Unarmored>
+        ): DecryptedMimeMessage {
+            val body = message.decryptMessage(unlockedKeys.first()).let { decrypted ->
+                check(decrypted.startsWith("PGPMIME"))
+                decrypted.extractMessage()
+            }
+            return DecryptedMimeMessage(
+                headers = emptyList(),
+                body = DecryptedMimeBody("text/plain", body),
+                attachments = emptyList(),
+                verificationStatus = VerificationStatus.Unknown
+            )
+        }
+
         override fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray =
             message.decryptMessage(unlockedKey).let { decrypted ->
                 check(decrypted.startsWith("BINARY"))
@@ -342,6 +360,24 @@ open class TestCryptoContext : CryptoContext {
             },
             VerificationStatus.Success
         )
+
+        override fun decryptAndVerifyMimeMessage(
+            message: EncryptedMessage,
+            publicKeys: List<Armored>,
+            unlockedKeys: List<Unarmored>,
+            time: VerificationTime
+        ): DecryptedMimeMessage {
+            val body = message.decryptMessage(unlockedKeys.first()).let { decrypted ->
+                check(decrypted.startsWith("PGPMIME"))
+                decrypted.extractMessage()
+            }
+            return DecryptedMimeMessage(
+                headers = emptyList(),
+                body = DecryptedMimeBody("text/plain", body),
+                attachments = emptyList(),
+                verificationStatus = VerificationStatus.Success
+            )
+        }
 
         override fun decryptAndVerifyData(
             message: EncryptedMessage,
