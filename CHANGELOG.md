@@ -11,6 +11,61 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.9.0] - 2023-01-25
+
+### Breaking Changes
+
+**Features**
+
+- Added Unauthenticated Session Support.
+
+  MIGRATION: Add AccountDatabase.MIGRATION_5.
+
+**Refactoring**
+
+- Removed ClientSecret.
+
+### Chores
+
+- plugins-detekt:
+  - Enabled NullableTypeSpacing rule.
+  - Added rules introduced in 1.22.0.
+  - Added libraries rule introduced in 1.22.0.
+  - Updated config.yml to match updated KtLint Wrapper in 1.22.0.
+
+### Features
+
+- crypto:
+  - Add API to decrypt PGP/MIME messages.
+
+    PGPCrypto now offers to decrypt PGP/MIME messages, using the implementation of gopenpgp.
+- key:
+  - Add API to decrypt PGP/MIME messages.
+
+    KeyHolderContext now offers to decrypt PGP/MIME messages.
+- network:
+  - Added Opportunistic Unauthenticated Session Request.
+- presentation:
+  - Update Button and DefaultText styles.
+
+### Bug Fixes
+
+- auth-presentation:
+  - Update text styles and margins to match the designs.
+- presentation:
+  - Set proper text size for Borderless and Secondary buttons.
+- presentation-compose:
+  - BottomSheetHeader not able to expand with content.
+
+### Refactoring
+
+- auth:
+  - Removed deprecated Auth Session scope field.
+
+### Theming
+
+- Updated Accent Colors.
+
 ## [9.8.1] - 2023-01-11
 
 ### Features
