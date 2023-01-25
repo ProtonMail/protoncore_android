@@ -31,7 +31,6 @@ import net.rubygrapefruit.platform.file.FilePermissionException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.logging.Logger
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
@@ -40,7 +39,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import studio.forface.easygradle.dsl.`detekt version`
@@ -101,9 +99,9 @@ abstract class ProtonDetektConfiguration {
  */
 private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
-    val libs = project.rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
-
-    `detekt version` = libs.findVersion("detekt").get().toString()
+    // val libs = project.rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
+    // `detekt version` = libs.findVersion("detekt").get().toString()
+    `detekt version` = "1.22.0"
 
     val defaultConfigFilePath = "config/detekt/config.yml"
 
@@ -155,9 +153,12 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
         }
 
         sub.dependencies {
-            add("detekt", libs.findLibrary("detekt-cli").get())
-            add("detektPlugins", libs.findLibrary("detekt-formatting").get())
-            add("detektPlugins", libs.findLibrary("detekt-rules-libraries").get())
+            add("detekt", `detekt-cli`)
+            add("detektPlugins", `detekt-formatting`)
+
+            // add("detekt", libs.findLibrary("detekt-cli").get())
+            // add("detektPlugins", libs.findLibrary("detekt-formatting").get())
+            // add("detektPlugins", libs.findLibrary("detekt-rules-libraries").get())
         }
     }
 
