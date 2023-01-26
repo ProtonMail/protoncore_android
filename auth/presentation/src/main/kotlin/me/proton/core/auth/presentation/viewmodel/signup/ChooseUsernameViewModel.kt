@@ -20,12 +20,14 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
@@ -34,6 +36,11 @@ import javax.inject.Inject
 internal class ChooseUsernameViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
 ) : ProtonViewModel() {
+
+    // See CP-5335.
+    private val getDomainsJob: Job = viewModelScope.launch {
+        runCatching { accountAvailability.getDomains() }
+    }
 
     private val mutableState = MutableStateFlow<State>(State.Idle)
     val state = mutableState.asStateFlow()
@@ -49,6 +56,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
 
     fun checkUsername(username: String) = flow {
         emit(State.Processing)
+        getDomainsJob.join()
         accountAvailability.checkUsername(username)
         emit(State.Success(username))
     }.catch { error ->

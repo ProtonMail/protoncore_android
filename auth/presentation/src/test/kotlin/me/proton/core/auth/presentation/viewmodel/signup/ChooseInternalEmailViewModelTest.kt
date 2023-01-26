@@ -19,7 +19,9 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
+import io.mockk.Ordering
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.State
@@ -150,6 +152,30 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `get domains is initially called, before checkUsername`() = coroutinesTest {
+        // GIVEN
+        val testUsername = "test-username"
+        val testDomain = "test-domain"
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { accountAvailability.checkUsername(testEmail) } returns Unit
+        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel.state.test {
+            viewModel.checkUsername(testUsername, testDomain)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
+            assertTrue(awaitItem() is State.Domains)
+            assertTrue(awaitItem() is State.Processing)
+            assertTrue(awaitItem() is State.Success)
+            cancelAndConsumeRemainingEvents()
+        }
+        // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            accountAvailability.getDomains()
+            accountAvailability.checkUsername(testEmail)
         }
     }
 }

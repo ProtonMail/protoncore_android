@@ -19,7 +19,9 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
+import io.mockk.Ordering
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.State
@@ -76,6 +78,27 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             assertTrue(awaitItem() is State.Processing)
             assertTrue(awaitItem() is State.Error.Message)
             cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `get domains is initially called, before checkUsername`() = coroutinesTest {
+        // GIVEN
+        val testUsername = "test-username"
+        coEvery { accountAvailability.checkUsername(testUsername) } returns Unit
+        // WHEN
+        viewModel = ChooseUsernameViewModel(accountAvailability)
+        viewModel.state.test {
+            viewModel.checkUsername(testUsername)
+            assertTrue(awaitItem() is State.Idle)
+            assertTrue(awaitItem() is State.Processing)
+            assertTrue(awaitItem() is State.Success)
+            cancelAndConsumeRemainingEvents()
+        }
+        // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            accountAvailability.getDomains()
+            accountAvailability.checkUsername(testUsername)
         }
     }
 }

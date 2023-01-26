@@ -36,7 +36,6 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupChooseExternal
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -93,7 +92,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
             }
-            .onLongState(ChooseUsernameViewModel.State.Processing) {
+            .onLongState(State.Processing) {
                 requireContext().showToast(getString(R.string.auth_long_signup))
             }
             .launchIn(lifecycleScope)
