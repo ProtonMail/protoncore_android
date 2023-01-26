@@ -217,6 +217,7 @@ public object Module {
 
     // Observability
     public const val observability: String = ":observability"
+    public const val observabilityDagger: String = "$observability:observability-dagger"
     public const val observabilityDomain: String = "$observability:observability-domain"
     public const val observabilityData: String = "$observability:observability-data"
 

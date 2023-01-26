@@ -1,3 +1,5 @@
+import studio.forface.easygradle.dsl.*
+
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -15,47 +17,21 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
-    kotlin("plugin.serialization")
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 android {
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
+    namespace = "me.proton.core.observability.dagger"
 }
 
 dependencies {
     api(
-        `javax-inject`,
-        project(Module.dataRoom),
-        project(Module.networkData),
-        project(Module.observabilityDomain),
-    )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        `coroutines-core`,
-        retrofit,
-        `room-ktx`,
-        `serialization-core`,
-        `serialization-json`
-    )
-
-    testImplementation(
-        project(Module.androidTest),
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk
+        project(Module.observabilityData),
+        project(Module.observabilityDomain)
     )
 }
