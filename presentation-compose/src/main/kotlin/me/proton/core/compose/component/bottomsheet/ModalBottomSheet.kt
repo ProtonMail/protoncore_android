@@ -28,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 
@@ -75,7 +76,10 @@ private fun runAction(
     onDismiss: () -> Unit,
     action: suspend () -> Unit,
 ) {
-    scope.launch {
+    // Force action to run on the main dispatcher (a confined dispatcher).
+    // Avoid Room to change thread a never switch back to main in ui tests.
+    // https://issuetracker.google.com/issues/254115946
+    scope.launch(Dispatchers.Main) {
         if (viewState.closeOnAction) {
             modalBottomSheetState.hide()
         }
