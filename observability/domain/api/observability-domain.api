@@ -1,0 +1,47 @@
+public abstract interface class me/proton/core/observability/domain/entity/ObservabilityData {
+	public abstract fun getMetricName ()Ljava/lang/String;
+	public abstract fun getMetricVersion ()J
+}
+
+public final class me/proton/core/observability/domain/entity/ObservabilityData$DefaultImpls {
+	public static fun getMetricName (Lme/proton/core/observability/domain/entity/ObservabilityData;)Ljava/lang/String;
+	public static fun getMetricVersion (Lme/proton/core/observability/domain/entity/ObservabilityData;)J
+}
+
+public final class me/proton/core/observability/domain/entity/ObservabilityEvent {
+	public static final field Companion Lme/proton/core/observability/domain/entity/ObservabilityEvent$Companion;
+	public synthetic fun <init> (ILjava/lang/String;JJLme/proton/core/observability/domain/entity/ObservabilityData;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/entity/ObservabilityData;Ljava/time/Instant;)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/entity/ObservabilityData;Ljava/time/Instant;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()J
+	public final fun component4 ()Lme/proton/core/observability/domain/entity/ObservabilityData;
+	public final fun copy (Ljava/lang/String;JJLme/proton/core/observability/domain/entity/ObservabilityData;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Ljava/lang/String;JJLme/proton/core/observability/domain/entity/ObservabilityData;ILjava/lang/Object;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Lme/proton/core/observability/domain/entity/ObservabilityData;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getTimestamp ()J
+	public final fun getVersion ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;Lkotlinx/serialization/KSerializer;)V
+}
+
+public final class me/proton/core/observability/domain/entity/ObservabilityEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun <init> (Lkotlinx/serialization/KSerializer;)V
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/entity/ObservabilityEvent;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/entity/ObservabilityEvent$Companion {
+	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
+}
+
