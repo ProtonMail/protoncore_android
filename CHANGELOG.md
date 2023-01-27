@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.9.1] - 2023-01-27
+
+### Bug Fixes
+
+- auth: Get Domains when Sign Up flows start.
+
 ## [9.9.0] - 2023-01-25
 
 ### Breaking Changes
