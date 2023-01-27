@@ -1,3 +1,24 @@
+public final class me/proton/core/observability/domain/ObservabilityManager {
+	public final fun enqueue (Lme/proton/core/observability/domain/entity/ObservabilityData;Ljava/time/Instant;)V
+	public final fun enqueue (Lme/proton/core/observability/domain/entity/ObservabilityEvent;)V
+	public static synthetic fun enqueue$default (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/observability/domain/entity/ObservabilityData;Ljava/time/Instant;ILjava/lang/Object;)V
+}
+
+public abstract interface class me/proton/core/observability/domain/ObservabilityRepository {
+	public abstract fun addEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAllEvents (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteEvents (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEventCount (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEvents (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/observability/domain/ObservabilityWorkerManager {
+	public abstract fun cancel ()V
+	public abstract fun getDurationSinceLastShipment-LV8wdWc (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun schedule-LRDsOJo (J)V
+	public abstract fun setLastSentNow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/observability/domain/entity/CheckoutGiapBillingProductQueryTotalV1 : me/proton/core/observability/domain/entity/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/entity/CheckoutGiapBillingProductQueryTotalV1$Companion;
 	public synthetic fun <init> (IJLme/proton/core/observability/domain/entity/CheckoutGiapBillingProductQueryTotalV1$Labels;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -940,5 +961,18 @@ public final class me/proton/core/observability/domain/entity/SignupUsernameAvai
 	public static final field unknown Lme/proton/core/observability/domain/entity/SignupUsernameAvailabilityTotalV1$Status;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/entity/SignupUsernameAvailabilityTotalV1$Status;
 	public static fun values ()[Lme/proton/core/observability/domain/entity/SignupUsernameAvailabilityTotalV1$Status;
+}
+
+public abstract interface class me/proton/core/observability/domain/usecase/IsObservabilityEnabled {
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/observability/domain/usecase/ProcessObservabilityEvents {
+	public fun <init> (Lme/proton/core/observability/domain/usecase/IsObservabilityEnabled;Lme/proton/core/observability/domain/ObservabilityWorkerManager;Lme/proton/core/observability/domain/ObservabilityRepository;Lme/proton/core/observability/domain/usecase/SendObservabilityEvents;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/observability/domain/usecase/SendObservabilityEvents {
+	public abstract fun invoke (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

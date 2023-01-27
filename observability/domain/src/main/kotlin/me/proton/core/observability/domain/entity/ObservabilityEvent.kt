@@ -22,6 +22,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.time.Instant
 
+/**
+ * @param name Metric name.
+ * @param version Metric version.
+ * @param timestamp Unix time in seconds.
+ * @param data Observability event data.
+ */
 @Serializable
 public data class ObservabilityEvent<D : ObservabilityData> internal constructor(
     @SerialName("Name") val name: String,
