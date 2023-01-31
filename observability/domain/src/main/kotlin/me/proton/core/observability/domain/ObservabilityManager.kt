@@ -23,6 +23,7 @@ import me.proton.core.observability.domain.entity.ObservabilityData
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.util.kotlin.serialize
 import java.time.Instant
 import javax.inject.Inject
 import kotlin.time.Duration
@@ -39,19 +40,26 @@ public class ObservabilityManager @Inject internal constructor(
      * If observability is disabled, the event won't be sent.
      */
     public fun enqueue(data: ObservabilityData, timestamp: Instant = Instant.now()) {
-        enqueue(ObservabilityEvent(data, timestamp))
+        enqueue(
+            ObservabilityEvent(
+                name = data.metricName,
+                version = data.metricVersion,
+                timestamp = timestamp,
+                data = data
+            )
+        )
     }
 
     /** Enqueues an [event] to be sent at some point in the future.
      * If observability is disabled, the event won't be sent
      */
-    public fun enqueue(event: ObservabilityEvent<*>) {
+    public fun enqueue(event: ObservabilityEvent) {
         scopeProvider.GlobalIOSupervisedScope.launch {
             enqueueEvent(event)
         }
     }
 
-    private suspend fun enqueueEvent(event: ObservabilityEvent<*>) {
+    private suspend fun enqueueEvent(event: ObservabilityEvent) {
         if (isObservabilityEnabled()) {
             repository.addEvent(event)
             workerManager.schedule(getSendDelay())

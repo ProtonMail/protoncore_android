@@ -215,6 +215,11 @@ public object Module {
     public const val challengeData: String = ":challenge:challenge-data"
     public const val challengePresentation: String = ":challenge:challenge-presentation"
 
+    // Observability
+    public const val observability: String = ":observability"
+    public const val observabilityDomain: String = "$observability:observability-domain"
+    public const val observabilityData: String = "$observability:observability-data"
+
     // Proguard rules
     public const val proguardRules: String = ":proguard-rules"
 

@@ -65,6 +65,7 @@ dependencies {
         project(Module.userData),
         project(Module.userDomain),
         project(Module.userSettingsData),
+        project(Module.observabilityData),
     )
 
     implementation(

@@ -21,9 +21,10 @@ package me.proton.core.observability.domain
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 
 public interface ObservabilityRepository {
-    public suspend fun addEvent(event: ObservabilityEvent<*>)
+    public suspend fun addEvent(event: ObservabilityEvent)
     public suspend fun deleteAllEvents()
-    public suspend fun deleteEvents(events: List<ObservabilityEvent<*>>)
-    public suspend fun getEvents(limit: Int): List<ObservabilityEvent<*>>
+    public suspend fun deleteEvents(events: List<ObservabilityEvent>)
+    public suspend fun deleteEvent(event: ObservabilityEvent)
+    public suspend fun getEvents(limit: Int): List<ObservabilityEvent>
     public suspend fun getEventCount(): Long
 }

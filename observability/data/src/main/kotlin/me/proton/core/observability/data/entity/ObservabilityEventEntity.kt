@@ -16,11 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.observability.domain.usecase
+package me.proton.core.observability.data.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import me.proton.core.observability.domain.entity.ObservabilityEvent
+import java.time.Instant
 
-public interface SendObservabilityEvents {
-    /** Sends the list of [events] to the server. */
-    public suspend operator fun invoke(events: List<ObservabilityEvent>)
+@Entity
+public data class ObservabilityEventEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val name: String,
+    val version: Long,
+    val timestamp: Long,
+    val data: String // json
+) {
+    internal fun toObservabilityEvent() = ObservabilityEvent(
+        id = this.id,
+        name = this.name,
+        version = this.version,
+        data = this.data,
+        timestamp = Instant.ofEpochSecond(this.timestamp)
+    )
 }

@@ -78,7 +78,7 @@ public final class me/proton/core/account/data/db/SessionDetailsDao_Impl : me/pr
 	public fun update ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/challenge/data/db/ChallengeDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/featureflag/data/db/FeatureFlagDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/label/data/local/LabelDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/payment/data/local/db/PaymentDatabase, me/proton/core/push/data/local/db/PushDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
+public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/challenge/data/db/ChallengeDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/featureflag/data/db/FeatureFlagDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/label/data/local/LabelDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/observability/data/db/ObservabilityDatabase, me/proton/core/payment/data/local/db/PaymentDatabase, me/proton/core/push/data/local/db/PushDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
 	public static final field Companion Lme/proton/core/accountmanager/data/db/AccountManagerDatabase$Companion;
 	public static final field name Ljava/lang/String;
 	public static final field version I
@@ -110,6 +110,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_23_24 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_24_25 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_25_26 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_26_27 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_2_3 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
@@ -142,6 +143,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun keySaltDao ()Lme/proton/core/key/data/db/KeySaltDao;
 	public fun labelDao ()Lme/proton/core/label/data/local/LabelDao;
 	public fun mailSettingsDao ()Lme/proton/core/mailsettings/data/db/dao/MailSettingsDao;
+	public fun observabilityDao ()Lme/proton/core/observability/data/db/ObservabilityDao;
 	public fun organizationDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationDao;
 	public fun organizationKeysDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationKeysDao;
 	public fun publicAddressDao ()Lme/proton/core/key/data/db/PublicAddressDao;
@@ -401,6 +403,24 @@ public final class me/proton/core/mailsettings/data/db/dao/MailSettingsDao_Impl 
 	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/mailsettings/data/entity/MailSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/observability/data/db/ObservabilityDao_Impl : me/proton/core/observability/data/db/ObservabilityDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/observability/data/entity/ObservabilityEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll$observability_data_release (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll$observability_data_release (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll$observability_data_release ()Ljava/util/List;
+	public fun getAll$observability_data_release (I)Ljava/util/List;
+	public fun getCount$observability_data_release ()J
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/observability/data/entity/ObservabilityEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/observability/data/entity/ObservabilityEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/observability/data/entity/ObservabilityEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/data/local/db/dao/GooglePurchaseDao_Impl : me/proton/core/payment/data/local/db/dao/GooglePurchaseDao {

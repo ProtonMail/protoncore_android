@@ -57,6 +57,8 @@ import me.proton.core.label.data.local.LabelDatabase
 import me.proton.core.label.data.local.LabelEntity
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
+import me.proton.core.observability.data.db.ObservabilityDatabase
+import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.push.data.local.db.PushConverters
@@ -118,6 +120,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         PushEntity::class,
         // payment
         GooglePurchaseEntity::class,
+        // observability
+        ObservabilityEventEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -152,11 +156,12 @@ abstract class AccountManagerDatabase :
     FeatureFlagDatabase,
     ChallengeDatabase,
     PushDatabase,
-    PaymentDatabase {
+    PaymentDatabase,
+    ObservabilityDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 26
+        const val version = 27
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -184,6 +189,7 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_23_24,
             AccountManagerDatabaseMigrations.MIGRATION_24_25,
             AccountManagerDatabaseMigrations.MIGRATION_25_26,
+            AccountManagerDatabaseMigrations.MIGRATION_26_27,
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

@@ -16,11 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.observability.domain.usecase
+package me.proton.core.observability.data.entity
 
 import me.proton.core.observability.domain.entity.ObservabilityEvent
+import me.proton.core.util.kotlin.serialize
 
-public interface SendObservabilityEvents {
-    /** Sends the list of [events] to the server. */
-    public suspend operator fun invoke(events: List<ObservabilityEvent>)
-}
+internal fun ObservabilityEvent.toObservabilityEventEntity(): ObservabilityEventEntity =
+    ObservabilityEventEntity(
+        name = name,
+        version = version,
+        timestamp = timestamp,
+        data = data.serialize()
+    )

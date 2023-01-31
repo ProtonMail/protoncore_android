@@ -200,6 +200,7 @@ dependencies {
         project(Module.user),
         project(Module.userSettings),
         project(Module.strictModeUtil),
+        project(Module.observabilityData),
 
         // Android
         activity,

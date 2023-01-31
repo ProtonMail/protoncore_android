@@ -65,10 +65,10 @@ dependencies {
     api(`javax-inject`)
     implementation(`coroutines-core`)
     implementation(`serialization-core`)
+    implementation(`serialization-json`)
     implementation(project(Module.kotlinUtil))
     testImplementation(junit)
     testImplementation(`kotlin-test`)
-    testImplementation(`serialization-json`)
 }
 
 /** Generates Kotlin classes from JSON schema files. */
