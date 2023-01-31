@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserKeyEntity
+import me.proton.core.user.domain.entity.AddressId
 
 @Dao
 abstract class UserKeyDao : BaseDao<UserKeyEntity>() {
@@ -33,4 +34,7 @@ abstract class UserKeyDao : BaseDao<UserKeyEntity>() {
 
     @Query("SELECT * FROM UserKeyEntity WHERE userId = :userId")
     abstract suspend fun getAllByUserId(userId: UserId): List<UserKeyEntity>
+
+    @Query("DELETE FROM UserKeyEntity WHERE userId = :userId")
+    abstract suspend fun deleteAllByUserId(userId: UserId)
 }

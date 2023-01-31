@@ -644,6 +644,7 @@ public abstract class me/proton/core/user/data/db/dao/AddressDao : me/proton/cor
 
 public abstract class me/proton/core/user/data/db/dao/AddressKeyDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
+	public abstract fun deleteAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;)Lkotlinx/coroutines/flow/Flow;
 }
@@ -664,6 +665,7 @@ public abstract class me/proton/core/user/data/db/dao/UserDao : me/proton/core/d
 
 public abstract class me/proton/core/user/data/db/dao/UserKeyDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
+	public abstract fun deleteAllByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeAllByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }

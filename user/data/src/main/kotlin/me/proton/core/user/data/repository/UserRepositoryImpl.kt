@@ -115,6 +115,7 @@ class UserRepositoryImpl @Inject constructor(
             val userKeys = user.keys.updateIsActive(passphrase)
             // Insert in Database.
             userDao.insertOrUpdate(user.toEntity(passphrase))
+            userKeyDao.deleteAllByUserId(user.userId)
             userKeyDao.insertOrUpdate(*userKeys.toEntityList().toTypedArray())
             invalidateMemCache(user.userId)
         }
