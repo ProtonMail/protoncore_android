@@ -42,8 +42,6 @@ public class ObservabilityManager @Inject internal constructor(
     public fun enqueue(data: ObservabilityData, timestamp: Instant = Instant.now()) {
         enqueue(
             ObservabilityEvent(
-                name = data.metricName,
-                version = data.metricVersion,
                 timestamp = timestamp,
                 data = data
             )

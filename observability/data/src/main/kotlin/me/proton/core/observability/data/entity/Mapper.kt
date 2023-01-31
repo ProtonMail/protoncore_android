@@ -23,6 +23,7 @@ import me.proton.core.util.kotlin.serialize
 
 internal fun ObservabilityEvent.toObservabilityEventEntity(): ObservabilityEventEntity =
     ObservabilityEventEntity(
+        id = id ?: 0,
         name = name,
         version = version,
         timestamp = timestamp,

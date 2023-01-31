@@ -10,7 +10,11 @@ public abstract interface class me/proton/core/observability/domain/Observabilit
 	public abstract fun deleteEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteEvents (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getEventCount (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getEvents (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEvents (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/observability/domain/ObservabilityRepository$DefaultImpls {
+	public static synthetic fun getEvents$default (Lme/proton/core/observability/domain/ObservabilityRepository;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/observability/domain/ObservabilityWorkerManager {
@@ -485,8 +489,8 @@ public final class me/proton/core/observability/domain/entity/ObservabilityEvent
 	public synthetic fun <init> (ILjava/lang/String;JJLme/proton/core/observability/domain/entity/ObservabilityData;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Long;Ljava/lang/String;JLjava/time/Instant;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/Long;Ljava/lang/String;JLjava/time/Instant;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Ljava/lang/Long;Ljava/lang/String;JLjava/time/Instant;Lme/proton/core/observability/domain/entity/ObservabilityData;)V
-	public synthetic fun <init> (Ljava/lang/Long;Ljava/lang/String;JLjava/time/Instant;Lme/proton/core/observability/domain/entity/ObservabilityData;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/Long;Ljava/time/Instant;Lme/proton/core/observability/domain/entity/ObservabilityData;)V
+	public synthetic fun <init> (Ljava/lang/Long;Ljava/time/Instant;Lme/proton/core/observability/domain/entity/ObservabilityData;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/Long;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J

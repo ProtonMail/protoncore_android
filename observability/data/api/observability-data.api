@@ -12,7 +12,7 @@ public final class me/proton/core/observability/data/ObservabilityRepositoryImpl
 	public fun deleteEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteEvents (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEventCount (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getEvents (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getEvents (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/observability/data/db/ObservabilityDao : me/proton/core/data/room/db/BaseDao {

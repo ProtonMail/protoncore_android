@@ -54,15 +54,14 @@ public data class ObservabilityEvent internal constructor(
 
     public constructor(
         id: Long? = null,
-        name: String,
-        version: Long,
         timestamp: Instant = Instant.now(),
         data: ObservabilityData
     ) : this(
         id = id,
-        name = name,
-        version = version,
+        name = data.metricName,
+        version = data.metricVersion,
         timestamp = timestamp.epochSecond,
         data = data
     )
+
 }

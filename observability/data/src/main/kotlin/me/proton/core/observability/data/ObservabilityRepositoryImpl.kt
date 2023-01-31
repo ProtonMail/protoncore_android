@@ -19,11 +19,9 @@
 package me.proton.core.observability.data
 
 import me.proton.core.observability.data.db.ObservabilityDatabase
-import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.observability.data.entity.toObservabilityEventEntity
 import me.proton.core.observability.domain.ObservabilityRepository
 import me.proton.core.observability.domain.entity.ObservabilityEvent
-import me.proton.core.util.kotlin.serialize
 import javax.inject.Inject
 
 public class ObservabilityRepositoryImpl @Inject constructor(
@@ -41,19 +39,22 @@ public class ObservabilityRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteEvents(events: List<ObservabilityEvent>) {
-        observabilityDao.deleteAll(
-            events.mapNotNull { it.id }
-        )
+        observabilityDao.delete(*events.map { it.toObservabilityEventEntity() }.toTypedArray())
     }
 
     override suspend fun deleteEvent(event: ObservabilityEvent) {
         observabilityDao.delete(event.toObservabilityEventEntity())
     }
 
-    override suspend fun getEvents(limit: Int): List<ObservabilityEvent> =
-        observabilityDao.getAll(limit).map {
+    override suspend fun getEvents(limit: Int?): List<ObservabilityEvent> {
+        val events = if (limit == null)
+            observabilityDao.getAll()
+        else
+            observabilityDao.getAll(limit)
+        return events.map {
             it.toObservabilityEvent()
         }
+    }
 
     override suspend fun getEventCount(): Long = observabilityDao.getCount()
 }
