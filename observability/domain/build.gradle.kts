@@ -67,8 +67,11 @@ dependencies {
     implementation(`serialization-core`)
     implementation(`serialization-json`)
     implementation(project(Module.kotlinUtil))
+    testImplementation(`coroutines-test`)
     testImplementation(junit)
     testImplementation(`kotlin-test`)
+    testImplementation(mockk)
+    testImplementation(project(Module.kotlinTest))
 }
 
 /** Generates Kotlin classes from JSON schema files. */
