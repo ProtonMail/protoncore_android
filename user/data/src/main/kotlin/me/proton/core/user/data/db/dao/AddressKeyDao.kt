@@ -33,4 +33,7 @@ abstract class AddressKeyDao : BaseDao<AddressKeyEntity>() {
 
     @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
     abstract suspend fun getAllByAddressId(addressId: AddressId): List<AddressKeyEntity>
+
+    @Query("DELETE FROM AddressKeyEntity WHERE addressId = :addressId")
+    abstract suspend fun deleteAllByAddressId(addressId: AddressId)
 }

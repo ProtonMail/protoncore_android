@@ -124,6 +124,7 @@ class UserAddressRepositoryImpl @Inject constructor(
                 val addressKeys = addresses.flatMap { it.keys }.updateIsActive(userId)
                 // Insert in Database.
                 addressDao.insertOrUpdate(*addresses.map { it.toEntity() }.toTypedArray())
+                addresses.forEach { address -> addressKeyDao.deleteAllByAddressId(address.addressId) }
                 addressKeyDao.insertOrUpdate(*addressKeys.map { it.toEntity() }.toTypedArray())
                 invalidateMemCache(userId)
             }
