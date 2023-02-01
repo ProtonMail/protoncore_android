@@ -170,11 +170,11 @@ internal class PushRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTe
         val job = launch(start = CoroutineStart.UNDISPATCHED) {
             tested.observeAllPushes(testUserId, PushObjectType.Messages).test {
                 assertContentEquals(testPushesMessages, awaitItem())
+                tested.deletePush(testUserId, deletedItem.pushId)
                 assertContentEquals(testPushesMessages - deletedItem, awaitItem())
             }
         }
 
-        tested.deletePush(testUserId, deletedItem.pushId)
         job.join()
     }
 }
