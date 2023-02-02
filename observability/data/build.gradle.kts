@@ -37,6 +37,7 @@ dependencies {
         project(Module.dataRoom),
         project(Module.networkData),
         project(Module.observabilityDomain),
+        project(Module.userSettingsDomain)
     )
 
     coreLibraryDesugaring(`desugar-jdk-libs`)
