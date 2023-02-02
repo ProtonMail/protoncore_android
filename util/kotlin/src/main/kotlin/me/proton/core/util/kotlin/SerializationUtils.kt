@@ -30,6 +30,9 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.encodeToJsonElement
+import me.proton.core.util.kotlin.ProtonCoreConfig.defaultJson
 import me.proton.core.util.kotlin.ProtonCoreConfig.defaultJsonStringFormat
 
 /*
@@ -120,9 +123,18 @@ inline fun <reified T : Any> List<T>.serialize() = Serializer.encodeToString(thi
 @NeedSerializable
 inline fun <reified T : Any, reified V : Any> Map<T, V>.serialize() = Serializer.encodeToString(this)
 
+@NeedSerializable
+inline fun <reified T> T.serializeToJson(
+    serializer: SerializationStrategy<T>? = null
+): JsonElement =
+    serializer?.let { JsonSerializer.encodeToJsonElement(serializer, this) } ?: JsonSerializer.encodeToJsonElement(this)
+
 
 @PublishedApi
 internal val Serializer get() = defaultJsonStringFormat
+
+@PublishedApi
+internal val JsonSerializer get() = defaultJson
 
 
 // region TEST ONLY

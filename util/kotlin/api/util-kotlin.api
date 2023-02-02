@@ -147,11 +147,13 @@ public final class me/proton/core/util/kotlin/NumberUtilsKt {
 
 public final class me/proton/core/util/kotlin/ProtonCoreConfig : me/proton/core/util/kotlin/Invokable {
 	public static final field INSTANCE Lme/proton/core/util/kotlin/ProtonCoreConfig;
+	public final fun getDefaultJson ()Lkotlinx/serialization/json/Json;
 	public final fun getDefaultJsonStringFormat ()Lkotlinx/serialization/StringFormat;
 	public final fun setDefaultJsonStringFormat (Lkotlinx/serialization/StringFormat;)V
 }
 
 public final class me/proton/core/util/kotlin/SerializationUtilsKt {
+	public static final fun getJsonSerializer ()Lkotlinx/serialization/json/Json;
 	public static final fun getSerializer ()Lkotlinx/serialization/StringFormat;
 }
 

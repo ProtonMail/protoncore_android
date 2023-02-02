@@ -27,10 +27,12 @@ import kotlinx.serialization.json.Json
  */
 object ProtonCoreConfig : Invokable {
 
-    /** Default [StringFormat] for serialize and deserialize JSON strings */
-    var defaultJsonStringFormat: StringFormat = Json {
+    val defaultJson: Json = Json {
         ignoreUnknownKeys = true
         isLenient = true
         encodeDefaults = false
     }
+
+    /** Default [StringFormat] for serialize and deserialize JSON strings */
+    var defaultJsonStringFormat: StringFormat = defaultJson
 }
