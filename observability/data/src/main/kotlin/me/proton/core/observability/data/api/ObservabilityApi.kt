@@ -21,11 +21,12 @@ package me.proton.core.observability.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.observability.data.api.request.DataMetricsRequest
+import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
 internal interface ObservabilityApi : BaseRetrofitApi {
     @Headers("Priority: u=6")
     @POST("data/v1/metrics")
-    suspend fun postDataMetrics(data: DataMetricsRequest): GenericResponse
+    suspend fun postDataMetrics(@Body data: DataMetricsRequest): GenericResponse
 }
