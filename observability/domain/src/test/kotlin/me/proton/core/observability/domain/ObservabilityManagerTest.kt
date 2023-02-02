@@ -104,7 +104,7 @@ class ObservabilityManagerTest {
     @Test
     fun durationSinceLastShipmentExceeded() = runTest {
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { observabilityRepository.getEventCount() } returns 1
+        coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT / 2
         workerManager.duration = ObservabilityManager.MAX_DELAY_MS.milliseconds
 
         // WHEN
@@ -121,7 +121,7 @@ class ObservabilityManagerTest {
     @Test
     fun durationSinceLastShipmentNotExceeded() = runTest {
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { observabilityRepository.getEventCount() } returns 1
+        coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT / 2
         workerManager.duration = (ObservabilityManager.MAX_DELAY_MS - 1).milliseconds
 
         // WHEN

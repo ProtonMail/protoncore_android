@@ -66,10 +66,14 @@ public class ObservabilityManager @Inject internal constructor(
         }
     }
 
-    private suspend fun getSendDelay(): Duration = when {
-        repository.getEventCount() >= MAX_EVENT_COUNT -> ZERO
-        workerManager.getDurationSinceLastShipment()?.let { it >= MAX_DELAY_MS.milliseconds } ?: false -> ZERO
-        else -> MAX_DELAY_MS.milliseconds
+    private suspend fun getSendDelay(): Duration {
+        val eventCount = repository.getEventCount()
+        return when {
+            eventCount <= 1L -> MAX_DELAY_MS.milliseconds
+            eventCount >= MAX_EVENT_COUNT -> ZERO
+            workerManager.getDurationSinceLastShipment()?.let { it >= MAX_DELAY_MS.milliseconds } ?: false -> ZERO
+            else -> MAX_DELAY_MS.milliseconds
+        }
     }
 
     internal companion object {
