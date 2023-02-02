@@ -22,7 +22,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.observability.data.IsObservabilityEnabledImpl
 import me.proton.core.observability.data.usecase.SendObservabilityEventsImpl
+import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.observability.domain.usecase.SendObservabilityEvents
 
 @Module
@@ -30,4 +32,7 @@ import me.proton.core.observability.domain.usecase.SendObservabilityEvents
 public interface CoreObservabilityModule {
     @Binds
     public fun bindSendObservabilityEvents(impl: SendObservabilityEventsImpl): SendObservabilityEvents
+
+    @Binds
+    public fun bindIsObservabilityEnabled(impl: IsObservabilityEnabledImpl): IsObservabilityEnabled
 }

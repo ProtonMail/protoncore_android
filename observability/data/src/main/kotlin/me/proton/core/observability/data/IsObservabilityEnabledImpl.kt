@@ -19,15 +19,18 @@
 package me.proton.core.observability.data
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
-import me.proton.core.usersettings.domain.entity.DeviceSettings
+import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import javax.inject.Inject
 
 public class IsObservabilityEnabledImpl @Inject constructor(
-    private val context: Context,
-    private val deviceSettings: DeviceSettings
+    @ApplicationContext private val context: Context,
+    private val deviceSettingsRepository: DeviceSettingsRepository
 ) : IsObservabilityEnabled {
 
-    override suspend fun invoke(): Boolean =
-        deviceSettings.isTelemetryEnabled && context.resources.getBoolean(R.bool.observability_enabled)
+    override suspend fun invoke(): Boolean {
+        val deviceSettings = deviceSettingsRepository.getDeviceSettings()
+        return deviceSettings.isTelemetryEnabled && context.resources.getBoolean(R.bool.observability_enabled)
+    }
 }

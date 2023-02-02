@@ -34,10 +34,11 @@ android {
 dependencies {
     api(
         `javax-inject`,
+        `hilt-android`,
         project(Module.dataRoom),
         project(Module.networkData),
         project(Module.observabilityDomain),
-        project(Module.userSettingsDomain)
+        project(Module.userSettingsDomain),
     )
 
     coreLibraryDesugaring(`desugar-jdk-libs`)

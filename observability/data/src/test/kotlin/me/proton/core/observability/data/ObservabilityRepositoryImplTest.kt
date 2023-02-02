@@ -24,8 +24,6 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkStatic
-import io.mockk.verify
-import junit.framework.TestCase
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.data.db.ObservabilityDao
 import me.proton.core.observability.data.db.ObservabilityDatabase
@@ -47,10 +45,6 @@ class ObservabilityRepositoryImplTest {
     private val db = mockk<ObservabilityDatabase>(relaxed = true)
     private val dao = mockk<ObservabilityDao>(relaxed = true)
     private lateinit var repository: ObservabilityRepository
-    // endregion
-
-    // region test data
-
     // endregion
 
     @Before

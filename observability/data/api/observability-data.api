@@ -5,6 +5,11 @@ public final class me/proton/core/observability/data/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/observability/data/IsObservabilityEnabledImpl : me/proton/core/observability/domain/usecase/IsObservabilityEnabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/usersettings/domain/entity/DeviceSettings;)V
+	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/observability/data/ObservabilityRepositoryImpl : me/proton/core/observability/domain/ObservabilityRepository {
 	public fun <init> (Lme/proton/core/observability/data/db/ObservabilityDatabase;)V
 	public fun addEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
