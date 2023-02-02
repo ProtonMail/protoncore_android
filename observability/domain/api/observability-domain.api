@@ -25,8 +25,6 @@ public abstract interface class me/proton/core/observability/domain/Observabilit
 }
 
 public final class me/proton/core/observability/domain/entity/ObservabilityEvent {
-	public static final field Companion Lme/proton/core/observability/domain/entity/ObservabilityEvent$Companion;
-	public synthetic fun <init> (ILjava/lang/String;JJLme/proton/core/observability/domain/metrics/ObservabilityData;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Long;Ljava/lang/String;JLjava/time/Instant;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/Long;Ljava/lang/String;JLjava/time/Instant;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Ljava/lang/Long;Ljava/time/Instant;Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
@@ -46,23 +44,6 @@ public final class me/proton/core/observability/domain/entity/ObservabilityEvent
 	public final fun getVersion ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/observability/domain/entity/ObservabilityEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/entity/ObservabilityEvent$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/entity/ObservabilityEvent;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/observability/domain/entity/ObservabilityEvent$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface annotation class me/proton/core/observability/domain/entity/SchemaId : java/lang/annotation/Annotation {

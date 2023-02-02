@@ -18,9 +18,6 @@
 
 package me.proton.core.observability.domain.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.util.kotlin.deserialize
 import java.time.Instant
@@ -31,13 +28,12 @@ import java.time.Instant
  * @param timestamp Unix time in seconds.
  * @param data Observability event data.
  */
-@Serializable
 public data class ObservabilityEvent internal constructor(
-    @Transient val id: Long? = null,
-    @SerialName("Name") val name: String,
-    @SerialName("Version") val version: Long,
-    @SerialName("Timestamp") val timestamp: Long,
-    @SerialName("Data") val data: ObservabilityData
+    val id: Long? = null,
+    val name: String,
+    val version: Long,
+    val timestamp: Long,
+    val data: ObservabilityData
 ) {
     public constructor(
         id: Long? = null,

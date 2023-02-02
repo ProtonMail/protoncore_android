@@ -24,6 +24,7 @@ import me.proton.core.network.domain.doThrow
 import me.proton.core.network.domain.isRetryable
 import me.proton.core.observability.data.api.ObservabilityApi
 import me.proton.core.observability.data.api.request.DataMetricsRequest
+import me.proton.core.observability.data.api.request.MetricEvent
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.usecase.SendObservabilityEvents
 import javax.inject.Inject
@@ -32,8 +33,9 @@ public class SendObservabilityEventsImpl @Inject constructor(
     private val apiProvider: ApiProvider
 ) : SendObservabilityEvents {
     override suspend fun invoke(events: List<ObservabilityEvent>) {
+        val metricEvents = events.map { MetricEvent.fromObservabilityEvent(it) }
         val result = apiProvider.get<ObservabilityApi>().invoke {
-            postDataMetrics(DataMetricsRequest(events))
+            postDataMetrics(DataMetricsRequest(metricEvents))
         }
         if (result is ApiResult.Error && result.isRetryable()) {
             result.doThrow()

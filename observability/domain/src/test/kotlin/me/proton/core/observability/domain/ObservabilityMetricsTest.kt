@@ -21,9 +21,6 @@ package me.proton.core.observability.domain
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import kotlin.test.Test
@@ -43,21 +40,5 @@ class ObservabilityMetricsTest {
         val jsonString = Json.encodeToString(data)
         val decodedData = Json.decodeFromString<SignupScreenViewTotalV1>(jsonString)
         assertEquals(data, decodedData)
-    }
-
-    @Test
-    fun observabilityEvent() {
-        val json = Json {
-            serializersModule = SerializersModule {
-                polymorphic(ObservabilityData::class) {
-                    subclass(SignupScreenViewTotalV1::class, SignupScreenViewTotalV1.serializer())
-                }
-            }
-        }
-        val data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
-        val event = ObservabilityEvent(data = data)
-        val jsonString = json.encodeToString(event)
-        val decodedEvent = json.decodeFromString<ObservabilityEvent>(jsonString)
-        assertEquals(event, decodedEvent)
     }
 }

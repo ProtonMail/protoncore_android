@@ -20,9 +20,36 @@ package me.proton.core.observability.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import me.proton.core.observability.domain.entity.ObservabilityEvent
+import me.proton.core.util.kotlin.ProtonCoreConfig.defaultJson
+import me.proton.core.util.kotlin.serializeToJson
 
 @Serializable
 internal data class DataMetricsRequest constructor(
-    @SerialName("Metrics") val metrics: List<ObservabilityEvent>
+    @SerialName("Metrics") val metrics: List<MetricEvent>
 )
+
+@Serializable
+internal data class MetricEvent constructor(
+    @SerialName("Name") val name: String,
+    @SerialName("Version") val version: Long,
+    @SerialName("Timestamp") val timestamp: Long,
+    @SerialName("Data") val data: JsonElement
+) {
+    companion object {
+        fun fromObservabilityEvent(event: ObservabilityEvent): MetricEvent = MetricEvent(
+            name = event.name,
+            version = event.version,
+            timestamp = event.timestamp,
+            data = JsonObject(
+                event.data.serializeToJson().jsonObject.toMutableMap().apply {
+                    // The server doesn't allow extra properties — remove "type" property:
+                    remove(defaultJson.configuration.classDiscriminator)
+                }
+            )
+        )
+    }
+}
