@@ -6,7 +6,7 @@ public final class me/proton/core/observability/data/BuildConfig {
 }
 
 public final class me/proton/core/observability/data/IsObservabilityEnabledImpl : me/proton/core/observability/domain/usecase/IsObservabilityEnabled {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/usersettings/domain/entity/DeviceSettings;)V
+	public fun <init> (Landroid/content/Context;Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
 	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

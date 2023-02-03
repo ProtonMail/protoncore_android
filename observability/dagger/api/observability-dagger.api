@@ -10,6 +10,7 @@ public final class me/proton/core/observability/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/observability/dagger/CoreObservabilityModule {
+	public abstract fun bindIsObservabilityEnabled (Lme/proton/core/observability/data/IsObservabilityEnabledImpl;)Lme/proton/core/observability/domain/usecase/IsObservabilityEnabled;
 	public abstract fun bindSendObservabilityEvents (Lme/proton/core/observability/data/usecase/SendObservabilityEventsImpl;)Lme/proton/core/observability/domain/usecase/SendObservabilityEvents;
 }
 
