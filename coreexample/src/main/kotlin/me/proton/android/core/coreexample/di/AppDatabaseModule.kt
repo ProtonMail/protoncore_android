@@ -36,6 +36,7 @@ import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.label.data.local.LabelDatabase
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
+import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.user.data.db.AddressDatabase
@@ -103,4 +104,7 @@ abstract class AppDatabaseBindsModule {
 
     @Binds
     abstract fun providePaymentDatabase(appDatabase: AppDatabase): PaymentDatabase
+
+    @Binds
+    abstract fun provideObservabilityDatabase(appDatabase: AppDatabase): ObservabilityDatabase
 }

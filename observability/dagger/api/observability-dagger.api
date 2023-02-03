@@ -12,6 +12,7 @@ public final class me/proton/core/observability/dagger/BuildConfig {
 public abstract interface class me/proton/core/observability/dagger/CoreObservabilityModule {
 	public static final field Companion Lme/proton/core/observability/dagger/CoreObservabilityModule$Companion;
 	public abstract fun bindIsObservabilityEnabled (Lme/proton/core/observability/data/IsObservabilityEnabledImpl;)Lme/proton/core/observability/domain/usecase/IsObservabilityEnabled;
+	public abstract fun bindObservabilityRepository (Lme/proton/core/observability/data/ObservabilityRepositoryImpl;)Lme/proton/core/observability/domain/ObservabilityRepository;
 	public abstract fun bindObservabilityWorkerManager (Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;)Lme/proton/core/observability/domain/ObservabilityWorkerManager;
 	public abstract fun bindSendObservabilityEvents (Lme/proton/core/observability/data/usecase/SendObservabilityEventsImpl;)Lme/proton/core/observability/domain/usecase/SendObservabilityEvents;
 }
