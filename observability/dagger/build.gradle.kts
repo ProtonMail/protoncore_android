@@ -1,4 +1,5 @@
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 /*
  * Copyright (c) 2022 Proton Technologies AG
@@ -32,6 +33,7 @@ android {
 dependencies {
     api(
         project(Module.observabilityData),
-        project(Module.observabilityDomain)
+        project(Module.observabilityDomain),
+        `android-work-runtime`
     )
 }

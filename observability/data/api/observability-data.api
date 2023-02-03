@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_observability_data_worker_ObservabilityWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/observability/data/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -10,6 +14,14 @@ public final class me/proton/core/observability/data/IsObservabilityEnabledImpl 
 	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/observability/data/IsObservabilityEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/observability/data/IsObservabilityEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/observability/data/IsObservabilityEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)Lme/proton/core/observability/data/IsObservabilityEnabledImpl;
+}
+
 public final class me/proton/core/observability/data/ObservabilityRepositoryImpl : me/proton/core/observability/domain/ObservabilityRepository {
 	public fun <init> (Lme/proton/core/observability/data/db/ObservabilityDatabase;)V
 	public fun addEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -18,6 +30,14 @@ public final class me/proton/core/observability/data/ObservabilityRepositoryImpl
 	public fun deleteEvents (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEventCount (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEvents (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/observability/data/ObservabilityRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/observability/data/ObservabilityRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/observability/data/ObservabilityRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/observability/data/db/ObservabilityDatabase;)Lme/proton/core/observability/data/ObservabilityRepositoryImpl;
 }
 
 public abstract class me/proton/core/observability/data/db/ObservabilityDao : me/proton/core/data/room/db/BaseDao {
@@ -56,5 +76,41 @@ public final class me/proton/core/observability/data/entity/ObservabilityEventEn
 public final class me/proton/core/observability/data/usecase/SendObservabilityEventsImpl : me/proton/core/observability/domain/usecase/SendObservabilityEvents {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
 	public fun invoke (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/observability/data/usecase/SendObservabilityEventsImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/observability/data/usecase/SendObservabilityEventsImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/observability/data/usecase/SendObservabilityEventsImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/observability/data/usecase/SendObservabilityEventsImpl;
+}
+
+public final class me/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl : me/proton/core/observability/domain/ObservabilityWorkerManager {
+	public fun <init> (Lkotlin/jvm/functions/Function0;Landroidx/work/WorkManager;)V
+	public fun cancel ()V
+	public fun getDurationSinceLastShipment-LV8wdWc (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun schedule-LRDsOJo (J)V
+	public fun setLastSentNow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/observability/data/worker/ObservabilityWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/observability/data/worker/ObservabilityWorker_AssistedFactory_Impl : me/proton/core/observability/data/worker/ObservabilityWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/observability/data/worker/ObservabilityWorker;
+	public static fun create (Lme/proton/core/observability/data/worker/ObservabilityWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/observability/data/worker/ObservabilityWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/observability/data/worker/ObservabilityWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/observability/data/worker/ObservabilityWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/observability/domain/usecase/ProcessObservabilityEvents;)Lme/proton/core/observability/data/worker/ObservabilityWorker;
+}
+
+public abstract interface class me/proton/core/observability/data/worker/ObservabilityWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/observability/data/worker/ObservabilityWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 

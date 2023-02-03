@@ -20,10 +20,15 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
 }
 
 publishOption.shouldBePublishedAsLib = true
+
+protonDagger {
+    workManagerHiltIntegration = true
+}
 
 android {
     compileOptions {
@@ -33,6 +38,7 @@ android {
 
 dependencies {
     api(
+        `android-work-runtime`,
         `javax-inject`,
         `hilt-android`,
         project(Module.dataRoom),
@@ -55,9 +61,15 @@ dependencies {
 
     testImplementation(
         project(Module.androidTest),
+        `android-test-core-ktx`,
+        `android-work-testing`,
         `coroutines-test`,
+        `hilt-android-testing`,
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        robolectric
     )
+
+    kaptTest(`hilt-android-compiler`)
 }

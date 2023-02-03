@@ -10,7 +10,21 @@ public final class me/proton/core/observability/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/observability/dagger/CoreObservabilityModule {
+	public static final field Companion Lme/proton/core/observability/dagger/CoreObservabilityModule$Companion;
 	public abstract fun bindIsObservabilityEnabled (Lme/proton/core/observability/data/IsObservabilityEnabledImpl;)Lme/proton/core/observability/domain/usecase/IsObservabilityEnabled;
+	public abstract fun bindObservabilityWorkerManager (Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;)Lme/proton/core/observability/domain/ObservabilityWorkerManager;
 	public abstract fun bindSendObservabilityEvents (Lme/proton/core/observability/data/usecase/SendObservabilityEventsImpl;)Lme/proton/core/observability/domain/usecase/SendObservabilityEvents;
+}
+
+public final class me/proton/core/observability/dagger/CoreObservabilityModule$Companion {
+	public final fun provideObservabilityWorkerManagerImpl (Landroidx/work/WorkManager;)Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;
+}
+
+public final class me/proton/core/observability/dagger/CoreObservabilityModule_Companion_ProvideObservabilityWorkerManagerImplFactory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/observability/dagger/CoreObservabilityModule_Companion_ProvideObservabilityWorkerManagerImplFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;
+	public static fun provideObservabilityWorkerManagerImpl (Landroidx/work/WorkManager;)Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;
 }
 
