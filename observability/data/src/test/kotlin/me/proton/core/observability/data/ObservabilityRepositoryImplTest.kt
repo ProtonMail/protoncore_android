@@ -29,8 +29,9 @@ import me.proton.core.observability.data.db.ObservabilityDao
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.observability.domain.ObservabilityRepository
-import me.proton.core.observability.domain.entity.ObservabilityData
 import me.proton.core.observability.domain.entity.ObservabilityEvent
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 import org.junit.After
@@ -45,6 +46,11 @@ class ObservabilityRepositoryImplTest {
     private val db = mockk<ObservabilityDatabase>(relaxed = true)
     private val dao = mockk<ObservabilityDao>(relaxed = true)
     private lateinit var repository: ObservabilityRepository
+    // endregion
+
+    // region test data
+    private val sampleData: ObservabilityData =
+        SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
     // endregion
 
     @Before
@@ -64,7 +70,7 @@ class ObservabilityRepositoryImplTest {
     fun `add new event works properly`() = runTest {
         // GIVEN
         val eventSlot = slot<ObservabilityEventEntity>()
-        val eventData = mockk<ObservabilityData>(relaxed = true)
+        val eventData = sampleData
         every { eventData.serialize() } returns "test-string"
         val event = ObservabilityEvent(
             id = 1, timestamp = Instant.MIN, data = eventData
@@ -85,7 +91,7 @@ class ObservabilityRepositoryImplTest {
     fun `delete event works properly`() = runTest {
         // GIVEN
         val eventSlot = slot<ObservabilityEventEntity>()
-        val eventData = mockk<ObservabilityData>(relaxed = true)
+        val eventData = sampleData
         every { eventData.serialize() } returns "test-string"
         val event = ObservabilityEvent(
             id = 1, timestamp = Instant.MIN, data = eventData
@@ -114,7 +120,7 @@ class ObservabilityRepositoryImplTest {
     fun `delete multiple events works properly`() = runTest {
         // GIVEN
         val eventSlot = slot<ObservabilityEventEntity>()
-        val eventData = mockk<ObservabilityData>(relaxed = true)
+        val eventData = sampleData
         every { eventData.serialize() } returns "test-string"
         val event1 = ObservabilityEvent(
             id = 1, timestamp = Instant.MIN, data = eventData

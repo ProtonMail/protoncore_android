@@ -16,11 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.observability.domain.entity
+package me.proton.core.observability.domain.metrics.common
 
-/**
- * @param id Contains the `$id` of a JSON schema.
- */
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-public annotation class SchemaId(val id: String)
+@Suppress("EnumEntryName", "EnumNaming")
+public enum class GiapStatus {
+    success,
+    billingUnavailable,
+    connectionError,
+    developerError,
+    googlePlayError,
+    itemError,
+    unknown
+}

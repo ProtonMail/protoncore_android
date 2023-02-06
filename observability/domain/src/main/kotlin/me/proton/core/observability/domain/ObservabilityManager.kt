@@ -19,11 +19,10 @@
 package me.proton.core.observability.domain
 
 import kotlinx.coroutines.launch
-import me.proton.core.observability.domain.entity.ObservabilityData
 import me.proton.core.observability.domain.entity.ObservabilityEvent
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.util.kotlin.CoroutineScopeProvider
-import me.proton.core.util.kotlin.serialize
 import java.time.Instant
 import javax.inject.Inject
 import kotlin.time.Duration

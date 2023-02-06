@@ -23,7 +23,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import me.proton.core.observability.domain.entity.ObservabilityData
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider

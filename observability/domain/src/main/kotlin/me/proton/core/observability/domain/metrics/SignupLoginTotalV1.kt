@@ -16,11 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.observability.domain.entity
+package me.proton.core.observability.domain.metrics
 
-/**
- * @param id Contains the `$id` of a JSON schema.
- */
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-public annotation class SchemaId(val id: String)
+import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Serializable
+import me.proton.core.observability.domain.entity.SchemaId
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
+
+@Serializable
+@Schema(description = "Logging in just after the signup.")
+@SchemaId("https://proton.me/android_core_signup_login_total_v1.schema.json")
+public data class SignupLoginTotalV1(
+    override val Labels: HttpStatusLabels,
+    override val Value: Long = 1
+) : ObservabilityData() {
+    public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
+}

@@ -21,6 +21,7 @@ package me.proton.core.observability.domain.entity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.util.kotlin.deserialize
 import java.time.Instant
 

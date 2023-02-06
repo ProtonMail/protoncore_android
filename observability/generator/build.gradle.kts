@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.implementation
+import studio.forface.easygradle.dsl.*
+
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -16,35 +19,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.implementation
-import org.gradle.kotlin.dsl.testImplementation
-import studio.forface.easygradle.dsl.*
-
 plugins {
-    protonKotlinLibrary
-    kotlin("plugin.serialization")
+    id("application")
+    id("java")
+    id("org.jetbrains.kotlin.jvm")
 }
 
-publishOption.shouldBePublishedAsLib = true
+application {
+    mainClass.set("me.proton.core.observability.generator.ObservabilityGeneratorKt")
+}
 
-kotlin {
-    sourceSets {
-        main {
-            kotlin.srcDir("src/generated/kotlin")
-        }
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
-    api(`javax-inject`)
-    implementation(`coroutines-core`)
-    implementation(`serialization-core`)
-    implementation(`serialization-json`)
+    implementation("com.github.ajalt.clikt:clikt:3.4.0")
+    implementation("com.github.victools:jsonschema-generator:4.28.0")
+    implementation("com.github.victools:jsonschema-module-swagger-2:4.28.0")
     implementation("io.swagger.core.v3:swagger-annotations:2.2.7")
-    implementation(project(Module.kotlinUtil))
-    testImplementation(`coroutines-test`)
-    testImplementation(junit)
-    testImplementation(`kotlin-test`)
-    testImplementation(mockk)
-    testImplementation(project(Module.kotlinTest))
+    implementation(`kotlin-reflect`)
+    implementation(project(Module.observabilityDomain))
 }

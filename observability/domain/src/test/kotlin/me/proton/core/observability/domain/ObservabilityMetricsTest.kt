@@ -23,29 +23,23 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import me.proton.core.observability.domain.entity.ObservabilityData
 import me.proton.core.observability.domain.entity.ObservabilityEvent
-import me.proton.core.observability.domain.entity.SignupScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ObservabilityMetricsTest {
     @Test
     fun metricNameAndVersion() {
-        val data = SignupScreenViewTotalV1(
-            1,
-            SignupScreenViewTotalV1.Labels(SignupScreenViewTotalV1.Screen_id.chooseInternalEmail)
-        )
+        val data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
         assertEquals("android_core_signup_screenView_total", data.metricName)
         assertEquals(1, data.metricVersion)
     }
 
     @Test
     fun metricEventSerialization() {
-        val data = SignupScreenViewTotalV1(
-            1,
-            SignupScreenViewTotalV1.Labels(SignupScreenViewTotalV1.Screen_id.chooseInternalEmail)
-        )
+        val data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
         val jsonString = Json.encodeToString(data)
         val decodedData = Json.decodeFromString<SignupScreenViewTotalV1>(jsonString)
         assertEquals(data, decodedData)
@@ -60,10 +54,7 @@ class ObservabilityMetricsTest {
                 }
             }
         }
-        val data = SignupScreenViewTotalV1(
-            1,
-            SignupScreenViewTotalV1.Labels(SignupScreenViewTotalV1.Screen_id.chooseInternalEmail)
-        )
+        val data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
         val event = ObservabilityEvent(data = data)
         val jsonString = json.encodeToString(event)
         val decodedEvent = json.decodeFromString<ObservabilityEvent>(jsonString)

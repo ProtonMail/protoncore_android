@@ -16,11 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.observability.domain.entity
+package me.proton.core.observability.domain.metrics.common
 
-/**
- * @param id Contains the `$id` of a JSON schema.
- */
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-public annotation class SchemaId(val id: String)
+import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Serializable
+
+@Serializable
+public data class HttpStatusLabels constructor(
+    @get:Schema(required = true)
+    val status: HttpApiStatus
+)
