@@ -64,7 +64,7 @@ class ObservabilityManagerTest {
         coVerify(exactly = 0) { observabilityRepository.addEvent(any()) }
 
         coVerify(exactly = 1) { observabilityRepository.deleteAllEvents() }
-        assertTrue(workerManager.scheduleCalls.isEmpty()) {
+        assertTrue(workerManager.scheduledCalls.isEmpty()) {
             "Unexpected call to `ObservabilityWorkerManager.schedule`."
         }
     }
@@ -82,7 +82,7 @@ class ObservabilityManagerTest {
         assertEquals(0, workerManager.cancelCount)
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(ObservabilityManager.MAX_DELAY_MS.milliseconds), workerManager.scheduleCalls)
+        assertContentEquals(listOf(ObservabilityManager.MAX_DELAY_MS.milliseconds), workerManager.scheduledCalls)
     }
 
     @Test
@@ -98,7 +98,7 @@ class ObservabilityManagerTest {
         assertEquals(0, workerManager.cancelCount)
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(Duration.ZERO), workerManager.scheduleCalls)
+        assertContentEquals(listOf(Duration.ZERO), workerManager.scheduledCalls)
     }
 
     @Test
@@ -115,7 +115,7 @@ class ObservabilityManagerTest {
         assertEquals(0, workerManager.cancelCount)
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(Duration.ZERO), workerManager.scheduleCalls)
+        assertContentEquals(listOf(Duration.ZERO), workerManager.scheduledCalls)
     }
 
     @Test
@@ -132,7 +132,7 @@ class ObservabilityManagerTest {
         assertEquals(0, workerManager.cancelCount)
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(ObservabilityManager.MAX_DELAY_MS.milliseconds), workerManager.scheduleCalls)
+        assertContentEquals(listOf(ObservabilityManager.MAX_DELAY_MS.milliseconds), workerManager.scheduledCalls)
     }
 
     /**
@@ -142,7 +142,7 @@ class ObservabilityManagerTest {
     private class FakeWorkerManager : ObservabilityWorkerManager {
         var cancelCount = 0
             private set
-        var scheduleCalls = mutableListOf<Duration>()
+        var scheduledCalls = mutableListOf<Duration>()
             private set
 
         var duration: Duration? = null
@@ -154,7 +154,7 @@ class ObservabilityManagerTest {
         override suspend fun getDurationSinceLastShipment(): Duration? = duration
         override suspend fun setLastSentNow() = Unit
         override fun schedule(delay: Duration) {
-            scheduleCalls.add(delay)
+            scheduledCalls.add(delay)
         }
     }
 }

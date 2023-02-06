@@ -29,6 +29,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
@@ -39,7 +41,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
 
     // See CP-5335.
     private val getDomainsJob: Job = viewModelScope.launch {
-        runCatching { accountAvailability.getDomains() }
+        runCatching { accountAvailability.getDomains(metricData = { SignupFetchDomainsTotalV1(it) }) }
     }
 
     private val mutableState = MutableStateFlow<State>(State.Idle)
@@ -57,7 +59,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
     fun checkExternalEmail(email: String) = flow {
         emit(State.Processing)
         getDomainsJob.join()
-        accountAvailability.checkExternalEmail(email)
+        accountAvailability.checkExternalEmail(email, metricData = { SignupEmailAvailabilityTotalV1(it) })
         emit(State.Success(email))
     }.catch { error ->
         emit(State.Error.Message(error))

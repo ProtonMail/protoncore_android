@@ -18,6 +18,9 @@
 
 package me.proton.core.observability.domain.metrics.common
 
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
+
 @Suppress("EnumNaming", "EnumEntryName")
 public enum class HttpApiStatus {
     http2xx,
@@ -27,4 +30,18 @@ public enum class HttpApiStatus {
     parseError,
     sslError,
     unknown
+}
+
+@Suppress("MagicNumber")
+public fun Throwable.toHttpApiStatus(): HttpApiStatus = when (this) {
+    is ApiException -> when (val apiError = this.error) {
+        is ApiResult.Error.Connection -> HttpApiStatus.connectionError
+        is ApiResult.Error.Http -> when (apiError.httpCode) {
+            in 400..499 -> HttpApiStatus.http4xx
+            in 500..599 -> HttpApiStatus.http5xx
+            else -> HttpApiStatus.unknown
+        }
+        is ApiResult.Error.Parse -> HttpApiStatus.parseError
+    }
+    else -> HttpApiStatus.unknown
 }

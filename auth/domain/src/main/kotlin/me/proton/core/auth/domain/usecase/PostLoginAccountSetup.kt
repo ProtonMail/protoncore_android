@@ -24,6 +24,8 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -42,7 +44,8 @@ class PostLoginAccountSetup @Inject constructor(
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val userCheck: UserCheck,
     private val userManager: UserManager,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val observabilityManager: ObservabilityManager
 ) {
     sealed class Result {
         sealed class Error : Result() {
@@ -81,7 +84,9 @@ class PostLoginAccountSetup @Inject constructor(
         temporaryPassword: Boolean,
         onSetupSuccess: (suspend () -> Unit)? = null,
         billingDetails: BillingDetails? = null,
-        internalAddressDomain: String? = null
+        internalAddressDomain: String? = null,
+        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
+        userCheckMetricData: ((UserCheckResult) -> ObservabilityData)? = null
     ): Result {
         // Subscribe to any pending subscription/billing.
         if (billingDetails != null) {
@@ -118,20 +123,44 @@ class PostLoginAccountSetup @Inject constructor(
             }
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
                 setupPrimaryKeys.invoke(userId, encryptedPassword, requiredAccountType)
-                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess)
+                unlockUserPrimaryKey(
+                    userId,
+                    encryptedPassword,
+                    onSetupSuccess,
+                    unlockUserMetricData,
+                    userCheckMetricData
+                )
             }
             is SetupAccountCheck.Result.SetupExternalAddressKeysNeeded -> {
-                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess) {
+                unlockUserPrimaryKey(
+                    userId,
+                    encryptedPassword,
+                    onSetupSuccess,
+                    unlockUserMetricData,
+                    userCheckMetricData
+                ) {
                     setupExternalAddressKeys.invoke(userId)
                 }
             }
             is SetupAccountCheck.Result.SetupInternalAddressNeeded -> {
-                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess) {
+                unlockUserPrimaryKey(
+                    userId,
+                    encryptedPassword,
+                    onSetupSuccess,
+                    unlockUserMetricData,
+                    userCheckMetricData
+                ) {
                     setupInternalAddress.invoke(userId, internalAddressDomain)
                 }
             }
             is SetupAccountCheck.Result.NoSetupNeeded -> {
-                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess)
+                unlockUserPrimaryKey(
+                    userId,
+                    encryptedPassword,
+                    onSetupSuccess,
+                    unlockUserMetricData,
+                    userCheckMetricData
+                )
             }
         }
     }
@@ -140,9 +169,15 @@ class PostLoginAccountSetup @Inject constructor(
         userId: UserId,
         password: EncryptedString,
         onSetupSuccess: (suspend () -> Unit)?,
+        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)?,
+        userCheckMetricData: ((UserCheckResult) -> ObservabilityData)?,
         onUnlockSuccess: (suspend () -> Unit)? = null,
     ): Result {
-        return when (val result = unlockUserPrimaryKey.invoke(userId, password)) {
+        val result = unlockUserPrimaryKey.invoke(userId, password)
+        if (unlockUserMetricData != null) {
+            observabilityManager.enqueue(unlockUserMetricData(result))
+        }
+        return when (result) {
             is UserManager.UnlockResult.Success -> {
                 // Invoke unlock success action.
                 onUnlockSuccess?.invoke()
@@ -150,7 +185,11 @@ class PostLoginAccountSetup @Inject constructor(
                 sessionManager.refreshScopes(checkNotNull(sessionManager.getSessionId(userId)))
                 // First get the User to invoke UserCheck.
                 val user = userManager.getUser(userId, refresh = true)
-                when (val userCheckResult = userCheck.invoke(user)) {
+                val userCheckResult = userCheck.invoke(user)
+                if (userCheckMetricData != null) {
+                    observabilityManager.enqueue(userCheckMetricData(userCheckResult))
+                }
+                when (userCheckResult) {
                     is UserCheckResult.Error -> {
                         // Disable account and prevent login.
                         accountWorkflow.handleAccountDisabled(userId)

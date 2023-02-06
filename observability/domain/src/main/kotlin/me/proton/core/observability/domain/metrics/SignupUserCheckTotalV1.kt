@@ -29,10 +29,7 @@ public data class SignupUserCheckTotalV1(
     override val Labels: LabelsData,
     override val Value: Long = 1
 ) : ObservabilityData() {
-
-    init {
-        require(Value >= 1L) { "Value < minimum 1 - $Value" }
-    }
+    public constructor(status: Status) : this(LabelsData(status))
 
     @Serializable
     public data class LabelsData constructor(

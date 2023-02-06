@@ -37,11 +37,12 @@ kotlin {
 
 dependencies {
     api(`javax-inject`)
+    api(`swagger-annotations`)
     implementation(`coroutines-core`)
     implementation(`serialization-core`)
     implementation(`serialization-json`)
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.7")
     implementation(project(Module.kotlinUtil))
+    implementation(project(Module.networkDomain))
     testImplementation(`coroutines-test`)
     testImplementation(junit)
     testImplementation(`kotlin-test`)

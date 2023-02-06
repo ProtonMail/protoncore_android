@@ -39,6 +39,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupRecoveryBindin
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -113,6 +114,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         observeProcessingStates()
+        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.setRecoveryMethod)
     }
 
     /** Adjusts the UI, depending on the current account type. */

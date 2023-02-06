@@ -23,13 +23,22 @@ import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
+import kotlinx.coroutines.flow.first
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.State
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.user.domain.repository.DomainRepository
+import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -37,13 +46,21 @@ import kotlin.test.assertTrue
 
 class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
-    private val accountAvailability = mockk<AccountAvailability>(relaxed = true)
+    private lateinit var accountAvailability: AccountAvailability
+    private lateinit var domainRepository: DomainRepository
+    private lateinit var observabilityManager: ObservabilityManager
+    private lateinit var userRepository: UserRepository
 
     private lateinit var viewModel: ChooseInternalEmailViewModel
 
     @Before
     fun beforeEveryTest() {
-        coEvery { accountAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
+        domainRepository = mockk(relaxed = true) {
+            coEvery { getAvailableDomains() } returns listOf("protonmail.com", "protonmail.ch")
+        }
+        userRepository = mockk(relaxed = true)
+        observabilityManager = mockk(relaxed = true)
+        accountAvailability = AccountAvailability(userRepository, domainRepository, observabilityManager)
     }
 
     @Test
@@ -64,7 +81,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @Test
     fun `domains loading connectivity error`() = coroutinesTest {
         // GIVEN
-        coEvery { accountAvailability.getDomains() } throws ApiException(
+        coEvery { domainRepository.getAvailableDomains() } throws ApiException(
             ApiResult.Error.NoInternet()
         )
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
@@ -81,7 +98,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @Test
     fun `domains loading api error`() = coroutinesTest {
         // GIVEN
-        coEvery { accountAvailability.getDomains() } throws ApiException(
+        coEvery { domainRepository.getAvailableDomains() } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -109,7 +126,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { accountAvailability.checkUsername(testEmail) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(testEmail) } returns Unit
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
@@ -131,7 +148,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { accountAvailability.checkUsername(testEmail) } throws ApiException(
+        coEvery { userRepository.checkUsernameAvailable(testEmail) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -161,7 +178,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { accountAvailability.checkUsername(testEmail) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(testEmail) } returns Unit
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
@@ -174,8 +191,35 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         }
         // THEN
         coVerify(ordering = Ordering.ORDERED) {
-            accountAvailability.getDomains()
-            accountAvailability.checkUsername(testEmail)
+            domainRepository.getAvailableDomains()
+            userRepository.checkUsernameAvailable(testEmail)
         }
+    }
+
+    @Test
+    fun `fetchDomains observability`() = coroutinesTest {
+        val dataSlot = slot<SignupFetchDomainsTotalV1>()
+
+        // WHEN
+        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel.state.first { it is State.Domains } // wait for domains
+
+        // THEN
+        verify(exactly = 1) { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
+    }
+
+    @Test
+    fun `checkUsername observability`() = coroutinesTest {
+        val dataSlot = slot<SignupUsernameAvailabilityTotalV1>()
+
+        // WHEN
+        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel.checkUsername("test-user", "proton.test")
+        viewModel.state.first { it is State.Success } // wait for validation success
+
+        // THEN
+        verify(exactly = 1) { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

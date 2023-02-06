@@ -45,6 +45,9 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
 import me.proton.core.network.domain.isPotentialBlocking
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
@@ -81,23 +84,32 @@ internal class LoginViewModel @Inject constructor(
         username: String,
         password: String,
         requiredAccountType: AccountType,
-        billingDetails: BillingDetails? = null
+        billingDetails: BillingDetails? = null,
+        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null,
+        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
+        userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
     ): Job = startLoginWorkflowWithEncryptedPassword(
         username = username,
         encryptedPassword = password.encrypt(keyStoreCrypto),
         requiredAccountType = requiredAccountType,
-        billingDetails = billingDetails
+        billingDetails = billingDetails,
+        loginMetricData = loginMetricData,
+        unlockUserMetricData = unlockUserMetricData,
+        userCheckMetricData = userCheckMetricData
     )
 
     fun startLoginWorkflowWithEncryptedPassword(
         username: String,
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
-        billingDetails: BillingDetails? = null
+        billingDetails: BillingDetails? = null,
+        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null,
+        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
+        userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
     ) = flow {
         emit(State.Processing)
 
-        val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType)
+        val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType, loginMetricData)
 
         savedStateHandle.set(STATE_USER_ID, sessionInfo.userId.id)
 
@@ -108,7 +120,9 @@ internal class LoginViewModel @Inject constructor(
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
             temporaryPassword = sessionInfo.temporaryPassword,
-            billingDetails = billingDetails
+            billingDetails = billingDetails,
+            unlockUserMetricData = unlockUserMetricData,
+            userCheckMetricData = userCheckMetricData
         )
         emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {

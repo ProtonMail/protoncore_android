@@ -19,25 +19,48 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.mockk
+import io.mockk.impl.annotations.MockK
+import io.mockk.slot
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.user.domain.repository.DomainRepository
+import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Test
+import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
+    private lateinit var accountAvailability: AccountAvailability
 
-    private val accountAvailability = mockk<AccountAvailability>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var domainRepository: DomainRepository
+
+    @MockK(relaxed = true)
+    private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK
+    private lateinit var userRepository: UserRepository
 
     private lateinit var viewModel: ChooseExternalEmailViewModel
+
+    @BeforeTest
+    fun setUp() {
+        MockKAnnotations.init(this)
+        accountAvailability = AccountAvailability(userRepository, domainRepository, observabilityManager)
+    }
 
     @Test
     fun `check email success`() = coroutinesTest {
@@ -45,7 +68,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { accountAvailability.checkExternalEmail(testEmail) } returns Unit
+        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
         viewModel = ChooseExternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
@@ -64,7 +87,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { accountAvailability.checkExternalEmail(testEmail) } throws ApiException(
+        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -92,7 +115,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { accountAvailability.checkExternalEmail(testEmail) } returns Unit
+        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
         viewModel = ChooseExternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             // WHEN
@@ -107,5 +130,27 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             accountAvailability.getDomains()
             accountAvailability.checkExternalEmail(testEmail)
         }
+    }
+
+    @Test
+    fun `observability data is enqueued`() = coroutinesTest {
+        // GIVEN
+        coEvery { userRepository.checkExternalEmailAvailable(any()) } returns Unit
+
+        // WHEN
+        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel.checkExternalEmail("username@email.text").join()
+
+        // THEN
+        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotalV1>()
+        val usernameAvailabilityEventSlot = slot<SignupEmailAvailabilityTotalV1>()
+
+        coVerify {
+            observabilityManager.enqueue(capture(fetchDomainsEventSlot), any())
+            observabilityManager.enqueue(capture(usernameAvailabilityEventSlot), any())
+        }
+
+        assertEquals(HttpApiStatus.http2xx, fetchDomainsEventSlot.captured.Labels.status)
+        assertEquals(HttpApiStatus.http2xx, usernameAvailabilityEventSlot.captured.Labels.status)
     }
 }

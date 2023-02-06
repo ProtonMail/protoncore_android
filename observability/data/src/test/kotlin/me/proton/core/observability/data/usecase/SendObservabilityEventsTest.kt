@@ -28,7 +28,7 @@ import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.observability.data.api.ObservabilityApi
 import me.proton.core.observability.domain.entity.ObservabilityEvent
-import me.proton.core.observability.domain.entity.SignupScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.observability.domain.usecase.SendObservabilityEvents
 import me.proton.core.test.android.api.TestApiManager
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -42,12 +42,8 @@ class SendObservabilityEventsTest {
     private lateinit var api: ObservabilityApi
     private lateinit var tested: SendObservabilityEvents
 
-    private val sampleEvent = ObservabilityEvent(
-        data = SignupScreenViewTotalV1(
-            1,
-            SignupScreenViewTotalV1.Labels(SignupScreenViewTotalV1.Screen_id.chooseInternalEmail)
-        )
-    )
+    private val sampleEvent =
+        ObservabilityEvent(data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail))
 
     @BeforeTest
     fun setUp() {

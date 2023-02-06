@@ -28,6 +28,10 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.runWithObservability
 import javax.inject.Inject
 
 /**
@@ -38,32 +42,36 @@ class PerformLogin @Inject constructor(
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val challengeManager: ChallengeManager,
-    private val challengeConfig: LoginChallengeConfig
+    private val challengeConfig: LoginChallengeConfig,
+    private val observabilityManager: ObservabilityManager
 ) {
     suspend operator fun invoke(
         username: String,
-        password: EncryptedString
+        password: EncryptedString,
+        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null
     ): SessionInfo {
         val loginInfo = authRepository.getAuthInfo(
             sessionId = null,
             username = username,
         )
-        password.decrypt(keyStoreCrypto).toByteArray().use {
+        password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val srpProofs: SrpProofs = srpCrypto.generateSrpProofs(
                 username = username,
-                password = it.array,
+                password = decryptedPassword.array,
                 version = loginInfo.version.toLong(),
                 salt = loginInfo.salt,
                 modulus = loginInfo.modulus,
                 serverEphemeral = loginInfo.serverEphemeral
             )
             return challengeManager.useFlow(challengeConfig.flowName) { frames ->
-                authRepository.performLogin(
-                    frames = frames,
-                    username = username,
-                    srpProofs = srpProofs,
-                    srpSession = loginInfo.srpSession
-                )
+                authRepository.runWithObservability(observabilityManager, loginMetricData) {
+                    performLogin(
+                        frames = frames,
+                        username = username,
+                        srpProofs = srpProofs,
+                        srpSession = loginInfo.srpSession
+                    )
+                }
             }
         }
     }

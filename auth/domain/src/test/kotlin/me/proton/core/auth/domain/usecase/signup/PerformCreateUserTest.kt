@@ -79,7 +79,8 @@ class PerformCreateUserTest {
             srpCrypto,
             keyStoreCrypto,
             challengeManager,
-            signupChallengeConfig
+            signupChallengeConfig,
+            mockk()
         )
         every {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())

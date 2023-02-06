@@ -71,8 +71,17 @@ class PerformLoginSuccessApiResultsTest {
         salt = testSalt, srpSession = testSrpSession, secondFactor = null
     )
     private val sessionInfoResult = SessionInfo(
-        username = testUsername, accessToken = "", tokenType = "", scopes = emptyList(),
-        sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "", localId = 1, passwordMode = 1,
+        username = testUsername,
+        accessToken = "",
+        tokenType = "",
+        scopes = emptyList(),
+        sessionId = SessionId(""),
+        userId = UserId(""),
+        refreshToken = "",
+        eventId = "",
+        serverProof = "",
+        localId = 1,
+        passwordMode = 1,
         secondFactor = null,
         temporaryPassword = false,
     )
@@ -85,7 +94,8 @@ class PerformLoginSuccessApiResultsTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig)
+        useCase =
+            PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig, mockk())
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs

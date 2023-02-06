@@ -22,8 +22,10 @@ import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.SessionManager
@@ -32,6 +34,9 @@ import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
+import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -46,6 +51,7 @@ import kotlin.test.assertTrue
 
 class PostLoginAccountSetupTest {
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
+    private lateinit var observabilityManager: ObservabilityManager
     private lateinit var performSubscribe: PerformSubscribe
     private lateinit var setupAccountCheck: SetupAccountCheck
     private lateinit var setupInternalAddress: SetupInternalAddress
@@ -68,6 +74,7 @@ class PostLoginAccountSetupTest {
     @Before
     fun setUp() {
         accountWorkflowHandler = mockk()
+        observabilityManager = mockk()
         performSubscribe = mockk()
         setupAccountCheck = mockk()
         setupExternalAddressKeys = mockk()
@@ -99,7 +106,8 @@ class PostLoginAccountSetupTest {
             unlockUserPrimaryKey,
             userCheck,
             userManager,
-            sessionManager
+            sessionManager,
+            observabilityManager
         )
     }
 
@@ -408,6 +416,32 @@ class PostLoginAccountSetupTest {
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify { setupExternalAddressKeys.invoke(testUserId) }
         coVerify(exactly = 1) { onSetupSuccess() }
+    }
+
+    @Test
+    fun `observability tests`() = runTest {
+        // GIVEN
+        val sessionInfo = mockSessionInfo()
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
+        coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
+        justRun { observabilityManager.enqueue(any(), any()) }
+
+        // WHEN
+        tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
+            unlockUserMetricData = { mockk<SignupUnlockUserTotalV1>() },
+            userCheckMetricData = { mockk<SignupUserCheckTotalV1>() }
+        )
+
+        // THEN
+        verify { observabilityManager.enqueue(any<SignupUnlockUserTotalV1>(), any()) }
+        verify { observabilityManager.enqueue(any<SignupUserCheckTotalV1>(), any()) }
     }
 
     private fun mockSessionInfo(

@@ -38,7 +38,7 @@ dependencies {
     implementation("com.github.ajalt.clikt:clikt:3.4.0")
     implementation("com.github.victools:jsonschema-generator:4.28.0")
     implementation("com.github.victools:jsonschema-module-swagger-2:4.28.0")
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.7")
+    implementation(`swagger-annotations`)
     implementation(`kotlin-reflect`)
     implementation(project(Module.observabilityDomain))
 }

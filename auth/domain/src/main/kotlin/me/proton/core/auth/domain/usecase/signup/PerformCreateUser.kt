@@ -27,6 +27,10 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -37,9 +41,11 @@ class PerformCreateUser @Inject constructor(
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val challengeManager: ChallengeManager,
-    private val challengeConfig: SignupChallengeConfig
+    private val challengeConfig: SignupChallengeConfig,
+    private val observabilityManager: ObservabilityManager
 ) {
 
+    @Suppress("LongParameterList")
     suspend operator fun invoke(
         username: String,
         domain: String?,
@@ -48,6 +54,7 @@ class PerformCreateUser @Inject constructor(
         recoveryPhone: String?,
         referrer: String?,
         type: CreateUserType,
+        metricData: ((HttpApiStatus) -> ObservabilityData)? = null
     ): UserId {
         require(
             recoveryEmail == null && recoveryPhone == null ||
@@ -66,17 +73,19 @@ class PerformCreateUser @Inject constructor(
             )
 
             return challengeManager.useFlow(challengeConfig.flowName) { frames ->
-                userRepository.createUser(
-                    username = username,
-                    domain = domain,
-                    password = password,
-                    recoveryEmail = recoveryEmail,
-                    recoveryPhone = recoveryPhone,
-                    referrer = referrer,
-                    type = type,
-                    auth = auth,
-                    frames
-                ).userId
+                userRepository.runWithObservability(observabilityManager, metricData) {
+                    createUser(
+                        username = username,
+                        domain = domain,
+                        password = password,
+                        recoveryEmail = recoveryEmail,
+                        recoveryPhone = recoveryPhone,
+                        referrer = referrer,
+                        type = type,
+                        auth = auth,
+                        frames
+                    ).userId
+                }
             }
         }
     }

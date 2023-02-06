@@ -19,11 +19,17 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
@@ -32,6 +38,7 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
 import me.proton.core.network.domain.ApiException
@@ -40,12 +47,16 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.CookieSessionId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.SignupAccountCreationTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -55,16 +66,42 @@ import kotlin.test.assertTrue
 class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
-    private val humanVerificationExternalInput = mockk<HumanVerificationExternalInput>(relaxed = true)
-    private val performCreateUser = mockk<PerformCreateUser>(relaxed = true)
-    private val performCreateExternalUser = mockk<PerformCreateExternalEmailUser>(relaxed = true)
-    private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-    private val plansOrchestrator = mockk<PlansOrchestrator>(relaxed = true)
-    private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
-    private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
-    private val performLogin = mockk<PerformLogin>()
-    private val challengeManager = mockk<ChallengeManager>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var humanVerificationExternalInput: HumanVerificationExternalInput
+
+    @MockK(relaxed = true)
+    private lateinit var keyStoreCrypto: KeyStoreCrypto
+
+    @MockK(relaxed = true)
+    private lateinit var plansOrchestrator: PlansOrchestrator
+
+    @MockK(relaxed = true)
+    private lateinit var paymentsOrchestrator: PaymentsOrchestrator
+
+    @MockK(relaxed = true)
+    private lateinit var clientIdProvider: ClientIdProvider
+
+    @MockK
+    private lateinit var performLogin: PerformLogin
+
+    @MockK(relaxed = true)
+    private lateinit var challengeManager: ChallengeManager
+
+    @MockK(relaxed = true)
+    private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK(relaxed = true)
+    private lateinit var authRepository: AuthRepository
+
+    @MockK(relaxed = true)
+    private lateinit var userRepository: UserRepository
+
+    @MockK(relaxed = true)
+    private lateinit var srpCrypto: SrpCrypto
     // endregion
+
+    private lateinit var performCreateUser: PerformCreateUser
+    private lateinit var performCreateExternalUser: PerformCreateExternalEmailUser
 
 
     // region test data
@@ -109,6 +146,32 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
+
+        performCreateUser = spyk(
+            PerformCreateUser(
+                authRepository,
+                userRepository,
+                srpCrypto,
+                keyStoreCrypto,
+                challengeManager,
+                signupChallengeConfig,
+                observabilityManager
+            )
+        )
+
+        performCreateExternalUser = spyk(
+            PerformCreateExternalEmailUser(
+                authRepository,
+                userRepository,
+                srpCrypto,
+                keyStoreCrypto,
+                challengeManager,
+                signupChallengeConfig,
+                observabilityManager
+            )
+        )
+
         viewModel = SignupViewModel(
             humanVerificationExternalInput,
             performCreateUser,
@@ -119,6 +182,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             performLogin,
             challengeManager,
             signupChallengeConfig,
+            observabilityManager,
             mockk(relaxed = true)
         )
         coEvery { clientIdProvider.getClientId(any()) } returns testClientId
@@ -126,24 +190,29 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
 
         coEvery {
-            performCreateUser.invoke(
+            userRepository.createUser(
                 username = testUsername,
                 domain = any(),
                 password = any(),
                 recoveryEmail = any(),
                 recoveryPhone = any(),
-                referrer = null,
+                referrer = any(),
                 type = any(),
+                auth = any(),
+                frames = any()
             )
-        } returns testUser.userId
+        } returns testUser
 
         coEvery {
-            performCreateExternalUser.invoke(
+            userRepository.createExternalEmailUser(
                 email = testEmail,
                 password = any(),
-                referrer = null
+                type = any(),
+                referrer = null,
+                auth = any(),
+                frames = any()
             )
-        } returns testUser.userId
+        } returns testUser
     }
 
     @Test
@@ -170,6 +239,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null,
                     type = CreateUserType.Normal,
                     domain = any(),
+                    metricData = any()
                 )
             }
         }
@@ -202,6 +272,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null,
                     type = CreateUserType.Normal,
                     domain = any(),
+                    metricData = any()
                 )
             }
         }
@@ -233,6 +304,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null,
                     type = CreateUserType.Normal,
                     domain = any(),
+                    metricData = any()
                 )
             }
         }
@@ -242,7 +314,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     fun `create Internal user API error`() = coroutinesTest {
         // GIVEN
         coEvery {
-            performCreateUser.invoke(
+            userRepository.createUser(
                 username = testUsername,
                 domain = any(),
                 password = any(),
@@ -250,6 +322,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 recoveryPhone = any(),
                 referrer = null,
                 type = any(),
+                auth = any(),
+                frames = any()
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -282,6 +356,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null,
                     type = CreateUserType.Normal,
                     domain = any(),
+                    metricData = any()
                 )
             }
         }
@@ -307,7 +382,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
-                    referrer = null
+                    referrer = null,
+                    metricData = any()
                 )
             }
         }
@@ -317,10 +393,13 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     fun `create External user error`() = coroutinesTest {
         // GIVEN
         coEvery {
-            performCreateExternalUser.invoke(
+            userRepository.createExternalEmailUser(
                 email = testEmail,
                 password = any(),
-                referrer = null
+                referrer = null,
+                type = any(),
+                auth = any(),
+                frames = any()
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -350,7 +429,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
-                    referrer = null
+                    referrer = null,
+                    metricData = any()
                 )
             }
         }
@@ -359,7 +439,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     @Test
     fun `tries login if internal username taken`() = coroutinesTest {
         coEvery {
-            performCreateUser.invoke(
+            userRepository.createUser(
                 username = testUsername,
                 domain = any(),
                 password = any(),
@@ -367,6 +447,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 recoveryPhone = any(),
                 referrer = null,
                 type = any(),
+                auth = any(),
+                frames = any()
             )
         } throws usernameTakenError
 
@@ -397,6 +479,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null,
                     type = CreateUserType.Normal,
                     domain = any(),
+                    metricData = any()
                 )
             }
 
@@ -412,10 +495,13 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     @Test
     fun `tries login if External username taken`() = coroutinesTest {
         coEvery {
-            performCreateExternalUser.invoke(
+            userRepository.createExternalEmailUser(
                 email = testEmail,
                 password = any(),
-                referrer = null
+                referrer = null,
+                type = any(),
+                auth = any(),
+                frames = any()
             )
         } throws usernameTakenError
 
@@ -441,7 +527,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
-                    referrer = null
+                    referrer = null,
+                    metricData = any()
                 )
             }
 
@@ -452,5 +539,65 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 )
             }
         }
+    }
+
+    @Test
+    fun `observability data for internal accounts`() = coroutinesTest {
+        // GIVEN
+        coEvery {
+            userRepository.createUser(
+                username = testUsername,
+                domain = any(),
+                password = any(),
+                recoveryEmail = any(),
+                recoveryPhone = any(),
+                referrer = any(),
+                type = any(),
+                auth = any(),
+                frames = any()
+            )
+        } returns testUser
+
+        viewModel.currentAccountType = AccountType.Internal
+        viewModel.username = testUsername
+        viewModel.setPassword(testPassword)
+
+        // WHEN
+        viewModel.startCreateUserWorkflow().join()
+
+        // THEN
+        val accountCreationEventSlot = slot<SignupAccountCreationTotalV1>()
+        verify { observabilityManager.enqueue(capture(accountCreationEventSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, accountCreationEventSlot.captured.Labels.status)
+    }
+
+    @Test
+    fun `observability data for external accounts`() = coroutinesTest {
+        // GIVEN
+        coEvery {
+            userRepository.createUser(
+                username = testUsername,
+                domain = any(),
+                password = any(),
+                recoveryEmail = any(),
+                recoveryPhone = any(),
+                referrer = any(),
+                type = any(),
+                auth = any(),
+                frames = any()
+            )
+        } returns testUser
+
+        viewModel.currentAccountType = AccountType.External
+        viewModel.externalEmail = testEmail
+        viewModel.setPassword(testPassword)
+
+        // WHEN
+        viewModel.startCreateUserWorkflow().join()
+
+        // THEN
+        val accountCreationEventSlot = slot<SignupAccountCreationTotalV1>()
+        verify { observabilityManager.enqueue(capture(accountCreationEventSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, accountCreationEventSlot.captured.Labels.status)
     }
 }

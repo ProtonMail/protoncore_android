@@ -28,6 +28,8 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.network.domain.session.Session
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import javax.inject.Inject
 
 /** Logs in the user, and creates the session locally. */
@@ -38,9 +40,10 @@ class CreateLoginSession @Inject constructor(
     suspend operator fun invoke(
         username: String,
         encryptedPassword: EncryptedString,
-        requiredAccountType: AccountType
+        requiredAccountType: AccountType,
+        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null
     ): SessionInfo {
-        val sessionInfo = performLogin.invoke(username, encryptedPassword)
+        val sessionInfo = performLogin.invoke(username, encryptedPassword, loginMetricData)
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
         return sessionInfo
     }

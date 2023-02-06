@@ -4,6 +4,11 @@ public final class me/proton/core/observability/domain/ObservabilityManager {
 	public static synthetic fun enqueue$default (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/observability/domain/metrics/ObservabilityData;Ljava/time/Instant;ILjava/lang/Object;)V
 }
 
+public final class me/proton/core/observability/domain/ObservabilityManagerKt {
+	public static final fun enqueueFromResult (Lme/proton/core/observability/domain/ObservabilityManager;Lkotlin/jvm/functions/Function1;Ljava/lang/Object;)Ljava/lang/Object;
+	public static final fun runWithObservability (Ljava/lang/Object;Lme/proton/core/observability/domain/ObservabilityManager;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/observability/domain/ObservabilityRepository {
 	public abstract fun addEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteAllEvents (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1157,6 +1162,7 @@ public final class me/proton/core/observability/domain/metrics/SignupUserCheckTo
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$LabelsData;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$Status;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$LabelsData;
 	public final fun component2 ()J
 	public final fun copy (Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$LabelsData;J)Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1;
@@ -1333,6 +1339,10 @@ public final class me/proton/core/observability/domain/metrics/common/HttpApiSta
 	public static final field unknown Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/HttpApiStatusKt {
+	public static final fun toHttpApiStatus (Ljava/lang/Throwable;)Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 }
 
 public final class me/proton/core/observability/domain/metrics/common/HttpStatusLabels {

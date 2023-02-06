@@ -37,6 +37,7 @@ import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -96,6 +97,8 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                 requireContext().showToast(getString(R.string.auth_long_signup))
             }
             .launchIn(lifecycleScope)
+
+        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.chooseExternalEmail)
     }
 
     private fun onNextClicked() {

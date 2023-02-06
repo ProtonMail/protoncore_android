@@ -156,6 +156,8 @@ public val DependencyHandler.`serialization-core`: Any
     get() = serialization("core")
 public val DependencyHandler.`desugar-jdk-libs`: Any
     get() = dependency("com.android.tools", module = "desugar_jdk_libs") version `desugar_jdk_libs version`
+public val DependencyHandler.`swagger-annotations`: Any
+    get() = dependency("io.swagger.core.v3", module = "swagger-annotations") version `swagger-annotations version`
 
 // region accessors
 public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`): Any =

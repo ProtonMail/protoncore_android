@@ -45,6 +45,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationPresentation),
         project(Module.networkDomain),
+        project(Module.observabilityDomain),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),
         project(Module.planPresentation),

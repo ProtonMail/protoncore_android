@@ -48,6 +48,9 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.SignupAccountCreationTotalV1
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
@@ -67,6 +70,7 @@ internal class SignupViewModel @Inject constructor(
     private val performLogin: PerformLogin,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
+    private val observabilityManager: ObservabilityManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -110,6 +114,10 @@ internal class SignupViewModel @Inject constructor(
             @Parcelize
             data class Message(val message: String?) : Error()
         }
+    }
+
+    fun onScreenView(screenId: SignupScreenViewTotalV1.ScreenId) {
+        observabilityManager.enqueue(SignupScreenViewTotalV1(screenId))
     }
 
     private fun setExternalRecoveryEmail(recoveryMethod: RecoveryMethod?) {
@@ -182,7 +190,8 @@ internal class SignupViewModel @Inject constructor(
         val result = performCreateUser(
             username = username, password = encryptedPassword,
             recoveryEmail = recoveryEmail, recoveryPhone = recoveryPhone,
-            referrer = null, type = currentAccountType.createUserType(), domain = domain
+            referrer = null, type = currentAccountType.createUserType(), domain = domain,
+            metricData = { SignupAccountCreationTotalV1(it) }
         )
         emit(State.CreateUserSuccess(result.id, username, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {
@@ -194,7 +203,8 @@ internal class SignupViewModel @Inject constructor(
         val userId = performCreateExternalEmailUser(
             email = externalEmail,
             password = encryptedPassword,
-            referrer = null
+            referrer = null,
+            metricData = { SignupAccountCreationTotalV1(it) }
         )
         emit(State.CreateUserSuccess(userId.id, externalEmail, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {

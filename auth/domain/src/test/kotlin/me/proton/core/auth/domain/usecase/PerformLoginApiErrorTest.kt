@@ -85,7 +85,8 @@ class PerformLoginApiErrorTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig)
+        useCase =
+            PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig, mockk())
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs

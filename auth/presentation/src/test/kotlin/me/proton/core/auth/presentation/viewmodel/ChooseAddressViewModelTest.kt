@@ -102,7 +102,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
     fun `username availability happy path`() = coroutinesTest {
         // GIVEN
         coEvery { accountAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
-        coEvery { accountAvailability.checkUsername(any(), any()) } returns Unit
+        coEvery { accountAvailability.checkUsername(any<UserId>(), any()) } returns Unit
         flowTest(viewModel.state) {
             // THEN
             assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
@@ -126,7 +126,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
     fun `unavailable username`() = coroutinesTest {
         // GIVEN
         coEvery { accountAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
-        coEvery { accountAvailability.checkUsername(any(), any()) } throws Exception("not available")
+        coEvery { accountAvailability.checkUsername(any<UserId>(), any()) } throws Exception("not available")
         flowTest(viewModel.state) {
             // THEN
             awaitItem().let { assertTrue(it is ChooseAddressViewModel.State.Processing, "Actual state is $it") }

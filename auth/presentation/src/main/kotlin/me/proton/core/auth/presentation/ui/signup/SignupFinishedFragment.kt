@@ -21,10 +21,13 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupFinishedBinding
+import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.Product
+import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
@@ -34,6 +37,7 @@ import javax.inject.Inject
 class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished) {
 
     private val binding by viewBinding(FragmentSignupFinishedBinding::bind)
+    private val signupViewModel by activityViewModels<SignupViewModel>()
 
     @Inject
     lateinit var product: Product
@@ -55,6 +59,8 @@ class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished)
                 onBackPressed()
             }
         }
+
+        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.congratulations)
     }
 
     override fun onBackPressed() {

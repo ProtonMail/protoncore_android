@@ -49,6 +49,10 @@ import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.SignupLoginTotalV1
+import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
+import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput
@@ -60,6 +64,7 @@ import me.proton.core.plan.presentation.ui.hasPlanSignupFragment
 import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -197,7 +202,10 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             state.username,
             state.password,
             signUpViewModel.currentAccountType,
-            billingDetails
+            billingDetails,
+            loginMetricData = { SignupLoginTotalV1(it) },
+            unlockUserMetricData = { it.toObservabilityData() },
+            userCheckMetricData = { it.toObservabilityData() }
         )
 
         signUpViewModel.onSignupCompleted()
@@ -262,5 +270,26 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     companion object {
         const val ARG_INPUT = "arg.signUpInput"
         const val ARG_RESULT = "arg.signUpResult"
+
+        private fun UserManager.UnlockResult.toObservabilityData(): SignupUnlockUserTotalV1 {
+            val status: SignupUnlockUserTotalV1.Status = when (this) {
+                UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey ->
+                    SignupUnlockUserTotalV1.Status.noKeySaltsForPrimaryKey
+                UserManager.UnlockResult.Error.NoPrimaryKey ->
+                    SignupUnlockUserTotalV1.Status.noPrimaryKey
+                UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase ->
+                    SignupUnlockUserTotalV1.Status.primaryKeyInvalidPassphrase
+                UserManager.UnlockResult.Success -> SignupUnlockUserTotalV1.Status.success
+            }
+            return SignupUnlockUserTotalV1(status)
+        }
+
+        private fun PostLoginAccountSetup.UserCheckResult.toObservabilityData(): SignupUserCheckTotalV1 {
+            val status: SignupUserCheckTotalV1.Status = when (this) {
+                is PostLoginAccountSetup.UserCheckResult.Error -> SignupUserCheckTotalV1.Status.failure
+                PostLoginAccountSetup.UserCheckResult.Success -> SignupUserCheckTotalV1.Status.success
+            }
+            return SignupUserCheckTotalV1(status)
+        }
     }
 }

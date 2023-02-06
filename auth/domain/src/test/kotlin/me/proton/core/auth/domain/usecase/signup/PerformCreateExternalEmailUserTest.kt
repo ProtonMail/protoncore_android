@@ -76,7 +76,8 @@ class PerformCreateExternalEmailUserTest {
             srpCrypto,
             keyStoreCrypto,
             challengeManager,
-            signupChallengeConfig
+            signupChallengeConfig,
+            mockk()
         )
         every {
             srpCrypto.calculatePasswordVerifier(testEmail, any(), any(), any())

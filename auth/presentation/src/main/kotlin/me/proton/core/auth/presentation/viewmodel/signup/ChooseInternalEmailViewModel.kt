@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import javax.inject.Inject
@@ -59,7 +61,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
     private fun fetchDomains() = flow {
         if (mutableDomains.value.isEmpty()) {
             emit(State.Processing)
-            mutableDomains.value = accountAvailability.getDomains()
+            mutableDomains.value = accountAvailability.getDomains(metricData = { SignupFetchDomainsTotalV1(it) })
         }
         emit(State.Domains(mutableDomains.value))
     }.catch { error ->
@@ -70,7 +72,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
 
     fun checkUsername(username: String, domain: String) = flow {
         emit(State.Processing)
-        accountAvailability.checkUsername("$username@$domain")
+        accountAvailability.checkUsername("$username@$domain", metricData = { SignupUsernameAvailabilityTotalV1(it) })
         emit(State.Success(username, domain))
     }.catch { error ->
         emit(State.Error.Message(error))
