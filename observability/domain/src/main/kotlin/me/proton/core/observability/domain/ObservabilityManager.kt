@@ -77,7 +77,7 @@ public class ObservabilityManager @Inject internal constructor(
     }
 
     internal companion object {
-        internal const val MAX_EVENT_COUNT = 100L
-        internal const val MAX_DELAY_MS = 2 * 60 * 1000L
+        internal const val MAX_EVENT_COUNT = 50L
+        internal const val MAX_DELAY_MS = 30 * 1000L
     }
 }
