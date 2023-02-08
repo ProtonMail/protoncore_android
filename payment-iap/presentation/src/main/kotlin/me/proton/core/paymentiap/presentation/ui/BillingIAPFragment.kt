@@ -83,6 +83,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                 when (it) {
                     is BillingIAPViewModel.State.Initializing,
                     is BillingIAPViewModel.State.PurchaseStarted,
+                    is BillingIAPViewModel.State.Success.PurchaseFlowLaunched,
                     is BillingIAPViewModel.State.QueryingProductDetails -> {
                         // do nothing currently. maybe spinner?
                     }
@@ -122,7 +123,6 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     is BillingIAPViewModel.State.Error.ProductPurchaseError.Message -> {
                         onError(it.error ?: R.string.payments_iap_general_error)
                     }
-                    is BillingIAPViewModel.State.Success.PurchaseFlowLaunched,
                     is BillingIAPViewModel.State.Error.ProductPurchaseError.UserCancelled -> {
                         onError()
                     }

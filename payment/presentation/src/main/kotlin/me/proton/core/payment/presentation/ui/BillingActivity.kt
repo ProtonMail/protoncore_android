@@ -196,9 +196,9 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                         is BillingViewModel.State.PayButtonsState.Idle -> {
                             payButton.setIdle()
                             gPayButton.apply {
+                                setIdle()
                                 text = getString(R.string.payments_pay_with)
                                 icon = AppCompatResources.getDrawable(this@BillingActivity, R.drawable.ic_gpay_logo)
-                                setIdle()
                             }
                             nextPaymentProviderButton.isEnabled = true
                         }
@@ -206,6 +206,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                             payButton.setLoading()
                             gPayButton.apply {
                                 text = getString(R.string.payments_paying_in_process)
+                                icon = null
                                 setLoading()
                             }
                             nextPaymentProviderButton.isEnabled = false
@@ -283,6 +284,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
             payButton.setLoading()
             gPayButton.apply {
                 setLoading()
+                icon = null
                 text = getString(R.string.payments_paying_in_process)
             }
         } else {
