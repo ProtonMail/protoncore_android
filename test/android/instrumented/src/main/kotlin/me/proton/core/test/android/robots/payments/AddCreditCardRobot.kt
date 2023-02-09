@@ -29,6 +29,9 @@ import me.proton.core.util.kotlin.random
  */
 class AddCreditCardRobot : PaymentRobot() {
 
+    @Suppress("FINAL_UPPER_BOUND")
+    fun <V : Verify> verify(block: Verify.() -> Unit) = Verify().apply(block)
+
     /**
      * Fills in credit card holder name
      * @return [AddCreditCardRobot]
@@ -79,5 +82,22 @@ class AddCreditCardRobot : PaymentRobot() {
     fun country(): CountryRobot {
         view.withId(R.id.countriesText).scrollTo()
         return clickElement(R.id.countriesText, ProtonAutoCompleteInput::class.java)
+    }
+
+    class Verify : PaymentRobot.Verify() {
+        fun payWithCardIsClickable() {
+            view.withId(R.id.payButton)
+                .checkDisplayed()
+                .isEnabled()
+                .isClickable()
+        }
+
+        fun payWithGoogleButtonIsNotVisible() {
+            view.withId(R.id.gPayButton).checkNotDisplayed()
+        }
+
+        fun switchPaymentProviderButtonIsVisible() {
+            view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
+        }
     }
 }

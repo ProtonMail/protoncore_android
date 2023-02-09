@@ -28,10 +28,12 @@ import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
 import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.android.robots.payments.AddCreditCardRobot
+import me.proton.core.test.android.robots.payments.GoogleIAPRobot
+import me.proton.core.test.quark.data.Card
 import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
@@ -56,7 +58,7 @@ class GiapUpgradeTests: BaseMockTest {
 
     @Test
     fun freeUserUpgradeAllProvidersAvailable() {
-        freeUserCanUpgrade()
+        freeUserCanUpgradeWithCard()
     }
 
     @Test
@@ -65,7 +67,7 @@ class GiapUpgradeTests: BaseMockTest {
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google-iap-only.json"
         )
-        freeUserCanUpgrade()
+        freeUserCanUpgradeGIAP()
     }
 
     @Test
@@ -111,7 +113,61 @@ class GiapUpgradeTests: BaseMockTest {
             }
     }
 
-    private fun freeUserCanUpgrade() {
+    private fun freeUserCanUpgradeWithCard() {
+        billingClientFactory.mockBillingClientSuccess()
+
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-none.json", 422
+        )
+
+        dispatcher.mockFromAssets(
+            "GET", "/users",
+            "GET/users-with-keys-not-subscribed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/organizations",
+            "GET/organizations-none.json", 422
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/addresses",
+            "GET/addresses-with-keys.json"
+        )
+        dispatcher.mockFromAssets(
+            "POST", "/payments/v4/subscription",
+            "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-mail-plus-proton-managed.json"
+        )
+
+        ActivityScenario.launch(MainActivity::class.java)
+
+        AddAccountRobot()
+            .signIn()
+            .username(testUsername)
+            .password(testPassword)
+            .signIn<CoreexampleRobot>()
+
+        CoreexampleRobot()
+            .plansUpgrade()
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<AddCreditCardRobot>(TestPlan.MailPlus)
+            .apply {
+                verify {
+                    addCreditCardElementsDisplayed()
+                }
+            }
+            .payWithCreditCard<CoreexampleRobot>(Card.default)
+            .plansCurrent()
+            .verify {
+                currentPlanDetailsDisplayed()
+                planDetailsDisplayed(TestPlan.MailPlus)
+            }
+    }
+
+    private fun freeUserCanUpgradeGIAP() {
         billingClientFactory.mockBillingClientSuccess()
 
         dispatcher.mockFromAssets(

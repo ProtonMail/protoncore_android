@@ -125,19 +125,21 @@ class CardPaymentTests : BaseMockTest {
             .skip()
             .skipConfirm<SelectPlanRobot>()
             .toggleExpandPlan(Plan.MailPlus)
-            .selectPlan<GoogleIAPRobot>(Plan.MailPlus)
+            .selectPlan<AddCreditCardRobot>(Plan.MailPlus)
             .apply {
-                verify<GoogleIAPRobot.Verify> {
-                    payWithGoogleButtonIsClickable()
+                verify<AddCreditCardRobot.Verify> {
+                    billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
+                    payWithCardIsClickable()
                     switchPaymentProviderButtonIsVisible()
                 }
             }
-            .switchPaymentProvider<AddCreditCardRobot>()
+            .switchPaymentProvider<GoogleIAPRobot>()
             .apply {
-                verify {
-                    billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
+                verify<GoogleIAPRobot.Verify> {
+                    googleIAPElementsDisplayed()
                 }
             }
+            .switchPaymentProvider<AddCreditCardRobot>()
             .payWithCreditCard<SignupFinishedRobot>(Card.default)
             .verify {
                 signupFinishedDisplayed()
@@ -303,8 +305,7 @@ class CardPaymentTests : BaseMockTest {
         CoreexampleRobot()
             .plansUpgrade()
             .toggleExpandPlan(Plan.MailPlus)
-            .selectPlan<GoogleIAPRobot>(Plan.MailPlus)
-            .switchPaymentProvider<AddCreditCardRobot>()
+            .selectPlan<AddCreditCardRobot>(Plan.MailPlus)
             .apply {
                 verify {
                     billingDetailsDisplayed(Plan.MailPlus, "CHF", false)

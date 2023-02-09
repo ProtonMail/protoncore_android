@@ -48,13 +48,13 @@ public class ActivePaymentProviderImpl @Inject constructor(
             it != PaymentProvider.PayPal
         }
         currentlyAvailablePaymentProviders = when {
-            !availablePaymentProviders.contains(PaymentProvider.GoogleInAppPurchase) ->
+            !availablePaymentProviders.contains(PaymentProvider.CardPayment) ->
                 availablePaymentProviders.associateWith {
                     val index = availablePaymentProviders.indexOf(it)
                     index == 0
                 }
             else -> availablePaymentProviders.associateWith {
-                it == PaymentProvider.GoogleInAppPurchase // this takes priority always
+                it == PaymentProvider.CardPayment // this takes priority always
             }
         }
     }

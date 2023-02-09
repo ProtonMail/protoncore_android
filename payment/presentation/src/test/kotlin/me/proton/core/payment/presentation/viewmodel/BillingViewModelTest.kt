@@ -1029,15 +1029,15 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             val state = awaitItem()
             assertTrue(state is BillingViewModel.State.PaymentProvidersSuccess)
 
-            assertEquals(state.activeProvider, PaymentProvider.GoogleInAppPurchase)
-            assertEquals(state.nextPaymentProviderTextResource, R.string.payment_use_credit_card_instead)
+            assertEquals(state.activeProvider, PaymentProvider.CardPayment)
+            assertEquals(state.nextPaymentProviderTextResource, R.string.payment_use_google_pay_instead)
 
             billingViewModel.switchNextPaymentProvider()
             val stateAfterSwitch = awaitItem()
             assertTrue(stateAfterSwitch is BillingViewModel.State.PaymentProvidersSuccess)
 
-            assertEquals(stateAfterSwitch.activeProvider, PaymentProvider.CardPayment)
-            assertEquals(stateAfterSwitch.nextPaymentProviderTextResource, R.string.payment_use_google_pay_instead)
+            assertEquals(stateAfterSwitch.activeProvider, PaymentProvider.GoogleInAppPurchase)
+            assertEquals(stateAfterSwitch.nextPaymentProviderTextResource, R.string.payment_use_credit_card_instead)
         }
     }
 }

@@ -42,6 +42,7 @@ import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.quark.data.Card
 import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
@@ -150,15 +151,15 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .skip()
             .skipConfirm<SelectPlanRobot>()
             .toggleExpandPlan(TestPlan.MailPlus)
-            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
+            .selectPlan<AddCreditCardRobot>(TestPlan.MailPlus)
             .apply {
-                verify<GoogleIAPRobot.Verify> {
-                    payWithGoogleButtonIsClickable()
-                    payWithCardButtonIsNotVisible()
+                verify<AddCreditCardRobot.Verify> {
+                    payWithCardIsClickable()
+                    payWithGoogleButtonIsNotVisible()
                     switchPaymentProviderButtonIsVisible()
                 }
             }
-            .payWithGPay<SignupFinishedRobot>()
+            .payWithCreditCard<SignupFinishedRobot>(Card.default)
             .verify {
                 signupFinishedDisplayed()
             }
@@ -174,11 +175,11 @@ class SignupWithGoogleIapTests : BaseMockTest {
         SelectPlanRobot()
             .toggleExpandPlan(TestPlan.MailPlus)
             .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
-            .apply { verify { googleIAPElementsDisplayed() } }
-            .switchPaymentProvider<AddCreditCardRobot>()
             .apply { verify { addCreditCardElementsDisplayed() } }
             .switchPaymentProvider<GoogleIAPRobot>()
             .apply { verify { googleIAPElementsDisplayed() } }
+            .switchPaymentProvider<AddCreditCardRobot>()
+            .apply { verify { addCreditCardElementsDisplayed() } }
             .back<SelectPlanRobot>()
             .verify {
                 planDetailsDisplayed(TestPlan.MailPlus)

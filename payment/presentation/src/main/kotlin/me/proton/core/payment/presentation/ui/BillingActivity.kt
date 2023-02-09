@@ -71,6 +71,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                     navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_proton_arrow_back)
                 }
                 setNavigationOnClickListener {
+                    setResult(RESULT_CANCELED, intent)
                     finish()
                 }
             }
@@ -141,14 +142,11 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                                 when (currentProvider) {
                                     PaymentProvider.GoogleInAppPurchase -> {
                                         supportFragmentManager.showBillingIAPFragment(R.id.fragment_container)
-                                        nextPaymentProviderButton.visibility =
-                                            if (input.singlePaymentProvider == PaymentProvider.GoogleInAppPurchase)
-                                                View.GONE
-                                            else
-                                                View.VISIBLE
+                                        handleNextProviderVisibility(PaymentProvider.GoogleInAppPurchase)
                                     }
                                     PaymentProvider.CardPayment -> {
                                         supportFragmentManager.showBillingFragment(R.id.fragment_container)
+                                        handleNextProviderVisibility(PaymentProvider.CardPayment)
                                     }
                                     PaymentProvider.PayPal -> error("PayPal is not supported")
                                 }.exhaustive
@@ -218,6 +216,14 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                     }.exhaustive
                 }
             }.launchIn(lifecycleScope)
+    }
+
+    private fun handleNextProviderVisibility(currentProvider: PaymentProvider) {
+        binding.nextPaymentProviderButton.visibility =
+            if (input.singlePaymentProvider == currentProvider)
+                View.GONE
+            else
+                View.VISIBLE
     }
 
     private fun onBillingSuccess(

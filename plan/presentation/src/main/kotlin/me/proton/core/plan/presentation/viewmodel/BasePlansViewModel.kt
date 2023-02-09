@@ -180,10 +180,6 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
                             state.emit(PlanState.Success.PaidPlanPayment(selectedPlan, billingResult))
                         }
                     }
-                } ?: run {
-                    viewModelScope.launch {
-                        state.emit(PlanState.Error.Message(message = R.string.plans_payment_error))
-                    }
                 }
             }
             startBillingWorkFlow(
