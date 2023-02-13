@@ -41,6 +41,9 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.retryOnceWhen
@@ -103,7 +106,13 @@ class SecondFactorViewModel @Inject constructor(
             requiredAccountType = requiredAccountType,
             isSecondFactorNeeded = false,
             isTwoPassModeNeeded = isTwoPassModeNeeded,
-            temporaryPassword = false
+            temporaryPassword = false,
+            subscribeMetricData = { result, management ->
+                CheckoutBillingSubscribeTotalV1(
+                    result.toHttpApiStatus(),
+                    management.toCheckoutBillingSubscribeManager()
+                )
+            }
         )
         emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {

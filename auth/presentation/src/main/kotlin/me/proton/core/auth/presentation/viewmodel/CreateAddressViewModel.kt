@@ -33,6 +33,9 @@ import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.SetupUsername
 import me.proton.core.util.kotlin.CoreLogger
@@ -75,7 +78,13 @@ class CreateAddressViewModel @Inject constructor(
             isTwoPassModeNeeded = false,
             temporaryPassword = false,
             onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
-            internalAddressDomain = domain
+            internalAddressDomain = domain,
+            subscribeMetricData = { result, management ->
+                CheckoutBillingSubscribeTotalV1(
+                    result.toHttpApiStatus(),
+                    management.toCheckoutBillingSubscribeManager()
+                )
+            }
         )
         emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {

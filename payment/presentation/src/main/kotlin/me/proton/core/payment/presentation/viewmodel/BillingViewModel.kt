@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
@@ -58,7 +59,8 @@ public class BillingViewModel @Inject constructor(
     performSubscribe: PerformSubscribe,
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
-    clientIdProvider: ClientIdProvider
+    clientIdProvider: ClientIdProvider,
+    observabilityManager: ObservabilityManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
     createPaymentTokenWithNewCreditCard,
@@ -68,7 +70,8 @@ public class BillingViewModel @Inject constructor(
     performSubscribe,
     getCountry,
     humanVerificationManager,
-    clientIdProvider
+    clientIdProvider,
+    observabilityManager
 ) {
     private val _state = MutableStateFlow<State>(State.Idle)
     public val state: StateFlow<State> = _state.asStateFlow()

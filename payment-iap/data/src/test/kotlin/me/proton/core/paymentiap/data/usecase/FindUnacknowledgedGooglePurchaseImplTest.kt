@@ -24,10 +24,16 @@ import com.android.billingclient.api.Purchase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotalV1
+import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.toGiapStatus
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -38,12 +44,14 @@ import kotlin.test.assertTrue
 
 internal class FindUnacknowledgedGooglePurchaseImplTest {
     private lateinit var googleBillingRepository: GoogleBillingRepository
+    private lateinit var observabilityManager: ObservabilityManager
     private lateinit var tested: FindUnacknowledgedGooglePurchaseImpl
 
     @BeforeTest
     fun setUp() {
         googleBillingRepository = mockk(relaxed = true)
-        tested = FindUnacknowledgedGooglePurchaseImpl { googleBillingRepository }
+        observabilityManager = mockk(relaxed = true)
+        tested = FindUnacknowledgedGooglePurchaseImpl({ googleBillingRepository }, observabilityManager)
     }
 
     @Test
@@ -155,6 +163,24 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             "Error"
         )
         assertFailsWith<BillingClientError> { tested() }
+    }
+
+    @Test
+    fun `observability data is recorder for querying subscriptions`() = runTest {
+        // GIVEN
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } returns emptyList()
+
+        // WHEN
+        tested(
+            querySubscriptionsMetricData = { result ->
+                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotalV1(it) }
+            }
+        )
+
+        // THEN
+        val dataSlot = slot<CheckoutGiapBillingQuerySubscriptionsTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(GiapStatus.success, dataSlot.captured.Labels.status)
     }
 
     private fun mockAccountIdentifiers(customerId: String? = null): AccountIdentifiers =

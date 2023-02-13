@@ -26,6 +26,8 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -85,6 +87,7 @@ class PostLoginAccountSetup @Inject constructor(
         onSetupSuccess: (suspend () -> Unit)? = null,
         billingDetails: BillingDetails? = null,
         internalAddressDomain: String? = null,
+        subscribeMetricData: ((kotlin.Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
         unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
         userCheckMetricData: ((UserCheckResult) -> ObservabilityData)? = null
     ): Result {
@@ -98,7 +101,8 @@ class PostLoginAccountSetup @Inject constructor(
                     cycle = billingDetails.cycle,
                     planNames = listOf(billingDetails.planName),
                     paymentToken = billingDetails.token,
-                    subscriptionManagement = billingDetails.subscriptionManagement
+                    subscriptionManagement = billingDetails.subscriptionManagement,
+                    subscribeMetricData = subscribeMetricData
                 )
             }
         }

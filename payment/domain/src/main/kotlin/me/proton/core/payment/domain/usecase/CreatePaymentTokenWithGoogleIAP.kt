@@ -19,6 +19,9 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
@@ -31,20 +34,24 @@ import javax.inject.Inject
  */
 public class CreatePaymentTokenWithGoogleIAP @Inject constructor(
     private val googlePurchaseRepository: GooglePurchaseRepository,
-    private val paymentsRepository: PaymentsRepository
+    private val paymentsRepository: PaymentsRepository,
+    private val observabilityManager: ObservabilityManager
 ) {
     public suspend operator fun invoke(
         userId: UserId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.GoogleIAP
+        paymentType: PaymentType.GoogleIAP,
+        metricData: ((Result<PaymentTokenResult.CreatePaymentTokenResult>) -> ObservabilityData)? = null
     ): PaymentTokenResult.CreatePaymentTokenResult {
-        val result = paymentsRepository.createPaymentTokenGoogleIAP(
-            userId,
-            amount,
-            currency,
-            paymentType
-        )
+        val result = paymentsRepository.runWithObservability(observabilityManager, metricData) {
+            createPaymentTokenGoogleIAP(
+                userId,
+                amount,
+                currency,
+                paymentType
+            )
+        }
 
         googlePurchaseRepository.updateGooglePurchase(
             googlePurchaseToken = paymentType.purchaseToken,

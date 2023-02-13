@@ -32,6 +32,12 @@ import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
@@ -74,7 +80,8 @@ internal class PaymentOptionsViewModel @Inject constructor(
     performSubscribe: PerformSubscribe,
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
-    clientIdProvider: ClientIdProvider
+    clientIdProvider: ClientIdProvider,
+    observabilityManager: ObservabilityManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
     createPaymentTokenWithNewCreditCard,
@@ -84,7 +91,8 @@ internal class PaymentOptionsViewModel @Inject constructor(
     performSubscribe,
     getCountry,
     humanVerificationManager,
-    clientIdProvider
+    clientIdProvider,
+    observabilityManager
 ) {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
@@ -125,7 +133,9 @@ internal class PaymentOptionsViewModel @Inject constructor(
         }
 
         val paymentProviders = getAvailablePaymentProviders()
-        val paymentMethods = availablePaymentMethods(userId).filter {
+        val paymentMethods = availablePaymentMethods(userId, metricData = {
+            CheckoutPaymentMethodsGetPaymentMethodsTotalV1(it.toHttpApiStatus())
+        }).filter {
             when (it.type) {
                 PaymentMethodType.CARD -> PaymentProvider.CardPayment in paymentProviders
                 PaymentMethodType.PAYPAL -> PaymentProvider.PayPal in paymentProviders
@@ -153,7 +163,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType,
-        subscriptionManagement: SubscriptionManagement
+        subscriptionManagement: SubscriptionManagement,
     ) = super.subscribe(
         userId,
         currentPlans.createSubscriptionPlansList(planName, planServices, planType),
@@ -161,7 +171,10 @@ internal class PaymentOptionsViewModel @Inject constructor(
         currency,
         cycle,
         paymentType,
-        subscriptionManagement
+        subscriptionManagement,
+        paymentTokenMetricData = { CheckoutPaymentMethodsCreatePaymentTokenTotalV1(it.toHttpApiStatus()) },
+        subscribeMetricData = { result, _ -> CheckoutPaymentMethodsSubscribeTotalV1(result.toHttpApiStatus()) },
+        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotalV1(it.toHttpApiStatus()) }
     )
 
     fun onThreeDSTokenApproved(
@@ -183,7 +196,10 @@ internal class PaymentOptionsViewModel @Inject constructor(
         currency,
         cycle,
         token,
-        external
+        external,
+        subscribeMetricData = { result, _ ->
+            CheckoutPaymentMethodsSubscribeTotalV1(result.toHttpApiStatus())
+        }
     )
 
     fun validatePlan(
@@ -199,7 +215,8 @@ internal class PaymentOptionsViewModel @Inject constructor(
         currentPlans.createSubscriptionPlansList(planName, planServices, planType),
         codes,
         currency,
-        cycle
+        cycle,
+        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotalV1(it.toHttpApiStatus()) }
     )
 
     private fun Set<PaymentProvider>.createGIAPPaymentMethod() =

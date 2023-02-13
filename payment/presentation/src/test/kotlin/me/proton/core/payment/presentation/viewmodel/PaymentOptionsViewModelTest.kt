@@ -32,6 +32,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
@@ -80,6 +81,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -158,7 +160,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                     performSubscribe,
                     getCountryCode,
                     humanVerificationManager,
-                    clientIdProvider
+                    clientIdProvider,
+                    observabilityManager
                 )
             )
     }
@@ -167,7 +170,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     fun `available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
         every { context.getString(any()) } returns "google"
-        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
+        coEvery { getAvailablePaymentMethods.invoke(testUserId, any()) } returns testPaymentMethodsList
 
         val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
@@ -189,7 +192,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         // GIVEN
         every { context.getString(any()) } returns "google"
         coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns setOf(PaymentProvider.CardPayment)
-        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
+        coEvery { getAvailablePaymentMethods.invoke(testUserId, any()) } returns testPaymentMethodsList
 
         val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
@@ -224,7 +227,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 performSubscribe,
                 getCountryCode,
                 humanVerificationManager,
-                clientIdProvider
+                clientIdProvider,
+                observabilityManager
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
 
@@ -263,7 +267,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 performSubscribe,
                 getCountryCode,
                 humanVerificationManager,
-                clientIdProvider
+                clientIdProvider,
+                observabilityManager
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
 
@@ -306,7 +311,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 performSubscribe,
                 getCountryCode,
                 humanVerificationManager,
-                clientIdProvider
+                clientIdProvider,
+                observabilityManager
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
 
@@ -331,7 +337,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @Test
     fun `available payment methods error handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentMethods.invoke(testUserId) } throws ApiException(
+        coEvery { getAvailablePaymentMethods.invoke(testUserId, any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -379,7 +385,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 listOf("test-plan-id"),
                 null,
                 testCurrency,
-                testSubscriptionCycle
+                testSubscriptionCycle,
+                validatePlanMetricData = any()
             )
         }
     }
@@ -415,7 +422,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 testCurrency,
                 testSubscriptionCycle,
                 testToken,
-                SubscriptionManagement.PROTON_MANAGED
+                SubscriptionManagement.PROTON_MANAGED,
+                subscribeMetricData = any()
             )
         }
     }

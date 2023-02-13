@@ -834,11 +834,11 @@ public final class me/proton/core/plan/presentation/view/PlanViewUtilsKt {
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
-	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/plan/presentation/viewmodel/SignupPlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_HiltModules {
@@ -888,11 +888,11 @@ public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchase
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
-	public static fun newInstance (Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
+	public static fun newInstance (Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_HiltModules {

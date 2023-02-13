@@ -20,7 +20,6 @@ package me.proton.core.paymentiap.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,10 +29,17 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
@@ -46,6 +52,7 @@ import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
@@ -136,6 +143,10 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
         addOnBackPressedCallback {
             requireActivity().finish()
         }
+
+        launchOnScreenView {
+            viewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.giapBilling)
+        }
     }
 
     private fun onLoading(loading: Boolean) {
@@ -171,7 +182,15 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     packageName = requireContext().packageName,
                     customerId = customerId
                 ),
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED,
+                paymentTokenMetricData = { r -> CheckoutGiapBillingCreatePaymentTokenTotalV1(r.toHttpApiStatus()) },
+                subscribeMetricData = { result, management ->
+                    CheckoutBillingSubscribeTotalV1(
+                        result.toHttpApiStatus(),
+                        management.toCheckoutBillingSubscribeManager()
+                    )
+                },
+                validatePlanMetricData = { result -> CheckoutGiapBillingValidatePlanTotalV1(result.toHttpApiStatus()) }
             )
         }
     }

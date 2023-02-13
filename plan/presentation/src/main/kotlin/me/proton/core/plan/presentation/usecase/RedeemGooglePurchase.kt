@@ -20,9 +20,13 @@ package me.proton.core.plan.presentation.usecase
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
@@ -45,11 +49,12 @@ internal class RedeemGooglePurchase @Inject constructor(
         googlePurchase: GooglePurchase,
         purchasedPlan: Plan,
         purchaseStatus: UnredeemedGooglePurchaseStatus,
-        userId: UserId
+        userId: UserId,
+        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null
     ) {
         when (purchaseStatus) {
             UnredeemedGooglePurchaseStatus.NotSubscribed ->
-                createSubscriptionAndAcknowledge(googlePurchase, purchasedPlan, userId)
+                createSubscriptionAndAcknowledge(googlePurchase, purchasedPlan, userId, subscribeMetricData)
             UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged ->
                 acknowledgeGooglePlayPurchaseOptional.getOrNull()?.invoke(googlePurchase.purchaseToken)
         }
@@ -58,7 +63,8 @@ internal class RedeemGooglePurchase @Inject constructor(
     private suspend fun createSubscriptionAndAcknowledge(
         googlePurchase: GooglePurchase,
         purchasedPlan: Plan,
-        userId: UserId
+        userId: UserId,
+        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)?
     ) {
         val currency = PlanCurrency.valueOf(purchasedPlan.currency!!)
         val planCycle = getPlanCycleForPurchase(googlePurchase, purchasedPlan)
@@ -68,7 +74,8 @@ internal class RedeemGooglePurchase @Inject constructor(
             codes = null,
             plans = planNames,
             currency.toSubscriptionCurrency(),
-            planCycle.toSubscriptionCycle()
+            planCycle.toSubscriptionCycle(),
+            metricData  = { CheckoutGiapBillingValidatePlanTotalV1(it.toHttpApiStatus()) }
         )
         val tokenResult = createPaymentTokenWithGoogleIAP(
             userId,
@@ -93,7 +100,8 @@ internal class RedeemGooglePurchase @Inject constructor(
             planNames,
             codes = null,
             tokenResult.token,
-            SubscriptionManagement.GOOGLE_MANAGED
+            SubscriptionManagement.GOOGLE_MANAGED,
+            subscribeMetricData = subscribeMetricData
         )
     }
 

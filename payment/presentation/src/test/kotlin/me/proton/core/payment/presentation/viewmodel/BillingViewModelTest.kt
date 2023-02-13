@@ -30,6 +30,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
@@ -74,6 +75,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>(relaxed = true)
     private val activePaymentProvider = mockk<me.proton.core.payment.presentation.ActivePaymentProvider>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -109,7 +111,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
-            clientIdProvider
+            clientIdProvider,
+            observabilityManager
         )
     }
 
@@ -965,7 +968,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
-            clientIdProvider
+            clientIdProvider,
+            observabilityManager
         )
 
         runCurrent()
@@ -992,7 +996,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
-            clientIdProvider
+            clientIdProvider,
+            observabilityManager
         )
 
         runCurrent()
@@ -1020,7 +1025,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
-            clientIdProvider
+            clientIdProvider,
+            observabilityManager
         )
 
         runCurrent()

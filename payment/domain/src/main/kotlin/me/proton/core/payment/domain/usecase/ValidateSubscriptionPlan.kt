@@ -19,6 +19,9 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
@@ -32,22 +35,26 @@ import javax.inject.Inject
  * Can be used for upgrade and for signups as well.
  */
 public class ValidateSubscriptionPlan @Inject constructor(
-    private val paymentsRepository: PaymentsRepository
+    private val paymentsRepository: PaymentsRepository,
+    private val observabilityManager: ObservabilityManager
 ) {
     public suspend operator fun invoke(
         userId: UserId?,
         codes: List<String>? = null,
         plans: List<String>,
         currency: Currency,
-        cycle: SubscriptionCycle
+        cycle: SubscriptionCycle,
+        metricData: ((Result<SubscriptionStatus>) -> ObservabilityData)? = null
     ): SubscriptionStatus {
         require(plans.isNotEmpty())
-        return paymentsRepository.validateSubscription(
-            userId,
-            codes,
-            plans.map { it to MAX_PLAN_QUANTITY }.toMap(),
-            currency,
-            cycle
-        )
+        return paymentsRepository.runWithObservability(observabilityManager, metricData) {
+            validateSubscription(
+                userId,
+                codes,
+                plans.associateWith { MAX_PLAN_QUANTITY },
+                currency,
+                cycle
+            )
+        }
     }
 }

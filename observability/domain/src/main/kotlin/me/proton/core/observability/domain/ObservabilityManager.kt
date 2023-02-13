@@ -25,6 +25,7 @@ import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import java.time.Instant
+import java.util.concurrent.CancellationException
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO
@@ -89,12 +90,12 @@ public class ObservabilityManager @Inject internal constructor(
  **/
 public suspend fun <T, R> T.runWithObservability(
     observabilityManager: ObservabilityManager,
-    metricData: ((Result<R>) -> ObservabilityData)?,
+    metricData: ((Result<R>) -> ObservabilityData?)?,
     block: suspend T.() -> R
 ): R = runCatching {
     block()
-}.also {
-    if (metricData != null) {
-        observabilityManager.enqueue(metricData(it))
+}.also { result ->
+    if (result.exceptionOrNull() !is CancellationException) {
+        metricData?.invoke(result)?.let { observabilityManager.enqueue(it) }
     }
 }.getOrThrow()

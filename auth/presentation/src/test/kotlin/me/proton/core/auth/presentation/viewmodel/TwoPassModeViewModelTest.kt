@@ -82,7 +82,16 @@ class TwoPassModeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Uncon
         // GIVEN
         val lambdaSlot = slot<(suspend () -> Unit)>()
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), capture(lambdaSlot))
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                capture(lambdaSlot),
+                subscribeMetricData = any()
+            )
         } returns success
         // WHEN
         viewModel.tryUnlockUser(testUserId, testPassword, accountType)

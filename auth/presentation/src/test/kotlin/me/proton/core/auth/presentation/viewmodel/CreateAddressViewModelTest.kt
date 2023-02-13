@@ -81,7 +81,8 @@ class CreateAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
                     isTwoPassModeNeeded = false,
                     temporaryPassword = false,
                     onSetupSuccess = any(),
-                    internalAddressDomain = testDomain
+                    internalAddressDomain = testDomain,
+                    subscribeMetricData = any()
                 )
             }
 
@@ -203,7 +204,8 @@ class CreateAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unc
                 temporaryPassword = false,
                 onSetupSuccess = any(),
                 billingDetails = null,
-                internalAddressDomain = testDomain
+                internalAddressDomain = testDomain,
+                subscribeMetricData = any()
             )
         } returns result
     }

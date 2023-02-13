@@ -83,7 +83,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo(isSecondFactorNeeded = true)
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
         } returns PostLoginAccountSetup.Result.Need.SecondFactor(testUserId)
 
         viewModel.state.test {
@@ -111,7 +111,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
         } returns PostLoginAccountSetup.Result.UserUnlocked(testUserId)
 
         viewModel.state.test {
@@ -139,7 +139,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
         } throws ApiException(ApiResult.Error.NoInternet())
 
         viewModel.state.test {
@@ -193,7 +193,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
         } returns PostLoginAccountSetup.Result.Need.ChangePassword(testUserId)
 
         viewModel.state.test {
@@ -217,7 +217,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
         } throws ApiException(
             ApiResult.Error.Http(
                 400,
@@ -242,7 +242,18 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         }
 
         coVerify(exactly = 2) { createLoginSession.invoke(testUserName, testPassword, any()) }
-        coVerify(exactly = 2) { postLoginAccountSetup.invoke(any(), testPassword, any(), any(), any(), any(), any()) }
+        coVerify(exactly = 2) {
+            postLoginAccountSetup.invoke(
+                any(),
+                testPassword,
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
+        }
     }
 
     @Test
@@ -270,7 +281,18 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         }
 
         coVerify(exactly = 1) { createLoginSession.invoke(testUserName, any(), any()) }
-        coVerify(exactly = 0) { postLoginAccountSetup.invoke(any(), testPassword, any(), any(), any(), any(), any()) }
+        coVerify(exactly = 0) {
+            postLoginAccountSetup.invoke(
+                any(),
+                testPassword,
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
+        }
     }
 
     @Test

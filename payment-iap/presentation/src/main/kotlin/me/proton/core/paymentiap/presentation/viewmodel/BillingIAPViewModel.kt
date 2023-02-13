@@ -36,19 +36,29 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingLaunchBillingTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
+import me.proton.core.observability.domain.metrics.common.GiapStatus
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class BillingIAPViewModel @Inject constructor(
     private val billingRepository: GoogleBillingRepository,
-    private val findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
+    private val findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase,
+    private val observabilityManager: ObservabilityManager
 ) : ProtonViewModel() {
 
     private val _billingIAPState = MutableStateFlow<State>(State.Initializing)
@@ -112,7 +122,18 @@ internal class BillingIAPViewModel @Inject constructor(
         flow {
             emit(State.QueryingProductDetails)
 
-            val productDetails = billingRepository.getProductDetails(googlePlanName)
+            val productDetails = billingRepository.runWithObservability(
+                observabilityManager,
+                { result ->
+                    val status = when {
+                        result.isSuccess && result.getOrNull() == null -> GiapStatus.unknown
+                        else -> result.toGiapStatus()
+                    }
+                    status?.let { CheckoutGiapBillingProductQueryTotalV1(it) }
+                }
+            ) {
+                getProductDetails(googlePlanName)
+            }
             if (productDetails == null) {
                 emit(State.Error.ProductDetailsError.ProductMismatch)
                 return@flow
@@ -154,8 +175,14 @@ internal class BillingIAPViewModel @Inject constructor(
             "Product must be set before making the purchase."
         }
 
-        val unredeemedPurchase = findUnacknowledgedGooglePurchase.byProduct(selectedProduct.productId)
+        val unredeemedPurchase = findUnacknowledgedGooglePurchase.byProduct(
+            selectedProduct.productId,
+            querySubscriptionsMetricData = { result ->
+                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotalV1(it) }
+            }
+        )
         if (unredeemedPurchase != null) {
+            observabilityManager.enqueue(CheckoutGiapBillingUnredeemedTotalV1())
             emit(State.UnredeemedPurchase(unredeemedPurchase))
         } else {
             launchBillingFlow(activity, customerId)
@@ -185,7 +212,12 @@ internal class BillingIAPViewModel @Inject constructor(
             .setObfuscatedAccountId(customerId)
             .build()
 
-        billingRepository.launchBillingFlow(activity, billingFlowParams)
+        billingRepository.runWithObservability(
+            observabilityManager,
+            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingLaunchBillingTotalV1(it) } }
+        ) {
+            launchBillingFlow(activity, billingFlowParams)
+        }
         emit(State.Success.PurchaseFlowLaunched)
     }
 
@@ -212,6 +244,10 @@ internal class BillingIAPViewModel @Inject constructor(
             else -> {
                 _billingIAPState.value = State.Error.ProductPurchaseError.Message(code = billingResult.responseCode)
             }
+        }
+
+        billingResult.toGiapStatus()?.let {
+            observabilityManager.enqueue(CheckoutGiapBillingPurchaseTotalV1(it))
         }
     }
 

@@ -29,6 +29,7 @@ dependencies {
         project(Module.domain),
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
+        project(Module.observabilityDomain),
         project(Module.userDomain),
         project(Module.planDomain),
         `javax-inject`

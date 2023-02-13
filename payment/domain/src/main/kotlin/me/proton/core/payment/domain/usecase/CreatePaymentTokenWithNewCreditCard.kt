@@ -19,6 +19,9 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
@@ -32,21 +35,25 @@ import javax.inject.Inject
  * For payment tokens with existing payment method @see [CreatePaymentTokenWithExistingPaymentMethod].
  */
 public class CreatePaymentTokenWithNewCreditCard @Inject constructor(
-    private val paymentsRepository: PaymentsRepository
+    private val paymentsRepository: PaymentsRepository,
+    private val observabilityManager: ObservabilityManager
 ) {
     public suspend operator fun invoke(
         userId: UserId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.CreditCard
+        paymentType: PaymentType.CreditCard,
+        metricData: ((Result<PaymentTokenResult.CreatePaymentTokenResult>) -> ObservabilityData)? = null
     ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
 
-        return paymentsRepository.createPaymentTokenNewCreditCard(
-            userId,
-            amount,
-            currency,
-            paymentType
-        )
+        return paymentsRepository.runWithObservability(observabilityManager, metricData) {
+            createPaymentTokenNewCreditCard(
+                userId,
+                amount,
+                currency,
+                paymentType
+            )
+        }
     }
 }

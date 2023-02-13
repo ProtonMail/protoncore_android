@@ -21,8 +21,14 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
@@ -39,6 +45,7 @@ import kotlin.test.assertNull
 
 class CreatePaymentTokenWithNewCreditCardTest {
     // region mocks
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     private val repository = mockk<PaymentsRepository>(relaxed = true)
     // endregion
 
@@ -63,7 +70,7 @@ class CreatePaymentTokenWithNewCreditCardTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = CreatePaymentTokenWithNewCreditCard(repository)
+        useCase = CreatePaymentTokenWithNewCreditCard(repository, observabilityManager)
         coEvery {
             repository.createPaymentTokenNewCreditCard(any(), any(), any(), any())
         } returns createTokenResult
@@ -131,5 +138,19 @@ class CreatePaymentTokenWithNewCreditCardTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(testUserId, -1, testCurrency, testPayment)
         }
+    }
+
+    @Test
+    fun `observability metrics are recorded`() = runTest {
+        useCase.invoke(
+            testUserId,
+            testAmount,
+            testCurrency,
+            testPayment,
+            metricData = { CheckoutCardBillingCreatePaymentTokenTotalV1(it.toHttpApiStatus()) })
+
+        val dataSlot = slot<CheckoutCardBillingCreatePaymentTokenTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

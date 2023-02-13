@@ -30,10 +30,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.R
@@ -272,7 +275,13 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                 plan.currency,
                 plan.subscriptionCycle,
                 token,
-                SubscriptionManagement.PROTON_MANAGED
+                SubscriptionManagement.PROTON_MANAGED,
+                subscribeMetricData = { result, management ->
+                    CheckoutBillingSubscribeTotalV1(
+                        result.toHttpApiStatus(),
+                        management.toCheckoutBillingSubscribeManager()
+                    )
+                }
             )
         }
     }

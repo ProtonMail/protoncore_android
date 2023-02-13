@@ -21,8 +21,14 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -37,6 +43,7 @@ import kotlin.test.assertNull
 
 class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     // region mocks
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     private val repository = mockk<PaymentsRepository>(relaxed = true)
     // endregion
 
@@ -57,7 +64,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
 
     @Before
     fun beforeEveryTest() {
-        useCase = CreatePaymentTokenWithExistingPaymentMethod(repository)
+        useCase = CreatePaymentTokenWithExistingPaymentMethod(repository, observabilityManager)
         coEvery {
             repository.createPaymentTokenExistingPaymentMethod(any(), any(), any(), any())
         } returns createTokenResult
@@ -130,5 +137,20 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(testUserId, -1, testCurrency, testPaymentMethodId)
         }
+    }
+
+    @Test
+    fun `observability metrics are recorded`() = runTest {
+        useCase.invoke(
+            userId = testUserId,
+            amount = testAmount,
+            currency = testCurrency,
+            paymentMethodId = testPaymentMethodId,
+            metricData = { CheckoutPaymentMethodsCreatePaymentTokenTotalV1(it.toHttpApiStatus()) }
+        )
+
+        val dataSlot = slot<CheckoutPaymentMethodsCreatePaymentTokenTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

@@ -18,21 +18,30 @@
 
 package me.proton.core.payment.data.usecase
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import org.junit.Before
@@ -44,9 +53,17 @@ import kotlin.test.assertNotNull
 
 class PerformSubscribeTest {
     // region mocks
-    private val repository = mockk<PaymentsRepository>(relaxed = true)
-    private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
-    private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var repository: PaymentsRepository
+
+    @MockK(relaxed = true)
+    private lateinit var humanVerificationManager: HumanVerificationManager
+
+    @MockK(relaxed = true)
+    private lateinit var clientIdProvider: ClientIdProvider
+
+    @MockK(relaxed = true)
+    private lateinit var observabilityManager: ObservabilityManager
     // endregion
 
     // region test data
@@ -76,7 +93,14 @@ class PerformSubscribeTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = PerformSubscribeImpl(Optional.empty(), repository, humanVerificationManager, clientIdProvider)
+        MockKAnnotations.init(this)
+        useCase = PerformSubscribeImpl(
+            Optional.empty(),
+            repository,
+            humanVerificationManager,
+            clientIdProvider,
+            observabilityManager
+        )
         coEvery {
             repository.createOrUpdateSubscription(
                 testUserId,
@@ -318,5 +342,30 @@ class PerformSubscribeTest {
         )
 
         coVerify(exactly = 0) { humanVerificationManager.clearDetails(any()) }
+    }
+
+    @Test
+    fun `observability data is recorded`() = runTest {
+        useCase.invoke(
+            userId = testUserId,
+            amount = 1,
+            currency = Currency.CHF,
+            cycle = SubscriptionCycle.YEARLY,
+            planNames = listOf(testPlanName),
+            codes = null,
+            paymentToken = testPaymentToken,
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED,
+            subscribeMetricData = { result, management ->
+                CheckoutBillingSubscribeTotalV1(
+                    result.toHttpApiStatus(),
+                    management.toCheckoutBillingSubscribeManager()
+                )
+            }
+        )
+
+        val dataSlot = slot<CheckoutBillingSubscribeTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(CheckoutBillingSubscribeTotalV1.Manager.proton, dataSlot.captured.Labels.manager)
+        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

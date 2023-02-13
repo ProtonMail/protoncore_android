@@ -18,10 +18,19 @@
 
 package me.proton.core.payment.domain.entity
 
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+
 public enum class SubscriptionManagement(public val value: Int) {
     PROTON_MANAGED(0), GOOGLE_MANAGED(2);
 
     public companion object {
         public val map: Map<Int, SubscriptionManagement> = values().associateBy { it.value }
+    }
+}
+
+public fun SubscriptionManagement.toCheckoutBillingSubscribeManager(): CheckoutBillingSubscribeTotalV1.Manager {
+    return when (this) {
+        SubscriptionManagement.PROTON_MANAGED -> CheckoutBillingSubscribeTotalV1.Manager.proton
+        SubscriptionManagement.GOOGLE_MANAGED -> CheckoutBillingSubscribeTotalV1.Manager.google
     }
 }

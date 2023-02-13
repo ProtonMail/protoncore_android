@@ -18,17 +18,23 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotalV1
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.toGiapStatus
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
     private val googleBillingRepositoryProvider: Provider<GoogleBillingRepository>,
-    private val googlePurchaseRepository: GooglePurchaseRepository
+    private val googlePurchaseRepository: GooglePurchaseRepository,
+    private val observabilityManager: ObservabilityManager
 ) : AcknowledgeGooglePlayPurchase {
     override suspend fun invoke(paymentToken: ProtonPaymentToken) {
         val googlePurchaseToken = requireNotNull(googlePurchaseRepository.findGooglePurchaseToken(paymentToken)) {
@@ -38,9 +44,14 @@ public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
     }
 
     override suspend fun invoke(purchaseToken: GooglePurchaseToken) {
+        val metricData: ((Result<Unit>) -> ObservabilityData?) =
+            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingAcknowledgeTotalV1(it) } }
+
         // Create a new instance of `GoogleBillingRepository` and clean up after it:
-        googleBillingRepositoryProvider.get().use {
-            it.acknowledgePurchase(purchaseToken)
+        googleBillingRepositoryProvider.get().use { googleBillingRepository ->
+            googleBillingRepository.runWithObservability(observabilityManager, metricData) {
+                acknowledgePurchase(purchaseToken)
+            }
         }
         googlePurchaseRepository.deleteByGooglePurchaseToken(purchaseToken)
     }

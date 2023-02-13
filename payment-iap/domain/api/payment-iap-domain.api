@@ -9,6 +9,12 @@ public final class me/proton/core/paymentiap/domain/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/paymentiap/domain/ObservabilityExtKt {
+	public static final fun toGiapStatus (Lcom/android/billingclient/api/BillingResult;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final fun toGiapStatus (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final fun toGiapStatus (Lme/proton/core/paymentiap/domain/repository/BillingClientError;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+}
+
 public final class me/proton/core/paymentiap/domain/entity/GooglePurchaseWrapperKt {
 	public static final fun unwrap (Lme/proton/core/payment/domain/entity/GooglePurchase;)Lcom/android/billingclient/api/Purchase;
 	public static final fun wrap (Lcom/android/billingclient/api/Purchase;)Lme/proton/core/payment/domain/entity/GooglePurchase;

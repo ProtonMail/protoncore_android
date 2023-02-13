@@ -31,6 +31,9 @@ import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
@@ -72,7 +75,8 @@ public abstract class BillingCommonViewModel(
     private val performSubscribe: PerformSubscribe,
     private val getCountry: GetCountry,
     private val humanVerificationManager: HumanVerificationManager,
-    private val clientIdProvider: ClientIdProvider
+    private val clientIdProvider: ClientIdProvider,
+    private val observabilityManager: ObservabilityManager
 ) : ProtonViewModel() {
 
     private val _subscriptionState = MutableStateFlow<State>(State.Idle)
@@ -101,7 +105,9 @@ public abstract class BillingCommonViewModel(
                 val subscriptionManagement: SubscriptionManagement
             ) : Success()
 
-            public data class TokenCreated(val paymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult) : Success()
+            public data class TokenCreated(val paymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult) :
+                Success()
+
             public data class SignUpTokenReady(
                 val amount: Long,
                 val currency: Currency,
@@ -135,6 +141,10 @@ public abstract class BillingCommonViewModel(
         }
     }
 
+    public fun onScreenView(screenId: CheckoutScreenViewTotalV1.ScreenId) {
+        observabilityManager.enqueue(CheckoutScreenViewTotalV1(screenId))
+    }
+
     /**
      * Creates new subscription with a completely new credit card that user will enter details for.
      * If you want to pay for a subscription during sign up, please use:
@@ -151,12 +161,15 @@ public abstract class BillingCommonViewModel(
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType,
-        subscriptionManagement: SubscriptionManagement
+        subscriptionManagement: SubscriptionManagement,
+        paymentTokenMetricData: ((Result<PaymentTokenResult.CreatePaymentTokenResult>) -> ObservabilityData)? = null,
+        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
+        validatePlanMetricData: ((Result<SubscriptionStatus>) -> ObservabilityData)? = null
     ): Job = flow {
         emit(State.Processing)
         val signUp = userId == null
 
-        val subscription = validatePlanSubscription(userId, codes, planNames, currency, cycle)
+        val subscription = validatePlanSubscription(userId, codes, planNames, currency, cycle, validatePlanMetricData)
         emit(State.Success.SubscriptionPlanValidated(subscription))
 
         if (!signUp && subscription.amountDue == 0L) {
@@ -170,7 +183,8 @@ public abstract class BillingCommonViewModel(
                     planNames,
                     codes,
                     paymentToken = null,
-                    subscriptionManagement
+                    subscriptionManagement,
+                    subscribeMetricData = subscribeMetricData
                 )
             emit(
                 State.Success.SubscriptionCreated(
@@ -194,7 +208,8 @@ public abstract class BillingCommonViewModel(
                         userId = userId,
                         amount = subscription.amountDue,
                         currency = currency,
-                        paymentMethodId = paymentType.paymentMethodId
+                        paymentMethodId = paymentType.paymentMethodId,
+                        metricData = paymentTokenMetricData
                     )
                 }
                 is PaymentType.CreditCard -> {
@@ -207,19 +222,27 @@ public abstract class BillingCommonViewModel(
                                 expirationYear = paymentType.card.expirationYear.adjustExpirationYear()
                             )
                         )
-                    createPaymentTokenWithNewCreditCard(userId, subscription.amountDue, currency, paymentTypeRefined)
+                    createPaymentTokenWithNewCreditCard(
+                        userId = userId,
+                        amount = subscription.amountDue,
+                        currency = currency,
+                        paymentType = paymentTypeRefined,
+                        metricData = paymentTokenMetricData
+                    )
                 }
                 is PaymentType.PayPal -> createPaymentTokenWithNewPayPal(
-                    userId,
-                    subscription.amountDue,
-                    currency,
-                    paymentType
+                    userId = userId,
+                    amount = subscription.amountDue,
+                    currency = currency,
+                    paymentType = paymentType,
+                    metricData = paymentTokenMetricData
                 )
                 is PaymentType.GoogleIAP -> createPaymentTokenWithGoogleIAP(
-                    userId,
-                    subscription.amountDue,
-                    currency,
-                    paymentType
+                    userId = userId,
+                    amount = subscription.amountDue,
+                    currency = currency,
+                    paymentType = paymentType,
+                    metricData = paymentTokenMetricData
                 )
             }.exhaustive
             emit(State.Success.TokenCreated(paymentTokenResult))
@@ -227,7 +250,19 @@ public abstract class BillingCommonViewModel(
             if (paymentTokenResult.status == PaymentTokenStatus.CHARGEABLE) {
                 val amount = subscription.amountDue
                 val token = paymentTokenResult.token
-                emit(onTokenApproved(userId, planNames, codes, amount, currency, cycle, token, subscriptionManagement))
+                emit(
+                    onTokenApproved(
+                        userId,
+                        planNames,
+                        codes,
+                        amount,
+                        currency,
+                        cycle,
+                        token,
+                        subscriptionManagement,
+                        subscribeMetricData
+                    )
+                )
             } else {
                 // should show 3DS approval URL WebView
                 emit(State.Incomplete.TokenApprovalNeeded(paymentTokenResult, subscription.amountDue))
@@ -252,9 +287,22 @@ public abstract class BillingCommonViewModel(
         currency: Currency,
         cycle: SubscriptionCycle,
         token: ProtonPaymentToken,
-        subscriptionManagement: SubscriptionManagement
+        subscriptionManagement: SubscriptionManagement,
+        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null
     ): Job = flow {
-        emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token, subscriptionManagement))
+        emit(
+            onTokenApproved(
+                userId,
+                planIds,
+                codes,
+                amount,
+                currency,
+                cycle,
+                token,
+                subscriptionManagement,
+                subscribeMetricData
+            )
+        )
     }.catch {
         _subscriptionState.tryEmit(State.Error.General(it))
     }.onEach {
@@ -270,10 +318,22 @@ public abstract class BillingCommonViewModel(
         plans: List<String>,
         codes: List<String>? = null,
         currency: Currency,
-        cycle: SubscriptionCycle
+        cycle: SubscriptionCycle,
+        validatePlanMetricData: ((Result<SubscriptionStatus>) -> ObservabilityData)? = null
     ): Job = flow {
         emit(PlansValidationState.Processing)
-        emit(PlansValidationState.Success(validatePlanSubscription(userId, codes, plans, currency, cycle)))
+        emit(
+            PlansValidationState.Success(
+                validatePlanSubscription(
+                    userId,
+                    codes,
+                    plans,
+                    currency,
+                    cycle,
+                    validatePlanMetricData
+                )
+            )
+        )
     }.catch { error ->
         _plansValidationState.tryEmit(PlansValidationState.Error.Message(error.message))
     }.onEach { subscriptionState ->
@@ -288,7 +348,8 @@ public abstract class BillingCommonViewModel(
         currency: Currency,
         cycle: SubscriptionCycle,
         token: ProtonPaymentToken,
-        subscriptionManagement: SubscriptionManagement
+        subscriptionManagement: SubscriptionManagement,
+        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
     ): State =
         if (userId == null) {
             // Token will be used during sign up (create user), as part of HumanVerification headers.
@@ -310,7 +371,8 @@ public abstract class BillingCommonViewModel(
                     planNames,
                     codes,
                     token,
-                    subscriptionManagement
+                    subscriptionManagement,
+                    subscribeMetricData = subscribeMetricData
                 ),
                 paymentToken = token,
                 subscriptionManagement = subscriptionManagement

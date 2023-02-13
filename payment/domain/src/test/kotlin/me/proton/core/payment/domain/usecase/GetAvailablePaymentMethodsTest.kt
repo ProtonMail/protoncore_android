@@ -20,8 +20,14 @@ package me.proton.core.payment.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotalV1
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
@@ -35,6 +41,7 @@ import kotlin.test.assertNotNull
 class GetAvailablePaymentMethodsTest {
     // region mocks
     private val repository = mockk<PaymentsRepository>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -64,7 +71,7 @@ class GetAvailablePaymentMethodsTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetAvailablePaymentMethods(repository)
+        useCase = GetAvailablePaymentMethods(repository, observabilityManager)
         coEvery {
             repository.getAvailablePaymentMethods(testUserId)
         } returns testDefaultPaymentMethods
@@ -87,5 +94,13 @@ class GetAvailablePaymentMethodsTest {
         val result = useCase.invoke(testUserId)
         assertNotNull(result)
         assertEquals(0, result.size)
+    }
+
+    @Test
+    fun `observability data is recorded`() = runTest {
+        useCase(testUserId, metricData = { CheckoutPaymentMethodsGetPaymentMethodsTotalV1(it.toHttpApiStatus()) })
+        val dataSlot = slot<CheckoutPaymentMethodsGetPaymentMethodsTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

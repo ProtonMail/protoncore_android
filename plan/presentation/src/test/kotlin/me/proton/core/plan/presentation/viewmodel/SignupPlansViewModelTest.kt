@@ -23,6 +23,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.spyk
 import me.proton.core.domain.entity.Product
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -51,6 +52,7 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
     private lateinit var getPlanDefaultUseCaseSpy: GetPlanDefault
     private val plansRepository = mockk<PlansRepository>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -114,7 +116,8 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
                 getPlans = getPlansUseCase,
                 getPlanDefault = getPlanDefaultUseCaseSpy,
                 supportPaidPlans = true,
-                paymentsOrchestrator = paymentOrchestrator
+                paymentsOrchestrator = paymentOrchestrator,
+                observabilityManager = observabilityManager
             )
     }
 
@@ -188,7 +191,8 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
                 getPlansUseCase,
                 getPlanDefaultUseCaseSpy,
                 true,
-                paymentOrchestrator
+                paymentOrchestrator,
+                observabilityManager = observabilityManager
             )
         val job = flowTest(viewModel.availablePlansState) {
             // THEN
@@ -219,7 +223,8 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
                 getPlanDefaultUseCaseSpy,
                 true,
-                paymentOrchestrator
+                paymentOrchestrator,
+                observabilityManager = observabilityManager
             )
         val job = flowTest(viewModel.availablePlansState) {
             // THEN
@@ -253,7 +258,8 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
                 getPlanDefaultUseCaseSpy,
                 true,
-                paymentOrchestrator
+                paymentOrchestrator,
+                observabilityManager = observabilityManager
             )
         val job = flowTest(viewModel.availablePlansState) {
             // THEN
@@ -289,7 +295,8 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),
                 getPlanDefaultUseCaseSpy,
                 true,
-                paymentOrchestrator
+                paymentOrchestrator,
+                observabilityManager = observabilityManager
             )
         val job = flowTest(viewModel.availablePlansState) {
             // THEN

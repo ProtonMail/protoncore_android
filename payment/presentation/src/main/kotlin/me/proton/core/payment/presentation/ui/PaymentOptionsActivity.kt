@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -46,6 +47,7 @@ import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.PaymentOptionsViewModel
 import me.proton.core.presentation.ui.adapter.selectableProtonAdapter
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
@@ -127,6 +129,10 @@ internal class PaymentOptionsActivity :
         observe()
 
         viewModel.getAvailablePaymentMethods(user)
+
+        launchOnScreenView {
+            viewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.paymentMethods)
+        }
     }
 
     private fun observe() {

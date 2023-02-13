@@ -21,15 +21,15 @@ public final class me/proton/core/paymentiap/data/repository/GoogleBillingReposi
 }
 
 public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl : me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {
-	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;)V
+	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public fun invoke-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke-vl4Hrws (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl : me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public fun byCustomer (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun byProduct (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun byCustomer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun byProduct (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun invoke (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

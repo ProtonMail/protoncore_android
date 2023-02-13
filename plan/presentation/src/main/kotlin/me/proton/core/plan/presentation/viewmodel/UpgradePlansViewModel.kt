@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
@@ -58,8 +59,9 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
     private val getUser: GetUser,
     private val getPaymentMethods: GetAvailablePaymentMethods,
     @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
-    paymentsOrchestrator: PaymentsOrchestrator
-) : BasePlansViewModel(paymentsOrchestrator) {
+    paymentsOrchestrator: PaymentsOrchestrator,
+    observabilityManager: ObservabilityManager
+) : BasePlansViewModel(paymentsOrchestrator, observabilityManager) {
 
     private val _subscribedPlansState = MutableStateFlow<SubscribedPlansState>(SubscribedPlansState.Idle)
 

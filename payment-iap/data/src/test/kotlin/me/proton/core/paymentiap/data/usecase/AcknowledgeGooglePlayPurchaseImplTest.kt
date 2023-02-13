@@ -21,25 +21,36 @@ package me.proton.core.paymentiap.data.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotalV1
+import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class AcknowledgeGooglePlayPurchaseImplTest {
     private lateinit var googleBillingRepository: GoogleBillingRepository
     private lateinit var googlePurchaseRepository: GooglePurchaseRepository
+    private lateinit var observabilityManager: ObservabilityManager
     private lateinit var tested: AcknowledgeGooglePlayPurchaseImpl
 
     @BeforeTest
     fun setUp() {
         googleBillingRepository = mockk(relaxed = true)
         googlePurchaseRepository = mockk(relaxed = true)
-        tested = AcknowledgeGooglePlayPurchaseImpl({ googleBillingRepository }, googlePurchaseRepository)
+        observabilityManager = mockk(relaxed = true)
+        tested = AcknowledgeGooglePlayPurchaseImpl(
+            { googleBillingRepository },
+            googlePurchaseRepository,
+            observabilityManager
+        )
     }
 
     @Test
@@ -59,5 +70,13 @@ internal class AcknowledgeGooglePlayPurchaseImplTest {
         val paymentToken = ProtonPaymentToken("payment-token")
         coEvery { googlePurchaseRepository.findGooglePurchaseToken(paymentToken) } returns null
         tested(paymentToken)
+    }
+
+    @Test
+    fun `observability data is recorded`() = runTest {
+        tested(GooglePurchaseToken("google-purchase-token"))
+        val dataSlot = slot<CheckoutGiapBillingAcknowledgeTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(GiapStatus.success, dataSlot.captured.Labels.status)
     }
 }

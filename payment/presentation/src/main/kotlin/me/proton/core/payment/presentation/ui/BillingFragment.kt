@@ -20,7 +20,6 @@ package me.proton.core.payment.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,10 +29,16 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.FragmentBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -45,6 +50,7 @@ import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
@@ -102,6 +108,10 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
         addOnBackPressedCallback {
             requireActivity().finish()
         }
+
+        launchOnScreenView {
+            viewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.cardBilling)
+        }
     }
 
     override fun onResume() {
@@ -155,7 +165,15 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                     zip = postalCodeInput.text.toString()
                 )
             ),
-            SubscriptionManagement.PROTON_MANAGED
+            SubscriptionManagement.PROTON_MANAGED,
+            paymentTokenMetricData = { CheckoutCardBillingCreatePaymentTokenTotalV1(it.toHttpApiStatus()) },
+            subscribeMetricData = { result, management ->
+                CheckoutBillingSubscribeTotalV1(
+                    result.toHttpApiStatus(),
+                    management.toCheckoutBillingSubscribeManager()
+                )
+            },
+            validatePlanMetricData = { CheckoutCardBillingValidatePlanTotalV1(it.toHttpApiStatus()) }
         )
     }
 

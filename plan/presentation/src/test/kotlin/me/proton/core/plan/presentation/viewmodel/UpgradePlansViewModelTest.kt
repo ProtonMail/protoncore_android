@@ -23,6 +23,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethod
@@ -68,6 +69,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
     private val getPaymentMethodsUseCase = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getSubscriptionUseCase = mockk<GetCurrentSubscription>(relaxed = true)
     private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -231,7 +233,8 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
             getUserUseCase,
             getPaymentMethodsUseCase,
             true,
-            paymentOrchestrator
+            paymentOrchestrator,
+            observabilityManager
         )
     }
 
@@ -308,7 +311,8 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
             getUserUseCase,
             getPaymentMethodsUseCase,
             true,
-            paymentOrchestrator
+            paymentOrchestrator,
+            observabilityManager
         )
 
         val job = flowTest(viewModel.availablePlansState) {
@@ -344,7 +348,8 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
                 getUserUseCase,
                 getPaymentMethodsUseCase,
                 true,
-                paymentOrchestrator
+                paymentOrchestrator,
+                observabilityManager
             )
 
             val job = flowTest(viewModel.availablePlansState) {
@@ -434,7 +439,8 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
                 getUserUseCase,
                 getPaymentMethodsUseCase,
                 true,
-                paymentOrchestrator
+                paymentOrchestrator,
+                observabilityManager
             )
             val job = flowTest(viewModel.availablePlansState) {
                 // THEN
@@ -450,6 +456,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
             // WHEN
             viewModel.getCurrentSubscribedPlans(testUserId)
             job.join()
+
         }
 
     @Test

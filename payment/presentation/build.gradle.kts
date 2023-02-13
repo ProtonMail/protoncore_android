@@ -33,6 +33,7 @@ dependencies {
         project(Module.domain),
         project(Module.humanVerificationDomain),
         project(Module.networkDomain),
+        project(Module.observabilityDomain),
         project(Module.paymentDomain),
         project(Module.presentation),
         `activity-noktx`,

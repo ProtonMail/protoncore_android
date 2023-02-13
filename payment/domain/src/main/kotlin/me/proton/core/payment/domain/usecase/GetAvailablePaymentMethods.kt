@@ -19,6 +19,9 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
@@ -29,8 +32,14 @@ import javax.inject.Inject
  * Could not be used during sign-up.
  */
 public class GetAvailablePaymentMethods @Inject constructor(
-    private val paymentsRepository: PaymentsRepository
+    private val paymentsRepository: PaymentsRepository,
+    private val observabilityManager: ObservabilityManager
 ) {
-    public suspend operator fun invoke(userId: UserId): List<PaymentMethod> =
-        paymentsRepository.getAvailablePaymentMethods(userId)
+    public suspend operator fun invoke(
+        userId: UserId,
+        metricData: ((Result<List<PaymentMethod>>) -> ObservabilityData)? = null
+    ): List<PaymentMethod> =
+        paymentsRepository.runWithObservability(observabilityManager, metricData) {
+            getAvailablePaymentMethods(userId)
+        }
 }

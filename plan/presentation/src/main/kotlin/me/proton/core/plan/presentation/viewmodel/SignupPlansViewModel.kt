@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -39,8 +40,9 @@ internal class SignupPlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     private val getPlanDefault: GetPlanDefault,
     @SupportSignupPaidPlans val supportPaidPlans: Boolean,
-    paymentsOrchestrator: PaymentsOrchestrator
-) : BasePlansViewModel(paymentsOrchestrator) {
+    paymentsOrchestrator: PaymentsOrchestrator,
+    observabilityManager: ObservabilityManager
+) : BasePlansViewModel(paymentsOrchestrator, observabilityManager) {
 
     fun getAllPlansForSignup() = flow {
         emit(PlanState.Processing)

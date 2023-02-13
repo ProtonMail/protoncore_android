@@ -31,6 +31,7 @@ android {
 dependencies {
     api(
         project(Module.domain),
+        project(Module.observabilityDomain),
         project(Module.paymentDomain),
         googlePlayBilling,
         `javax-inject`

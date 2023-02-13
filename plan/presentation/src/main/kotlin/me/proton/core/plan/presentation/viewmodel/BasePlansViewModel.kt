@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.onPaymentResult
@@ -54,7 +56,10 @@ import java.util.Date
 import kotlin.math.max
 import kotlin.math.roundToInt
 
-internal abstract class BasePlansViewModel(private val paymentsOrchestrator: PaymentsOrchestrator) : ProtonViewModel() {
+internal abstract class BasePlansViewModel(
+    private val paymentsOrchestrator: PaymentsOrchestrator,
+    private val observabilityManager: ObservabilityManager,
+) : ProtonViewModel() {
 
     protected val state = MutableStateFlow<PlanState>(PlanState.Idle)
     val availablePlansState = state.asStateFlow()
@@ -79,6 +84,10 @@ internal abstract class BasePlansViewModel(private val paymentsOrchestrator: Pay
 
     fun register(context: Fragment) {
         paymentsOrchestrator.register(context)
+    }
+
+    fun onScreenView(screenId: CheckoutScreenViewTotalV1.ScreenId) {
+        observabilityManager.enqueue(CheckoutScreenViewTotalV1(screenId))
     }
 
     protected fun createFreePlan(
