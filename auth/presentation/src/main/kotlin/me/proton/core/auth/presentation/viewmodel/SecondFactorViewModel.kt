@@ -18,14 +18,17 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
@@ -36,6 +39,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
@@ -44,6 +48,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecondFactorViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val accountWorkflow: AccountWorkflowHandler,
     private val performSecondFactor: PerformSecondFactor,
     private val postLoginAccountSetup: PostLoginAccountSetup,
@@ -65,10 +70,10 @@ class SecondFactorViewModel @Inject constructor(
         }
     }
 
-    suspend fun stopSecondFactorFlow(userId: UserId) {
-        val sessionId = sessionProvider.getSessionId(userId)
-        checkNotNull(sessionId) { "No session id for this user." }
-        accountWorkflow.handleSecondFactorFailed(sessionId)
+    fun stopSecondFactorFlow(): Job = viewModelScope.launch {
+        savedStateHandle.get<String>(STATE_SESSION_ID)?.let {
+            accountWorkflow.handleSecondFactorFailed(SessionId(it))
+        }
     }
 
     fun startSecondFactorFlow(
@@ -81,7 +86,13 @@ class SecondFactorViewModel @Inject constructor(
         emit(State.Processing)
 
         val sessionId = sessionProvider.getSessionId(userId)
-        checkNotNull(sessionId) { "No session id for this user." }
+        if (sessionId == null) {
+            emit(State.Error.Unrecoverable("No session for this user."))
+            return@flow
+        }
+
+        // Remember sessionId for stopSecondFactorFlow.
+        savedStateHandle[STATE_SESSION_ID] = sessionId.id
 
         val scopeInfo = performSecondFactor.invoke(sessionId, secondFactorCode)
         accountWorkflow.handleSecondFactorSuccess(sessionId, scopeInfo.scopes)
@@ -99,7 +110,7 @@ class SecondFactorViewModel @Inject constructor(
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying second factor flow")
     }.catch { error ->
         if (error.isUnrecoverableError()) {
-            stopSecondFactorFlow(userId)
+            stopSecondFactorFlow().join()
             emit(State.Error.Unrecoverable(error.message))
         } else {
             emit(State.Error.Message(error))
@@ -119,5 +130,6 @@ class SecondFactorViewModel @Inject constructor(
     companion object {
         const val HTTP_ERROR_UNAUTHORIZED = 401
         const val HTTP_ERROR_BAD_REQUEST = 400
+        const val STATE_SESSION_ID = "sessionId"
     }
 }

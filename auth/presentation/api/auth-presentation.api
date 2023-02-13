@@ -2215,10 +2215,11 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public static final field Companion Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$Companion;
 	public static final field HTTP_ERROR_BAD_REQUEST I
 	public static final field HTTP_ERROR_UNAUTHORIZED I
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)V
+	public static final field STATE_SESSION_ID Ljava/lang/String;
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;)Lkotlinx/coroutines/Job;
-	public final fun stopSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun stopSecondFactorFlow ()Lkotlinx/coroutines/Job;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$Companion {
@@ -2272,11 +2273,11 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_HiltModules {

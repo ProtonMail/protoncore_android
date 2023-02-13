@@ -155,8 +155,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     override fun onBackPressed() {
-        viewModel.stopLoginWorkflow()
-            .invokeOnCompletion { finish() }
+        viewModel.stopLoginWorkflow().invokeOnCompletion { finish() }
     }
 
     private fun onSuccess(

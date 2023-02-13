@@ -77,7 +77,9 @@ internal class LoginViewModel @Inject constructor(
     }
 
     fun stopLoginWorkflow(): Job = viewModelScope.launch {
-        savedStateHandle.get<String>(STATE_USER_ID)?.let { accountWorkflow.handleAccountDisabled(UserId(it)) }
+        savedStateHandle.get<String>(STATE_USER_ID)?.let {
+            accountWorkflow.handleAccountDisabled(UserId(it))
+        }
     }
 
     fun startLoginWorkflow(
@@ -111,7 +113,7 @@ internal class LoginViewModel @Inject constructor(
 
         val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType, loginMetricData)
 
-        savedStateHandle.set(STATE_USER_ID, sessionInfo.userId.id)
+        savedStateHandle[STATE_USER_ID] = sessionInfo.userId.id
 
         val result = postLoginAccountSetup(
             userId = sessionInfo.userId,
