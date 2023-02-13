@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
+import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
@@ -46,7 +47,6 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
 import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchAll
@@ -87,7 +87,7 @@ internal class LoginViewModel @Inject constructor(
         password: String,
         requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null,
-        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null,
+        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null,
         unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
         userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
     ): Job = startLoginWorkflowWithEncryptedPassword(
@@ -105,7 +105,7 @@ internal class LoginViewModel @Inject constructor(
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null,
-        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null,
+        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null,
         unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
         userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
     ) = flow {

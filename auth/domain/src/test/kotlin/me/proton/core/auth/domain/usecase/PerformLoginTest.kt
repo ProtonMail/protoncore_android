@@ -32,6 +32,7 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupLoginTotalV1
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -76,7 +77,7 @@ class PerformLoginTest {
         tested.invoke(
             username = "test-username",
             password = "encrypted-test-password",
-            loginMetricData = { SignupLoginTotalV1(it) }
+            loginMetricData = { SignupLoginTotalV1(it.toHttpApiStatus()) }
         )
 
         // THEN

@@ -41,7 +41,7 @@ class CreateLoginSession @Inject constructor(
         username: String,
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
-        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null
+        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null
     ): SessionInfo {
         val sessionInfo = performLogin.invoke(username, encryptedPassword, loginMetricData)
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)

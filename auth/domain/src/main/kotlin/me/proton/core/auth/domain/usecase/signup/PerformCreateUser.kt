@@ -54,7 +54,7 @@ class PerformCreateUser @Inject constructor(
         recoveryPhone: String?,
         referrer: String?,
         type: CreateUserType,
-        metricData: ((HttpApiStatus) -> ObservabilityData)? = null
+        metricData: ((Result<UserId>) -> ObservabilityData)? = null
     ): UserId {
         require(
             recoveryEmail == null && recoveryPhone == null ||

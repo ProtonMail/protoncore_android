@@ -49,7 +49,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
         email: String,
         password: EncryptedString,
         referrer: String?,
-        metricData: ((HttpApiStatus) -> ObservabilityData)? = null
+        metricData: ((Result<UserId>) -> ObservabilityData)? = null
     ): UserId {
         require(email.isNotBlank()) { "Email must not be empty." }
 

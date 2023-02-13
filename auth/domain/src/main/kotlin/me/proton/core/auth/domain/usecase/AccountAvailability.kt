@@ -21,7 +21,6 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
@@ -40,7 +39,7 @@ class AccountAvailability @Inject constructor(
      * @param metricData Optionally, a function that produces [ObservabilityData]
      *  that will be [enqueued][ObservabilityManager.enqueue].
      */
-    suspend fun getDomains(metricData: ((HttpApiStatus) -> ObservabilityData)? = null): List<Domain> {
+    suspend fun getDomains(metricData: ((Result<List<Domain>>) -> ObservabilityData)? = null): List<Domain> {
         return domainRepository.runWithObservability(observabilityManager, metricData) {
             getAvailableDomains()
         }
@@ -57,7 +56,7 @@ class AccountAvailability @Inject constructor(
         return userRepository.checkUsernameAvailable(username)
     }
 
-    suspend fun checkUsername(username: String, metricData: ((HttpApiStatus) -> ObservabilityData)? = null) {
+    suspend fun checkUsername(username: String, metricData: ((Result<Unit>) -> ObservabilityData)? = null) {
         check(username.isNotBlank()) { "Username must not be blank." }
 
         return userRepository.runWithObservability(observabilityManager, metricData) {
@@ -65,7 +64,7 @@ class AccountAvailability @Inject constructor(
         }
     }
 
-    suspend fun checkExternalEmail(email: String, metricData: ((HttpApiStatus) -> ObservabilityData)? = null) {
+    suspend fun checkExternalEmail(email: String, metricData: ((Result<Unit>) -> ObservabilityData)? = null) {
         check(email.isNotBlank()) { "Email must not be blank." }
 
         userRepository.runWithObservability(observabilityManager, metricData) {

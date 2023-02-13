@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
 
     // See CP-5335.
     private val getDomainsJob: Job = viewModelScope.launch {
-        runCatching { accountAvailability.getDomains(metricData = { SignupFetchDomainsTotalV1(it) }) }
+        runCatching { accountAvailability.getDomains(metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }) }
     }
 
     private val mutableState = MutableStateFlow<State>(State.Idle)
@@ -59,7 +60,10 @@ internal class ChooseUsernameViewModel @Inject constructor(
     fun checkUsername(username: String) = flow {
         emit(State.Processing)
         getDomainsJob.join()
-        accountAvailability.checkUsername(username, metricData = { SignupUsernameAvailabilityTotalV1(it) })
+        accountAvailability.checkUsername(
+            username,
+            metricData = { SignupUsernameAvailabilityTotalV1(it.toHttpApiStatus()) }
+        )
         emit(State.Success(username))
     }.catch { error ->
         emit(State.Error.Message(error))

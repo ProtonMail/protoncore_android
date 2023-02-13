@@ -51,6 +51,7 @@ import me.proton.core.humanverification.domain.HumanVerificationExternalInput
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotalV1
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
@@ -191,7 +192,7 @@ internal class SignupViewModel @Inject constructor(
             username = username, password = encryptedPassword,
             recoveryEmail = recoveryEmail, recoveryPhone = recoveryPhone,
             referrer = null, type = currentAccountType.createUserType(), domain = domain,
-            metricData = { SignupAccountCreationTotalV1(it) }
+            metricData = { SignupAccountCreationTotalV1(it.toHttpApiStatus()) }
         )
         emit(State.CreateUserSuccess(result.id, username, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {
@@ -204,7 +205,7 @@ internal class SignupViewModel @Inject constructor(
             email = externalEmail,
             password = encryptedPassword,
             referrer = null,
-            metricData = { SignupAccountCreationTotalV1(it) }
+            metricData = { SignupAccountCreationTotalV1(it.toHttpApiStatus()) }
         )
         emit(State.CreateUserSuccess(userId.id, externalEmail, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {

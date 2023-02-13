@@ -48,7 +48,7 @@ class PerformLogin @Inject constructor(
     suspend operator fun invoke(
         username: String,
         password: EncryptedString,
-        loginMetricData: ((HttpApiStatus) -> ObservabilityData)? = null
+        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null
     ): SessionInfo {
         val loginInfo = authRepository.getAuthInfo(
             sessionId = null,

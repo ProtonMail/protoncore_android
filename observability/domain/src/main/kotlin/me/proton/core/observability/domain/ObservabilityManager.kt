@@ -21,9 +21,8 @@ package me.proton.core.observability.domain
 import kotlinx.coroutines.launch
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import java.time.Instant
 import javax.inject.Inject
@@ -59,6 +58,7 @@ public class ObservabilityManager @Inject internal constructor(
     }
 
     private suspend fun enqueueEvent(event: ObservabilityEvent) {
+        CoreLogger.d(LogTag.ENQUEUE, "$event")
         if (isObservabilityEnabled()) {
             repository.addEvent(event)
             workerManager.schedule(getSendDelay())
@@ -84,32 +84,17 @@ public class ObservabilityManager @Inject internal constructor(
     }
 }
 
-/** Enqueues an observability data event from the [result].
- * The event is recorded if [metricData] is not null.
- * Useful for metrics that can create [ObservabilityData] from [HttpApiStatus].
- **/
-public fun <R> ObservabilityManager.enqueueFromResult(
-    metricData: ((HttpApiStatus) -> ObservabilityData)?,
-    result: Result<R>
-): Result<R> {
-    metricData ?: return result
-    return result.onSuccess {
-        enqueue(metricData(HttpApiStatus.http2xx))
-    }.onFailure {
-        enqueue(metricData(it.toHttpApiStatus()))
-    }
-}
-
 /** Enqueues an observability data event from the [Result] of executing a [block].
  * The event is recorded if [metricData] is not null.
- * Useful for metrics that can create [ObservabilityData] from [HttpApiStatus].
  **/
 public suspend fun <T, R> T.runWithObservability(
     observabilityManager: ObservabilityManager,
-    metricData: ((HttpApiStatus) -> ObservabilityData)?,
+    metricData: ((Result<R>) -> ObservabilityData)?,
     block: suspend T.() -> R
 ): R = runCatching {
     block()
 }.also {
-    observabilityManager.enqueueFromResult(metricData, it)
+    if (metricData != null) {
+        observabilityManager.enqueue(metricData(it))
+    }
 }.getOrThrow()
