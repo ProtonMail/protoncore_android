@@ -86,6 +86,10 @@ open class PaymentRobot : CoreRobot() {
         fun nextPaymentProviderButtonDisplayed() {
             view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
         }
+
+        fun nextPaymentProviderButtonNotDisplayed() {
+            view.withId(R.id.nextPaymentProviderButton).checkNotDisplayed()
+        }
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

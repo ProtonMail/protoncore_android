@@ -27,12 +27,12 @@ import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
-import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.mockuitests.BaseMockTest
-import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.payments.GoogleIAPRobot
+import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.quark.data.Card
 import okhttp3.HttpUrl
 import org.junit.Rule
@@ -41,7 +41,7 @@ import kotlin.test.Test
 import me.proton.core.test.quark.data.Plan as TestPlan
 
 @HiltAndroidTest
-class GiapUpgradeTests: BaseMockTest {
+class GiapUpgradeTests : BaseMockTest {
     @get:Rule
     val mockTestRule = MockTestRule(this)
 
@@ -58,62 +58,6 @@ class GiapUpgradeTests: BaseMockTest {
 
     @Test
     fun freeUserUpgradeAllProvidersAvailable() {
-        freeUserCanUpgradeWithCard()
-    }
-
-    @Test
-    fun freeUserUpgradeOnlyGiapAvailable() {
-        dispatcher.mockFromAssets(
-            "GET", "/payments/v4/status/google",
-            "GET/payments/v4/status/google-iap-only.json"
-        )
-        freeUserCanUpgradeGIAP()
-    }
-
-    @Test
-    fun freeUserSubscriptionScreenNoPlansNoPaymentOptionsAvailable() {
-        dispatcher.mockFromAssets(
-            "GET", "/payments/v4/status/google",
-            "GET/payments/v4/status/google-all-disabled.json"
-        )
-
-        billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
-
-        dispatcher.mockFromAssets(
-            "GET", "/payments/v4/subscription",
-            "GET/payments/v4/subscription-none.json", 422
-        )
-
-        dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
-        )
-        dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
-        )
-        dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
-        )
-
-        ActivityScenario.launch(MainActivity::class.java)
-
-        AddAccountRobot()
-            .signIn()
-            .username(testUsername)
-            .password(testPassword)
-            .signIn<CoreexampleRobot>()
-
-        CoreexampleRobot()
-            .plansCurrent()
-            .verify {
-                currentPlanDetailsDisplayed()
-                plansNotDisplayed()
-            }
-    }
-
-    private fun freeUserCanUpgradeWithCard() {
         billingClientFactory.mockBillingClientSuccess()
 
         dispatcher.mockFromAssets(
@@ -167,8 +111,187 @@ class GiapUpgradeTests: BaseMockTest {
             }
     }
 
-    private fun freeUserCanUpgradeGIAP() {
+    @Test
+    fun freeUserUpgradeOnlyGiapAvailable() {
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-iap-only.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/users",
+            "GET/users-with-keys-not-subscribed.json"
+        )
+        freeUserCanUpgradeGIAP()
+    }
+
+    @Test
+    fun freeUserWithCreditsUpgradeOnlyGiapAvailable() {
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-iap-only.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/users",
+            "GET/users-with-saved-credits.json"
+        )
         billingClientFactory.mockBillingClientSuccess()
+
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-none.json", 422
+        )
+
+        dispatcher.mockFromAssets(
+            "GET", "/organizations",
+            "GET/organizations-none.json", 422
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/addresses",
+            "GET/addresses-with-keys.json"
+        )
+        dispatcher.mockFromAssets(
+            "POST", "/payments/v4/subscription",
+            "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-mail-plus-proton-managed.json"
+        )
+
+        ActivityScenario.launch(MainActivity::class.java)
+
+        AddAccountRobot()
+            .signIn()
+            .username(testUsername)
+            .password(testPassword)
+            .signIn<CoreexampleRobot>()
+
+        CoreexampleRobot()
+            .verify {
+                plansUpgradeDisabled()
+            }
+    }
+
+    @Test
+    fun freeUserWithCreditsCurrentPlansOnlyGiapAvailable() {
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-iap-only.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/users",
+            "GET/users-with-saved-credits.json"
+        )
+        billingClientFactory.mockBillingClientSuccess()
+
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-none.json", 422
+        )
+
+        dispatcher.mockFromAssets(
+            "GET", "/organizations",
+            "GET/organizations-none.json", 422
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/addresses",
+            "GET/addresses-with-keys.json"
+        )
+        dispatcher.mockFromAssets(
+            "POST", "/payments/v4/subscription",
+            "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-mail-plus-proton-managed.json"
+        )
+
+        ActivityScenario.launch(MainActivity::class.java)
+
+        AddAccountRobot()
+            .signIn()
+            .username(testUsername)
+            .password(testPassword)
+            .signIn<CoreexampleRobot>()
+
+        CoreexampleRobot()
+            .plansCurrent()
+            .verify {
+                currentPlanDetailsDisplayed()
+                planDetailsDisplayed(TestPlan.Free)
+                plansNotDisplayed()
+            }
+    }
+
+    @Test
+    fun freeUserWithCreditsCurrentPlansCardAndGiapAvailable() {
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-iap-and-card.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/users",
+            "GET/users-with-saved-credits.json"
+        )
+        billingClientFactory.mockBillingClientSuccess()
+
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-none.json", 422
+        )
+
+        dispatcher.mockFromAssets(
+            "GET", "/organizations",
+            "GET/organizations-none.json", 422
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/addresses",
+            "GET/addresses-with-keys.json"
+        )
+        dispatcher.mockFromAssets(
+            "POST", "/payments/v4/subscription",
+            "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-mail-plus-proton-managed.json"
+        )
+
+        ActivityScenario.launch(MainActivity::class.java)
+
+        AddAccountRobot()
+            .signIn()
+            .username(testUsername)
+            .password(testPassword)
+            .signIn<CoreexampleRobot>()
+
+        CoreexampleRobot()
+            .plansCurrent()
+            .apply {
+                verify {
+                    currentPlanDetailsDisplayed()
+                    planDetailsDisplayed(TestPlan.Free)
+                    plansDisplayed()
+                }
+            }
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<AddCreditCardRobot>(TestPlan.MailPlus)
+            .apply {
+                verify {
+                    addCreditCardElementsDisplayed()
+                    nextPaymentProviderButtonNotDisplayed()
+                }
+            }
+    }
+
+    @Test
+    fun freeUserSubscriptionScreenNoPlansNoPaymentOptionsAvailable() {
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-all-disabled.json"
+        )
+
+        billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
 
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/subscription",
@@ -179,6 +302,39 @@ class GiapUpgradeTests: BaseMockTest {
             "GET", "/users",
             "GET/users-with-keys-not-subscribed.json"
         )
+        dispatcher.mockFromAssets(
+            "GET", "/organizations",
+            "GET/organizations-none.json", 422
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/addresses",
+            "GET/addresses-with-keys.json"
+        )
+
+        ActivityScenario.launch(MainActivity::class.java)
+
+        AddAccountRobot()
+            .signIn()
+            .username(testUsername)
+            .password(testPassword)
+            .signIn<CoreexampleRobot>()
+
+        CoreexampleRobot()
+            .plansCurrent()
+            .verify {
+                currentPlanDetailsDisplayed()
+                plansNotDisplayed()
+            }
+    }
+
+    private fun freeUserCanUpgradeGIAP() {
+        billingClientFactory.mockBillingClientSuccess()
+
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/subscription",
+            "GET/payments/v4/subscription-none.json", 422
+        )
+
         dispatcher.mockFromAssets(
             "GET", "/organizations",
             "GET/organizations-none.json", 422

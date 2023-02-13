@@ -930,6 +930,7 @@ public class me/proton/core/test/android/robots/payments/PaymentRobot$Verify : m
 	public final fun googleIAPElementsDisplayed ()V
 	public final fun googlePaymentMethodDisplayed (Ljava/lang/String;)V
 	public final fun nextPaymentProviderButtonDisplayed ()V
+	public final fun nextPaymentProviderButtonNotDisplayed ()V
 	public final fun paymentMethodDisplayed (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -954,6 +955,7 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public final fun planDetailsDisplayedInsideRecyclerView (Lme/proton/core/test/quark/data/Plan;)V
 	public final fun planDetailsNotDisplayed ()V
 	public final fun planRenewalDisplayed (Ljava/lang/String;)V
+	public final fun plansDisplayed ()V
 	public final fun plansNotDisplayed ()V
 }
 

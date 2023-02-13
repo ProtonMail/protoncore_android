@@ -107,6 +107,10 @@ open class CoreexampleRobot : CoreRobot() {
         fun scopeTriggerStatusIs(vararg oneOf: String) {
             view.withId(R.id.trigger_status).scrollTo().checkContainsAny(*oneOf)
         }
+
+        fun plansUpgradeDisabled() {
+            view.withId(R.id.plansUpgrade).isDisabled()
+        }
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

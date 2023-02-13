@@ -62,6 +62,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
@@ -337,7 +338,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         )
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
-        viewModel.state.test {
+        viewModel.state.test(timeout = 5.seconds) {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN

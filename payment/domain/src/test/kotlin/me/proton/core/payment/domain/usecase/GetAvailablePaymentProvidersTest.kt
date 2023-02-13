@@ -29,6 +29,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.PaymentStatus
+import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -36,6 +37,7 @@ import kotlin.test.assertTrue
 
 class GetAvailablePaymentProvidersTest {
     private lateinit var accountManager: AccountManager
+    private lateinit var userManager: UserManager
     private lateinit var getPaymentStatus: GetPaymentStatus
     private lateinit var protonIAPBillingLibrary: ProtonIAPBillingLibrary
     private lateinit var tested: GetAvailablePaymentProviders
@@ -43,6 +45,7 @@ class GetAvailablePaymentProvidersTest {
     @BeforeTest
     fun setUp() {
         accountManager = mockk { every { getPrimaryUserId() } returns flowOf(null) }
+        userManager = mockk(relaxed = true)
         getPaymentStatus = mockk()
         protonIAPBillingLibrary = mockk()
     }
@@ -149,6 +152,7 @@ class GetAvailablePaymentProvidersTest {
     private fun makeTested(appStore: AppStore): GetAvailablePaymentProviders =
         GetAvailablePaymentProviders(
             accountManager,
+            userManager,
             appStore,
             getPaymentStatus,
             protonIAPBillingLibrary
