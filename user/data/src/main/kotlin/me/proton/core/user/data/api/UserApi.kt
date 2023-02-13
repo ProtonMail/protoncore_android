@@ -34,10 +34,10 @@ import retrofit2.http.Query
 
 interface UserApi : BaseRetrofitApi {
 
-    @GET("users")
+    @GET("core/v4/users")
     suspend fun getUsers(): UsersResponse
 
-    @GET("users/available")
+    @GET("core/v4/users/available")
     suspend fun usernameAvailable(
         @Query("Name") email: String,
         @Query("ParseDomain") parseDomain: Int = 1
@@ -46,10 +46,10 @@ interface UserApi : BaseRetrofitApi {
     @GET("core/v4/users/availableExternal")
     suspend fun externalEmailAvailable(@Query("Name") email: String): GenericResponse
 
-    @POST("v4/users")
+    @POST("core/v4/users")
     suspend fun createUser(@Body userRequest: CreateUserRequest): UsersResponse
 
-    @POST("v4/users/external")
+    @POST("core/v4/users/external")
     suspend fun createExternalUser(@Body userRequest: CreateExternalUserRequest): UsersResponse
 
     @PUT("core/v4/users/lock")

@@ -33,18 +33,18 @@ import retrofit2.http.Path
 
 interface AddressApi : BaseRetrofitApi {
 
-    @GET("addresses")
+    @GET("core/v4/addresses")
     suspend fun getAddresses(): AddressesResponse
 
-    @GET("addresses/{id}")
+    @GET("core/v4/addresses/{id}")
     suspend fun getAddress(@Path("id") id: String): SingleAddressResponse
 
-    @POST("addresses/setup")
+    @POST("core/v4/addresses/setup")
     suspend fun createAddress(@Body request: CreateAddressRequest): CreateAddressResponse
 
-    @PUT("addresses/{id}")
+    @PUT("core/v4/addresses/{id}")
     suspend fun updateAddress(@Path("id") id: String, @Body request: UpdateAddressRequest)
 
-    @PUT("addresses/order")
+    @PUT("core/v4/addresses/order")
     suspend fun updateOrder(@Body request: UpdateOrderRequest)
 }

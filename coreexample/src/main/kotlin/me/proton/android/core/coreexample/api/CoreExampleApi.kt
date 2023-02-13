@@ -31,10 +31,10 @@ interface CoreExampleApi : BaseRetrofitApi {
     @GET("internal/tests/humanverification")
     suspend fun triggerHumanVerification(): GenericResponse
 
-    @GET("keys/salts")
+    @GET("core/v4/keys/salts")
     suspend fun triggerConfirmPasswordLockedScope(): GenericResponse
 
-    @GET("settings/mnemonic")
+    @GET("core/v4/settings/mnemonic")
     suspend fun triggerConfirmPasswordForPasswordScope(): GenericResponse
 
     @PUT("mail/v4/messages/read")

@@ -66,16 +66,16 @@ class GiapUpgradeTests : BaseMockTest {
         )
 
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-not-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
@@ -118,8 +118,8 @@ class GiapUpgradeTests : BaseMockTest {
             "GET/payments/v4/status/google-iap-only.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-not-subscribed.json"
         )
         freeUserCanUpgradeGIAP()
     }
@@ -131,8 +131,8 @@ class GiapUpgradeTests : BaseMockTest {
             "GET/payments/v4/status/google-iap-only.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-saved-credits.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-saved-credits.json"
         )
         billingClientFactory.mockBillingClientSuccess()
 
@@ -142,12 +142,12 @@ class GiapUpgradeTests : BaseMockTest {
         )
 
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
@@ -179,8 +179,8 @@ class GiapUpgradeTests : BaseMockTest {
             "GET/payments/v4/status/google-iap-only.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-saved-credits.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-saved-credits.json"
         )
         billingClientFactory.mockBillingClientSuccess()
 
@@ -190,12 +190,12 @@ class GiapUpgradeTests : BaseMockTest {
         )
 
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
@@ -230,8 +230,8 @@ class GiapUpgradeTests : BaseMockTest {
             "GET/payments/v4/status/google-iap-and-card.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-saved-credits.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-saved-credits.json"
         )
         billingClientFactory.mockBillingClientSuccess()
 
@@ -241,12 +241,12 @@ class GiapUpgradeTests : BaseMockTest {
         )
 
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
@@ -299,16 +299,16 @@ class GiapUpgradeTests : BaseMockTest {
         )
 
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-not-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
 
         ActivityScenario.launch(MainActivity::class.java)
@@ -336,12 +336,12 @@ class GiapUpgradeTests : BaseMockTest {
         )
 
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",

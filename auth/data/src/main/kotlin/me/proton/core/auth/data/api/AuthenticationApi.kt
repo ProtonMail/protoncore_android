@@ -39,22 +39,22 @@ import retrofit2.http.Tag
 
 interface AuthenticationApi : BaseRetrofitApi {
 
-    @POST("auth/info")
+    @POST("auth/v4/info")
     suspend fun getAuthInfo(@Body request: AuthInfoRequest): AuthInfoResponse
 
-    @GET("auth/modulus")
+    @GET("auth/v4/modulus")
     suspend fun getRandomModulus(): ModulusResponse
 
-    @GET("auth/scopes")
+    @GET("auth/v4/scopes")
     suspend fun getScopes(): ScopesResponse
 
-    @POST("auth")
+    @POST("auth/v4")
     suspend fun performLogin(@Body request: LoginRequest): LoginResponse
 
-    @POST("auth/2fa")
+    @POST("auth/v4/2fa")
     suspend fun performSecondFactor(@Body request: SecondFactorRequest): SecondFactorResponse
 
-    @DELETE("auth")
+    @DELETE("auth/v4")
     suspend fun revokeSession(@Tag timeout: TimeoutOverride): GenericResponse
 
     @POST("core/v4/validate/email")

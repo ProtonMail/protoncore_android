@@ -71,12 +71,12 @@ class CardPaymentTests : BaseMockTest {
             "POST/payments/v4/subscription-mail-plus-proton-managed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
 
         ActivityScenario.launch(AddAccountActivity::class.java)
@@ -108,12 +108,12 @@ class CardPaymentTests : BaseMockTest {
             "POST/payments/v4/subscription-mail-plus-google-managed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
 
         ActivityScenario.launch(AddAccountActivity::class.java)
@@ -161,16 +161,16 @@ class CardPaymentTests : BaseMockTest {
             "GET/payments/v4/subscription-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-not-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
@@ -221,16 +221,16 @@ class CardPaymentTests : BaseMockTest {
             "GET/payments/v4/subscription-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-not-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
@@ -274,16 +274,16 @@ class CardPaymentTests : BaseMockTest {
             "GET/payments/v4/subscription-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-not-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-not-subscribed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/organizations",
-            "GET/organizations-none.json", 422
+            "GET", "/core/v4/organizations",
+            "GET/core/v4/organizations-none.json", 422
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",

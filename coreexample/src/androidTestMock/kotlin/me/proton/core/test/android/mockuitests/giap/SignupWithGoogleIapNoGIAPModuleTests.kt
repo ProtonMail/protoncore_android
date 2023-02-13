@@ -100,16 +100,16 @@ class SignupWithGoogleIapNoGIAPModuleTests {
             "GET/payments/v4/status/google-all-disabled.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-subscribed.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
             "POST/payments/v4/subscription-mail-plus-google-managed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
 
         ActivityScenario.launch(AddAccountActivity::class.java)
@@ -134,16 +134,16 @@ class SignupWithGoogleIapNoGIAPModuleTests {
             "GET/payments/v4/status/google.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/users",
-            "GET/users-with-keys-subscribed.json"
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-subscribed.json"
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
             "POST/payments/v4/subscription-mail-plus-google-managed.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/addresses",
-            "GET/addresses-with-keys.json"
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
         )
 
         ActivityScenario.launch(AddAccountActivity::class.java)

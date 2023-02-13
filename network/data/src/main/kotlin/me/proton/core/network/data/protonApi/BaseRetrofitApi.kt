@@ -32,7 +32,7 @@ interface BaseRetrofitApi {
     @POST("auth/v4/sessions")
     suspend fun requestToken(@Body request: RequestTokenRequest): TokenResponse
 
-    @POST("auth/refresh")
+    @POST("auth/v4/refresh")
     suspend fun refreshToken(@Body body: RefreshTokenRequest): TokenResponse
 
     @GET("tests/ping")

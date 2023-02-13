@@ -24,9 +24,9 @@ import me.proton.core.usersettings.data.api.response.SingleOrganizationResponse
 import retrofit2.http.GET
 
 interface OrganizationApi : BaseRetrofitApi {
-    @GET("organizations")
+    @GET("core/v4/organizations")
     suspend fun getOrganization(): SingleOrganizationResponse
 
-    @GET("organizations/keys")
+    @GET("core/v4/organizations/keys")
     suspend fun getOrganizationKeys(): OrganizationKeysResponse
 }

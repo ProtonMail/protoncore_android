@@ -37,24 +37,24 @@ import retrofit2.http.Tag
 
 interface KeyApi : BaseRetrofitApi {
 
-    @GET("keys/salts")
+    @GET("core/v4/keys/salts")
     suspend fun getSalts(): KeySaltsResponse
 
-    @GET("keys")
+    @GET("core/v4/keys")
     suspend fun getPublicAddressKeys(
         @Query("Email") email: String,
         @Tag cacheOverride: CacheOverride? = null
     ): PublicAddressKeysResponse
 
-    @POST("keys/address")
+    @POST("core/v4/keys/address")
     suspend fun createAddressKey(@Body request: CreateAddressKeyRequest): CreateAddressKeyResponse
 
-    @POST("keys")
+    @POST("core/v4/keys")
     suspend fun createAddressKeyOld(@Body request: CreateAddressKeyRequest): CreateAddressKeyResponse
 
-    @POST("keys/setup")
+    @POST("core/v4/keys/setup")
     suspend fun setupInitialKeys(@Body request: SetupInitialKeysRequest): SetupInitialKeysResponse
 
-    @PUT("keys/private")
+    @PUT("core/v4/keys/private")
     suspend fun updatePrivateKeys(@Body request: UpdateKeysForPasswordChangeRequest): SRPAuthenticationResponse
 }

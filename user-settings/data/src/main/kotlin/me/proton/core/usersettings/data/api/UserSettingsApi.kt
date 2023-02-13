@@ -31,15 +31,15 @@ import retrofit2.http.PUT
 
 internal interface UserSettingsApi : BaseRetrofitApi {
 
-    @PUT("settings/username")
+    @PUT("core/v4/settings/username")
     suspend fun setUsername(@Body request: SetUsernameRequest): GenericResponse
 
-    @PUT("settings/email")
+    @PUT("core/v4/settings/email")
     suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): UpdateUserSettingsResponse
 
-    @GET("settings")
+    @GET("core/v4/settings")
     suspend fun getUserSettings(): SingleUserSettingsResponse
 
-    @PUT("settings/password")
+    @PUT("core/v4/settings/password")
     suspend fun updateLoginPassword(@Body request: UpdateLoginPasswordRequest): UpdateUserSettingsResponse
 }
