@@ -22,7 +22,7 @@ import studio.forface.easygradle.dsl.*
 plugins {
     id("application")
     id("java")
-    id("org.jetbrains.kotlin.jvm")
+    alias(libs.plugins.kotlin.gradle)
 }
 
 application {
