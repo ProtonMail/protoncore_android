@@ -667,6 +667,11 @@ public final class me/proton/core/presentation/utils/ScreenContentProtectorKt {
 	public static synthetic fun protectScreen$default (Landroidx/fragment/app/Fragment;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;ILjava/lang/Object;)Lme/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate;
 }
 
+public final class me/proton/core/presentation/utils/ScreenViewExtensionsKt {
+	public static final fun launchOnScreenView (Landroidx/activity/ComponentActivity;Lkotlin/jvm/functions/Function1;)V
+	public static final fun launchOnScreenView (Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;)V
+}
+
 public final class me/proton/core/presentation/utils/SnackType : java/lang/Enum {
 	public static final field Error Lme/proton/core/presentation/utils/SnackType;
 	public static final field Norm Lme/proton/core/presentation/utils/SnackType;
