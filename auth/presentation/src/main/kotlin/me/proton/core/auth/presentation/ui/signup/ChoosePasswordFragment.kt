@@ -28,6 +28,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupChoosePassword
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -71,7 +72,9 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
             }
         }
 
-        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.createPassword)
+        launchOnScreenView {
+            signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.createPassword)
+        }
     }
 
     private fun onNextClicked() {

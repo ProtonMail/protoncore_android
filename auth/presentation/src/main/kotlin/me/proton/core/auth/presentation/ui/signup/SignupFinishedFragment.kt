@@ -28,6 +28,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupFinishedBindin
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.Product
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
@@ -60,7 +61,9 @@ class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished)
             }
         }
 
-        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.congratulations)
+        launchOnScreenView {
+            signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.congratulations)
+        }
     }
 
     override fun onBackPressed() {

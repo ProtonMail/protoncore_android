@@ -43,6 +43,7 @@ import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
@@ -114,7 +115,10 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         observeProcessingStates()
-        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.setRecoveryMethod)
+
+        launchOnScreenView {
+            signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.setRecoveryMethod)
+        }
     }
 
     /** Adjusts the UI, depending on the current account type. */

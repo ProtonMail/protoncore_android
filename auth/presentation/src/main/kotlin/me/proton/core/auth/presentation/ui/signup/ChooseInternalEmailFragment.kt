@@ -42,6 +42,7 @@ import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -117,7 +118,9 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             }
             .launchIn(lifecycleScope)
 
-        signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
+        launchOnScreenView {
+            signupViewModel.onScreenView(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
+        }
     }
 
     private fun onNextClicked() {
