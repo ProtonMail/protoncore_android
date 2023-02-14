@@ -12,10 +12,11 @@ public class me/proton/core/humanverification/data/HumanVerificationListenerImpl
 }
 
 public final class me/proton/core/humanverification/data/HumanVerificationManagerImpl : me/proton/core/humanverification/domain/HumanVerificationManager, me/proton/core/humanverification/domain/HumanVerificationWorkflowHandler, me/proton/core/network/domain/humanverification/HumanVerificationListener, me/proton/core/network/domain/humanverification/HumanVerificationProvider {
-	public fun <init> (Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
+	public fun <init> (Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public fun addDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun handleHumanVerificationCancelled (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun handleHumanVerificationFailed (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun handleHumanVerificationSuccess (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onHumanVerificationInvalid (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

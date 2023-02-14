@@ -45,7 +45,6 @@ class HumanVerificationWebViewClient(
     private val alternativeUrl: String?,
     private val networkRequestOverrider: NetworkRequestOverrider,
     private val onResourceLoadingError: (request: WebResourceRequest?, response: WebResponseError?) -> Unit,
-    private val onWebLocationChanged: (String) -> Unit,
     @HumanVerificationApiHost private val verifyAppUrl: String
 ) : WebViewClient() {
     private val rootDomain: String = when {
@@ -65,11 +64,6 @@ class HumanVerificationWebViewClient(
             needsExtraHeaderForAPI -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
         }
-    }
-
-    override fun onPageFinished(view: WebView, url: String) {
-        super.onPageFinished(view, url)
-        onWebLocationChanged(url)
     }
 
     override fun onReceivedHttpError(
@@ -109,13 +103,15 @@ class HumanVerificationWebViewClient(
     }
 
     private fun tryAllowingSelfSignedDoHCert(error: SslError): Boolean {
-        return if (error.primaryError == SslError.SSL_UNTRUSTED && error.url.toUri().isAlternativeUrl()) {
+        val isAlternativeUrl = error.url.toUri().isAlternativeUrl()
+        return if (error.primaryError == SslError.SSL_UNTRUSTED && isAlternativeUrl) {
             val x509Certificate = error.certificate.getCompatX509Cert()
             if (x509Certificate == null) {
                 false
             } else {
-                val trustManager = LeafSPKIPinningTrustManager(Constants.ALTERNATIVE_API_SPKI_PINS)
-                runCatching { trustManager.checkServerTrusted(arrayOf(x509Certificate), "generic") }.isSuccess
+                LeafSPKIPinningTrustManager(Constants.ALTERNATIVE_API_SPKI_PINS).runCatching {
+                    checkServerTrusted(arrayOf(x509Certificate), "generic")
+                }.isSuccess
             }
         } else false
     }
@@ -167,7 +163,8 @@ class HumanVerificationWebViewClient(
         }
 
         // We need to remove the CSP header for DoH to work
-        val needsCspRemoval = Uri.parse(url).isAlternativeUrl() && response.responseHeaders.containsKey(CSP_HEADER)
+        val isAlternativeUrl = Uri.parse(url).isAlternativeUrl()
+        val needsCspRemoval = isAlternativeUrl && response.responseHeaders.containsKey(CSP_HEADER)
         val filteredHeaders = if (needsCspRemoval) {
             response.responseHeaders.toMutableMap().also { it.remove(CSP_HEADER) }
         } else {

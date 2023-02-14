@@ -27,6 +27,8 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.HvResultTotalV1
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +36,8 @@ import javax.inject.Singleton
 class HumanVerificationManagerImpl @Inject constructor(
     private val humanVerificationProvider: HumanVerificationProvider,
     private val humanVerificationListener: HumanVerificationListener,
-    private val humanVerificationRepository: HumanVerificationRepository
+    private val humanVerificationRepository: HumanVerificationRepository,
+    private val observabilityManager: ObservabilityManager
 ) : HumanVerificationManager, HumanVerificationWorkflowHandler,
     HumanVerificationProvider by humanVerificationProvider,
     HumanVerificationListener by humanVerificationListener {
@@ -57,6 +60,7 @@ class HumanVerificationManagerImpl @Inject constructor(
             tokenType = tokenType,
             tokenCode = tokenCode
         )
+        observabilityManager.enqueue(HvResultTotalV1(HvResultTotalV1.Status.success))
     }
 
     override suspend fun handleHumanVerificationFailed(clientId: ClientId) {
@@ -64,5 +68,14 @@ class HumanVerificationManagerImpl @Inject constructor(
             clientId = clientId,
             state = HumanVerificationState.HumanVerificationFailed,
         )
+        observabilityManager.enqueue(HvResultTotalV1(HvResultTotalV1.Status.failure))
+    }
+
+    override suspend fun handleHumanVerificationCancelled(clientId: ClientId) {
+        humanVerificationRepository.updateHumanVerificationState(
+            clientId = clientId,
+            state = HumanVerificationState.HumanVerificationCancelled,
+        )
+        observabilityManager.enqueue(HvResultTotalV1(HvResultTotalV1.Status.cancellation))
     }
 }

@@ -34,6 +34,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.observability.domain.ObservabilityManager
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -45,6 +46,7 @@ class HumanVerificationListenerImplTest {
     private lateinit var humanVerificationManager: HumanVerificationManager
 
     private val humanVerificationRepository = mockk<HumanVerificationRepository>()
+    private val observabilityManager = mockk<ObservabilityManager>()
 
     private val session1 = Session(
         sessionId = SessionId("session1"),
@@ -70,7 +72,8 @@ class HumanVerificationListenerImplTest {
         humanVerificationManager = HumanVerificationManagerImpl(
             humanVerificationProvider,
             humanVerificationListener,
-            humanVerificationRepository
+            humanVerificationRepository,
+            observabilityManager
         )
 
         coEvery { humanVerificationRepository.insertHumanVerificationDetails(any()) } returns Unit

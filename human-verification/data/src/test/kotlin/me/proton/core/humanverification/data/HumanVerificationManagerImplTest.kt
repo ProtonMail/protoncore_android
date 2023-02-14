@@ -23,6 +23,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -35,13 +36,16 @@ import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.HvResultTotalV1
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class HumanVerificationManagerImplTest {
 
-    private val humanVerificationRepository = mockk<HumanVerificationRepository>()
+    private val humanVerificationRepository = mockk<HumanVerificationRepository>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
 
     private lateinit var humanVerificationProvider: HumanVerificationProvider
     private lateinit var humanVerificationListener: HumanVerificationListener
@@ -63,7 +67,8 @@ class HumanVerificationManagerImplTest {
         humanVerificationManager = HumanVerificationManagerImpl(
             humanVerificationProvider,
             humanVerificationListener,
-            humanVerificationRepository
+            humanVerificationRepository,
+            observabilityManager
         )
     }
 
@@ -165,5 +170,35 @@ class HumanVerificationManagerImplTest {
         val stateLists = humanVerificationManager.onHumanVerificationStateChanged().toList()
         assertEquals(1, stateLists.size)
         assertEquals(HumanVerificationState.HumanVerificationFailed, stateLists[0].state)
+    }
+
+    @Test
+    fun `on handleHumanVerificationSuccess, enqueue hv observability success`() = runTest {
+        // GIVEN
+        val result = HvResultTotalV1(HvResultTotalV1.Status.success)
+        // WHEN
+        humanVerificationManager.handleHumanVerificationSuccess(clientId, "token", "code")
+        // THEN
+        verify { observabilityManager.enqueue(result, any()) }
+    }
+
+    @Test
+    fun `on handleHumanVerificationFailed, enqueue hv observability failure`() = runTest {
+        // GIVEN
+        val result = HvResultTotalV1(HvResultTotalV1.Status.failure)
+        // WHEN
+        humanVerificationManager.handleHumanVerificationFailed(clientId)
+        // THEN
+        verify { observabilityManager.enqueue(result, any()) }
+    }
+
+    @Test
+    fun `on handleHumanVerificationCancelled, enqueue hv observability cancellation`() = runTest {
+        // GIVEN
+        val result = HvResultTotalV1(HvResultTotalV1.Status.cancellation)
+        // WHEN
+        humanVerificationManager.handleHumanVerificationCancelled(clientId)
+        // THEN
+        verify { observabilityManager.enqueue(result, any()) }
     }
 }

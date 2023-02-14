@@ -29,6 +29,9 @@ import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1
+import me.proton.core.observability.domain.metrics.HvScreenViewTotalV1
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import javax.inject.Inject
@@ -39,6 +42,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HV3ViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
+    private val observabilityManager: ObservabilityManager,
     private val accountRepository: AccountRepository,
     private val getUserSettings: GetUserSettings,
     private val networkPrefs: NetworkPrefs,
@@ -67,17 +71,29 @@ class HV3ViewModel @Inject constructor(
 
     suspend fun onHumanVerificationResult(
         clientId: ClientId,
-        token: HumanVerificationToken?
+        token: HumanVerificationToken?,
+        cancelled: Boolean,
     ) = withContext(backgroundContext) {
-        if (token != null) {
-            humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
+        when {
+            cancelled -> humanVerificationWorkflowHandler.handleHumanVerificationCancelled(clientId)
+            token == null -> humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId)
+            else -> humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
                 clientId = clientId,
                 tokenType = token.type,
                 tokenCode = token.code
             )
-        } else {
-            humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
         }
     }
-}
 
+    fun onScreenView() {
+        observabilityManager.enqueue(HvScreenViewTotalV1(HvScreenViewTotalV1.ScreenId.hv3))
+    }
+
+    fun onPageLoad(status: HvPageLoadTotalV1.Status) {
+        val routing = when {
+            activeAltUrlForDoH != null -> HvPageLoadTotalV1.Routing.alternative
+            else -> HvPageLoadTotalV1.Routing.standard
+        }
+        observabilityManager.enqueue(HvPageLoadTotalV1(status, routing))
+    }
+}

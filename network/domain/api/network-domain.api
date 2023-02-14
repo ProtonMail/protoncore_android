@@ -472,6 +472,7 @@ public abstract interface class me/proton/core/network/domain/humanverification/
 }
 
 public final class me/proton/core/network/domain/humanverification/HumanVerificationState : java/lang/Enum {
+	public static final field HumanVerificationCancelled Lme/proton/core/network/domain/humanverification/HumanVerificationState;
 	public static final field HumanVerificationFailed Lme/proton/core/network/domain/humanverification/HumanVerificationState;
 	public static final field HumanVerificationInvalid Lme/proton/core/network/domain/humanverification/HumanVerificationState;
 	public static final field HumanVerificationNeeded Lme/proton/core/network/domain/humanverification/HumanVerificationState;

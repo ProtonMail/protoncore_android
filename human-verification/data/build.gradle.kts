@@ -37,6 +37,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.networkData),
         project(Module.networkDomain),
+        project(Module.observabilityDomain),
         `javax-inject`,
         retrofit,
         `serialization-core`,

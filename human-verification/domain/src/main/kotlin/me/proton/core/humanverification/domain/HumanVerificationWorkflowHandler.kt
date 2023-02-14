@@ -33,4 +33,9 @@ interface HumanVerificationWorkflowHandler {
      * Handle HumanVerification failure.
      */
     suspend fun handleHumanVerificationFailed(clientId: ClientId)
+
+    /**
+     * Handle HumanVerification cancellation.
+     */
+    suspend fun handleHumanVerificationCancelled(clientId: ClientId)
 }

@@ -29,7 +29,6 @@ import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import androidx.annotation.MainThread
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
@@ -47,12 +46,14 @@ import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationV3Binding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
+import me.proton.core.humanverification.presentation.ui.common.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.ui.common.REQUEST_KEY
 import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERIFICATION
+import me.proton.core.humanverification.presentation.ui.common.WebResponseError
 import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.MessageType
 import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.Type
-import me.proton.core.humanverification.presentation.ui.common.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.utils.showHelp
+import me.proton.core.humanverification.presentation.utils.toHvPageLoadStatus
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ExtraParams
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ViewModel
 import me.proton.core.network.domain.client.ClientId
@@ -60,8 +61,10 @@ import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.client.getId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.normSnack
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.viewBinding
@@ -108,7 +111,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             toolbar.apply {
                 setNavigationIcon(R.drawable.ic_proton_close)
                 setNavigationOnClickListener {
-                    setResultAndDismiss(token = null)
+                    setResultAndDismiss(token = null, cancelled = true)
                 }
                 setOnMenuItemClickListener {
                     when (it.itemId) {
@@ -124,6 +127,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         }
 
         observeNestedScroll()
+        launchOnScreenView { viewModel.onScreenView() }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -142,8 +146,9 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
-            onResourceLoadingError = { _, _ -> lifecycleScope.launch { handleResourceLoadingError() } },
-            onWebLocationChanged = {},
+            onResourceLoadingError = { _, response ->
+                lifecycleScope.launch { handleResourceLoadingError(response) }
+            },
             verifyAppUrl = humanVerificationBaseUrl
         )
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
@@ -202,10 +207,11 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     }
 
     @MainThread
-    private fun handleResourceLoadingError() {
+    private fun handleResourceLoadingError(error: WebResponseError?) {
         this.view ?: return
         view?.errorSnack(R.string.presentation_connectivity_issues)
         setLoading(false)
+        viewModel.onPageLoad(error.toHvPageLoadStatus())
     }
 
     @MainThread
@@ -215,14 +221,17 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             Type.Success -> {
                 val token = requireNotNull(response.payload?.token)
                 val tokenType = requireNotNull(response.payload?.type)
-                setResultAndDismiss(HumanVerificationToken(token, tokenType))
+                setResultAndDismiss(HumanVerificationToken(token, tokenType), cancelled = false)
             }
             Type.Notification -> {
                 val message = requireNotNull(response.payload?.text)
                 val messageType = requireNotNull(response.payload?.type?.let { MessageType.map[it] })
                 handleNotification(message, messageType)
             }
-            Type.Loaded -> setLoading(false)
+            Type.Loaded -> {
+                setLoading(false)
+                viewModel.onPageLoad(HvPageLoadTotalV1.Status.http2xx)
+            }
             Type.Resize -> {} // No action needed
         }
     }
@@ -247,11 +256,11 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     override fun onBackPressed() {
         with(binding.humanVerificationWebView) {
             if (canGoBack()) goBack()
-            else setResultAndDismiss(token = null)
+            else setResultAndDismiss(token = null, cancelled = true)
         }
     }
 
-    private fun setResultAndDismiss(token: HumanVerificationToken?) {
+    private fun setResultAndDismiss(token: HumanVerificationToken?, cancelled: Boolean) {
         val result = HumanVerificationResult(
             clientId = clientId.id,
             clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
@@ -263,7 +272,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         setFragmentResult(REQUEST_KEY, resultBundle)
 
         lifecycleScope.launch {
-            viewModel.onHumanVerificationResult(clientId, token)
+            viewModel.onHumanVerificationResult(clientId, token, cancelled)
             // Extra delay for better UX while replacing underlying fragments
             delay(100)
             dismissAllowingStateLoss()

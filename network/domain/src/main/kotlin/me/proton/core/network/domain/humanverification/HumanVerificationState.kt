@@ -40,6 +40,11 @@ enum class HumanVerificationState {
     HumanVerificationFailed,
 
     /**
+     * The human verification has been cancelled.
+     */
+    HumanVerificationCancelled,
+
+    /**
      * The human verification token/code is invalid.
      */
     HumanVerificationInvalid

@@ -52,7 +52,8 @@ open class HumanVerificationListenerImpl @Inject constructor(
             .filter {
                 it in listOf(
                     HumanVerificationState.HumanVerificationSuccess,
-                    HumanVerificationState.HumanVerificationFailed
+                    HumanVerificationState.HumanVerificationFailed,
+                    HumanVerificationState.HumanVerificationCancelled,
                 )
             }
             .first()
