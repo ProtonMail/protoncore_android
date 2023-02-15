@@ -1,5 +1,4 @@
 import org.gradle.kotlin.dsl.implementation
-import studio.forface.easygradle.dsl.*
 
 /*
  * Copyright (c) 2022 Proton Technologies AG
@@ -39,6 +38,6 @@ dependencies {
     implementation("com.github.victools:jsonschema-generator:4.28.0")
     implementation("com.github.victools:jsonschema-module-swagger-2:4.28.0")
     implementation(`swagger-annotations`)
-    implementation(`kotlin-reflect`)
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation(project(Module.observabilityDomain))
 }
