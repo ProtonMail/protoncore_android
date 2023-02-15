@@ -40,11 +40,16 @@ fun SupportSQLiteDatabase.recreateTable(
     check(oldColumns.size == newColumns.size)
     val oldColumnsSeparated = oldColumns.joinToString(",")
     val newColumnsSeparated = newColumns.joinToString(",")
+    // https://www.sqlite.org/src/info/ae9638e9c0ad0c36
+    execSQL("PRAGMA legacy_alter_table = ON")
+    execSQL("PRAGMA foreign_keys = OFF")
     execSQL("ALTER TABLE $table RENAME TO ${table}_old")
     createTable.invoke(this)
     execSQL("INSERT INTO $table($newColumnsSeparated) SELECT $oldColumnsSeparated FROM ${table}_old")
     execSQL("DROP TABLE ${table}_old")
     createIndices.invoke(this)
+    execSQL("PRAGMA foreign_keys = ON")
+    execSQL("PRAGMA legacy_alter_table = OFF")
 }
 
 /**
