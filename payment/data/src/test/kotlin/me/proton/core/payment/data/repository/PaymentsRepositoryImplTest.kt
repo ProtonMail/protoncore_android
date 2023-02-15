@@ -36,10 +36,10 @@ import me.proton.core.payment.data.api.PaymentsApi
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
-import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
@@ -409,7 +409,7 @@ class PaymentsRepositoryImplTest {
             codes = null,
             plans = mapOf("test-plan-id" to 1),
             cycle = SubscriptionCycle.YEARLY,
-            payment = PaymentBody.TokenPaymentBody(ProtonPaymentToken("test-token-id")),
+            payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id")),
             subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         // THEN
@@ -431,7 +431,7 @@ class PaymentsRepositoryImplTest {
                 codes = null,
                 plans = mapOf("test-plan-id" to 1),
                 cycle = SubscriptionCycle.YEARLY,
-                payment = PaymentBody.TokenPaymentBody(ProtonPaymentToken("test-token-id")),
+                payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id")),
                 subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         }

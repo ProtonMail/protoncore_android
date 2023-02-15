@@ -18,15 +18,15 @@
 
 package me.proton.core.payment.domain.entity
 
-public sealed class PaymentType(public val type: String) {
-    public data class CreditCard(val card: Card) : PaymentType("card")
-    public object PayPal : PaymentType("paypal")
-    public data class PaymentMethod(val paymentMethodId: String) : PaymentType("paymentmethod")
+public sealed class PaymentType {
+    public data class CreditCard(val card: Card) : PaymentType()
+    public object PayPal : PaymentType()
+    public data class PaymentMethod(val paymentMethodId: String) : PaymentType()
     public data class GoogleIAP(
         val productId: String,
         val purchaseToken: GooglePurchaseToken,
         val orderId: String,
         val packageName: String,
         val customerId: String
-    ) : PaymentType("google")
+    ) : PaymentType()
 }

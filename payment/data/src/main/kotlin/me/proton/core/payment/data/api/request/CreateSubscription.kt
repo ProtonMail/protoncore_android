@@ -27,8 +27,8 @@ internal data class CreateSubscription(
     val amount: Long,
     @SerialName("Currency")
     val currency: String,
-    @SerialName("Payment")
-    val payment: TokenTypePaymentBody? = null,
+    @SerialName("PaymentToken")
+    val paymentToken: String?,
     @SerialName("Codes")
     val codes: List<String>? = null,
     @SerialName("Plans")

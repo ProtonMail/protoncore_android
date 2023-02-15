@@ -24,8 +24,6 @@ import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
-import me.proton.core.payment.data.api.request.TokenDetails
-import me.proton.core.payment.data.api.request.TokenTypePaymentBody
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.BuildRetrofitApi
 import me.proton.core.test.kotlin.enqueueFromResourceFile
@@ -131,10 +129,7 @@ class PaymentsApiTest {
             CreateSubscription(
                 amount = 4788,
                 currency = "CHF",
-                payment = TokenTypePaymentBody(
-                    type = "token",
-                    tokenDetails = TokenDetails(token = "token-123")
-                ),
+                paymentToken = "token-123",
                 codes = null,
                 plans = mapOf("mail2022" to 1),
                 cycle = 12,

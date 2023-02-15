@@ -134,7 +134,7 @@ public final class me/proton/core/payment/data/repository/GooglePurchaseReposito
 
 public final class me/proton/core/payment/data/repository/PaymentsRepositoryImpl : me/proton/core/payment/domain/repository/PaymentsRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
-	public fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentBody;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createPaymentTokenExistingPaymentMethod (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createPaymentTokenGoogleIAP (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createPaymentTokenNewCreditCard (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

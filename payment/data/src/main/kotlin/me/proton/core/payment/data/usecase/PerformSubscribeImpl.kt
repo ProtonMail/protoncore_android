@@ -23,7 +23,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentBody
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -64,7 +64,7 @@ public class PerformSubscribeImpl @Inject constructor(
             sessionUserId = userId,
             amount = amount,
             currency = currency,
-            payment = if (amount == 0L) null else PaymentBody.TokenPaymentBody(paymentToken!!),
+            payment = if (amount == 0L) null else PaymentTokenEntity(paymentToken!!),
             codes = codes,
             plans = planNames.map { it to MAX_PLAN_QUANTITY }.toMap(),
             cycle = cycle,

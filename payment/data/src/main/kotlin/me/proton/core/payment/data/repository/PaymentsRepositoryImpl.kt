@@ -28,14 +28,12 @@ import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
-import me.proton.core.payment.data.api.request.TokenDetails
-import me.proton.core.payment.data.api.request.TokenTypePaymentBody
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -166,15 +164,15 @@ public class PaymentsRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId,
         amount: Long,
         currency: Currency,
-        payment: PaymentBody?,
+        payment: PaymentTokenEntity?,
         codes: List<String>?,
         plans: PlanQuantity,
         cycle: SubscriptionCycle,
         subscriptionManagement: SubscriptionManagement
     ): Subscription =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            val paymentBodyEntity = if (payment is PaymentBody.TokenPaymentBody) {
-                TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token.value))
+            val paymentBodyEntity = if (payment is PaymentTokenEntity) {
+                payment.token.value
             } else null
             createUpdateSubscription(
                 CreateSubscription(

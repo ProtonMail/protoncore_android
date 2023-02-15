@@ -21,9 +21,9 @@ package me.proton.core.payment.domain.repository
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentStatus
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -134,7 +134,7 @@ public interface PaymentsRepository {
         sessionUserId: SessionUserId,
         amount: Long,
         currency: Currency,
-        payment: PaymentBody?,
+        payment: PaymentTokenEntity?,
         codes: List<String>? = null,
         plans: PlanQuantity,
         cycle: SubscriptionCycle,

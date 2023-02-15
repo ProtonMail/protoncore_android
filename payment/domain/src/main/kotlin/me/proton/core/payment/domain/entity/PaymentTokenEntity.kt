@@ -18,6 +18,4 @@
 
 package me.proton.core.payment.domain.entity
 
-public sealed class PaymentBody(public val type: String) {
-    public data class TokenPaymentBody(val token: ProtonPaymentToken) : PaymentBody("token")
-}
+public data class PaymentTokenEntity(val token: ProtonPaymentToken)

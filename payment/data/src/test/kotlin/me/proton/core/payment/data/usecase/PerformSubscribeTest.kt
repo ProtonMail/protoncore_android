@@ -28,7 +28,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentBody
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -193,7 +193,7 @@ class PerformSubscribeTest {
                 sessionUserId = testUserId,
                 amount = 1,
                 currency = Currency.CHF,
-                payment = PaymentBody.TokenPaymentBody(testPaymentToken),
+                payment = PaymentTokenEntity(testPaymentToken),
                 codes = null,
                 plans = listOf(testPlanName).map { it to 1 }.toMap(),
                 cycle = SubscriptionCycle.YEARLY,
@@ -220,7 +220,7 @@ class PerformSubscribeTest {
                 sessionUserId = testUserId,
                 amount = 1,
                 currency = Currency.CHF,
-                payment = PaymentBody.TokenPaymentBody(testPaymentToken),
+                payment = PaymentTokenEntity(testPaymentToken),
                 codes = null,
                 plans = listOf(testPlanName).map { it to 1 }.toMap(),
                 cycle = SubscriptionCycle.YEARLY,
