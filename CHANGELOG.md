@@ -11,6 +11,51 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.10.0] - 2023-02-16
+
+### Chores
+
+- observability:
+  - Update signup metrics to use `launchOnScreenView`.
+  - Adjust max event count and delay for sending the events.
+  - Provide dagger dependencies.
+
+### Features
+
+- observability:
+  - Make `runWithObservability` more generic.
+  - Add extensions for launching coroutines on "screen view".
+  - Observability metrics for signup.
+  - Add a delay before sending the events, it there's only one event enqueued.
+  - Generate JSON schemas from Kotlin classes.
+  - Worker for sending observability events.
+  - Implement API call for sending observability events.
+  - Add observability data unit tests.
+  - Add observability data.
+  - Add `ObservabilityManager` and related classes.
+  - Generate Kotlin classes from JSON schemas.
+  - Gradle task for generating Kotlin classes from JSON schema files with metrics definitions.
+- observability-data:
+  - Add enabled flag unit tests.
+  - Add enabled flag unit tests.
+  - Add enabled flag.
+- payment:
+  - Payment token body adjustment.
+- payment-iap:
+  - Check for user credits during the payments providers checks.
+  - Remove the payment error when user cancelled the payment and set card as default provider when all providers are enabled.
+  - Fix gpay button appearance.
+- util-kotlin:
+  - Add `serializeToJson` extension function.
+
+### Bug Fixes
+
+- Fixed foreign key reference to be renamed while recreating/altering target table.
+- Fixed Second Factor error handling on 401 (e.g. 3x wrong).
+- observability:
+  - Do not send class discriminator ("type" property) when sending observability events.
+  - Add missing `@Body` annotation.
+
 ## [9.9.1] - 2023-01-27
 
 ### Bug Fixes
