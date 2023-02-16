@@ -56,6 +56,12 @@ If needed, you can also manually update this file (provided the general structur
   - Do not send class discriminator ("type" property) when sending observability events.
   - Add missing `@Body` annotation.
 
+## [9.9.2] - 2023-02-16
+
+### Bug Fixes
+
+- Fixed foreign key reference to be renamed while recreating/altering target table.
+
 ## [9.9.1] - 2023-01-27
 
 ### Bug Fixes
