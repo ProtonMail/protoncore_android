@@ -19,6 +19,7 @@
 package me.proton.core.observability.domain.metrics
 
 import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.EmptyStatusLabels
@@ -27,8 +28,6 @@ import me.proton.core.observability.domain.metrics.common.EmptyStatusLabels
 @Schema(description = "Unredeemed purchase detected on billing screen.")
 @SchemaId("https://proton.me/android_core_checkout_giapBilling_unredeemed_total_v1.schema.json")
 public data class CheckoutGiapBillingUnredeemedTotalV1(
-    override val Labels: EmptyStatusLabels,
-    override val Value: Long = 1
-) : ObservabilityData() {
-    public constructor() : this(EmptyStatusLabels())
-}
+    @Required override val Labels: EmptyStatusLabels = EmptyStatusLabels(),
+    @Required override val Value: Long = 1
+) : ObservabilityData()

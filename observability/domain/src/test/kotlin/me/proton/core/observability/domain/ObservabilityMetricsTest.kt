@@ -18,11 +18,9 @@
 
 package me.proton.core.observability.domain
 
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
+import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.serialize
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -37,8 +35,8 @@ class ObservabilityMetricsTest {
     @Test
     fun metricEventSerialization() {
         val data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail)
-        val jsonString = Json.encodeToString(data)
-        val decodedData = Json.decodeFromString<SignupScreenViewTotalV1>(jsonString)
+        val jsonString = data.serialize()
+        val decodedData = jsonString.deserialize<SignupScreenViewTotalV1>()
         assertEquals(data, decodedData)
     }
 }

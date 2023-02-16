@@ -66,6 +66,7 @@ dependencies {
         `coroutines-test`,
         `hilt-android-testing`,
         junit,
+        `kotlin-reflect`,
         `kotlin-test`,
         mockk,
         robolectric
