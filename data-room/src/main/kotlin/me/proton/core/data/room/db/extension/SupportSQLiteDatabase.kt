@@ -40,16 +40,15 @@ fun SupportSQLiteDatabase.recreateTable(
     check(oldColumns.size == newColumns.size)
     val oldColumnsSeparated = oldColumns.joinToString(",")
     val newColumnsSeparated = newColumns.joinToString(",")
+    // https://gitlab.protontech.ch/proton/mobile/android/proton-libs/-/merge_requests/1123
     // https://www.sqlite.org/src/info/ae9638e9c0ad0c36
+    // https://cs.android.com/android/_/android/platform/external/sqlite/+/88147c430cc041a27d07e593ffea12b7aa586f7a
     execSQL("PRAGMA legacy_alter_table = ON")
-    execSQL("PRAGMA foreign_keys = OFF")
     execSQL("ALTER TABLE $table RENAME TO ${table}_old")
     createTable.invoke(this)
     execSQL("INSERT INTO $table($newColumnsSeparated) SELECT $oldColumnsSeparated FROM ${table}_old")
     execSQL("DROP TABLE ${table}_old")
     createIndices.invoke(this)
-    execSQL("PRAGMA foreign_keys = ON")
-    execSQL("PRAGMA legacy_alter_table = OFF")
 }
 
 /**
