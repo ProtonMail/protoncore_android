@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.10.1] - 2023-02-17
+
+### Bug Fixes
+
+- Revert PRAGMA foreign_keys. Keep PRAGMA legacy_alter_table always ON (default in Android).
+
 ## [9.10.0] - 2023-02-16
 
 ### Chores
