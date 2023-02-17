@@ -56,6 +56,12 @@ If needed, you can also manually update this file (provided the general structur
   - Do not send class discriminator ("type" property) when sending observability events.
   - Add missing `@Body` annotation.
 
+## [9.9.3] - 2023-02-17
+
+### Bug Fixes
+
+- Revert PRAGMA foreign_keys. Keep PRAGMA legacy_alter_table always ON (default in Android).
+
 ## [9.9.2] - 2023-02-16
 
 ### Bug Fixes
