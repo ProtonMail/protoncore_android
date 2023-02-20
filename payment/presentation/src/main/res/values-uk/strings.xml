@@ -23,19 +23,19 @@
   <string name="payments_3ds_not_approved">Підтвердження 3DS було відхилено.</string>
   <string name="payments_error_card_name">Необхідно ввести ім\'я, вказане на картці.</string>
   <string name="payments_error_card_number">Недійсний номер картки.</string>
-  <string name="payments_error_cvc">Будь ласка, введіть чинний код захисту.</string>
+  <string name="payments_error_cvc">Будь ласка, введіть дійсний код безпеки.</string>
   <string name="payments_error_session">Щоб підписати зареєстрованого користувача потрібен дійсний ідентифікатор сеансу.</string>
   <string name="payments_error_signup_paymentmethod">Не вдалося зареєструватися за допомогою наявного способу оплати.</string>
-  <string name="payments_error_invalid_session">Нечинний сеанс.</string>
-  <string name="payments_no_payment_provider">Не знайдена жодна активна платіжна служба.</string>
+  <string name="payments_error_invalid_session">Недійсний сеанс.</string>
+  <string name="payments_no_payment_provider">Не знайдено активного обробника платежу.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>
   <string name="payments_add_credit_debit_card">Додати нову кредитну/платіжну картку</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Сплатити %s</string>
-  <string name="payments_pay_with" comment="Example: Pay with debit card">Оплатити за допомогою</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Сплатити за допомогою</string>
   <string name="payments_method_icon">Піктограма способу оплати.</string>
-  <string name="payments_method_surcharge">*Покупки, здійснені за допомогою цього способу оплати, обкладаються комісією.</string>
+  <string name="payments_method_surcharge">*Під час покупок із використанням цього способу оплати стягується комісія.</string>
   <string name="payments_method_terms_conditions">Покупка за допомогою Google Pay означає, що ви приймаєте умови користування Google Pay і погоджуєтеся налаштувати регулярні платежі з Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Продовжити</string>
@@ -48,7 +48,7 @@
   <string name="payments_security_code">Код безпеки</string>
   <string name="payments_postal_code">Поштовий індекс</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">00/00</string>
+  <string name="payments_expiration_date_hint">ММ/РР</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Країна</string>
   <string name="payments_paying_in_process">Оплата</string>
@@ -57,14 +57,14 @@
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">н/д</string>
   <string name="payments_billing_yearly">На 1 рік</string>
-  <string name="payment_use_google_pay_instead">Використати Google Pay</string>
-  <string name="payment_use_credit_card_instead">Використати кредитну/дебетову картку</string>
+  <string name="payment_use_google_pay_instead">Натомість використати Google Pay</string>
+  <string name="payment_use_credit_card_instead">Натомість використати кредитну/платіжну картку</string>
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Підтвердити покращення облікового запису</string>
-  <string name="payments_giap_unredeemed_description">Ваш платіж за допомогою Google Pay було успішно оброблено, але процес покращення облікового запису було перервано. Застосувати платіж для покращення облікового запису зараз?</string>
-  <string name="payments_giap_unredeemed_confirm">Підтвердити перехід</string>
-  <string name="payments_giap_redeem_success">Ваш обліковий запис було успішно покращено</string>
-  <string name="payments_giap_redeem_error">Не вдалося завершити перехід. Будь ласка, повторіть спробу пізніше.</string>
+  <string name="payments_giap_unredeemed_description">Платіж через Google успішно проведено, але процес зміни тарифного плану було перервано. Застосувати ваш платіж для зміни тарифного плану зараз?</string>
+  <string name="payments_giap_unredeemed_confirm">Підтвердити зміну тарифного плану</string>
+  <string name="payments_giap_redeem_success">Ваш тарифний план успішно змінено</string>
+  <string name="payments_giap_redeem_error">Не вдалося завершити зміну тарифного плану. Будь ласка, повторіть спробу пізніше.</string>
   <!-- endregion -->
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">Дапамога</string>
+  <string name="human_verification_title">Антыспамавая праверка</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_enter_code_subtitle">Увядзіце праверачны код, які быў адпраўлены на %s.</string>
+  <string name="human_verification_enter_code_subtitle_email">Увядзіце праверачны код, які быў адпраўлены на %s. Калі вы не знайшлі яго ва ўваходных, праверце папку са спамам.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Увядзіце праверачны код, які вы атрымалі:</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
+  <string name="human_verification_option_email">Электронная пошта</string>
+  <string name="human_verification_option_email_subtitle">Ваш адрас электроннай пошты будзе выкарыстаны толькі для бягучай аднаразовай праверкі. Калі вы не знайшлі ліст ва ўваходных, праверце папку са спамам.</string>
+  <string name="human_verification_option_sms">Нумар тэлефона</string>
+  <string name="human_verification_option_sms_subtitle">Ваш нумар тэлефона будзе выкарыстаны толькі для бягучай аднаразовай праверкі.</string>
+  <string name="human_verification_get_verification_code">Атрымаць праверачны код</string>
+  <string name="human_verification_already_have_code">У мяне ўжо ёсць код</string>
+  <string name="human_verification_request_replacement_code">Не атрымалі код?</string>
+  <string name="human_verification_verify">Праверыць</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">Ці неабходна вам дапамога з антыспамавай праверкай?</string>
+  <string name="human_verification_code">Праверачны код</string>
+  <string name="human_verification_code_request_new_code_title">Запытаць новы код?</string>
+  <string name="human_verification_code_request_new_code_action">Запытаць новы код</string>
+  <string name="human_verification_code_request_new_code">Атрымаць код замены, які адпраўлены на %s.</string>
+  <string name="email">Электронная пошта</string>
+  <string name="email_hint">email@example.com</string>
+  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">Запытаць запрашэнне</string>
+  <string name="human_verification_help_manual">Калі ў вас узніклі праблемы са стварэннем уліковага запісу, запытайце запрашэнне і мы адкажам на працягу аднаго працоўнага дня.</string>
+  <string name="human_verification_help_website_title">Наведайце наш цэнтр падтрымкі</string>
+  <string name="human_verification_help_website">Даведацца больш пра антыспамавую праверку і навошта мы яе выкарыстоўваем.</string>
+  <string name="human_verification_sending_failed">Збой адпраўкі праверачнага кода. Паспрабуйце яшчэ раз.</string>
+  <string name="human_verification_incorrect_code">Няправільны код. Паспрабуйце яшчэ раз.</string>
+  <string name="human_verification_resent_code">Мы адправілі вам іншы код.</string>
+  <string name="human_verification_captcha_failed">Збой праверкі CAPTCHA. Паспрабуйце яшчэ раз або выберыце іншы варыянт праверкі.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
+  <string name="human_verification_captcha_no_connectivity">Няма злучэння. Немагчыма загрузіць CAPTCHA.</string>
+  <string name="human_verification_action_retry">Паўтарыць</string>
+  <string name="human_verification_method_loading_failed">Немагчыма загрузіць бягучы метад праверкі. Калі праблема застанецца, паспрабуйце адзін з іншых метадаў пры іх даступнасці, або звярніцеся да даведкі.</string>
+</resources>

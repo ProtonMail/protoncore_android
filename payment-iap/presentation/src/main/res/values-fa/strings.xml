@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">*شامل اضافه بها برای ارائه دهنده کارمزد و مالیات اضافی میشود.</string>
-  <string name="payments_iap_terms_conditions">با زدن روی "خرید از طریق Google Play" شما شرایط و ضوابط Google Play را قبول میکنید و برپا کردن پرداخت مکرر با Google را تایید میکنید.</string>
-  <string name="payments_iap_invalid_google_plan">نام طرح نامعتبر انتخاب شد. لطفا روند را از سر بگیرید.</string>
-  <string name="payments_iap_error_google_plan_price">مشکل با قیمت محصول Google. لطفا روند را از سر بگیرید.</string>
-  <string name="payments_iap_error_fetching_google_plan">مشکل با واکشی محصول Google. لطفا روند را از سر بگیرید.</string>
-  <string name="payments_iap_error_already_owned">شما همین حالا این محصول را دارید. لطفا یکی دیگر را انتخاب کنید.</string>
+  <string name="payments_iap_terms_conditions">با زدن روی \"خرید از طریق Google Play\" شما شرایط و ضوابط Google Play را قبول میکنید و برپا کردن پرداخت مکرر با Google را تایید میکنید.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
+  <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
   <string name="payments_iap_error_billing_client_unavailable">مشتری صورت حساب Google در دسترس یا متصل نیست.</string>
-  <string name="payments_iap_general_error">خطایی رخ داده است. لطفا روند را از سر بگیرید.</string>
+  <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
 </resources>

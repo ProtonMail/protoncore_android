@@ -19,24 +19,24 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Se ha producido un error.</string>
-  <string name="payments_no_connectivity">No hay conexión disponible para mostrar la página de confirmación 3DS.</string>
+  <string name="payments_no_connectivity">No hay conectividad para mostrar la página de confirmación 3DS.</string>
   <string name="payments_3ds_not_approved">La aprobación de 3DS ha sido rechazada.</string>
-  <string name="payments_error_card_name">El titular de la tarjeta es obligatorio.</string>
-  <string name="payments_error_card_number">Número de tarjeta no válido.</string>
-  <string name="payments_error_cvc">Por favor, introduce un código de seguridad válido.</string>
-  <string name="payments_error_session">El ID de sesión es necesario cuando se subscribe a un usuario conectado.</string>
-  <string name="payments_error_signup_paymentmethod">No se puede acceder con el método actual de pago.</string>
-  <string name="payments_error_invalid_session">Sesión no válida.</string>
-  <string name="payments_no_payment_provider">No se encontró ningún proveedor de pago activo.</string>
+  <string name="payments_error_card_name">El nombre del titular de la tarjeta es obligatorio.</string>
+  <string name="payments_error_card_number">Número de tarjeta inválido.</string>
+  <string name="payments_error_cvc">Introduce un código de seguridad válido.</string>
+  <string name="payments_error_session">El ID de sesión es necesario cuando se subscribe a un plan para un usuario conectado.</string>
+  <string name="payments_error_signup_paymentmethod">No es posible registrarse con el método actual de pago.</string>
+  <string name="payments_error_invalid_session">Sesión inválida.</string>
+  <string name="payments_no_payment_provider">No se ha encontrado ningún proveedor de pago activo.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Elije el método de pago</string>
+  <string name="payments_choose_payment_method">Selecciona tu método de pago</string>
   <string name="payments_add_credit_debit_card">Añadir tarjeta de crédito/débito</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Pagar %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Pagar con</string>
-  <string name="payments_method_icon">Ícono de método de pago.</string>
+  <string name="payments_method_icon">Icono de método de pago.</string>
   <string name="payments_method_surcharge">*Las compras realizadas con este método de pago tienen un recargo.</string>
-  <string name="payments_method_terms_conditions">Comprar con Google Pay significa que acepta los términos y condiciones de Google Pay y acepta configurar un pago recurrente con Google.</string>
+  <string name="payments_method_terms_conditions">Al comprar con Google Pay aceptas los términos y condiciones de Google Pay y aceptas establecer un pago recurrente con Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Continuar</string>
   <!-- endregion -->
@@ -44,7 +44,7 @@
   <string name="payments_payment_details">Detalles del pago</string>
   <string name="payments_card_name">Titular de la tarjeta</string>
   <string name="payments_card_number">Número de tarjeta</string>
-  <string name="payments_expiration_date">Fecha de expiración</string>
+  <string name="payments_expiration_date">Fecha de caducidad</string>
   <string name="payments_security_code">Código de seguridad</string>
   <string name="payments_postal_code">Código postal</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
@@ -56,15 +56,15 @@
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n/d</string>
-  <string name="payments_billing_yearly">Durante 1 año</string>
+  <string name="payments_billing_yearly">Por 1 año</string>
   <string name="payment_use_google_pay_instead">Utiliza Google Pay en su lugar</string>
   <string name="payment_use_credit_card_instead">Utiliza una tarjeta de crédito/débito en su lugar</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirmar la mejora de la cuenta</string>
-  <string name="payments_giap_unredeemed_description">Tu pago de Google Pay se procesó con éxito, pero el proceso de mejora de la cuenta fue interrumpido. ¿Quieres procesar el pago para mejorar tu cuenta ahora?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirmar la mejora</string>
-  <string name="payments_giap_redeem_success">Tu cuenta se ha actualizado correctamente.</string>
-  <string name="payments_giap_redeem_error">No se ha podido completar la actualización. Intenta más tarde.</string>
+  <string name="payments_giap_unredeemed_title">Confirmar la actualización de la cuenta</string>
+  <string name="payments_giap_unredeemed_description">Se ha procesado tu pago de Google Pay, pero el proceso de actualización de la cuenta fue interrumpido. ¿Quieres procesar el pago para actualizar tu cuenta ahora?</string>
+  <string name="payments_giap_unredeemed_confirm">Confirmar la actualización</string>
+  <string name="payments_giap_redeem_success">Tu cuenta se ha actualizado.</string>
+  <string name="payments_giap_redeem_error">No se ha podido completar la actualización. Inténtalo más tarde.</string>
   <!-- endregion -->
 </resources>

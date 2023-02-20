@@ -19,7 +19,7 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">A apărut o eroare.</string>
-  <string name="payments_no_connectivity">Nu există conectivitate pentru a afișa pagina de confirmare 3DS.</string>
+  <string name="payments_no_connectivity">Nu există conexiune pentru a afișa pagina de confirmare 3DS.</string>
   <string name="payments_3ds_not_approved">Confirmarea 3DS a fost respinsă.</string>
   <string name="payments_error_card_name">Numele de pe card este obligatoriu.</string>
   <string name="payments_error_card_number">Număr de card nevalid.</string>

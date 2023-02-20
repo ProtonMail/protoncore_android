@@ -103,16 +103,16 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">La básica para comunicaciones privadas y seguras.</string>
+  <string name="plan_id_free_header">El básico para comunicaciones privadas y seguras.</string>
   <string name="plan_id_plus_header">Buzón completo con protección avanzada.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 países</string>
-  <string name="plan_id_vpnbasic_high_speed">Velocidad alta</string>
+  <string name="plan_id_vpnbasic_high_speed">Alta velocidad</string>
   <string name="plan_id_vpnplus_adblock">Bloqueador de anuncios (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Soporte de servicio de streaming</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 países</string>
-  <string name="plan_id_vpnplus_highest_speed">Velocidad máxima</string>
+  <string name="plan_id_vpnplus_highest_speed">Máxima velocidad</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Soporte multi usuario</string>
   <string name="plan_id_visionary_header">Visionary</string>

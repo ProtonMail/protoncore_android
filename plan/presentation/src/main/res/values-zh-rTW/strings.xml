@@ -37,7 +37,7 @@
   <plurals name="plans_billing_other_period">
     <item quantity="other">為期%d個月</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">升級您的方案</string>
+  <string name="plans_upgrade_your_plan">更新升級您的方案</string>
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">取得 %s</string>
   <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
@@ -46,13 +46,13 @@
   <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
   <string name="plans_manage_your_subscription_other">您的訂閱無法在行動裝置應用程式內管理。</string>
   <string name="plans_autorenew_subscriptions">此應用程式僅提供自動續購型年約授權.</string>
-  <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置應用程式升級。</string>
+  <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置內的應用程式升級。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 儲存空間</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">多達 #proton_storage# 的儲存空間</item>
+    <item quantity="other">多達 #proton_storage# 的儲存空間。</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 儲存空間 / 使用者</item>

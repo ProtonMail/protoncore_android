@@ -19,8 +19,8 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Hjælp</string>
-  <string name="human_verification_title">Menneskelig godkendelse</string>
-  <string name="human_verification_main_subtitle">For at forhindre misbrug bedes du bekræfte, at du er menneske ved hjælp af en af følgende muligheder</string>
+  <string name="human_verification_title">Menneskelig verifikation</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Indtast den bekræftelseskode, der blev sendt til %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Indtast den bekræftelseskode, der blev sendt til %s. Hvis du ikke kan finde beskeden i din indbakke, så tjek venligst din spam-mappe.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Indtast den bekræftelseskode, du allerede har:</string>
@@ -34,8 +34,8 @@
   <string name="human_verification_request_replacement_code">Ikke modtaget koden?</string>
   <string name="human_verification_verify">Bekræft</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Har du brug for hjælp til menneskelig verificering?</string>
-  <string name="human_verification_code">Bekræftelseskode</string>
+  <string name="human_verification_help_title">Har du brug for hjælp til menneskelig verifikation?</string>
+  <string name="human_verification_code">Verifikationskode</string>
   <string name="human_verification_code_request_new_code_title">Anmod om ny kode?</string>
   <string name="human_verification_code_request_new_code_action">Anmod om ny kode</string>
   <string name="human_verification_code_request_new_code">Få en erstatningskode sendt til %s.</string>
@@ -48,12 +48,12 @@
   <string name="human_verification_help_manual">Hvis du har problemer med at oprette din konto, bedes du anmode om en invitation. Så vil vi svare inden for en arbejdsdag.</string>
   <string name="human_verification_help_website_title">Besøg vores Hjælpecenter</string>
   <string name="human_verification_help_website">Få mere at vide om menneskelig godkendelse, og hvorfor vi beder om det.</string>
-  <string name="human_verification_sending_failed">Afsendelse af bekræftelseskode mislykkedes. Prøv venligst igen.</string>
+  <string name="human_verification_sending_failed">Afsendelse af verifikationskode mislykkedes. Prøv venligst igen.</string>
   <string name="human_verification_incorrect_code">Forkert kode. Forsøg venligst igen.</string>
-  <string name="human_verification_resent_code">Vi har sendt dig en ny kode.</string>
-  <string name="human_verification_captcha_failed">Captcha-verifikation mislykkedes. Prøv en gang til eller vælg en anden bekræftelsesmulighed.</string>
+  <string name="human_verification_resent_code">Vi har sendt en ny kode til dig.</string>
+  <string name="human_verification_captcha_failed">Captcha-verifikation mislykkedes. Prøv en gang til eller vælg en anden verifikationsmulighed.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Ingen forbindelse. Kunne ikke indlæse CAPTCHA.</string>
   <string name="human_verification_action_retry">Prøv igen</string>
-  <string name="human_verification_method_loading_failed">Kunne ikke indlæse den aktuelle bekræftelsesmetode. Hvis problemet fortsætter, skal du prøve en af de andre metoder, hvis de er tilgængelige, eller tjekke Hjælp-skærmen.</string>
+  <string name="human_verification_method_loading_failed">Kunne ikke indlæse den aktuelle verifikationsmetode. Hvis problemet fortsætter, skal du prøve en af de andre metoder, hvis de er tilgængelige, eller tjekke Hjælp-skærmen.</string>
 </resources>

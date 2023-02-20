@@ -20,10 +20,10 @@
   <!-- base common strings -->
   <string name="human_verification_help">Yardım</string>
   <string name="human_verification_title">İnsan doğrulaması</string>
-  <string name="human_verification_main_subtitle">Kötüye kullanımı önlemek için lütfen aşağıdaki seçeneklerden birini kullanarak insan olduğunuzu doğrulayın</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın.</string>
   <string name="human_verification_enter_code_subtitle_email">%s alıcısına gönderilen doğrulama kodunu yazın. E-postayı gelen kutunuzda bulamazsanız, istenmeyen kutusuna bakmayı unutmayın.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Elinizdeki doğrulama kodunu yazın:</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Daha önce aldığınız doğrulama kodunu yazın:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-posta</string>
   <string name="human_verification_option_email_subtitle">E-postanız yalnızca bu tek seferlik doğrulama için kullanılacak. E-postayı gelen kutunuzda bulamazsanız istenmeyen kutusuna bakmayı unutmayın.</string>
@@ -44,8 +44,8 @@
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
-  <string name="human_verification_help_manual_title">Bir davet iste</string>
-  <string name="human_verification_help_manual">Hesap açmakta sorun yaşıyorsanız, lütfen bir davet isteyin. Bir iş günü içinde size yanıt vereceğiz.</string>
+  <string name="human_verification_help_manual_title">Davet isteğinde bulun</string>
+  <string name="human_verification_help_manual">Hesap açmakta sorun yaşıyorsanız, lütfen bir davet isteğinde bulunun. Bir iş günü içinde size yanıt vereceğiz.</string>
   <string name="human_verification_help_website_title">Yardım merkezimize gidin</string>
   <string name="human_verification_help_website">İnsan doğrulaması ve bunu neden istediğimiz hakkında ayrıntılı bilgi alın.</string>
   <string name="human_verification_sending_failed">Doğrulama kodu gönderilemedi. Lütfen yeniden deneyin.</string>

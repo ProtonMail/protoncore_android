@@ -19,8 +19,8 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Ajutor</string>
-  <string name="human_verification_title">Verificare umană</string>
-  <string name="human_verification_main_subtitle">Pentru prevenirea abuzului, folosiți una din opțiuni pentru a dovedi că sunteți o persoană</string>
+  <string name="human_verification_title">Verificare persoană</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Introduceți codul de verificare care a fost trimis la %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Introduceți codul de verificare care a fost trimis la %s. Dacă nu găsiți mesajul, verificați și în folderul de mesaje nedorite.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Introduceți codul de verificare pe care îl aveți deja:</string>
@@ -53,7 +53,7 @@
   <string name="human_verification_resent_code">S-a trimis un alt cod.</string>
   <string name="human_verification_captcha_failed">Verificarea cu CAPTCHA a eșuat. Reîncercați sau alegeți o altă metodă de verificare.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">NU aveți conexiune. Nu se poate încărca CAPTCHA.</string>
+  <string name="human_verification_captcha_no_connectivity">Nu aveți conexiune. Nu se poate încărca CAPTCHA.</string>
   <string name="human_verification_action_retry">Reîncercare</string>
   <string name="human_verification_method_loading_failed">Nu se poate încărca metoda de verificare actuală. Dacă problema persistă, încercați o altă metodă disponibilă sau consultați pagina de ajutor.</string>
 </resources>

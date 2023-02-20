@@ -20,13 +20,13 @@
   <!-- base common strings -->
   <string name="human_verification_help">Aide</string>
   <string name="human_verification_title">Vérification humaine</string>
-  <string name="human_verification_main_subtitle">Pour lutter contre les abus, veuillez prouver que vous êtes humain en utilisant l\'une des options suivantes</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Saisissez le code de vérification que nous avons envoyé à %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Saisissez le code de vérification qui a été envoyé à %s. Si vous ne trouvez pas le message dans votre boîte de réception, veuillez vérifier votre dossier pourriels.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Saisissez le code de vérification que vous possédez déjà:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Courriel</string>
-  <string name="human_verification_option_email_subtitle">Votre adresse courriel ne sera utilisée que pour cette vérification unique. Si vous ne trouvez pas le message dans votre boîte de réception, veuillez vérifier votre dossier d’indésirables.</string>
+  <string name="human_verification_option_email_subtitle">Votre adresse courriel ne sera utilisée que pour cette vérification unique. Si vous ne trouvez pas le message dans votre boîte de réception, veuillez vérifier votre dossier pourriels.</string>
   <string name="human_verification_option_sms">Numéro de téléphone</string>
   <string name="human_verification_option_sms_subtitle">Votre numéro de téléphone ne sera utilisé que pour cette vérification unique.</string>
   <string name="human_verification_get_verification_code">Obtenir un code de vérification</string>

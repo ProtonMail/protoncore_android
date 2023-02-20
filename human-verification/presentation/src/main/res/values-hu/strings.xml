@@ -19,14 +19,14 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Segítség</string>
-  <string name="human_verification_title">Nem vagyok robot</string>
-  <string name="human_verification_main_subtitle">A visszaélések elkerülése végett, következő lehetőségek egyikével, bizonyítania kell, hogy nem robot</string>
+  <string name="human_verification_title">Robot ellenőrzés</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Írja be a %s címre küldött ellenőrző kódot.</string>
   <string name="human_verification_enter_code_subtitle_email">Adja meg a %s címre küldött ellenőrző kódot. Ha nem találja az e-mailt, ellenőrizze a Levélszemét mappában.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Írja be a már meglévő ellenőrző kódot:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">E-mail címét csak erre az egyszer ellenőrzésre fogjuk használni. Ha nem találja az e-mailt, nézze meg a Levélszemét közt is.</string>
+  <string name="human_verification_option_email_subtitle">E-mail címét csak erre az egyszeri ellenőrzésre fogjuk használni. Ha nem találja az e-mailt, nézze meg a Levélszemét közt is.</string>
   <string name="human_verification_option_sms">Telefonszám</string>
   <string name="human_verification_option_sms_subtitle">A telefonszám csak erre az egyszeri ellenőrzésre lesz felhasználva.</string>
   <string name="human_verification_get_verification_code">Ellenőrző kód küldése</string>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Паведаміць пра праблему</string>
+  <string name="core_report_bug_close">Закрыць</string>
+  <string name="core_report_bug_subject_field_hint">Тэма</string>
+  <string name="core_report_bug_subject_field_required">Увядзіце тэму</string>
+  <string name="core_report_bug_description_field_hint">Што пайшло не так? Мінімум 10 сімвалаў</string>
+  <string name="core_report_bug_description_field_placeholder">У дэталях апішыце праблему. Калі гэта было паведамленне пра памылку, паведаміце нам, што ў ім было.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Увядзіце прынамсі %d сімвал</item>
+    <item quantity="few">Увядзіце прынамсі %d сімвалы</item>
+    <item quantity="many">Увядзіце прынамсі %d сімвалаў</item>
+    <item quantity="other">Увядзіце прынамсі %d сімвалы</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Закрыць справаздачу пра памылкі?</string>
+  <string name="core_report_bug_discard_changes_description">Калі вы пакінеце гэту старонку, ваша справаздача не будзе захавана.</string>
+  <string name="core_report_bug_discard_changes_cancel">Працягнуць пісаць</string>
+  <string name="core_report_bug_discard_changes_confirm">Закрыць без захавання</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Максімум %d сімвал</item>
+    <item quantity="few">Максімум %d сімвалы</item>
+    <item quantity="many">Максімум %d сімвалаў</item>
+    <item quantity="other">Максімум %d сімвалы</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Нешта пайшло не так. Паспрабуйце яшчэ раз праз некалькі хвілін.</string>
+  <string name="core_report_bug_send">Адправіць справаздачу</string>
+  <string name="core_report_bug_success">Дзякуй за вашу справаздачу</string>
+</resources>

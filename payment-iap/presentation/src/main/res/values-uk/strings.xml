@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">* Включає доплату за додаткові комісії та податки постачальника.</string>
-  <string name="payments_iap_terms_conditions">Торкнувшись «Купити через Google Pay», ви погоджуєтеся з умовами користування Google Pay і погоджуєтеся налаштувати регулярний платіж у Google.</string>
-  <string name="payments_iap_invalid_google_plan">Вибрано недійсну назву тарифного плану. Перезапустіть процес.</string>
-  <string name="payments_iap_error_google_plan_price">Проблема з ціною продукту Google. Перезапустіть процес.</string>
-  <string name="payments_iap_error_fetching_google_plan">Проблема отримання продукту Google. Перезапустіть процес.</string>
+  <string name="payments_iap_terms_conditions">Торкнувшись «Купити через Google Pay», ви погоджуєтеся з умовами користування Google Pay і налаштуванням регулярного платежу з Google.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_error_google_plan_price">Проблема з ціною продукту в Google. Будь ласка, перезапустіть процес.</string>
+  <string name="payments_iap_error_fetching_google_plan">Проблема з отриманням продукту Google. Будь ласка, перезапустіть процес.</string>
   <string name="payments_iap_error_already_owned">Ви вже придбали цей продукт. Будь ласка, виберіть інший.</string>
   <string name="payments_iap_error_billing_client_unavailable">Платіжний клієнт Google наразі недоступний або від\'єднаний.</string>
-  <string name="payments_iap_general_error">Сталася помилка. Перезапустіть процес.</string>
+  <string name="payments_iap_general_error">Сталася помилка. Будь ласка, перезапустіть процес.</string>
 </resources>

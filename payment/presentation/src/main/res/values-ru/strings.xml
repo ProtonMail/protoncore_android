@@ -22,9 +22,9 @@
   <string name="payments_no_connectivity">Невозможно отобразить 3DS подтверждение из-за отсутствия соединения.</string>
   <string name="payments_3ds_not_approved">Одобрение 3DS было отклонено.</string>
   <string name="payments_error_card_name">Требуется имя на карте.</string>
-  <string name="payments_error_card_number">Недействительный номер карты.</string>
-  <string name="payments_error_cvc">Пожалуйста, введите правильный код безопасности.</string>
-  <string name="payments_error_session">Требуется действующий идентификатор сессии для создания подписки активного пользователя.</string>
+  <string name="payments_error_card_number">Неверный номер карты.</string>
+  <string name="payments_error_cvc">Введите правильный код безопасности.</string>
+  <string name="payments_error_session">Действительный идентификатор сеанса необходим при подписке пользователя, вошедшего в систему.</string>
   <string name="payments_error_signup_paymentmethod">Не удалось зарегистрироваться с существующим способом оплаты.</string>
   <string name="payments_error_invalid_session">Недействительный сеанс.</string>
   <string name="payments_no_payment_provider">Активный поставщик платежей не найден.</string>
@@ -41,7 +41,7 @@
   <string name="payments_method_continue">Продолжить</string>
   <!-- endregion -->
   <!-- region billing -->
-  <string name="payments_payment_details">Платежные реквизиты</string>
+  <string name="payments_payment_details">Информация платежа</string>
   <string name="payments_card_name">Имя на карте</string>
   <string name="payments_card_number">Номер карты</string>
   <string name="payments_expiration_date">Срок действия</string>
@@ -51,11 +51,11 @@
   <string name="payments_expiration_date_hint">ММ/ГГ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Страна</string>
-  <string name="payments_paying_in_process">Проводим оплату</string>
+  <string name="payments_paying_in_process">Производится оплата</string>
   <string name="payments_choose_country">Выберите страну</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Истекает %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">н/д</string>
+  <string name="payments_info_not_available">недоступно</string>
   <string name="payments_billing_yearly">За 1 год</string>
   <string name="payment_use_google_pay_instead">Вместо этого используйте Google Pay</string>
   <string name="payment_use_credit_card_instead">Использовать кредитную/дебетовую карту</string>
@@ -65,6 +65,6 @@
   <string name="payments_giap_unredeemed_description">Ваш платеж Google успешно обработан, но процесс улучшения аккаунта был прерван. Применить платеж, чтобы улучшить аккаунт сейчас?</string>
   <string name="payments_giap_unredeemed_confirm">Подтвердите улучшение</string>
   <string name="payments_giap_redeem_success">Ваш аккаунт был успешно улучшен</string>
-  <string name="payments_giap_redeem_error">Не удается завершить улучшение. Пожалуйста, попробуйте позже.</string>
+  <string name="payments_giap_redeem_error">Не удается завершить улучшение. Попробуйте позже.</string>
   <!-- endregion -->
 </resources>

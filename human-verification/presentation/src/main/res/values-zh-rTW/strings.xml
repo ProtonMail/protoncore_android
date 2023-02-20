@@ -20,11 +20,11 @@
   <!-- base common strings -->
   <string name="human_verification_help">說明</string>
   <string name="human_verification_title">真人驗證</string>
-  <string name="human_verification_main_subtitle">為了防止濫用，請使用以下的其中一個選項驗證您是人類</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">輸入從 %s 接收的驗證碼。</string>
   <string name="human_verification_enter_code_subtitle_email">請輸入傳送到 %s 的驗證碼。若您在收件匣中找不到該電郵，請查看垃圾郵件資料夾。</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">輸入您已有的驗證碼：</string>
-  <string name="human_verification_option_captcha">驗證碼</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">電郵</string>
   <string name="human_verification_option_email_subtitle">您的電郵將僅用於此ㄧ次性驗證。若您在收件匣中找到該電郵，請檢查您的垃圾郵件資料夾。</string>
   <string name="human_verification_option_sms">電話號碼</string>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">Адбылася памылка.</string>
+  <string name="payments_no_connectivity">Няма злучэння, каб паказаць старонкі пацвярджэння 3DS.</string>
+  <string name="payments_3ds_not_approved">Пацвярджэнне 3DS было адхілена.</string>
+  <string name="payments_error_card_name">Неабходна ўвесці імя азначанае на картцы.</string>
+  <string name="payments_error_card_number">Памылковы нумар карткі.</string>
+  <string name="payments_error_cvc">Увядзіце сапраўдны код бяспекі.</string>
+  <string name="payments_error_session">Патрабуецца сапраўдны ідэнтыфікатар сеанса для падпісання зарэгістраванага карыстальніка.</string>
+  <string name="payments_error_signup_paymentmethod">Немагчыма зарэгістравацца з існуючым спосабам аплаты.</string>
+  <string name="payments_error_invalid_session">Памылковы сеанс.</string>
+  <string name="payments_no_payment_provider">Не знойдзена ніводнага плацежнага пастаўшчыка.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">Выберыце спосаб аплаты</string>
+  <string name="payments_add_credit_debit_card">Дадаць новую банкаўскую картку</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Аплаціць %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Аплаціць з дапамогай</string>
+  <string name="payments_method_icon">Значок спосабу аплаты.</string>
+  <string name="payments_method_surcharge">*За куплі, якія здзейснены з дапамогай гэтага спосабу аплаты спаганяюць камісію.</string>
+  <string name="payments_method_terms_conditions">Купля з дапамогай Google Pay азначае, што вы прымаеце ўмовы выкарыстання Google Pay і згаджаецеся ажыццяўляць перыядычную аплату з дапамогай Google.</string>
+  <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Працягнуць</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">Падрабязнасці плацяжу</string>
+  <string name="payments_card_name">Імя на картцы</string>
+  <string name="payments_card_number">Нумар карткі</string>
+  <string name="payments_expiration_date">Тэрмін дзеяння</string>
+  <string name="payments_security_code">Код бяспекі</string>
+  <string name="payments_postal_code">Паштовы індэкс</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">ММ/ГГ</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">Краіна</string>
+  <string name="payments_paying_in_process">Аплата</string>
+  <string name="payments_choose_country">Выберыце краіну</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (дзейнічае да %3$s/%4$s)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">н/д</string>
+  <string name="payments_billing_yearly">За 1 год</string>
+  <string name="payment_use_google_pay_instead">Выкарыстоўваць Google Pay</string>
+  <string name="payment_use_credit_card_instead">Выкарыстоўваць банкаўскую картку</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Пацвердзіць паляпшэнне ўліковага запісу</string>
+  <string name="payments_giap_unredeemed_description">Ваш плацеж Google Play паспяхова апрацаваны, але працэс паляпшэння ўліковага запісу быў перарваны. Ужыць плацеж для паляпшэння вашага ўліковага запісу зараз?</string>
+  <string name="payments_giap_unredeemed_confirm">Пацвердзіць паляпшэнне</string>
+  <string name="payments_giap_redeem_success">Ваш уліковы запіс быў паспяхова палепшаны</string>
+  <string name="payments_giap_redeem_error">Немагчыма завяршыць паляпшэнне. Паспрабуйце яшчэ раз пазней.</string>
+  <!-- endregion -->
+</resources>

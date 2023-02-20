@@ -19,22 +19,22 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">帮助</string>
-  <string name="human_verification_title">人机验证</string>
-  <string name="human_verification_main_subtitle">为了防止滥用，请使用以下选项之一进行人机验证</string>
+  <string name="human_verification_title">真人认证</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">请输入发送到 %s 的验证码。</string>
   <string name="human_verification_enter_code_subtitle_email">请输入发送到 %s 的验证码。如果您在收件箱中找不到该电子邮件，请检查垃圾邮件文件夹。</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">请输入您已有的验证码：</string>
-  <string name="human_verification_option_captcha">验证码</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">电子邮件</string>
   <string name="human_verification_option_email_subtitle">您的邮箱地址仅用于本次验证，如果该邮件未出现在收件箱中，请检查是否被归为垃圾邮件。</string>
   <string name="human_verification_option_sms">电话号码</string>
-  <string name="human_verification_option_sms_subtitle">您的电话号码仅用于本次验证。</string>
+  <string name="human_verification_option_sms_subtitle">您的电话号码将仅用于本次验证。</string>
   <string name="human_verification_get_verification_code">获取验证码</string>
   <string name="human_verification_already_have_code">已收到验证码</string>
-  <string name="human_verification_request_replacement_code">未收到验证码？</string>
+  <string name="human_verification_request_replacement_code">没有收到验证码？</string>
   <string name="human_verification_verify">验证</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">需要人机验证方面的帮助吗？</string>
+  <string name="human_verification_help_title">需要真人认证方面的帮助吗？</string>
   <string name="human_verification_code">验证码</string>
   <string name="human_verification_code_request_new_code_title">重新发送验证码？</string>
   <string name="human_verification_code_request_new_code_action">重新发送验证码</string>

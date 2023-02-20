@@ -41,7 +41,7 @@
   <string name="payments_method_continue">Halda áfram</string>
   <!-- endregion -->
   <!-- region billing -->
-  <string name="payments_payment_details">Nánar um greiðslu</string>
+  <string name="payments_payment_details">Greiðsluupplýsingar</string>
   <string name="payments_card_name">Nafn á greiðslukorti</string>
   <string name="payments_card_number">Númer greiðslukorts</string>
   <string name="payments_expiration_date">Gildistími</string>

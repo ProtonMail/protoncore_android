@@ -20,40 +20,40 @@
   <!-- base common strings -->
   <string name="human_verification_help">Bantuan</string>
   <string name="human_verification_title">Verifikasi Manusia</string>
-  <string name="human_verification_main_subtitle">Untuk mencegah penyalahgunaan, mohon verifikasi bahwa Anda manusia dengan menggunakan pilihan berikut</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke %s. Jika Anda tidak menemukan surel di kotak masuk Anda, mohon periksa folder spam.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Masukkan kode verifikasi yang telah Anda miliki:</string>
+  <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke $%s. Apabila Anda tidak menemukan email yang bersangkutan pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Masukkan kode verifikasi yang telah Anda terima:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Email</string>
-  <string name="human_verification_option_email_subtitle">Surel Anda hanya akan digunakan untuk verifikasi satu kali ini. Jika Anda tidak menemukan surel di kotak masuk Anda, mohon periksa folder spam.</string>
+  <string name="human_verification_option_email_subtitle">Alamat email Anda hanya akan digunakan untuk proses verifikasi kali ini. Apabila Anda tidak menemukan email yang dimaksud pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
   <string name="human_verification_option_sms">Nomor telepon</string>
-  <string name="human_verification_option_sms_subtitle">Nomor telepon Anda hanya akan digunakan untuk verifikasi satu kali ini saja.</string>
+  <string name="human_verification_option_sms_subtitle">Nomor telepon Anda hanya akan digunakan untuk proses verifikasi kali ini.</string>
   <string name="human_verification_get_verification_code">Dapatkan kode verifikasi</string>
   <string name="human_verification_already_have_code">Saya sudah memiliki kode</string>
   <string name="human_verification_request_replacement_code">Tidak menerima kode?</string>
   <string name="human_verification_verify">Verifikasi</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Apakah Anda perlu bantuan dengan verifikasi manusia?</string>
+  <string name="human_verification_help_title">Apakah Anda memerlukan bantuan dengan proses verifikasi manusia?</string>
   <string name="human_verification_code">Kode Verifikasi</string>
   <string name="human_verification_code_request_new_code_title">Minta kode baru?</string>
   <string name="human_verification_code_request_new_code_action">Minta kode baru</string>
-  <string name="human_verification_code_request_new_code">Dapatkan kode pengganti yang dikirim ke %s.</string>
+  <string name="human_verification_code_request_new_code">Dapatkan kode pengganti yang akan dikirim ke %s.</string>
   <string name="email">Email</string>
-  <string name="email_hint">email@contoh.com</string>
+  <string name="email_hint">alamatemail@contoh.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Minta undangan</string>
-  <string name="human_verification_help_manual">Jika Anda menemui masalah saat membuat akun, silakan minta undangan dan kami akan meresponnya 1 hari kerja.</string>
-  <string name="human_verification_help_website_title">Kunjungi Pusat Bantuan Kami</string>
-  <string name="human_verification_help_website">Pelajari lebih lanjut tentang verifikasi manusia dan mengapa kami memintanya.</string>
+  <string name="human_verification_help_manual">Apabila Anda menemui masalah dalam membuat akun, silakan minta undangan baru dan kami akan meresponnya dalam 1 hari kerja.</string>
+  <string name="human_verification_help_website_title">Kunjungi Pusat Bantuan kami</string>
+  <string name="human_verification_help_website">Pelajari lebih lanjut tentang proses verifikasi manusia dan mengapa kami melangsungkan proses ini.</string>
   <string name="human_verification_sending_failed">Pengiriman kode verifikasi gagal. Silakan coba lagi.</string>
   <string name="human_verification_incorrect_code">Kode salah. Silakan coba lagi.</string>
-  <string name="human_verification_resent_code">Kami sudah mengirim Anda kode lainnya.</string>
+  <string name="human_verification_resent_code">Kami telah mengirimkan Anda kode yang baru.</string>
   <string name="human_verification_captcha_failed">Verifikasi CAPTCHA gagal. Silakan coba satu kali lagi atau pilih metode verifikasi lainnya.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">Tidak ada konektivitas. Tidak dapat memuat CAPTCHA.</string>
+  <string name="human_verification_captcha_no_connectivity">Tidak ada konektivitas internet. CAPTCHA tidak dapat dimuat.</string>
   <string name="human_verification_action_retry">Coba Lagi</string>
   <string name="human_verification_method_loading_failed">Tidak dapat memuat metode verifikasi yang saat ini dipilih. Apabila masalah ini berlanjut, silakan coba metode verfikasi lain yang tersedia atau rujuk menu Bantuan kami.</string>
 </resources>

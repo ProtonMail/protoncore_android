@@ -19,34 +19,34 @@
 <resources>
   <string name="plans_select_a_plan">Pilih Paket</string>
   <string name="plans_select_a_plan_subtitle">Satu paket untuk seluruh layanan Proton</string>
-  <string name="plans_fetching_general_error">Terjadi kesalahan pada saat mengambil daftar paket.</string>
-  <string name="plans_payment_error">Terjadi kesalahan dalam proses pembayaran. Silakan coba lagi nanti atau buat akun gratis.</string>
+  <string name="plans_fetching_general_error">Terjadi kesalahan dalam mengambil daftar paket.</string>
+  <string name="plans_payment_error">Terdapat kesalahan dalam pembayaran. Silakan coba lagi nanti atau buat akun gratis.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per bulan</string>
   <string name="plan_price_annually">per tahun</string>
   <string name="plans_current_plan">Paket Saat Ini</string>
-  <string name="plans_upgrade_plan">Tingkatkan paket langganan Anda</string>
+  <string name="plans_upgrade_plan">Tingkatkan paket Anda</string>
   <string name="plans_subscription">Langganan</string>
-  <string name="plans_renewal_date">Paket langganan Anda akan otomatis diperbarui pada &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Paket langganan Anda akan berakhir pada &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_renewal_date">Paket Anda akan diperbarui secara otomatis pada &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Paket Anda akan berakhir pada &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_billed_yearly">*Ditagihkan per tahun seharga %s</string>
-  <string name="plans_billed_monthly">Ditagih per bulan</string>
+  <string name="plans_billed_monthly">Ditagihkan per bulan</string>
   <string name="plans_billing_monthly">Untuk 1 bulan</string>
   <string name="plans_billing_yearly">Untuk 1 tahun</string>
   <string name="plans_billing_two_years">Untuk 2 tahun</string>
   <plurals name="plans_billing_other_period">
     <item quantity="other">Untuk %d bulan</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Tingkatkan paket langganan Anda</string>
-  <string name="plans_proton_for_free">Dapatkan Proton gratis</string>
+  <string name="plans_upgrade_your_plan">Tingkatkan paket Anda</string>
+  <string name="plans_proton_for_free">Dapatkan Proton secara cuma-cuma</string>
   <string name="plans_get_proton">Dapatkan %s</string>
   <string name="plans_manage_your_subscription">Kelola langganan Anda di <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s dari %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Langganan Anda dikelola oleh Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat dikelola dari aplikasi mobile.</string>
-  <string name="plans_autorenew_subscriptions">Hanya langganan tahunan yang terbarui yang dapat dibeli via aplikasi ini.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan paket langganan Anda dari aplikasi seluler.</string>
+  <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat dikelola dari aplikasi seluler.</string>
+  <string name="plans_autorenew_subscriptions">Hanya langganan tahunan yang terbarui secara otomatis yang dapat dibeli via aplikasi ini.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan akun dari aplikasi seluler.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">Kuota penyimpanan #proton_storage#</item>
@@ -67,7 +67,7 @@
     <item quantity="other">%d dari #proton_addresses# alamat</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Dukungan #proton_domains# alamat email khusus</item>
+    <item quantity="other">Dukungan #proton_domains# domain email khusus</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# kalender personal</item>
@@ -89,12 +89,12 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Dasar-dasar komunikasi privat dan aman.</string>
+  <string name="plan_id_free_header">Landasan dasar komunikasi yang privat dan aman.</string>
   <string name="plan_id_plus_header">Kotak surat berfitur lengkap dengan perlindungan tingkat lanjut.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 negara</string>
-  <string name="plan_id_vpnbasic_high_speed">Berkecepatan tinggi</string>
-  <string name="plan_id_vpnplus_adblock">Pemblokir iklan (NetShield)</string>
+  <string name="plan_id_vpnbasic_high_speed">Kecepatan tinggi</string>
+  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Dukungan layanan streaming</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 negara</string>
@@ -112,7 +112,7 @@
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
   <!-- endregion -->

@@ -42,15 +42,15 @@
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">支払いの詳細</string>
-  <string name="payments_card_name">クレジットカードの名義人</string>
-  <string name="payments_card_number">クレジットカード番号</string>
+  <string name="payments_card_name">カード名義人</string>
+  <string name="payments_card_number">カード番号</string>
   <string name="payments_expiration_date">有効期限</string>
   <string name="payments_security_code">セキュリティコード</string>
   <string name="payments_postal_code">郵便番号</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
-  <string name="payments_country">国名</string>
+  <string name="payments_country">国</string>
   <string name="payments_paying_in_process">決済中</string>
   <string name="payments_choose_country">国を選択</string>
   <string name="payment_cc_list_item">%1$s - %2$s (期限 %3$s/%4$s)</string>

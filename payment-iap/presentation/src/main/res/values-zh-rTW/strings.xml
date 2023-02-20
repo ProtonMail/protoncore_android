@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">＊包含額外的供應商服務費及稅金。</string>
-  <string name="payments_iap_terms_conditions">點擊「使用 Google Pay 購買」，即表示您同意 Google Pay 的合約與條款，並同意通過 Google 設好定期付款。</string>
-  <string name="payments_iap_invalid_google_plan">選取的方案名稱無效。 請重新開始流程。</string>
-  <string name="payments_iap_error_google_plan_price">Google 產品價格有問題。 請重新開始流程。</string>
-  <string name="payments_iap_error_fetching_google_plan">擷取 Google 產品時發生錯誤。 請重新開始流程。</string>
-  <string name="payments_iap_error_already_owned">您已經擁有此產品。 請選擇另一個。</string>
-  <string name="payments_iap_error_billing_client_unavailable">Google帳務客戶端暫不可用或已斷線。</string>
-  <string name="payments_iap_general_error">發生錯誤。 請重新開始流程。</string>
+  <string name="payments_iap_surcharge_info">* 包含額外的供應商服務費及稅金。</string>
+  <string name="payments_iap_terms_conditions">點擊「使用 Google Pay 購買」，即表示您同意 Google Pay 的合約與條款，並同意通過 Google 設定定期付款。</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_error_google_plan_price">Google 產品價格問題。請重新開始流程。</string>
+  <string name="payments_iap_error_fetching_google_plan">擷取 Google 產品時發生問題。請重新開始流程。</string>
+  <string name="payments_iap_error_already_owned">您已擁有此產品。請選取其他的。</string>
+  <string name="payments_iap_error_billing_client_unavailable">Google 帳務客戶端暫時不可用或已斷線。</string>
+  <string name="payments_iap_general_error">發生錯誤。請重新開始流程。</string>
 </resources>

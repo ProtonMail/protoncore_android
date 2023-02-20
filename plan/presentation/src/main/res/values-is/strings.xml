@@ -112,9 +112,9 @@
   <string name="plan_id_vpnplus_streaming">Streaming service support</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 lönd</string>
-  <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string name="plan_id_vpnplus_highest_speed">Mesti hraði</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Multi-user support</string>
+  <string name="plan_id_professional_multiuser">Fjölnotendastuðningur</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
@@ -123,7 +123,7 @@
   <string name="servers_in_countries" comment="new_plans">1500+ netþjónar í 63 löndum</string>
   <string name="ad_blocker" comment="new_plans">Innbyggður auglýsingabani (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
-  <string name="secure_core" comment="new_plans">Secure Core servers</string>
+  <string name="secure_core" comment="new_plans">Öruggir Core netþjónar</string>
   <string name="tor_vpn" comment="new_plans">Tor yfir VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>

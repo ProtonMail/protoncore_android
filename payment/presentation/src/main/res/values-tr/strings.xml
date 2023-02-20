@@ -19,12 +19,12 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Bir sorun çıktı.</string>
-  <string name="payments_no_connectivity">Bağlantı olmadığından 3D Secure doğrulama sayfası görüntülenemiyor.</string>
-  <string name="payments_3ds_not_approved">3D Secure doğrulaması reddedildi.</string>
-  <string name="payments_error_card_name">Kart üzerindeki isim gerekli.</string>
+  <string name="payments_no_connectivity">3DS onay sayfasını görüntüleyebilecek bir bağlantı yok.</string>
+  <string name="payments_3ds_not_approved">3DS onayı reddedildi.</string>
+  <string name="payments_error_card_name">Kartın üzerindeki isim yazılmalı.</string>
   <string name="payments_error_card_number">Kart numarası geçersiz.</string>
   <string name="payments_error_cvc">Lütfen geçerli güvenlik kodunu yazın.</string>
-  <string name="payments_error_session">Çevrimiçi kullanıcı abone olurken geçerli oturum kimliği gereklidir.</string>
+  <string name="payments_error_session">Oturum açmış bir kullanıcı olarak abone olurken geçerli oturum kimliği gereklidir.</string>
   <string name="payments_error_signup_paymentmethod">Var olan ödeme yöntemiyle hesap açılamadı.</string>
   <string name="payments_error_invalid_session">Oturum geçersiz.</string>
   <string name="payments_no_payment_provider">Herhangi bir etkin ödeme hizmeti sağlayıcısı bulunamadı.</string>

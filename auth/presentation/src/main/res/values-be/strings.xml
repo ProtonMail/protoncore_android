@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Абараніце сваю прыватнасць з дапамогай Proton</string>
+  <string name="welcome_subtitle">Шыфраванне зберагае прыватнасць вашых даных. Вашы даныя сапраўды належаць вам.</string>
+  <string name="welcome_title_mail">Абараніце сваю прыватнасць з Proton Mail</string>
+  <string name="welcome_subtitle_mail">Зашыфраваная электронная пошта, якая захоўвае прыватнасць вашых размоў. Ваша паштовая скрыня сапраўды належыць вам.</string>
+  <string name="welcome_subtitle_mail_alt">Прыватнасць. Бяспека. Зручнасць. Зашыфраваная пошта, якая дае вам поўны кантроль над вашымі персанальнымі данымі.</string>
+  <string name="welcome_title_drive">Абараніце сваю прыватнасць з Proton Drive</string>
+  <string name="welcome_subtitle_drive">Зручнасць воблачнага сховішча і бяспека тэхналогіі шыфравання. Нарэшце з\'явілася рашэнне для воблачнага сховішча, якому можна давяраць.</string>
+  <string name="welcome_subtitle_drive_alt">Бяспечны спосаб захоўваць вашы файлы. Запампоўвайце, сінхранізуйце і дзяліцеся файламі з дапамогай надзейнага шыфравання.</string>
+  <string name="welcome_title_calendar">Абараніце сваю прыватнасць з Proton Calendar</string>
+  <string name="welcome_subtitle_calendar">Зашыфраваны каляндар, які захоўвае вашы падзеі з жыцця прыватнымі, бяспечнымі і абароненымі.</string>
+  <string name="welcome_subtitle_calendar_alt">Наш каляндар са скразным шыфраваннем дапаможа вам заставацца арганізаваным, прытрымлівацца графіка і кантраляваць сітуацыю.</string>
+  <string name="welcome_title_vpn">Абараніце сваю прыватнасць з Proton VPN</string>
+  <string name="welcome_subtitle_vpn">Высакахуткасны швейцарскі VPN, які абараняе вашу прыватнасць, шыфруючы ваша злучэнне з інтэрнэтам.</string>
+  <string name="welcome_subtitle_vpn_alt">Васокахуткасны швейцарскі VPN, які абараняе вашу прыватнасць. Максімум бяспекі, больш за 1600 сервераў і ніякіх абмежаванняў.</string>
+  <string name="welcome_privacy_by_default">Прадвызначаная прыватнасць</string>
+  <string name="auth_password_label">Пароль</string>
+  <string name="auth_password_help">Пароль павінен змяшчаць прынамсі 8 сімвалаў</string>
+  <string name="auth_current_login_password">Бягучы пароль уваходу</string>
+  <string name="auth_enter_six_digit_code">Увядзіце код з 6 лічбаў</string>
+  <string name="auth_second_factor_code">Двухфактарны код</string>
+  <string name="auth_email_username">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="auth_account_details">Увядзіце звесткі ўліковага запісу Proton.</string>
+  <string name="auth_sign_in">Увайсці</string>
+  <string name="auth_sign_in_action">Увайсці</string>
+  <string name="auth_need_help">Неабходна дапамога?</string>
+  <string name="auth_login_assistive_text">Увядзіце вашу электронную пошту Proton або імя карыстальніка.</string>
+  <string name="auth_help_title">Як мы можам дапамагчы?</string>
+  <string name="auth_help_option_forgot_username">Забылі сваё імя карыстальніка</string>
+  <string name="auth_help_option_forgot_password">Забылі пароль</string>
+  <string name="auth_help_option_other">Іншыя праблемы ўваходу</string>
+  <string name="auth_help_other">Усё яшчэ неабходная дапамога? Звяжыцеся з намі наўпрост.</string>
+  <string name="auth_help_option_customer_support">Падтрымка кліентаў</string>
+  <string name="auth_2fa_title">Двухфактарная аўтэнтыфікацыя</string>
+  <string name="auth_2fa_label">Двухфактарны код</string>
+  <string name="auth_2fa_recovery_code_label">Код аднаўлення</string>
+  <string name="auth_2fa_assistive_text">Увядзіце код з 6 лічбаў.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Увядзіце код аднаўлення з 8 сімвалаў.</string>
+  <string name="auth_2fa_action">Аўтэнтыфікацыя</string>
+  <string name="auth_2fa_use_recovery_code">Выкарыстоўваць код аднаўлення</string>
+  <string name="auth_2fa_use_2fa_code">Выкарыстоўваць двухфактарны код</string>
+  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_mailbox_title">Разблакіруйце вашу паштовую скрыню</string>
+  <string name="auth_mailbox_password_label">Пароль паштовай скрыні</string>
+  <string name="auth_mailbox_unlock_action">Разблакіраваць</string>
+  <string name="auth_forgot_password">Забылі пароль</string>
+  <string name="auth_login_general_error">Адбылася памылка.</string>
+  <string name="auth_login_external_account_unsupported_title">Патрабуецца адрас Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Атрымаць адрас Proton Mail, які прывязаны да гэтага ўліковага запісу ў вашых наладах вэб-інтэрфейсу Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Даведацца больш</string>
+  <string name="auth_login_empty_credentials">Enter your email or username.</string>
+  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_create_address_title">Стварыць адрас Proton Mail</string>
+  <string name="auth_create_address_subtitle">Ваш уліковы запіс Proton звязаны з %1$s. Каб карыстацца Proton Mail, стварыце адрас.</string>
+  <string name="auth_username">Імя карыстальніка</string>
+  <string name="auth_username_next_action">Далей</string>
+  <string name="auth_create_address_result_title">Адрас %s даступны</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s будзе вашым новым адрасам электроннай пошты ў Proton Mail.</string>
+  <string name="auth_create_address_result_subtitle">Выкарыстоўвайце гэты адрас для ўваходу ва ўсе сэрвісы Proton.</string>
+  <string name="auth_create_address_result_recovery_title">Ваша электронная пошта для аднаўлення доступу:</string>
+  <string name="auth_create_address_create">Стварыць адрас</string>
+  <string name="auth_create_address_creating">Стварэнне адраса</string>
+  <string name="auth_create_address_terms">Націскаючы кнопку \"Стварыць адрас\", вы пагаджаецеся з <a href="https://protonmail.com/terms-and-conditions">Умовамі выкарыстання</a> Proton.</string>
+  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_no_available_domain">Няма даступных даменаў.</string>
+  <string name="auth_create_address_error_private_key">Збой генерацыі прыватнага ключа.</string>
+  <string name="auth_create_address_error_signed_key_list">Збой генерацыі спіса ключоў.</string>
+  <string name="auth_create_address_error_setusername">Не ўдалося звязаць імя карыстальніка.</string>
+  <string name="auth_create_address_error_username_unavailable">Выбранае імя карыстальніка недаступна.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Асноўны ключ не знойдзены.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Памылка асноўнага ключа.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Памылковая парольная фраза.</string>
+  <string name="auth_password_chooser_title">Змяніць свой пароль</string>
+  <string name="auth_password_chooser_description">Для выкарыстання праграмы Proton у якасці ўдзельніка арганізацыі, першапачаткова вам неабходна змяніць свой пароль, увайшоўшы ў Proton праз браўзер.</string>
+  <string name="auth_password_chooser_change">Змяніць пароль</string>
+  <string name="auth_user_check_one_free_error">Дазволены толькі адзін бясплатны ўліковы запіс Proton.</string>
+  <string name="auth_user_check_delinquent_error">Ваш уліковы запіс удзельніка Proton прыпынены па прычыне неаплачанага рахунка.</string>
+  <string name="auth_user_check_delinquent_action">Аплаціць рахунак</string>
+  <string name="auth_account_not_found_error">Памылка ўліковага запісу</string>
+  <string name="auth_one_account_all_services">Адзін уліковы запіс для ўсіх сэрвісаў Proton.</string>
+  <string name="auth_create_account">Стварыць уліковы запіс</string>
+  <string name="auth_long_signup">Адбываецца ўваход. Пачакайце…</string>
+  <string name="auth_long_login">Пачакайце…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Стварыць уліковы запіс Proton</string>
+  <string name="auth_signup_current_email">Выкарыстоўваць бягучы адрас электроннай пошты</string>
+  <string name="auth_signup_external_footnote">З адрасам Proton, вы можаце карыстацца ўсімі службамі Proton</string>
+  <string name="auth_signup_internal_footnote">Вам спатрэбіцца адрас Proton, каб выкарыстоўваць Proton Mail і Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Атрымаць новы зашыфраваны адрас электроннай пошты</string>
+  <string name="auth_signup_username">Імя карыстальніка</string>
+  <string name="auth_signup_domain">Дамен</string>
+  <string name="auth_signup_email">Электронная пошта</string>
+  <string name="auth_signup_next">Далей</string>
+  <string name="auth_signup_choose_password">Стварыць пароль</string>
+  <string name="auth_signup_repeat_password">Паўтарыце пароль</string>
+  <string name="auth_signup_recovery_method_title">Задаць метад аднаўлення (неабавязкова)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Задаць метад аднаўлення</string>
+  <string name="auth_signup_recovery_method_subtitle">Мы адправім вам інструкцыі для аднаўлення на гэты адрас электроннай пошты або на нумар тэлефона, калі вы не зможаце атрымаць доступ да свайго ўліковага запісу.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Мы адправім вам інструкцыі для аднаўлення на гэты адрас электроннай пошты, калі вы не зможаце атрымаць доступ да свайго ўліковага запісу.</string>
+  <string name="auth_signup_recovery_method_email">Электронная пошта</string>
+  <string name="auth_signup_recovery_method_phone">Тэлефон</string>
+  <string name="auth_signup_recovery_method_email_hint">Электронная пошта для аднаўлення доступу</string>
+  <string name="auth_signup_recovery_method_phone_hint">Нумар тэлефона для аднаўлення доступу</string>
+  <string name="auth_signup_terms_conditions">Умовы выкарыстання</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Націскаючы кнопку \"Далей\", вы пагаджаецеся з <annotation link="terms">Умовамі выкарыстання.</annotation> Proton.</string>
+  <string name="auth_signup_skip_recovery_title">Прапусціць метад аднаўлення?</string>
+  <string name="auth_signup_skip_recovery_description">Метад аднаўлення дапаможа атрымаць доступ да вашага ўліковага запісу ў выпадку, калі вы забудзеце пароль або заблакіруеце ўліковы запіс.</string>
+  <string name="auth_signup_skip_recovery">Прапусціць</string>
+  <string name="auth_signup_set_recovery">Задаць метад аднаўлення</string>
+  <string name="auth_signup_no_connectivity">Няма злучэння, каб паказаць умовы выкарыстання.</string>
+  <string name="auth_signup_error_username_blank">Поле з імем карыстальніка не можа быць пустым.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Паролі не супадаюць.</string>
+  <string name="auth_signup_validation_password_length">Пароль павінен змяшчаць прынамсі 8 сімвалаў.</string>
+  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_your_account_is_being_setup">Адбываецца стварэнне вашага ўліковага запісу…</string>
+  <string name="auth_signup_please_wait">Звычайна гэта доўжыцца не больш за хвіліну.</string>
+  <string name="auth_signup_replacement_code">Не атрымалі код?</string>
+  <string name="auth_signup_verify">Праверыць</string>
+  <string name="auth_signup_verification_code">Праверачны код</string>
+  <string name="auth_signup_enter_code_subtitle">Увядзіце праверачны код, які быў адпраўлены на %s:</string>
+  <string name="auth_signup_error_human_verification_failed">Збой антыспамавай праверкі.</string>
+  <string name="auth_signup_token_code_resent">Код токена адпраўлены паўторна.</string>
+  <string name="auth_signup_congratulations_subtitle">Ваш уліковы запіс Proton паспяхова створаны.\nДалучайцеся да свету прыватнасці.</string>
+  <string name="auth_signup_congratulations">Віншуем!</string>
+  <string name="auth_signup_start_using_proton">Пачаць выкарыстоўваць Proton</string>
+  <string name="auth_signup_start_using_calendar">Пачаць выкарыстоўваць Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Пачаць выкарыстоўваць Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Пачаць выкарыстоўваць Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Пачаць выкарыстоўваць Proton VPN</string>
+  <string name="auth_signup_error_validation_recovery_destination">Памылковы метад аднаўлення доступу.</string>
+</resources>

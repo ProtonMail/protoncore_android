@@ -30,7 +30,7 @@
   <string name="welcome_subtitle_calendar_alt">Nuestro calendario cifrado de extremo a extremo te ayuda a organizarte, mantenerte enfocado y en control.</string>
   <string name="welcome_title_vpn">Protege tu privacidad con Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suiza de alta velocidad que salvaguarda tu privacidad cifrando tu conexión a internet.</string>
-  <string name="welcome_subtitle_vpn_alt">VPN suizo de alta velocidad que protege su privacidad. Máxima seguridad, más de 1,600 servidores sin restricciones.</string>
+  <string name="welcome_subtitle_vpn_alt">VPN suizo de alta velocidad que protege tu privacidad. Máxima seguridad, más de 1,600 servidores sin restricciones.</string>
   <string name="welcome_privacy_by_default">Privacidad por defecto</string>
   <string name="auth_password_label">Contraseña</string>
   <string name="auth_password_help">La contraseña debe contener al menos $ caracteres</string>
@@ -42,7 +42,7 @@
   <string name="auth_sign_in">Iniciar sesión</string>
   <string name="auth_sign_in_action">Iniciar sesión</string>
   <string name="auth_need_help">¿Necesitas ayuda?</string>
-  <string name="auth_login_assistive_text">Por favor, introduzca su correo electrónico o nombre de usuario de Proton.</string>
+  <string name="auth_login_assistive_text">Introduce tu correo electrónico o nombre de usuario de Proton.</string>
   <string name="auth_help_title">¿En qué podemos ayudarte?</string>
   <string name="auth_help_option_forgot_username">He olvidado mi nombre de usuario</string>
   <string name="auth_help_option_forgot_password">He olvidado mi contraseña</string>
@@ -57,17 +57,17 @@
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Utilizar un código de recuperación</string>
   <string name="auth_2fa_use_2fa_code">Utilizar código de doble factor</string>
-  <string name="auth_2fa_error_empty_code">El código de dos factores no debe estar vacío</string>
+  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
   <string name="auth_mailbox_title">Desbloquea tu buzón de correo</string>
   <string name="auth_mailbox_password_label">Contraseña del buzón</string>
   <string name="auth_mailbox_unlock_action">Desbloquear</string>
   <string name="auth_forgot_password">He olvidado mi contraseña</string>
   <string name="auth_login_general_error">Se ha producido un error.</string>
   <string name="auth_login_external_account_unsupported_title">Es necesaria una dirección Proton</string>
-  <string name="auth_login_external_account_unsupported_message">Obtenga una dirección de Proton Mail vinculada a esta cuenta en su configuración web de Proton.</string>
+  <string name="auth_login_external_account_unsupported_message">Obtén una dirección de Proton Mail enlazada a esta cuenta en la configuración web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Más información</string>
-  <string name="auth_login_empty_credentials">Las credenciales no deben estar vacías.</string>
-  <string name="auth_mailbox_empty_credentials">Las credenciales no deben estar vacías.</string>
+  <string name="auth_login_empty_credentials">Enter your email or username.</string>
+  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
   <string name="auth_create_address_title">Crear una dirección de Proton Mail</string>
   <string name="auth_create_address_subtitle">Tu cuenta de Proton está asociada con %1$s. Para utilizar Proton Mail, crea una dirección.</string>
   <string name="auth_username">Nombre de usuario</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Crear dirección</string>
   <string name="auth_create_address_creating">Creando dirección</string>
   <string name="auth_create_address_terms">Al hacer clic en Crear dirección, aceptas los <a href="https://protonmail.com/terms-and-conditions">Términos y condiciones de Proton.</a></string>
-  <string name="auth_create_address_error_credentials">Las credenciales no deben estar vacías.</string>
+  <string name="auth_create_address_error_credentials">Enter a password.</string>
   <string name="auth_create_address_error_no_available_domain">No hay dominio disponible.</string>
   <string name="auth_create_address_error_private_key">La generación de la clave privada ha fallado.</string>
   <string name="auth_create_address_error_signed_key_list">La generación de la lista de claves ha fallado.</string>
@@ -92,7 +92,7 @@
   <string name="auth_password_chooser_description">Para usar la aplicación de Proton como miembro de una organización, primero debe cambiar su contraseña accediendo desde un navegador web.</string>
   <string name="auth_password_chooser_change">Cambiar contraseña</string>
   <string name="auth_user_check_one_free_error">Solo se permite una cuenta Proton gratuita.</string>
-  <string name="auth_user_check_delinquent_error">Su cuenta se encuentra suspendida en este momento debido a una factura atrasada.</string>
+  <string name="auth_user_check_delinquent_error">Tu cuenta se encuentra suspendida en este momento debido a una factura vencida.</string>
   <string name="auth_user_check_delinquent_action">Pagar factura</string>
   <string name="auth_account_not_found_error">Error con la cuenta</string>
   <string name="auth_one_account_all_services">Una cuenta para todos los servicios de Proton.</string>
@@ -113,8 +113,8 @@
   <string name="auth_signup_repeat_password">Repite la contraseña</string>
   <string name="auth_signup_recovery_method_title">Establecer un método de recuperación (opcional)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Establecer un método de recuperación</string>
-  <string name="auth_signup_recovery_method_subtitle">Enviaremos instrucciones de recuperación a este siguiente correo electrónico o número telefónico si se bloquea el acceso a su cuenta.</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">Enviaremos instrucciones de recuperación a este correo electrónico si se bloquea el acceso a su cuenta.</string>
+  <string name="auth_signup_recovery_method_subtitle">Enviaremos instrucciones de recuperación a este correo electrónico o número telefónico si se bloquea el acceso a tu cuenta.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Enviaremos instrucciones de recuperación a este correo electrónico si se bloquea el acceso a tu cuenta.</string>
   <string name="auth_signup_recovery_method_email">Correo electrónico</string>
   <string name="auth_signup_recovery_method_phone">Teléfono</string>
   <string name="auth_signup_recovery_method_email_hint">Correo electrónico de recuperación</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">El nombre de usuario no puede estar vacío.</string>
   <string name="auth_signup_error_passwords_do_not_match">Las contraseñas no coinciden.</string>
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>
-  <string name="auth_signup_validation_password">La contraseña no debe estar vacía.</string>
+  <string name="auth_signup_validation_password">Confirm your password.</string>
   <string name="auth_signup_your_account_is_being_setup">Tu cuenta está siendo creada…</string>
   <string name="auth_signup_please_wait">Normalmente no llevará más de un minuto.</string>
   <string name="auth_signup_replacement_code">¿No has recibido el código?</string>
@@ -138,7 +138,7 @@
   <string name="auth_signup_enter_code_subtitle">Introduce el código de verificación enviado a %s:</string>
   <string name="auth_signup_error_human_verification_failed">La verificación humana ha fallado.</string>
   <string name="auth_signup_token_code_resent">Código token reenviado.</string>
-  <string name="auth_signup_congratulations_subtitle">Su cuenta Proton ha sido creada correctamente.\nDisfrute el mundo de la privacidad.</string>
+  <string name="auth_signup_congratulations_subtitle">Tu cuenta Proton ha sido creada correctamente.\nDisfruta el mundo de la privacidad.</string>
   <string name="auth_signup_congratulations">¡Enhorabuena!</string>
   <string name="auth_signup_start_using_proton">Empezar a usar Proton</string>
   <string name="auth_signup_start_using_calendar">Empezar a usar Proton Calendar</string>

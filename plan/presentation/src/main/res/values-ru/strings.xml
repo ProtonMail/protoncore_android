@@ -40,12 +40,12 @@
     <item quantity="many">За %d месяцев</item>
     <item quantity="other">За %d месяцев</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Улучшить план</string>
+  <string name="plans_upgrade_your_plan">Улучшить тариф</string>
   <string name="plans_proton_for_free">Получить Proton бесплатно</string>
   <string name="plans_get_proton">Получить %s</string>
   <string name="plans_manage_your_subscription">Управляйте своей подпиской по ссылке: <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s из %s</string>
-  <string name="plans_payments_info_not_available">н/д</string>
+  <string name="plans_payments_info_not_available">недоступно</string>
   <string name="plans_manage_your_subscription_google">Ваша подписка управляется Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вы не можете управлять подпиской из мобильного приложения.</string>
   <string name="plans_autorenew_subscriptions">Через это приложение доступны только автопродлеваемые годовые подписки.</string>
@@ -131,7 +131,7 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Основа для конфиденциальных и безопасных коммуникаций.</string>
+  <string name="plan_id_free_header">Основа для конфиденциальных и защищенных коммуникаций.</string>
   <string name="plan_id_plus_header">Полнофункциональный почтовый ящик с расширенной защитой.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 страны</string>

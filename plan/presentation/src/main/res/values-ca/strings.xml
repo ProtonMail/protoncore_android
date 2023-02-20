@@ -38,7 +38,7 @@
     <item quantity="one">Per a %d mes</item>
     <item quantity="other">Per a %d mesos</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Actualitza el teu compte</string>
+  <string name="plans_upgrade_your_plan">Milloreu-vos el pla</string>
   <string name="plans_proton_for_free">Obtingueu Proton gratuïtament</string>
   <string name="plans_get_proton">Obtingueu %s</string>
   <string name="plans_manage_your_subscription">Gestioneu la subscripció en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
@@ -105,7 +105,7 @@
   <!-- region plans headers -->
   <string name="plan_id_free_header">La base de les comunicacions privades i segures.</string>
   <string name="plan_id_plus_header">Bústia de correu completa amb protecció avançada.</string>
-  <string name="plan_id_vpnbasic_header">VPN Bàsica</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 països</string>
   <string name="plan_id_vpnbasic_high_speed">Alta velocitat</string>
   <string name="plan_id_vpnplus_adblock">Bloquejador d\'anuncis (NetShield)</string>

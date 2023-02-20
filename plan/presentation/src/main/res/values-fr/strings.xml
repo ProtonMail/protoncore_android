@@ -25,10 +25,10 @@
   <string name="plan_price_monthly">par mois</string>
   <string name="plan_price_annually">par an</string>
   <string name="plans_current_plan">Abonnement actuel</string>
-  <string name="plans_upgrade_plan">Changer d\'abonnement</string>
+  <string name="plans_upgrade_plan">Passez à un abonnement supérieur</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Votre abonnement sera automatiquement renouvelé le &lt;b&gt;%s&lt;/b&gt;.</string>
-  <string name="plans_expiration_date">Votre abonnement expirera le &lt;b&gt;%s&lt;/b&gt;.</string>
+  <string name="plans_expiration_date">Votre abonnement arrivera à expiration le &lt;b&gt;%s&lt;/b&gt;.</string>
   <string name="plans_billed_yearly">*Facturé annuellement : %s</string>
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>
@@ -43,10 +43,10 @@
   <string name="plans_get_proton">Obtenir %s</string>
   <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s sur %s</string>
-  <string name="plans_payments_info_not_available">indisponible</string>
-  <string name="plans_manage_your_subscription_google">Votre abonnement est géré par Google Play.</string>
+  <string name="plans_payments_info_not_available">n/a</string>
+  <string name="plans_manage_your_subscription_google">Google Play gère votre abonnement.</string>
   <string name="plans_manage_your_subscription_other">Vous ne pouvez pas gérer votre abonnement dans l\'application mobile.</string>
-  <string name="plans_autorenew_subscriptions">Seuls les abonnements annuels qui se renouvellent automatiquement sont disponibles via cette application.</string>
+  <string name="plans_autorenew_subscriptions">Seuls les abonnements annuels qui se renouvellent automatiquement sont disponibles depuis cette application.</string>
   <string name="plans_can_not_upgrade_from_mobile">Vous ne pouvez pas passer à l\'abonnement supérieur depuis l\'application mobile.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -113,7 +113,7 @@
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 pays</string>
   <string name="plan_id_vpnplus_highest_speed">Vitesse maximale</string>
-  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_header">Professionnel</string>
   <string name="plan_id_professional_multiuser">Prise en charge du multi-utilisateur</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->

@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">Kimliği doğrula</string>
   <string name="auth_2fa_use_recovery_code">Kurtarma kodunu kullan</string>
   <string name="auth_2fa_use_2fa_code">İki aşamalı doğrulama kodu kullanılsın</string>
-  <string name="auth_2fa_error_empty_code">İki aşamalı doğrulama kodu boş bırakılamaz</string>
+  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
   <string name="auth_mailbox_title">Posta kutunuzun kilidini açın</string>
   <string name="auth_mailbox_password_label">Posta kutusu parolası</string>
   <string name="auth_mailbox_unlock_action">Kilidi aç</string>
@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">Proton adresi gereklidir</string>
   <string name="auth_login_external_account_unsupported_message">Proton web ayarlarınızdan bu hesap ile ilişkilendirilmiş bir Proton Mail hesabı alın.</string>
   <string name="auth_login_external_account_unsupported_help_action">Ayrıntılı bilgi alın</string>
-  <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
-  <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
+  <string name="auth_login_empty_credentials">Enter your email or username.</string>
+  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
   <string name="auth_create_address_title">Bir Proton Mail adresi oluşturun</string>
   <string name="auth_create_address_subtitle">Proton hesabınız %1$s ile bağlantılı. Proton Mail kullanmak için bir adres oluşturun.</string>
   <string name="auth_username">Kullanıcı adı</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Adres oluştur</string>
   <string name="auth_create_address_creating">Adres oluşturuluyor</string>
   <string name="auth_create_address_terms">Adres oluştur üzerine tıklayarak, Proton <a href="https://protonmail.com/terms-and-conditions">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
-  <string name="auth_create_address_error_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
+  <string name="auth_create_address_error_credentials">Enter a password.</string>
   <string name="auth_create_address_error_no_available_domain">Kullanılabilecek bir etki alanı yok.</string>
   <string name="auth_create_address_error_private_key">Kişisel anahtar oluşturulamadı.</string>
   <string name="auth_create_address_error_signed_key_list">Anahtar listesi oluşturulamadı.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
-  <string name="auth_signup_validation_password">Parola boş olamaz.</string>
+  <string name="auth_signup_validation_password">Confirm your password.</string>
   <string name="auth_signup_your_account_is_being_setup">Hesabınız oluşturuluyor…</string>
   <string name="auth_signup_please_wait">Genellikle bir dakikadan kısa sürer.</string>
   <string name="auth_signup_replacement_code">Kodu almadınız mı?</string>

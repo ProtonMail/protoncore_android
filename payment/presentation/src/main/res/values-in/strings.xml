@@ -19,15 +19,15 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Terjadi kesalahan.</string>
-  <string name="payments_no_connectivity">Tidak ada konektivitas untuk menampilkan halaman konfirmasi 3DS.</string>
+  <string name="payments_no_connectivity">Tidak ada koneksi internet untuk menampilkan halaman konfirmasi 3DS.</string>
   <string name="payments_3ds_not_approved">Persetujuan 3DS ditolak.</string>
   <string name="payments_error_card_name">Nama pada kartu diperlukan.</string>
   <string name="payments_error_card_number">Nomor kartu tidak valid.</string>
   <string name="payments_error_cvc">Mohon masukkan kode keamanan yang valid.</string>
-  <string name="payments_error_session">Id sesi yang valid dibutuhkan saat berlangganan pengguna yang masuk.</string>
-  <string name="payments_error_signup_paymentmethod">Tidak dapat mendaftar dengan metode pembayaran yang sudah ada.</string>
+  <string name="payments_error_session">Id sesi yang valid dibutuhkan untuk memberikan langganan kepada pengguna yang masuk.</string>
+  <string name="payments_error_signup_paymentmethod">Tidak dapat mendaftar dengan metode pembayaran yang telah ada.</string>
   <string name="payments_error_invalid_session">Sesi tidak valid.</string>
-  <string name="payments_no_payment_provider">Tidak ada layanan penyedia pembayaran aktif yang ditemukan.</string>
+  <string name="payments_no_payment_provider">Tidak ada penyedia pembayaran aktif yang ditemukan.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Pilih metode pembayaran Anda</string>
@@ -36,13 +36,13 @@
   <string name="payments_pay_with" comment="Example: Pay with debit card">Bayar dengan</string>
   <string name="payments_method_icon">Ikon metode pembayaran.</string>
   <string name="payments_method_surcharge">*Pembayaran dengan metode ini akan dikenakan biaya tambahan.</string>
-  <string name="payments_method_terms_conditions">Dengan membeli menggunakan Google Pay, Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk menyiapkan pembayaran yang berulang dengan Google.</string>
+  <string name="payments_method_terms_conditions">Dengan membeli menggunakan Google Pay, Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk mengadakan pembayaran yang berulang dengan Google.</string>
   <string name="payments_method_google">Google</string>
-  <string name="payments_method_continue">Lanjut</string>
+  <string name="payments_method_continue">Lanjutkan</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Rincian pembayaran</string>
-  <string name="payments_card_name">Nama di kartu</string>
+  <string name="payments_card_name">Nama pada kartu</string>
   <string name="payments_card_number">Nomor kartu</string>
   <string name="payments_expiration_date">Tanggal kedaluwarsa</string>
   <string name="payments_security_code">Kode keamanan</string>
@@ -51,7 +51,7 @@
   <string name="payments_expiration_date_hint">BB/TT</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Negara</string>
-  <string name="payments_paying_in_process">Pembayaran sedang berlangsung</string>
+  <string name="payments_paying_in_process">Pembayaran diproses</string>
   <string name="payments_choose_country">Pilih negara</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Kdlw. %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
@@ -62,9 +62,9 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Konfirmasi peningkatan akun</string>
-  <string name="payments_giap_unredeemed_description">Pembayaran Google Pay Anda berhasil diproses, namun proses pembayaran terganggu. Terapkan pembayaran untuk meningkatkan jenis akun Anda sekarang?</string>
-  <string name="payments_giap_unredeemed_confirm">Konfirmasi peningkatan akun</string>
+  <string name="payments_giap_unredeemed_description">Pembayaran Google Pay Anda berhasil diproses, namun terdapat gangguan dalam proses peningkatan akun. Terapkan pembayaran untuk meningkatkan jenis akun Anda sekarang?</string>
+  <string name="payments_giap_unredeemed_confirm">Konfirmasi peningkatan</string>
   <string name="payments_giap_redeem_success">Akun Anda berhasil ditingkatkan</string>
-  <string name="payments_giap_redeem_error">Tidak dapat menyelesaikan peningkatan akun. Silakan coba lagi nanti.</string>
+  <string name="payments_giap_redeem_error">Proses peningkatan akun tidak dapat dirampungkan. Silakan coba lagi nanti.</string>
   <!-- endregion -->
 </resources>

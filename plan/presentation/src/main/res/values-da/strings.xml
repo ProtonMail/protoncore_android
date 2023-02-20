@@ -23,7 +23,7 @@
   <string name="plans_payment_error">Der er opstået en betalingsfejl. Prøv venligst igen senere eller opret et gratis abonnement.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pr. måned</string>
-  <string name="plan_price_annually">årligt</string>
+  <string name="plan_price_annually">pr. år</string>
   <string name="plans_current_plan">Nuværende abonnement</string>
   <string name="plans_upgrade_plan">Opgradér dit abonnement</string>
   <string name="plans_subscription">Abonnement</string>
@@ -38,12 +38,12 @@
     <item quantity="one">I %d måned</item>
     <item quantity="other">I %d måneder</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Opgradér abonnement</string>
+  <string name="plans_upgrade_your_plan">Opgradér dit abonnement</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>
   <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s af %s</string>
-  <string name="plans_payments_info_not_available">ikke tilgængelig</string>
+  <string name="plans_payments_info_not_available">Ikke tilgængelig</string>
   <string name="plans_manage_your_subscription_google">Dit abonnement håndteres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Dit abonnement kan ikke administreres i mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Kun årlige abonnementer med automatisk fornyelse er tilgængelige via denne app.</string>
@@ -58,8 +58,8 @@
     <item quantity="other">Op til #proton_storage# lagerplads</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# lager / bruger</item>
-    <item quantity="other">#proton_storage# lager / bruger</item>
+    <item quantity="one">#proton_storage# lagerplads / bruger</item>
+    <item quantity="other">#proton_storage# lagerplads / bruger</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# e-mailadresse</item>
@@ -104,12 +104,12 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">Det grundlæggende til privat og sikker kommunikation.</string>
-  <string name="plan_id_plus_header">Fuld funktionsdygtig postkasse med avanceret beskyttelse.</string>
+  <string name="plan_id_plus_header">Fuldt udstyret postkasse med avanceret beskyttelse.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 lande</string>
   <string name="plan_id_vpnbasic_high_speed">Høj hastighed</string>
   <string name="plan_id_vpnplus_adblock">Annonceblokering (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Understøttelse af streamingtjeneste</string>
+  <string name="plan_id_vpnplus_streaming">Understøttelse af streamingtjenester</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 lande</string>
   <string name="plan_id_vpnplus_highest_speed">Højeste hastighed</string>

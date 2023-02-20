@@ -21,7 +21,7 @@
   <string name="payments_general_error">Ocurrió un error.</string>
   <string name="payments_no_connectivity">No hay conexión para mostrar la página de confirmación de 3DS.</string>
   <string name="payments_3ds_not_approved">La aprobación de 3DS ha sido rechazada.</string>
-  <string name="payments_error_card_name">El titular de la tarjeta es obligatorio.</string>
+  <string name="payments_error_card_name">Nombre en la tarjeta requerido.</string>
   <string name="payments_error_card_number">Número de tarjeta inválido.</string>
   <string name="payments_error_cvc">Ingrese un código de seguridad válido.</string>
   <string name="payments_error_session">Se necesita un id de sesión válido al suscribirse a un usuario conectado.</string>

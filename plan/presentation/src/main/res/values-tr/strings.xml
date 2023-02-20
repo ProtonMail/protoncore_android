@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Tüm Proton hizmetleri için tek tarife</string>
   <string name="plans_fetching_general_error">Tarifeler alınırken bir sorun çıktı.</string>
   <string name="plans_payment_error">Bir ödeme sorunu çıktı. Lütfen bir süre sonra yeniden deneyin ya da ücretsiz bir tarife oluşturun.</string>
-  <string name="plans_free_name">Ücretsiz</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">aylık</string>
   <string name="plan_price_annually">yıllık</string>
   <string name="plans_current_plan">Geçerli tarife</string>

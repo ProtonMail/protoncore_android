@@ -17,18 +17,18 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">Chroń swoją prywatność z kontem Proton</string>
+  <string name="welcome_title">Chroń swoją prywatność z Proton</string>
   <string name="welcome_subtitle">Szyfrowanie zapewnia prywatność Twoich danych. Twoje dane należą do Ciebie.</string>
-  <string name="welcome_title_mail">Chroń swoją prywatność z pocztą Proton Mail</string>
+  <string name="welcome_title_mail">Chroń swoją prywatność z Proton Mail</string>
   <string name="welcome_subtitle_mail">Szyfrowana poczta e-mail, która zapewnia prywatną komunikację. Twoja skrzynka należy do Ciebie.</string>
   <string name="welcome_subtitle_mail_alt">Prywatność. Bezpieczeństwo. Wygoda. Szyfrowana poczta e-mail, która daje Ci pełną kontrolę nad danymi.</string>
-  <string name="welcome_title_drive">Chroń swoją prywatność z dyskiem Proton Drive</string>
+  <string name="welcome_title_drive">Chroń swoją prywatność z Proton Drive</string>
   <string name="welcome_subtitle_drive">Wygoda przechowywania danych w chmurze i bezpieczeństwo technologii szyfrowania. Wreszcie rozwiązanie do przechowywania danych w chmurze, któremu możesz zaufać.</string>
   <string name="welcome_subtitle_drive_alt">Najbezpieczniejszy sposób przechowywania plików. Przesyłaj, synchronizuj i udostępniaj pliki przy użyciu najsilniejszego szyfrowania.</string>
-  <string name="welcome_title_calendar">Chroń swoją prywatność z kalendarzem Proton Calendar</string>
+  <string name="welcome_title_calendar">Chroń swoją prywatność z Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Szyfrowany kalendarz, który zapewnia Twoim wydarzeniom prywatność i bezpieczeństwo.</string>
   <string name="welcome_subtitle_calendar_alt">Szyfrowany kalendarz end-to-end pomaga organizować i kontrolować Twój harmonogram.</string>
-  <string name="welcome_title_vpn">Chroń swoją prywatność z usługą Proton VPN</string>
+  <string name="welcome_title_vpn">Chroń swoją prywatność z Proton VPN</string>
   <string name="welcome_subtitle_vpn">Szybka szwajcarska usługa VPN, która chroni Twoją prywatność, szyfrując Twoje połączenie internetowe.</string>
   <string name="welcome_subtitle_vpn_alt">Szybka szwajcarska usługa VPN, która chroni Twoją prywatność. Maksymalne bezpieczeństwo, 1600 serwerów i brak ograniczeń.</string>
   <string name="welcome_privacy_by_default">Prywatność to nasz standard</string>
@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">Uwierzytelnij</string>
   <string name="auth_2fa_use_recovery_code">Użyj kodu odzyskiwania</string>
   <string name="auth_2fa_use_2fa_code">Użyj kodu uwierzytelniającego</string>
-  <string name="auth_2fa_error_empty_code">Kod uwierzytelniający nie może być pusty</string>
+  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
   <string name="auth_mailbox_title">Odblokuj swoją skrzynkę pocztową</string>
   <string name="auth_mailbox_password_label">Hasło skrzynki pocztowej</string>
   <string name="auth_mailbox_unlock_action">Odblokuj</string>
@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">Adres Proton jest wymagany</string>
   <string name="auth_login_external_account_unsupported_message">Uzyskaj adres Proton Mail powiązany z tym kontem.</string>
   <string name="auth_login_external_account_unsupported_help_action">Dowiedz się więcej</string>
-  <string name="auth_login_empty_credentials">Dane logowania nie mogą być puste.</string>
-  <string name="auth_mailbox_empty_credentials">Dane logowania nie mogą być puste.</string>
+  <string name="auth_login_empty_credentials">Enter your email or username.</string>
+  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
   <string name="auth_create_address_title">Utwórz adres Proton Mail</string>
   <string name="auth_create_address_subtitle">Twoje konto Proton jest powiązane z adresem %1$s. Utwórz adres, aby korzystać z poczty Proton Mail.</string>
   <string name="auth_username">Nazwa użytkownika</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Utwórz adres</string>
   <string name="auth_create_address_creating">Tworzenie adresu</string>
   <string name="auth_create_address_terms">Klikając przycisk Utwórz adres, akceptujesz <a href="https://protonmail.com/terms-and-conditions">regulamin</a> usługi Proton.</string>
-  <string name="auth_create_address_error_credentials">Dane logowania nie mogą być puste.</string>
+  <string name="auth_create_address_error_credentials">Enter a password.</string>
   <string name="auth_create_address_error_no_available_domain">Brak dostępnej domeny.</string>
   <string name="auth_create_address_error_private_key">Generowanie klucza prywatnego nie powiodło się.</string>
   <string name="auth_create_address_error_signed_key_list">Generowanie listy kluczy nie powiodło się.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Nazwa użytkownika nie może być pusta.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hasła nie pasują do siebie.</string>
   <string name="auth_signup_validation_password_length">Hasło musi zawierać co najmniej 8 znaków.</string>
-  <string name="auth_signup_validation_password">Hasło nie może być puste.</string>
+  <string name="auth_signup_validation_password">Confirm your password.</string>
   <string name="auth_signup_your_account_is_being_setup">Tworzenie konta…</string>
   <string name="auth_signup_please_wait">Zazwyczaj nie trwa to dłużej niż minutę.</string>
   <string name="auth_signup_replacement_code">Nie otrzymano kodu?</string>
@@ -140,10 +140,10 @@
   <string name="auth_signup_token_code_resent">Kod tokena został ponownie wysłany.</string>
   <string name="auth_signup_congratulations_subtitle">Konto Proton zostało utworzone.\nCiesz się prywatnością.</string>
   <string name="auth_signup_congratulations">Gratulacje!</string>
-  <string name="auth_signup_start_using_proton">Zacznij korzystać z usług Proton</string>
-  <string name="auth_signup_start_using_calendar">Zacznij korzystać z aplikacji Proton Calendar</string>
-  <string name="auth_signup_start_using_mail">Zacznij korzystać z aplikacji Proton Mail</string>
-  <string name="auth_signup_start_using_drive">Zacznij korzystać z aplikacji Proton Drive</string>
-  <string name="auth_signup_start_using_vpn">Zacznij korzystać z aplikacji Proton VPN</string>
+  <string name="auth_signup_start_using_proton">Zacznij korzystać z Proton</string>
+  <string name="auth_signup_start_using_calendar">Zacznij korzystać z Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Zacznij korzystać z Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Zacznij korzystać z Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Zacznij korzystać z Proton VPN</string>
   <string name="auth_signup_error_validation_recovery_destination">Kontakt pomocniczy jest nieprawidłowy.</string>
 </resources>

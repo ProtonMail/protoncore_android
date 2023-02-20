@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">Autentificare</string>
   <string name="auth_2fa_use_recovery_code">Folosire cod de recuperare</string>
   <string name="auth_2fa_use_2fa_code">Folosire cod doi factori</string>
-  <string name="auth_2fa_error_empty_code">Codul pentru autentificarea cu doi factori nu poate fi gol.</string>
+  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
   <string name="auth_mailbox_title">Deblocare mesaje</string>
   <string name="auth_mailbox_password_label">Parolă mesaje</string>
   <string name="auth_mailbox_unlock_action">Deblocare</string>
@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">Este necesară o adresă Proton</string>
   <string name="auth_login_external_account_unsupported_message">Obțineți o adresă Proton Mail asociată acestui cont în setările web Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Detalii</string>
-  <string name="auth_login_empty_credentials">Datele de autentificare nu pot fi goale.</string>
-  <string name="auth_mailbox_empty_credentials">Datele de autentificare nu pot fi goale.</string>
+  <string name="auth_login_empty_credentials">Enter your email or username.</string>
+  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
   <string name="auth_create_address_title">Creare adresă Proton Mail</string>
   <string name="auth_create_address_subtitle">Contul Proton este asociat cu %1$s. Pentru a utiliza Proton Mail, creați o adresă.</string>
   <string name="auth_username">Nume utilizator</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Creare adresă</string>
   <string name="auth_create_address_creating">Se creează adresa</string>
   <string name="auth_create_address_terms">Făcând clic pe «Creare adresă», sunteți de acord cu <a href="https://protonmail.com/terms-and-conditions">Termenii și condițiile</a> Proton.</string>
-  <string name="auth_create_address_error_credentials">Datele de autentificare nu pot fi goale.</string>
+  <string name="auth_create_address_error_credentials">Enter a password.</string>
   <string name="auth_create_address_error_no_available_domain">Nu sunt domenii disponibile.</string>
   <string name="auth_create_address_error_private_key">Generarea cheii private a eșuat.</string>
   <string name="auth_create_address_error_signed_key_list">Generarea listei de chei a eșuat.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Numele de utilizator nu poate fi gol.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parolele nu coincid.</string>
   <string name="auth_signup_validation_password_length">Parola trebuie să fie de cel puțin 8 caractere.</string>
-  <string name="auth_signup_validation_password">Parola nu poate fi goală.</string>
+  <string name="auth_signup_validation_password">Confirm your password.</string>
   <string name="auth_signup_your_account_is_being_setup">Vi se creează contul…</string>
   <string name="auth_signup_please_wait">De obicei nu durează mai mult de un minut.</string>
   <string name="auth_signup_replacement_code">Nu ați primit codul?</string>

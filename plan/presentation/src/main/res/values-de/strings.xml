@@ -38,10 +38,10 @@
     <item quantity="one">Für %d Monat</item>
     <item quantity="other">Für %d Monate</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Abonnement wechseln</string>
+  <string name="plans_upgrade_your_plan">Abonnement upgraden</string>
   <string name="plans_proton_for_free">Proton kostenlos erhalten</string>
   <string name="plans_get_proton">Hol dir %s</string>
-  <string name="plans_manage_your_subscription">Verwalte dein Abonnement unter <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Verwalte dein Abonnement unter <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s von %s</string>
   <string name="plans_payments_info_not_available">k.A.</string>
   <string name="plans_manage_your_subscription_google">Dein Abonnement wird von Google Play verwaltet.</string>
@@ -58,16 +58,16 @@
     <item quantity="other">Bis zu #proton_storage# Speicherplatz</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# Speicherplatz/Nutzer</item>
-    <item quantity="other">#proton_storage# Speicherplatz/Nutzer</item>
+    <item quantity="one">#proton_storage# Speicherplatz/Benutzer</item>
+    <item quantity="other">#proton_storage# Speicherplatz/Benutzer</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# E-Mail-Adresse</item>
     <item quantity="other">#proton_addresses# E-Mail-Adressen</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# E-Mail-Adresse/Nutzer</item>
-    <item quantity="other">#proton_addresses# E-Mail-Adressen/Nutzer</item>
+    <item quantity="one">#proton_addresses# E-Mail-Adresse/Benutzer</item>
+    <item quantity="other">#proton_addresses# E-Mail-Adressen/Benutzer</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d von #proton_addresses# Adresse</item>
@@ -114,16 +114,16 @@
   <string name="plan_id_vpnplus_countries">63 Länder</string>
   <string name="plan_id_vpnplus_highest_speed">Höchste Geschwindigkeit</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Unterstützung mehrerer Benutzer</string>
+  <string name="plan_id_professional_multiuser">Mehrbenutzerunterstützung</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Unbegrenzte Anzahl an Ordnern, Kategorien und Filtern</string>
-  <string name="highest_vpn_speed" comment="new_plans">Höchste VPN-Geschwindigkeiten</string>
+  <string name="highest_vpn_speed" comment="new_plans">Höchste VPN-Geschwindigkeit</string>
   <string name="servers_in_countries" comment="new_plans">Mehr als 1.500 Server in 63 Ländern</string>
   <string name="ad_blocker" comment="new_plans">Integrierter Werbeblocker (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Weltweiter Zugang zu Streaming-Diensten</string>
-  <string name="secure_core" comment="new_plans">„Secure Core“‐Server</string>
+  <string name="secure_core" comment="new_plans">Secure Core‐Server</string>
   <string name="tor_vpn" comment="new_plans">Tor über VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sichere E-Mails mit erweiterten Funktionen für deine tägliche Kommunikation.</string>

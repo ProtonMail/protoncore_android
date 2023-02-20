@@ -105,7 +105,7 @@
   <!-- region plans headers -->
   <string name="plan_id_free_header">Τα βασικά για ιδιωτική και διασφαλισμένη επικοινωνία.</string>
   <string name="plan_id_plus_header">Πλήρως εξοπλισμένο γραμματοκιβώτιο με προηγμένη προστασία.</string>
-  <string name="plan_id_vpnbasic_header">VPN Βασικό</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 χώρες</string>
   <string name="plan_id_vpnbasic_high_speed">Υψηλή ταχύτητα</string>
   <string name="plan_id_vpnplus_adblock">Φραγή Διαφημίσεων (NetShield)</string>

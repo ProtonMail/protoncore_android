@@ -20,14 +20,14 @@
   <!-- base common strings -->
   <string name="human_verification_help">Tallelt</string>
   <string name="human_verification_title">Asenqed b-umdan</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Enter the verification code that was sent to %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Enter the verification code that was sent to %s. If you don\'t find the email in your inbox, please check your spam folder.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Imayl</string>
   <string name="human_verification_option_email_subtitle">Your email will only be used for this one-time verification. If you don\'t find the email in your inbox, please check your spam folder.</string>
-  <string name="human_verification_option_sms">Uṭṭun n tiliɣri</string>
+  <string name="human_verification_option_sms">Uṭṭun n teleɣṛi</string>
   <string name="human_verification_option_sms_subtitle">Uṭṭun-ik n tiliɣṛi ad yettwaseqdec kan tikkelt deg usenqed-agi.</string>
   <string name="human_verification_get_verification_code">Awi tangalt n usentem</string>
   <string name="human_verification_already_have_code">Sɛiɣ yakan tangalt</string>
@@ -54,6 +54,6 @@
   <string name="human_verification_captcha_failed">CAPTCHA verification failed. Please try one more time or choose another verification option.</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load CAPTCHA.</string>
-  <string name="human_verification_action_retry">Retry</string>
+  <string name="human_verification_action_retry">Uɣal aɛreḍ</string>
   <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>
 </resources>

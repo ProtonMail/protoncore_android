@@ -42,7 +42,7 @@
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Fizetés részletei</string>
-  <string name="payments_card_name">Kártyán megjelenített név</string>
+  <string name="payments_card_name">A kártyán szereplő név</string>
   <string name="payments_card_number">Kártyaszám</string>
   <string name="payments_expiration_date">Lejárati dátum</string>
   <string name="payments_security_code">Biztonsági kód</string>
@@ -65,6 +65,6 @@
   <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
   <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
   <string name="payments_giap_redeem_success">Fiókja sikeresen frissült</string>
-  <string name="payments_giap_redeem_error">Nem tudtuk véglegesíteni a nagyobb csomagra váltást. Kérjük próbálja újra később.</string>
+  <string name="payments_giap_redeem_error">Nem sikerült befejezni a nagyobb csomagra váltást. Kérjük próbálja újra később.</string>
   <!-- endregion -->
 </resources>

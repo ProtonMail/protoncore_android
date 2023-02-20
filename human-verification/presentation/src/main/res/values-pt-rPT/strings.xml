@@ -19,13 +19,13 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Ajuda</string>
-  <string name="human_verification_title">Verificação Humana</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_title">Verificação humana</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Insira o código de verificação enviado para %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Insira o código de verificação enviado para %s. Se não encontrar o email na sua caixa de entrada, por favor verifique a pasta de assédio.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Correio</string>
+  <string name="human_verification_option_email">Email</string>
   <string name="human_verification_option_email_subtitle">Your email will only be used for this one-time verification. If you don\'t find the email in your inbox, please check your spam folder.</string>
   <string name="human_verification_option_sms">Número de telefone</string>
   <string name="human_verification_option_sms_subtitle">O seu telefone só será usado para esta verificação única.</string>

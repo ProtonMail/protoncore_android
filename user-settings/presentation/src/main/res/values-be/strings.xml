@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Электронная пошта для аднаўлення доступу</string>
+  <string name="settings_recovery_email_current">Бягучы адрас электроннай пошты для скідання/апавяшчэння</string>
+  <string name="settings_recovery_email_new">Новы адрас электроннай пошты для скідання/апавяшчэння</string>
+  <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для скідання/апавяшчэння</string>
+  <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>
+  <string name="settings_recovery_email_confirm_hint">Увядзіце адрас электроннай пошты яшчэ раз</string>
+  <string name="settings_save">Захаваць</string>
+  <string name="settings_password_required">Увядзіце ваш пароль для ўваходу</string>
+  <string name="settings_password_required_ok">Добра</string>
+  <string name="settings_not_set">Не зададзена</string>
+  <string name="settings_recovery_email_error_no_match">Электронная пошта для аднаўлення і пацвярджэння не супадаюць.</string>
+  <string name="settings_validation_email">Памылковы адрас электроннай пошты.</string>
+  <string name="settings_general_error">Адбылася памылка.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Змяніць пароль</string>
+  <string name="settings_password_management_change_mailbox_password">Змяніць пароль паштовай скрыні</string>
+  <string name="settings_password_management_header">Кіраванне паролямі</string>
+  <string name="settings_login_password_hint_current">Бягучы пароль уваходу</string>
+  <string name="settings_login_password_hint_new">Новы пароль уваходу</string>
+  <string name="settings_login_password_hint_new_confirm">Пацвердзіць новы пароль уваходу</string>
+  <string name="settings_mailbox_password_hint_new">Новы пароль паштовай скрыні</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Пацвердзіць новы пароль паштовай скрыні</string>
+  <string name="settings_change_password_error">Адбылася памылка пры змяненні пароля.</string>
+  <string name="settings_recovery_email_success">Абноўлена электронная пошта для аднаўлення доступу</string>
+  <string name="settings_password_management_success">Пароль абноўлены</string>
+  <string name="settings_password_management_login_password_success">Пароль уваходу абноўлены</string>
+  <string name="settings_password_management_mailbox_password_success">Пароль ад паштовай скрыні абноўлены</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Ананімная тэлеметрыя</string>
+  <string name="device_settings_telemetry_hint">Для ўдасканалення нашага сэрвісу час ад часу мы ананімна збіраем даныя аб выкарыстанні.</string>
+  <string name="device_settings_crashreport_title">Ананімная справаздача аб збоях</string>
+  <string name="device_settings_crashreport_hint">Справаздача з падрабязнасцямі будзе адпраўлена нашым інжынерам у выпадку, калі ў праграме адбыўся збой. Гэтыя даныя выкарыстоўваюцца толькі для выпраўлення памылак у праграме.</string>
+</resources>

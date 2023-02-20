@@ -104,8 +104,8 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">De basis voor privé-en veilige communicatie.</string>
-  <string name="plan_id_plus_header">Volledige mailbox met geavanceerde beveiliging.</string>
-  <string name="plan_id_vpnbasic_header">VPN Basis</string>
+  <string name="plan_id_plus_header">Full-featured mailbox met geavanceerde beveiliging.</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 landen</string>
   <string name="plan_id_vpnbasic_high_speed">Hoge snelheid</string>
   <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>

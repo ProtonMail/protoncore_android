@@ -41,9 +41,9 @@
     <item quantity="other">Na %d miesiąca</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Ulepsz plan</string>
-  <string name="plans_proton_for_free">Załóż darmowe konto</string>
+  <string name="plans_proton_for_free">Wybierz plan Proton Free</string>
   <string name="plans_get_proton">Wybierz plan %s</string>
-  <string name="plans_manage_your_subscription">Zarządzaj swoją subskrypcją na stronie <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Zarządzaj swoją subskrypcją na stronie <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s z %s</string>
   <string name="plans_payments_info_not_available">nie dotyczy</string>
   <string name="plans_manage_your_subscription_google">Twoja subskrypcja jest zarządzana przez Google Play.</string>

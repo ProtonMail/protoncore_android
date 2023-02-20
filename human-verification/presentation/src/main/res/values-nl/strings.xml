@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hulp</string>
   <string name="human_verification_title">Persoonsverificatie</string>
-  <string name="human_verification_main_subtitle">Om misbruik te voorkomen, gelieve te verifiëren dat u een mens bent door gebruik te maken van één van de volgende opties</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Voer de verificatiecode in die is verzonden naar %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Voer de verificatiecode in die is verzonden naar %s. Als u de e-mail niet in uw inbox vindt, controleer dan uw spam-map.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Voer de verificatiecode in die u al hebt:</string>

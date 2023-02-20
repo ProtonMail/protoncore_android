@@ -17,11 +17,11 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Switch to</string>
+  <string name="account_switcher_section_switch_to">Prebacite se na</string>
   <string name="account_switcher_action_add_account">Dodaj račun</string>
   <string name="account_switcher_action_sign_in">Prijavite se</string>
   <string name="account_switcher_action_sign_out">Odjava</string>
   <string name="account_switcher_action_remove">Ukloni</string>
-  <string name="account_list_item_chevron_content_description">Open account switcher</string>
-  <string name="account_view_three_dots_content_description">Options</string>
+  <string name="account_list_item_chevron_content_description">Otvori prebacivač računa</string>
+  <string name="account_view_three_dots_content_description">Mogućnosti</string>
 </resources>

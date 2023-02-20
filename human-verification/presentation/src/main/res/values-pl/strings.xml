@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Pomoc</string>
   <string name="human_verification_title">Weryfikacja antyspamowa</string>
-  <string name="human_verification_main_subtitle">Aby zapobiec nadużyciom, udowodnij, że jesteś człowiekiem za pomocą jednej z następujących opcji</string>
+  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
   <string name="human_verification_enter_code_subtitle">Wpisz kod weryfikacyjny wysłany do %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Wpisz kod weryfikacyjny wysłany do %s. Jeśli nie widzisz wiadomości w skrzynce odbiorczej, sprawdź folder Spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Wpisz kod weryfikacyjny, który już posiadasz:</string>

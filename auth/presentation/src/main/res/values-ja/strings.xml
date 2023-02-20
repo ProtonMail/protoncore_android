@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">認証</string>
   <string name="auth_2fa_use_recovery_code">回復用コードを使用</string>
   <string name="auth_2fa_use_2fa_code">2 要素認証コードを使用</string>
-  <string name="auth_2fa_error_empty_code">2 段階コードは空にできません</string>
+  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
   <string name="auth_mailbox_title">メールボックスのロック解除</string>
   <string name="auth_mailbox_password_label">メールボックスのパスワード</string>
   <string name="auth_mailbox_unlock_action">ロック解除</string>
@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">Proton アドレスが必要です</string>
   <string name="auth_login_external_account_unsupported_message">Get a Proton Mail address linked to this account in your Proton web settings.</string>
   <string name="auth_login_external_account_unsupported_help_action">詳細</string>
-  <string name="auth_login_empty_credentials">認証情報を空にできません。</string>
-  <string name="auth_mailbox_empty_credentials">認証情報を空にできません。</string>
+  <string name="auth_login_empty_credentials">Enter your email or username.</string>
+  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
   <string name="auth_create_address_title">Proton Mail アドレスを作成</string>
   <string name="auth_create_address_subtitle">あなたのアカウントは、%1$s に関連付けられています。Proton Mail を使用するには、アドレスを作成してください。</string>
   <string name="auth_username">ユーザー名</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">アドレスの作成</string>
   <string name="auth_create_address_creating">アドレスの作成中</string>
   <string name="auth_create_address_terms">アドレスを作成することで、Proton の<a href="https://protonmail.com/terms-and-conditions">利用規約</a>に同意したことになります。</string>
-  <string name="auth_create_address_error_credentials">認証情報を空にできません。</string>
+  <string name="auth_create_address_error_credentials">Enter a password.</string>
   <string name="auth_create_address_error_no_available_domain">利用可能なドメインがありません。</string>
   <string name="auth_create_address_error_private_key">プライベートキーの生成に失敗しました。</string>
   <string name="auth_create_address_error_signed_key_list">キーリストの生成に失敗しました。</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">ユーザー名を空白にすることはできません。</string>
   <string name="auth_signup_error_passwords_do_not_match">パスワードが一致しません.</string>
   <string name="auth_signup_validation_password_length">パスワードは 8 文字以上必要です。</string>
-  <string name="auth_signup_validation_password">パスワードを空にすることはできません。</string>
+  <string name="auth_signup_validation_password">Confirm your password.</string>
   <string name="auth_signup_your_account_is_being_setup">アカウントを作成しています…</string>
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>
   <string name="auth_signup_replacement_code">コードを受け取っていませんか?</string>

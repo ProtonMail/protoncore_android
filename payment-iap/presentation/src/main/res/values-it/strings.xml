@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">* Include un supplemento per commissioni e tasse aggiuntive del fornitore.</string>
-  <string name="payments_iap_terms_conditions">Toccando "Acquista con Google Pay", accetti i termini e le condizioni di Google Pay e accetti di impostare un pagamento ricorrente con Google.</string>
-  <string name="payments_iap_invalid_google_plan">Nome del piano selezionato non valido. Si prega di riavviare il processo.</string>
+  <string name="payments_iap_terms_conditions">Toccando \"Acquista con Google Pay\", accetti i termini e le condizioni di Google Pay e accetti di impostare un pagamento ricorrente con Google.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
   <string name="payments_iap_error_google_plan_price">Problema con il prezzo del prodotto Google. Si prega di riavviare il processo.</string>
   <string name="payments_iap_error_fetching_google_plan">Problema durante il recupero del prodotto Google. Si prega di riavviare il processo.</string>
-  <string name="payments_iap_error_already_owned">Possiedi già questo prodotto. Selezionane uno diverso.</string>
+  <string name="payments_iap_error_already_owned">Possiedi già questo prodotto. Si prega di selezionarne uno diverso.</string>
   <string name="payments_iap_error_billing_client_unavailable">Il client di fatturazione di Google non è attualmente disponibile o è disconnesso.</string>
-  <string name="payments_iap_general_error">Si è verificato un errore. Si prega di riavviare il processo.</string>
+  <string name="payments_iap_general_error">C\'è stato un errore. Si prega di riavviare il processo.</string>
 </resources>

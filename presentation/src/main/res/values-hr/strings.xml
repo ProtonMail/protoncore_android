@@ -30,18 +30,18 @@
   <string name="presentation_alert_ok">U redu</string>
   <string name="presentation_alert_enter">Unesi</string>
   <string name="presentation_alert_cancel">Poništi</string>
-  <string name="presentation_alert_submit">Submit</string>
+  <string name="presentation_alert_submit">Pošalji</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Report a problem</string>
+  <string name="presentation_menu_item_title_report_a_bug">Prijavi problem</string>
   <string name="presentation_menu_item_title_settings">Postavke</string>
-  <string name="presentation_menu_item_title_subscription">Subscription</string>
+  <string name="presentation_menu_item_title_subscription">Pretplata</string>
   <string name="presentation_menu_item_title_sign_out">Odjava</string>
   <!-- Other -->
-  <string name="presentation_back">Back</string>
+  <string name="presentation_back">Natrag</string>
   <string name="presentation_close">Zatvori</string>
   <string name="presentation_skip">Preskoči</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Could not connect to server.</string>
+  <string name="presentation_general_connection_error">Povezivanje na poslužitelj nije moguće.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
 </resources>

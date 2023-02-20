@@ -37,7 +37,7 @@
   <plurals name="plans_billing_other_period">
     <item quantity="other">%d 个月</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">升级您的账户</string>
+  <string name="plans_upgrade_your_plan">升级您的计划</string>
   <string name="plans_proton_for_free">免费获得Proton</string>
   <string name="plans_get_proton">获得 %s</string>
   <string name="plans_manage_your_subscription">通过 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的订阅</string>
@@ -76,8 +76,7 @@
     <item quantity="other">%d / #proton_calendars# 个日历</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="other">单设备免费 VPN
-#proton_vpn# 台设备可同时接入高速 VPN</item>
+    <item quantity="other">#proton_vpn# 台设备可同时接入高速 VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 台设备可接入高速 VPN</item>
@@ -92,17 +91,17 @@
   <!-- region plans headers -->
   <string name="plan_id_free_header">基础的私密和安全通信功能。</string>
   <string name="plan_id_plus_header">防护等级更高的全功能邮箱。</string>
-  <string name="plan_id_vpnbasic_header">VPN 普通版</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 个国家和地区</string>
   <string name="plan_id_vpnbasic_high_speed">速度较快</string>
   <string name="plan_id_vpnplus_adblock">广告拦截（NetShield）</string>
   <string name="plan_id_vpnplus_streaming">支持流媒体服务</string>
-  <string name="plan_id_vpnplus_header">VPN 增强版</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 个国家和地区</string>
   <string name="plan_id_vpnplus_highest_speed">速度最快</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">支持多用户</string>
-  <string name="plan_id_visionary_header">尊享版</string>
+  <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">不限量文件夹、标签和筛选规则</string>

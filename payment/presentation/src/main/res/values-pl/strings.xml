@@ -48,7 +48,7 @@
   <string name="payments_security_code">Kod zabezpieczający</string>
   <string name="payments_postal_code">Kod pocztowy</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">00/00</string>
+  <string name="payments_expiration_date_hint">MM/RR</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Kraj</string>
   <string name="payments_paying_in_process">Przetwarzanie płatności</string>

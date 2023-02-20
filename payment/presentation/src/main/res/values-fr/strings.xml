@@ -23,27 +23,27 @@
   <string name="payments_3ds_not_approved">L\'approbation 3DS a été rejetée.</string>
   <string name="payments_error_card_name">Le nom du titulaire de la carte est nécessaire.</string>
   <string name="payments_error_card_number">Le numéro de carte n\'est pas valide.</string>
-  <string name="payments_error_cvc">Saisissez le code de sécurité.</string>
+  <string name="payments_error_cvc">Saisissez un code de sécurité valide.</string>
   <string name="payments_error_session">Un identifiant de session valide est nécessaire lors de l\'abonnement d’un utilisateur connecté.</string>
-  <string name="payments_error_signup_paymentmethod">Le mode de paiement actuel ne permet pas de s\'inscrire.</string>
+  <string name="payments_error_signup_paymentmethod">Vous ne pouvez pas vous inscrire avec le mode de paiement actuel.</string>
   <string name="payments_error_invalid_session">La session n\'est pas valide.</string>
-  <string name="payments_no_payment_provider">Aucun fournisseur de service de paiement actif.</string>
+  <string name="payments_no_payment_provider">Aucun fournisseur de service de paiement actif n\'a été trouvé.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choisissez votre mode de paiement.</string>
-  <string name="payments_add_credit_debit_card">Ajouter une nouvelle carte de crédit/débit</string>
+  <string name="payments_add_credit_debit_card">Ajouter une carte de crédit/débit</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Payer %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Payer avec</string>
   <string name="payments_method_icon">Icône de mode de paiement.</string>
   <string name="payments_method_surcharge">*Les achats effectués avec ce mode de paiement entraînent un surcoût.</string>
-  <string name="payments_method_terms_conditions">Acheter avec Google Pay implique que vous acceptez les conditions générales de Google Pay et que vous acceptez de programmer un paiement récurrent avec Google.</string>
+  <string name="payments_method_terms_conditions">Acheter avec Google Pay signifie que vous acceptez les conditions générales de Google Pay et que vous acceptez de configurer un paiement récurrent avec Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Continuer</string>
   <!-- endregion -->
   <!-- region billing -->
-  <string name="payments_payment_details">Informations sur le paiement</string>
+  <string name="payments_payment_details">Informations de paiement</string>
   <string name="payments_card_name">Titulaire de la carte</string>
-  <string name="payments_card_number">Numéro de carte</string>
+  <string name="payments_card_number">Numéro de la carte</string>
   <string name="payments_expiration_date">Date d’expiration</string>
   <string name="payments_security_code">Code de sécurité</string>
   <string name="payments_postal_code">Code postal</string>
@@ -61,10 +61,10 @@
   <string name="payment_use_credit_card_instead">Utiliser plutôt une carte de crédit ou de débit</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirmez la mise à niveau du compte</string>
-  <string name="payments_giap_unredeemed_description">Votre paiement Google Pay a bien été traité, mais la mise à niveau du compte a été interrompue. Appliquer le paiement pour mettre à niveau votre compte maintenant ?</string>
+  <string name="payments_giap_unredeemed_title">Confirmez la mise à niveau du compte.</string>
+  <string name="payments_giap_unredeemed_description">Votre paiement Google Pay a été traité, mais la mise à niveau du compte a été interrompue. Appliquer le paiement pour mettre à niveau votre compte maintenant ?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmer la mise à niveau</string>
-  <string name="payments_giap_redeem_success">Votre compte a bien été mis à niveau.</string>
-  <string name="payments_giap_redeem_error">Impossible de terminer la mise à niveau. Nous vous invitons à réessayer plus tard.</string>
+  <string name="payments_giap_redeem_success">Votre compte a été mis à niveau.</string>
+  <string name="payments_giap_redeem_error">La mise à niveau n\'a pas abouti. Nous vous invitons à réessayer plus tard.</string>
   <!-- endregion -->
 </resources>

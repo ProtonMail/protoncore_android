@@ -38,7 +38,7 @@
     <item quantity="one">Por %d mês</item>
     <item quantity="other">Por %d meses</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Faça upgrade de seu plano</string>
+  <string name="plans_upgrade_your_plan">Faça upgrade do seu plano</string>
   <string name="plans_proton_for_free">Obter Proton grátis</string>
   <string name="plans_get_proton">Obter %s</string>
   <string name="plans_manage_your_subscription">Gerenciar a sua assinatura em <a href="https://account.protonmail.com">account.protonmail.com</a></string>
@@ -104,7 +104,7 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">O básico para comunicações seguras e privadas.</string>
-  <string name="plan_id_plus_header">Caixa de correio completa e com proteção avançada.</string>
+  <string name="plan_id_plus_header">Caixa de entrada completa com proteção avançada.</string>
   <string name="plan_id_vpnbasic_header">VPN básica</string>
   <string name="plan_id_vpnbasic_countries">63 países</string>
   <string name="plan_id_vpnbasic_high_speed">Alta velocidade</string>
@@ -113,7 +113,7 @@
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 países</string>
   <string name="plan_id_vpnplus_highest_speed">Velocidade máxima</string>
-  <string name="plan_id_professional_header">Profissional</string>
+  <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suporte para múltiplos usuários</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <!-- endregion -->

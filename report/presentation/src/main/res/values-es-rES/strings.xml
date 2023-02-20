@@ -21,21 +21,21 @@
   <string name="core_report_bug_close">Cerrar</string>
   <string name="core_report_bug_subject_field_hint">Asunto</string>
   <string name="core_report_bug_subject_field_required">Introduce un asunto</string>
-  <string name="core_report_bug_description_field_hint">¿Qué salió mal? Mínimo 10 caracteres</string>
-  <string name="core_report_bug_description_field_placeholder">Por favor describa el problema con el máximo detalle que pueda. Si recibió un mensaje de error, por favor háganos saber su contenido.</string>
+  <string name="core_report_bug_description_field_hint">¿Qué ha pasado? Mínimo 10 caracteres</string>
+  <string name="core_report_bug_description_field_placeholder">Describe el problema lo más detallado posible. Si hay un error en el mensaje, haznos saber lo que dice.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="one">Introduce al menos %d carácter</item>
     <item quantity="other">Introduce al menos %d caracteres</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">¿Cerrar reporte de error?</string>
-  <string name="core_report_bug_discard_changes_description">Si cierra esta página su reporte no será guardado.</string>
+  <string name="core_report_bug_discard_changes_title">¿Cerrar informe de errores?</string>
+  <string name="core_report_bug_discard_changes_description">Si cierras esta página no se guardará tu informe.</string>
   <string name="core_report_bug_discard_changes_cancel">Seguir escribiendo</string>
   <string name="core_report_bug_discard_changes_confirm">Cerrar sin guardar</string>
   <plurals name="core_report_bug_form_field_too_long">
     <item quantity="one">Máximo %d caracter</item>
     <item quantity="other">Máximo %d caracteres</item>
   </plurals>
-  <string name="core_report_bug_general_error">Algo salió mal. Por favor inténtelo de nuevo en unos minutos.</string>
+  <string name="core_report_bug_general_error">Se ha producido un error. Inténtalo de nuevo en unos minutos</string>
   <string name="core_report_bug_send">Enviar informe</string>
   <string name="core_report_bug_success">Gracias por tu informe</string>
 </resources>

@@ -31,10 +31,10 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Vælg din betalingsmetode</string>
-  <string name="payments_add_credit_debit_card">Tilføj kredit / betalingskort</string>
+  <string name="payments_add_credit_debit_card">Tilføj kredit/betalingskort</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Betal %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Betal med</string>
-  <string name="payments_method_icon">Betalingsmetode ikon.</string>
+  <string name="payments_method_icon">Betalingsmetode-ikon.</string>
   <string name="payments_method_surcharge">*Køb foretaget med denne betalingsmetode medfører et tillægsgebyr.</string>
   <string name="payments_method_terms_conditions">Når du køber med Google Pay, betyder det, at du accepterer Google Pay\'s vilkår og betingelser og accepterer at oprette en tilbagevendende betaling med Google.</string>
   <string name="payments_method_google">Google</string>
@@ -48,14 +48,14 @@
   <string name="payments_security_code">Sikkerhedskode</string>
   <string name="payments_postal_code">Postnummer</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">00/00</string>
+  <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
   <string name="payments_paying_in_process">Betaler</string>
   <string name="payments_choose_country">Vælg land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Udløber %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">ikke tilgængelig</string>
+  <string name="payments_info_not_available">Ikke tilgængelig</string>
   <string name="payments_billing_yearly">I 1 år</string>
   <string name="payment_use_google_pay_instead">Brug Google Pay i stedet</string>
   <string name="payment_use_credit_card_instead">Brug kredit-/debetkort i stedet</string>
@@ -64,7 +64,7 @@
   <string name="payments_giap_unredeemed_title">Bekræft opgradering af konto</string>
   <string name="payments_giap_unredeemed_description">Din Google Pay-betaling blev behandlet, men opgraderingen af kontoen blev afbrudt. Vil du gennemføre betalingen for at opgradere din konto nu?</string>
   <string name="payments_giap_unredeemed_confirm">Bekræft opgradering</string>
-  <string name="payments_giap_redeem_success">Din konto er med succes blevet opgraderet</string>
+  <string name="payments_giap_redeem_success">Din konto er blevet opgraderet</string>
   <string name="payments_giap_redeem_error">Opgraderingen kan ikke fuldføres. Prøv venligst igen senere.</string>
   <!-- endregion -->
 </resources>

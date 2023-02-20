@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">* Incluye recargo por tarifas e impuestos adicionales del proveedor.</string>
-  <string name="payments_iap_terms_conditions">Al pulsar "Comprar con Google Pay" acepta los términos y condiciones de Google Pay y acepta establecer un pago recurrente con Google.</string>
-  <string name="payments_iap_invalid_google_plan">Nombre de plan seleccionado inválido. Restablezca el proceso.</string>
-  <string name="payments_iap_error_google_plan_price">Problema con el precio del producto de Google. Restablezca el proceso.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problema al recuperar el producto de Google. Restablezca el proceso.</string>
-  <string name="payments_iap_error_already_owned">Ya tiene este producto. Seleccione uno diferente.</string>
+  <string name="payments_iap_terms_conditions">Al pulsar \"Comprar con Google Pay\" acepta los términos y condiciones de Google Pay y acepta establecer un pago recurrente con Google.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_error_google_plan_price">Problema con el precio del producto de Google. Reinicie el proceso.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problema al recuperar el producto de Google. Reinicie el proceso.</string>
+  <string name="payments_iap_error_already_owned">Ya posee este producto. Seleccione uno diferente.</string>
   <string name="payments_iap_error_billing_client_unavailable">El cliente de facturación de Google no está disponible actualmente o está desconectado.</string>
-  <string name="payments_iap_general_error">Ha ocurrido un error. Restablezca el proceso.</string>
+  <string name="payments_iap_general_error">Ocurrió un error. Reinicie el proceso.</string>
 </resources>

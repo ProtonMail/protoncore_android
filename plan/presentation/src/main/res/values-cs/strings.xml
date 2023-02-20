@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Vyberte tarif</string>
   <string name="plans_select_a_plan_subtitle">Jeden tarif pro všechny Proton služby</string>
   <string name="plans_fetching_general_error">Při načítání tarifů došlo k chybě.</string>
-  <string name="plans_payment_error">Došlo k chybě při platbě. Zkuste to prosím později nebo si vytvořte bezplatný plán.</string>
+  <string name="plans_payment_error">Došlo k chybě při platbě. Zkuste to prosím později nebo si vytvořte bezplatný tarif.</string>
   <string name="plans_free_name">Zdarma</string>
   <string name="plan_price_monthly">za měsíc</string>
   <string name="plan_price_annually">za rok</string>
@@ -71,7 +71,7 @@
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# e-mailová adresa</item>
-    <item quantity="few">#proton_addresses# e-mailových adres</item>
+    <item quantity="few">#proton_addresses# e-mailové adresy</item>
     <item quantity="many">#proton_addresses# e-mailových adres</item>
     <item quantity="other">#proton_addresses# e-mailových adres</item>
   </plurals>
@@ -107,9 +107,9 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Bezplatná VPN na jednom zařízení</item>
-    <item quantity="few">Vysokorychlostní VPN na #proton_vpn# zařízení</item>
-    <item quantity="many">Vysokorychlostní VPN na #proton_vpn# zařízení</item>
-    <item quantity="other">Vysokorychlostní VPN na #proton_vpn# zařízení</item>
+    <item quantity="few">Vysokorychlostní VPN na #proton_vpn# zařízeních</item>
+    <item quantity="many">Vysokorychlostní VPN na #proton_vpn# zařízeních</item>
+    <item quantity="other">Vysokorychlostní VPN na #proton_vpn# zařízeních</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN vysokorychlostní připojení</item>
@@ -125,7 +125,7 @@
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
     <item quantity="one">%d z #proton_users# uživatelů</item>
-    <item quantity="few">%d z #proton_users# uživatelů</item>
+    <item quantity="few">%d ze #proton_users# uživatelů</item>
     <item quantity="many">%d z #proton_users# uživatelů</item>
     <item quantity="other">%d z #proton_users# uživatelů</item>
   </plurals>

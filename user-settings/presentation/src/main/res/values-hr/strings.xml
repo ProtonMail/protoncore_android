@@ -22,7 +22,7 @@
   <string name="settings_recovery_email_current">Trenutna adresa e-pošte za oporavak</string>
   <string name="settings_recovery_email_new">New recovery/notification email</string>
   <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
+  <string name="settings_recovery_email_new_hint">Unesite adresu e-pošte</string>
   <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
   <string name="settings_save">Spremi</string>
   <string name="settings_password_required">Unesite vašu lozinku</string>
@@ -30,7 +30,7 @@
   <string name="settings_not_set">Nije postavljeno</string>
   <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
   <string name="settings_validation_email">Email is invalid.</string>
-  <string name="settings_general_error">An error occurred.</string>
+  <string name="settings_general_error">Došlo je do pogreške.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Promijeni lozinku</string>
   <string name="settings_password_management_change_mailbox_password">Promijeni lozinku sandučića e-pošte</string>
