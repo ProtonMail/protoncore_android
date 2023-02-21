@@ -11,6 +11,52 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.11.0] - 2023-02-21
+
+### Chores
+
+- Added Observability main module.
+
+### Features
+
+- observability:
+  - Add observability metrics for checkout.
+  - Observability metrics for Human Verification.
+- payment:
+  - Add observability metrics for checkout.
+- plan:
+  - Add observability metrics for checkout.
+
+### Bug Fixes
+
+- Revert PRAGMA foreign_keys. Keep PRAGMA legacy_alter_table always ON (default in Android).
+- observability:
+  - Fix json encoding for metric data.
+
+    - Add `@Required` annotation for fields with default values.
+  - Fix json schema generator.
+- user:
+  - Remove deleted user keys from local db.
+
+    When we receive an event for a user, we have to remove the keys
+    that are no longer in the model from the local DB.
+    
+    CP-5365
+  - Remove deleted address keys from local db.
+
+    When we receive an event for a user address, we have to remove the keys
+    that are no longer in the model from the local DB.
+    
+    CP-5365
+
+### Internationalization
+
+- Upgrade translations from crowdin (ba33a454).
+
+### Refactoring
+
+- Added prefix and version to Proton endpoints (auth, keys, users, addresses, organizations, settings).
+
 ## [9.10.1] - 2023-02-17
 
 ### Bug Fixes
