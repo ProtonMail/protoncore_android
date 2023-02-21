@@ -55,8 +55,9 @@ class PerformUpdateUserPassword @Inject constructor(
         val user = userRepository.getUser(userId)
         val username = user.nameNotNull()
         val account = accountRepository.getAccountOrNull(userId)
-        val loginInfo = authRepository.getAuthInfo(requireNotNull(account?.sessionId), username)
-        val modulus = authRepository.randomModulus()
+        val sessionId = requireNotNull(account?.sessionId)
+        val loginInfo = authRepository.getAuthInfo(sessionId, username)
+        val modulus = authRepository.randomModulus(sessionId)
         val organizationKeys = if (user.isOrganizationAdmin())
             organizationRepository.getOrganizationKeys(userId, refresh = true)
         else null

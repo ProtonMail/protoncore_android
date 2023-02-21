@@ -65,7 +65,9 @@ interface AuthRepository {
     /**
      * Asks API to generate new random modulus.
      */
-    suspend fun randomModulus(): Modulus
+    suspend fun randomModulus(
+        sessionId: SessionId?
+    ): Modulus
 
     /**
      * Get session scopes.

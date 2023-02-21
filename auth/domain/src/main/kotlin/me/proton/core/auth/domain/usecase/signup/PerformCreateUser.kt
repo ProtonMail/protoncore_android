@@ -62,7 +62,7 @@ class PerformCreateUser @Inject constructor(
                 recoveryEmail != null && recoveryPhone == null
         ) { "Recovery Email and Phone could not be set together" }
 
-        val modulus = authRepository.randomModulus()
+        val modulus = authRepository.randomModulus(null)
 
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val auth = srpCrypto.calculatePasswordVerifier(

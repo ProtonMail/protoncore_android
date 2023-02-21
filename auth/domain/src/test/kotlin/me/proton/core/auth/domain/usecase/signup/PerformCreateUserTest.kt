@@ -88,7 +88,7 @@ class PerformCreateUserTest {
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testEncryptedPassword
 
-        coEvery { authRepository.randomModulus() } returns testModulus
+        coEvery { authRepository.randomModulus(null) } returns testModulus
         coEvery {
             userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
         } returns mockk(relaxed = true)
@@ -107,7 +107,7 @@ class PerformCreateUserTest {
             type = CreateUserType.Normal,
         )
 
-        coVerify(exactly = 1) { authRepository.randomModulus() }
+        coVerify(exactly = 1) { authRepository.randomModulus(null) }
         verify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testUsername,
@@ -151,7 +151,7 @@ class PerformCreateUserTest {
             type = CreateUserType.Normal,
         )
 
-        coVerify(exactly = 1) { authRepository.randomModulus() }
+        coVerify(exactly = 1) { authRepository.randomModulus(null) }
         verify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testUsername,
@@ -196,7 +196,7 @@ class PerformCreateUserTest {
             type = CreateUserType.Normal,
         )
 
-        coVerify(exactly = 1) { authRepository.randomModulus() }
+        coVerify(exactly = 1) { authRepository.randomModulus(null) }
         verify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testUsername,

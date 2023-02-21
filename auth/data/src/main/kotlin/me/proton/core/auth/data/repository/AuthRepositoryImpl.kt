@@ -54,8 +54,8 @@ class AuthRepositoryImpl(
             getAuthInfo(request).toAuthInfo(username)
         }.valueOrThrow
 
-    override suspend fun randomModulus(): Modulus =
-        provider.get<AuthenticationApi>().invoke {
+    override suspend fun randomModulus(sessionId: SessionId?): Modulus =
+        provider.get<AuthenticationApi>(sessionId).invoke {
             getRandomModulus().toModulus()
         }.valueOrThrow
 

@@ -85,7 +85,7 @@ class PerformCreateExternalEmailUserTest {
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testEncryptedPassword
 
-        coEvery { authRepository.randomModulus() } returns testModulus
+        coEvery { authRepository.randomModulus(null) } returns testModulus
 
         coEvery {
             userRepository.createExternalEmailUser(any(), any(), any(), any(), any(), any())
@@ -100,7 +100,7 @@ class PerformCreateExternalEmailUserTest {
             referrer = null
         )
 
-        coVerify(exactly = 1) { authRepository.randomModulus() }
+        coVerify(exactly = 1) { authRepository.randomModulus(null) }
         verify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testEmail,

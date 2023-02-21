@@ -37,6 +37,8 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_BAD
 import me.proton.core.network.domain.ResponseCodes.NOT_ALLOWED
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
@@ -55,6 +57,7 @@ class SetupPrimaryKeysTest {
     private val testDomain = "example.com"
     private val testEmail = "$testUsername@$testDomain"
     private val testModulus = Modulus(modulusId = "test-id", modulus = "test-modulus")
+    private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
     private val testAuth = Auth(
         version = 0,
@@ -62,6 +65,10 @@ class SetupPrimaryKeysTest {
         salt = "test-salt",
         verifier = "test-verifier"
     )
+
+    private val sessionProvider: SessionProvider = mockk() {
+        coEvery { getSessionId(any()) } returns testSessionId
+    }
 
     private lateinit var userManager: UserManager
     private lateinit var userAddressRepository: UserAddressRepository
@@ -84,6 +91,7 @@ class SetupPrimaryKeysTest {
             userAddressRepository,
             authRepository,
             domainRepository,
+            sessionProvider,
             srpCrypto,
             keyStoreCrypto
         )
@@ -224,7 +232,7 @@ class SetupPrimaryKeysTest {
     }
 
     private fun AuthRepository.mockRandomModulus() {
-        coEvery { randomModulus() } returns testModulus
+        coEvery { randomModulus(any()) } returns testModulus
     }
 
     private fun DomainRepository.mockGetAvailableDomains() {

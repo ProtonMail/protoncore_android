@@ -53,7 +53,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
     ): UserId {
         require(email.isNotBlank()) { "Email must not be empty." }
 
-        val modulus = authRepository.randomModulus()
+        val modulus = authRepository.randomModulus(null)
 
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val auth = srpCrypto.calculatePasswordVerifier(

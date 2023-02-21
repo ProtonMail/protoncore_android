@@ -162,7 +162,7 @@ class PerformUpdateLoginPasswordTest {
             secondFactor = null
         )
 
-        coEvery { authRepository.randomModulus() } returns Modulus(
+        coEvery { authRepository.randomModulus(any()) } returns Modulus(
             modulusId = testModulusId,
             modulus = testModulus
         )
