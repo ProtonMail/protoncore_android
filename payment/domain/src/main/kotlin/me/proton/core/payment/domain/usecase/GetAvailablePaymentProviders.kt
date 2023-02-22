@@ -47,9 +47,15 @@ public class GetAvailablePaymentProviders @Inject internal constructor(
         } catch (_: ApiException) {
             null
         }
-        val hasPreviousPurchase = user?.let {
-            userManager.getUser(user).credit > 0
-        } ?: false
+        val hasPreviousPurchase = try {
+            user?.let {
+                userManager.getUser(user).credit > 0
+            } ?: false
+        } catch (_: ApiException) {
+            // we set this to true as the user API failed so we need to assume that the user has had previous purchase
+            // and not allow GIAP since it can lead to incorrect state on the BE
+            true
+        }
         return buildSet {
             if (paymentStatus?.card == true) add(PaymentProvider.CardPayment)
             if (paymentStatus?.paypal == true) add(PaymentProvider.PayPal)

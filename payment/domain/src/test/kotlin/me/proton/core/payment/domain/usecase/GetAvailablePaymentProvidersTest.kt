@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.PaymentStatus
@@ -139,6 +140,35 @@ class GetAvailablePaymentProvidersTest {
         coEvery { getPaymentStatus.invoke(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
 
         assertTrue(tested().isEmpty())
+    }
+
+    @Test
+    fun `get user and payment status throw API exception`() = runTest {
+        tested = makeTested(AppStore.GooglePlay)
+        coEvery { userManager.getUser(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+        coEvery { getPaymentStatus.invoke(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+
+        assertTrue(tested(UserId("test-user-id")).isEmpty())
+    }
+
+    @Test
+    fun `get user only throws API exception`() = runTest {
+        tested = makeTested(AppStore.GooglePlay)
+        coEvery { userManager.getUser(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+        mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = false))
+
+        assertEquals(setOf(PaymentProvider.CardPayment), tested(UserId("test-user-id")))
+    }
+
+    @Test
+    fun `get user only throws API exception IAP only`() = runTest {
+        tested = makeTested(AppStore.GooglePlay)
+        coEvery { userManager.getUser(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+        mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = false, inApp = true, paypal = false))
+
+        assertEquals(0, tested(UserId("test-user-id")).size)
     }
 
     private fun mockGoogleIAP(available: Boolean) {
