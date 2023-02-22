@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.11.1] - 2023-02-22
+
+### Bug Fixes
+
+- payment-iap:
+  - Fix user api exception handling.
+
 ## [9.11.0] - 2023-02-21
 
 ### Chores
