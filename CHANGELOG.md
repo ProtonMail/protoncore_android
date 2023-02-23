@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.11.2] - 2023-02-23
+
+### Bug Fixes
+
+- auth:
+  - Use current session for randomModulus if exist.
+
 ## [9.11.1] - 2023-02-22
 
 ### Bug Fixes
