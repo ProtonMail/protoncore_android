@@ -18,39 +18,50 @@
 
 package me.proton.core.observability.domain
 
+import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
-import me.proton.core.test.kotlin.assertTrue
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertContentEquals
-import kotlin.test.assertEquals
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.milliseconds
 
 class ObservabilityManagerTest {
+    private var currentClockMillis: Long = 0L
+
     private lateinit var isObservabilityEnabled: IsObservabilityEnabled
     private lateinit var observabilityRepository: ObservabilityRepository
     private lateinit var scopeProvider: CoroutineScopeProvider
-    private lateinit var workerManager: FakeWorkerManager
+    private lateinit var workerManager: ObservabilityWorkerManager
+    private lateinit var timeTracker: ObservabilityTimeTracker
     private lateinit var tested: ObservabilityManager
 
     @BeforeTest
     fun setUp() {
+        currentClockMillis = 0L
         isObservabilityEnabled = mockk()
         observabilityRepository = mockk(relaxUnitFun = true)
-        scopeProvider = TestCoroutineScopeProvider(TestDispatcherProvider(UnconfinedTestDispatcher()))
-        workerManager = FakeWorkerManager()
+        scopeProvider =
+            TestCoroutineScopeProvider(TestDispatcherProvider(UnconfinedTestDispatcher()))
+        timeTracker = ObservabilityTimeTracker { currentClockMillis }
+        workerManager = mockk(relaxed = true)
 
-        tested = ObservabilityManager(isObservabilityEnabled, observabilityRepository, scopeProvider, workerManager)
+        tested = ObservabilityManager(
+            isObservabilityEnabled,
+            observabilityRepository,
+            scopeProvider,
+            timeTracker,
+            workerManager
+        )
     }
 
     @Test
@@ -64,9 +75,7 @@ class ObservabilityManagerTest {
         coVerify(exactly = 0) { observabilityRepository.addEvent(any()) }
 
         coVerify(exactly = 1) { observabilityRepository.deleteAllEvents() }
-        assertTrue(workerManager.scheduledCalls.isEmpty()) {
-            "Unexpected call to `ObservabilityWorkerManager.schedule`."
-        }
+        verify(exactly = 0) { workerManager.schedule(any()) }
     }
 
     @Test
@@ -79,10 +88,10 @@ class ObservabilityManagerTest {
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
-        assertEquals(0, workerManager.cancelCount)
+        verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(ObservabilityManager.MAX_DELAY_MS.milliseconds), workerManager.scheduledCalls)
+        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
     }
 
     @Test
@@ -95,66 +104,87 @@ class ObservabilityManagerTest {
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
-        assertEquals(0, workerManager.cancelCount)
+        verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(Duration.ZERO), workerManager.scheduledCalls)
+        verify(exactly = 1) { workerManager.schedule(ZERO) }
     }
 
     @Test
     fun durationSinceLastShipmentExceeded() = runTest {
         coEvery { isObservabilityEnabled.invoke() } returns true
         coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT / 2
-        workerManager.duration = ObservabilityManager.MAX_DELAY_MS.milliseconds
+        timeTracker.setFirstEventNow()
+        currentClockMillis = ObservabilityManager.MAX_DELAY_MS
 
         // WHEN
         tested.enqueue(mockk<ObservabilityData>(relaxed = true))
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
-        assertEquals(0, workerManager.cancelCount)
+        verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(Duration.ZERO), workerManager.scheduledCalls)
+        verify(exactly = 1) { workerManager.schedule(ZERO) }
     }
 
     @Test
     fun durationSinceLastShipmentNotExceeded() = runTest {
         coEvery { isObservabilityEnabled.invoke() } returns true
         coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT / 2
-        workerManager.duration = (ObservabilityManager.MAX_DELAY_MS - 1).milliseconds
+        currentClockMillis = ObservabilityManager.MAX_DELAY_MS - 1
 
         // WHEN
         tested.enqueue(mockk<ObservabilityData>(relaxed = true))
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
-        assertEquals(0, workerManager.cancelCount)
+        verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        assertContentEquals(listOf(ObservabilityManager.MAX_DELAY_MS.milliseconds), workerManager.scheduledCalls)
+        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
     }
 
-    /**
-     * The [getDurationSinceLastShipment] method returns inline class (Duration) which is not supported by mockk,
-     * so we need to use a fake class.
-     */
-    private class FakeWorkerManager : ObservabilityWorkerManager {
-        var cancelCount = 0
-            private set
-        var scheduledCalls = mutableListOf<Duration>()
-            private set
+    @Test
+    fun schedulingEventsUsesProperDelays() = runTest {
+        // 1. =========================
+        // GIVEN
+        coEvery { isObservabilityEnabled.invoke() } returns true
+        coEvery { observabilityRepository.getEventCount() } returns 1
+        currentClockMillis = ObservabilityManager.MAX_DELAY_MS
 
-        var duration: Duration? = null
+        // WHEN
+        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
 
-        override fun cancel() {
-            cancelCount += 1
-        }
+        // THEN
+        // The first event should be enqueued with max delay.
+        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
 
-        override suspend fun getDurationSinceLastShipment(): Duration? = duration
-        override suspend fun setLastSentNow() = Unit
-        override fun schedule(delay: Duration) {
-            scheduledCalls.add(delay)
-        }
+        // 2. =========================
+        // GIVEN
+        clearMocks(workerManager)
+        coEvery { observabilityRepository.getEventCount() } returns 2
+        currentClockMillis += 10
+
+        // WHEN
+        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+
+        // THEN
+        // Subsequent events should be also enqueued with max delay.
+        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
+
+        // 3. =========================
+        // GIVEN
+        clearMocks(workerManager)
+        coEvery { observabilityRepository.getEventCount() } returns 3
+        currentClockMillis += ObservabilityManager.MAX_DELAY_MS
+
+        // WHEN
+        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+
+        // THEN
+        // Events enqueued after MAX_DELAY_MS since the first event,
+        // should be enqueued with no delay.
+        verify(exactly = 1) { workerManager.schedule(ZERO) }
     }
 }

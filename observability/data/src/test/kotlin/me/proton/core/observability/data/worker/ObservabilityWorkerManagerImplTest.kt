@@ -26,37 +26,20 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 import kotlin.time.Duration.Companion.ZERO
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 
 class ObservabilityWorkerManagerImplTest {
-    private lateinit var clock: FakeClock
     private lateinit var tested: ObservabilityWorkerManagerImpl
     private lateinit var workManager: WorkManager
 
     @BeforeTest
     fun setUp() {
-        clock = FakeClock()
         workManager = mockk()
-        tested = ObservabilityWorkerManagerImpl(clock::now, workManager)
-    }
-
-    @Test
-    fun durationSinceLastShipment() = runTest {
-        assertNull(tested.getDurationSinceLastShipment())
-        tested.setLastSentNow()
-        clock.current = 1000
-        assertEquals(1000.milliseconds, tested.getDurationSinceLastShipment())
-
-        tested.setLastSentNow()
-        clock.current = 1500
-        assertEquals(500.milliseconds, tested.getDurationSinceLastShipment())
+        tested = ObservabilityWorkerManagerImpl(workManager)
     }
 
     @Test
@@ -94,11 +77,5 @@ class ObservabilityWorkerManagerImplTest {
         // THEN
         assertEquals(ExistingWorkPolicy.KEEP, workPolicySlot.captured)
         assertEquals(2.minutes.inWholeMilliseconds, requestSlot.captured.workSpec.initialDelay)
-    }
-
-    private class FakeClock {
-        var current: Long = 0
-
-        fun now(): Long = current
     }
 }

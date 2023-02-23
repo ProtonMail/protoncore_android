@@ -19,14 +19,14 @@
 package me.proton.core.observability.domain.usecase
 
 import me.proton.core.observability.domain.ObservabilityRepository
-import me.proton.core.observability.domain.ObservabilityWorkerManager
+import me.proton.core.observability.domain.ObservabilityTimeTracker
 import javax.inject.Inject
 
 /** Processes observability events in batches and sends them to the server. */
 public class ProcessObservabilityEvents @Inject constructor(
     private val isObservabilityEnabled: IsObservabilityEnabled,
-    private val observabilityWorkerManager: ObservabilityWorkerManager,
     private val repository: ObservabilityRepository,
+    private val timeTracker: ObservabilityTimeTracker,
     private val sendObservabilityEvents: SendObservabilityEvents
 ) {
     public suspend operator fun invoke() {
@@ -34,7 +34,7 @@ public class ProcessObservabilityEvents @Inject constructor(
             true -> processSingleBatch()
             else -> repository.deleteAllEvents()
         }
-        observabilityWorkerManager.setLastSentNow()
+        timeTracker.clear()
     }
 
     private tailrec suspend fun processSingleBatch() {

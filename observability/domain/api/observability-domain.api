@@ -26,11 +26,13 @@ public final class me/proton/core/observability/domain/ObservabilityRepository$D
 	public static synthetic fun getEvents$default (Lme/proton/core/observability/domain/ObservabilityRepository;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/observability/domain/ObservabilityTimeTracker {
+	public fun <init> (Lkotlin/jvm/functions/Function0;)V
+}
+
 public abstract interface class me/proton/core/observability/domain/ObservabilityWorkerManager {
 	public abstract fun cancel ()V
-	public abstract fun getDurationSinceLastShipment-LV8wdWc (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun schedule-LRDsOJo (J)V
-	public abstract fun setLastSentNow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/domain/entity/ObservabilityEvent {
@@ -1455,7 +1457,7 @@ public abstract interface class me/proton/core/observability/domain/usecase/IsOb
 }
 
 public final class me/proton/core/observability/domain/usecase/ProcessObservabilityEvents {
-	public fun <init> (Lme/proton/core/observability/domain/usecase/IsObservabilityEnabled;Lme/proton/core/observability/domain/ObservabilityWorkerManager;Lme/proton/core/observability/domain/ObservabilityRepository;Lme/proton/core/observability/domain/usecase/SendObservabilityEvents;)V
+	public fun <init> (Lme/proton/core/observability/domain/usecase/IsObservabilityEnabled;Lme/proton/core/observability/domain/ObservabilityRepository;Lme/proton/core/observability/domain/ObservabilityTimeTracker;Lme/proton/core/observability/domain/usecase/SendObservabilityEvents;)V
 	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

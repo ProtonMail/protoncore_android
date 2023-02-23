@@ -35,6 +35,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.observability.domain.ObservabilityRepository
+import me.proton.core.observability.domain.ObservabilityTimeTracker
 import me.proton.core.observability.domain.ObservabilityWorkerManager
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
@@ -71,6 +72,9 @@ class ObservabilityWorkerTest {
     @BindValue
     internal lateinit var sendObservabilityEvents: SendObservabilityEvents
 
+    @BindValue
+    internal lateinit var timeTracker: ObservabilityTimeTracker
+
     private lateinit var context: Context
 
     @Before
@@ -81,6 +85,7 @@ class ObservabilityWorkerTest {
         observabilityWorkerManager = mockk(relaxUnitFun = true)
         repository = mockk(relaxUnitFun = true)
         sendObservabilityEvents = mockk(relaxUnitFun = true)
+        timeTracker = mockk(relaxUnitFun = true)
     }
 
 
@@ -92,7 +97,6 @@ class ObservabilityWorkerTest {
         assertEquals(ListenableWorker.Result.success(), result)
 
         coVerify(exactly = 0) { sendObservabilityEvents.invoke(any()) }
-        coVerify { observabilityWorkerManager.setLastSentNow() }
         coVerify { repository.deleteAllEvents() }
     }
 
@@ -119,7 +123,6 @@ class ObservabilityWorkerTest {
 
         coVerify(exactly = 1) { sendObservabilityEvents.invoke(events) }
         coVerify(exactly = 1) { repository.deleteEvents(events) }
-        coVerify(exactly = 1) { observabilityWorkerManager.setLastSentNow() }
     }
 
     @Test
@@ -140,8 +143,6 @@ class ObservabilityWorkerTest {
 
         coVerify(exactly = 2) { sendObservabilityEvents.invoke(any()) }
         coVerify(exactly = 2) { repository.deleteEvents(any()) }
-
-        coVerify(exactly = 1) { observabilityWorkerManager.setLastSentNow() }
     }
 
     @Test
@@ -153,8 +154,6 @@ class ObservabilityWorkerTest {
 
         val result = makeAndRunWorker()
         assertEquals(ListenableWorker.Result.retry(), result)
-
-        coVerify(exactly = 0) { observabilityWorkerManager.setLastSentNow() }
     }
 
     @Test
@@ -166,8 +165,6 @@ class ObservabilityWorkerTest {
 
         val result = makeAndRunWorker()
         assertIs<ListenableWorker.Result.Failure>(result)
-
-        coVerify(exactly = 0) { observabilityWorkerManager.setLastSentNow() }
     }
 
     @Test
@@ -178,8 +175,6 @@ class ObservabilityWorkerTest {
 
         val result = makeAndRunWorker()
         assertIs<ListenableWorker.Result.Failure>(result)
-
-        coVerify(exactly = 0) { observabilityWorkerManager.setLastSentNow() }
     }
 
     private fun makeWorker(): ObservabilityWorker = TestListenableWorkerBuilder<ObservabilityWorker>(context)

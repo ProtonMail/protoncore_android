@@ -26,14 +26,6 @@ public interface ObservabilityWorkerManager {
      */
     public fun cancel()
 
-    /** Returns the duration since the last successful shipment of observability events.
-     * Returns `null` if the shipment wasn't recorder yet.
-     */
-    public suspend fun getDurationSinceLastShipment(): Duration?
-
-    /** Marks that observability events have been successfully shipped (sent). */
-    public suspend fun setLastSentNow()
-
     /** Schedules a worker to send the observability events.
      * If a worker has been previously scheduled but hasn't yet executed,
      * the existing scheduled worker will be kept.

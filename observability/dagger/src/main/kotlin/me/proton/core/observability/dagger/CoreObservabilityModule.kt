@@ -19,7 +19,6 @@
 package me.proton.core.observability.dagger
 
 import android.os.SystemClock
-import androidx.work.WorkManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -30,6 +29,7 @@ import me.proton.core.observability.data.ObservabilityRepositoryImpl
 import me.proton.core.observability.data.usecase.SendObservabilityEventsImpl
 import me.proton.core.observability.data.worker.ObservabilityWorkerManagerImpl
 import me.proton.core.observability.domain.ObservabilityRepository
+import me.proton.core.observability.domain.ObservabilityTimeTracker
 import me.proton.core.observability.domain.ObservabilityWorkerManager
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.observability.domain.usecase.SendObservabilityEvents
@@ -53,7 +53,7 @@ public interface CoreObservabilityModule {
     public companion object {
         @Provides
         @Singleton
-        public fun provideObservabilityWorkerManagerImpl(workManager: WorkManager): ObservabilityWorkerManagerImpl =
-            ObservabilityWorkerManagerImpl({ SystemClock.elapsedRealtime() }, workManager)
+        public fun provideObservabilityTimeTracker(): ObservabilityTimeTracker =
+            ObservabilityTimeTracker(clockMillis = { SystemClock.elapsedRealtime() })
     }
 }

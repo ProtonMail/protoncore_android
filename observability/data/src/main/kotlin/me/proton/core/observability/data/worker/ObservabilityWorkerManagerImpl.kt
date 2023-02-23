@@ -23,28 +23,17 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import me.proton.core.observability.domain.ObservabilityWorkerManager
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
 
-public class ObservabilityWorkerManagerImpl constructor(
-    private val clockMillis: () -> Long,
+public class ObservabilityWorkerManagerImpl @Inject constructor(
     private val workManager: WorkManager
 ) : ObservabilityWorkerManager {
-    private val lastSentAtMs = MutexValue<Long?>(null)
 
     override fun cancel() {
         workManager.cancelUniqueWork(WORK_NAME)
-    }
-
-    override suspend fun getDurationSinceLastShipment(): Duration? =
-        lastSentAtMs.getValue()?.let { clockMillis() - it }?.milliseconds
-
-    override suspend fun setLastSentNow() {
-        lastSentAtMs.setValue(clockMillis())
     }
 
     override fun schedule(delay: Duration) {
@@ -64,14 +53,6 @@ public class ObservabilityWorkerManagerImpl constructor(
             else -> ExistingWorkPolicy.KEEP
         }
         workManager.beginUniqueWork(WORK_NAME, policy, request).enqueue()
-    }
-
-    private class MutexValue<T>(initialValue: T) {
-        private val mutex = Mutex()
-        private var value: T = initialValue
-
-        suspend fun getValue(): T = mutex.withLock { value }
-        suspend fun setValue(newValue: T) = mutex.withLock { value = newValue }
     }
 
     private companion object {

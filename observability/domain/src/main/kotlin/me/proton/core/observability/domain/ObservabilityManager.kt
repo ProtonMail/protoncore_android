@@ -35,6 +35,7 @@ public class ObservabilityManager @Inject internal constructor(
     private val isObservabilityEnabled: IsObservabilityEnabled,
     private val repository: ObservabilityRepository,
     private val scopeProvider: CoroutineScopeProvider,
+    private val timeTracker: ObservabilityTimeTracker,
     private val workerManager: ObservabilityWorkerManager,
 ) {
     /** Enqueues an event with a given [data] and [timestamp] to be sent at some point in the future.
@@ -63,18 +64,28 @@ public class ObservabilityManager @Inject internal constructor(
         if (isObservabilityEnabled()) {
             repository.addEvent(event)
             workerManager.schedule(getSendDelay())
+
+            if (timeTracker.getDurationSinceFirstEvent() == null) {
+                timeTracker.setFirstEventNow()
+            }
         } else {
             workerManager.cancel()
             repository.deleteAllEvents()
+            timeTracker.clear()
         }
     }
 
     private suspend fun getSendDelay(): Duration {
-        val eventCount = repository.getEventCount()
+        suspend fun isMaxDurationExceeded(): Boolean {
+            val duration = timeTracker.getDurationSinceFirstEvent()
+            return if (duration != null) {
+                duration >= MAX_DELAY_MS.milliseconds
+            } else false
+        }
+
         return when {
-            eventCount <= 1L -> MAX_DELAY_MS.milliseconds
-            eventCount >= MAX_EVENT_COUNT -> ZERO
-            workerManager.getDurationSinceLastShipment()?.let { it >= MAX_DELAY_MS.milliseconds } ?: false -> ZERO
+            repository.getEventCount() >= MAX_EVENT_COUNT -> ZERO
+            isMaxDurationExceeded() -> ZERO
             else -> MAX_DELAY_MS.milliseconds
         }
     }

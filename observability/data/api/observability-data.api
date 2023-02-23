@@ -87,11 +87,17 @@ public final class me/proton/core/observability/data/usecase/SendObservabilityEv
 }
 
 public final class me/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl : me/proton/core/observability/domain/ObservabilityWorkerManager {
-	public fun <init> (Lkotlin/jvm/functions/Function0;Landroidx/work/WorkManager;)V
+	public fun <init> (Landroidx/work/WorkManager;)V
 	public fun cancel ()V
-	public fun getDurationSinceLastShipment-LV8wdWc (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun schedule-LRDsOJo (J)V
-	public fun setLastSentNow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;
+	public static fun newInstance (Landroidx/work/WorkManager;)Lme/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl;
 }
 
 public abstract interface class me/proton/core/observability/data/worker/ObservabilityWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
