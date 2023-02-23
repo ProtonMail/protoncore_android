@@ -28,6 +28,7 @@ open class CoreExampleApiClient @Inject constructor() : ApiClient {
     protected open val appName = "android-mail"
     protected open val productName = "ProtonMail"
     protected open val versionName = "3.0.0" // imitating ProtonMail version
+    protected open val versionSuffix = if (BuildConfig.DEBUG) "-dev" else ""
 
     /**
      * Tells the lib if DoH should be used in a given moment (based e.g. on user setting or whether
@@ -40,7 +41,7 @@ open class CoreExampleApiClient @Inject constructor() : ApiClient {
      * Client's value for 'x-pm-appversion' header.
      */
     override val appVersionHeader: String
-        get() = "$appName@$versionName"
+        get() = "$appName@$versionName$versionSuffix"
 
     /**
      * Client's value for 'User-Agent' header.
