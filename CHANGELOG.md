@@ -11,6 +11,25 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.12.0] - 2023-02-24
+
+### Chores
+
+- coreexample:
+  - Add `-dev` suffix for app version header for DEBUG builds.
+
+### Features
+
+- observability:
+  - Enable observability.
+
+### Bug Fixes
+
+- auth:
+  - Fixed SecondFactor on back click.
+- observability:
+  - Use proper delays for scheduling sending the obserability events.
+
 ## [9.11.2] - 2023-02-23
 
 ### Bug Fixes
