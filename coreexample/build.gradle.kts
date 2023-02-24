@@ -19,7 +19,6 @@
 import com.android.build.gradle.TestedExtension
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
-import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.util.Properties
 
@@ -124,7 +123,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             applicationIdSuffix = ".local.properties"
             val localProperties = Properties().apply {
                 try {
-                    load(FileInputStream("local.properties"))
+                    load(rootDir.resolve("local.properties").inputStream())
                 } catch (e: FileNotFoundException) {
                     logger.warn("No local.properties found")
                 }
