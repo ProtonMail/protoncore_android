@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -30,7 +29,6 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.entity.SessionResult
-import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel.Companion.STATE_SESSION_ID
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
@@ -61,9 +59,6 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     private val testLoginPassword = "123456"
     private val success = PostLoginAccountSetup.Result.UserUnlocked(testUserId)
     private val twoPassNeeded = PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId)
-    private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true) {
-        every { get<String>(STATE_SESSION_ID) } returns testSessionId.id
-    }
 
     // endregion
 
@@ -72,7 +67,6 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     @Before
     fun beforeEveryTest() {
         viewModel = SecondFactorViewModel(
-            savedStateHandle,
             accountManager,
             performSecondFactor,
             postLoginAccountSetup,
@@ -165,7 +159,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     @Test
     fun `stop 2fa invokes failed on account manager`() = coroutinesTest {
         // WHEN
-        viewModel.stopSecondFactorFlow()
+        viewModel.stopSecondFactorFlow(testUserId)
         // THEN
         val arguments = slot<SessionId>()
         coVerify(exactly = 1) { accountManager.handleSecondFactorFailed(capture(arguments)) }
@@ -175,12 +169,30 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     @Test
     fun `stop 2fa without sessionId`() = coroutinesTest {
         // GIVEN
-        every { savedStateHandle.get<String>(STATE_SESSION_ID) } returns null
+        val requiredAccountType = AccountType.Internal
+        coEvery { sessionProvider.getSessionId(any()) } returns null
         // WHEN
-        viewModel.stopSecondFactorFlow()
+        viewModel.startSecondFactorFlow(
+            userId = testUserId,
+            encryptedPassword = testLoginPassword,
+            requiredAccountType = requiredAccountType,
+            isTwoPassModeNeeded = false,
+            secondFactorCode = testSecondFactorCode
+        )
+        viewModel.stopSecondFactorFlow(testUserId)
         // THEN
         val arguments = slot<SessionId>()
         coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(capture(arguments)) }
+        coVerify(exactly = 0) { accountManager.handleSecondFactorSuccess(any(), any()) }
+    }
+
+    @Test
+    fun `stop 2fa without previously call startSecondFactorFlow`() = coroutinesTest {
+        // WHEN
+        viewModel.stopSecondFactorFlow(testUserId)
+        // THEN
+        val arguments = slot<SessionId>()
+        coVerify(exactly = 1) { accountManager.handleSecondFactorFailed(capture(arguments)) }
         coVerify(exactly = 0) { accountManager.handleSecondFactorSuccess(any(), any()) }
     }
 }

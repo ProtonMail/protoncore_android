@@ -141,7 +141,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     }
 
     override fun onBackPressed() {
-        viewModel.stopSecondFactorFlow().invokeOnCompletion { finish() }
+        viewModel.stopSecondFactorFlow(UserId(input.userId)).invokeOnCompletion { finish() }
     }
 
     override fun onError(triggerValidation: Boolean, message: String?, isPotentialBlocking: Boolean) {
