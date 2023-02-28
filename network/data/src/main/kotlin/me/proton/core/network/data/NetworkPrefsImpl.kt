@@ -27,8 +27,9 @@ import me.proton.core.util.android.sharedpreferences.string
 
 class NetworkPrefsImpl(context: Context) : NetworkPrefs, PreferencesProvider {
 
-    override val preferences: SharedPreferences =
+    override val preferences: SharedPreferences by lazy {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
 
     override var activeAltBaseUrl: String? by string()
     override var lastPrimaryApiFail: Long by long(default = Long.MIN_VALUE)
