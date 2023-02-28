@@ -20,13 +20,10 @@ package me.proton.core.observability.data
 
 import android.content.Context
 import android.content.res.Resources
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
-import me.proton.core.usersettings.domain.entity.DeviceSettings
-import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -37,24 +34,20 @@ class IsObservabilityEnabledImplTest {
     // region mocks
     private val resources = mockk<Resources>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
-    private val deviceSettingsRepository = mockk<DeviceSettingsRepository>(relaxed = true)
-    private val deviceSettings = mockk<DeviceSettings>(relaxed = true)
     private lateinit var repository: IsObservabilityEnabled
     // endregion
 
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        coEvery { deviceSettingsRepository.getDeviceSettings() } returns deviceSettings
         every { context.resources } returns resources
-        repository = IsObservabilityEnabledImpl(context, deviceSettingsRepository)
+        repository = IsObservabilityEnabledImpl(context)
     }
 
     @Test
-    fun `telemetry enabled observability enabled returns true`() = runTest {
+    fun `observability enabled returns true`() = runTest {
         // GIVEN
-        every { deviceSettings.isTelemetryEnabled } returns true
-        every { resources.getBoolean(R.bool.observability_enabled) } returns true
+        every { resources.getBoolean(R.bool.core_feature_observability_enabled) } returns true
         // WHEN
         val result = repository.invoke()
         // THEN
@@ -62,32 +55,9 @@ class IsObservabilityEnabledImplTest {
     }
 
     @Test
-    fun `telemetry enabled observability disabled returns false`() = runTest {
+    fun `observability disabled returns false`() = runTest {
         // GIVEN
-        every { deviceSettings.isTelemetryEnabled } returns true
-        every { resources.getBoolean(R.bool.observability_enabled) } returns false
-        // WHEN
-        val result = repository.invoke()
-        // THEN
-        assertFalse(result)
-    }
-
-    @Test
-    fun `telemetry disabled observability enabled returns false`() = runTest {
-        // GIVEN
-        every { deviceSettings.isTelemetryEnabled } returns false
-        every { resources.getBoolean(R.bool.observability_enabled) } returns true
-        // WHEN
-        val result = repository.invoke()
-        // THEN
-        assertFalse(result)
-    }
-
-    @Test
-    fun `telemetry disabled observability disabled returns false`() = runTest {
-        // GIVEN
-        every { resources.getBoolean(R.bool.observability_enabled) } returns false
-        every { deviceSettings.isTelemetryEnabled } returns false
+        every { resources.getBoolean(R.bool.core_feature_observability_enabled) } returns false
         // WHEN
         val result = repository.invoke()
         // THEN

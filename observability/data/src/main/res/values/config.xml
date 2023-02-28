@@ -17,5 +17,5 @@
   -->
 
 <resources>
-    <bool name="observability_enabled">true</bool>
+    <bool name="core_feature_observability_enabled">true</bool>
 </resources>

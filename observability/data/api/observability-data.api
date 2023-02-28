@@ -10,16 +10,16 @@ public final class me/proton/core/observability/data/BuildConfig {
 }
 
 public final class me/proton/core/observability/data/IsObservabilityEnabledImpl : me/proton/core/observability/domain/usecase/IsObservabilityEnabled {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
+	public fun <init> (Landroid/content/Context;)V
 	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/data/IsObservabilityEnabledImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/observability/data/IsObservabilityEnabledImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/observability/data/IsObservabilityEnabledImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/observability/data/IsObservabilityEnabledImpl;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)Lme/proton/core/observability/data/IsObservabilityEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/observability/data/IsObservabilityEnabledImpl;
 }
 
 public final class me/proton/core/observability/data/ObservabilityRepositoryImpl : me/proton/core/observability/domain/ObservabilityRepository {

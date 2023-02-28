@@ -18,7 +18,7 @@
 
 package me.proton.core.observability.domain.usecase
 
-/** Checks if observability is enabled (based on telemetry settings). */
+/** Checks if observability is enabled (based on local feature flag). */
 public interface IsObservabilityEnabled {
     public suspend operator fun invoke(): Boolean
 }
