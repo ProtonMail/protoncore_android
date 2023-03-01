@@ -67,9 +67,33 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
         maxDomains = 1,
         maxAddresses = 1,
         maxCalendars = 1,
-        maxSpace = 1,
+        maxSpace = 2,
         maxMembers = 1,
         maxVPN = 1,
+        services = 0,
+        features = 1,
+        quantity = 1,
+        maxTier = 1,
+        enabled = true,
+        pricing = PlanPricing(
+            1, 10, 20
+        )
+    )
+
+    private val testPlanZeroValueFields = Plan(
+        id = "plan-name-1",
+        type = 1,
+        cycle = 1,
+        name = "plan-name-1",
+        title = "Plan Title 1",
+        currency = "CHF",
+        amount = 10,
+        maxDomains = 0,
+        maxAddresses = 0,
+        maxCalendars = 0,
+        maxSpace = 2,
+        maxMembers = 0,
+        maxVPN = 0,
         services = 0,
         features = 1,
         quantity = 1,
@@ -88,12 +112,12 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
         title = "Plan Default",
         currency = null,
         amount = 0,
-        maxDomains = 0,
+        maxDomains = 1,
         maxAddresses = 1,
-        maxCalendars = 0,
+        maxCalendars = 1,
         maxSpace = 1,
         maxMembers = 1,
-        maxVPN = 0,
+        maxVPN = 2,
         services = 0,
         features = 0,
         quantity = 0,
@@ -140,8 +164,72 @@ class SignupPlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Corou
             coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
             assertEquals("plan-default", planThree.name)
             assertEquals(1, planThree.storage)
+            assertEquals(2, planOne.storage)
+            assertEquals(2, planTwo.storage)
             assertEquals("plan-name-1", planOne.name)
             assertEquals("plan-name-2", planTwo.name)
+        }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
+    }
+
+    @Test
+    fun `get plan with 0 value fields for signup success handled correctly`() = coroutinesTest {
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
+            testPlanZeroValueFields
+        )
+        val job = flowTest(viewModel.availablePlansState) {
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(2, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
+            assertTrue(planOne is PlanDetailsItem.PaidPlanDetailsItem)
+            assertTrue(planTwo is PlanDetailsItem.FreePlanDetailsItem)
+            assertEquals("plan-name-1", planOne.name)
+            assertEquals("plan-default", planTwo.name)
+            assertEquals(1, planOne.addresses)
+            assertEquals(1, planOne.calendars)
+            assertEquals(1, planOne.domains)
+            assertEquals(2, planOne.connections)
+            assertEquals(1, planOne.members)
+        }
+
+        // WHEN
+        viewModel.getAllPlansForSignup()
+        job.join()
+    }
+
+    @Test
+    fun `get plan with non-0 value fields for signup success handled correctly`() = coroutinesTest {
+        coEvery { getPlansUseCase.invoke(any()) } returns listOf(
+            testPlan
+        )
+        val job = flowTest(viewModel.availablePlansState) {
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            assertEquals(2, plansStatus.plans.size)
+            val planOne = plansStatus.plans[0]
+            val planTwo = plansStatus.plans[1]
+            coVerify { getPlanDefaultUseCaseSpy.invoke(null) }
+            assertTrue(planOne is PlanDetailsItem.PaidPlanDetailsItem)
+            assertTrue(planTwo is PlanDetailsItem.FreePlanDetailsItem)
+            assertEquals("plan-name-1", planOne.name)
+            assertEquals("plan-default", planTwo.name)
+            assertEquals(1, planOne.addresses)
+            assertEquals(1, planOne.calendars)
+            assertEquals(1, planOne.domains)
+            assertEquals(1, planOne.connections)
+            assertEquals(1, planOne.members)
         }
 
         // WHEN

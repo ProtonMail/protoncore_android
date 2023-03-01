@@ -122,6 +122,30 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         )
     )
 
+    private val testPlanZeroValueFields = Plan(
+        id = "plan-name-1",
+        type = 1,
+        cycle = 1,
+        name = "plan-name-1",
+        title = "Plan Title 1",
+        currency = "CHF",
+        amount = 10,
+        maxDomains = 0,
+        maxAddresses = 0,
+        maxCalendars = 0,
+        maxSpace = 2,
+        maxMembers = 0,
+        maxVPN = 0,
+        services = 0,
+        features = 1,
+        quantity = 1,
+        maxTier = 1,
+        enabled = true,
+        pricing = PlanPricing(
+            1, 10, 20
+        )
+    )
+
     private val testDefaultPlan = Plan(
         id = null,
         type = 1,
@@ -130,17 +154,17 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         title = "Plan Default",
         currency = null,
         amount = 0,
-        maxDomains = 0,
+        maxDomains = 1,
         maxAddresses = 1,
-        maxCalendars = 0,
+        maxCalendars = 1,
         maxSpace = 1,
         maxMembers = 1,
-        maxVPN = 0,
+        maxVPN = 2,
         services = 0,
         features = 0,
         quantity = 0,
-        enabled = true,
-        maxTier = 0
+        maxTier = 0,
+        enabled = true
     )
 
     private val testOrganization = Organization(
@@ -248,8 +272,43 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
             val plansStatus = awaitItem()
             assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             coVerify(exactly = 1) { getPlanDefaultUseCase(testUserId) }
+            val plan = plansStatus.plans[0]
             assertEquals(1, plansStatus.plans.size)
-            assertEquals("plan-name-1", plansStatus.plans[0].name)
+            assertEquals(1, plan.addresses)
+            assertEquals(1, plan.calendars)
+            assertEquals(1, plan.domains)
+            assertEquals(1, plan.connections)
+            assertEquals(1, plan.members)
+            assertEquals("plan-name-1", plan.name)
+        }
+
+        // WHEN
+        viewModel.getCurrentSubscribedPlans(testUserId)
+        job.join()
+    }
+
+    @Test
+    fun `get plans with 0 value fields for upgrade currently free success handled correctly`() = coroutinesTest {
+        coEvery { getSubscriptionUseCase.invoke(testUserId) } returns null
+        coEvery { getPlansUseCase.invoke(testUserId) } returns listOf(
+            testPlanZeroValueFields
+        )
+        val job = flowTest(viewModel.availablePlansState) {
+            // THEN
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
+            val plansStatus = awaitItem()
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
+            coVerify(exactly = 1) { getPlanDefaultUseCase(testUserId) }
+            val plan = plansStatus.plans[0]
+            assertEquals(1, plansStatus.plans.size)
+            assertEquals(1, plan.addresses)
+            assertEquals(1, plan.calendars)
+            assertEquals(1, plan.domains)
+            assertEquals(2, plan.connections)
+            assertEquals(1, plan.members)
+            assertEquals(1, plansStatus.plans.size)
+            assertEquals("plan-name-1", plan.name)
         }
 
         // WHEN

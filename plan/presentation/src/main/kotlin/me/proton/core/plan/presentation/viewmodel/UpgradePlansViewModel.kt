@@ -34,6 +34,7 @@ import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
+import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.usecase.GetPlanDefault
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanCurrency
@@ -106,10 +107,11 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         }?.toMutableList() ?: mutableListOf()
 
         val isFree = subscribedPlans.isEmpty()
+        val freePlan = getPlanDefault(userId)
         if (isFree) {
             subscribedPlans.add(
                 createCurrentPlan(
-                    plan = getPlanDefault(userId),
+                    plan = freePlan,
                     endDate = null,
                     user = user,
                     paymentMethods = paymentMethods,
@@ -119,7 +121,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         }
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
-        getAvailablePlansForUpgrade(userId, isFree)
+        getAvailablePlansForUpgrade(userId, isFree, freePlan)
         val external = currentSubscription?.external
         val unredeemed = if (checkForUnredeemedPurchase) {
             checkUnredeemedGooglePurchase(userId)
@@ -141,7 +143,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private fun getAvailablePlansForUpgrade(userId: UserId, isFreeUser: Boolean) = flow {
+    private fun getAvailablePlansForUpgrade(userId: UserId, isFreeUser: Boolean, freePlan: Plan) = flow {
         emit(PlanState.Processing)
 
         val paymentProviders = getAvailablePaymentProviders()
@@ -152,7 +154,7 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
             !isFreeUser -> emptyList()
             else -> getPlans(userId = userId)
                 .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
-                .map { plan -> plan.toPaidPlanDetailsItem() }
+                .map { plan -> plan.toPaidPlanDetailsItem(freePlan) }
         }
 
         emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = anyPaymentEnabled))

@@ -54,11 +54,12 @@ internal class SignupPlansViewModel @Inject constructor(
         val anyPaymentEnabled = paymentProviders.isNotEmpty()
         if (anyPaymentEnabled && supportPaidPlans) {
             plans.apply {
+                val freePlan = getPlanDefault(userId = null)
                 addAll(
                     getPlans(userId = null)
-                        .map { plan -> plan.toPaidPlanDetailsItem() }
+                        .map { plan -> plan.toPaidPlanDetailsItem(freePlan) }
                 )
-                add(createFreePlan(getPlanDefault(userId = null)))
+                add(createFreePlan(freePlan))
             }
         }
         emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = anyPaymentEnabled))

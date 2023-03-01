@@ -157,7 +157,7 @@ internal abstract class BasePlansViewModel(
         )
     }
 
-    protected fun Plan.toPaidPlanDetailsItem() =
+    protected fun Plan.toPaidPlanDetailsItem(freePlan: Plan) =
         PlanDetailsItem.PaidPlanDetailsItem(
             name = name,
             displayName = title,
@@ -168,11 +168,11 @@ internal abstract class BasePlansViewModel(
             },
             price = PlanPricing.fromPlan(this),
             storage = maxSpace,
-            members = maxMembers,
-            addresses = maxAddresses,
-            calendars = maxCalendars,
-            domains = maxDomains,
-            connections = maxVPN,
+            members = maxMembers.defaultIfZero(freePlan.maxMembers),
+            addresses = maxAddresses.defaultIfZero(freePlan.maxAddresses),
+            calendars = maxCalendars.defaultIfZero(freePlan.maxCalendars),
+            domains = maxDomains.defaultIfZero(freePlan.maxDomains),
+            connections = maxVPN.defaultIfZero(freePlan.maxVPN),
             currency = PlanCurrency.valueOf(currency!!), // paid plan has to have currency
             starred = services?.hasFlag(MASK_ALL) ?: false,
             services = services ?: 0,
@@ -206,6 +206,8 @@ internal abstract class BasePlansViewModel(
             )
         }
     }
+
+    private fun Int.defaultIfZero(value: Int): Int = if (this > 0) this else value
 }
 
 @VisibleForTesting
