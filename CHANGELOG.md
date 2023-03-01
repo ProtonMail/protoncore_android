@@ -11,6 +11,19 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.13.0] - 2023-03-01
+
+### Chores
+
+- observability:
+  - Don't check for telemetry when checking if observability is enabled.
+  - Add JSON files for observability dashboards.
+
+### Features
+
+- observability:
+  - Add metrics for (unauth) sessions.
+
 ## [9.12.0] - 2023-02-24
 
 ### Chores
