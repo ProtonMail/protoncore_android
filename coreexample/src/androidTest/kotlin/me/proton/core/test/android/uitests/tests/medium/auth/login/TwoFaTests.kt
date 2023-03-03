@@ -18,9 +18,11 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.auth.login.TwoFaRobot
+import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
@@ -30,10 +32,10 @@ class TwoFaTests : BaseTest() {
     private val invalidCode = "123456"
     private val twoFaRobot = TwoFaRobot()
     private val incorrectCredMessage = "Incorrect login credentials. Please try again"
+    private val user = users.getUser(false) { it.twoFa.isNotEmpty() }
 
     @Before
     fun goToTwoFa() {
-        val user = users.getUser(false) { it.twoFa.isNotEmpty() }
         AddAccountRobot()
             .signIn()
             .loginUser<TwoFaRobot>(user)
@@ -55,5 +57,24 @@ class TwoFaTests : BaseTest() {
             .setSecondFactorInput(invalidCode)
             .authenticate<TwoFaRobot>()
             .verify { errorSnackbarDisplayed(incorrectCredMessage) }
+    }
+
+    @Test
+    fun backToLogin() {
+        twoFaRobot
+            .back<LoginRobot>()
+            .verify { loginElementsDisplayed() }
+    }
+
+    @Test
+    fun revokeSession() {
+        twoFaRobot
+            .setSecondFactorInput(invalidCode)
+            .apply { quark.expireSession(username = user.name, expireRefreshToken = true) }
+            .authenticate<CoreexampleRobot>()
+            .verify {
+                errorSnackbarDisplayed(incorrectCredMessage)
+                userStateIs(user, AccountState.Disabled, null)
+            }
     }
 }
