@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Dieses Gerät verwendet eine fehlerhafte Implementierung des Android Keystore, den wir zum Schutz deiner Daten verwenden. Das bedeutet, dass deine Daten kompromittiert sein können, wenn ein Angreifer physischen Zugriff auf dieses Gerät erhält. Was möchtest du tun?</string>
   <string name="crypto_keystore_error_continue_action">Fortfahren</string>
   <string name="crypto_keystore_error_more_info_action">Weitere Informationen erhalten</string>
-  <string name="crypto_keystore_error_logout_action">Abmelden</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Beenden</string>
 </resources>

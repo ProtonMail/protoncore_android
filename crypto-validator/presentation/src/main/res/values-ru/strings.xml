@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">В этом устройстве используется неправильная реализация Android Keystore, которую мы используем для обеспечения безопасности ваших данных. Это означает, что ваши данные могут быть подвергнуты опасности, если злоумышленник получит физический доступ к этому устройству. Что бы вы хотели сделать?</string>
   <string name="crypto_keystore_error_continue_action">Продолжить</string>
   <string name="crypto_keystore_error_more_info_action">Получить больше информации</string>
-  <string name="crypto_keystore_error_logout_action">Выйти из системы</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Выйти</string>
 </resources>

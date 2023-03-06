@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Nome sulla carta richiesto.</string>
   <string name="payments_error_card_number">Numero carta di credito non valido.</string>
   <string name="payments_error_cvc">Inserisci un codice di sicurezza valido.</string>
-  <string name="payments_error_session">È necessario un Id di sessione valido quando si iscrive un utente che ha effettuato l\'accesso.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente.</string>
   <string name="payments_error_invalid_session">Sessione non valida.</string>
   <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento attivo trovato.</string>
@@ -48,14 +48,14 @@
   <string name="payments_security_code">Codice di sicurezza</string>
   <string name="payments_postal_code">CAP</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">MM/YY</string>
+  <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Paese</string>
   <string name="payments_paying_in_process">Pagamento</string>
   <string name="payments_choose_country">Seleziona paese</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Scade %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">n/a</string>
+  <string name="payments_info_not_available">non disponibile</string>
   <string name="payments_billing_yearly">Per 1 anno</string>
   <string name="payment_use_google_pay_instead">Utilizza invece Google Pay</string>
   <string name="payment_use_credit_card_instead">Usa invece la carta di credito/debito</string>

@@ -19,41 +19,41 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">ヘルプ</string>
-  <string name="human_verification_title">人間であることを検証</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
-  <string name="human_verification_enter_code_subtitle">%s に送信された認証コードを入力してください。</string>
-  <string name="human_verification_enter_code_subtitle_email">%s に送信した検証コードを入力してください。受信箱にメールがない場合、迷惑メールフォルダーを確認してください。</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">すでに持っている検証コードを入力:</string>
+  <string name="human_verification_title">人間であることの検証</string>
+  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_enter_code_subtitle">%s に送信された検証コードを入力してください。</string>
+  <string name="human_verification_enter_code_subtitle_email">%s に送信された検証コードを入力してください。受信トレイにメールが見当たらない場合は、迷惑メールフォルダーを確認してください。</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">既に持っている検証コードを入力:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">メール</string>
-  <string name="human_verification_option_email_subtitle">メールは 1 回限りの検証のために使用されます。受信トレイにメールが見当たらない場合は迷惑メールフォルダーを確認してください。</string>
+  <string name="human_verification_option_email_subtitle">メールは、この一度限りの検証にのみ使用されます。受信トレイにメールが見当たらない場合は、迷惑メールフォルダーを確認してください。</string>
   <string name="human_verification_option_sms">電話番号</string>
-  <string name="human_verification_option_sms_subtitle">電話番号は、この一度限りの認証にのみ使用されます。</string>
-  <string name="human_verification_get_verification_code">認証コードを取得</string>
-  <string name="human_verification_already_have_code">すでにコードを持っています</string>
-  <string name="human_verification_request_replacement_code">認証コードを受け取っていませんか?</string>
+  <string name="human_verification_option_sms_subtitle">電話番号は、この一度限りの検証にのみ使用されます。</string>
+  <string name="human_verification_get_verification_code">検証コードを取得</string>
+  <string name="human_verification_already_have_code">既にコードを持っています</string>
+  <string name="human_verification_request_replacement_code">コードが受信できませんか？</string>
   <string name="human_verification_verify">検証</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">人間ではないことの検証に助けが必要ですか?</string>
+  <string name="human_verification_help_title">人間であることの検証に助けが必要ですか？</string>
   <string name="human_verification_code">検証コード</string>
-  <string name="human_verification_code_request_new_code_title">新しいコードの発行しますか?</string>
-  <string name="human_verification_code_request_new_code_action">新しいコードの発行</string>
+  <string name="human_verification_code_request_new_code_title">新しいコードをリクエストしますか？</string>
+  <string name="human_verification_code_request_new_code_action">新しいコードをリクエスト</string>
   <string name="human_verification_code_request_new_code">代わりのコードを %s に送信しました。</string>
-  <string name="email">メール</string>
+  <string name="email">電子メール</string>
   <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
-  <string name="human_verification_help_manual_title">登録を申請</string>
+  <string name="human_verification_help_manual_title">招待をリクエスト</string>
   <string name="human_verification_help_manual">アカウントの作成に問題がある場合は、招待をリクエストしてください。1 営業日以内に対応します。</string>
   <string name="human_verification_help_website_title">ヘルプセンターを閲覧</string>
-  <string name="human_verification_help_website">人間であることの検証についてとなぜ必要なのかについての詳細</string>
+  <string name="human_verification_help_website">人間であることの検証の詳細とその必要性について。</string>
   <string name="human_verification_sending_failed">検証コードの送信に失敗しました。再度お試しください。</string>
   <string name="human_verification_incorrect_code">無効なコードです。再度お試しください。</string>
-  <string name="human_verification_resent_code">ほかのコードを送信しました。</string>
+  <string name="human_verification_resent_code">別のコードを送信しました。</string>
   <string name="human_verification_captcha_failed">CAPTCHA 検証に失敗しました。もう一度試すか、別の検証方法を選択してください。</string>
   <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">接続されていません、CAPTCHA の読み込みに失敗しました。</string>
+  <string name="human_verification_captcha_no_connectivity">接続がありません。CAPTCHA の読み込みに失敗しました。</string>
   <string name="human_verification_action_retry">再試行</string>
-  <string name="human_verification_method_loading_failed">現在の認証メソッドを読み込めませんでした。この問題が解決しない場合は、利用できるほかのメソッドを試すか、ヘルプスクリーンを確認してください。</string>
+  <string name="human_verification_method_loading_failed">現在の検証方法を読み込めませんでした。この問題が解決しない場合は、利用できる他の方法を試すか、ヘルプスクリーンをご確認ください。</string>
 </resources>

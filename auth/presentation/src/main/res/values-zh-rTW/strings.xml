@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">驗證</string>
   <string name="auth_2fa_use_recovery_code">使用備援代碼</string>
   <string name="auth_2fa_use_2fa_code">使用兩步驟驗證碼</string>
-  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_2fa_error_empty_code">輸入六位數的代碼。</string>
   <string name="auth_mailbox_title">解除鎖定您的信箱</string>
   <string name="auth_mailbox_password_label">信箱密碼</string>
   <string name="auth_mailbox_unlock_action">解鎖</string>
@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">需要 Proton 地址</string>
   <string name="auth_login_external_account_unsupported_message">在您的 Proton 網路設定中取得連結至此帳號的 Proton Mail 電子郵件地址。</string>
   <string name="auth_login_external_account_unsupported_help_action">取得更多資訊</string>
-  <string name="auth_login_empty_credentials">Enter your email or username.</string>
-  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_login_empty_credentials">憑證不應為空。</string>
+  <string name="auth_mailbox_empty_credentials">憑證不應為空。</string>
   <string name="auth_create_address_title">建立 Proton Mail 位址</string>
   <string name="auth_create_address_subtitle">您的 Proton 帳號已與 %1$s 關聯。如要使用 Proton Mail，請先建立電郵位址。</string>
   <string name="auth_username">使用者名稱</string>
   <string name="auth_username_next_action">下一步</string>
   <string name="auth_create_address_result_title">%s 可用</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s 將是您的新 Proton Mail 電郵位址。</string>
-  <string name="auth_create_address_result_subtitle">您將會使用此地址登入所有 Proton 服務。</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">您的備援電子郵件地址為：</string>
   <string name="auth_create_address_create">建立電郵位址</string>
   <string name="auth_create_address_creating">正在創建電郵位址</string>
   <string name="auth_create_address_terms">點擊「建立電子郵件地址」，即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">條款與細則。</a></string>
-  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>
   <string name="auth_create_address_error_signed_key_list">產生金鑰清單失敗。</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">使用者名稱不能為空。</string>
   <string name="auth_signup_error_passwords_do_not_match">密碼不相符。</string>
   <string name="auth_signup_validation_password_length">密碼應至少 8 個字元長。</string>
-  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_validation_password">密碼不能為空。</string>
   <string name="auth_signup_your_account_is_being_setup">您的帳號即時創建中...</string>
   <string name="auth_signup_please_wait">通常不超過一分鐘。</string>
   <string name="auth_signup_replacement_code">尚未收到驗證碼？</string>

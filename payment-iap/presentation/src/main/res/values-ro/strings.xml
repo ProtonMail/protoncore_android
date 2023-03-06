@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Include suprataxa pentru taxele și comisioanele suplimentare ale furnizorului.</string>
   <string name="payments_iap_terms_conditions">Apăsând pe „Cumpărare cu Google Pay” sunteți de acord cu termenii și condițiile ale Google Pay și sunteți de acord să stabiliți o plată periodică prin Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Nume nevalid plan selectat. Reporniți procesul.</string>
   <string name="payments_iap_error_google_plan_price">Problemă cu prețul produsului Google. Reporniți procesul.</string>
   <string name="payments_iap_error_fetching_google_plan">Problemă preluare produs Google. Reporniți procesul.</string>
   <string name="payments_iap_error_already_owned">Deja dețineți acest produs. Selectați altul.</string>

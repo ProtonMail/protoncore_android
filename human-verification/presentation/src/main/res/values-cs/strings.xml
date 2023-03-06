@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Nápověda</string>
   <string name="human_verification_title">CAPTCHA</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Kvůli ochraně před zneužitím, prosím ověřte pomocí jedné z následujících možností, že jste člověk</string>
   <string name="human_verification_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Zadejte ověřovací kód, který byl odeslán na adresu %s. Pokud nenajdete tento e-mail ve své schránce, zkontrolujte prosím složku se spamem.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Zadejte ověřovací kód, který již máte:</string>

@@ -22,17 +22,17 @@
   <string name="presentation_force_update_title">Actualització necessària</string>
   <string name="presentation_force_update_message">Aquesta versió de l\'aplicació ja no està suportada, si us plau actualitzeu-la per continuar-la utilitzant.</string>
   <string name="presentation_force_update_learn_more">Més informació</string>
-  <string name="presentation_force_update_update">Actualitzar</string>
+  <string name="presentation_force_update_update">Actualitza</string>
   <string name="presentation_market_missing">No es troba l\'aplicació de botiga instal·lada al dispositiu. Aneu a la botiga i actualitzeu l\'aplicació.</string>
-  <string name="presentation_authenticate">Autenticar</string>
+  <string name="presentation_authenticate">Autentica</string>
   <string name="presentation_signin_to_continue">Inicieu sessió per continuar</string>
   <string name="presentation_alert_title">Alerta</string>
-  <string name="presentation_alert_ok">D\'acord</string>
+  <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Entrar</string>
   <string name="presentation_alert_cancel">Cancel·la</string>
   <string name="presentation_alert_submit">Envia</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Avisar d\'un problema</string>
+  <string name="presentation_menu_item_title_report_a_bug">Notifica un problema</string>
   <string name="presentation_menu_item_title_settings">Configuració</string>
   <string name="presentation_menu_item_title_subscription">Subscripció</string>
   <string name="presentation_menu_item_title_sign_out">Tanca la sessió</string>

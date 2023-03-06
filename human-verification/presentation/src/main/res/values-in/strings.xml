@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Bantuan</string>
   <string name="human_verification_title">Verifikasi Manusia</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Untuk mencegah penyalahgunaan, mohon verifikasi bahwa Anda benar manusia melalui salah satu pilihan berikut</string>
   <string name="human_verification_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s.</string>
   <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke $%s. Apabila Anda tidak menemukan email yang bersangkutan pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Masukkan kode verifikasi yang telah Anda terima:</string>
@@ -39,7 +39,7 @@
   <string name="human_verification_code_request_new_code_title">Minta kode baru?</string>
   <string name="human_verification_code_request_new_code_action">Minta kode baru</string>
   <string name="human_verification_code_request_new_code">Dapatkan kode pengganti yang akan dikirim ke %s.</string>
-  <string name="email">Email</string>
+  <string name="email">Surel</string>
   <string name="email_hint">alamatemail@contoh.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>

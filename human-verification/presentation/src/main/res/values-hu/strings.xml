@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Segítség</string>
   <string name="human_verification_title">Robot ellenőrzés</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">A visszaélések elkerülése végett, következő lehetőségek egyikével, bizonyítania kell, hogy nem robot</string>
   <string name="human_verification_enter_code_subtitle">Írja be a %s címre küldött ellenőrző kódot.</string>
   <string name="human_verification_enter_code_subtitle_email">Adja meg a %s címre küldött ellenőrző kódot. Ha nem találja az e-mailt, ellenőrizze a Levélszemét mappában.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Írja be a már meglévő ellenőrző kódot:</string>
@@ -40,7 +40,7 @@
   <string name="human_verification_code_request_new_code_action">Új kód kérése</string>
   <string name="human_verification_code_request_new_code">Cserekód küldése a %s címre.</string>
   <string name="email">E-mail</string>
-  <string name="email_hint">email@example.com</string>
+  <string name="email_hint">email@pelda.com</string>
   <string name="sms_hint">XX XX XXX XXXX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

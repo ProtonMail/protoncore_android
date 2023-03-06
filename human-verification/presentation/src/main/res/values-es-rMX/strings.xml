@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Ayuda</string>
   <string name="human_verification_title">Verificación humana</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Para evitar abusos, compruebe que es humano usando una de las siguientes opciones</string>
   <string name="human_verification_enter_code_subtitle">Ingrese el código de verificación enviado a %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Ingrese el código de verificación enviado a %s. Si no encuentra el correo en su buzón, revise su carpeta de spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Ingrese el código de verificación que ya tiene:</string>
@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">Obtener un código de reemplazo enviado a %s.</string>
   <string name="email">Correo</string>
   <string name="email_hint">correo@ejemplo.com</string>
-  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="sms_hint">XX XXXX XXXX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Solicitar una invitación</string>

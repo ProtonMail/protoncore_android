@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Dit toestel gebruikt een foutieve implementatie van Android Keystore, welke we gebruiken om uw data veilig te houden. Dit betekent dat uw data in gevaar is wanneer een aanvaller fysieke toegang tot dit toestel verkrijgt. Wat wil u graag doen?</string>
   <string name="crypto_keystore_error_continue_action">Doorgaan</string>
   <string name="crypto_keystore_error_more_info_action">Meer informatie</string>
-  <string name="crypto_keystore_error_logout_action">Afmelden</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Afsluiten</string>
 </resources>

@@ -19,12 +19,12 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Произошла ошибка.</string>
-  <string name="payments_no_connectivity">Невозможно отобразить 3DS подтверждение из-за отсутствия соединения.</string>
+  <string name="payments_no_connectivity">Отсутствует соединение для 3DS подтверждения.</string>
   <string name="payments_3ds_not_approved">Одобрение 3DS было отклонено.</string>
   <string name="payments_error_card_name">Требуется имя на карте.</string>
   <string name="payments_error_card_number">Неверный номер карты.</string>
   <string name="payments_error_cvc">Введите правильный код безопасности.</string>
-  <string name="payments_error_session">Действительный идентификатор сеанса необходим при подписке пользователя, вошедшего в систему.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Не удалось зарегистрироваться с существующим способом оплаты.</string>
   <string name="payments_error_invalid_session">Недействительный сеанс.</string>
   <string name="payments_no_payment_provider">Активный поставщик платежей не найден.</string>

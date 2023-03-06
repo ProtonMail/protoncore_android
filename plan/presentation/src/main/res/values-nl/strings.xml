@@ -108,7 +108,7 @@
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 landen</string>
   <string name="plan_id_vpnbasic_high_speed">Hoge snelheid</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
+  <string name="plan_id_vpnplus_adblock">Advertentieblokkering (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Streamingdienst ondersteuning</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 landen</string>

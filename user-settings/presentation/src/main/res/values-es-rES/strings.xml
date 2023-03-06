@@ -26,7 +26,7 @@
   <string name="settings_recovery_email_confirm_hint">Vuelve a introducir tu dirección de correo electrónico</string>
   <string name="settings_save">Guardar</string>
   <string name="settings_password_required">Introduce tu contraseña de inicio de sesión</string>
-  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_password_required_ok">Aceptar</string>
   <string name="settings_not_set">No establecido</string>
   <string name="settings_recovery_email_error_no_match">Los correos electrónicos de recuperación y confirmación no coinciden.</string>
   <string name="settings_validation_email">El correo electrónico no es válido.</string>

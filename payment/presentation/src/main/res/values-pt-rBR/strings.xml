@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Obrigatório o nome no cartão.</string>
   <string name="payments_error_card_number">Número do cartão inválido.</string>
   <string name="payments_error_cvc">Por favor, entre um código de segurança válido.</string>
-  <string name="payments_error_session">Um Id de sessão válido é necessário ao fazer a assinatura de um usuário conectado.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Não foi possível criar uma conta com o método de pagamento existente.</string>
   <string name="payments_error_invalid_session">Sessão inválida.</string>
   <string name="payments_no_payment_provider">Sem provedor de pagamento ativo encontrado.</string>
@@ -62,7 +62,7 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Confirmar upgrade da conta</string>
-  <string name="payments_giap_unredeemed_description">Seu pagamento no Google Pay foi processado com sucesso, mas o processo de upgrade da conta foi interrompido. Aplique agora o pagamento para atualizar sua conta?</string>
+  <string name="payments_giap_unredeemed_description">Seu pagamento no Google Pay foi processado com sucesso, mas o processo de upgrade da conta foi interrompido. Aplique agora o pagamento para fazer upgrade da sua conta?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmar upgrade</string>
   <string name="payments_giap_redeem_success">Sua conta foi atualizada com sucesso</string>
   <string name="payments_giap_redeem_error">Incapaz de completar o upgrade. Por favor, tente novamente mais tarde.</string>

@@ -19,10 +19,10 @@
 <resources>
   <string name="payments_iap_surcharge_info">* 包括额外的供应商费用和税收的附加费用。</string>
   <string name="payments_iap_terms_conditions">如果您点击了“使用 Google Pay 购买”，视为您接受 Google Pay 的条款和条件，并同意使用 Google 设立定期付款。</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
-  <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
+  <string name="payments_iap_invalid_google_plan">所选等级名称无效，请重新操作。</string>
+  <string name="payments_iap_error_google_plan_price">Google 产品价格存在问题，请重新操作。</string>
+  <string name="payments_iap_error_fetching_google_plan">获取 Google 产品失败，请重新操作。</string>
+  <string name="payments_iap_error_already_owned">您已拥有此产品，请重新选择。</string>
   <string name="payments_iap_error_billing_client_unavailable">Google计费客户端目前不可用或已断开连接。</string>
-  <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
+  <string name="payments_iap_general_error">发生了错误，请重新开始过程。</string>
 </resources>

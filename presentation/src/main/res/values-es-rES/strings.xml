@@ -27,7 +27,7 @@
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Inicia sesión para continuar</string>
   <string name="presentation_alert_title">Alerta</string>
-  <string name="presentation_alert_ok">OK</string>
+  <string name="presentation_alert_ok">Aceptar</string>
   <string name="presentation_alert_enter">Entrar</string>
   <string name="presentation_alert_cancel">Cancelar</string>
   <string name="presentation_alert_submit">Enviar</string>

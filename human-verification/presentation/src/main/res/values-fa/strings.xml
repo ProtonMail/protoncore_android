@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">راهنما</string>
   <string name="human_verification_title">اعتبارسنجی</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
   <string name="human_verification_enter_code_subtitle">کد تاییدی که به %s ارسال شد را وارد نمایید.</string>
   <string name="human_verification_enter_code_subtitle_email">کد تأییدی که به %s ارسال شد وارد کنید. اگر ایمیل را در صندوق ورودی خود پیدا نمیکنید، لطفاً پوشه هرزنامه خود را بررسی کنید.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">لطفا کد اعتبارسنجی که در حال حاضر دارید وارد کنید:</string>
@@ -39,7 +39,7 @@
   <string name="human_verification_code_request_new_code_title">درخواست کد جدید؟</string>
   <string name="human_verification_code_request_new_code_action">درخواست کد جدید</string>
   <string name="human_verification_code_request_new_code">کد جایگزین به %s ارسال شود.</string>
-  <string name="email">ایمیل</string>
+  <string name="email">رایانامه</string>
   <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>

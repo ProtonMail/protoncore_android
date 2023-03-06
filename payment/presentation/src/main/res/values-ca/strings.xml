@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Es requereix el nom a la targeta.</string>
   <string name="payments_error_card_number">Número de targeta incorrecte.</string>
   <string name="payments_error_cvc">Introduïu un codi de seguretat vàlid.</string>
-  <string name="payments_error_session">Es necessita una ID de sessió vàlida per subscriure a un usuari connectat.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">No es pot procedir al registre amb el mètode de pagament existent.</string>
   <string name="payments_error_invalid_session">Sessió invàlida.</string>
   <string name="payments_no_payment_provider">No s\'ha trobat cap proveïdor de pagament actiu.</string>

@@ -26,7 +26,7 @@
   <string name="settings_recovery_email_confirm_hint">Torneu a introduir l\'adreça de correu electrònic</string>
   <string name="settings_save">Desa</string>
   <string name="settings_password_required">Introduïu la contrasenya d\'inici de sessió</string>
-  <string name="settings_password_required_ok">D\'acord</string>
+  <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Sense definir</string>
   <string name="settings_recovery_email_error_no_match">Els correus electrònics de recuperació i de confirmació no coincideixen.</string>
   <string name="settings_validation_email">El correu electrònic no és vàlid.</string>

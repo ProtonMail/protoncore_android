@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">To urządzenie wykorzystuje wadliwą implementację magazynu kluczy Android Keystore, którego używamy do zabezpieczenia danych użytkownika. Oznacza to, że Twoje dane mogą być zagrożone, jeśli atakujący uzyska fizyczny dostęp do urządzenia. Co chcesz zrobić?</string>
   <string name="crypto_keystore_error_continue_action">Kontynuuj</string>
   <string name="crypto_keystore_error_more_info_action">Więcej informacji</string>
-  <string name="crypto_keystore_error_logout_action">Wyloguj</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Wyjście</string>
 </resources>

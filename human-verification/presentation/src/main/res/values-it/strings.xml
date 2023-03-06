@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Aiuto</string>
   <string name="human_verification_title">Verifica umana</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
   <string name="human_verification_enter_code_subtitle">Inserisci il codice di verifica inviato a %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Inserisci il codice di verifica che è stato inviato a %s. Se non trovi l\'email nella posta in arrivo, per favore controlla la cartella dello spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Inserisci il codice di verifica che già possiedi:</string>
@@ -40,8 +40,8 @@
   <string name="human_verification_code_request_new_code_action">Richiedi nuovo codice</string>
   <string name="human_verification_code_request_new_code">Ricevi un codice sostitutivo inviato a %s.</string>
   <string name="email">Email</string>
-  <string name="email_hint">email@example.com</string>
-  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="email_hint">email@esempio.it</string>
+  <string name="sms_hint">XXX XXX XXXX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Richiedi un invito</string>

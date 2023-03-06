@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Включает доплату за дополнительные услуги поставщика услуг и налоги.</string>
   <string name="payments_iap_terms_conditions">Нажав кнопку \"Купить с помощью Google Pay\", вы соглашаетесь с условиями Google Pay и соглашаетесь настроить повторяющийся платеж с Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Выбрано неверное название тарифа. Перезапустите процесс.</string>
   <string name="payments_iap_error_google_plan_price">Проблема с ценой продукта Google. Перезапустите процесс.</string>
   <string name="payments_iap_error_fetching_google_plan">Проблема с загрузкой продукта Google. Перезапустите процесс.</string>
   <string name="payments_iap_error_already_owned">У вас уже естьэтот продукт. Выберите другой.</string>

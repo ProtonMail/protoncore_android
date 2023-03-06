@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Необхідно ввести ім\'я, вказане на картці.</string>
   <string name="payments_error_card_number">Недійсний номер картки.</string>
   <string name="payments_error_cvc">Будь ласка, введіть дійсний код безпеки.</string>
-  <string name="payments_error_session">Щоб підписати зареєстрованого користувача потрібен дійсний ідентифікатор сеансу.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Не вдалося зареєструватися за допомогою наявного способу оплати.</string>
   <string name="payments_error_invalid_session">Недійсний сеанс.</string>
   <string name="payments_no_payment_provider">Не знайдено активного обробника платежу.</string>

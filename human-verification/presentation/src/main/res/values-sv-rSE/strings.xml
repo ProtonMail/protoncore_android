@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hjälp</string>
   <string name="human_verification_title">Mänsklig verifiering</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">För att förhindra missbruk, verifiera att du är människa med hjälp av något av följande alternativ</string>
   <string name="human_verification_enter_code_subtitle">Ange verifieringskoden som skickades till %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Ange verifieringskoden som skickades till %s. Om du inte hittar e-postmeddelandet i din inkorg, kontrollera din skräppostmapp.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Ange verifieringskoden som du redan har:</string>

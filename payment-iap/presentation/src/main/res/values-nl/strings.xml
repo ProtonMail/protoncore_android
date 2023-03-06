@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* omvat bijkomende operatorkosten en belastingen.</string>
   <string name="payments_iap_terms_conditions">Door te kiezen voor “Betaal met Google Pay” gaat u akkoord met Google Pay\'s algemene voorwaarden en het opzetten van een terugkerende betaling met Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
   <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
   <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>

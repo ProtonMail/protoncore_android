@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hilfe</string>
   <string name="human_verification_title">Menschliche Verifizierung</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Um Missbrauch zu verhindern, bestätige bitte, dass du ein Mensch bist, indem du eine der folgenden Optionen verwendest</string>
   <string name="human_verification_enter_code_subtitle">Gib den an „%s” gesendeten Verifizierungscode ein.</string>
   <string name="human_verification_enter_code_subtitle_email">Gib den an „%s“ gesendeten Verifizierungscode ein. Solltest du die E-Mail nicht in deinem Posteingang vorfinden, überprüfe bitte deinen Spam-Ordner.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Gib den bereits erhaltenen Verifizierungscode ein:</string>
@@ -39,7 +39,7 @@
   <string name="human_verification_code_request_new_code_title">Neuen Code anfordern?</string>
   <string name="human_verification_code_request_new_code_action">Neuen Code anfordern</string>
   <string name="human_verification_code_request_new_code">Lass dir einen Ersatzcode an „%s“ senden.</string>
-  <string name="email">E-Mail-Adresse</string>
+  <string name="email">E-Mail</string>
   <string name="email_hint">email@beispiel.de</string>
   <string name="sms_hint">+49 ●●● ●●●●●●●●</string>
   <string name="verification_code_hint">●●●●●●</string>

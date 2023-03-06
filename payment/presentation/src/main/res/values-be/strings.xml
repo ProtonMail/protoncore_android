@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Неабходна ўвесці імя азначанае на картцы.</string>
   <string name="payments_error_card_number">Памылковы нумар карткі.</string>
   <string name="payments_error_cvc">Увядзіце сапраўдны код бяспекі.</string>
-  <string name="payments_error_session">Патрабуецца сапраўдны ідэнтыфікатар сеанса для падпісання зарэгістраванага карыстальніка.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Немагчыма зарэгістравацца з існуючым спосабам аплаты.</string>
   <string name="payments_error_invalid_session">Памылковы сеанс.</string>
   <string name="payments_no_payment_provider">Не знойдзена ніводнага плацежнага пастаўшчыка.</string>

@@ -55,9 +55,9 @@
   <string name="auth_2fa_assistive_text">Introduïu el codi de 6 dígits.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduïu un codi de recuperació de 8 caràcters.</string>
   <string name="auth_2fa_action">Autentica</string>
-  <string name="auth_2fa_use_recovery_code">Utilitzar codi de recuperació</string>
-  <string name="auth_2fa_use_2fa_code">Utilitzar codi de dos factors</string>
-  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_2fa_use_recovery_code">Utilitza un codi de recuperació</string>
+  <string name="auth_2fa_use_2fa_code">Utilitza un codi de dos factors</string>
+  <string name="auth_2fa_error_empty_code">Introduïu el codi de 6 dígits.</string>
   <string name="auth_mailbox_title">Desbloquegeu la vostra bústia de correu</string>
   <string name="auth_mailbox_password_label">Contrasenya de la bústia de correu</string>
   <string name="auth_mailbox_unlock_action">Desbloqueja</string>
@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Es requereix l\'adreça del Proton</string>
   <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton enllaçada a aquest compte a la configuració web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
-  <string name="auth_login_empty_credentials">Enter your email or username.</string>
-  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_title">Creeu una adreça de Proton Mail</string>
   <string name="auth_create_address_subtitle">El vostre compte de Proton està associat amb %1$s. Per a utilitzar Proton Mail, creeu una adreça.</string>
   <string name="auth_username">Nom d\'usuari</string>
   <string name="auth_username_next_action">Següent</string>
   <string name="auth_create_address_result_title">%s està disponible</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s serà la vostra nova adreça de correu de Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">Utilitzareu aquesta adreça per iniciar sessió a tots els serveis de Proton.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">S\'està creant l\'adreça</string>
   <string name="auth_create_address_terms">Clicant a Crear adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i Condicions</a> de Proton</string>
-  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>
   <string name="auth_create_address_error_signed_key_list">Ha fallat la generació de la llista de claus.</string>
@@ -101,9 +101,9 @@
   <string name="auth_long_login">Espereu…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creeu el vostre compte Proton</string>
-  <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual</string>
-  <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
-  <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
+  <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual.</string>
+  <string name="auth_signup_external_footnote">Amb una adreça de Proton, podeu utilitzar tots els serveis de Proton</string>
+  <string name="auth_signup_internal_footnote">Necessiteu una adreça de Proton per a utilitzar Proton Mail i Proton Calendar</string>
   <string name="auth_signup_create_secure_proton_address">Obteniu una nova adreça de correu xifrada</string>
   <string name="auth_signup_username">Nom d\'usuari</string>
   <string name="auth_signup_domain">Domini</string>
@@ -129,11 +129,11 @@
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot ser blanc.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les contrasenyes no coincideixen.</string>
   <string name="auth_signup_validation_password_length">La contrasenya ha de tenir almenys 8 caràcters.</string>
-  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_validation_password">Password must not be empty.</string>
   <string name="auth_signup_your_account_is_being_setup">S\'està creant el vostre compte…</string>
   <string name="auth_signup_please_wait">No sol tardar més d\'un minut.</string>
   <string name="auth_signup_replacement_code">No heu rebut el codi?</string>
-  <string name="auth_signup_verify">Verificar</string>
+  <string name="auth_signup_verify">Verifica</string>
   <string name="auth_signup_verification_code">Codi de verificació</string>
   <string name="auth_signup_enter_code_subtitle">Introduïu el codi de verificació que s’ha enviat a %s:</string>
   <string name="auth_signup_error_human_verification_failed">Ha fallat la verificació humana.</string>

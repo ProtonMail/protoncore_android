@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">نام روی کارت الزامی است.</string>
   <string name="payments_error_card_number">شماره کارت نامعتبر.</string>
   <string name="payments_error_cvc">لطفا کد امنیتی معتبر وارد کنید.</string>
-  <string name="payments_error_session">Id نشست معتبر لازم است زمانی که به عنوان کاربری که وارد حساب کاربری شده اقدام به تهیه اشتراک میکنید.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">با روش پرداخت فعلی نمی توان ثبت‌نام کرد.</string>
   <string name="payments_error_invalid_session">نشست نامعتبر.</string>
   <string name="payments_no_payment_provider">هیچ ارائه دهنده سیستم پرداخت فعالی یافت نشد.</string>

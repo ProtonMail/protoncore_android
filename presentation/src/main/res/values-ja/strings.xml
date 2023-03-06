@@ -19,11 +19,11 @@
 <resources>
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">リンクを開くブラウザーが見つかりません。</string>
-  <string name="presentation_force_update_title">アップデートが必要です。</string>
-  <string name="presentation_force_update_message">このバージョンのアプリはサポートされていません。使用を継続するにはアップグレードしてください。</string>
-  <string name="presentation_force_update_learn_more">より詳しく</string>
+  <string name="presentation_force_update_title">更新が必要です</string>
+  <string name="presentation_force_update_message">このバージョンのアプリはサポートされていません。使用を継続するには更新してください。</string>
+  <string name="presentation_force_update_learn_more">詳細</string>
   <string name="presentation_force_update_update">更新</string>
-  <string name="presentation_market_missing">デバイスにインストールされているマーケット アプリケーションを見つけすことができません。ストアに移動しアプリケーションをアップデートしてください。</string>
+  <string name="presentation_market_missing">デバイスにアプリケーションが見つかりません。アプリストアに移動し、アプリケーションをインストールしてください。</string>
   <string name="presentation_authenticate">認証</string>
   <string name="presentation_signin_to_continue">サインインして続行</string>
   <string name="presentation_alert_title">警告</string>
@@ -42,6 +42,6 @@
   <string name="presentation_skip">スキップ</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">サーバーに接続できません。</string>
-  <string name="presentation_check_your_connection">接続を確認してください</string>
+  <string name="presentation_check_your_connection">接続をご確認ください</string>
   <string name="presentation_connectivity_issues">接続の問題</string>
 </resources>

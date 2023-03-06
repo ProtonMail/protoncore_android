@@ -29,8 +29,8 @@
   <string name="welcome_subtitle_calendar">Зашифрованный календарь, обеспечивающий конфиденциальность, безопасность и защищенность событий вашей жизни.</string>
   <string name="welcome_subtitle_calendar_alt">Наш календарь со сквозным шифрованием поможет вам оставаться организованным, идти в ногу со временем и контролировать ситуацию.</string>
   <string name="welcome_title_vpn">Защитите свою конфиденциальность с Proton VPN</string>
-  <string name="welcome_subtitle_vpn">Высокая скорость VPN из Швейцарии и защита вашей частной жизни шифрованием вашего подключения к Интернету.</string>
-  <string name="welcome_subtitle_vpn_alt">Высокая скорость VPN из Швейцарии и защита вашей частной жизни. Максимальная безопасность, более 1600 серверов и никаких ограничений.</string>
+  <string name="welcome_subtitle_vpn">Высокоскоростной VPN из Швейцарии, который защищает вашу частную жизнь, шифруя интернет-соединение.</string>
+  <string name="welcome_subtitle_vpn_alt">Высокоскоростной VPN из Швейцарии, защищающий вашу частную жизнь. Максимальная безопасность, 1600+ серверов и никаких ограничений.</string>
   <string name="welcome_privacy_by_default">Конфиденциальность по умолчанию</string>
   <string name="auth_password_label">Пароль</string>
   <string name="auth_password_help">Пароль должен содержать хотя бы 8 символов</string>
@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">Аутентифицировать</string>
   <string name="auth_2fa_use_recovery_code">Использовать код восстановления</string>
   <string name="auth_2fa_use_2fa_code">Использовать код двухфакторной аутентификации</string>
-  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_2fa_error_empty_code">Введите код из шести цифр.</string>
   <string name="auth_mailbox_title">Разблокируйте свой почтовый ящик</string>
   <string name="auth_mailbox_password_label">Пароль почтового ящика</string>
   <string name="auth_mailbox_unlock_action">Разблокировать</string>
@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Требуется адрес Proton</string>
   <string name="auth_login_external_account_unsupported_message">Получите адрес Proton Mail, привязанный к этому аккаунту в веб-настройках Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Подробнее</string>
-  <string name="auth_login_empty_credentials">Enter your email or username.</string>
-  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_login_empty_credentials">Учетные данные не могут быть пустыми.</string>
+  <string name="auth_mailbox_empty_credentials">Учетные данные не могут быть пустыми.</string>
   <string name="auth_create_address_title">Создать адрес Proton Mail</string>
   <string name="auth_create_address_subtitle">Ваш аккаунт Proton связан с %1$s. Чтобы использовать Proton Mail, создайте адрес.</string>
   <string name="auth_username">Имя пользователя</string>
   <string name="auth_username_next_action">Далее</string>
   <string name="auth_create_address_result_title">%s доступно</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s будет вашим новым адресом электронной почты Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">Используйте этот адрес для входа во все службы Proton.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Ваш резервный адрес электронной почты:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
   <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\", вы соглашаетесь с <a href="https://protonmail.com/terms-and-conditions">Условиями</a> Proton</string>
-  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_credentials">Поля учетных данных не должны быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
   <string name="auth_create_address_error_signed_key_list">Не удалось сгенерировать список ключей.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Имя пользователя не может быть пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Пароли не совпадают.</string>
   <string name="auth_signup_validation_password_length">Пароль должен содержать минимум 8 символов.</string>
-  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_validation_password">Пароль не может быть пустым.</string>
   <string name="auth_signup_your_account_is_being_setup">Создается ваш аккаунт…</string>
   <string name="auth_signup_please_wait">Обычно на это требуется не больше минуты.</string>
   <string name="auth_signup_replacement_code">Не получили код?</string>

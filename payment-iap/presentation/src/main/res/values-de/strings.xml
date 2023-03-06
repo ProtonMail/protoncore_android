@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Enthält einen Aufschlag für zusätzliche Anbietergebühren und Steuern.</string>
   <string name="payments_iap_terms_conditions">Wenn du auf „Mit Google Pay kaufen” tippst, erklärst du dich mit den Geschäftsbedingungen von Google Pay einverstanden und stimmst zu, eine wiederkehrende Zahlung mit Google einzurichten.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Ungültiger Abonnementname ausgewählt. Bitte starte den Vorgang erneut.</string>
   <string name="payments_iap_error_google_plan_price">Problem mit dem Google-Produktpreis. Bitte starte den Vorgang neu.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem beim Abrufen des Google-Produkts. Bitte starte den Vorgang neu.</string>
   <string name="payments_iap_error_already_owned">Du besitzt dieses Produkt bereits. Bitte wähle ein anderes aus.</string>

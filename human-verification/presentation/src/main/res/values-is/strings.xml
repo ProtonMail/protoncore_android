@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hjálp</string>
   <string name="human_verification_title">Mennskupróf</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
   <string name="human_verification_enter_code_subtitle">Settu inn sannvottunarkóðann sem sendur var til %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Settu inn sannvottunarkóðann sem sendur var til %s. Ef þú finnur ekki tölvupóstinn í pósthólfinu þínu, skaltu skoða í ruslpóstmöppuna þína.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>

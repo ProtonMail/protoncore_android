@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Περιλαμβάνει επιπλέον χρέωση για πρόσθετα τέλη και φόρους παρόχου.</string>
   <string name="payments_iap_terms_conditions">Πατώντας \"Αγορά μέσω Google Pay\", συμφωνείτε με τους όρους και τις προϋποθέσεις του Google Pay και συμφωνείτε να ρυθμίσετε μια επαναλαμβανόμενη πληρωμή με την Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
   <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
   <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>

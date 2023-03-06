@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Дапамога</string>
   <string name="human_verification_title">Антыспамавая праверка</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Для прадухілення злоўжывання, пацвердзіце, што вы чалавек выкарыстоўваючы наступныя параметры</string>
   <string name="human_verification_enter_code_subtitle">Увядзіце праверачны код, які быў адпраўлены на %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Увядзіце праверачны код, які быў адпраўлены на %s. Калі вы не знайшлі яго ва ўваходных, праверце папку са спамам.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Увядзіце праверачны код, які вы атрымалі:</string>
@@ -40,7 +40,7 @@
   <string name="human_verification_code_request_new_code_action">Запытаць новы код</string>
   <string name="human_verification_code_request_new_code">Атрымаць код замены, які адпраўлены на %s.</string>
   <string name="email">Электронная пошта</string>
-  <string name="email_hint">email@example.com</string>
+  <string name="email_hint">poshta@uzor.by</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Perangkat ini menggunakan penerapan Android Keystore yang salah, yang kami gunakan untuk membuat data Anda tetap aman. Ini berarti data Anda dapat diganggu jika seorang penyerang mendapatkan akses fisik ke perangkat ini. Apa yang Ingin Anda lakukan?</string>
   <string name="crypto_keystore_error_continue_action">Lanjut</string>
   <string name="crypto_keystore_error_more_info_action">Dapatkan lebih banyak informasi</string>
-  <string name="crypto_keystore_error_logout_action">Keluar</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Keluar</string>
 </resources>

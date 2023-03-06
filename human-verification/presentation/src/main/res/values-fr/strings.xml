@@ -19,14 +19,14 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Aide</string>
-  <string name="human_verification_title">Vérification humaine</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_title">Vérification que vous n\'êtes pas un robot</string>
+  <string name="human_verification_main_subtitle">Pour poursuivre, vous devez confirmer que vous n\'êtes pas un robot.</string>
   <string name="human_verification_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Saisissez le code de vérification qui a été envoyé à %s. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Saisissez le code de vérification que vous avez déjà :</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Adresse électronique</string>
-  <string name="human_verification_option_email_subtitle">Votre adresse électronique ne sera utilisée que pour cette vérification. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
+  <string name="human_verification_option_email">Adresse e-mail</string>
+  <string name="human_verification_option_email_subtitle">Votre adresse e-mail ne sera utilisée que pour cette vérification. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
   <string name="human_verification_option_sms">Numéro de téléphone</string>
   <string name="human_verification_option_sms_subtitle">Votre numéro de téléphone ne sera utilisé que pour cette vérification.</string>
   <string name="human_verification_get_verification_code">Obtenir un code de vérification</string>
@@ -34,7 +34,7 @@
   <string name="human_verification_request_replacement_code">Vous n\'avez pas reçu le code ?</string>
   <string name="human_verification_verify">Vérifier</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Besoin d\'aide pour la vérification humaine ?</string>
+  <string name="human_verification_help_title">Besoin d\'aide pour la vérification que vous n\'êtes pas un robot ?</string>
   <string name="human_verification_code">Code de vérification</string>
   <string name="human_verification_code_request_new_code_title">Demander un nouveau code ?</string>
   <string name="human_verification_code_request_new_code_action">Demander un nouveau code</string>
@@ -47,7 +47,7 @@
   <string name="human_verification_help_manual_title">Demander une invitation</string>
   <string name="human_verification_help_manual">Si vous avez des difficultés à créer votre compte, vous pouvez demander une invitation et nous vous répondrons dans un délai d\'un jour ouvrable.</string>
   <string name="human_verification_help_website_title">Consultez notre espace Aide &amp; Support</string>
-  <string name="human_verification_help_website">En savoir plus sur la vérification humaine et pourquoi nous la demandons.</string>
+  <string name="human_verification_help_website">En savoir plus sur la vérification que vous n\'êtes pas un robot et pourquoi nous la demandons.</string>
   <string name="human_verification_sending_failed">Le code de vérification n\'a pas pu être envoyé. Nous vous invitons à réessayer.</string>
   <string name="human_verification_incorrect_code">Le code n\'est pas correct. Nous vous invitons à réessayer.</string>
   <string name="human_verification_resent_code">Nous vous avons envoyé un autre code.</string>

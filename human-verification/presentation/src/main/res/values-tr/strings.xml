@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Yardım</string>
   <string name="human_verification_title">İnsan doğrulaması</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Kötüye kullanımı önlemek için lütfen aşağıdaki seçeneklerden birini kullanarak insan olduğunuzu doğrulayın</string>
   <string name="human_verification_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın.</string>
   <string name="human_verification_enter_code_subtitle_email">%s alıcısına gönderilen doğrulama kodunu yazın. E-postayı gelen kutunuzda bulamazsanız, istenmeyen kutusuna bakmayı unutmayın.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Daha önce aldığınız doğrulama kodunu yazın:</string>

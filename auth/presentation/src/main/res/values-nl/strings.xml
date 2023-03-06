@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Proton-adres vereist</string>
   <string name="auth_login_external_account_unsupported_message">Verkrijg een Proton Mail-adres verbonden aan dit account via uw Proton-webinstellingen.</string>
   <string name="auth_login_external_account_unsupported_help_action">Meer informatie</string>
-  <string name="auth_login_empty_credentials">Enter your email or username.</string>
-  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_title">Maak een Proton Mail e-mailadres aan</string>
   <string name="auth_create_address_subtitle">Uw Proton-account is gekoppeld aan %1$s. Maak een adres aan om Proton Mail te gebruiken.</string>
   <string name="auth_username">Gebruikersnaam</string>
   <string name="auth_username_next_action">Volgende</string>
   <string name="auth_create_address_result_title">%s is beschikbaar</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s zal uw nieuw Proton Mail e-mailadres zijn.</string>
-  <string name="auth_create_address_result_subtitle">U zult dit adres gebruiken om in te loggen op alle Proton diensten.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Uw herstel e-mailadres is:</string>
   <string name="auth_create_address_create">Adres toevoegen</string>
   <string name="auth_create_address_creating">Adres aanmaken</string>
   <string name="auth_create_address_terms">Door op Volgende te klikken, gaat u akkoord met de <a href="https://protonmail.com/terms-and-conditions">Algemene Voorwaarden</a></string>
-  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">Geen beschikbaar domein.</string>
   <string name="auth_create_address_error_private_key">Genereren van private sleutel mislukt.</string>
   <string name="auth_create_address_error_signed_key_list">Genereren van sleutellijst mislukt.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">De gebruikersnaam mag niet leeg zijn.</string>
   <string name="auth_signup_error_passwords_do_not_match">Wachtwoorden komen niet overeen.</string>
   <string name="auth_signup_validation_password_length">Wachtwoord moet ten minste 8 tekens bevatten.</string>
-  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_validation_password">Password must not be empty.</string>
   <string name="auth_signup_your_account_is_being_setup">Uw account wordt aangemaakt…</string>
   <string name="auth_signup_please_wait">Dit duurt doorgaans niet langer dan één minuut.</string>
   <string name="auth_signup_replacement_code">Code niet ontvangen?</string>

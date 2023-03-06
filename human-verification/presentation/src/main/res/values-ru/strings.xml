@@ -20,13 +20,13 @@
   <!-- base common strings -->
   <string name="human_verification_help">Помощь</string>
   <string name="human_verification_title">Проверка пользователя</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Чтобы избежать злоупотреблений, подтвердите, что вы человек, одним из способов</string>
   <string name="human_verification_enter_code_subtitle">Введите код подтверждения, отправленный на $%s.</string>
   <string name="human_verification_enter_code_subtitle_email">Введите код подтверждения, который был отправлен на %s. Если вы не нашли его во Входящих, проверьте Спам.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Введите имеющийся у вас код подтверждения:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Электронная почта</string>
-  <string name="human_verification_option_email_subtitle">Ваша почта будет использована для разовой проверки. Если у вас во входящих нет писем, то проверьте папку со спамом.</string>
+  <string name="human_verification_option_email_subtitle">Ваша электронная почта будет использована только для разовой проверки. Если письма нет во входящих, проверьте папку со спамом.</string>
   <string name="human_verification_option_sms">Hомер телефона</string>
   <string name="human_verification_option_sms_subtitle">Ваш номер телефона будет использован только для этой разовой проверки.</string>
   <string name="human_verification_get_verification_code">Получить код подтверждения</string>
@@ -39,8 +39,8 @@
   <string name="human_verification_code_request_new_code_title">Запросить новый код?</string>
   <string name="human_verification_code_request_new_code_action">Запросить новый код</string>
   <string name="human_verification_code_request_new_code">Получить замену кода на %s.</string>
-  <string name="email">Электронная почта</string>
-  <string name="email_hint">email@example.com</string>
+  <string name="email">Эл. почта</string>
+  <string name="email_hint">pochta@primer.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

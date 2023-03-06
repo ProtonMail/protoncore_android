@@ -18,18 +18,18 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Adresse électronique de récupération</string>
-  <string name="settings_recovery_email_current">Adresse électronique actuelle de réinitialisation/notification</string>
+  <string name="settings_recovery_email_header">E-mail de récupération</string>
+  <string name="settings_recovery_email_current">Adresse e-mail actuelle de réinitialisation/notification</string>
   <string name="settings_recovery_email_new">Nouvelle adresse e-mail de récupération/notification</string>
-  <string name="settings_recovery_email_confirm">Confirmer la nouvelle adresse électronique de réinitialisation/notification</string>
-  <string name="settings_recovery_email_new_hint">Saisissez votre adresse électronique</string>
-  <string name="settings_recovery_email_confirm_hint">Saisissez à nouveau votre adresse électronique</string>
+  <string name="settings_recovery_email_confirm">Confirmer la nouvelle adresse e-mail de réinitialisation/notification</string>
+  <string name="settings_recovery_email_new_hint">Saisissez votre adresse e-mail</string>
+  <string name="settings_recovery_email_confirm_hint">Saisissez à nouveau votre adresse e-mail</string>
   <string name="settings_save">Enregistrer</string>
   <string name="settings_password_required">Saisissez votre mot de passe de connexion</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non défini</string>
-  <string name="settings_recovery_email_error_no_match">L’adresse électronique de récupération et sa confirmation ne correspondent pas.</string>
-  <string name="settings_validation_email">L’adresse électronique n\'est pas valide.</string>
+  <string name="settings_recovery_email_error_no_match">L’adresse e-mail de récupération et sa confirmation ne correspondent pas.</string>
+  <string name="settings_validation_email">L’adresse e-mail n\'est pas valide.</string>
   <string name="settings_general_error">Une erreur s’est produite.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Modifier le mot de passe</string>
@@ -38,10 +38,10 @@
   <string name="settings_login_password_hint_current">Mot de passe de connexion actuel</string>
   <string name="settings_login_password_hint_new">Nouveau mot de passe de connexion</string>
   <string name="settings_login_password_hint_new_confirm">Confirmer le nouveau mot de passe de connexion</string>
-  <string name="settings_mailbox_password_hint_new">Nouveau mot de passe de la messagerie</string>
+  <string name="settings_mailbox_password_hint_new">Nouveau mot de passe de messagerie</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmer le nouveau mot de passe de la messagerie</string>
   <string name="settings_change_password_error">Une erreur s\'est produite lors du changement de mot de passe.</string>
-  <string name="settings_recovery_email_success">L\'adresse électronique de récupération a été mise à jour.</string>
+  <string name="settings_recovery_email_success">L\'adresse e-mail de récupération a été mise à jour.</string>
   <string name="settings_password_management_success">Le mot de passe a été mis à jour.</string>
   <string name="settings_password_management_login_password_success">Le mot de passe de connexion a été mis à jour.</string>
   <string name="settings_password_management_mailbox_password_success">Le mot de passe de la messagerie a été mis à jour.</string>

@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Ajutor</string>
   <string name="human_verification_title">Verificare persoană</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">Pentru prevenirea abuzului, folosiți una din opțiuni pentru a dovedi că sunteți o persoană.</string>
   <string name="human_verification_enter_code_subtitle">Introduceți codul de verificare care a fost trimis la %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Introduceți codul de verificare care a fost trimis la %s. Dacă nu găsiți mesajul, verificați și în folderul de mesaje nedorite.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Introduceți codul de verificare pe care îl aveți deja:</string>

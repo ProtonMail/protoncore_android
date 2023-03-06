@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">Otentikasi</string>
   <string name="auth_2fa_use_recovery_code">Gunakan kode pemulihan</string>
   <string name="auth_2fa_use_2fa_code">Gunakan kode dua faktor</string>
-  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_2fa_error_empty_code">Masukkan kode 6 digit.</string>
   <string name="auth_mailbox_title">Buka kunci kotak pesan Anda</string>
   <string name="auth_mailbox_password_label">Sandi kotak pesan</string>
   <string name="auth_mailbox_unlock_action">Membuka kunci</string>
@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Alamat Proton dibutuhkan</string>
   <string name="auth_login_external_account_unsupported_message">Dapatkan alamat Proton Mail yang terhubung dengan akun ini pada pengaturan web Proton Anda.</string>
   <string name="auth_login_external_account_unsupported_help_action">Pelajari lebih lanjut</string>
-  <string name="auth_login_empty_credentials">Enter your email or username.</string>
-  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_login_empty_credentials">Kredensial tidak boleh dikosongkan.</string>
+  <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_create_address_title">Buat alamat Proton Mail</string>
   <string name="auth_create_address_subtitle">Akun Proton Anda terhubung dengan %1$s. Untuk dapat menggunakan Proton Mail, silakan buat alamat email.</string>
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Selanjutnya</string>
   <string name="auth_create_address_result_title">%s tersedia</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s akan menjadi alamat email Proton Mail baru Anda.</string>
-  <string name="auth_create_address_result_subtitle">Anda akan menggunakan alamat ini untuk masuk ke seluruh layanan Proton.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>
   <string name="auth_create_address_terms">Dengan mengklik Buat Alamat, Anda menyatakan diri setuju pada <a href="https://protonmail.com/terms-and-conditions">Syarat dan Ketentuan</a> Proton.</string>
-  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
   <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>
   <string name="auth_create_address_error_signed_key_list">Gagal membuat daftar kunci.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Nama pengguna tidak boleh kosong.</string>
   <string name="auth_signup_error_passwords_do_not_match">Kata sandi tidak cocok.</string>
   <string name="auth_signup_validation_password_length">Kata sandi harus minimal 8 karakter.</string>
-  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_validation_password">Kata sandi tidak boleh kosong.</string>
   <string name="auth_signup_your_account_is_being_setup">Akun Anda sedang dibuat…</string>
   <string name="auth_signup_please_wait">Biasanya tidak sampai satu menit.</string>
   <string name="auth_signup_replacement_code">Tidak menerima kode?</string>

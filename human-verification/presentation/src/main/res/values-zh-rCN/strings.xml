@@ -19,8 +19,8 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">帮助</string>
-  <string name="human_verification_title">真人认证</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_title">人机验证</string>
+  <string name="human_verification_main_subtitle">为防止滥用，请选择一种方式完成人机验证</string>
   <string name="human_verification_enter_code_subtitle">请输入发送到 %s 的验证码。</string>
   <string name="human_verification_enter_code_subtitle_email">请输入发送到 %s 的验证码。如果您在收件箱中找不到该电子邮件，请检查垃圾邮件文件夹。</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">请输入您已有的验证码：</string>
@@ -34,12 +34,12 @@
   <string name="human_verification_request_replacement_code">没有收到验证码？</string>
   <string name="human_verification_verify">验证</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">需要真人认证方面的帮助吗？</string>
+  <string name="human_verification_help_title">验证过程中需要帮助？</string>
   <string name="human_verification_code">验证码</string>
   <string name="human_verification_code_request_new_code_title">重新发送验证码？</string>
   <string name="human_verification_code_request_new_code_action">重新发送验证码</string>
   <string name="human_verification_code_request_new_code">向 %s 重新发送验证码。</string>
-  <string name="email">电子邮件</string>
+  <string name="email">邮箱</string>
   <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XXX XXXX XXXX</string>
   <string name="verification_code_hint">XXXXXX</string>

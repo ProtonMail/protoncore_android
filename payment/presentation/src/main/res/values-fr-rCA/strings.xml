@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Nom du titulaire de la carte requis.</string>
   <string name="payments_error_card_number">Numéro de carte invalide.</string>
   <string name="payments_error_cvc">Veuillez saisir le code de sécurité.</string>
-  <string name="payments_error_session">Un identifiant de session valide est nécessaire lors de l\'abonnement d’un·e utilisateur·rice connecté·e.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Impossible de s\'inscrire avec le mode de paiement existant.</string>
   <string name="payments_error_invalid_session">Session invalide.</string>
   <string name="payments_no_payment_provider">Aucun fournisseur de paiement actif.</string>

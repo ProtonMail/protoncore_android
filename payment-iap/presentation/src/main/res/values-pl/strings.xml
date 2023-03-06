@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Zawiera dodatkowe opłaty i podatki.</string>
   <string name="payments_iap_terms_conditions">Klikając przycisk “Zapłać z Google Pay”, akceptujesz regulamin Google Pay i zgadzasz się na utworzenie subskrypcji.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Nazwa planu jest nieprawidłowa. Uruchom ponownie proces.</string>
   <string name="payments_iap_error_google_plan_price">Wystąpił problem z ceną planu w Google. Uruchom ponownie proces.</string>
   <string name="payments_iap_error_fetching_google_plan">Wystąpił problem z pobraniem planu w Google. Uruchom ponownie proces.</string>
   <string name="payments_iap_error_already_owned">Posiadasz już ten plan. Wybierz inny.</string>

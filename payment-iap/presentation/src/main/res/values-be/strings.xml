@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Уключае дадатковыя зборы пастаўшчыка і падаткі.</string>
   <string name="payments_iap_terms_conditions">Націскаючы кнопку \"Купіць з Google Pay\", вы пагаджаецеся з умовамі выкарыстання Google Pay і ажыццяўляць рэгулярны плацеж з дапамогай Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Выбрана памылковая назва тарыфнага плана. Перазапусціце працэс.</string>
   <string name="payments_iap_error_google_plan_price">Праблема з цаною прадукту Google. Перазапусціце працэс.</string>
   <string name="payments_iap_error_fetching_google_plan">Праблема з атрыманнем прадукту Google. Перазапусціце працэс.</string>
   <string name="payments_iap_error_already_owned">Вы ўжо валодаеце гэтым прадуктам. Выберыце іншы.</string>

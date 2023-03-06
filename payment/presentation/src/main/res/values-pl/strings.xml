@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Właściciel karty jest wymagany.</string>
   <string name="payments_error_card_number">Numer karty jest nieprawidłowy.</string>
   <string name="payments_error_cvc">Wpisz prawidłowy kod zabezpieczający.</string>
-  <string name="payments_error_session">Identyfikator ważnej sesji jest potrzebny podczas zakupu subskrypcji zalogowanego użytkownika.</string>
+  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
   <string name="payments_error_signup_paymentmethod">Nie można zarejestrować się z istniejącą metodą płatności.</string>
   <string name="payments_error_invalid_session">Sesja jest nieprawidłowa.</string>
   <string name="payments_no_payment_provider">Aktywny dostawca płatności nie został znaleziony.</string>

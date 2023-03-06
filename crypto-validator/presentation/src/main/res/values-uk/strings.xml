@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Цей пристрій використовує хибну реалізацію Android KeyStore, який ми використовуємо для збереження ваших даних. Це означає, що ваші дані можуть бути скомпрометовані, якщо зловмисник отримує фізичний доступ до цього пристрою. Що б ви хотіли зробити?</string>
   <string name="crypto_keystore_error_continue_action">Продовжити</string>
   <string name="crypto_keystore_error_more_info_action">Отримати більше інформації</string>
-  <string name="crypto_keystore_error_logout_action">Вийти</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Вихід</string>
 </resources>

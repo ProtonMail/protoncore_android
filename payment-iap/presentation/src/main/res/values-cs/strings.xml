@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Zahrnuje příplatek za další poplatky poskytovatele a daně.</string>
   <string name="payments_iap_terms_conditions">Klepnutím na tlačítko “Koupit pomocí Google Pay“ souhlasíte s podmínkami služby Google Pay a souhlasíte s nastavením opakované platby u společnosti Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Vybrán neplatný název tarifu. Restartujte prosím proces.</string>
   <string name="payments_iap_error_google_plan_price">Problém s cenou produktu Google. Restartujte prosím proces.</string>
   <string name="payments_iap_error_fetching_google_plan">Problém se stahováním produktu Google. Restartujte prosím proces.</string>
   <string name="payments_iap_error_already_owned">Tento produkt již vlastníte. Vyberte prosím jiný.</string>

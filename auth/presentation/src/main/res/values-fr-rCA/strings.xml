@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Une adresse Proton est nécessaire</string>
   <string name="auth_login_external_account_unsupported_message">Obtenez une adresse Proton Mail liée à ce compte dans vos paramètres web Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">En savoir plus</string>
-  <string name="auth_login_empty_credentials">Enter your email or username.</string>
-  <string name="auth_mailbox_empty_credentials">Enter your mailbox password.</string>
+  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_title">Créer une adresse Proton Mail</string>
   <string name="auth_create_address_subtitle">Votre compte Proton est associé à %1$s. Pour utiliser Proton Mail, veuillez créer une adresse.</string>
   <string name="auth_username">Nom d\'utilisateur</string>
   <string name="auth_username_next_action">Suivant</string>
   <string name="auth_create_address_result_title">%s est disponible</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s sera votre nouvelle adresse électronique Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">Vous utiliserez cette adresse pour vous connecter à tous les services Proton.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Votre adresse électronique de récupération est:</string>
   <string name="auth_create_address_create">Créer une adresse</string>
   <string name="auth_create_address_creating">Création de l’adresse</string>
   <string name="auth_create_address_terms">En cliquant sur «créer une adresse», vous acceptez les <a href="https://protonmail.com/terms-and-conditions">conditions générales d\'utilisation</a> de Proton.</string>
-  <string name="auth_create_address_error_credentials">Enter a password.</string>
+  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">Aucun domaine disponible.</string>
   <string name="auth_create_address_error_private_key">La génération de la clé privée a échoué.</string>
   <string name="auth_create_address_error_signed_key_list">La génération de la liste des clés a échoué.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur·rice ne doit pas être vide.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
-  <string name="auth_signup_validation_password">Confirm your password.</string>
+  <string name="auth_signup_validation_password">Password must not be empty.</string>
   <string name="auth_signup_your_account_is_being_setup">Votre compte a été créé…</string>
   <string name="auth_signup_please_wait">En général, ceci ne prend pas plus d\'une minute.</string>
   <string name="auth_signup_replacement_code">Vous n\'avez pas reçu le code?</string>

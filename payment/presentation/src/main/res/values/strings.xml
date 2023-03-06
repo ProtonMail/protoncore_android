@@ -24,7 +24,7 @@
     <string name="payments_error_card_name">Name on card required.</string>
     <string name="payments_error_card_number">Invalid card number.</string>
     <string name="payments_error_cvc">Please enter valid security code.</string>
-    <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
+    <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
     <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
     <string name="payments_error_invalid_session">Invalid session.</string>
     <string name="payments_no_payment_provider">No active payment provider found.</string>
@@ -64,7 +64,6 @@
     <string name="payments_giap_unredeemed_title">Confirm account upgrade</string>
     <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
     <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
-
     <string name="payments_giap_redeem_success">Your account was successfully upgraded</string>
     <string name="payments_giap_redeem_error">Unable to complete the upgrade. Please try again later.</string>
     <!-- endregion -->

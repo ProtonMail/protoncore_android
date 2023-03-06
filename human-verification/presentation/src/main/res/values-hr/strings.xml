@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Pomoć</string>
   <string name="human_verification_title">Ljudska provjera</string>
-  <string name="human_verification_main_subtitle">To continue, please verify you are human.</string>
+  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
   <string name="human_verification_enter_code_subtitle">Unesite potvrdni kôd koji je poslan na %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Unesite potvrdni kȏd koji je poslan na %s. Ako ne pronađete e-poštu u pristigloj pošti, provjerite svoju mapu neželjene pošte.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>

@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Ezen az eszközön az Android Keystore implementációja hibás, pedig ez tartaná biztonságban az adatait. Ez azt jelenti, hogy adatai kompromittálhatók, ha az eszköz rossz kezekbe kerül. Mit szeretne tenni?</string>
   <string name="crypto_keystore_error_continue_action">Folytatás</string>
   <string name="crypto_keystore_error_more_info_action">További információk</string>
-  <string name="crypto_keystore_error_logout_action">Kijelentkezés</string>
+  <string name="crypto_keystore_error_logout_action">Sign out</string>
   <string name="crypto_keystore_error_exit_action">Kilépés</string>
 </resources>

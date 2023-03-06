@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Diğer hizmet sağlayıcı ücretleri ve vergiler için ek ücretler dahildir.</string>
   <string name="payments_iap_terms_conditions">\"Google Pay ile Satın Al\" üzerine dokunarak Google Pay hüküm ve koşullar metnini ve Google Pay kullanarak yinelenen bir ödeme ayarlamayı kabul etmiş olursunuz.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Seçilmiş tarife adı geçersiz. Lütfen işlemi yeniden başlatın.</string>
   <string name="payments_iap_error_google_plan_price">Google ürünü fiyatında sorun var. Lütfen işlemi yeniden başlatın.</string>
   <string name="payments_iap_error_fetching_google_plan">Google ürünü alınırken sorun çıktı. Lütfen işlemi yeniden başlatın.</string>
   <string name="payments_iap_error_already_owned">Bu ürünü zaten satın almışsınız. Lütfen farklı bir ürün seçin.</string>
