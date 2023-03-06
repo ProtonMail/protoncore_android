@@ -70,9 +70,7 @@ class TokenErrorHandlerTest {
 
     @Before
     fun before() = runTest {
-        TokenErrorHandler.reset(null)
-        TokenErrorHandler.reset(unauthSessionId)
-        TokenErrorHandler.reset(authSessionId)
+        TokenErrorHandler.clear()
     }
 
     @Test

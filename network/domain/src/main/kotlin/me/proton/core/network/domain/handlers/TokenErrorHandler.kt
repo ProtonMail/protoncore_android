@@ -127,5 +127,8 @@ class TokenErrorHandler<Api>(
         @TestOnly
         suspend fun reset(sessionId: SessionId?) =
             sessionMutex(sessionId).withLock { sessionLastRefreshMap[sessionId] = Long.MIN_VALUE }
+
+        @TestOnly
+        fun clear() = sessionLastRefreshMap.clear()
     }
 }
