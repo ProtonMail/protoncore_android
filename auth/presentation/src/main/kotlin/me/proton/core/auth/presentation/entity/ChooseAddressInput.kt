@@ -23,8 +23,9 @@ import kotlinx.parcelize.Parcelize
 import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Parcelize
-data class ChooseAddressInput(
+data class ChooseAddressInput constructor(
     val userId: String,
     val password: EncryptedString,
-    val recoveryEmail: String
+    val recoveryEmail: String,
+    val isTwoPassModeNeeded: Boolean
 ) : Parcelable

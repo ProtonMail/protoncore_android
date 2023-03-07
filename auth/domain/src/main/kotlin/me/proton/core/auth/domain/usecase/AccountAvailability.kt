@@ -47,16 +47,20 @@ class AccountAvailability @Inject constructor(
 
     suspend fun getUser(userId: UserId) = userRepository.getUser(userId)
 
-    suspend fun checkUsername(userId: UserId, username: String) {
-        check(username.isNotBlank()) { "Username must not be blank." }
-
+    suspend fun checkUsername(
+        userId: UserId,
+        username: String,
+        metricData: ((Result<Unit>) -> ObservabilityData)? = null
+    ) {
         val user = userRepository.getUser(userId)
         if (user.name == username) return
-
-        return userRepository.checkUsernameAvailable(username)
+        return checkUsername(username, metricData)
     }
 
-    suspend fun checkUsername(username: String, metricData: ((Result<Unit>) -> ObservabilityData)? = null) {
+    suspend fun checkUsername(
+        username: String,
+        metricData: ((Result<Unit>) -> ObservabilityData)? = null
+    ) {
         check(username.isNotBlank()) { "Username must not be blank." }
 
         return userRepository.runWithObservability(observabilityManager, metricData) {
@@ -64,7 +68,10 @@ class AccountAvailability @Inject constructor(
         }
     }
 
-    suspend fun checkExternalEmail(email: String, metricData: ((Result<Unit>) -> ObservabilityData)? = null) {
+    suspend fun checkExternalEmail(
+        email: String,
+        metricData: ((Result<Unit>) -> ObservabilityData)? = null
+    ) {
         check(email.isNotBlank()) { "Email must not be blank." }
 
         userRepository.runWithObservability(observabilityManager, metricData) {

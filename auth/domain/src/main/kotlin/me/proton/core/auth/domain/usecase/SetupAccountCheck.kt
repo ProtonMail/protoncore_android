@@ -82,8 +82,8 @@ class SetupAccountCheck @Inject constructor(
                 else -> NoSetupNeeded
             }
             AccountType.Internal -> when {
-                !user.hasUsername() -> ChooseUsernameNeeded
                 isTemporaryPassword -> ChangePasswordNeeded
+                !user.hasUsername() -> ChooseUsernameNeeded
                 !user.hasKeys() -> SetupPrimaryKeysNeeded
                 isTwoPassModeNeeded -> TwoPassNeeded
                 fetchAddresses(userId).needsInternalUserAddressKeySetup() -> SetupInternalAddressNeeded

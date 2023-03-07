@@ -733,18 +733,20 @@ public final class me/proton/core/auth/presentation/entity/AddAccountWorkflow : 
 
 public final class me/proton/core/auth/presentation/entity/ChooseAddressInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/ChooseAddressInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/ChooseAddressInput;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/ChooseAddressInput;
+	public final fun component4 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lme/proton/core/auth/presentation/entity/ChooseAddressInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/ChooseAddressInput;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/ChooseAddressInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPassword ()Ljava/lang/String;
 	public final fun getRecoveryEmail ()Ljava/lang/String;
 	public final fun getUserId ()Ljava/lang/String;
 	public fun hashCode ()I
+	public final fun isTwoPassModeNeeded ()Z
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
@@ -802,70 +804,6 @@ public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$U
 	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
-}
-
-public final class me/proton/core/auth/presentation/entity/CreateAddressInput : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/CreateAddressInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/CreateAddressInput;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/CreateAddressInput;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDomain ()Ljava/lang/String;
-	public final fun getPassword ()Ljava/lang/String;
-	public final fun getRecoveryEmail ()Ljava/lang/String;
-	public final fun getUserId ()Ljava/lang/String;
-	public final fun getUsername ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/auth/presentation/entity/CreateAddressInput$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/CreateAddressInput;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/CreateAddressInput;
-}
-
-public abstract class me/proton/core/auth/presentation/entity/CreateAddressResult : android/os/Parcelable {
-}
-
-public final class me/proton/core/auth/presentation/entity/CreateAddressResult$Success : me/proton/core/auth/presentation/entity/CreateAddressResult {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field INSTANCE Lme/proton/core/auth/presentation/entity/CreateAddressResult$Success;
-	public fun describeContents ()I
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/auth/presentation/entity/CreateAddressResult$Success$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/CreateAddressResult$Success;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/CreateAddressResult$Success;
-}
-
-public final class me/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError : me/proton/core/auth/presentation/entity/CreateAddressResult {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;)V
-	public fun describeContents ()I
-	public final fun getMessage ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError;
 }
 
 public final class me/proton/core/auth/presentation/entity/LoginInput : android/os/Parcelable {
@@ -1365,6 +1303,7 @@ public final class me/proton/core/auth/presentation/ui/ChooseAddressActivity : m
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/ChooseAddressActivity$Companion;
 	public fun <init> ()V
+	public fun onError (ZLjava/lang/String;Z)V
 	public fun showLoading (Z)V
 }
 
@@ -1877,11 +1816,10 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Terms
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
-	public final fun checkUsername (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun getChooseAddressState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
-	public final fun setUsernameAndUpgradeToProtonAccount (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun stopChooseAddressWorkflow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+	public final fun submit (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lkotlinx/coroutines/Job;
 }
 
 public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
@@ -1912,14 +1850,12 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameAvailable : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data {
+	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameAvailable;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameAvailable;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameAvailable;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDomain ()Ljava/lang/String;
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

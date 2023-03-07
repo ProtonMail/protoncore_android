@@ -26,8 +26,6 @@ import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
-import me.proton.core.auth.presentation.entity.CreateAddressInput
-import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput

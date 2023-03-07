@@ -55,7 +55,9 @@ class SetupPrimaryKeysTest {
     private val encryptedPassword: EncryptedString = "encrypted-password"
     private val testUsername = "test-username"
     private val testDomain = "example.com"
+    private val testAlternativeDomain = "example.alternative.com"
     private val testEmail = "$testUsername@$testDomain"
+    private val testAlternativeEmail = "$testUsername@$testAlternativeDomain"
     private val testModulus = Modulus(modulusId = "test-id", modulus = "test-modulus")
     private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
@@ -66,7 +68,7 @@ class SetupPrimaryKeysTest {
         verifier = "test-verifier"
     )
 
-    private val sessionProvider: SessionProvider = mockk() {
+    private val sessionProvider: SessionProvider = mockk {
         coEvery { getSessionId(any()) } returns testSessionId
     }
 
@@ -101,7 +103,7 @@ class SetupPrimaryKeysTest {
     fun `primary key already exists`() = runTest {
         userManager.mockGetUser(mockUser(withPrimaryPrivateKey = true))
 
-        tested.invoke(testUserId, encryptedPassword, mockk())
+        tested.invoke(testUserId, encryptedPassword, mockk(), testDomain)
 
         coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any()) wasNot Called }
         coVerify { userAddressRepository wasNot Called }
@@ -117,14 +119,25 @@ class SetupPrimaryKeysTest {
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
         srpCrypto.mockCalculatePasswordVerifier(testEmail)
-        userAddressRepository.mockCreateAddress(displayName = testUsername)
+        userAddressRepository.mockCreateAddress(displayName = testUsername, domain = testDomain)
         userAddressRepository.mockGetAddress()
         userManager.mockGetUser(mockUser(username = testUsername))
-        userManager.mockSetupPrimaryKeys(testUsername)
+        userManager.mockSetupPrimaryKeys(testUsername, domain = testDomain)
 
-        tested.invoke(testUserId, encryptedPassword, AccountType.Internal)
+        tested.invoke(
+            testUserId,
+            encryptedPassword,
+            AccountType.Internal,
+            internalDomain = testDomain
+        )
 
-        coVerify(exactly = 1) { userAddressRepository.createAddress(testUserId, testUsername, testDomain) }
+        coVerify(exactly = 1) {
+            userAddressRepository.createAddress(
+                testUserId,
+                testUsername,
+                testDomain
+            )
+        }
         coVerify(exactly = 1) {
             userManager.setupPrimaryKeys(
                 testUserId,
@@ -142,12 +155,12 @@ class SetupPrimaryKeysTest {
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
         srpCrypto.mockCalculatePasswordVerifier(testEmail)
-        userAddressRepository.mockCreateAddress(displayName = testUsername)
+        userAddressRepository.mockCreateAddress(displayName = testUsername, domain = testDomain)
         userAddressRepository.mockGetAddress()
         userManager.mockGetUser(mockUser(userEmail = testEmail))
-        userManager.mockSetupPrimaryKeys(testUsername)
+        userManager.mockSetupPrimaryKeys(testUsername, domain = testDomain)
 
-        tested.invoke(testUserId, encryptedPassword, AccountType.External)
+        tested.invoke(testUserId, encryptedPassword, AccountType.External, testDomain)
 
         coVerify { userAddressRepository wasNot Called }
         coVerify(exactly = 1) {
@@ -169,13 +182,17 @@ class SetupPrimaryKeysTest {
         srpCrypto.mockCalculatePasswordVerifier(testEmail)
         val data = ApiResult.Error.ProtonData(NOT_ALLOWED, "User has already set up an address")
         val apiException = ApiException(ApiResult.Error.Http(400, "Bad request", data))
-        userAddressRepository.mockCreateAddress(displayName = testUsername, withException = apiException)
+        userAddressRepository.mockCreateAddress(
+            displayName = testUsername,
+            domain = testDomain,
+            withException = apiException
+        )
         userAddressRepository.mockGetAddress()
         userManager.mockGetUser(mockUser(username = testUsername))
-        userManager.mockSetupPrimaryKeys(testUsername)
+        userManager.mockSetupPrimaryKeys(testUsername, domain = testDomain)
 
         val result = assertFailsWith(ApiException::class) {
-            tested.invoke(testUserId, encryptedPassword, AccountType.Internal)
+            tested.invoke(testUserId, encryptedPassword, AccountType.Internal, testDomain)
         }
         assertEquals("User has already set up an address", result.message)
     }
@@ -186,15 +203,19 @@ class SetupPrimaryKeysTest {
         domainRepository.mockGetAvailableDomains()
         keyStoreCrypto.mockDecrypt()
         srpCrypto.mockCalculatePasswordVerifier(testEmail)
-        userAddressRepository.mockCreateAddress(displayName = testUsername)
+        userAddressRepository.mockCreateAddress(displayName = testUsername, domain = testDomain)
         userAddressRepository.mockGetAddress()
         userManager.mockGetUser(mockUser(username = testUsername))
         val data = ApiResult.Error.ProtonData(NOT_ALLOWED, "Primary key exists")
         val apiException = ApiException(ApiResult.Error.Http(400, "Bad request", data))
-        userManager.mockSetupPrimaryKeys(testUsername, withException = apiException)
+        userManager.mockSetupPrimaryKeys(
+            testUsername,
+            domain = testDomain,
+            withException = apiException
+        )
 
         val result = assertFailsWith(ApiException::class) {
-            tested.invoke(testUserId, encryptedPassword, AccountType.Internal)
+            tested.invoke(testUserId, encryptedPassword, AccountType.Internal, testDomain)
         }
         assertEquals("Primary key exists", result.message)
     }
@@ -206,9 +227,84 @@ class SetupPrimaryKeysTest {
         coEvery { userManager.getUser(testUserId, any()) } throws apiException
 
         val result = assertFailsWith<ApiException> {
-            tested.invoke(testUserId, encryptedPassword, mockk())
+            tested.invoke(testUserId, encryptedPassword, mockk(), testDomain)
         }
         assertEquals("Unsupported API version", result.message)
+    }
+
+    @Test
+    fun `selects default domain`() = runTest {
+        authRepository.mockRandomModulus()
+        domainRepository.mockGetAvailableDomains()
+        keyStoreCrypto.mockDecrypt()
+        srpCrypto.mockCalculatePasswordVerifier(testEmail)
+        userAddressRepository.mockCreateAddress(displayName = testUsername, domain = testDomain)
+        userAddressRepository.mockGetAddress()
+        userManager.mockGetUser(mockUser(username = testUsername))
+        userManager.mockSetupPrimaryKeys(testUsername, domain = testDomain)
+
+        tested.invoke(
+            testUserId,
+            encryptedPassword,
+            AccountType.Internal,
+            internalDomain = null // passing null should result in selecting the default domain
+        )
+
+        coVerify(exactly = 1) {
+            userAddressRepository.createAddress(
+                testUserId,
+                testUsername,
+                testDomain
+            )
+        }
+        coVerify(exactly = 1) {
+            userManager.setupPrimaryKeys(
+                testUserId,
+                testUsername,
+                testDomain,
+                testAuth,
+                withArg { it contentEquals decryptedPassword.toByteArray() }
+            )
+        }
+    }
+
+    @Test
+    fun `selects alternative domain`() = runTest {
+        authRepository.mockRandomModulus()
+        domainRepository.mockGetAvailableDomains()
+        keyStoreCrypto.mockDecrypt()
+        srpCrypto.mockCalculatePasswordVerifier(testAlternativeEmail)
+        userAddressRepository.mockCreateAddress(
+            displayName = testUsername,
+            domain = testAlternativeDomain
+        )
+        userAddressRepository.mockGetAddress()
+        userManager.mockGetUser(mockUser(username = testUsername))
+        userManager.mockSetupPrimaryKeys(testUsername, domain = testAlternativeDomain)
+
+        tested.invoke(
+            testUserId,
+            encryptedPassword,
+            AccountType.Internal,
+            internalDomain = testAlternativeDomain
+        )
+
+        coVerify(exactly = 1) {
+            userAddressRepository.createAddress(
+                testUserId,
+                testUsername,
+                testAlternativeDomain
+            )
+        }
+        coVerify(exactly = 1) {
+            userManager.setupPrimaryKeys(
+                testUserId,
+                testUsername,
+                testAlternativeDomain,
+                testAuth,
+                withArg { it contentEquals decryptedPassword.toByteArray() }
+            )
+        }
     }
 
     //region Mock helpers
@@ -236,7 +332,7 @@ class SetupPrimaryKeysTest {
     }
 
     private fun DomainRepository.mockGetAvailableDomains() {
-        coEvery { getAvailableDomains() } returns listOf(testDomain)
+        coEvery { getAvailableDomains() } returns listOf(testDomain, testAlternativeDomain)
     }
 
     private fun KeyStoreCrypto.mockDecrypt() {
@@ -254,13 +350,17 @@ class SetupPrimaryKeysTest {
         } returns testAuth
     }
 
-    private fun UserAddressRepository.mockCreateAddress(displayName: String, withException: Throwable? = null) {
-        coEvery { createAddress(testUserId, displayName, testDomain) } answers {
+    private fun UserAddressRepository.mockCreateAddress(
+        displayName: String,
+        domain: String,
+        withException: Throwable? = null
+    ) {
+        coEvery { createAddress(testUserId, displayName, domain) } answers {
             if (withException != null) {
                 throw withException
             } else {
                 mockk {
-                    every { email } returns "$displayName@$testDomain"
+                    every { email } returns "$displayName@$domain"
                 }
             }
         }
@@ -280,8 +380,12 @@ class SetupPrimaryKeysTest {
         coEvery { getUser(testUserId, any()) } returnsMany users.toList()
     }
 
-    private fun UserManager.mockSetupPrimaryKeys(username: String, withException: Throwable? = null) {
-        coEvery { setupPrimaryKeys(testUserId, username, testDomain, testAuth, any()) }.apply {
+    private fun UserManager.mockSetupPrimaryKeys(
+        username: String,
+        domain: String,
+        withException: Throwable? = null
+    ) {
+        coEvery { setupPrimaryKeys(testUserId, username, domain, testAuth, any()) }.apply {
             if (withException != null) {
                 throws(withException)
             } else {

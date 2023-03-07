@@ -59,7 +59,8 @@ class AuthOrchestrator @Inject constructor() {
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
     private var signUpWorkflowLauncher: ActivityResultLauncher<SignUpInput>? = null
-    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? = null
+    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? =
+        null
     // endregion
 
     private var onAddAccountResultListener: ((result: AddAccountResult?) -> Unit)? = {}
@@ -190,10 +191,16 @@ class AuthOrchestrator @Inject constructor() {
     private fun startChooseAddressWorkflow(
         userId: UserId,
         password: EncryptedString,
-        externalEmail: String
+        externalEmail: String,
+        isTwoPassModeNeeded: Boolean
     ) {
         checkRegistered(chooseAddressLauncher).launch(
-            ChooseAddressInput(userId.id, password = password, recoveryEmail = externalEmail)
+            ChooseAddressInput(
+                userId.id,
+                password = password,
+                recoveryEmail = externalEmail,
+                isTwoPassModeNeeded = isTwoPassModeNeeded
+            )
         )
     }
 
@@ -325,7 +332,15 @@ class AuthOrchestrator @Inject constructor() {
         val password = checkNotNull(account.details.session?.password) {
             "Password is null for startChooseAddressWorkflow."
         }
-        startChooseAddressWorkflow(account.userId, password, email)
+        val twoPassModeEnabled = checkNotNull(account.details.session?.twoPassModeEnabled) {
+            "TwoPassModeEnabled is null for startChooseAddressWorkflow."
+        }
+        startChooseAddressWorkflow(
+            userId = account.userId,
+            password = password,
+            externalEmail = email,
+            isTwoPassModeNeeded = twoPassModeEnabled
+        )
     }
 
     /**

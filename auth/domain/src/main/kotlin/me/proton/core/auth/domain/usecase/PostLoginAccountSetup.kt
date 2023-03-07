@@ -126,7 +126,12 @@ class PostLoginAccountSetup @Inject constructor(
                 Result.Need.ChooseUsername(userId)
             }
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
-                setupPrimaryKeys.invoke(userId, encryptedPassword, requiredAccountType)
+                setupPrimaryKeys.invoke(
+                    userId,
+                    encryptedPassword,
+                    requiredAccountType,
+                    internalAddressDomain
+                )
                 unlockUserPrimaryKey(
                     userId,
                     encryptedPassword,

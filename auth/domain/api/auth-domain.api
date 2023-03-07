@@ -209,8 +209,9 @@ public final class me/proton/core/auth/domain/usecase/AccountAvailability {
 	public final fun checkExternalEmail (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun checkExternalEmail$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun checkUsername (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun checkUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun checkUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun checkUsername$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun checkUsername$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getDomains (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getDomains$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -420,7 +421,7 @@ public final class me/proton/core/auth/domain/usecase/SetupInternalAddress {
 
 public final class me/proton/core/auth/domain/usecase/SetupPrimaryKeys {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/DomainRepository;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/UnlockUserPrimaryKey {

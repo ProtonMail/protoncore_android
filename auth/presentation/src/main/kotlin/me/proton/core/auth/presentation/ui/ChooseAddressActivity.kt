@@ -36,7 +36,6 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
-import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.ChooseAddressState
 import me.proton.core.domain.entity.UserId
@@ -59,7 +58,8 @@ import me.proton.core.util.kotlin.exhaustive
  * checks with the API.
  */
 @AndroidEntryPoint
-class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(ActivityChooseAddressBinding::inflate) {
+class ChooseAddressActivity :
+    AuthActivity<ActivityChooseAddressBinding>(ActivityChooseAddressBinding::inflate) {
 
     private val input: ChooseAddressInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -97,16 +97,22 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is ChooseAddressState.Idle -> showLoading(false)
-                    is ChooseAddressState.Processing -> showLoading(true)
+                    is ChooseAddressState.Idle -> onIdle()
+                    is ChooseAddressState.Processing -> onProcessing()
                     is ChooseAddressState.Data.Domains -> onDomains(it.domains)
-                    is ChooseAddressState.Data.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
-                    is ChooseAddressState.AccountSetupResult -> onAccountSetupResult(it.result)
-                    is ChooseAddressState.Error.Message -> showError(it.error.getUserMessage(resources))
-                    is ChooseAddressState.Error.DomainsNotAvailable -> {
-                        showError(getString(R.string.auth_create_address_error_no_available_domain))
-                    }
-                    is ChooseAddressState.Error.UsernameNotAvailable -> onUsernameUnAvailable()
+                    is ChooseAddressState.Data.UsernameProposal ->
+                        onUsernameProposalAvailable(it.username)
+                    is ChooseAddressState.AccountSetupResult ->
+                        onAccountSetupResult(it.result)
+                    is ChooseAddressState.Error.Message ->
+                        onError(false, it.error.getUserMessage(resources))
+                    is ChooseAddressState.Error.DomainsNotAvailable ->
+                        onError(
+                            false,
+                            getString(R.string.auth_create_address_error_no_available_domain)
+                        )
+                    is ChooseAddressState.Error.UsernameNotAvailable ->
+                        onUsernameUnAvailable()
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
@@ -129,17 +135,42 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
             hideKeyboard()
             usernameInput.validateUsername()
                 .onFailure { usernameInput.setInputError() }
-                .onSuccess { viewModel.checkUsername(it, domainInput.text.toString().replace("@", "")) }
+                .onSuccess {
+                    viewModel.submit(
+                        UserId(input.userId),
+                        username = it,
+                        password = input.password,
+                        domain = domainInput.text.toString().replace("@", ""),
+                        isTwoPassModeNeeded = input.isTwoPassModeNeeded
+                    )
+                }
         }
+    }
+
+    private fun onIdle() {
+        showLoading(false)
+        enableForm()
+    }
+
+    private fun onProcessing() {
+        showLoading(true)
+        binding.usernameInput.isEnabled = false
+    }
+
+    override fun onError(
+        triggerValidation: Boolean,
+        message: String?,
+        isPotentialBlocking: Boolean
+    ) {
+        super.onError(triggerValidation, message, isPotentialBlocking)
+        showLoading(false)
+        binding.usernameInput.isEnabled = true
+        showError(message)
     }
 
     private fun onDomains(domains: List<Domain>) {
         showLoading(false)
         with(binding) {
-            nextButton.isEnabled = true
-            cancelButton.isEnabled = true
-            domainInput.isEnabled = true
-
             if (domains.count() == 1) {
                 usernameInput.setOnDoneActionListener { onNextClicked() }
             }
@@ -160,31 +191,13 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
         }
     }
 
-    private fun onUsernameAvailable(username: String, domain: String) {
+    private fun onUsernameProposalAvailable(username: String) {
         with(binding.usernameInput) {
             text = username
             isEnabled = true
         }
-        binding.subtitleText.text =
-            String.format(getString(R.string.auth_create_address_subtitle), input.recoveryEmail, input.recoveryEmail)
-        binding.nextButton.isEnabled = true
         showLoading(false)
-        // TODO: upgrade to PA
-//        viewModel.upgradeToProtonAccount(UserId(input.userId), input.password, username, domain)
-//        startForResult.launch(
-//            CreateAddressInput(input.userId, input.password, username, domain, input.recoveryEmail)
-//        )
-    }
-
-    // TODO: use this after the actual EA -> PA conversion is done.
-    private fun onCreateAddressResult(createAddressResult: CreateAddressResult) {
-        val result = when (createAddressResult) {
-            CreateAddressResult.Success -> ChooseAddressResult.Success(input.userId)
-            is CreateAddressResult.UserCheckError -> ChooseAddressResult.UserCheckError(createAddressResult.message)
-        }
-        val intent = Intent().putExtra(ARG_RESULT, result)
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+        enableForm()
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
@@ -201,18 +214,27 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
     }
 
     private fun onSuccess() {
-        setResultAndFinish(CreateAddressResult.Success)
+        setResultAndFinish(ChooseAddressResult.Success(input.userId))
     }
 
     private fun onUserCheckError(error: PostLoginAccountSetup.UserCheckResult.Error) {
         onUserCheckFailed(error, useToast = true)
-        setResultAndFinish(CreateAddressResult.UserCheckError(error.localizedMessage))
+        setResultAndFinish(ChooseAddressResult.UserCheckError(error.localizedMessage))
     }
 
-    private fun setResultAndFinish(result: CreateAddressResult) {
+    private fun setResultAndFinish(result: ChooseAddressResult) {
         val intent = Intent().putExtra(ARG_RESULT, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    private fun enableForm() {
+        with(binding) {
+            usernameInput.isEnabled = true
+            nextButton.isEnabled = true
+            cancelButton.isEnabled = true
+            domainInput.isEnabled = true
+        }
     }
 
     companion object {

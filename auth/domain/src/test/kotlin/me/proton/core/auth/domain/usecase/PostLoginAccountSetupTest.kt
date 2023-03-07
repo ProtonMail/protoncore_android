@@ -350,7 +350,7 @@ class PostLoginAccountSetupTest {
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
-        coJustRun { setupPrimaryKeys.invoke(any(), any(), any()) }
+        coJustRun { setupPrimaryKeys.invoke(any(), any(), any(), any()) }
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
         val result = tested.invoke(
@@ -360,10 +360,18 @@ class PostLoginAccountSetupTest {
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
             temporaryPassword = sessionInfo.temporaryPassword,
-            onSetupSuccess = onSetupSuccess
+            onSetupSuccess = onSetupSuccess,
+            internalAddressDomain = "test-domain"
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
-        coVerify { setupPrimaryKeys.invoke(testUserId, testEncryptedPassword, testAccountType) }
+        coVerify {
+            setupPrimaryKeys.invoke(
+                userId = testUserId,
+                password = testEncryptedPassword,
+                accountType = testAccountType,
+                internalDomain = "test-domain"
+            )
+        }
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify(exactly = 1) { onSetupSuccess() }
     }
@@ -385,11 +393,12 @@ class PostLoginAccountSetupTest {
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
             temporaryPassword = sessionInfo.temporaryPassword,
-            onSetupSuccess = onSetupSuccess
+            onSetupSuccess = onSetupSuccess,
+            internalAddressDomain = "test-domain"
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
-        coVerify { setupInternalAddress.invoke(testUserId) }
+        coVerify { setupInternalAddress.invoke(testUserId, "test-domain") }
         coVerify(exactly = 1) { onSetupSuccess() }
     }
 

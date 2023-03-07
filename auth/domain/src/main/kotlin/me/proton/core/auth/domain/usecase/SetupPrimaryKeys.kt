@@ -29,6 +29,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
@@ -56,13 +57,18 @@ class SetupPrimaryKeys @Inject constructor(
         userId: UserId,
         password: EncryptedString,
         accountType: AccountType,
+        internalDomain: Domain?
     ) {
         val user = userManager.getUser(userId, refresh = true)
         if (user.keys.primary() != null) return
 
         val email = when (accountType) {
             AccountType.External -> checkNotNull(user.emailSplit) { "Email is needed." }
-            AccountType.Internal -> getOrCreateInternalAddress(userId, user.displayNameNotNull()).emailSplit
+            AccountType.Internal -> getOrCreateInternalAddress(
+                userId = userId,
+                displayName = user.displayNameNotNull(),
+                internalDomain = internalDomain
+            ).emailSplit
             AccountType.Username -> return
         }
 
@@ -89,6 +95,7 @@ class SetupPrimaryKeys @Inject constructor(
     private suspend fun getOrCreateInternalAddress(
         userId: UserId,
         displayName: String,
+        internalDomain: Domain?
     ): UserAddress {
         suspend fun getAddresses() = userAddressRepository.getAddresses(
             sessionUserId = userId,
@@ -98,7 +105,7 @@ class SetupPrimaryKeys @Inject constructor(
         suspend fun createAddress() = userAddressRepository.createAddress(
             sessionUserId = userId,
             displayName = displayName,
-            domain = domainRepository.getAvailableDomains().first()
+            domain = internalDomain ?: domainRepository.getAvailableDomains().first()
         )
 
         return getAddresses().firstInternalOrNull() ?: createAddress()

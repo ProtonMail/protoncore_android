@@ -24,6 +24,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -36,7 +37,6 @@ import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.usersettings.domain.usecase.SetupUsername
@@ -52,7 +52,8 @@ class ChooseAddressViewModel @Inject constructor(
     private val setupUsername: SetupUsername
 ) : ProtonViewModel() {
 
-    private val _chooseAddressState = MutableStateFlow<ChooseAddressState>(ChooseAddressState.Idle)
+    private val _chooseAddressState =
+        MutableStateFlow<ChooseAddressState>(ChooseAddressState.Processing)
 
     val chooseAddressState = _chooseAddressState.asStateFlow()
 
@@ -61,9 +62,12 @@ class ChooseAddressViewModel @Inject constructor(
         object Processing : ChooseAddressState()
         sealed class Data : ChooseAddressState() {
             data class Domains(val domains: List<Domain>) : Data()
-            data class UsernameAvailable(val username: String, val domain: String) : Data()
+            data class UsernameProposal(val username: String) : Data()
         }
-        data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : ChooseAddressState()
+
+        data class AccountSetupResult(val result: PostLoginAccountSetup.Result) :
+            ChooseAddressState()
+
         sealed class Error : ChooseAddressState() {
             object DomainsNotAvailable : Error()
             object UsernameNotAvailable : Error()
@@ -82,11 +86,13 @@ class ChooseAddressViewModel @Inject constructor(
         val user = accountAvailability.getUser(userId)
         val username = user.email?.split("@")?.firstOrNull()
         if (username == null) {
-            emit(ChooseAddressState.Error.UsernameNotAvailable)
+            emit(ChooseAddressState.Idle)
             return@flow
         }
-        val domain = domains[0]
-        checkUsername(username, domain)
+
+        checkUsername(userId, username, domains.first())
+            .onFailure { emit(ChooseAddressState.Idle) }
+            .onSuccess { emit(ChooseAddressState.Data.UsernameProposal(it)) }
     }.catch { error ->
         emit(ChooseAddressState.Error.Message(error))
     }.onEach {
@@ -99,21 +105,46 @@ class ChooseAddressViewModel @Inject constructor(
         accountWorkflow.handleCreateAddressFailed(userId)
     }
 
-    fun checkUsername(username: String, domain: Domain) = flow {
-        emit(ChooseAddressState.Processing)
-        accountAvailability.checkUsername("$username@$domain")
-        emit(ChooseAddressState.Data.UsernameAvailable(username, domain))
-    }.catch {
-        emit(ChooseAddressState.Error.UsernameNotAvailable)
-    }.onEach {
-        _chooseAddressState.tryEmit(it)
-    }.launchIn(viewModelScope)
-
-    fun setUsernameAndUpgradeToProtonAccount(
+    fun submit(
         userId: UserId,
-        password: EncryptedString,
         username: String,
-        domain: String
+        password: EncryptedString,
+        domain: Domain,
+        isTwoPassModeNeeded: Boolean
+    ) = viewModelScope.launch {
+        _chooseAddressState.emit(ChooseAddressState.Processing)
+
+        checkUsername(userId, username, domain)
+            .onFailure {
+                _chooseAddressState.emit(ChooseAddressState.Error.UsernameNotAvailable)
+            }.onSuccess { username ->
+                setUsernameAndUpgradeToProtonAccount(
+                    userId,
+                    username = username,
+                    password = password,
+                    domain = domain,
+                    isTwoPassModeNeeded = isTwoPassModeNeeded
+                )
+            }
+    }
+
+    private suspend fun checkUsername(
+        userId: UserId,
+        username: String,
+        domain: Domain
+    ): Result<String> = flow {
+        accountAvailability.checkUsername(userId, "$username@$domain", metricData = null)
+        emit(Result.success(username))
+    }.catch {
+        emit(Result.failure(it))
+    }.first()
+
+    private fun setUsernameAndUpgradeToProtonAccount(
+        userId: UserId,
+        username: String,
+        password: EncryptedString,
+        domain: String,
+        isTwoPassModeNeeded: Boolean
     ) = flow {
         emit(ChooseAddressState.Processing)
 
@@ -124,10 +155,13 @@ class ChooseAddressViewModel @Inject constructor(
             encryptedPassword = password,
             requiredAccountType = AccountType.Internal,
             isSecondFactorNeeded = false,
-            isTwoPassModeNeeded = false,
+            isTwoPassModeNeeded = isTwoPassModeNeeded,
             temporaryPassword = false,
             onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
-            internalAddressDomain = domain
+            internalAddressDomain = domain,
+            subscribeMetricData = null,
+            userCheckMetricData = null,
+            unlockUserMetricData = null
         )
         emit(ChooseAddressState.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {
