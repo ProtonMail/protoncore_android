@@ -37,7 +37,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.animation.AnimationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig
@@ -60,7 +59,6 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.client.getId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
@@ -69,7 +67,6 @@ import me.proton.core.presentation.utils.normSnack
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.deserializeOrNull
-import me.proton.core.util.kotlin.exhaustive
 import java.net.URLEncoder
 import javax.inject.Inject
 
@@ -93,12 +90,6 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
     private val clientIdType: ClientIdType by lazy { ClientIdType.getByValue(parsedArgs.clientIdType) }
     private val clientId: ClientId by lazy { clientIdType.getId(parsedArgs.clientId) }
-    private val sessionId: SessionId? by lazy {
-        when (clientIdType) {
-            ClientIdType.SESSION -> SessionId(clientId.id)
-            ClientIdType.COOKIE -> null
-        }.exhaustive
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -111,7 +102,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             toolbar.apply {
                 setNavigationIcon(R.drawable.ic_proton_close)
                 setNavigationOnClickListener {
-                    setResultAndDismiss(token = null, cancelled = true)
+                    setResult(token = null, cancelled = true)
                 }
                 setOnMenuItemClickListener {
                     when (it.itemId) {
@@ -221,7 +212,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             Type.Success -> {
                 val token = requireNotNull(response.payload?.token)
                 val tokenType = requireNotNull(response.payload?.type)
-                setResultAndDismiss(HumanVerificationToken(token, tokenType), cancelled = false)
+                setResult(HumanVerificationToken(token, tokenType), cancelled = false)
             }
             Type.Notification -> {
                 val message = requireNotNull(response.payload?.text)
@@ -256,26 +247,20 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     override fun onBackPressed() {
         with(binding.humanVerificationWebView) {
             if (canGoBack()) goBack()
-            else setResultAndDismiss(token = null, cancelled = true)
+            else setResult(token = null, cancelled = true)
         }
     }
 
-    private fun setResultAndDismiss(token: HumanVerificationToken?, cancelled: Boolean) {
-        val result = HumanVerificationResult(
-            clientId = clientId.id,
-            clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
-            token = token
-        )
-        val resultBundle = Bundle().apply {
-            putParcelable(RESULT_HUMAN_VERIFICATION, result)
-        }
-        setFragmentResult(REQUEST_KEY, resultBundle)
-
+    private fun setResult(token: HumanVerificationToken?, cancelled: Boolean) {
         lifecycleScope.launch {
             viewModel.onHumanVerificationResult(clientId, token, cancelled)
-            // Extra delay for better UX while replacing underlying fragments
-            delay(100)
-            dismissAllowingStateLoss()
+        }.invokeOnCompletion { error ->
+            setFragmentResult(REQUEST_KEY, Bundle().apply {
+                if (error == null) {
+                    val result = HumanVerificationResult(clientId.id, clientIdType.value, token)
+                    putParcelable(RESULT_HUMAN_VERIFICATION, result)
+                }
+            })
         }
     }
 
