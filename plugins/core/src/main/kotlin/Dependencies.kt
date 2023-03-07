@@ -195,4 +195,6 @@ public val DependencyHandler.turbine: Any
     get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
 public val DependencyHandler.uiautomator: Any
     get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
+public val DependencyHandler.fusion: Any
+    get() = dependency("me.proton.test", module = "fusion") version `fusion version`
 // endregion
