@@ -11,6 +11,24 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.14.0] - 2023-03-08
+
+### Chores
+
+- Avoid creating SharedPreferences during hilt graph creation
+- Upgraded Android Gradle Plugin to 7.4.1.
+
+### Features
+
+- plan:
+  - If plan value is zero, take the value from default plan.
+
+### Bug Fixes
+
+- HV3DialogFragment setFragmentResult is now called after viewModel onHumanVerificationResult.
+- presentation-compose:
+  - Use a main dispatcher in modal runAction to avoid running them in a unconfined dispatcher in ui tests.
+
 ## [9.13.0] - 2023-03-01
 
 ### Chores
