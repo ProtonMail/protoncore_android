@@ -26,7 +26,7 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import javax.inject.Inject
 
-class SessionListenerImpl @Inject constructor(
+open class SessionListenerImpl @Inject constructor(
     private val accountRepository: AccountRepository
 ) : SessionListener {
 
@@ -44,7 +44,7 @@ class SessionListenerImpl @Inject constructor(
         accountRepository.updateSessionScopes(sessionId, scopes)
     }
 
-    override suspend fun onSessionForceLogout(session: Session) {
+    override suspend fun onSessionForceLogout(session: Session, httpCode: Int) {
         accountRepository.updateSessionState(session.sessionId, SessionState.ForceLogout)
         accountRepository.getAccountOrNull(session.sessionId)?.let { account ->
             accountRepository.updateAccountState(account.userId, AccountState.Disabled)

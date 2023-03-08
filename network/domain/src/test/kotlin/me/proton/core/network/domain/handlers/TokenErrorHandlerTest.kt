@@ -93,7 +93,7 @@ class TokenErrorHandlerTest {
         coVerify(exactly = 0) { apiBackend.invoke(call) }
         coVerify(exactly = 0) { apiBackend.refreshSession(any()) }
         coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any()) }
+        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
     }
@@ -120,7 +120,7 @@ class TokenErrorHandlerTest {
         coVerify(exactly = 1) { apiBackend.invoke(call) }
         coVerify(exactly = 0) { apiBackend.refreshSession(any()) }
         coVerify(exactly = 1) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any()) }
+        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
         coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
     }
@@ -145,7 +145,7 @@ class TokenErrorHandlerTest {
         coVerify(exactly = 1) { apiBackend.invoke(call) }
         coVerify(exactly = 1) { apiBackend.refreshSession(authSession) }
         coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any()) }
+        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
         coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(any()) }
     }
@@ -170,7 +170,7 @@ class TokenErrorHandlerTest {
         coVerify(exactly = 1) { apiBackend.invoke(call) }
         coVerify(exactly = 1) { apiBackend.refreshSession(unauthSession) }
         coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any()) }
+        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
         coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(any()) }
     }
@@ -198,7 +198,7 @@ class TokenErrorHandlerTest {
         coVerify(exactly = 1) { apiBackend.invoke(call) }
         coVerify(exactly = 1) { apiBackend.refreshSession(unauthSession) }
         coVerify(exactly = 1) { apiBackend.requestSession() }
-        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(any(), 422) }
         coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
     }
@@ -226,7 +226,7 @@ class TokenErrorHandlerTest {
         coVerify(exactly = 0) { apiBackend.invoke(call) }
         coVerify(exactly = 1) { apiBackend.refreshSession(authSession) }
         coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(any(), 422) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
         coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
     }

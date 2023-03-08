@@ -25,6 +25,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
@@ -103,7 +104,7 @@ class SessionManagerImplTest {
     fun `on onSessionForceLogout`() = runTest {
         mocks.setupAccountRepository()
 
-        sessionManager.onSessionForceLogout(session1)
+        sessionManager.onSessionForceLogout(session1, HttpResponseCodes.HTTP_BAD_REQUEST)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(1, stateLists.size)

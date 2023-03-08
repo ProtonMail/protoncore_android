@@ -87,7 +87,7 @@ class TokenErrorHandler<Api>(
             is ApiResult.Error.Http -> {
                 when (apiResult.httpCode) {
                     in FORCE_LOGOUT_HTTP_CODES -> {
-                        sessionListener.onSessionForceLogout(resolved.session)
+                        sessionListener.onSessionForceLogout(resolved.session, apiResult.httpCode)
                         // Retry the call if it was an unauthenticated session and got new one.
                         resolved is Found.Unauthenticated && requestToken(backend)
                     }

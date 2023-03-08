@@ -642,7 +642,7 @@ public final class me/proton/core/network/domain/session/SessionId {
 }
 
 public abstract interface class me/proton/core/network/domain/session/SessionListener {
-	public abstract fun onSessionForceLogout (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onSessionForceLogout (Lme/proton/core/network/domain/session/Session;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onSessionScopesRefreshed (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onSessionTokenCreated (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onSessionTokenRefreshed (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

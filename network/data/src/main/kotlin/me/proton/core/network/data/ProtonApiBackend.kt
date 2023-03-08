@@ -181,6 +181,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         api.safeCall(networkManager, block)
 
     override suspend fun refreshSession(session: Session): ApiResult<Session> {
+        CoreLogger.log(LogTag.REFRESH_TOKEN,
+            "Refreshing tokens: uid=${session.sessionId.id.formatToken(client)}, refreshToken=${session.refreshToken.formatToken(client)}")
         val result = invokeInternal {
             refreshToken(
                 RefreshTokenRequest(
@@ -191,11 +193,14 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         }
         return when (result) {
             is ApiResult.Success -> {
-                CoreLogger.log(LogTag.REFRESH_TOKEN, "Access & refresh tokens refreshed.")
+                val accessToken = result.value.accessToken
+                val refreshToken = result.value.refreshToken
+                val tokensLog = "a=${accessToken.formatToken(client)} r=${refreshToken.formatToken(client)}"
+                CoreLogger.log(LogTag.REFRESH_TOKEN, "Access & refresh tokens refreshed: $tokensLog.")
                 ApiResult.Success(
                     session.refreshWith(
-                        accessToken = result.value.accessToken,
-                        refreshToken = result.value.refreshToken,
+                        accessToken = accessToken,
+                        refreshToken = refreshToken,
                         scopes = result.value.scopes
                     )
                 )

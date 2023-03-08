@@ -38,5 +38,5 @@ interface SessionListener {
     /**
      * Called when a [Session] has been forced to logout (session is not deleted).
      */
-    suspend fun onSessionForceLogout(session: Session)
+    suspend fun onSessionForceLogout(session: Session, httpCode: Int)
 }

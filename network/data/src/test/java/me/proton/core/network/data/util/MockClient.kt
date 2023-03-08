@@ -46,7 +46,7 @@ class MockSessionListener(
     private val onScopesRefreshed: (sessionId: SessionId, scopes: List<String>) -> Unit = { _, _ -> },
     private val onTokenCreated: (Session) -> Unit = { },
     private val onTokenRefreshed: (Session) -> Unit = { },
-    private val onForceLogout: (Session) -> Unit = { }
+    private val onForceLogout: (Session, Int) -> Unit = { _, _ -> }
 ) : SessionListener {
     override suspend fun onSessionScopesRefreshed(
         sessionId: SessionId,
@@ -62,8 +62,9 @@ class MockSessionListener(
     ) = onTokenRefreshed(session)
 
     override suspend fun onSessionForceLogout(
-        session: Session
-    ) = onForceLogout(session)
+        session: Session,
+        httpCode: Int
+    ) = onForceLogout(session, httpCode)
 }
 
 class MockApiClient : ApiClient {
