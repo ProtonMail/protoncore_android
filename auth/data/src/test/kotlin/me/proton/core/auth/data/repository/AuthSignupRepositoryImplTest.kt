@@ -24,6 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -54,6 +55,7 @@ class AuthSignupRepositoryImplTest {
     // endregion
 
     private val product = Product.Mail
+    private val validateServerProof = ValidateServerProof()
 
     @Before
     fun beforeEveryTest() {
@@ -64,7 +66,7 @@ class AuthSignupRepositoryImplTest {
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
-        repository = AuthRepositoryImpl(apiProvider, context, product)
+        repository = AuthRepositoryImpl(apiProvider, context, product, validateServerProof)
     }
 
     @Test

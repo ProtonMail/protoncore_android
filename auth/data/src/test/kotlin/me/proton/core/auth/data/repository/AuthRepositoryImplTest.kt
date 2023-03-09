@@ -31,6 +31,7 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
@@ -86,6 +87,7 @@ class AuthRepositoryImplTest {
     private val successScopeInfo = mockk<ScopeInfo>()
 
     private val product = Product.Mail
+    private val validateServerProof = ValidateServerProof()
 
     private val testDispatcherProvider = TestDispatcherProvider()
 
@@ -106,7 +108,7 @@ class AuthRepositoryImplTest {
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
-        repository = AuthRepositoryImpl(apiProvider, context, product)
+        repository = AuthRepositoryImpl(apiProvider, context, product, validateServerProof)
     }
 
     @Test

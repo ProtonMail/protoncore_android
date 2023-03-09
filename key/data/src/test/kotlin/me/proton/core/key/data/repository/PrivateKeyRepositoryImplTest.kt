@@ -24,6 +24,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.KeyApi
@@ -59,6 +60,8 @@ class PrivateKeyRepositoryImplTest {
 
     // endregion
 
+    private val validateServerProof = ValidateServerProof()
+
     private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
@@ -73,7 +76,7 @@ class PrivateKeyRepositoryImplTest {
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every { apiFactory.create(any(), interfaceClass = KeyApi::class) } returns apiManager
-        repository = PrivateKeyRepositoryImpl(apiProvider)
+        repository = PrivateKeyRepositoryImpl(apiProvider, validateServerProof)
     }
 
     @Test

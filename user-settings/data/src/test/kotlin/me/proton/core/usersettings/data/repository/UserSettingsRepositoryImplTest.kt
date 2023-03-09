@@ -26,6 +26,7 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
@@ -78,6 +79,8 @@ class UserSettingsRepositoryImplTest {
 
     // endregion
 
+    private val validateServerProof = ValidateServerProof()
+
     private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
@@ -90,7 +93,7 @@ class UserSettingsRepositoryImplTest {
             userSettingsApi
         )
 
-        repository = UserSettingsRepositoryImpl(db, apiProvider, TestCoroutineScopeProvider(dispatcherProvider))
+        repository = UserSettingsRepositoryImpl(db, apiProvider, validateServerProof, TestCoroutineScopeProvider(dispatcherProvider))
     }
 
     @Test

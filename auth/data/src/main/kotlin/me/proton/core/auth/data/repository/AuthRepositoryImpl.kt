@@ -30,8 +30,8 @@ import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
-import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
@@ -45,7 +45,8 @@ import me.proton.core.network.domain.session.SessionId
 class AuthRepositoryImpl(
     private val provider: ApiProvider,
     private val context: Context,
-    private val product: Product
+    private val product: Product,
+    private val validateServerProof: ValidateServerProof
 ) : AuthRepository {
 
     override suspend fun getAuthInfo(sessionId: SessionId?, username: String): AuthInfo =
@@ -78,7 +79,7 @@ class AuthRepositoryImpl(
             getFrameMap(frames)
         )
         val response = performLogin(request)
-        response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "login failed" }
+        validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "login failed" }
         response.toSessionInfo(username)
     }.valueOrThrow
 
