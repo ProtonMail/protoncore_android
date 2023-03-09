@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.data.api.response.isSuccess
-import me.proton.core.auth.domain.extension.requireValidProof
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
@@ -72,6 +72,7 @@ class UserRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val cryptoContext: CryptoContext,
     private val product: Product,
+    private val validateServerProof: ValidateServerProof,
     scopeProvider: CoroutineScopeProvider
 ) : UserRepository {
 
@@ -200,7 +201,7 @@ class UserRepositoryImpl @Inject constructor(
         provider.get<UserApi>(sessionUserId).invoke {
             val request = UnlockRequest(srpProofs.clientEphemeral, srpProofs.clientProof, srpSession)
             val response = unlockLockedScope(request)
-            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "getting locked scope failed" }
+            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "getting locked scope failed" }
             response.isSuccess()
         }.valueOrThrow
 
@@ -218,7 +219,7 @@ class UserRepositoryImpl @Inject constructor(
                 twoFactorCode
             )
             val response = unlockPasswordScope(request)
-            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "getting password scope failed" }
+            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "getting password scope failed" }
             response.isSuccess()
         }.valueOrThrow
 

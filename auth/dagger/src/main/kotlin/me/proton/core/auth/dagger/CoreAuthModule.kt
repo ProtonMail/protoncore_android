@@ -28,6 +28,7 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -46,7 +47,8 @@ public interface CoreAuthModule {
         public fun provideAuthRepository(
             apiProvider: ApiProvider,
             @ApplicationContext context: Context,
-            product: Product
-        ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product)
+            product: Product,
+            validateServerProof: ValidateServerProof
+        ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product, validateServerProof)
     }
 }

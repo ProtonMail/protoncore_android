@@ -851,7 +851,7 @@ public final class me/proton/core/usersettings/data/repository/OrganizationRepos
 }
 
 public final class me/proton/core/usersettings/data/repository/UserSettingsRepositoryImpl : me/proton/core/usersettings/domain/repository/UserSettingsRepository {
-	public fun <init> (Lme/proton/core/usersettings/data/db/UserSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public fun <init> (Lme/proton/core/usersettings/data/db/UserSettingsDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun getUserSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

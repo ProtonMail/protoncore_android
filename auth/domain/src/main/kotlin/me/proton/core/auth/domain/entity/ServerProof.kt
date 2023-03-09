@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.response
+package me.proton.core.auth.domain.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.auth.domain.entity.ServerProof
-
-@Serializable
-data class UpdateUserSettingsResponse(
-    @SerialName("UserSettings")
-    val settings: UserSettingsResponse,
-    @SerialName("ServerProof")
-    val serverProof: ServerProof
-)
+typealias ServerProof = String

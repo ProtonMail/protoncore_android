@@ -19,7 +19,7 @@
 package me.proton.core.key.data.repository
 
 import me.proton.core.auth.data.api.response.isSuccess
-import me.proton.core.auth.domain.extension.requireValidProof
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -39,7 +39,8 @@ import me.proton.core.util.kotlin.toInt
 import javax.inject.Inject
 
 class PrivateKeyRepositoryImpl @Inject constructor(
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    private val validateServerProof: ValidateServerProof
 ) : PrivateKeyRepository {
 
     private fun PrivateAddressKey.creationRequest(): CreateAddressKeyRequest {
@@ -119,7 +120,7 @@ class PrivateKeyRepositoryImpl @Inject constructor(
                     organizationKey = organizationKey
                 )
             )
-            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "key update failed" }
+            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "key update failed" }
             response.isSuccess()
         }.valueOrThrow
     }

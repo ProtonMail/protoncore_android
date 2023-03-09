@@ -482,7 +482,7 @@ public final class me/proton/core/auth/data/api/response/SecondFactorResponse$Co
 }
 
 public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/proton/core/auth/domain/repository/AuthRepository {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;)V
 	public fun getAuthInfo (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

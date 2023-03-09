@@ -24,7 +24,7 @@ import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.auth.domain.extension.requireValidProof
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
@@ -51,6 +51,7 @@ import javax.inject.Inject
 class UserSettingsRepositoryImpl @Inject constructor(
     db: UserSettingsDatabase,
     private val apiProvider: ApiProvider,
+    private val validateServerProof: ValidateServerProof,
     scopeProvider: CoroutineScopeProvider
 ) : UserSettingsRepository {
 
@@ -115,7 +116,7 @@ class UserSettingsRepositoryImpl @Inject constructor(
                     srpSession = srpSession
                 )
             )
-            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "recovery email update failed" }
+            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "recovery email update failed" }
             insertOrUpdate(response.settings.fromResponse(sessionUserId))
             getUserSettings(sessionUserId)
         }.valueOrThrow
@@ -138,7 +139,7 @@ class UserSettingsRepositoryImpl @Inject constructor(
                     auth = AuthRequest.from(auth)
                 )
             )
-            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "password change failed" }
+            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "password change failed" }
             insertOrUpdate(response.settings.fromResponse(sessionUserId))
             getUserSettings(sessionUserId)
         }.valueOrThrow

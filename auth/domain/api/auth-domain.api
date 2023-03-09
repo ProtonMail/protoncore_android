@@ -185,10 +185,6 @@ public final class me/proton/core/auth/domain/exception/InvalidServerAuthenticat
 	public fun <init> (Ljava/lang/String;)V
 }
 
-public final class me/proton/core/auth/domain/extension/ServerProofKt {
-	public static final fun requireValidProof (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-}
-
 public abstract interface class me/proton/core/auth/domain/repository/AuthRepository {
 	public abstract fun getAuthInfo (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -448,6 +444,11 @@ public final class me/proton/core/auth/domain/usecase/UserCheckAction$OpenUrl : 
 	public final fun getUrl ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/domain/usecase/ValidateServerProof {
+	public fun <init> ()V
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/GetAuthInfo {

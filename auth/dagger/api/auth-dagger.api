@@ -15,14 +15,14 @@ public abstract interface class me/proton/core/auth/dagger/CoreAuthModule {
 }
 
 public final class me/proton/core/auth/dagger/CoreAuthModule$Companion {
-	public final fun provideAuthRepository (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/domain/repository/AuthRepository;
+	public final fun provideAuthRepository (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;)Lme/proton/core/auth/domain/repository/AuthRepository;
 }
 
 public final class me/proton/core/auth/dagger/CoreAuthModule_Companion_ProvideAuthRepositoryFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/dagger/CoreAuthModule_Companion_ProvideAuthRepositoryFactory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/dagger/CoreAuthModule_Companion_ProvideAuthRepositoryFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/domain/repository/AuthRepository;
-	public static fun provideAuthRepository (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/domain/repository/AuthRepository;
+	public static fun provideAuthRepository (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;)Lme/proton/core/auth/domain/repository/AuthRepository;
 }
 
