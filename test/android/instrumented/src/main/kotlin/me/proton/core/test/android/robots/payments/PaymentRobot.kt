@@ -74,15 +74,6 @@ open class PaymentRobot : CoreRobot() {
             }
         }
 
-        fun googleIAPElementsDisplayed() {
-            arrayOf(
-                me.proton.core.paymentiap.presentation.R.id.termsConditionsInfoText,
-                me.proton.core.paymentiap.presentation.R.id.priceSurchargeInfoText
-            ).forEach {
-                view.withId(it).checkDisplayed()
-            }
-        }
-
         fun nextPaymentProviderButtonDisplayed() {
             view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
         }

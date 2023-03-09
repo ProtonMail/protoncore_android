@@ -16,46 +16,56 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.payments
+package me.proton.core.paymentiap.test.robot
 
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.robots.payments.PaymentRobot
 
 /**
  * [GoogleIAPRobot] class contains new credit card addition actions and verifications implementation
  */
-class GoogleIAPRobot : PaymentRobot() {
+public class GoogleIAPRobot : PaymentRobot() {
 
-    inline fun <reified T> payWithGPay(): T = clickElement(R.id.gPayButton)
+    public inline fun <reified T> payWithGPay(): T = clickElement(R.id.gPayButton)
 
     @Suppress("FINAL_UPPER_BOUND")
-    fun <V : Verify> verify(block: Verify.() -> Unit) = Verify().apply(block)
+    public fun <V : Verify> verify(block: Verify.() -> Unit): Verify = Verify().apply(block)
 
-    class Verify : PaymentRobot.Verify() {
-        fun payWithCardButtonIsNotVisible() {
+    public class Verify : PaymentRobot.Verify() {
+        public fun payWithCardButtonIsNotVisible() {
             view.withId(R.id.payButton).checkNotDisplayed()
         }
 
-        fun switchPaymentProviderButtonIsNotVisible() {
+        public fun switchPaymentProviderButtonIsNotVisible() {
             view.withId(R.id.nextPaymentProviderButton).checkNotDisplayed()
         }
 
-        fun switchPaymentProviderButtonIsVisible() {
+        public fun switchPaymentProviderButtonIsVisible() {
             view.withId(R.id.nextPaymentProviderButton).checkDisplayed()
         }
 
-        fun payWithCardButtonIsVisible() {
+        public fun payWithCardButtonIsVisible() {
             view.withId(R.id.payButton).checkDisplayed()
         }
 
-        fun nextPaymentProviderButtonIsNotVisible() {
+        public fun nextPaymentProviderButtonIsNotVisible() {
             view.withId(R.id.nextPaymentProviderButton).checkNotDisplayed()
         }
 
-        fun payWithGoogleButtonIsClickable() {
+        public fun payWithGoogleButtonIsClickable() {
             view.withId(R.id.gPayButton)
                 .checkDisplayed()
                 .isEnabled()
                 .isClickable()
+        }
+
+        public fun googleIAPElementsDisplayed() {
+            arrayOf(
+                me.proton.core.paymentiap.presentation.R.id.termsConditionsInfoText,
+                me.proton.core.paymentiap.presentation.R.id.priceSurchargeInfoText
+            ).forEach {
+                view.withId(it).checkDisplayed()
+            }
         }
     }
 }

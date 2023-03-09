@@ -531,6 +531,16 @@ public class me/proton/core/test/android/robots/CoreVerify : me/proton/core/test
 	public final fun snackbarDisplayed (I)V
 }
 
+public abstract interface class me/proton/core/test/android/robots/WithUiDevice {
+	public abstract fun getUiDevice ()Landroidx/test/uiautomator/UiDevice;
+	public abstract fun waitForIt (Landroidx/test/uiautomator/SearchCondition;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/test/android/robots/WithUiDevice$DefaultImpls {
+	public static fun getUiDevice (Lme/proton/core/test/android/robots/WithUiDevice;)Landroidx/test/uiautomator/UiDevice;
+	public static fun waitForIt (Lme/proton/core/test/android/robots/WithUiDevice;Landroidx/test/uiautomator/SearchCondition;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot : me/proton/core/test/android/robots/CoreRobot {
 	public static final field UserElement Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserElement;
 	public fun <init> ()V
@@ -904,21 +914,6 @@ public final class me/proton/core/test/android/robots/payments/ExistingPaymentMe
 	public final fun paymentMethod (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
-public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
-	public fun <init> ()V
-	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/GoogleIAPRobot$Verify;
-}
-
-public final class me/proton/core/test/android/robots/payments/GoogleIAPRobot$Verify : me/proton/core/test/android/robots/payments/PaymentRobot$Verify {
-	public fun <init> ()V
-	public final fun nextPaymentProviderButtonIsNotVisible ()V
-	public final fun payWithCardButtonIsNotVisible ()V
-	public final fun payWithCardButtonIsVisible ()V
-	public final fun payWithGoogleButtonIsClickable ()V
-	public final fun switchPaymentProviderButtonIsNotVisible ()V
-	public final fun switchPaymentProviderButtonIsVisible ()V
-}
-
 public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/PaymentRobot$Verify;
@@ -928,7 +923,6 @@ public class me/proton/core/test/android/robots/payments/PaymentRobot$Verify : m
 	public fun <init> ()V
 	public final fun addCreditCardElementsDisplayed ()V
 	public final fun billingDetailsDisplayed (Lme/proton/core/test/quark/data/Plan;Ljava/lang/String;Z)V
-	public final fun googleIAPElementsDisplayed ()V
 	public final fun googlePaymentMethodDisplayed (Ljava/lang/String;)V
 	public final fun nextPaymentProviderButtonDisplayed ()V
 	public final fun nextPaymentProviderButtonNotDisplayed ()V
@@ -958,24 +952,6 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public final fun planRenewalDisplayed (Ljava/lang/String;)V
 	public final fun plansDisplayed ()V
 	public final fun plansNotDisplayed ()V
-}
-
-public final class me/proton/core/test/android/robots/reports/BugReportRobot : me/proton/core/test/android/robots/CoreRobot {
-	public fun <init> ()V
-	public final fun description (Ljava/lang/String;)Lme/proton/core/test/android/robots/reports/BugReportRobot;
-	public final fun keepWriting ()Lme/proton/core/test/android/robots/reports/BugReportRobot;
-	public final fun subject (Ljava/lang/String;)Lme/proton/core/test/android/robots/reports/BugReportRobot;
-	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/reports/BugReportRobot$Verify;
-}
-
-public final class me/proton/core/test/android/robots/reports/BugReportRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
-	public fun <init> ()V
-	public final fun bugReportFormIsEditable ()V
-	public final fun bugReportIsSending ()V
-	public final fun descriptionFieldHasError (II[Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun descriptionLength (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun subjectFieldHasError (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
-	public final fun subjectLength (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/robots/settings/PasswordManagementRobot : me/proton/core/test/android/robots/CoreRobot {

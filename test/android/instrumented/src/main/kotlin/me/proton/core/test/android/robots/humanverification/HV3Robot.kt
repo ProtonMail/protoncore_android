@@ -38,9 +38,9 @@ import me.proton.core.humanverification.domain.entity.TokenType.EMAIL
 import me.proton.core.humanverification.domain.entity.TokenType.SMS
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.test.android.robots.CoreVerify
+import me.proton.core.test.android.robots.WithUiDevice
 
 private const val GET_VERIFICATION_CODE = "Get verification code"
-private const val LOADING_TIMEOUT_MS = 30_000L
 
 internal class HV3Robot : BaseHVRobot(), WithUiDevice {
     override fun help(): BaseHVRobot = clickElement<HV3Robot>(R.id.menu_help, TextView::class.java)
@@ -202,15 +202,5 @@ internal class HV3CodeRobot : BaseHVCodeRobot(), WithUiDevice {
         override fun incorrectCode() {
             hasObject(By.textContains("Invalid verification code")).waitForIt()
         }
-    }
-}
-
-private interface WithUiDevice {
-    val uiDevice: UiDevice get() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-
-    fun <T : Any> SearchCondition<T>.waitForIt(): T {
-        val result = uiDevice.wait(this, LOADING_TIMEOUT_MS)
-        check(result != null) { "Could not find a UI object." }
-        return result
     }
 }

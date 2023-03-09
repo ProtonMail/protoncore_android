@@ -125,6 +125,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:human-verification-data              |
 | me.proton.core:human-verification-domain            |
 | me.proton.core:human-verification-presentation      |
+| me.proton.core:human-verification-test              |
 | me.proton.core:key                                  |
 | me.proton.core:key-dagger                           |
 | me.proton.core:key-data                             |
@@ -165,6 +166,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:payment-iap-data                     |
 | me.proton.core:payment-iap-domain                   |
 | me.proton.core:payment-iap-presentation             |
+| me.proton.core:payment-iap-test                     |
 | me.proton.core:plan                                 |
 | me.proton.core:plan-dagger                          |
 | me.proton.core:plan-data                            |

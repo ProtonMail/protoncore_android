@@ -36,6 +36,7 @@ dependencies {
 
     implementation(
         project(Module.androidInstrumentedTest),
+        project(Module.humanVerificationTest),
         project(Module.authPresentation),
         fusion,
         `kotlin-test`,

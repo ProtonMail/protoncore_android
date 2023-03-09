@@ -29,7 +29,7 @@ import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.util.kotlin.random
 import org.junit.Test

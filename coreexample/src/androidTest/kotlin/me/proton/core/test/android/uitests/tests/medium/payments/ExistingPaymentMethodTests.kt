@@ -25,7 +25,7 @@ import me.proton.core.test.quark.data.Card
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot.PaymentMethodElement.paymentMethod
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.After
 import org.junit.Before

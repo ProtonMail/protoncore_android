@@ -29,6 +29,7 @@ import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
+import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
@@ -36,7 +37,6 @@ import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
-import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.HttpUrl

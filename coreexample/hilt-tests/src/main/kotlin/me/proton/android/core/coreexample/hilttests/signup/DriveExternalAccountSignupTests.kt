@@ -28,7 +28,7 @@ import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.test.signup.BaseExternalAccountSignupTests
+import me.proton.core.auth.test.BaseExternalAccountSignupTests
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider

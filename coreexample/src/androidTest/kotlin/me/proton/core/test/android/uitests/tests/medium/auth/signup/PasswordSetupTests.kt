@@ -22,7 +22,7 @@ import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.PasswordSetupRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.util.kotlin.random
 import org.junit.Before

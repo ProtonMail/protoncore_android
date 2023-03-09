@@ -1,0 +1,23 @@
+public final class me/proton/core/paymentiap/test/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/test/robot/GoogleIAPRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
+	public fun <init> ()V
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/paymentiap/test/robot/GoogleIAPRobot$Verify;
+}
+
+public final class me/proton/core/paymentiap/test/robot/GoogleIAPRobot$Verify : me/proton/core/test/android/robots/payments/PaymentRobot$Verify {
+	public fun <init> ()V
+	public final fun googleIAPElementsDisplayed ()V
+	public final fun nextPaymentProviderButtonIsNotVisible ()V
+	public final fun payWithCardButtonIsNotVisible ()V
+	public final fun payWithCardButtonIsVisible ()V
+	public final fun payWithGoogleButtonIsClickable ()V
+	public final fun switchPaymentProviderButtonIsNotVisible ()V
+	public final fun switchPaymentProviderButtonIsVisible ()V
+}
+

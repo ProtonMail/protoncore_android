@@ -24,7 +24,7 @@ import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.After
 import org.junit.Test

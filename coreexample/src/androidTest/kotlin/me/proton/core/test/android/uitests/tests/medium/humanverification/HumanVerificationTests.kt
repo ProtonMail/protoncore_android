@@ -20,7 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.humanverification
 
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test

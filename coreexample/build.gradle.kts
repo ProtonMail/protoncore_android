@@ -258,6 +258,7 @@ dependencies {
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
+        project(Module.paymentIapTest),
         project(Module.quark),
         `android-test-runner`,
         `hilt-android-testing`,

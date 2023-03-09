@@ -140,6 +140,7 @@ public object Module {
     public const val paymentIapData: String = "$paymentIap:payment-iap-data"
     public const val paymentIapDomain: String = "$paymentIap:payment-iap-domain"
     public const val paymentIapPresentation: String = "$paymentIap:payment-iap-presentation"
+    public const val paymentIapTest: String = "$paymentIap:payment-iap-test"
 
     // Countries
     public const val country: String = ":country"
@@ -162,6 +163,7 @@ public object Module {
     public const val humanVerificationDomain: String = "$humanVerification:human-verification-domain"
     public const val humanVerificationPresentation: String = "$humanVerification:human-verification-presentation"
     public const val humanVerificationData: String = "$humanVerification:human-verification-data"
+    public const val humanVerificationTest: String = "$humanVerification:human-verification-test"
 
     // Mail Message
     public const val mailMessage: String = ":mail-message"

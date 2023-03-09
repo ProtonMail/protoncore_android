@@ -27,6 +27,7 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.ui.StartPlanChooser
 import me.proton.core.plan.presentation.ui.UpgradeActivity
@@ -38,7 +39,6 @@ import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
-import me.proton.core.test.android.robots.payments.GoogleIAPRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.mockuitests.MockTestRule
@@ -177,7 +177,7 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
             .apply { verify { addCreditCardElementsDisplayed() } }
             .switchPaymentProvider<GoogleIAPRobot>()
-            .apply { verify { googleIAPElementsDisplayed() } }
+            .apply { verify<GoogleIAPRobot.Verify> { googleIAPElementsDisplayed() } }
             .switchPaymentProvider<AddCreditCardRobot>()
             .apply { verify { addCreditCardElementsDisplayed() } }
             .back<SelectPlanRobot>()

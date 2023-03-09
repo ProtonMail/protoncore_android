@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests
+package me.proton.core.test.android.uitests.robot
 
 import android.view.ViewGroup
 import android.widget.Button
@@ -34,11 +34,9 @@ import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
-import me.proton.core.test.android.robots.auth.signup.SignupRobot
 import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
-import me.proton.core.test.android.robots.reports.BugReportRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 

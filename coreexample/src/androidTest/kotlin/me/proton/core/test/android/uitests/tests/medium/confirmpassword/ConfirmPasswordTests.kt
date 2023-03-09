@@ -19,7 +19,7 @@
 package me.proton.core.test.android.uitests.tests.medium.confirmpassword
 
 import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Before

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.test.signup
+package me.proton.core.auth.test
 
 import kotlinx.coroutines.runBlocking
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders

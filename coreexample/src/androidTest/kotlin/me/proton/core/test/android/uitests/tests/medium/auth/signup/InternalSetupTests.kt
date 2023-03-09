@@ -20,7 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.util.kotlin.random
 import org.junit.Before

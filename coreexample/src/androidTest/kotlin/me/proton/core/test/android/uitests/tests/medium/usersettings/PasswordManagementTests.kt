@@ -23,7 +23,7 @@ import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.util.kotlin.random

@@ -21,8 +21,8 @@ package me.proton.core.test.android.uitests.tests.medium.reports
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.presentation.R
 import me.proton.core.test.android.instrumented.ui.espresso.OnView
-import me.proton.core.test.android.robots.reports.BugReportRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.BugReportRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Test

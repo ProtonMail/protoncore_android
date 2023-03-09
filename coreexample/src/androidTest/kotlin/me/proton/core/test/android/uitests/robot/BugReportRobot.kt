@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.reports
+package me.proton.core.test.android.uitests.robot
 
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes

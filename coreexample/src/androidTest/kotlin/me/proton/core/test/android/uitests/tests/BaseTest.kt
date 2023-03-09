@@ -32,7 +32,7 @@ import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
 import me.proton.core.test.quark.data.User.Users
 import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User

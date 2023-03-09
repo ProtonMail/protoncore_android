@@ -24,6 +24,7 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
@@ -31,8 +32,7 @@ import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.mockuitests.MockTestRule
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
-import me.proton.core.test.android.robots.payments.GoogleIAPRobot
-import me.proton.core.test.android.uitests.CoreexampleRobot
+import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.quark.data.Card
 import okhttp3.HttpUrl
 import org.junit.Rule
