@@ -11,6 +11,19 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.15.0] - 2023-03-09
+
+### Chores
+
+- account-manager:
+  - More extensive logging for token refresh.
+- network:
+  - More extensive logging for token refresh.
+
+### Features
+
+- Remove Proton Account Sign Up switch for VPN.
+
 ## [9.14.0] - 2023-03-08
 
 ### Chores
