@@ -27,6 +27,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
+import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
@@ -69,7 +70,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, Product.Vpn)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -98,7 +99,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             )
         )
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, Product.Vpn)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -116,7 +117,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, Product.Vpn)
         viewModel.state.test {
             // WHEN
             viewModel.checkExternalEmail(testEmail)
@@ -138,7 +139,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         coEvery { userRepository.checkExternalEmailAvailable(any()) } returns Unit
 
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, Product.Vpn)
         viewModel.checkExternalEmail("username@email.text").join()
 
         // THEN
@@ -152,5 +153,21 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         assertEquals(HttpApiStatus.http2xx, fetchDomainsEventSlot.captured.Labels.status)
         assertEquals(HttpApiStatus.http2xx, usernameAvailabilityEventSlot.captured.Labels.status)
+    }
+
+    @Test
+    fun `allowInternalAccount is false for VPN`() = coroutinesTest {
+        // GIVEN
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, Product.Vpn)
+        // THEN
+        assertEquals(expected = false, actual = viewModel.allowInternalAccount)
+    }
+
+    @Test
+    fun `allowInternalAccount is true for Drive`() = coroutinesTest {
+        // GIVEN
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, Product.Drive)
+        // THEN
+        assertEquals(expected = true, actual = viewModel.allowInternalAccount)
     }
 }

@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.domain.entity.Product
 import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
@@ -37,7 +38,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ChooseExternalEmailViewModel @Inject constructor(
-    private val accountAvailability: AccountAvailability
+    private val accountAvailability: AccountAvailability,
+    private val product: Product
 ) : ProtonViewModel() {
 
     // See CP-5335.
@@ -47,6 +49,8 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
 
     private val mutableState = MutableStateFlow<State>(State.Idle)
     val state = mutableState.asStateFlow()
+
+    val allowInternalAccount = product != Product.Vpn
 
     sealed class State {
         object Idle : State()

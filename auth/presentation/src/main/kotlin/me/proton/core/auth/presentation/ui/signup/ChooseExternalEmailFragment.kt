@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -81,6 +82,10 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
             nextButton.onClick(::onNextClicked)
             switchButton.onClick(::onSwitchClicked)
+
+            switchButton.isVisible = viewModel.allowInternalAccount
+            separatorView.isVisible = viewModel.allowInternalAccount
+            footnoteText.isVisible = viewModel.allowInternalAccount
         }
 
         viewModel.state
