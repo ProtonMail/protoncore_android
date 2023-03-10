@@ -626,14 +626,14 @@ class GOpenPGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         unlockedKey: Unarmored
     ): ByteArray = runCatching {
-        decryptMessage(message, unlockedKey) { it.binary }
+        decryptMessage(message, unlockedKey) { it.getBinaryOrEmpty() }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptData(
         data: DataPacket,
         sessionKey: SessionKey
     ): ByteArray = runCatching {
-        decryptDataSessionKey(data, sessionKey).binary
+        decryptDataSessionKey(data, sessionKey).getBinaryOrEmpty()
     }.getOrElse { throw CryptoException("Data cannot be decrypted.", it) }
 
     override fun decryptFile(
@@ -686,7 +686,7 @@ class GOpenPGPCrypto : PGPCrypto {
     ): DecryptedData = runCatching {
         decryptAndVerifyMessage(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
             DecryptedData(
-                it.message.binary,
+                it.message.getBinaryOrEmpty(),
                 it.signatureVerificationError.toVerificationStatus()
             )
         }
@@ -700,7 +700,7 @@ class GOpenPGPCrypto : PGPCrypto {
     ): DecryptedData = runCatching {
         decryptAndVerifyDataSessionKey(data, sessionKey, publicKeys, time.toUtcSeconds()).let {
             DecryptedData(
-                it.message.binary,
+                it.message.getBinaryOrEmpty(),
                 it.signatureVerificationError.toVerificationStatus()
             )
         }
@@ -1027,6 +1027,13 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun String.trimLinesEndIf(
         predicate: () -> Boolean
     ): String = if (predicate.invoke()) trimLinesEnd() else this
+
+
+    /**
+     * When gopenpgp decrypts an empty message, getBinary() will return null.
+     * We map the null value to an empty ByteArray()
+     */
+    private fun PlainMessage.getBinaryOrEmpty(): ByteArray = binary ?: ByteArray(0)
 
     companion object {
         // 32K is usually not far from the optimal buffer size on Android devices.
