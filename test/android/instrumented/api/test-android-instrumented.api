@@ -615,6 +615,7 @@ public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot : me
 
 public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
+	public final fun formElementsDisplayed ()V
 }
 
 public final class me/proton/core/test/android/robots/auth/signup/ChooseExternalEmailRobot : me/proton/core/test/android/robots/CoreRobot {

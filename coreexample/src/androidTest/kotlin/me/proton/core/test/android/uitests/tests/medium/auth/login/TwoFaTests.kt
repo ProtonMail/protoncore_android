@@ -62,6 +62,7 @@ class TwoFaTests : BaseTest() {
     @Test
     fun backToLogin() {
         twoFaRobot
+            .apply { verify { formElementsDisplayed() } }
             .back<LoginRobot>()
             .verify { loginElementsDisplayed() }
     }

@@ -46,7 +46,13 @@ class TwoFaRobot : CoreRobot() {
      */
     inline fun <reified T> authenticate(): T = clickElement(R.id.authenticateButton)
 
-    class Verify : CoreVerify()
+    class Verify : CoreVerify() {
+        fun formElementsDisplayed() {
+            view.withId(R.id.authenticateButton).checkDisplayed()
+            view.withId(R.id.recoveryCodeButton).checkDisplayed()
+            view.withId(R.id.secondFactorInput).checkDisplayed()
+        }
+    }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }
