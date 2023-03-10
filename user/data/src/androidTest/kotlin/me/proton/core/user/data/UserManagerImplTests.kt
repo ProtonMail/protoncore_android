@@ -34,6 +34,7 @@ import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -108,6 +109,7 @@ class UserManagerImplTests {
     private lateinit var userManager: UserManager
 
     private val product = Product.Mail
+    private val validateServerProof = ValidateServerProof()
 
     @Before
     fun setup() {
@@ -126,10 +128,10 @@ class UserManagerImplTests {
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
         keySaltRepository = KeySaltRepositoryImpl(db, apiProvider, scopeProvider)
-        privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)
+        privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider, validateServerProof)
 
         // UserRepositoryImpl implements PassphraseRepository.
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, scopeProvider)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, validateServerProof, scopeProvider)
         passphraseRepository = userRepository
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(

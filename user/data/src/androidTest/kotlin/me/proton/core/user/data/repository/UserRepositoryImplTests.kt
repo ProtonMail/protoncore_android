@@ -35,6 +35,7 @@ import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -93,6 +94,7 @@ class UserRepositoryImplTests {
     private lateinit var userRepository: UserRepository
 
     private val product = Product.Mail
+    private val validateServerProof = ValidateServerProof()
 
     private val testSrpProofs = SrpProofs(
         clientEphemeral = "test-client-ephemeral",
@@ -115,7 +117,7 @@ class UserRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, scopeProvider)
+        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, validateServerProof, scopeProvider)
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
