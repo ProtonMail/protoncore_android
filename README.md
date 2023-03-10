@@ -89,6 +89,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:auth-data                            |
 | me.proton.core:auth-domain                          |
 | me.proton.core:auth-presentation                    |
+| me.proton.core:auth-test                            |
 | me.proton.core:contact                              |
 | me.proton.core:contact-data                         |
 | me.proton.core:contact-domain                       |

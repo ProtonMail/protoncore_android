@@ -1,0 +1,77 @@
+public final class me/proton/core/auth/test/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/auth/test/login/BaseUsernameAccountLoginTests {
+	public abstract fun getInternalUsers ()Lme/proton/core/test/quark/data/User$Users;
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getVpnUsers ()Lme/proton/core/test/quark/data/User$Users;
+	public abstract fun loginWithFreeInternalAccount ()V
+	public abstract fun loginWithVpnUsernameAccount ()V
+	public abstract fun prepare ()V
+	public abstract fun verifySuccessfulLogin ()V
+}
+
+public final class me/proton/core/auth/test/login/BaseUsernameAccountLoginTests$DefaultImpls {
+	public static fun loginWithFreeInternalAccount (Lme/proton/core/auth/test/login/BaseUsernameAccountLoginTests;)V
+	public static fun loginWithVpnUsernameAccount (Lme/proton/core/auth/test/login/BaseUsernameAccountLoginTests;)V
+	public static fun prepare (Lme/proton/core/auth/test/login/BaseUsernameAccountLoginTests;)V
+}
+
+public final class me/proton/core/auth/test/robot/AddAccountRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/AddAccountRobot;
+	public final fun goToLogin ()Lme/proton/core/auth/test/robot/LoginRobot;
+	public final fun uiElementsDisplayed ()V
+}
+
+public final class me/proton/core/auth/test/robot/LoginRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/LoginRobot;
+	public final fun fillPassword (Ljava/lang/String;)Lme/proton/core/auth/test/robot/LoginRobot;
+	public final fun fillUsername (Ljava/lang/String;)Lme/proton/core/auth/test/robot/LoginRobot;
+	public final fun login ()V
+}
+
+public final class me/proton/core/auth/test/robot/TwoPassRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/TwoPassRobot;
+	public final fun fillMailboxPassword (Ljava/lang/String;)Lme/proton/core/auth/test/robot/TwoPassRobot;
+	public final fun unlock ()V
+}
+
+public abstract interface class me/proton/core/auth/test/signup/BaseExternalAccountSignupTests {
+	public abstract fun externalSignupNotSupported ()V
+	public abstract fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public abstract fun getGetAvailablePaymentProviders ()Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getTestUser ()Lme/proton/core/test/quark/data/User;
+	public abstract fun happyPath ()V
+	public abstract fun incorrectEmailVerificationCode ()V
+	public abstract fun setTestUser (Lme/proton/core/test/quark/data/User;)V
+	public abstract fun setUp ()V
+	public abstract fun switchToInternalAndBack ()V
+}
+
+public final class me/proton/core/auth/test/signup/BaseExternalAccountSignupTests$DefaultImpls {
+	public static fun externalSignupNotSupported (Lme/proton/core/auth/test/signup/BaseExternalAccountSignupTests;)V
+	public static fun happyPath (Lme/proton/core/auth/test/signup/BaseExternalAccountSignupTests;)V
+	public static fun incorrectEmailVerificationCode (Lme/proton/core/auth/test/signup/BaseExternalAccountSignupTests;)V
+	public static fun setUp (Lme/proton/core/auth/test/signup/BaseExternalAccountSignupTests;)V
+	public static fun switchToInternalAndBack (Lme/proton/core/auth/test/signup/BaseExternalAccountSignupTests;)V
+}
+
+public abstract interface class me/proton/core/auth/test/signup/BaseUsernameAccountSignupTests {
+	public abstract fun getGetAvailablePaymentProviders ()Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getVpnUsers ()Lme/proton/core/test/quark/data/User$Users;
+	public abstract fun happyPath ()V
+	public abstract fun prepare ()V
+	public abstract fun verifySuccessfulSignup ()V
+}
+
+public final class me/proton/core/auth/test/signup/BaseUsernameAccountSignupTests$DefaultImpls {
+	public static fun happyPath (Lme/proton/core/auth/test/signup/BaseUsernameAccountSignupTests;)V
+	public static fun prepare (Lme/proton/core/auth/test/signup/BaseUsernameAccountSignupTests;)V
+}
+

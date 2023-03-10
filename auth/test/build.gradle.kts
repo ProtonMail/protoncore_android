@@ -23,7 +23,7 @@ plugins {
     protonAndroidLibrary
 }
 
-publishOption.shouldBePublishedAsLib = false
+publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.auth.test"
