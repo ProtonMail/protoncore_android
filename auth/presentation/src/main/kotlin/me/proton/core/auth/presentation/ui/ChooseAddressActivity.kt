@@ -21,6 +21,8 @@ package me.proton.core.auth.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -29,14 +31,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
-import me.proton.core.auth.presentation.entity.CreateAddressInput
 import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
-import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.*
+import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.ChooseAddressState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -55,8 +57,6 @@ import me.proton.core.util.kotlin.exhaustive
  *
  * This is the first scree of the flow, which should help the user choose an available username (who's availability is
  * checks with the API.
- *
- * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
 class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(ActivityChooseAddressBinding::inflate) {
@@ -65,9 +65,9 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
-    private val startForResult = registerForActivityResult(StartCreateAddress()) { result ->
-        if (result != null) {
-            onCreateAddressResult(result)
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            stopWorkflow()
         }
     }
 
@@ -76,28 +76,44 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
         binding.apply {
             toolbar.setNavigationOnClickListener {
-                onBackPressed()
+                stopWorkflow()
             }
+            cancelButton.onClick { stopWorkflow() }
             nextButton.onClick(::onNextClicked)
-            subtitleText.text = String.format(getString(R.string.auth_create_address_subtitle, input.recoveryEmail))
+            subtitleText.text = String.format(
+                getString(R.string.auth_create_address_subtitle),
+                input.recoveryEmail,
+                input.recoveryEmail
+            )
         }
 
         viewModel.setUserId(UserId(input.userId))
-        viewModel.state
+        viewModel.chooseAddressState
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is State.Idle -> showLoading(false)
-                    is State.Processing -> showLoading(true)
-                    is State.Success -> onUsernameAvailable(it.username, it.domain)
-                    is State.Data -> onData(it.username, it.domains)
-                    is State.Error.Message -> showError(it.error.getUserMessage(resources))
-                    is State.Error.DomainsNotAvailable -> showError(getString(R.string.auth_create_address_error_no_available_domain))
+                    is ChooseAddressState.Idle -> showLoading(false)
+                    is ChooseAddressState.Processing -> showLoading(true)
+                    is ChooseAddressState.Data.Domains -> onDomains(it.domains)
+                    is ChooseAddressState.Data.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
+                    is ChooseAddressState.AccountSetupResult -> onAccountSetupResult(it.result)
+                    is ChooseAddressState.Error.Message -> showError(it.error.getUserMessage(resources))
+                    is ChooseAddressState.Error.DomainsNotAvailable -> {
+                        showError(getString(R.string.auth_create_address_error_no_available_domain))
+                    }
+                    is ChooseAddressState.Error.UsernameNotAvailable -> onUsernameUnAvailable()
                 }.exhaustive
-            }.launchIn(lifecycleScope)
+            }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun stopWorkflow() {
+        viewModel.stopChooseAddressWorkflow(UserId(input.userId)).invokeOnCompletion { finish() }
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {
@@ -108,50 +124,92 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
         }
     }
 
-    override fun onBackPressed() {
-        viewModel.stopChooseAddressWorkflow(UserId(input.userId))
-            .invokeOnCompletion { finish() }
-    }
-
     private fun onNextClicked() {
-        with(binding.usernameInput) {
+        with(binding) {
             hideKeyboard()
-            validateUsername()
-                .onFailure { setInputError() }
-                .onSuccess { viewModel.checkUsername(it, suffixText.toString().replace("@", "")) }
+            usernameInput.validateUsername()
+                .onFailure { usernameInput.setInputError() }
+                .onSuccess { viewModel.checkUsername(it, domainInput.text.toString().replace("@", "")) }
         }
     }
 
-    private fun onData(username: String?, domains: List<Domain>) {
-        with(binding.usernameInput) {
-            suffixText = "@${domains.first()}"
-            text = username
-            isEnabled = username == null
-        }
-        binding.nextButton.isEnabled = true
+    private fun onDomains(domains: List<Domain>) {
         showLoading(false)
+        with(binding) {
+            nextButton.isEnabled = true
+            cancelButton.isEnabled = true
+            domainInput.isEnabled = true
+
+            if (domains.count() == 1) {
+                usernameInput.setOnDoneActionListener { onNextClicked() }
+            }
+
+            domainInput.apply {
+                val items = domains.map { "@$it" }
+                text = items.firstOrNull()
+                setAdapter(ArrayAdapter(context, R.layout.list_item_domain, R.id.title, items))
+            }
+        }
+    }
+
+    private fun onUsernameUnAvailable() {
+        showError(getString(R.string.auth_create_address_error_username_unavailable))
+        with(binding.usernameInput) {
+            setInputError()
+            isEnabled = true
+        }
     }
 
     private fun onUsernameAvailable(username: String, domain: String) {
-        with(binding.nextButton) {
-            setIdle()
+        with(binding.usernameInput) {
+            text = username
             isEnabled = true
         }
-        startForResult.launch(
-            CreateAddressInput(input.userId, input.password, username, domain, input.recoveryEmail)
-        )
+        binding.subtitleText.text =
+            String.format(getString(R.string.auth_create_address_subtitle), input.recoveryEmail, input.recoveryEmail)
+        binding.nextButton.isEnabled = true
+        showLoading(false)
+        // TODO: upgrade to PA
+//        viewModel.upgradeToProtonAccount(UserId(input.userId), input.password, username, domain)
+//        startForResult.launch(
+//            CreateAddressInput(input.userId, input.password, username, domain, input.recoveryEmail)
+//        )
     }
 
-    private fun onUsernameUnavailable(message: String? = null) {
-        binding.usernameInput.setInputError()
-        showError(message)
-    }
-
+    // TODO: use this after the actual EA -> PA conversion is done.
     private fun onCreateAddressResult(createAddressResult: CreateAddressResult) {
         val result = when (createAddressResult) {
             CreateAddressResult.Success -> ChooseAddressResult.Success(input.userId)
             is CreateAddressResult.UserCheckError -> ChooseAddressResult.UserCheckError(createAddressResult.message)
         }
+        val intent = Intent().putExtra(ARG_RESULT, result)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
+        when (result) {
+            is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckError(result.error)
+
+            is PostLoginAccountSetup.Result.Need.ChangePassword,
+            is PostLoginAccountSetup.Result.Need.ChooseUsername,
+            is PostLoginAccountSetup.Result.Need.SecondFactor,
+            is PostLoginAccountSetup.Result.Need.TwoPassMode,
+            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess()
+        }
+    }
+
+    private fun onSuccess() {
+        setResultAndFinish(CreateAddressResult.Success)
+    }
+
+    private fun onUserCheckError(error: PostLoginAccountSetup.UserCheckResult.Error) {
+        onUserCheckFailed(error, useToast = true)
+        setResultAndFinish(CreateAddressResult.UserCheckError(error.localizedMessage))
+    }
+
+    private fun setResultAndFinish(result: CreateAddressResult) {
         val intent = Intent().putExtra(ARG_RESULT, result)
         setResult(Activity.RESULT_OK, intent)
         finish()

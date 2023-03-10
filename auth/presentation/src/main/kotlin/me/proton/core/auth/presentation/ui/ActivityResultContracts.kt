@@ -105,19 +105,6 @@ class StartChooseAddress : ActivityResultContract<ChooseAddressInput, ChooseAddr
     }
 }
 
-class StartCreateAddress : ActivityResultContract<CreateAddressInput, CreateAddressResult?>() {
-
-    override fun createIntent(context: Context, input: CreateAddressInput) =
-        Intent(context, CreateAddressActivity::class.java).apply {
-            putExtra(CreateAddressActivity.ARG_INPUT, input)
-        }
-
-    override fun parseResult(resultCode: Int, result: Intent?): CreateAddressResult? {
-        if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(CreateAddressActivity.ARG_RESULT)
-    }
-}
-
 // region signup
 class StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
 

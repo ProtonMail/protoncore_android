@@ -45,34 +45,61 @@
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/AuthContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/titleText"
                 style="@style/ProtonTextView.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/auth_create_address_title" />
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:text="@string/auth_create_address_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/subtitleText"
                 style="@style/ProtonTextView.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:layout_marginTop="@dimen/auth_subtitle_top_margin"
-                android:text="@string/auth_create_address_subtitle" />
+                android:gravity="start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleText" />
 
-            <me.proton.core.presentation.ui.view.ProtonInput
+            <me.proton.core.challenge.presentation.ProtonMetadataInput
                 android:id="@+id/usernameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/auth_content_top_margin"
+                android:layout_marginTop="@dimen/gap_large_plus"
                 android:enabled="false"
                 android:inputType="text|textNoSuggestions"
-                app:label="@string/auth_username" />
+                app:label="@string/auth_username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/subtitleText" />
+
+            <!-- Workaround: descendantFocusability="blocksDescendants" -->
+            <!-- See: https://issuetracker.google.com/issues/209938896 -->
+            <me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
+                android:id="@+id/domainInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large"
+                android:descendantFocusability="blocksDescendants"
+                android:inputType="none"
+                android:enabled="false"
+                app:label="@string/auth_signup_domain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/usernameInput" />
 
             <me.proton.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/nextButton"
@@ -80,7 +107,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_content_separator_top_margin"
                 android:enabled="false"
-                android:text="@string/auth_username_next_action" />
-        </LinearLayout>
+                android:text="@string/auth_username_next_action"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/domainInput" />
+
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/cancelButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_medium"
+                android:text="@string/presentation_alert_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nextButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
