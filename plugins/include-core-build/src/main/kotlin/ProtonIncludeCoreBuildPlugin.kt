@@ -29,17 +29,17 @@ abstract class ProtonIncludeCoreBuildPlugin : Plugin<Settings> {
     override fun apply(target: Settings) {
         // Configuration from Client.
         val config = target.createExtension() as DefaultProtonIncludeCoreBuildExtension
-        // Configuration from CI.
-        val isCI = System.getenv("CI").toBoolean()
+        // Configuration from GitLab CI.
         val host = System.getenv("CI_SERVER_HOST")
         val token = System.getenv("CI_JOB_TOKEN")
+        val hasHostToken = host != null && token != null
         val commitSha = System.getenv("CORE_COMMIT_SHA")
         val parentPath = target.rootDir.parentFile.absolutePath
         val metaProperties = File("$parentPath/${metaProperties}")
         target.gradle.settingsEvaluated {
             val protonLibsUri = when {
                 config.uri.isPresent -> config.uri.get()
-                isCI -> "https://gitlab-ci-token:$token@$host/proton/mobile/android/proton-libs.git"
+                hasHostToken -> "https://gitlab-ci-token:$token@$host/proton/mobile/android/proton-libs.git"
                 else -> "https://github.com/ProtonMail/protoncore_android.git"
             }
             // Configuration for Core.
