@@ -5,6 +5,31 @@ public final class me/proton/core/auth/test/BuildConfig {
 	public fun <init> ()V
 }
 
+public abstract interface class me/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests {
+	public abstract fun accountWithTwoPasswordMode ()V
+	public abstract fun accountWithUnavailableUsername ()V
+	public abstract fun chooseInternalAddressIsClosed ()V
+	public abstract fun externalAccountWithAddressButNoAddressKey ()V
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getTestUser ()Lme/proton/core/test/quark/data/User;
+	public abstract fun getTestUsername ()Ljava/lang/String;
+	public abstract fun happyPath ()V
+	public abstract fun prepare ()V
+	public abstract fun setTestUser (Lme/proton/core/test/quark/data/User;)V
+	public abstract fun setTestUsername (Ljava/lang/String;)V
+	public abstract fun verifyLoggedOut ()V
+	public abstract fun verifySuccessfulLogin ()V
+}
+
+public final class me/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests$DefaultImpls {
+	public static fun accountWithTwoPasswordMode (Lme/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests;)V
+	public static fun accountWithUnavailableUsername (Lme/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests;)V
+	public static fun chooseInternalAddressIsClosed (Lme/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests;)V
+	public static fun externalAccountWithAddressButNoAddressKey (Lme/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests;)V
+	public static fun happyPath (Lme/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests;)V
+	public static fun prepare (Lme/proton/core/auth/test/login/BaseConvertExternalToInternalAccountTests;)V
+}
+
 public abstract interface class me/proton/core/auth/test/login/BaseUsernameAccountLoginTests {
 	public abstract fun getInternalUsers ()Lme/proton/core/test/quark/data/User$Users;
 	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;

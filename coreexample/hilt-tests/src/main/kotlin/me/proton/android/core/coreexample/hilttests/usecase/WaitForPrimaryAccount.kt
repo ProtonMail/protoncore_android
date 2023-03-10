@@ -27,6 +27,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import javax.inject.Inject
+import kotlin.test.assertNotNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -40,7 +41,12 @@ class WaitForPrimaryAccount @Inject constructor(private val accountManager: Acco
     operator fun invoke(
         state: AccountState? = AccountState.Ready,
         timeout: Duration = ACCOUNT_WAIT_MS.milliseconds
-    ): Account? = runBlocking { waitForAccount(state, timeout) }
+    ): Account = runBlocking {
+        assertNotNull(
+            waitForAccount(state, timeout),
+            "Could not obtain the primary account (after waiting for $timeout)."
+        )
+    }
 
     private suspend fun waitForAccount(
         state: AccountState?,

@@ -39,7 +39,6 @@ import me.proton.core.test.quark.data.User
 import org.junit.Rule
 import javax.inject.Inject
 import kotlin.test.BeforeTest
-import kotlin.test.assertNotNull
 
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
@@ -76,7 +75,6 @@ class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(M
     }
 
     override fun verifySuccessfulLogin() {
-        val account = waitForPrimaryAccount()
-        assertNotNull(account)
+        waitForPrimaryAccount()
     }
 }

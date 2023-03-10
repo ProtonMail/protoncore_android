@@ -58,6 +58,8 @@ android {
 }
 
 dependencies {
+    androidTestUtil(`androidx-test-orchestrator`)
+
     coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(

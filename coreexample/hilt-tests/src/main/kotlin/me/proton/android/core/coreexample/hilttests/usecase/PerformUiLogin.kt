@@ -41,8 +41,7 @@ class PerformUiLogin @Inject constructor(private val waitForPrimaryAccount: Wait
                 .unlock<CoreRobot>()
         }
 
-        val account = waitForPrimaryAccount()
-        assertNotNull(account)
+        val account = waitForPrimaryAccount(state = AccountState.Ready)
         assertEquals(AccountState.Ready, account.state)
         return account
     }
