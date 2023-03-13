@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">帮助</string>
   <string name="human_verification_title">人机验证</string>
-  <string name="human_verification_main_subtitle">为防止滥用，请选择一种方式完成人机验证</string>
+  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
   <string name="human_verification_enter_code_subtitle">请输入发送到 %s 的验证码。</string>
   <string name="human_verification_enter_code_subtitle_email">请输入发送到 %s 的验证码。如果您在收件箱中找不到该电子邮件，请检查垃圾邮件文件夹。</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">请输入您已有的验证码：</string>

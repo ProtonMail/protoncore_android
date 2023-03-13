@@ -25,7 +25,7 @@
   <string name="plan_price_monthly">por mes</string>
   <string name="plan_price_annually">por año</string>
   <string name="plans_current_plan">Plan actual</string>
-  <string name="plans_upgrade_plan">Actualiza tu plan</string>
+  <string name="plans_upgrade_plan">Mejora tu plan</string>
   <string name="plans_subscription">Suscripción</string>
   <string name="plans_renewal_date">Tu plan se renovará automáticamente el &lt;b&gt;%s&lt;/b&gt;.</string>
   <string name="plans_expiration_date">Tu plan vence el &lt;b&gt;%s&lt;/b&gt;.</string>
@@ -38,7 +38,7 @@
     <item quantity="one">Por %d mes</item>
     <item quantity="other">Por %d meses</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Actualiza tu plan</string>
+  <string name="plans_upgrade_your_plan">Mejora tu plan</string>
   <string name="plans_proton_for_free">Obtén Proton gratis</string>
   <string name="plans_get_proton">Obtén %s</string>
   <string name="plans_manage_your_subscription">Gestiona tu suscripción en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
@@ -128,6 +128,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Correo electrónico seguro con funciones avanzadas para tu día a día.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Tu privacidad y seguridad son nuestra prioridad.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Almacenamiento seguro en la nube que te permite almacenar, sincronizar y compartir archivos de forma fácil y segura.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privacidad y seguridad totales con todos los servicios de Proton combinados.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

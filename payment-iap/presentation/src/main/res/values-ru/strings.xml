@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Включает доплату за дополнительные услуги поставщика услуг и налоги.</string>
+  <string name="payments_iap_surcharge_info">* Включает налоги и дополнительные сборы поставщика услуг.</string>
   <string name="payments_iap_terms_conditions">Нажав кнопку \"Купить с помощью Google Pay\", вы соглашаетесь с условиями Google Pay и соглашаетесь настроить повторяющийся платеж с Google.</string>
   <string name="payments_iap_invalid_google_plan">Выбрано неверное название тарифа. Перезапустите процесс.</string>
   <string name="payments_iap_error_google_plan_price">Проблема с ценой продукта Google. Перезапустите процесс.</string>
   <string name="payments_iap_error_fetching_google_plan">Проблема с загрузкой продукта Google. Перезапустите процесс.</string>
-  <string name="payments_iap_error_already_owned">У вас уже естьэтот продукт. Выберите другой.</string>
+  <string name="payments_iap_error_already_owned">Вы уже приобрели этот продукт. Выберите другой.</string>
   <string name="payments_iap_error_billing_client_unavailable">Платежный клиент Google в данный момент недоступен или отключен.</string>
   <string name="payments_iap_general_error">Произошла ошибка. Пожалуйста, перезапустите процесс.</string>
 </resources>

@@ -156,6 +156,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Zabezpečený e-mail s pokročilými funkcemi pro každodenní komunikaci.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Vaše soukromí a bezpečnost jsou pro nás prioritou.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Bezpečné kloudové úložiště, které vám umožňuje uchovávat, synchronizovat a sdílet soubory jednoduše a bezpečně.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Komplexní ochrana soukromí a zabezpečení se všemi službami Protonu dohromady.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

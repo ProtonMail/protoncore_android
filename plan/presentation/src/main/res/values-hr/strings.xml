@@ -142,6 +142,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

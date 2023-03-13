@@ -23,6 +23,6 @@
   <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
   <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
-  <string name="payments_iap_error_billing_client_unavailable">Το πρόγραμμα-πελάτης χρέωσης Google δεν είναι προς το παρόν διαθέσιμο ή αποσυνδεδεμένο.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Το πρόγραμμα / εργαλείο χρέωσης Google δεν είναι προς το παρόν διαθέσιμο ή αποσυνδεδεμένο.</string>
   <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
 </resources>

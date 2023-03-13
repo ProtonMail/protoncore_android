@@ -62,7 +62,7 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Bekräfta kontouppgradering</string>
-  <string name="payments_giap_unredeemed_description">Din Google Pay-betalning har behandlats, men kontouppgraderingsprocessen avbröts. Tillämpa betalningen för att uppgradera ditt konto nu?</string>
+  <string name="payments_giap_unredeemed_description">Din Google Pay-betalning har behandlats, men kontots uppgraderingsprocess avbröts. Tillämpa betalningen för att uppgradera ditt konto nu?</string>
   <string name="payments_giap_unredeemed_confirm">Bekräfta uppgradering</string>
   <string name="payments_giap_redeem_success">Ditt konto har uppgraderats</string>
   <string name="payments_giap_redeem_error">Det gick inte att slutföra uppgraderingen. Försök igen senare.</string>

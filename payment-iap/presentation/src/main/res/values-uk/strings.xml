@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Включає доплату за додаткові комісії та податки постачальника.</string>
   <string name="payments_iap_terms_conditions">Торкнувшись «Купити через Google Pay», ви погоджуєтеся з умовами користування Google Pay і налаштуванням регулярного платежу з Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Вибрано неправильну назву тарифного плану. Будь ласка, перезапустіть процес.</string>
   <string name="payments_iap_error_google_plan_price">Проблема з ціною продукту в Google. Будь ласка, перезапустіть процес.</string>
   <string name="payments_iap_error_fetching_google_plan">Проблема з отриманням продукту Google. Будь ласка, перезапустіть процес.</string>
   <string name="payments_iap_error_already_owned">Ви вже придбали цей продукт. Будь ласка, виберіть інший.</string>

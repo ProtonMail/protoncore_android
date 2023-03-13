@@ -47,7 +47,7 @@
   <string name="auth_help_option_forgot_username">Забылі сваё імя карыстальніка</string>
   <string name="auth_help_option_forgot_password">Забылі пароль</string>
   <string name="auth_help_option_other">Іншыя праблемы ўваходу</string>
-  <string name="auth_help_other">Усё яшчэ неабходная дапамога? Звяжыцеся з намі наўпрост.</string>
+  <string name="auth_help_other">Усё яшчэ неабходна дапамога? Звяжыцеся з намі наўпрост.</string>
   <string name="auth_help_option_customer_support">Падтрымка кліентаў</string>
   <string name="auth_2fa_title">Двухфактарная аўтэнтыфікацыя</string>
   <string name="auth_2fa_label">Двухфактарны код</string>

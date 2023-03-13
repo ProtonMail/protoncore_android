@@ -57,7 +57,7 @@
   <string name="auth_2fa_action">Autentica</string>
   <string name="auth_2fa_use_recovery_code">Utilizza un codice di recupero</string>
   <string name="auth_2fa_use_2fa_code">Utilizza autenticazione in due passaggi</string>
-  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_2fa_error_empty_code">Inserisci il codice a 6 cifre.</string>
   <string name="auth_mailbox_title">Sblocca la tua casella email</string>
   <string name="auth_mailbox_password_label">Password della casella email</string>
   <string name="auth_mailbox_unlock_action">Sblocca</string>

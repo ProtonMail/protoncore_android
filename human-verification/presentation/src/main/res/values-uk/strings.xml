@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Довідка</string>
   <string name="human_verification_title">Перевірка «Я не робот»</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_main_subtitle">Щоб запобігти зловживанню, підтвердьте, що ви людина, скориставшись одним із запропонованих варіантів</string>
   <string name="human_verification_enter_code_subtitle">Введіть код перевірки, який був надісланий на %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Введіть код перевірки, який було надіслано на %s. Якщо ви не можете знайти електронний лист у вхідних, перевірте теку зі спамом.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Введіть отриманий код перевірки:</string>

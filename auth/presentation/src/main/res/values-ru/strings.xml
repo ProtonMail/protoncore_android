@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
   <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\", вы соглашаетесь с <a href="https://protonmail.com/terms-and-conditions">Условиями</a> Proton</string>
-  <string name="auth_create_address_error_credentials">Поля учетных данных не должны быть пустыми.</string>
+  <string name="auth_create_address_error_credentials">Учетные данные не могут быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
   <string name="auth_create_address_error_signed_key_list">Не удалось сгенерировать список ключей.</string>

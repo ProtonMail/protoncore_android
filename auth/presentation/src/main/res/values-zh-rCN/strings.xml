@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">需要使用 Proton 地址</string>
   <string name="auth_login_external_account_unsupported_message">在 Proton web 设置中获取该账户链接的 Proton 电子邮件地址。</string>
   <string name="auth_login_external_account_unsupported_help_action">了解详情</string>
-  <string name="auth_login_empty_credentials">账号和密码不应为空。</string>
-  <string name="auth_mailbox_empty_credentials">账号和密码不应为空。</string>
+  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_title">创建 Proton Mail 邮箱地址</string>
   <string name="auth_create_address_subtitle">您的 Proton 账户已关联至 %1$s。创建邮箱地址即可使用 Proton Mail。</string>
   <string name="auth_username">用户名</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">创建地址</string>
   <string name="auth_create_address_creating">正在创建地址</string>
   <string name="auth_create_address_terms">点击创建地址即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">服务条款</a>。</string>
-  <string name="auth_create_address_error_credentials">账号和密码不应为空。</string>
+  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">没有可用的域名。</string>
   <string name="auth_create_address_error_private_key">生成私钥失败。</string>
   <string name="auth_create_address_error_signed_key_list">生成密钥列表失败。</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">用户名不能为空。</string>
   <string name="auth_signup_error_passwords_do_not_match">两次输入的密码不一致。</string>
   <string name="auth_signup_validation_password_length">密码长度至少应为 8 个字符。</string>
-  <string name="auth_signup_validation_password">密码不能为空。</string>
+  <string name="auth_signup_validation_password">Password must not be empty.</string>
   <string name="auth_signup_your_account_is_being_setup">正在创建您的账户…</string>
   <string name="auth_signup_please_wait">通常不会超过一分钟。</string>
   <string name="auth_signup_replacement_code">未收到验证码？</string>

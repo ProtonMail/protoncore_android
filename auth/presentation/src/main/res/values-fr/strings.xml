@@ -20,7 +20,7 @@
   <string name="welcome_title">Protégez votre vie privée avec Proton</string>
   <string name="welcome_subtitle">Le chiffrement assure la confidentialité de vos données. Vos données vous appartiennent vraiment.</string>
   <string name="welcome_title_mail">Protégez votre vie privée avec Proton Mail</string>
-  <string name="welcome_subtitle_mail">Une messagerie chiffrée qui préserve la confidentialité de vos conversations. Vos e-mails vous appartiennent vraiment.</string>
+  <string name="welcome_subtitle_mail">Une messagerie chiffrée qui préserve la confidentialité de vos conversations. Vos messages vous appartiennent vraiment.</string>
   <string name="welcome_subtitle_mail_alt">Vie privée. Sécurité. Facilité d\'utilisation. Une messagerie chiffrée qui vous donne le contrôle total de vos données personnelles.</string>
   <string name="welcome_title_drive">Protégez votre vie privée avec Proton Drive</string>
   <string name="welcome_subtitle_drive">Le confort du stockage cloud et la sécurité de la technologie de chiffrement. Enfin une solution de stockage cloud digne de confiance.</string>
@@ -42,7 +42,7 @@
   <string name="auth_sign_in">Se connecter</string>
   <string name="auth_sign_in_action">Se connecter</string>
   <string name="auth_need_help">Besoin d\'aide ?</string>
-  <string name="auth_login_assistive_text">Saisissez votre adresse e-mail ou votre nom d\'utilisateur Proton.</string>
+  <string name="auth_login_assistive_text">Saisissez votre adresse e-mail Proton ou votre nom d\'utilisateur Proton.</string>
   <string name="auth_help_title">Comment pouvons-nous vous aider ?</string>
   <string name="auth_help_option_forgot_username">Nom d\'utilisateur oublié</string>
   <string name="auth_help_option_forgot_password">Mot de passe oublié</string>
@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">Une adresse Proton est nécessaire.</string>
   <string name="auth_login_external_account_unsupported_message">Obtenez une adresse Proton Mail liée à ce compte dans vos paramètres web Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">En savoir plus</string>
-  <string name="auth_login_empty_credentials">Saisissez votre e-mail ou nom d\'utilisateur.</string>
-  <string name="auth_mailbox_empty_credentials">Saisissez votre mot de passe de messagerie.</string>
+  <string name="auth_login_empty_credentials">Les identifiants ne doivent pas être vides.</string>
+  <string name="auth_mailbox_empty_credentials">Les identifiants ne doivent pas être vides.</string>
   <string name="auth_create_address_title">Créer une adresse Proton Mail</string>
   <string name="auth_create_address_subtitle">Votre compte Proton est associé à %1$s. Pour utiliser Proton Mail, veuillez créer une adresse.</string>
   <string name="auth_username">Nom d\'utilisateur</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Créer une adresse</string>
   <string name="auth_create_address_creating">Création de l’adresse</string>
   <string name="auth_create_address_terms">En cliquant sur Créer une adresse, vous acceptez les <a href="https://protonmail.com/terms-and-conditions">conditions générales d\'utilisation</a> de Proton.</string>
-  <string name="auth_create_address_error_credentials">Saisissez un mot de passe.</string>
+  <string name="auth_create_address_error_credentials">Les identifiants ne doivent pas être vides.</string>
   <string name="auth_create_address_error_no_available_domain">Aucun domaine n\'est disponible.</string>
   <string name="auth_create_address_error_private_key">La clé privée n\'a pas pu être générée.</string>
   <string name="auth_create_address_error_signed_key_list">La liste des clés n\'a pas pu être générée.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur ne doit pas être vide.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
-  <string name="auth_signup_validation_password">Confirmez votre mot de passe.</string>
+  <string name="auth_signup_validation_password">Le mot de passe ne doit pas être vide.</string>
   <string name="auth_signup_your_account_is_being_setup">Nous créons votre compte…</string>
   <string name="auth_signup_please_wait">Cela ne prend généralement pas plus d\'une minute.</string>
   <string name="auth_signup_replacement_code">Vous n\'avez pas reçu le code ?</string>

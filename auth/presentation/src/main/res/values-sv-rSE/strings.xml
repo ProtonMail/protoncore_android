@@ -27,7 +27,7 @@
   <string name="welcome_subtitle_drive_alt">Det säkraste sättet att lagra dina filer. Ladda upp, synkronisera och dela med den starkaste krypteringen som finns.</string>
   <string name="welcome_title_calendar">Skydda din integritet med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypterad kalender som håller dina livshändelser privat, skyddad och säker.</string>
-  <string name="welcome_subtitle_calendar_alt">Vår end-to-end-krypterade kalender hjälper dig att hålla ordning, på rätt spår och ha kontroll.</string>
+  <string name="welcome_subtitle_calendar_alt">Vår end-to-end-krypterade kalender hjälper till att hålla dig organiserad, hålla rätt kurs och ha kontroll.</string>
   <string name="welcome_title_vpn">Skydda din integritet med Proton VPN</string>
   <string name="welcome_subtitle_vpn">Schweizisk VPN med hög hastighet som skyddar din integritet genom att kryptera din Internetanslutning.</string>
   <string name="welcome_subtitle_vpn_alt">Höghastighets schweizisk VPN som skyddar din integritet. Maximal säkerhet, 1600+ servrar och inga begränsningar.</string>
@@ -66,8 +66,8 @@
   <string name="auth_login_external_account_unsupported_title">Proton-adress krävs</string>
   <string name="auth_login_external_account_unsupported_message">Skaffa en Proton Mail-adress länkat till detta konto i dina Proton-webbinställningar.</string>
   <string name="auth_login_external_account_unsupported_help_action">Lär dig mer</string>
-  <string name="auth_login_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
-  <string name="auth_mailbox_empty_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
+  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_title">Skapa en Proton Mail-adress</string>
   <string name="auth_create_address_subtitle">Ditt Proton-konto är associerat med %1$s. För att använda Proton Mail, skapa en adress.</string>
   <string name="auth_username">Användarnamn</string>
@@ -79,7 +79,7 @@
   <string name="auth_create_address_create">Skapa adress</string>
   <string name="auth_create_address_creating">Skapar adress</string>
   <string name="auth_create_address_terms">Genom att klicka på ”Skapa adress” godkänner du Protons <a href="https://protonmail.com/terms-and-conditions">användarvillkor.</a></string>
-  <string name="auth_create_address_error_credentials">Autentiseringsuppgifter får inte vara tomma.</string>
+  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">Ingen tillgänglig domän.</string>
   <string name="auth_create_address_error_private_key">Misslyckades att generera privat nyckel.</string>
   <string name="auth_create_address_error_signed_key_list">Misslyckades att generera nyckellista.</string>

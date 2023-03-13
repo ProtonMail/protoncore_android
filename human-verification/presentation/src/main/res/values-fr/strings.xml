@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Aide</string>
   <string name="human_verification_title">Vérification que vous n\'êtes pas un robot</string>
-  <string name="human_verification_main_subtitle">Pour poursuivre, vous devez confirmer que vous n\'êtes pas un robot.</string>
+  <string name="human_verification_main_subtitle">Pour lutter contre les abus, veuillez prouver que vous êtes humain en utilisant l\'une des options suivantes</string>
   <string name="human_verification_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Saisissez le code de vérification qui a été envoyé à %s. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Saisissez le code de vérification que vous avez déjà :</string>

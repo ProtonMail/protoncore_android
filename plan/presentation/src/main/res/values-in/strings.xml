@@ -114,6 +114,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Layanan penyimpanan cloud aman yang memudahkan Anda untuk menyimpan, menyinkronkan, dan membagikan berkas secara aman.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

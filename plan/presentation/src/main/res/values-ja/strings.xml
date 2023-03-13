@@ -114,6 +114,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">毎日の会話のための、高度な機能を備えた安全なメールのプランです。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">あなたのプライバシーとセキュリティは私たちの最優先事項です。</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">包括的なプライバシーとセキュリティを提供する、すべての Proton サービスが利用できるプランです。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

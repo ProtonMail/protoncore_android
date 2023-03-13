@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non défini</string>
   <string name="settings_recovery_email_error_no_match">L’adresse e-mail de récupération et sa confirmation ne correspondent pas.</string>
-  <string name="settings_validation_email">L’adresse e-mail n\'est pas valide.</string>
+  <string name="settings_validation_email">L’adresse e-mail est invalide.</string>
   <string name="settings_general_error">Une erreur s’est produite.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Modifier le mot de passe</string>

@@ -28,7 +28,7 @@
     <item quantity="other">Εισάγετε τουλάχιστον %d χαρακτήρες</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">Κλείσιμο αναφοράς σφάλματος;</string>
-  <string name="core_report_bug_discard_changes_description">Αν φύγετε από αυτήν τη σελίδα, η αναφορά σας δεν θα αποσταλεί.</string>
+  <string name="core_report_bug_discard_changes_description">Αν φύγετε από αυτήν τη σελίδα, η αναφορά σας δε θα αποθηκευτεί.</string>
   <string name="core_report_bug_discard_changes_cancel">Συνέχεια σύνταξης</string>
   <string name="core_report_bug_discard_changes_confirm">Κλείσιμο χωρίς αποθήκευση</string>
   <plurals name="core_report_bug_form_field_too_long">

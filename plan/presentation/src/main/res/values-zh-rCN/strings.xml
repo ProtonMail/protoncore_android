@@ -114,6 +114,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">包含多种高级功能的安全邮箱，充分满足您的日常通讯需求。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隐私和安全是我们的首要任务。</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">各项 Proton 服务深度融合，为您提供全方位的隐私保护。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
