@@ -35,8 +35,19 @@ import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
+import me.proton.core.auth.presentation.observability.toUnlockUserStatus
+import me.proton.core.auth.presentation.observability.toUserCheckStatus
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.LoginEaToIaUnlockUserTotalV1
+import me.proton.core.observability.domain.metrics.LoginEaToIaUserCheckTotalV1
+import me.proton.core.observability.domain.metrics.LoginEaToIaUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.usersettings.domain.usecase.SetupUsername
@@ -48,6 +59,7 @@ import javax.inject.Inject
 class ChooseAddressViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val accountAvailability: AccountAvailability,
+    private val observabilityManager: ObservabilityManager,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val setupUsername: SetupUsername
 ) : ProtonViewModel() {
@@ -77,7 +89,8 @@ class ChooseAddressViewModel @Inject constructor(
 
     fun setUserId(userId: UserId) = flow {
         emit(ChooseAddressState.Processing)
-        val domains = accountAvailability.getDomains()
+        val domains = accountAvailability.getDomains(
+            metricData = { LoginEaToIaFetchDomainsTotalV1(it.toHttpApiStatus()) })
         if (domains.isEmpty()) {
             emit(ChooseAddressState.Error.DomainsNotAvailable)
             return@flow
@@ -128,12 +141,19 @@ class ChooseAddressViewModel @Inject constructor(
             }
     }
 
+    internal fun onScreenView(screenId: LoginScreenViewTotalV1.ScreenId) {
+        observabilityManager.enqueue(LoginScreenViewTotalV1(screenId))
+    }
+
     private suspend fun checkUsername(
         userId: UserId,
         username: String,
         domain: Domain
     ): Result<String> = flow {
-        accountAvailability.checkUsername(userId, "$username@$domain", metricData = null)
+        accountAvailability.checkUsername(
+            userId = userId,
+            username = "$username@$domain",
+            metricData = { LoginEaToIaUsernameAvailabilityTotalV1(it.toHttpApiStatus()) })
         emit(Result.success(username))
     }.catch {
         emit(Result.failure(it))
@@ -159,9 +179,14 @@ class ChooseAddressViewModel @Inject constructor(
             temporaryPassword = false,
             onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
             internalAddressDomain = domain,
-            subscribeMetricData = null,
-            userCheckMetricData = null,
-            unlockUserMetricData = null
+            subscribeMetricData = { result, management ->
+                CheckoutBillingSubscribeTotalV1(
+                    result.toHttpApiStatus(),
+                    management.toCheckoutBillingSubscribeManager()
+                )
+            },
+            userCheckMetricData = { LoginEaToIaUserCheckTotalV1(it.toUserCheckStatus()) },
+            unlockUserMetricData = { LoginEaToIaUnlockUserTotalV1(it.toUnlockUserStatus()) }
         )
         emit(ChooseAddressState.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {

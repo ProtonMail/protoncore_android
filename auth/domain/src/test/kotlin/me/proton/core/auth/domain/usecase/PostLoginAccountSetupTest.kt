@@ -35,6 +35,7 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.payment.domain.entity.Currency
@@ -444,11 +445,13 @@ class PostLoginAccountSetupTest {
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
             temporaryPassword = sessionInfo.temporaryPassword,
+            subscribeMetricData = { _, _ -> mockk<CheckoutBillingSubscribeTotalV1>() },
             unlockUserMetricData = { mockk<SignupUnlockUserTotalV1>() },
             userCheckMetricData = { mockk<SignupUserCheckTotalV1>() }
         )
 
         // THEN
+        verify { observabilityManager.enqueue(any<CheckoutBillingSubscribeTotalV1>(), any()) }
         verify { observabilityManager.enqueue(any<SignupUnlockUserTotalV1>(), any()) }
         verify { observabilityManager.enqueue(any<SignupUserCheckTotalV1>(), any()) }
     }

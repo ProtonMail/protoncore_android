@@ -1815,7 +1815,7 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Terms
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
 	public final fun getChooseAddressState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun stopChooseAddressWorkflow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
@@ -1892,11 +1892,11 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_HiltModules {

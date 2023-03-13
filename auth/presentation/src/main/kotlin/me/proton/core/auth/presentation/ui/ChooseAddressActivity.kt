@@ -39,8 +39,10 @@ import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.ChooseAddressState
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotalV1
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -116,6 +118,10 @@ class ChooseAddressActivity :
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
+
+        launchOnScreenView {
+            viewModel.onScreenView(LoginScreenViewTotalV1.ScreenId.chooseInternalAddress)
+        }
     }
 
     private fun stopWorkflow() {

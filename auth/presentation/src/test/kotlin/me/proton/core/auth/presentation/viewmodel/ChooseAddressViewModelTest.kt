@@ -29,6 +29,7 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.flowTest
@@ -48,6 +49,9 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
 
     @MockK(relaxed = true)
     private lateinit var accountAvailability: AccountAvailability
+
+    @MockK(relaxed = true)
+    private lateinit var observabilityManager: ObservabilityManager
 
     @MockK(relaxed = true)
     private lateinit var postLoginAccountSetup: PostLoginAccountSetup
@@ -71,6 +75,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
             ChooseAddressViewModel(
                 accountWorkflowHandler,
                 accountAvailability,
+                observabilityManager,
                 postLoginAccountSetup,
                 setupUsername
             )
@@ -81,7 +86,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         // GIVEN
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains() } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
@@ -105,7 +110,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
     @Test
     fun `available domains error path`() = coroutinesTest {
         // GIVEN
-        coEvery { accountAvailability.getDomains() } throws ApiException(ApiResult.Error.NoInternet())
+        coEvery { accountAvailability.getDomains(any()) } throws ApiException(ApiResult.Error.NoInternet())
 
         flowTest(viewModel.chooseAddressState) {
             // WHEN
@@ -126,11 +131,17 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { user.name } returns null
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains() } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
-        coEvery { accountAvailability.checkUsername(any<UserId>(), any()) } returns Unit
+        coEvery {
+            accountAvailability.checkUsername(
+                userId = any(),
+                username = any(),
+                metricData = any()
+            )
+        } returns Unit
 
         flowTest(viewModel.chooseAddressState) {
             // WHEN
@@ -153,11 +164,17 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { accountAvailability.getUser(any()) } returns user
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains() } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
-        coEvery { accountAvailability.checkUsername(any<UserId>(), any()) } coAnswers {
+        coEvery {
+            accountAvailability.checkUsername(
+                userId = any(),
+                username = any(),
+                metricData = any()
+            )
+        } coAnswers {
             yield()
             throw ApiException(
                 ApiResult.Error.Http(
@@ -190,11 +207,17 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { accountAvailability.getUser(any()) } returns user
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains() } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
-        coEvery { accountAvailability.checkUsername(any<UserId>(), any()) } coAnswers {
+        coEvery {
+            accountAvailability.checkUsername(
+                userId = any(),
+                username = any(),
+                metricData = any()
+            )
+        } coAnswers {
             yield()
             throw ApiException(
                 ApiResult.Error.Http(
@@ -216,7 +239,10 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
                 isTwoPassModeNeeded = any(),
                 temporaryPassword = any(),
                 onSetupSuccess = any(),
-                internalAddressDomain = any()
+                internalAddressDomain = any(),
+                subscribeMetricData = any(),
+                userCheckMetricData = any(),
+                unlockUserMetricData = any()
             )
         } returns PostLoginAccountSetup.Result.UserUnlocked(userId)
 
@@ -229,7 +255,13 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
             assertIs<ChooseAddressViewModel.ChooseAddressState.Data.Domains>(awaitItem())
             assertIs<ChooseAddressViewModel.ChooseAddressState.Idle>(awaitItem())
 
-            coEvery { accountAvailability.checkUsername(any<UserId>(), any()) } returns Unit
+            coEvery {
+                accountAvailability.checkUsername(
+                    userId = any(),
+                    username = any(),
+                    metricData = any()
+                )
+            } returns Unit
             viewModel.submit(
                 userId = userId,
                 username = "new-username",
