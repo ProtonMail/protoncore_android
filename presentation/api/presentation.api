@@ -359,6 +359,7 @@ public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/Li
 	protected fun getLabel ()Landroid/widget/TextView;
 	public final fun getLabelText ()Ljava/lang/CharSequence;
 	public final fun getMinLines ()I
+	public final fun getPasswordClearable ()Z
 	public final fun getPrefixText ()Ljava/lang/CharSequence;
 	public final fun getSuffixText ()Ljava/lang/CharSequence;
 	public final fun getText ()Ljava/lang/CharSequence;
@@ -388,6 +389,7 @@ public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/Li
 	public final fun setOnEditorActionListener (Landroid/widget/TextView$OnEditorActionListener;)V
 	public final fun setOnFocusLostListener (Landroid/view/View$OnFocusChangeListener;)V
 	public final fun setOnNextActionListener (Lkotlin/jvm/functions/Function0;)V
+	public final fun setPasswordClearable (Z)V
 	public final fun setPrefixText (Ljava/lang/CharSequence;)V
 	public final fun setSingleLine (Z)V
 	public final fun setSuffixText (Ljava/lang/CharSequence;)V

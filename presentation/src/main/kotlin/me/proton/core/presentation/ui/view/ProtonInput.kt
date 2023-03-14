@@ -123,6 +123,7 @@ open class ProtonInput : LinearLayout {
             getDrawable(R.styleable.ProtonInput_endIconDrawable)?.let {
                 endIconDrawable = it
             }
+            passwordClearable = getBoolean(R.styleable.ProtonInput_passwordClearable, true)
 
             val digits = getString(R.styleable.ProtonInput_android_digits)
             if (digits != null) {
@@ -142,7 +143,7 @@ open class ProtonInput : LinearLayout {
     }
 
     private fun clearIfPassword() {
-        if (isPasswordInput) {
+        if (isPasswordInput && passwordClearable) {
             clearTextAndOverwriteMemory()
         }
     }
@@ -321,6 +322,16 @@ open class ProtonInput : LinearLayout {
         get() = EndIconMode.map[inputLayout.endIconMode] ?: EndIconMode.NONE
         set(value) {
             setActionMode(value)
+        }
+
+    /**
+     * Whether the password input should be cleared when the view goes into background. Clearing the value for password
+     * input texts is for additional security.
+     * Default value is true.
+     */
+    var passwordClearable: Boolean = true
+        set(value) {
+            field = value
         }
 
     fun addTextChangedListener(watcher: TextWatcher) {

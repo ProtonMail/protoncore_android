@@ -121,6 +121,7 @@
             <enum name="firstStrongRtl" value="7" />
         </attr>
         <attr name="endIconDrawable" format="reference" />
+        <attr name="passwordClearable" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="ProtonAutoCompleteInput">

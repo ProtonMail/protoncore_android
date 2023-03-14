@@ -133,4 +133,27 @@ class ProtonInputAttributesTest {
 
         assertFalse(protonInput.isEnabled)
     }
+
+    @Test
+    fun `password clearable attribute default TRUE`() {
+        val attributes = Robolectric.buildAttributeSet()
+
+        protonInput = LayoutInflater.from(activity)
+            .inflate(R.layout.proton_input, ProtonInput(activity, attributes.build())) as ProtonInput
+        parent.addView(protonInput)
+
+        assertTrue(protonInput.passwordClearable)
+    }
+
+    @Test
+    fun `password clearable attribute set FALSE`() {
+        val attributes = Robolectric.buildAttributeSet()
+        attributes.addAttribute(R.attr.passwordClearable, "false")
+
+        protonInput = LayoutInflater.from(activity)
+            .inflate(R.layout.proton_input, ProtonInput(activity, attributes.build())) as ProtonInput
+        parent.addView(protonInput)
+
+        assertFalse(protonInput.passwordClearable)
+    }
 }
