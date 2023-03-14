@@ -175,6 +175,17 @@ class SetupPrimaryKeysTest {
     }
 
     @Test
+    fun `no setup for old existing username only account`() = runTest {
+        userManager.mockGetUser(mockUser(username = testUsername, userEmail = null))
+
+        tested.invoke(testUserId, encryptedPassword, AccountType.External, testDomain)
+
+        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any()) wasNot Called }
+        coVerify { userAddressRepository wasNot Called }
+        coVerify { authRepository wasNot Called }
+    }
+
+    @Test
     fun `fails to recover from error when creating address`() = runTest {
         authRepository.mockRandomModulus()
         domainRepository.mockGetAvailableDomains()

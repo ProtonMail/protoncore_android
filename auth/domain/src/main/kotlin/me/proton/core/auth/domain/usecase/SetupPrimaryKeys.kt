@@ -63,12 +63,13 @@ class SetupPrimaryKeys @Inject constructor(
         if (user.keys.primary() != null) return
 
         val email = when (accountType) {
-            AccountType.External -> checkNotNull(user.emailSplit) { "Email is needed." }
             AccountType.Internal -> getOrCreateInternalAddress(
                 userId = userId,
                 displayName = user.displayNameNotNull(),
                 internalDomain = internalDomain
             ).emailSplit
+            // Username only -> No key setup.
+            AccountType.External -> user.emailSplit ?: return
             AccountType.Username -> return
         }
 
