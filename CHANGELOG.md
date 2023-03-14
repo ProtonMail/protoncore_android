@@ -11,6 +11,34 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.16.0] - 2023-03-14
+
+### Features
+
+- auth:
+  - Converting EA into PA.
+  - Prompt for Username EA Login Cap C.
+
+### Bug Fixes
+
+- crypto:
+  - Handle null values when decrypting empty messages.
+
+    When decrypting an empty OpenPGP message, gopenpgp will return
+    null in the getBinary().
+    This null value was not properly handled by the crypto module and would
+    result in a NullPointerException.
+    
+    CP-5565 MAILANDR-435
+
+### Internationalization
+
+- Upgrade translations from crowdin (03364a5f).
+
+### Refactoring
+
+- Make ServerProof validation an usecase.
+
 ## [9.15.0] - 2023-03-09
 
 ### Chores
