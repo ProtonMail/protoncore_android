@@ -11,6 +11,17 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.16.1] - 2023-03-15
+
+### Bug Fixes
+
+- auth:
+  - Don't setup keys for existing Username Account.
+
+### Internationalization
+
+- Upgrade translations from crowdin (6e8d2a4c).
+
 ## [9.16.0] - 2023-03-14
 
 ### Features
