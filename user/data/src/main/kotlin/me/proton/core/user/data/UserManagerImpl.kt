@@ -36,7 +36,6 @@ import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.primary
-import me.proton.core.key.domain.extension.updatePrivateKeyPassphrase
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
@@ -169,7 +168,7 @@ class UserManagerImpl @Inject constructor(
                 // Update organization key if provided.
                 val updatedOrgPrivateKey = orgPrivateKey?.takeIf { user.isOrganizationAdmin() }?.let { key ->
                     requireNotNull(passphraseRepository.getPassphrase(userId)).decrypt(keyStore).use {
-                        key.updatePrivateKeyPassphrase(cryptoContext, it.array, newPassphrase.array)
+                        key.updatePrivateKeyPassphraseOrNull(cryptoContext, it.array, newPassphrase.array)
                     }
                 }
 

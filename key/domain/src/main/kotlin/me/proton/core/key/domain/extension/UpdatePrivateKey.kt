@@ -40,17 +40,15 @@ fun KeyHolderPrivateKey.updatePrivateKeyPassphraseOrNull(
     )?.let { Key(keyId, it) }
 }
 
-fun Armored.updatePrivateKeyPassphrase(
+fun Armored.updatePrivateKeyPassphraseOrNull(
     cryptoContext: CryptoContext,
     passphrase: ByteArray,
     newPassphrase: ByteArray
-): Armored {
-    return cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
-        privateKey = this,
-        passphrase = passphrase,
-        newPassphrase = newPassphrase
-    )
-}
+): Armored? = cryptoContext.pgpCrypto.updatePrivateKeyPassphraseOrNull(
+    privateKey = this,
+    passphrase = passphrase,
+    newPassphrase = newPassphrase
+)
 
 /**
  * Copy instance and replace [PrivateKey.passphrase] and [PrivateKey.isActive] using [canUnlock].

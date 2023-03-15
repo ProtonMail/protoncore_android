@@ -597,7 +597,7 @@ public final class me/proton/core/key/domain/extension/PublicKeyRingKt {
 
 public final class me/proton/core/key/domain/extension/UpdatePrivateKeyKt {
 	public static final fun updateIsActive (Lme/proton/core/key/domain/entity/key/PrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;)Lme/proton/core/key/domain/entity/key/PrivateKey;
-	public static final fun updatePrivateKeyPassphrase (Ljava/lang/String;Lme/proton/core/crypto/common/context/CryptoContext;[B[B)Ljava/lang/String;
+	public static final fun updatePrivateKeyPassphraseOrNull (Ljava/lang/String;Lme/proton/core/crypto/common/context/CryptoContext;[B[B)Ljava/lang/String;
 	public static final fun updatePrivateKeyPassphraseOrNull (Lme/proton/core/key/domain/entity/keyholder/KeyHolderPrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;[B)Lme/proton/core/key/domain/entity/key/Key;
 }
 
