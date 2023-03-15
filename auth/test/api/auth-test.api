@@ -81,12 +81,34 @@ public final class me/proton/core/auth/test/BuildConfig {
 	public fun <init> ()V
 }
 
+public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTests {
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getUsers ()Lme/proton/core/test/quark/data/User$Users;
+	public abstract fun signInExternalHappyPath ()V
+	public abstract fun signInInternalHappyPath ()V
+	public abstract fun signInInternalTwoPassHappyPath ()V
+	public abstract fun verifyAfterLoginScreenDisplayed ()V
+}
+
+public final class me/proton/core/auth/test/MinimalSignInInternalTests$DefaultImpls {
+	public static fun signInExternalHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
+	public static fun signInInternalHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
+	public static fun signInInternalTwoPassHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
+}
+
 public abstract interface class me/proton/core/auth/test/MinimalSignUpExternalTests {
 	public abstract fun signupExternalAccountHappyPath ()V
 }
 
 public final class me/proton/core/auth/test/MinimalSignUpExternalTests$DefaultImpls {
 	public static fun signupExternalAccountHappyPath (Lme/proton/core/auth/test/MinimalSignUpExternalTests;)V
+}
+
+public final class me/proton/core/auth/test/flow/SignInFlow {
+	public static final field INSTANCE Lme/proton/core/auth/test/flow/SignInFlow;
+	public final fun signInExternal (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun signInInternal (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun signInInternalTwoPass (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 }
 
 public final class me/proton/core/auth/test/flow/SignUpFlow {
@@ -170,5 +192,17 @@ public final class me/proton/core/auth/test/rule/AcceptExternalRule : org/junit/
 	public fun <init> (Lkotlin/jvm/functions/Function0;)V
 	public fun after ()V
 	public fun before ()V
+}
+
+public final class me/proton/core/auth/test/usecase/WaitForNoPrimaryAccount {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
+	public final fun invoke-LRDsOJo (J)V
+	public static synthetic fun invoke-LRDsOJo$default (Lme/proton/core/auth/test/usecase/WaitForNoPrimaryAccount;JILjava/lang/Object;)V
+}
+
+public final class me/proton/core/auth/test/usecase/WaitForPrimaryAccount {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
+	public final fun invoke-HG0u8IE (Lme/proton/core/account/domain/entity/AccountState;J)Lme/proton/core/account/domain/entity/Account;
+	public static synthetic fun invoke-HG0u8IE$default (Lme/proton/core/auth/test/usecase/WaitForPrimaryAccount;Lme/proton/core/account/domain/entity/AccountState;JILjava/lang/Object;)Lme/proton/core/account/domain/entity/Account;
 }
 

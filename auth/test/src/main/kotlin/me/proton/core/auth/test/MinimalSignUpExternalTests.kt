@@ -25,9 +25,7 @@ import me.proton.core.util.kotlin.random
 import kotlin.test.Test
 
 /**
- * Minimal Tests for signing up with an external account.
- *
- * Only for apps that provide [AccountType.External].
+ * Minimal SignUp Tests for app providing [AccountType.External].
  */
 public interface MinimalSignUpExternalTests {
 

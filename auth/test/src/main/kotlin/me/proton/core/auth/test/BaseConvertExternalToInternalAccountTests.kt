@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.test
 
+import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
 import me.proton.core.auth.test.robot.login.TwoPassRobot
@@ -52,21 +53,8 @@ public interface BaseConvertExternalToInternalAccountTests {
         quark.userCreate(testUser, Quark.CreateAddress.WithKey())
 
         // WHEN
-        AddAccountRobot
-            .clickSignIn()
-            .fillUsername(testUser.email)
-            .fillPassword(testUser.password)
-            .login()
-
-        ChooseInternalAddressRobot
-            .apply {
-                continueButtonIsEnabled()
-                domainInputDisplayed()
-                usernameInputIsFilled(testUsername)
-            }
-            .selectAlternativeDomain()
-            .selectPrimaryDomain()
-            .next()
+        AddAccountRobot.clickSignIn()
+        SignInFlow.signInExternal(testUser.email, testUser.password, testUsername)
 
         // THEN
         verifySuccessfulLogin()
@@ -84,19 +72,8 @@ public interface BaseConvertExternalToInternalAccountTests {
         quark.userCreate(testUser, Quark.CreateAddress.NoKey)
 
         // WHEN
-        AddAccountRobot
-            .clickSignIn()
-            .fillUsername(testUser.email)
-            .fillPassword(testUser.password)
-            .login()
-
-        ChooseInternalAddressRobot
-            .apply {
-                continueButtonIsEnabled()
-                domainInputDisplayed()
-                usernameInputIsFilled(testUsername)
-            }
-            .next()
+        AddAccountRobot.clickSignIn()
+        SignInFlow.signInExternal(testUser.email, testUser.password, testUsername)
 
         // THEN
         verifySuccessfulLogin()
@@ -116,19 +93,8 @@ public interface BaseConvertExternalToInternalAccountTests {
         quark.userCreate(testUser, Quark.CreateAddress.WithKey())
 
         // WHEN
-        AddAccountRobot
-            .clickSignIn()
-            .fillUsername(testUser.email)
-            .fillPassword(testUser.password)
-            .login()
-
-        ChooseInternalAddressRobot
-            .apply {
-                continueButtonIsEnabled()
-                domainInputDisplayed()
-                usernameInputIsFilled(testUsername)
-            }
-            .next()
+        AddAccountRobot.clickSignIn()
+        SignInFlow.signInExternal(testUser.email, testUser.password, testUsername)
 
         TwoPassRobot
             .fillMailboxPassword(passphrase)

@@ -20,12 +20,12 @@ package me.proton.android.core.coreexample.hilttests.usecase
 
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import javax.inject.Inject
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 class PerformUiLogin @Inject constructor(private val waitForPrimaryAccount: WaitForPrimaryAccount) {
     operator fun invoke(usernameOrEmail: String, password: String, mailboxPass: String? = null): Account {

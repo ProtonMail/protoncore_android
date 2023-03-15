@@ -30,9 +30,9 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.VpnApiClient
-import me.proton.android.core.coreexample.hilttests.usecase.WaitForPrimaryAccount
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.BaseUsernameAccountSignupTests
+import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer

@@ -11,10 +11,10 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.MailApiClient
-import me.proton.android.core.coreexample.hilttests.usecase.WaitForNoPrimaryAccount
-import me.proton.android.core.coreexample.hilttests.usecase.WaitForPrimaryAccount
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.BaseConvertExternalToInternalAccountTests
+import me.proton.core.auth.test.usecase.WaitForNoPrimaryAccount
+import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider

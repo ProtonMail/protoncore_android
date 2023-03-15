@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.hilttests.usecase
+package me.proton.core.auth.test.usecase
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
@@ -34,11 +34,14 @@ import kotlin.time.Duration.Companion.milliseconds
 private const val ACCOUNT_WAIT_MS = 30L * 1000
 private const val WAIT_DELAY_MS = 250L
 
-class WaitForPrimaryAccount @Inject constructor(private val accountManager: AccountManager) {
-    /** Waits for the primary account to be in the given [state].
+public class WaitForPrimaryAccount @Inject constructor(private val accountManager: AccountManager) {
+
+    /**
+     * Waits for the primary account to be in the given [state].
+     *
      * @param state If `null`, the account can be in any state.
      */
-    operator fun invoke(
+    public operator fun invoke(
         state: AccountState? = AccountState.Ready,
         timeout: Duration = ACCOUNT_WAIT_MS.milliseconds
     ): Account = runBlocking {
