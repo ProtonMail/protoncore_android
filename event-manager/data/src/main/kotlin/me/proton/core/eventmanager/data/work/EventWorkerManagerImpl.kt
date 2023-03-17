@@ -53,7 +53,7 @@ class EventWorkerManagerImpl @Inject constructor(
 
     override suspend fun isRunning(config: EventManagerConfig): Boolean {
         val uniqueWorkName = getUniqueWorkName(config)
-        val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().first()
-        return info.state == WorkInfo.State.RUNNING
+        val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().firstOrNull()
+        return info?.state == WorkInfo.State.RUNNING
     }
 }
