@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -39,6 +40,7 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -49,13 +51,15 @@ fun PublicAddress.verifyText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
-): Boolean = publicKeyRing().verifyText(context, text, signature, time, trimTrailingSpaces)
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
+): Boolean = publicKeyRing().verifyText(context, text, signature, time, trimTrailingSpaces, verificationContext)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicAddress.publicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -65,8 +69,9 @@ fun PublicAddress.verifyData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = publicKeyRing().verifyData(context, data, signature, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): Boolean = publicKeyRing().verifyData(context, data, signature, time, verificationContext)
 
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicAddress.publicKeyRing].
@@ -76,6 +81,7 @@ fun PublicAddress.verifyData(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
  *
@@ -86,13 +92,22 @@ fun PublicAddress.getVerifiedTimestampOfText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
-): Long? = publicKeyRing().getVerifiedTimestampOfText(context, text, signature, time, trimTrailingSpaces)
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
+): Long? = publicKeyRing().getVerifiedTimestampOfText(
+    context,
+    text,
+    signature,
+    time,
+    trimTrailingSpaces,
+    verificationContext
+)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicAddress.publicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
  *
@@ -102,8 +117,9 @@ fun PublicAddress.getVerifiedTimestampOfData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Long? = publicKeyRing().getVerifiedTimestampOfData(context, data, signature, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): Long? = publicKeyRing().getVerifiedTimestampOfData(context, data, signature, time, verificationContext)
 
 /**
  * Encrypt [text] using this [PublicAddress.primaryKey].

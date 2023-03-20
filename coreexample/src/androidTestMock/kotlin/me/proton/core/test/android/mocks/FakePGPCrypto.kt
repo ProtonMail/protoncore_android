@@ -35,9 +35,11 @@ import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationTime
+import me.proton.core.crypto.common.pgp.VerificationContext
 import java.io.File
 import java.util.Base64
 
@@ -203,11 +205,16 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: decryptSessionKeyWithPassword")
     }
 
-    override fun signText(plainText: String, unlockedKey: Unarmored, trimTrailingSpaces: Boolean): Signature {
+    override fun signText(
+        plainText: String,
+        unlockedKey: Unarmored,
+        trimTrailingSpaces: Boolean,
+        signatureContext: SignatureContext?
+    ): Signature {
         return "${plainText.hashCode()}"
     }
 
-    override fun signData(data: ByteArray, unlockedKey: Unarmored): Signature {
+    override fun signData(data: ByteArray, unlockedKey: Unarmored, signatureContext: SignatureContext?): Signature {
         TODO("Not yet implemented: signData")
     }
 
@@ -219,7 +226,8 @@ class FakePGPCrypto : PGPCrypto {
         plainText: String,
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        signatureContext: SignatureContext?
     ): EncryptedSignature {
         TODO("Not yet implemented: signTextEncrypted")
     }
@@ -227,7 +235,8 @@ class FakePGPCrypto : PGPCrypto {
     override fun signDataEncrypted(
         data: ByteArray,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext?
     ): EncryptedSignature {
         TODO("Not yet implemented: signDataEncrypted")
     }
@@ -245,12 +254,19 @@ class FakePGPCrypto : PGPCrypto {
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
     ): Boolean {
         return "${plainText.hashCode()}" == signature
     }
 
-    override fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, time: VerificationTime): Boolean {
+    override fun verifyData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean {
         TODO("Not yet implemented: verifyData")
     }
 
@@ -258,7 +274,8 @@ class FakePGPCrypto : PGPCrypto {
         file: DecryptedFile,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): Boolean {
         TODO("Not yet implemented: verifyFile")
     }
@@ -268,7 +285,8 @@ class FakePGPCrypto : PGPCrypto {
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
     ): Long? {
         TODO("Not yet implemented: getVerifiedTimestampOfText")
     }
@@ -277,7 +295,8 @@ class FakePGPCrypto : PGPCrypto {
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): Long? {
         TODO("Not yet implemented: getVerifiedTimestampOfData")
     }
@@ -288,7 +307,8 @@ class FakePGPCrypto : PGPCrypto {
         privateKey: Unarmored,
         publicKeys: List<Armored>,
         time: VerificationTime,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
     ): Boolean {
         TODO("Not yet implemented: verifyTextEncrypted")
     }
@@ -298,7 +318,8 @@ class FakePGPCrypto : PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): Boolean {
         TODO("Not yet implemented: verifyDataEncrypted")
     }
@@ -308,7 +329,8 @@ class FakePGPCrypto : PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): Boolean {
         TODO("Not yet implemented: verifyFileEncrypted")
     }

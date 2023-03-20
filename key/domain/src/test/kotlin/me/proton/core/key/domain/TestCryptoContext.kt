@@ -42,8 +42,10 @@ import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.PacketType
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.srp.Auth
@@ -89,6 +91,8 @@ open class TestCryptoContext : CryptoContext {
         private fun Armored.decryptMessage(key: Unarmored) = toByteArray().decrypt(key).fromByteArray()
         private fun String.extractMessage() = substring(indexOf("[") + 1, indexOf("]"))
 
+        private fun String.extractContext() = "context=<.*>".toRegex().find(this)?.value
+
         // Encrypt key with passphrase.
         override fun lock(unlockedKey: Unarmored, passphrase: ByteArray): Armored =
             unlockedKey.encrypt(passphrase).fromByteArray()
@@ -103,14 +107,28 @@ open class TestCryptoContext : CryptoContext {
             }
 
         // Concat text+key for testing purpose.
-        override fun signText(plainText: String, unlockedKey: Unarmored, trimTrailingSpaces: Boolean): Signature =
-            "sign([$plainText], with=${unlockedKey.fromByteArray()})"
+        override fun signText(
+            plainText: String,
+            unlockedKey: Unarmored,
+            trimTrailingSpaces: Boolean,
+            signatureContext: SignatureContext?
+        ): Signature {
+            val context = signatureContext?.let { ", context=${it.value}" } ?: ""
+            return "sign([$plainText], with=${unlockedKey.fromByteArray()}$context)"
                 .encryptMessage(unlockedKey)
+        }
+
 
         // Concat data+key for testing purpose.
-        override fun signData(data: ByteArray, unlockedKey: Unarmored): Signature =
-            "sign([${data.fromByteArray()}], with=${unlockedKey.fromByteArray()})"
+        override fun signData(
+            data: ByteArray,
+            unlockedKey: Unarmored,
+            signatureContext: SignatureContext?
+        ): Signature {
+            val context = signatureContext?.let { ", context=<${it.value}>" } ?: ""
+            return "sign([${data.fromByteArray()}], with=${unlockedKey.fromByteArray()}$context)"
                 .encryptMessage(unlockedKey)
+        }
 
         override fun signFile(file: File, unlockedKey: Unarmored): Signature =
             signData(file.readBytes(), unlockedKey)
@@ -119,9 +137,10 @@ open class TestCryptoContext : CryptoContext {
             plainText: String,
             unlockedKey: Unarmored,
             encryptionKeys: List<Armored>,
-            trimTrailingSpaces: Boolean
+            trimTrailingSpaces: Boolean,
+            signatureContext: SignatureContext?
         ): EncryptedSignature {
-            val signature = signText(plainText, unlockedKey, trimTrailingSpaces)
+            val signature = signText(plainText, unlockedKey, trimTrailingSpaces, signatureContext)
             return "encrypt([$signature], with=${encryptionKeys.joinToString(", ")})"
                 .encryptMessage(encryptionKeys.first())
         }
@@ -129,9 +148,10 @@ open class TestCryptoContext : CryptoContext {
         override fun signDataEncrypted(
             data: ByteArray,
             unlockedKey: Unarmored,
-            encryptionKeys: List<Armored>
+            encryptionKeys: List<Armored>,
+            signatureContext: SignatureContext?
         ): EncryptedSignature {
-            val signature = signData(data, unlockedKey)
+            val signature = signData(data, unlockedKey, signatureContext)
             return "encrypt([$signature], with=${encryptionKeys.joinToString(", ")})"
                 .encryptMessage(encryptionKeys.first())
         }
@@ -147,19 +167,44 @@ open class TestCryptoContext : CryptoContext {
             signature: Signature,
             publicKey: Armored,
             time: VerificationTime,
-            trimTrailingSpaces: Boolean
+            trimTrailingSpaces: Boolean,
+            verificationContext: VerificationContext?
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return false
+            }
             return plainText == decryptedSignature.extractMessage()
+        }
+
+        private fun verifyContext(
+            verificationContext: VerificationContext?,
+            decryptedSignature: String
+        ): Boolean {
+            if (verificationContext != null) {
+                val context = decryptedSignature.extractContext()
+                if (context == null) {
+                    if (verificationContext.required is VerificationContext.ContextRequirement.Required.Always) {
+                        return false
+                    }
+                } else if (context != verificationContext.value) {
+                    return false
+                }
+            }
+            return true
         }
 
         override fun verifyData(
             data: ByteArray,
             signature: Signature,
             publicKey: Armored,
-            time: VerificationTime
+            time: VerificationTime,
+            verificationContext: VerificationContext?
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return false
+            }
             return data.fromByteArray() == decryptedSignature.extractMessage()
         }
 
@@ -167,9 +212,13 @@ open class TestCryptoContext : CryptoContext {
             file: DecryptedFile,
             signature: Armored,
             publicKey: Armored,
-            time: VerificationTime
+            time: VerificationTime,
+            verificationContext: VerificationContext?
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return false
+            }
             val data = file.file.readBytes()
             return data.fromByteArray() == decryptedSignature.extractMessage()
         }
@@ -179,9 +228,13 @@ open class TestCryptoContext : CryptoContext {
             signature: Armored,
             publicKey: Armored,
             time: VerificationTime,
-            trimTrailingSpaces: Boolean
+            trimTrailingSpaces: Boolean,
+            verificationContext: VerificationContext?
         ): Long? {
             val decryptedSignature = signature.decryptMessage(publicKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return null
+            }
             if (plainText == decryptedSignature.extractMessage()) {
                 return timestamp
             }
@@ -192,9 +245,13 @@ open class TestCryptoContext : CryptoContext {
             data: ByteArray,
             signature: Armored,
             publicKey: Armored,
-            time: VerificationTime
+            time: VerificationTime,
+            verificationContext: VerificationContext?
         ): Long? {
             val decryptedSignature = signature.decryptMessage(publicKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return null
+            }
             if (data.fromByteArray() == decryptedSignature.extractMessage()) {
                 return timestamp
             }
@@ -207,9 +264,13 @@ open class TestCryptoContext : CryptoContext {
             privateKey: Unarmored,
             publicKeys: List<Armored>,
             time: VerificationTime,
-            trimTrailingSpaces: Boolean
+            trimTrailingSpaces: Boolean,
+            verificationContext: VerificationContext?
         ): Boolean = runCatching {
             val decryptedSignature = encryptedSignature.decryptMessage(privateKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return false
+            }
             val signature = decryptedSignature.extractMessage()
             val decryptedData = signature.decryptMessage(publicKeys.first())
             return plainText == decryptedData.extractMessage()
@@ -220,9 +281,13 @@ open class TestCryptoContext : CryptoContext {
             encryptedSignature: EncryptedSignature,
             privateKey: Unarmored,
             publicKeys: List<Armored>,
-            time: VerificationTime
+            time: VerificationTime,
+            verificationContext: VerificationContext?
         ): Boolean = runCatching {
             val decryptedSignature = encryptedSignature.decryptMessage(privateKey)
+            if (!verifyContext(verificationContext, decryptedSignature)){
+                return false
+            }
             val signature = decryptedSignature.extractMessage()
             val decryptedData = signature.decryptMessage(publicKeys.first())
             return data.fromByteArray() == decryptedData.extractMessage()
@@ -233,9 +298,10 @@ open class TestCryptoContext : CryptoContext {
             encryptedSignature: EncryptedSignature,
             privateKey: Unarmored,
             publicKeys: List<Armored>,
-            time: VerificationTime
+            time: VerificationTime,
+            verificationContext: VerificationContext?
         ): Boolean =
-            verifyDataEncrypted(file.readBytes(), encryptedSignature, privateKey, publicKeys, time)
+            verifyDataEncrypted(file.readBytes(), encryptedSignature, privateKey, publicKeys, time, verificationContext)
 
         override fun getArmored(data: Unarmored, header: PGPHeader): Armored = data.fromByteArray()
 

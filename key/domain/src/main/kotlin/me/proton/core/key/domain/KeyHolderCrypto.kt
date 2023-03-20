@@ -37,7 +37,9 @@ import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
@@ -303,23 +305,30 @@ fun KeyHolderContext.decryptAndVerifyHashKeyOrNull(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [KeyHolderContext.verifyText]
  */
-fun KeyHolderContext.signText(text: String, trimTrailingSpaces: Boolean = true): Signature =
-    privateKeyRing.signText(text, trimTrailingSpaces)
+fun KeyHolderContext.signText(
+    text: String,
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
+): Signature =
+    privateKeyRing.signText(text, trimTrailingSpaces, signatureContext)
 
 /**
  * Sign [data] using [PrivateKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [KeyHolderContext.verifyData]
  */
-fun KeyHolderContext.signData(data: ByteArray): Signature =
-    privateKeyRing.signData(data)
+fun KeyHolderContext.signData(data: ByteArray, signatureContext: SignatureContext? = null): Signature =
+    privateKeyRing.signData(data, signatureContext)
 
 /**
  * Sign [file] using [PrivateKeyRing].
@@ -339,6 +348,7 @@ fun KeyHolderContext.signFile(file: File): Signature =
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [text] cannot be signed.
  *
@@ -347,17 +357,21 @@ fun KeyHolderContext.signFile(file: File): Signature =
 fun KeyHolderContext.signTextEncrypted(
     text: String,
     encryptionKeyRing: PublicKeyRing = publicKeyRing,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
 ): EncryptedSignature =
     privateKeyRing.signTextEncrypted(
         text,
         encryptionKeyRing,
-        trimTrailingSpaces
+        trimTrailingSpaces,
+        signatureContext
     )
 
 /**
  * Sign [data] using [PrivateKeyRing]
  * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
@@ -365,12 +379,14 @@ fun KeyHolderContext.signTextEncrypted(
  */
 fun KeyHolderContext.signDataEncrypted(
     data: ByteArray,
-    encryptionKeyRing: PublicKeyRing = publicKeyRing
+    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedSignature =
     privateKeyRing.signDataEncrypted(
         context,
         data,
-        encryptionKeyRing
+        encryptionKeyRing,
+        signatureContext
     )
 
 /**
@@ -400,6 +416,7 @@ fun KeyHolderContext.signFileEncrypted(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [KeyHolderContext.signTextEncrypted]
  */
@@ -408,13 +425,15 @@ fun KeyHolderContext.verifyTextEncrypted(
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing = publicKeyRing,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
 ): Boolean = privateKeyRing.verifyTextEncrypted(
     text,
     encryptedSignature,
     verificationKeyRing,
     time,
-    trimTrailingSpaces
+    trimTrailingSpaces,
+    verificationContext
 )
 
 /**
@@ -422,6 +441,7 @@ fun KeyHolderContext.verifyTextEncrypted(
  * and then verify it is a valid signature of [data] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [KeyHolderContext.signTextEncrypted]
  */
@@ -429,13 +449,15 @@ fun KeyHolderContext.verifyDataEncrypted(
     data: ByteArray,
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean = privateKeyRing.verifyDataEncrypted(
     context,
     data,
     encryptedSignature,
     verificationKeyRing,
-    time
+    time,
+    verificationContext
 )
 
 /**
@@ -443,6 +465,7 @@ fun KeyHolderContext.verifyDataEncrypted(
  * and then verify it is a valid signature of [file] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [KeyHolderContext.signTextEncrypted]
  */
@@ -450,13 +473,15 @@ fun KeyHolderContext.verifyFileEncrypted(
     file: File,
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean = privateKeyRing.verifyFileEncrypted(
     context,
     file,
     encryptedSignature,
     verificationKeyRing,
-    time
+    time,
+    verificationContext
 )
 
 /**
@@ -467,6 +492,7 @@ fun KeyHolderContext.verifyFileEncrypted(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -476,13 +502,15 @@ fun KeyHolderContext.verifyText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
-): Boolean = publicKeyRing.verifyText(context, text, signature, time, trimTrailingSpaces)
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
+): Boolean = publicKeyRing.verifyText(context, text, signature, time, trimTrailingSpaces, verificationContext)
 
 /**
  * Verify [signature] of [data] is correctly signed using [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -491,14 +519,16 @@ fun KeyHolderContext.verifyText(
 fun KeyHolderContext.verifyData(
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean =
-    publicKeyRing.verifyData(context, data, signature, time)
+    publicKeyRing.verifyData(context, data, signature, time, verificationContext)
 
 /**
  * Verify [signature] of [file] is correctly signed using [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -507,9 +537,10 @@ fun KeyHolderContext.verifyData(
 fun KeyHolderContext.verifyFile(
     file: DecryptedFile,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean =
-    publicKeyRing.verifyFile(context, file, signature, time)
+    publicKeyRing.verifyFile(context, file, signature, time, verificationContext)
 
 /**
  * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
@@ -519,6 +550,7 @@ fun KeyHolderContext.verifyFile(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return the timestamp if at least one [PublicKey] verify [signature], null otherwise
  *
@@ -528,13 +560,22 @@ fun KeyHolderContext.getVerifiedTimestampOfText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
-): Long? = publicKeyRing.getVerifiedTimestampOfText(context, text, signature, time, trimTrailingSpaces)
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
+): Long? = publicKeyRing.getVerifiedTimestampOfText(
+    context,
+    text,
+    signature,
+    time,
+    trimTrailingSpaces,
+    verificationContext
+)
 
 /**
  * Verify [signature] of [data] is correctly signed using [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return the timestamp if at least one [PublicKey] verify [signature], null otherwise
  *
@@ -543,9 +584,10 @@ fun KeyHolderContext.getVerifiedTimestampOfText(
 fun KeyHolderContext.getVerifiedTimestampOfData(
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Long? =
-    publicKeyRing.getVerifiedTimestampOfData(context, data, signature, time)
+    publicKeyRing.getVerifiedTimestampOfData(context, data, signature, time, verificationContext)
 
 /**
  * Encrypt [text] using [PublicKeyRing].
@@ -1113,6 +1155,7 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
  *
  * @param validTokenPredicate a predicate function to specify
  * what format should a valid token have. Default: always true predicate.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
@@ -1124,14 +1167,19 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
 fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
     nestedPrivateKey: NestedPrivateKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validTokenPredicate: (ByteArray) -> Boolean = { true }
+    validTokenPredicate: (ByteArray) -> Boolean = { true },
+    verificationContext: VerificationContext? = null
 ): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.passphrase) { "Cannot decrypt key without encrypted passphrase." }
     checkNotNull(nestedPrivateKey.passphraseSignature) { "Cannot verify without passphrase signature." }
     val passphrase = decryptData(nestedPrivateKey.passphrase).use { decrypted ->
-        check(verifyKeyRing.verifyData(context, decrypted.array, nestedPrivateKey.passphraseSignature)) {
-            "Cannot verify key passphrase using provided signature."
-        }
+        val verified = verifyKeyRing.verifyData(
+            context,
+            decrypted.array,
+            nestedPrivateKey.passphraseSignature,
+            verificationContext = verificationContext
+        )
+        check(verified) { "Cannot verify key passphrase using provided signature." }
         check(validTokenPredicate(decrypted.array)) {
             "Passphrase doesn't have the expected format"
         }
@@ -1153,6 +1201,7 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
  *
  * @param validTokenPredicate a predicate function to specify
  * what format should a valid token have. Default: always true predicate.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
@@ -1166,11 +1215,13 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
     passphrase: EncryptedMessage,
     signature: Signature,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validTokenPredicate: (ByteArray) -> Boolean = { true }
+    validTokenPredicate: (ByteArray) -> Boolean = { true },
+    verificationContext: VerificationContext? = null
 ): NestedPrivateKey = decryptAndVerifyNestedKeyOrThrow(
     NestedPrivateKey.from(key, passphrase, signature),
     verifyKeyRing,
-    validTokenPredicate
+    validTokenPredicate,
+    verificationContext
 )
 
 /**
@@ -1180,6 +1231,7 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
  *
  * @param validTokenPredicate a predicate function to specify
  * what format should a valid token have. Default: always true predicate.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  * Or null if its passphrase cannot be decrypted or verified.
@@ -1189,9 +1241,10 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
 fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
     nestedPrivateKey: NestedPrivateKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validTokenPredicate: (ByteArray) -> Boolean = { true }
+    validTokenPredicate: (ByteArray) -> Boolean = { true },
+    verificationContext: VerificationContext? = null
 ): NestedPrivateKey? = runCatching {
-    decryptAndVerifyNestedKeyOrThrow(nestedPrivateKey, verifyKeyRing, validTokenPredicate)
+    decryptAndVerifyNestedKeyOrThrow(nestedPrivateKey, verifyKeyRing, validTokenPredicate, verificationContext)
 }.onFailure {
     CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt and/or verify nested key.")
 }.getOrNull()
@@ -1203,6 +1256,7 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
  *
  * @param validTokenPredicate a predicate function to specify
  * what format should a valid token have. Default: always true predicate.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  * Or null if its passphrase cannot be decrypted or verified.
@@ -1214,9 +1268,17 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
     passphrase: EncryptedMessage,
     signature: Signature,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validTokenPredicate: (ByteArray) -> Boolean = { true }
+    validTokenPredicate: (ByteArray) -> Boolean = { true },
+    verificationContext: VerificationContext? = null
 ): NestedPrivateKey? = runCatching {
-    decryptAndVerifyNestedKeyOrThrow(key, passphrase, signature, verifyKeyRing, validTokenPredicate)
+    decryptAndVerifyNestedKeyOrThrow(
+        key,
+        passphrase,
+        signature,
+        verifyKeyRing,
+        validTokenPredicate,
+        verificationContext
+    )
 }.onFailure {
     CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt and/or verify nested key.")
 }.getOrNull()
@@ -1226,20 +1288,23 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt passphrase. Default: [KeyHolderContext.publicKeyRing].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [nestedPrivateKey] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyData].
  */
 fun KeyHolderContext.encryptAndSignNestedKey(
     nestedPrivateKey: NestedPrivateKey,
-    encryptKeyRing: PublicKeyRing = publicKeyRing
+    encryptKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.privateKey.passphrase) { "Cannot encrypt without passphrase." }
     return nestedPrivateKey.privateKey.passphrase.decrypt(context.keyStoreCrypto).use { passphrase ->
         nestedPrivateKey.copy(
             privateKey = nestedPrivateKey.privateKey.copy(isActive = false, passphrase = null),
             passphrase = encryptKeyRing.encryptData(context, passphrase.array),
-            passphraseSignature = signData(passphrase.array)
+            passphraseSignature = signData(passphrase.array, signatureContext)
         )
     }
 }

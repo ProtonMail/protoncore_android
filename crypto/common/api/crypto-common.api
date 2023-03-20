@@ -355,6 +355,7 @@ public final class me/proton/core/crypto/common/pgp/SessionKey : java/io/Closeab
 
 public final class me/proton/core/crypto/common/pgp/SignatureContext {
 	public fun <init> (Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Z
 	public final fun copy (Ljava/lang/String;Z)Lme/proton/core/crypto/common/pgp/SignatureContext;

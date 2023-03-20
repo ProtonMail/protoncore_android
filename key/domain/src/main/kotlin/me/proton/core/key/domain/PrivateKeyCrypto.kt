@@ -26,6 +26,8 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.unlockOrNull
@@ -131,23 +133,35 @@ fun PrivateKey.decryptDataOrNull(context: CryptoContext, message: EncryptedMessa
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [PublicKey.verifyText]
  */
-fun PrivateKey.signText(context: CryptoContext, text: String, trimTrailingSpaces: Boolean = true): Signature =
-    unlock(context).use { it.signText(context, text, trimTrailingSpaces) }
+fun PrivateKey.signText(
+    context: CryptoContext,
+    text: String,
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
+): Signature =
+    unlock(context).use { it.signText(context, text, trimTrailingSpaces, signatureContext) }
 
 /**
  * Sign [data] using this [PrivateKey].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [PublicKey.verifyData]
  */
-fun PrivateKey.signData(context: CryptoContext, data: ByteArray): Signature =
-    unlock(context).use { it.signData(context, data) }
+fun PrivateKey.signData(
+    context: CryptoContext,
+    data: ByteArray,
+    signatureContext: SignatureContext? = null
+): Signature =
+    unlock(context).use { it.signData(context, data, signatureContext) }
 
 /**
  * Unlock this [PrivateKey] using embedded passphrase.
@@ -272,22 +286,30 @@ fun PrivateKeyRing.decryptSessionKeyOrNull(keyPacket: KeyPacket): SessionKey? =
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [PublicKeyRing.verifyText]
  */
-fun PrivateKeyRing.signText(text: String, trimTrailingSpaces: Boolean = true): Signature =
-    unlockedPrimaryKey.signText(context, text, trimTrailingSpaces)
+fun PrivateKeyRing.signText(
+    text: String,
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
+): Signature =
+    unlockedPrimaryKey.signText(context, text, trimTrailingSpaces, signatureContext)
 
 /**
  * Sign [data] using primary [UnlockedPrivateKey].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [PublicKeyRing.verifyData]
  */
-fun PrivateKeyRing.signData(data: ByteArray): Signature =
-    unlockedPrimaryKey.signData(context, data)
+fun PrivateKeyRing.signData(data: ByteArray, signatureContext: SignatureContext? = null): Signature =
+    unlockedPrimaryKey.signData(context, data, signatureContext)
 
 /**
  * Sign [file] using primary [UnlockedPrivateKey].
@@ -307,6 +329,7 @@ fun PrivateKeyRing.signFile(file: File): Signature =
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [text] cannot be signed.
  *
@@ -315,13 +338,16 @@ fun PrivateKeyRing.signFile(file: File): Signature =
 fun PrivateKeyRing.signTextEncrypted(
     text: String,
     encryptionKeyRing: PublicKeyRing,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
 ): Signature =
-    unlockedPrimaryKey.signTextEncrypted(context, text, encryptionKeyRing, trimTrailingSpaces)
+    unlockedPrimaryKey.signTextEncrypted(context, text, encryptionKeyRing, trimTrailingSpaces, signatureContext)
 
 /**
  * Sign [data] using this [UnlockedPrivateKey]
  * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
@@ -330,9 +356,10 @@ fun PrivateKeyRing.signTextEncrypted(
 fun PrivateKeyRing.signDataEncrypted(
     context: CryptoContext,
     data: ByteArray,
-    encryptionKeyRing: PublicKeyRing
+    encryptionKeyRing: PublicKeyRing,
+    signatureContext: SignatureContext? = null
 ): Signature =
-    unlockedPrimaryKey.signDataEncrypted(context, data, encryptionKeyRing)
+    unlockedPrimaryKey.signDataEncrypted(context, data, encryptionKeyRing, signatureContext)
 
 /**
  * Sign [file] using this [UnlockedPrivateKey]
@@ -358,6 +385,7 @@ fun PrivateKeyRing.signFileEncrypted(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signTextEncrypted]
  */
@@ -366,14 +394,16 @@ fun PrivateKeyRing.verifyTextEncrypted(
     encryptedSignature: Armored,
     verificationKeyRing: PublicKeyRing,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
 ): Boolean = unlockedPrimaryKey.verifyTextEncrypted(
     context,
     text,
     encryptedSignature,
     verificationKeyRing,
     time,
-    trimTrailingSpaces
+    trimTrailingSpaces,
+    verificationContext
 )
 
 /**
@@ -381,6 +411,7 @@ fun PrivateKeyRing.verifyTextEncrypted(
  * and then verify it is a valid signature of [data] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signTextEncrypted]
  */
@@ -389,13 +420,15 @@ fun PrivateKeyRing.verifyDataEncrypted(
     data: ByteArray,
     encryptedSignature: Armored,
     verificationKeyRing: PublicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean = unlockedPrimaryKey.verifyDataEncrypted(
     context,
     data,
     encryptedSignature,
     verificationKeyRing,
-    time
+    time,
+    verificationContext
 )
 
 /**
@@ -403,6 +436,7 @@ fun PrivateKeyRing.verifyDataEncrypted(
  * and then verify it is a valid signature of [file] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signTextEncrypted]
  */
@@ -411,11 +445,13 @@ fun PrivateKeyRing.verifyFileEncrypted(
     file: File,
     encryptedSignature: Armored,
     verificationKeyRing: PublicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean = unlockedPrimaryKey.verifyFileEncrypted(
     context,
     file,
     encryptedSignature,
     verificationKeyRing,
-    time
+    time,
+    verificationContext
 )

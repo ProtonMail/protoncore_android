@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -38,6 +39,7 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signText]
  */
@@ -46,13 +48,22 @@ fun PublicKey.verifyText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(text, signature, key, time, trimTrailingSpaces)
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(
+    text,
+    signature,
+    key,
+    time,
+    trimTrailingSpaces,
+    verificationContext
+)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKey].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signData]
  */
@@ -60,13 +71,15 @@ fun PublicKey.verifyData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyData(data, signature, key, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyData(data, signature, key, time, verificationContext)
 
 /**
  * Verify [signature] of [file] is correctly signed using this [PublicKey].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signData]
  */
@@ -74,8 +87,9 @@ fun PublicKey.verifyFile(
     context: CryptoContext,
     file: DecryptedFile,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyFile(file, signature, key, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyFile(file, signature, key, time, verificationContext)
 
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKey], and
@@ -86,6 +100,7 @@ fun PublicKey.verifyFile(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signText]
  */
@@ -94,9 +109,10 @@ fun PublicKey.getVerifiedTimestampOfText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
 ): Long? = if (isActive && canVerify) {
-    context.pgpCrypto.getVerifiedTimestampOfText(text, signature, key, time, trimTrailingSpaces)
+    context.pgpCrypto.getVerifiedTimestampOfText(text, signature, key, time, trimTrailingSpaces, verificationContext)
 } else {
     null
 }
@@ -106,6 +122,7 @@ fun PublicKey.getVerifiedTimestampOfText(
  * return the timestamp if it is, null otherwise.
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [PrivateKeyRing.signText]
  */
@@ -113,9 +130,10 @@ fun PublicKey.getVerifiedTimestampOfData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Long? = if (isActive && canVerify) {
-    context.pgpCrypto.getVerifiedTimestampOfData(data, signature, key, time)
+    context.pgpCrypto.getVerifiedTimestampOfData(data, signature, key, time, verificationContext)
 } else {
     null
 }

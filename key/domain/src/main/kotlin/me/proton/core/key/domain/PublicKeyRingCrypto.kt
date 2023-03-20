@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -68,6 +69,7 @@ fun PublicKeyRing.encryptSessionKey(context: CryptoContext, sessionKey: SessionK
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -78,13 +80,15 @@ fun PublicKeyRing.verifyText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
-): Boolean = keys.any { it.verifyText(context, text, signature, time, trimTrailingSpaces) }
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
+): Boolean = keys.any { it.verifyText(context, text, signature, time, trimTrailingSpaces, verificationContext) }
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -94,13 +98,15 @@ fun PublicKeyRing.verifyData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = keys.any { it.verifyData(context, data, signature, time) }
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): Boolean = keys.any { it.verifyData(context, data, signature, time, verificationContext) }
 
 /**
  * Verify [signature] of [file] is correctly signed using this [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -110,8 +116,9 @@ fun PublicKeyRing.verifyFile(
     context: CryptoContext,
     file: DecryptedFile,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
-): Boolean = keys.any { it.verifyFile(context, file, signature, time) }
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): Boolean = keys.any { it.verifyFile(context, file, signature, time, verificationContext) }
 
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].
@@ -121,6 +128,7 @@ fun PublicKeyRing.verifyFile(
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
  *
@@ -132,16 +140,25 @@ fun PublicKeyRing.getVerifiedTimestampOfText(
     text: String,
     signature: Signature,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
 ): Long? = keys
     .asSequence()
-    .mapNotNull { key -> key.getVerifiedTimestampOfText(context, text, signature, time, trimTrailingSpaces) }
+    .mapNotNull { key -> key.getVerifiedTimestampOfText(
+        context,
+        text,
+        signature,
+        time,
+        trimTrailingSpaces,
+        verificationContext
+    )}
     .firstOrNull()
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return the timestamp of the signature if at least one [PublicKey] verify [signature]. null otherwise
  *
@@ -151,8 +168,9 @@ fun PublicKeyRing.getVerifiedTimestampOfData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Long? = keys
     .asSequence()
-    .mapNotNull { key -> key.getVerifiedTimestampOfData(context, data, signature, time) }
+    .mapNotNull { key -> key.getVerifiedTimestampOfData(context, data, signature, time, verificationContext) }
     .firstOrNull()

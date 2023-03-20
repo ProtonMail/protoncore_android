@@ -1350,15 +1350,14 @@ internal class GOpenPGPCryptoTest {
             Version: GopenPGP 2.5.2
             Comment: https://gopenpgp.org
             
-            wsCaBAABCgBOBQJkBdcDCZA+tiWe3yHfJBYhBG6LoimwzMr2li+XlT62JZ7fId8k
-            JhSAAAAAABEADGNvbnRleHRAcHJvdG9uLmNodGVzdC1jb250ZXh0AAAWswgAmtfD
-            vf7yNlc2umZ4p8ddlcQGhkpwQgiTuaYIeJytAytPtzzSAuMUcACeBCXCTt9iXaak
-            ImnZULdBW6T5n/o5zVTVO5yGniOeswpXqERnp+Qmsowjd5fU+XRBnkx0cSVIrVo5
-            tB4gf5nxAnojusQekELnNINd8nXrWYHiDFM+aos+pTxqzWlcJv32LtQ4yuxWSzIL
-            9dJMIpqL+1jk2QI6E+6iTM6NkwNhYjJ7emMGJXyzPmXj4pmpJ1lYo50uHRlwirnI
-            VXcOkUKUwGdibnCjUv+XFoG7Qv2ilDuk/TxTKSjW7ajGjv6KAOde/pOtmpiwcWKi
-            OzIkiswXw5vOtLkrew==
-            =Ub8I
+            wsBzBAABCgAnBQJkBdkOCZA+tiWe3yHfJBYhBG6LoimwzMr2li+XlT62JZ7fId8k
+            AAAwOgf/U+wgABHyfI6Bd/1xPdUyy3FTaEY+Nj8NYi/PKez66OmLubgMEj0DfD7M
+            2P4SL3ZR0Y9iEtCKpncvLtlvA0sss0SZMaXH0bpJZS62cc98gLBuhE9mP1aWUu1u
+            +1AKVIvJKzhJC+MjKrVwMO03JrEb97ZDJylqoF2UvTeQomIY6qo5l4khDeZRVgsn
+            wqmq7+FLGHG75bhrW4dSOCKrNdKwodml/3l4/R8OPhRL6882egXfBtF0i0yhnX2s
+            4watN2OKQE8b9gfkrDWp0vA/hLLXx8IdIiuAkj55Dj6ciVXy6fTfKqcK4/IIX4MO
+            y5KD4MLQbmTja5KoK82mavsbhwXM7A==
+            =k4Xq
             -----END PGP SIGNATURE-----
         """.trimIndent()
         val publicKey = TestKey.verificationContextKey

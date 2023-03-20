@@ -26,6 +26,8 @@ import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.decryptSessionKeyOrNull
@@ -177,23 +179,35 @@ fun UnlockedPrivateKey.decryptSessionKeyOrNull(context: CryptoContext, keyPacket
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [PublicKey.verifyText]
  */
-fun UnlockedPrivateKey.signText(context: CryptoContext, text: String, trimTrailingSpaces: Boolean = true): Signature =
-    context.pgpCrypto.signText(text, unlockedKey.value, trimTrailingSpaces)
+fun UnlockedPrivateKey.signText(
+    context: CryptoContext,
+    text: String,
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
+): Signature =
+    context.pgpCrypto.signText(text, unlockedKey.value, trimTrailingSpaces, signatureContext)
 
 /**
  * Sign [data] using this [UnlockedPrivateKey].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [PublicKey.verifyData]
  */
-fun UnlockedPrivateKey.signData(context: CryptoContext, data: ByteArray): Signature =
-    context.pgpCrypto.signData(data, unlockedKey.value)
+fun UnlockedPrivateKey.signData(
+    context: CryptoContext,
+    data: ByteArray,
+    signatureContext: SignatureContext? = null
+): Signature =
+    context.pgpCrypto.signData(data, unlockedKey.value, signatureContext)
 
 /**
  * Sign [file] using this [UnlockedPrivateKey].
@@ -213,6 +227,7 @@ fun UnlockedPrivateKey.signFile(context: CryptoContext, file: File): Signature =
  * before signing the message.
  * Trimming trailing spaces used to be the default behavior of the library.
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [text] cannot be signed.
  *
@@ -222,17 +237,21 @@ fun UnlockedPrivateKey.signTextEncrypted(
     context: CryptoContext,
     text: String,
     encryptionKeyRing: PublicKeyRing,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    signatureContext: SignatureContext? = null
 ): EncryptedSignature = context.pgpCrypto.signTextEncrypted(
     text,
     unlockedKey.value,
     encryptionKeyRing.keys.map { it.key },
-    trimTrailingSpaces
+    trimTrailingSpaces,
+    signatureContext
 )
 
 /**
  * Sign [data] using this [UnlockedPrivateKey]
  * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *
@@ -241,11 +260,13 @@ fun UnlockedPrivateKey.signTextEncrypted(
 fun UnlockedPrivateKey.signDataEncrypted(
     context: CryptoContext,
     data: ByteArray,
-    encryptionKeyRing: PublicKeyRing
+    encryptionKeyRing: PublicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedSignature = context.pgpCrypto.signDataEncrypted(
     data,
     unlockedKey.value,
-    encryptionKeyRing.keys.map { it.key }
+    encryptionKeyRing.keys.map { it.key },
+    signatureContext
 )
 
 /**
@@ -276,6 +297,7 @@ fun UnlockedPrivateKey.signFileEncrypted(
  * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [UnlockedPrivateKey.signTextEncrypted]
  */
@@ -285,14 +307,16 @@ fun UnlockedPrivateKey.verifyTextEncrypted(
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing,
     time: VerificationTime = VerificationTime.Now,
-    trimTrailingSpaces: Boolean = true
+    trimTrailingSpaces: Boolean = true,
+    verificationContext: VerificationContext? = null
 ): Boolean = context.pgpCrypto.verifyTextEncrypted(
     text,
     encryptedSignature,
     unlockedKey.value,
     verificationKeyRing.keys.map { it.key },
     time,
-    trimTrailingSpaces
+    trimTrailingSpaces,
+    verificationContext
 )
 
 /**
@@ -300,6 +324,7 @@ fun UnlockedPrivateKey.verifyTextEncrypted(
  * and then verify it is a valid signature of [data] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [UnlockedPrivateKey.signTextEncrypted]
  */
@@ -308,13 +333,15 @@ fun UnlockedPrivateKey.verifyDataEncrypted(
     data: ByteArray,
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean = context.pgpCrypto.verifyDataEncrypted(
     data,
     encryptedSignature,
     unlockedKey.value,
     verificationKeyRing.keys.map { it.key },
-    time
+    time,
+    verificationContext
 )
 
 /**
@@ -322,6 +349,7 @@ fun UnlockedPrivateKey.verifyDataEncrypted(
  * and then verify it is a valid signature of [file] using [verificationKeyRing]
  *
  * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @see [UnlockedPrivateKey.signTextEncrypted]
  */
@@ -330,13 +358,15 @@ fun UnlockedPrivateKey.verifyFileEncrypted(
     file: File,
     encryptedSignature: EncryptedSignature,
     verificationKeyRing: PublicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): Boolean = context.pgpCrypto.verifyFileEncrypted(
     file,
     encryptedSignature,
     unlockedKey.value,
     verificationKeyRing.keys.map { it.key },
-    time
+    time,
+    verificationContext
 )
 
 /**
