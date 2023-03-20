@@ -44,8 +44,8 @@ internal class ApiResultRetryTest {
     @Test
     fun `certificate error`() {
         val result = ApiResult.Error.Certificate(Throwable())
-        assertFalse { result.isRetryable() }
-        assertFalse { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertTrue { result.isRetryable() }
+        assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
         assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
     }
 

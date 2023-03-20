@@ -207,8 +207,8 @@ fun ApiException.retryAfter(): Duration? = error.retryAfter()
  */
 fun <T> ApiResult<T>.isRetryable(): Boolean = when (this) {
     is ApiResult.Success,
-    is ApiResult.Error.Parse,
-    is ApiResult.Error.Certificate -> false
+    is ApiResult.Error.Parse -> false
+    is ApiResult.Error.Certificate -> true
     is ApiResult.Error.Connection -> true
     is ApiResult.Error.Http -> when (httpCode) {
         HttpResponseCodes.HTTP_REQUEST_TIMEOUT,
