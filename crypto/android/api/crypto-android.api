@@ -82,27 +82,27 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun getPassphrase ([BLjava/lang/String;)[B
 	public fun getPublicKey (Ljava/lang/String;)Ljava/lang/String;
 	public fun getUnarmored (Ljava/lang/String;)[B
-	public fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Ljava/lang/Long;
-	public fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Z)Ljava/lang/Long;
+	public fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
+	public fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ZLme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
 	public fun isPrivateKey (Ljava/lang/String;)Z
 	public fun isPublicKey (Ljava/lang/String;)Z
 	public fun isValidKey (Ljava/lang/String;)Z
 	public fun lock ([B[B)Ljava/lang/String;
-	public fun signData ([B[B)Ljava/lang/String;
-	public fun signDataEncrypted ([B[BLjava/util/List;)Ljava/lang/String;
+	public fun signData ([B[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
+	public fun signDataEncrypted ([B[BLjava/util/List;Lme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public fun signFile (Ljava/io/File;[B)Ljava/lang/String;
 	public fun signFileEncrypted (Ljava/io/File;[BLjava/util/List;)Ljava/lang/String;
-	public fun signText (Ljava/lang/String;[BZ)Ljava/lang/String;
-	public fun signTextEncrypted (Ljava/lang/String;[BLjava/util/List;Z)Ljava/lang/String;
+	public fun signText (Ljava/lang/String;[BZLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
+	public fun signTextEncrypted (Ljava/lang/String;[BLjava/util/List;ZLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public fun unlock (Ljava/lang/String;[B)Lme/proton/core/crypto/common/pgp/UnlockedKey;
 	public fun updatePrivateKeyPassphrase (Ljava/lang/String;[B[B)Ljava/lang/String;
 	public fun updateTime (J)V
-	public fun verifyData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
-	public fun verifyDataEncrypted ([BLjava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
-	public fun verifyFile (Lme/proton/core/crypto/common/pgp/DecryptedFile;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
-	public fun verifyFileEncrypted (Ljava/io/File;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;)Z
-	public fun verifyText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Z)Z
-	public fun verifyTextEncrypted (Ljava/lang/String;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;Z)Z
+	public fun verifyData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Z
+	public fun verifyDataEncrypted ([BLjava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Z
+	public fun verifyFile (Lme/proton/core/crypto/common/pgp/DecryptedFile;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Z
+	public fun verifyFileEncrypted (Ljava/io/File;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Z
+	public fun verifyText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ZLme/proton/core/crypto/common/pgp/VerificationContext;)Z
+	public fun verifyTextEncrypted (Ljava/lang/String;Ljava/lang/String;[BLjava/util/List;Lme/proton/core/crypto/common/pgp/VerificationTime;ZLme/proton/core/crypto/common/pgp/VerificationContext;)Z
 }
 
 public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto$Companion {

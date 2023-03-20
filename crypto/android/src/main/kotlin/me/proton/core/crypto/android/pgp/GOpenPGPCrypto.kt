@@ -30,6 +30,8 @@ import com.proton.gopenpgp.crypto.PGPSignature
 import com.proton.gopenpgp.crypto.PGPSplitMessage
 import com.proton.gopenpgp.crypto.PlainMessage
 import com.proton.gopenpgp.crypto.PlainMessageMetadata
+import com.proton.gopenpgp.crypto.SigningContext
+import com.proton.gopenpgp.crypto.VerificationContext as GolangVerificationContext
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
 import com.proton.gopenpgp.helper.Go2AndroidReader
 import com.proton.gopenpgp.helper.Helper
@@ -55,8 +57,10 @@ import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.PacketType
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
@@ -338,13 +342,22 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // region Private Sign
 
+    private fun SignatureContext.toGolang() = SigningContext(
+        value,
+        isCritical
+    )
+
     private fun signMessageDetached(
         plainMessage: PlainMessage,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): Signature {
         newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                return keyRing.value.signDetached(plainMessage).armored
+                return keyRing.value.signDetachedWithContext(
+                    plainMessage,
+                    signatureContext?.toGolang()
+                ).armored
             }
         }
     }
@@ -366,11 +379,13 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun signMessageDetachedEncrypted(
         plainMessage: PlainMessage,
         unlockedKey: Unarmored,
-        encryptionKeyRing: KeyRing
+        encryptionKeyRing: KeyRing,
+        signatureContext: SignatureContext?
     ): EncryptedSignature {
         newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                return keyRing.value.signDetachedEncrypted(plainMessage, encryptionKeyRing).armored
+                val signature = keyRing.value.signDetachedWithContext(plainMessage, signatureContext?.toGolang())
+                return encryptionKeyRing.encrypt(PlainMessage(signature.data), null).armored
             }
         }
     }
@@ -394,40 +409,66 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // region Private Verify
 
+    private fun VerificationContext.toGolang() : GolangVerificationContext {
+        val required = this.required
+        return GolangVerificationContext(
+            value,
+            required is VerificationContext.ContextRequirement.Required,
+            if(required is VerificationContext.ContextRequirement.Required.After) required.timestamp else 0
+        )
+    }
+
+
     private fun verifyMessageDetached(
         plainMessage: PlainMessage,
         signature: Armored,
         publicKey: Armored,
-        validAtUtc: Long
+        validAtUtc: Long,
+        verificationContext: VerificationContext?
     ): Boolean = runCatching {
         val pgpSignature = PGPSignature(signature)
         val publicKeyRing = publicKey.keyRing()
-        publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
+        publicKeyRing.verifyDetachedWithContext(plainMessage, pgpSignature, validAtUtc, verificationContext?.toGolang())
     }.isSuccess
 
     private fun getVerifiedTimestampMessageDetached(
         plainMessage: PlainMessage,
         signature: Armored,
         publicKey: Armored,
-        validAtUtc: Long
+        validAtUtc: Long,
+        verificationContext: VerificationContext?
     ): Long? = runCatching {
         val pgpSignature = PGPSignature(signature)
         val publicKeyRing = publicKey.keyRing()
-        publicKeyRing.getVerifiedSignatureTimestamp(plainMessage, pgpSignature, validAtUtc)
+        publicKeyRing.getVerifiedSignatureTimestampWithContext(
+            plainMessage,
+            pgpSignature,
+            validAtUtc,
+            verificationContext?.toGolang()
+        )
     }.getOrNull()
 
+    @SuppressWarnings("LongParameterList")
     private fun verifyMessageDetachedEncrypted(
         plainMessage: PlainMessage,
         encryptedSignature: EncryptedSignature,
         decryptionKey: Unarmored,
         publicKeys: List<Armored>,
-        validAtUtc: Long
+        validAtUtc: Long,
+        verificationContext: VerificationContext?
     ): Boolean = runCatching {
-        val pgpSignature = PGPMessage(encryptedSignature)
         val publicKeyRing = publicKeys.keyRing()
         newKey(decryptionKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                publicKeyRing.verifyDetachedEncrypted(plainMessage, pgpSignature, keyRing.value, validAtUtc)
+                val decryptedSignature = keyRing.value.decrypt(PGPMessage(encryptedSignature), null, 0).let {
+                    PGPSignature(it.data)
+                }
+                publicKeyRing.verifyDetachedWithContext(
+                    plainMessage,
+                    decryptedSignature,
+                    validAtUtc,
+                    verificationContext?.toGolang()
+                )
             }
         }
     }.isSuccess
@@ -436,30 +477,45 @@ class GOpenPGPCrypto : PGPCrypto {
         source: File,
         signature: Armored,
         publicKey: Armored,
-        validAtUtc: Long
+        validAtUtc: Long,
+        verificationContext: VerificationContext?
     ): Boolean = runCatching {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
             val pgpSignature = PGPSignature(signature)
             val publicKeyRing = publicKey.keyRing()
-            publicKeyRing.verifyDetachedStream(reader, pgpSignature, validAtUtc)
+            publicKeyRing.verifyDetachedStreamWithContext(
+                reader,
+                pgpSignature,
+                validAtUtc,
+                verificationContext?.toGolang()
+            )
         }
     }.isSuccess
 
+    @SuppressWarnings("LongParameterList")
     private fun verifyFileDetachedEncrypted(
         source: File,
         encryptedSignature: EncryptedSignature,
         decryptionKey: Unarmored,
         publicKeys: List<Armored>,
-        validAtUtc: Long
+        validAtUtc: Long,
+        verificationContext: VerificationContext?
     ): Boolean = runCatching {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
-            val pgpSignature = PGPMessage(encryptedSignature)
             val publicKeyRing = publicKeys.keyRing()
             newKey(decryptionKey).use { key ->
                 newKeyRing(key).use { keyRing ->
-                    publicKeyRing.verifyDetachedEncryptedStream(reader, pgpSignature, keyRing.value, validAtUtc)
+                    val decryptedSignature = keyRing.value.decrypt(PGPMessage(encryptedSignature), null, 0).let {
+                        PGPSignature(it.data)
+                    }
+                    publicKeyRing.verifyDetachedStreamWithContext(
+                        reader,
+                        decryptedSignature,
+                        validAtUtc,
+                        verificationContext?.toGolang()
+                    )
                 }
             }
         }
@@ -741,17 +797,19 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun signText(
         plainText: String,
         unlockedKey: Unarmored,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        signatureContext: SignatureContext?
     ): Signature = runCatching {
         val plainTextTrimmed = plainText.trimLinesEndIf { trimTrailingSpaces }
-        signMessageDetached(PlainMessage(plainTextTrimmed), unlockedKey)
+        signMessageDetached(PlainMessage(plainTextTrimmed), unlockedKey, signatureContext)
     }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
 
     override fun signData(
         data: ByteArray,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): Signature = runCatching {
-        signMessageDetached(PlainMessage(data), unlockedKey)
+        signMessageDetached(PlainMessage(data), unlockedKey, signatureContext)
     }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
 
     override fun signFile(
@@ -765,25 +823,32 @@ class GOpenPGPCrypto : PGPCrypto {
         plainText: String,
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        signatureContext: SignatureContext?
     ): EncryptedSignature = runCatching {
         val plainTextTrimmed = plainText.trimLinesEndIf { trimTrailingSpaces }
-        signMessageDetachedEncrypted(PlainMessage(plainTextTrimmed), unlockedKey, encryptionKeys.keyRing())
+        signMessageDetachedEncrypted(
+            PlainMessage(plainTextTrimmed),
+            unlockedKey,
+            encryptionKeys.keyRing(),
+            signatureContext
+        )
     }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
 
 
     override fun signDataEncrypted(
         data: ByteArray,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext?
     ): EncryptedSignature = runCatching {
-        signMessageDetachedEncrypted(PlainMessage(data), unlockedKey, encryptionKeys.keyRing())
+        signMessageDetachedEncrypted(PlainMessage(data), unlockedKey, encryptionKeys.keyRing(), signatureContext)
     }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
 
     override fun signFileEncrypted(
         file: File,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
         signFileDetachedEncrypted(file, unlockedKey, encryptionKeys.keyRing())
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
@@ -797,39 +862,56 @@ class GOpenPGPCrypto : PGPCrypto {
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
     ): Boolean {
         val plainTextTrimmed = plainText.trimLinesEndIf { trimTrailingSpaces }
-        return verifyMessageDetached(PlainMessage(plainTextTrimmed), signature, publicKey, time.toUtcSeconds())
+        return verifyMessageDetached(
+            PlainMessage(plainTextTrimmed),
+            signature,
+            publicKey,
+            time.toUtcSeconds(),
+            verificationContext
+        )
     }
 
     override fun verifyData(
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
-    ): Boolean = verifyMessageDetached(PlainMessage(data), signature, publicKey, time.toUtcSeconds())
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean = verifyMessageDetached(
+        PlainMessage(data),
+        signature,
+        publicKey,
+        time.toUtcSeconds(),
+        verificationContext
+    )
 
     override fun verifyFile(
         file: DecryptedFile,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
-    ): Boolean = verifyFileDetached(file.file, signature, publicKey, time.toUtcSeconds())
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean = verifyFileDetached(file.file, signature, publicKey, time.toUtcSeconds(), verificationContext)
 
     override fun getVerifiedTimestampOfText(
         plainText: String,
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
     ): Long? {
         val plainTextTrimmed = plainText.trimLinesEndIf { trimTrailingSpaces }
         return getVerifiedTimestampMessageDetached(
             PlainMessage(plainTextTrimmed),
             signature,
             publicKey,
-            time.toUtcSeconds()
+            time.toUtcSeconds(),
+            verificationContext
         )
     }
 
@@ -837,8 +919,15 @@ class GOpenPGPCrypto : PGPCrypto {
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
-    ): Long? = getVerifiedTimestampMessageDetached(PlainMessage(data), signature, publicKey, time.toUtcSeconds())
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Long? = getVerifiedTimestampMessageDetached(
+        PlainMessage(data),
+        signature,
+        publicKey,
+        time.toUtcSeconds(),
+        verificationContext
+    )
 
     override fun verifyTextEncrypted(
         plainText: String,
@@ -846,7 +935,8 @@ class GOpenPGPCrypto : PGPCrypto {
         privateKey: Unarmored,
         publicKeys: List<Armored>,
         time: VerificationTime,
-        trimTrailingSpaces: Boolean
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
     ): Boolean {
         val plainTextTrimmed = plainText.trimLinesEndIf { trimTrailingSpaces }
         return verifyMessageDetachedEncrypted(
@@ -854,7 +944,8 @@ class GOpenPGPCrypto : PGPCrypto {
             encryptedSignature,
             privateKey,
             publicKeys,
-            time.toUtcSeconds()
+            time.toUtcSeconds(),
+            verificationContext
         )
     }
 
@@ -863,13 +954,15 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): Boolean = verifyMessageDetachedEncrypted(
         PlainMessage(data),
         encryptedSignature,
         privateKey,
         publicKeys,
-        time.toUtcSeconds()
+        time.toUtcSeconds(),
+        verificationContext
     )
 
     override fun verifyFileEncrypted(
@@ -877,8 +970,16 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime
-    ): Boolean = verifyFileDetachedEncrypted(file, encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean = verifyFileDetachedEncrypted(
+        file,
+        encryptedSignature,
+        privateKey,
+        publicKeys,
+        time.toUtcSeconds(),
+        verificationContext
+    )
 
     // endregion
 

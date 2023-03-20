@@ -362,20 +362,29 @@ interface PGPCrypto {
      * Trimming trailing spaces used to be the default behavior of the library.
      * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
+     *
      * @throws [CryptoException] if [plainText] cannot be signed.
      *
      * @see [verifyText]
      */
-    fun signText(plainText: String, unlockedKey: Unarmored, trimTrailingSpaces: Boolean = true): Signature
+    fun signText(
+        plainText: String,
+        unlockedKey: Unarmored,
+        trimTrailingSpaces: Boolean = true,
+        signatureContext: SignatureContext? = null
+    ): Signature
 
     /**
      * Sign [data] using [unlockedKey].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @throws [CryptoException] if [data] cannot be signed.
      *
      * @see [verifyData]
      */
-    fun signData(data: ByteArray, unlockedKey: Unarmored): Signature
+    fun signData(data: ByteArray, unlockedKey: Unarmored, signatureContext: SignatureContext? = null): Signature
 
     /**
      * Sign [file] using [unlockedKey].
@@ -394,6 +403,8 @@ interface PGPCrypto {
      * Trimming trailing spaces used to be the default behavior of the library.
      * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
+     *
      * @throws [CryptoException] if [plainText] cannot be signed.
      *
      * @see [verifyTextEncrypted]
@@ -402,11 +413,14 @@ interface PGPCrypto {
         plainText: String,
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
-        trimTrailingSpaces: Boolean = true
+        trimTrailingSpaces: Boolean = true,
+        signatureContext: SignatureContext? = null
     ): EncryptedSignature
 
     /**
      * Sign [data] using [unlockedKey] and encrypt the signature using [encryptionKeys].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @throws [CryptoException] if [data] cannot be signed.
      *
@@ -415,11 +429,13 @@ interface PGPCrypto {
     fun signDataEncrypted(
         data: ByteArray,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext? = null
     ): EncryptedSignature
 
     /**
      * Sign [file] using [unlockedKey] and encrypt the signature using [encryptionKeys].
+     *
      *
      * @throws [CryptoException] if [file] cannot be signed.
      *
@@ -440,6 +456,10 @@ interface PGPCrypto {
      * Trimming trailing spaces used to be the default behavior of the library.
      * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
+     *
      * @see [signText]
      */
     fun verifyText(
@@ -447,7 +467,8 @@ interface PGPCrypto {
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime = VerificationTime.Now,
-        trimTrailingSpaces: Boolean = true
+        trimTrailingSpaces: Boolean = true,
+        verificationContext: VerificationContext? = null
     ): Boolean
 
     /**
@@ -461,7 +482,8 @@ interface PGPCrypto {
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): Boolean
 
     /**
@@ -469,13 +491,17 @@ interface PGPCrypto {
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
      * @see [signFile]
      */
     fun verifyFile(
         file: DecryptedFile,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): Boolean
 
     /**
@@ -488,6 +514,9 @@ interface PGPCrypto {
      * Trimming trailing spaces used to be the default behavior of the library.
      * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
      * @see [signText]
      */
     fun getVerifiedTimestampOfText(
@@ -495,7 +524,8 @@ interface PGPCrypto {
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime = VerificationTime.Now,
-        trimTrailingSpaces: Boolean = true
+        trimTrailingSpaces: Boolean = true,
+        verificationContext: VerificationContext? = null
     ): Long?
 
     /**
@@ -504,13 +534,17 @@ interface PGPCrypto {
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
      * @see [signData]
      */
     fun getVerifiedTimestampOfData(
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): Long?
 
     /**
@@ -523,6 +557,9 @@ interface PGPCrypto {
      * Trimming trailing spaces used to be the default behavior of the library.
      * This might be needed in some cases to respect a standard, or to maintain compatibility with old signatures.
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
      * @see [signTextEncrypted]
      */
     fun verifyTextEncrypted(
@@ -531,7 +568,8 @@ interface PGPCrypto {
         privateKey: Unarmored,
         publicKeys: List<Armored>,
         time: VerificationTime = VerificationTime.Now,
-        trimTrailingSpaces: Boolean = true
+        trimTrailingSpaces: Boolean = true,
+        verificationContext: VerificationContext? = null
     ): Boolean
 
     /**
@@ -540,6 +578,9 @@ interface PGPCrypto {
      *
      * @param time time for encrypted signature validation, default to [VerificationTime.Now].
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
      * @see [signDataEncrypted]
      */
     fun verifyDataEncrypted(
@@ -547,7 +588,8 @@ interface PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): Boolean
 
     /**
@@ -556,6 +598,9 @@ interface PGPCrypto {
      *
      * @param time time for encrypted signature validation, default to [VerificationTime.Now].
      *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
+     *
      * @see [signFileEncrypted]
      */
     fun verifyFileEncrypted(
@@ -563,7 +608,8 @@ interface PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): Boolean
 
     /**

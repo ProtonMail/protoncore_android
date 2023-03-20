@@ -25,6 +25,7 @@ import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.PGPHeader
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -1227,5 +1228,190 @@ internal class GOpenPGPCryptoTest {
         val decrypted = crypto.decryptText(encrypted, unarmored)
         // then
         assertEquals(message, decrypted)
+    }
+
+    @Test
+    fun verifyDetachedCriticalContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.5.2
+            Comment: https://gopenpgp.org
+            
+            wsCaBAABCgBOBQJkBdTjCZA+tiWe3yHfJBYhBG6LoimwzMr2li+XlT62JZ7fId8k
+            JpSAAAAAABEADGNvbnRleHRAcHJvdG9uLmNodGVzdC1jb250ZXh0AACmMwgAmhVy
+            MIOgqeidOgNUQrOren3m53sA48dO0xmSRMd1HZa4uv5gDDisl+j98l7iawpvnQ1m
+            GqMvvrxyCV66h3W1efjGCW8lbGMKjaSZL4iUteRrAYCfsBq2l7yMDqFn+Kqns9f5
+            c29eh5mSxiGtmJsGSoJVFw7ZfDS+QpIw1yEsdYcyKLqdxmFS5pNQwY8uGuCrPaya
+            4iHLP52kGRt9pTSQTf8flwjb1bjTTJ/dOd3C2AVXtH7NmOgtLeLuc2bT6WKJFPwd
+            BYgCnD0r/6bcRqzqdhcV2lK3WtG1AitH0kKweXhPbtv9OGD36//04zGAeZY7BK8+
+            4J2lzLNX+pYtHPbnRw==
+            =XIJE
+            -----END PGP SIGNATURE-----
+        """.trimIndent()
+        val publicKey = TestKey.verificationContextKey
+        val sigCreationTime = 1678104846L
+        crypto.updateTime(sigCreationTime + 100_000)
+        // when
+        val verifiedWithoutContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithWrongContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        // then
+        assertTrue(verifiedWithContext)
+        assertFalse(verifiedWithoutContext)
+        assertFalse(verifiedWithWrongContext)
+    }
+
+    @Test
+    fun verifyDetachedNonCriticalContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.5.2
+            Comment: https://gopenpgp.org
+            
+            wsCaBAABCgBOBQJkBdcDCZA+tiWe3yHfJBYhBG6LoimwzMr2li+XlT62JZ7fId8k
+            JhSAAAAAABEADGNvbnRleHRAcHJvdG9uLmNodGVzdC1jb250ZXh0AAAWswgAmtfD
+            vf7yNlc2umZ4p8ddlcQGhkpwQgiTuaYIeJytAytPtzzSAuMUcACeBCXCTt9iXaak
+            ImnZULdBW6T5n/o5zVTVO5yGniOeswpXqERnp+Qmsowjd5fU+XRBnkx0cSVIrVo5
+            tB4gf5nxAnojusQekELnNINd8nXrWYHiDFM+aos+pTxqzWlcJv32LtQ4yuxWSzIL
+            9dJMIpqL+1jk2QI6E+6iTM6NkwNhYjJ7emMGJXyzPmXj4pmpJ1lYo50uHRlwirnI
+            VXcOkUKUwGdibnCjUv+XFoG7Qv2ilDuk/TxTKSjW7ajGjv6KAOde/pOtmpiwcWKi
+            OzIkiswXw5vOtLkrew==
+            =Ub8I
+            -----END PGP SIGNATURE-----
+        """.trimIndent()
+        val publicKey = TestKey.verificationContextKey
+        val sigCreationTime = 1678104846L
+        crypto.updateTime(sigCreationTime + 100_000)
+        // when
+        val verifiedWithoutContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithWrongContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        // then
+        assertTrue(verifiedWithContext)
+        assertTrue(verifiedWithoutContext)
+        assertFalse(verifiedWithWrongContext)
+    }
+
+    @Test
+    fun verifyDetachedMissingContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signature = """
+            -----BEGIN PGP SIGNATURE-----
+            Version: GopenPGP 2.5.2
+            Comment: https://gopenpgp.org
+            
+            wsCaBAABCgBOBQJkBdcDCZA+tiWe3yHfJBYhBG6LoimwzMr2li+XlT62JZ7fId8k
+            JhSAAAAAABEADGNvbnRleHRAcHJvdG9uLmNodGVzdC1jb250ZXh0AAAWswgAmtfD
+            vf7yNlc2umZ4p8ddlcQGhkpwQgiTuaYIeJytAytPtzzSAuMUcACeBCXCTt9iXaak
+            ImnZULdBW6T5n/o5zVTVO5yGniOeswpXqERnp+Qmsowjd5fU+XRBnkx0cSVIrVo5
+            tB4gf5nxAnojusQekELnNINd8nXrWYHiDFM+aos+pTxqzWlcJv32LtQ4yuxWSzIL
+            9dJMIpqL+1jk2QI6E+6iTM6NkwNhYjJ7emMGJXyzPmXj4pmpJ1lYo50uHRlwirnI
+            VXcOkUKUwGdibnCjUv+XFoG7Qv2ilDuk/TxTKSjW7ajGjv6KAOde/pOtmpiwcWKi
+            OzIkiswXw5vOtLkrew==
+            =Ub8I
+            -----END PGP SIGNATURE-----
+        """.trimIndent()
+        val publicKey = TestKey.verificationContextKey
+        val sigCreationTime = 1678104846L
+        crypto.updateTime(sigCreationTime + 100_000)
+        // when
+        val verifiedWithoutContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = null
+        )
+        val verifiedWithContextAlwaysRequired = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithContextRequiredBeforeSig = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.After(sigCreationTime - 100_000)
+            )
+        )
+        val verifiedWithContextRequiredAfterSig = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.After(sigCreationTime + 100_000)
+            )
+        )
+        val verifiedWithWrongContext = crypto.verifyText(
+            plainText,
+            signature,
+            publicKey,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        // then
+        assertFalse(verifiedWithContextAlwaysRequired)
+        assertFalse(verifiedWithContextRequiredBeforeSig)
+        assertTrue(verifiedWithContextRequiredAfterSig)
+        assertTrue(verifiedWithoutContext)
+        assertFalse(verifiedWithWrongContext)
     }
 }
