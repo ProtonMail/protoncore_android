@@ -36,6 +36,7 @@ public fun BillingResult.toGiapStatus(): GiapStatus? = responseCode.toGiapStatus
 
 private fun Int.toGiapStatus(): GiapStatus? =
     when (this) {
+        BillingClient.BillingResponseCode.OK -> GiapStatus.success
         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> GiapStatus.billingUnavailable
         BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
         BillingClient.BillingResponseCode.SERVICE_TIMEOUT,
