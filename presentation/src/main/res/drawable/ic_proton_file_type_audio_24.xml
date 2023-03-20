@@ -1,0 +1,39 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M2,4.5C2,3.119 3.119,2 4.5,2H19.5C20.881,2 22,3.119 22,4.5V19.5C22,20.881 20.881,22 19.5,22H4.5C3.119,22 2,20.881 2,19.5V4.5Z"
+      android:fillColor="#DADBE0" />
+  <path
+      android:pathData="M11.569,16.61C11.744,16.747 12,16.622 12,16.4V7.601C12,7.378 11.744,7.254 11.569,7.391L8.212,10.016V10.016H6.267C6.119,10.016 6,10.135 6,10.282V13.718C6,13.866 6.119,13.985 6.267,13.985H8.212L11.569,16.61Z"
+      android:fillColor="#3A3F4A"
+      android:fillType="evenOdd" />
+  <path
+      android:pathData="M17.198,12.007C17.198,9.862 15.464,8.136 13.333,8.136V7.333C15.905,7.333 18,9.417 18,12.007C18,14.598 15.903,16.667 13.333,16.667V15.864C15.465,15.864 17.198,14.15 17.198,12.007Z"
+      android:fillColor="#3A3F4A"
+      android:fillType="evenOdd" />
+  <path
+      android:pathData="M15.065,12C15.065,11.046 14.292,10.272 13.333,10.272V9.469C14.733,9.469 15.867,10.6 15.867,12C15.867,13.397 14.736,14.544 13.333,14.544V13.741C14.289,13.741 15.065,12.958 15.065,12Z"
+      android:fillColor="#3A3F4A"
+      android:fillType="evenOdd" />
+</vector>

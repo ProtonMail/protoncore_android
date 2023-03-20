@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M2,4.5C2,3.119 3.119,2 4.5,2H19.5C20.881,2 22,3.119 22,4.5V19.5C22,20.881 20.881,22 19.5,22H4.5C3.119,22 2,20.881 2,19.5V4.5Z"
+      android:fillColor="#EC3213" />
+  <path
+      android:pathData="M11.916,10.575L12.804,9.038C12.894,8.882 12.941,8.705 12.941,8.525C12.941,8.345 12.894,8.169 12.804,8.013C12.714,7.857 12.584,7.728 12.429,7.638C12.273,7.548 12.096,7.5 11.916,7.5C11.736,7.5 11.559,7.547 11.404,7.637C11.248,7.727 11.118,7.857 11.028,8.013C10.938,8.168 10.891,8.345 10.891,8.525C10.891,8.705 10.938,8.882 11.028,9.038L11.916,10.575ZM11.916,10.575L13.908,14.439M11.916,10.575L9.942,14.439M9.942,14.439H7.966C7.822,14.439 7.679,14.467 7.545,14.523C7.412,14.578 7.291,14.659 7.189,14.761C7.087,14.863 7.006,14.984 6.951,15.117C6.896,15.25 6.867,15.393 6.867,15.538C6.867,16.642 8.315,17.056 8.899,16.118L9.942,14.439ZM9.942,14.439H13.908M13.908,14.439H15.884C16.028,14.439 16.171,14.467 16.304,14.523C16.438,14.578 16.559,14.659 16.66,14.761C16.762,14.863 16.843,14.984 16.898,15.117C16.953,15.251 16.981,15.393 16.981,15.538C16.981,16.642 15.533,17.056 14.95,16.118L13.908,14.439Z"
+      android:strokeWidth="1.15"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff" />
+</vector>
