@@ -11,6 +11,37 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.17.0] - 2023-03-21
+
+### Chores
+
+- Add updated file type drawables.
+
+  Added the latest version of file types used in mail android v6 for attachments
+- observability:
+  - Update JSON file for "Sign In" and "Checkout" dashboards.
+  - Update Grafana dashboard JSON files.
+
+### Features
+
+- auth:
+  - Add observability for converting from EA to IA.
+- observability:
+  - Add observability for converting from EA to IA.
+
+### Bug Fixes
+
+- event-manager:
+  - Fix NoSuchElementException in EventWorkerManagerImpl.isRunning.
+- key:
+  - Fix updating key passphrase error.
+- network:
+  - Treat ApiResult.Error.Certificate errors as retryable.
+- payment-iap:
+  - Add missing `OK` case for observability label value.
+- presentation:
+  - Fix saving state for password input fields.
+
 ## [9.16.1] - 2023-03-15
 
 ### Bug Fixes
