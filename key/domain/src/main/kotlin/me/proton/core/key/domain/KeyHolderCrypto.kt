@@ -54,6 +54,7 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import me.proton.core.util.kotlin.CoreLogger
 
 /**
  * Executes the given [block] function for a [KeyHolder] on a [KeyHolderContext] and then close any associated
@@ -1191,6 +1192,8 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
     validTokenPredicate: (ByteArray) -> Boolean = { true }
 ): NestedPrivateKey? = runCatching {
     decryptAndVerifyNestedKeyOrThrow(nestedPrivateKey, verifyKeyRing, validTokenPredicate)
+}.onFailure {
+    CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt and/or verify nested key.")
 }.getOrNull()
 
 /**
@@ -1214,6 +1217,8 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
     validTokenPredicate: (ByteArray) -> Boolean = { true }
 ): NestedPrivateKey? = runCatching {
     decryptAndVerifyNestedKeyOrThrow(key, passphrase, signature, verifyKeyRing, validTokenPredicate)
+}.onFailure {
+    CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt and/or verify nested key.")
 }.getOrNull()
 
 /**

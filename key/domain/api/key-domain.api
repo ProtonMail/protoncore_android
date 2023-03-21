@@ -120,6 +120,11 @@ public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static synthetic fun verifyTextEncrypted$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PublicKeyRing;Lme/proton/core/crypto/common/pgp/VerificationTime;ZILjava/lang/Object;)Z
 }
 
+public final class me/proton/core/key/domain/LogTag {
+	public static final field DEFAULT Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/key/domain/LogTag;
+}
+
 public final class me/proton/core/key/domain/PrivateKeyCryptoKt {
 	public static final fun canUnlock (Lme/proton/core/key/domain/entity/key/PrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;)Z
 	public static final fun canUnlock (Lme/proton/core/key/domain/entity/key/PrivateKey;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;)Z
