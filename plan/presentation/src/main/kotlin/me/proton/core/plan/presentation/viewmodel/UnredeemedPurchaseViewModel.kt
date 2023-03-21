@@ -33,10 +33,12 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
+import me.proton.core.payment.presentation.LogTag
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.RedeemGooglePurchase
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,6 +73,13 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
         )
         emit(State.PurchaseRedeemed)
     }.catch {
+        with (unredeemedPurchase.googlePurchase) {
+            CoreLogger.e(
+                LogTag.SUBSCRIPTION_CREATION_REDEEM,
+                it,
+                "Subscription creation error for purchase token: $purchaseToken and customerId: $customerId"
+            )
+        }
         _state.emit(State.Error)
     }.onEach {
         _state.emit(it)

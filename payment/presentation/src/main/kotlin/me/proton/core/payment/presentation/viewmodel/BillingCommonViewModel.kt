@@ -50,6 +50,7 @@ import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.adjustExpirationYear
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
@@ -59,6 +60,7 @@ import me.proton.core.plan.domain.entity.PLAN_ADDON
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.hasFlag
 
@@ -270,6 +272,13 @@ public abstract class BillingCommonViewModel(
             // endregion
         }
     }.catch {
+        if (paymentType is PaymentType.GoogleIAP) {
+            CoreLogger.e(
+                LogTag.SUBSCRIPTION_CREATION,
+                it,
+                "Subscription creation error for purchase token: ${paymentType.purchaseToken} and customerId: ${paymentType.customerId}"
+            )
+        }
         _subscriptionState.tryEmit(State.Error.General(it))
     }.onEach {
         _subscriptionState.tryEmit(it)

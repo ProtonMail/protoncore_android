@@ -175,7 +175,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                 codes = it.codes,
                 currency = it.plan.currency,
                 cycle = it.plan.subscriptionCycle,
-                PaymentType.GoogleIAP(
+                paymentType = PaymentType.GoogleIAP(
                     productId = productId,
                     purchaseToken = purchaseToken,
                     orderId = orderId,
