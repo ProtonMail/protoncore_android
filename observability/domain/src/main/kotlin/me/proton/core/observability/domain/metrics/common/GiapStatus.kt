@@ -26,5 +26,6 @@ public enum class GiapStatus {
     developerError,
     googlePlayError,
     itemError,
+    notFound,
     unknown
 }

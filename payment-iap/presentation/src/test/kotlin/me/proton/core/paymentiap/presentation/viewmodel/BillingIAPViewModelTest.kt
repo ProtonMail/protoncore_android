@@ -56,7 +56,11 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = BillingIAPViewModel(billingRepository, findUnacknowledgedGooglePurchase, observabilityManager)
+        tested = BillingIAPViewModel(
+            billingRepository,
+            findUnacknowledgedGooglePurchase,
+            observabilityManager
+        )
     }
 
     @Test
@@ -96,7 +100,11 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         )
 
         // WHEN
-        tested = BillingIAPViewModel(billingRepository, findUnacknowledgedGooglePurchase, observabilityManager)
+        tested = BillingIAPViewModel(
+            billingRepository,
+            findUnacknowledgedGooglePurchase,
+            observabilityManager
+        )
         // wait until `onPurchasesUpdated` is called:
         tested.billingIAPState.first { it is BillingIAPViewModel.State.Error.ProductPurchaseError.Message }
 
@@ -104,5 +112,25 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         val dataSlot = slot<CheckoutGiapBillingPurchaseTotalV1>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.developerError, dataSlot.captured.Labels.status)
+    }
+
+    @Test
+    fun `query for a product that does not exist`() = coroutinesTest {
+        // GIVEN
+        coEvery { billingRepository.getProductDetails(any()) } returns null
+
+        // WHEN
+        tested.queryProductDetails("test-plan-name").join()
+
+        // THEN
+
+        assertEquals(
+            BillingIAPViewModel.State.Error.ProductDetailsError.ProductMismatch,
+            tested.billingIAPState.value
+        )
+
+        val dataSlot = slot<CheckoutGiapBillingProductQueryTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(GiapStatus.notFound, dataSlot.captured.Labels.status)
     }
 }
