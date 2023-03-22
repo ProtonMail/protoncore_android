@@ -52,6 +52,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotalV1
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
@@ -72,6 +73,7 @@ internal class SignupViewModel @Inject constructor(
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
     private val observabilityManager: ObservabilityManager,
+    private val canUpgradeToPaid: CanUpgradeToPaid,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -97,7 +99,7 @@ internal class SignupViewModel @Inject constructor(
         object Idle : State()
 
         @Parcelize
-        object CreateUserInputReady : State()
+        data class CreateUserInputReady(val paidOptionAvailable: Boolean) : State()
 
         @Parcelize
         object CreateUserProcessing : State()
@@ -134,9 +136,11 @@ internal class SignupViewModel @Inject constructor(
     fun skipRecoveryMethod() = setRecoveryMethod(null)
 
     fun setRecoveryMethod(recoveryMethod: RecoveryMethod?) {
-        _recoveryMethod = recoveryMethod
-        setExternalRecoveryEmail(recoveryMethod)
-        _state.tryEmit(State.CreateUserInputReady)
+        viewModelScope.launch {
+            _recoveryMethod = recoveryMethod
+            setExternalRecoveryEmail(recoveryMethod)
+            _state.tryEmit(State.CreateUserInputReady(canUpgradeToPaid()))
+        }
     }
 
     fun onCreateUserCancelled() {

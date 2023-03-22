@@ -109,7 +109,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             .onEach {
                 when (it) {
                     is SignupViewModel.State.Idle -> Unit
-                    is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady()
+                    is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady(it.paidOptionAvailable)
                     is SignupViewModel.State.CreateUserProcessing -> onCreateUserProcessing()
                     is SignupViewModel.State.CreateUserSuccess -> onCreateUserSuccess(it)
                     is SignupViewModel.State.Error.CreateUserCanceled -> Unit
@@ -168,9 +168,18 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }.exhaustive
     }
 
-    private fun onCreateUserInputReady() {
-        if (!supportFragmentManager.hasPlanSignupFragment()) {
+    private fun onCreateUserInputReady(paidOptionAvailable: Boolean) {
+        if (paidOptionAvailable && !supportFragmentManager.hasPlanSignupFragment()) {
             supportFragmentManager.showPlansSignup(planInput = PlanInput())
+        } else if (!paidOptionAvailable) {
+            val selectedPlan = SelectedPlan.free(getString(R.string.plans_free_name))
+            signUpViewModel.subscriptionDetails = SubscriptionDetails(
+                billingResult = null,
+                planName = selectedPlan.planName,
+                planDisplayName = selectedPlan.planDisplayName,
+                cycle = selectedPlan.cycle.toSubscriptionCycle()
+            )
+            signUpViewModel.startCreateUserWorkflow()
         }
     }
 

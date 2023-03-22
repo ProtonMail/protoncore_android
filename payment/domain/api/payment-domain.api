@@ -433,6 +433,12 @@ public abstract interface class me/proton/core/payment/domain/usecase/Acknowledg
 	public abstract fun invoke-vl4Hrws (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/domain/usecase/CanUpgradeToPaid {
+	public fun <init> (ZLme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public final fun getSupportPaidPlans ()Z
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod {
 	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
