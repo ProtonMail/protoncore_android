@@ -11,6 +11,18 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.17.1] - 2023-03-22
+
+### Chores
+
+- payment-iap:
+  - Add log tag for the purchase token.
+
+### Bug Fixes
+
+- auth:
+  - Don't ask TwoPass for VPN.
+
 ## [9.17.0] - 2023-03-21
 
 ### Chores
