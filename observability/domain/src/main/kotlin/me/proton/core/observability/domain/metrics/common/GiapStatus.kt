@@ -24,6 +24,7 @@ public enum class GiapStatus {
     billingUnavailable,
     connectionError,
     developerError,
+    featureNotSupported,
     googlePlayError,
     itemError,
     notFound,

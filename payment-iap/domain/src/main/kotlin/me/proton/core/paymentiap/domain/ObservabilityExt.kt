@@ -44,6 +44,7 @@ private fun Int.toGiapStatus(): GiapStatus? =
         BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> GiapStatus.connectionError
         BillingClient.BillingResponseCode.DEVELOPER_ERROR -> GiapStatus.developerError
         BillingClient.BillingResponseCode.ERROR -> GiapStatus.googlePlayError
+        BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> GiapStatus.featureNotSupported
         BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED,
         BillingClient.BillingResponseCode.ITEM_NOT_OWNED,
         BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> GiapStatus.itemError

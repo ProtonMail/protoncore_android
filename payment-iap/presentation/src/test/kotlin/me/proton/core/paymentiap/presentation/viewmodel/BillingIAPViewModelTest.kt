@@ -35,6 +35,7 @@ import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTo
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
+import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
@@ -132,5 +133,26 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         val dataSlot = slot<CheckoutGiapBillingProductQueryTotalV1>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.notFound, dataSlot.captured.Labels.status)
+    }
+
+    @Test
+    fun `feature not supported when querying for a product`() = coroutinesTest {
+        // GIVEN
+        coEvery { billingRepository.getProductDetails(any()) } throws BillingClientError(
+            BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED, "Feature not supported"
+        )
+
+        // WHEN
+        tested.queryProductDetails("test-plan-name").join()
+
+        // THEN
+        assertEquals(
+            BillingIAPViewModel.State.Error.ProductDetailsError.ResponseCode,
+            tested.billingIAPState.value
+        )
+
+        val dataSlot = slot<CheckoutGiapBillingProductQueryTotalV1>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(GiapStatus.featureNotSupported, dataSlot.captured.Labels.status)
     }
 }

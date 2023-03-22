@@ -1711,6 +1711,7 @@ public final class me/proton/core/observability/domain/metrics/common/GiapStatus
 	public static final field billingUnavailable Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field developerError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field featureNotSupported Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field googlePlayError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field itemError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field notFound Lme/proton/core/observability/domain/metrics/common/GiapStatus;
