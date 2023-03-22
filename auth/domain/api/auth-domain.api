@@ -373,7 +373,7 @@ public final class me/proton/core/auth/domain/usecase/RecoverableErrorsKt {
 }
 
 public final class me/proton/core/auth/domain/usecase/SetupAccountCheck {
-	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;)V
+	public fun <init> (Lme/proton/core/domain/entity/Product;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLme/proton/core/account/domain/entity/AccountType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
