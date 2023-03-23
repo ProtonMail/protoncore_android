@@ -50,6 +50,7 @@ import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotalV1
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.test.android.ArchTest
@@ -90,6 +91,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @MockK(relaxed = true)
     private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK(relaxed = true)
+    private lateinit var canUpgradeToPaid: CanUpgradeToPaid
 
     @MockK(relaxed = true)
     private lateinit var authRepository: AuthRepository
@@ -184,11 +188,13 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             challengeManager,
             signupChallengeConfig,
             observabilityManager,
+            canUpgradeToPaid,
             mockk(relaxed = true)
         )
         coEvery { clientIdProvider.getClientId(any()) } returns testClientId
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
+        coEvery { canUpgradeToPaid.invoke() } returns true
 
         coEvery {
             userRepository.createUser(
@@ -252,10 +258,11 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         val emailRecovery = RecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
-        viewModel.setRecoveryMethod(emailRecovery)
 
         viewModel.state.test {
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
+            viewModel.setRecoveryMethod(emailRecovery)
             assertIs<SignupViewModel.State.CreateUserInputReady>(awaitItem())
             viewModel.startCreateUserWorkflow()
             // THEN
@@ -285,9 +292,11 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
-        viewModel.setRecoveryMethod(emailRecovery)
+
         viewModel.state.test {
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
+            viewModel.setRecoveryMethod(emailRecovery)
             assertIs<SignupViewModel.State.CreateUserInputReady>(awaitItem())
             viewModel.startCreateUserWorkflow()
             // THEN

@@ -18,26 +18,45 @@
 
 package me.proton.core.plan.data.repository
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PlansRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : PlansRepository {
 
+    private val defaultResponseExpirationTimeMs = 60000
+    private val mutex: Mutex = Mutex()
+    private var paidPlansCache: List<Plan>? = null
+    private var lastAccessTime: Long = 0
+
     /**
      * Returns from the API all plans available for the user in the moment.
      */
-    override suspend fun getPlans(sessionUserId: SessionUserId?): List<Plan> =
-        provider.get<PlansApi>(sessionUserId).invoke {
-            getPlans().plans.map {
-                it.toPlan()
+    override suspend fun getPlans(sessionUserId: SessionUserId?): List<Plan> {
+        mutex.withLock {
+            val currentTime = System.currentTimeMillis()
+            return if (currentTime - lastAccessTime > defaultResponseExpirationTimeMs) {
+                provider.get<PlansApi>(sessionUserId).invoke {
+                    lastAccessTime = currentTime
+                    paidPlansCache = getPlans().plans.map {
+                        it.toPlan()
+                    }
+                    paidPlansCache ?: emptyList()
+                }.valueOrThrow
+            } else {
+                paidPlansCache ?: emptyList()
             }
-        }.valueOrThrow
+        }
+    }
 
     override suspend fun getPlansDefault(sessionUserId: SessionUserId?): Plan =
         provider.get<PlansApi>(sessionUserId).invoke {
