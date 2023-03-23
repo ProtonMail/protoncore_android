@@ -33,7 +33,7 @@ public interface MinimalSignInInternalTests {
     public val quark: Quark
     public val users: User.Users
 
-    public fun verifyAfterLoginScreenDisplayed()
+    public fun verifyAfter()
 
     @Test
     public fun signInInternalHappyPath() {
@@ -41,7 +41,7 @@ public interface MinimalSignInInternalTests {
 
         AddAccountRobot.clickSignIn()
         SignInFlow.signInInternal(user.name, user.password)
-        verifyAfterLoginScreenDisplayed()
+        verifyAfter()
     }
 
     @Test
@@ -50,7 +50,7 @@ public interface MinimalSignInInternalTests {
 
         AddAccountRobot.clickSignIn()
         SignInFlow.signInInternalTwoPass(user.name, user.password, user.passphrase)
-        verifyAfterLoginScreenDisplayed()
+        verifyAfter()
     }
 
     @Test
@@ -65,6 +65,6 @@ public interface MinimalSignInInternalTests {
 
         AddAccountRobot.clickSignIn()
         SignInFlow.signInExternal(user.email, user.password, username)
-        verifyAfterLoginScreenDisplayed()
+        verifyAfter()
     }
 }

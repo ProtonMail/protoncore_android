@@ -21,6 +21,7 @@ package me.proton.core.auth.test
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.flow.SignUpFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
+import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.util.kotlin.random
 import kotlin.test.Test
 
@@ -29,11 +30,19 @@ import kotlin.test.Test
  */
 public interface MinimalSignUpExternalTests {
 
+    public val isCongratsDisplayed: Boolean
+    public fun verifyAfter()
+
     @Test
     public fun signupExternalAccountHappyPath() {
         val testEmail = String.Companion.random(10, ('a'..'z').toList()) + "@example.com"
 
         AddAccountRobot.clickSignUp()
         SignUpFlow.signUpExternalEmail(testEmail)
+        CongratsRobot.takeIf { isCongratsDisplayed }?.apply {
+            uiElementsDisplayed()
+            clickStart()
+        }
+        verifyAfter()
     }
 }
