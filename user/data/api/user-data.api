@@ -220,6 +220,55 @@ public final class me/proton/core/user/data/UserManagerImpl_Factory : dagger/int
 	public static fun newInstance (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/user/data/UserManagerImpl;
 }
 
+public final class me/proton/core/user/data/UserSpaceEvent {
+	public static final field Companion Lme/proton/core/user/data/UserSpaceEvent$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILjava/lang/Long;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Long;)V
+	public synthetic fun <init> (Ljava/lang/Long;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Long;
+	public final fun copy (Ljava/lang/Long;)Lme/proton/core/user/data/UserSpaceEvent;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/UserSpaceEvent;Ljava/lang/Long;ILjava/lang/Object;)Lme/proton/core/user/data/UserSpaceEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUsedSpace ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/UserSpaceEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/UserSpaceEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/UserSpaceEvent$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserSpaceEvent;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/UserSpaceEvent;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserSpaceEvent$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public class me/proton/core/user/data/UserSpaceEventListener : me/proton/core/eventmanager/domain/EventListener {
+	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/user/domain/repository/UserRepository;)V
+	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOrder ()I
+	public fun getType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/UserSpaceEventListener_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/UserSpaceEventListener_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/data/UserSpaceEventListener;
+	public static fun newInstance (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/user/domain/repository/UserRepository;)Lme/proton/core/user/data/UserSpaceEventListener;
+}
+
 public abstract interface class me/proton/core/user/data/api/AddressApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
 	public abstract fun createAddress (Lme/proton/core/user/data/api/request/CreateAddressRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAddress (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -661,6 +710,7 @@ public abstract class me/proton/core/user/data/db/dao/UserDao : me/proton/core/d
 	public abstract fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setUsedSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/user/data/db/dao/UserKeyDao : me/proton/core/data/room/db/BaseDao {
@@ -910,6 +960,7 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 	public fun unlockUserForLockedScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun unlockUserForPasswordScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateUserUsedSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl_Factory : dagger/internal/Factory {

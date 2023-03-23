@@ -43,4 +43,7 @@ abstract class UserDao : BaseDao<UserEntity>() {
     @Transaction
     @Query("UPDATE UserEntity SET passphrase = :passphrase WHERE userId = :userId")
     abstract suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray?)
+
+    @Query("UPDATE UserEntity SET usedSpace = :usedSpace WHERE userId = :userId")
+    abstract suspend fun setUsedSpace(userId: UserId, usedSpace: Long)
 }
