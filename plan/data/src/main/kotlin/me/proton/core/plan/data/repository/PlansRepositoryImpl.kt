@@ -46,10 +46,10 @@ class PlansRepositoryImpl @Inject constructor(
             val currentTime = System.currentTimeMillis()
             return if (currentTime - lastAccessTime > defaultResponseExpirationTimeMs) {
                 provider.get<PlansApi>(sessionUserId).invoke {
-                    lastAccessTime = currentTime
                     paidPlansCache = getPlans().plans.map {
                         it.toPlan()
                     }
+                    lastAccessTime = currentTime
                     paidPlansCache ?: emptyList()
                 }.valueOrThrow
             } else {

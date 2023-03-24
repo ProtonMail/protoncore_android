@@ -61,6 +61,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
@@ -194,7 +195,6 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         coEvery { clientIdProvider.getClientId(any()) } returns testClientId
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
-        coEvery { canUpgradeToPaid.invoke() } returns true
 
         coEvery {
             userRepository.createUser(
@@ -223,10 +223,11 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     }
 
     @Test
-    fun `create Internal user no recovery method set`() = coroutinesTest {
+    fun `create Internal user no recovery method set paid available`() = coroutinesTest {
         // GIVEN
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
+
         viewModel.state.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -253,9 +254,10 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     }
 
     @Test
-    fun `create Internal user email recovery method set`() = coroutinesTest {
+    fun `create Internal user email recovery method set paid available`() = coroutinesTest {
         // GIVEN
         val emailRecovery = RecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
+        coEvery { canUpgradeToPaid() } returns true
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
 
@@ -263,7 +265,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
             viewModel.setRecoveryMethod(emailRecovery)
-            assertIs<SignupViewModel.State.CreateUserInputReady>(awaitItem())
+            val createUserInputReady = awaitItem()
+            assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
+            assertTrue(createUserInputReady.paidOptionAvailable)
             viewModel.startCreateUserWorkflow()
             // THEN
             assertIs<SignupViewModel.State.CreateUserProcessing>(awaitItem())
@@ -287,9 +291,10 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     }
 
     @Test
-    fun `create Internal user phone recovery method set`() = coroutinesTest {
+    fun `create Internal user email recovery method set paid unavailable`() = coroutinesTest {
         // GIVEN
-        val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)
+        val emailRecovery = RecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
+        coEvery { canUpgradeToPaid() } returns false
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
 
@@ -297,7 +302,84 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
             viewModel.setRecoveryMethod(emailRecovery)
-            assertIs<SignupViewModel.State.CreateUserInputReady>(awaitItem())
+            val createUserInputReady = awaitItem()
+            assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
+            assertFalse(createUserInputReady.paidOptionAvailable)
+            viewModel.startCreateUserWorkflow()
+            // THEN
+            assertIs<SignupViewModel.State.CreateUserProcessing>(awaitItem())
+            val successItem = awaitItem()
+            assertIs<SignupViewModel.State.CreateUserSuccess>(successItem)
+            assertEquals(testUser.userId.id, successItem.userId)
+
+            coVerify(exactly = 1) {
+                performCreateUser(
+                    username = testUsername,
+                    password = "encrypted-$testPassword",
+                    recoveryEmail = testEmail,
+                    recoveryPhone = null,
+                    referrer = null,
+                    type = CreateUserType.Normal,
+                    domain = any(),
+                    metricData = any()
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `create Internal user phone recovery method set paid available`() = coroutinesTest {
+        // GIVEN
+        val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)
+        viewModel.username = testUsername
+        viewModel.setPassword(testPassword)
+        coEvery { canUpgradeToPaid() } returns true
+
+        viewModel.state.test {
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            // WHEN
+            viewModel.setRecoveryMethod(emailRecovery)
+            val createUserInputReady = awaitItem()
+            assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
+            assertTrue(createUserInputReady.paidOptionAvailable)
+            viewModel.startCreateUserWorkflow()
+            // THEN
+            assertIs<SignupViewModel.State.CreateUserProcessing>(awaitItem())
+            val successItem = awaitItem()
+            assertIs<SignupViewModel.State.CreateUserSuccess>(successItem)
+            assertEquals(testUser.userId.id, successItem.userId)
+
+            coVerify(exactly = 1) {
+                performCreateUser(
+                    username = testUsername,
+                    password = "encrypted-$testPassword",
+                    recoveryEmail = null,
+                    recoveryPhone = testPhone,
+                    referrer = null,
+                    type = CreateUserType.Normal,
+                    domain = any(),
+                    metricData = any()
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `create Internal user phone recovery method set paid unavailable`() = coroutinesTest {
+        // GIVEN
+        val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)
+        viewModel.username = testUsername
+        viewModel.setPassword(testPassword)
+        coEvery { canUpgradeToPaid() } returns false
+
+        viewModel.state.test {
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            // WHEN
+            viewModel.setRecoveryMethod(emailRecovery)
+            val createUserInputReady = awaitItem()
+            assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
+            assertFalse(createUserInputReady.paidOptionAvailable)
+
             viewModel.startCreateUserWorkflow()
             // THEN
             assertIs<SignupViewModel.State.CreateUserProcessing>(awaitItem())

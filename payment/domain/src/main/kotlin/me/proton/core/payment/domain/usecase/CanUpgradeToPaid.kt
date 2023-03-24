@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.domain.usecase
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlans
 import javax.inject.Inject
@@ -28,13 +29,14 @@ public class CanUpgradeToPaid @Inject constructor(
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders
 ) {
 
-    public suspend operator fun invoke(): Boolean {
+    public suspend operator fun invoke(userId: UserId? = null): Boolean {
+        if (!supportPaidPlans) {
+            return false
+        }
         val paymentProviders = getAvailablePaymentProviders().filter {
             // It's not possible to setup PayPal during signup, from mobile app.
             it != PaymentProvider.PayPal
         }
-        val anyPaymentEnabled = paymentProviders.isNotEmpty()
-        val plans = getPlans(userId = null)
-        return anyPaymentEnabled && supportPaidPlans && plans.isNotEmpty()
+        return paymentProviders.isNotEmpty() && getPlans(userId).isNotEmpty()
     }
 }
