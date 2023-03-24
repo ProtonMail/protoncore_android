@@ -98,8 +98,7 @@ fun FragmentManager.showCongrats(
     val congratsFragment = SignupFinishedFragment()
     inTransaction {
         setCustomAnimations(0, 0)
-        add(containerId, congratsFragment, TAG_CONGRATS)
-        addToBackStack(null)
+        replace(containerId, congratsFragment, TAG_CONGRATS)
     }
     congratsFragment
 }

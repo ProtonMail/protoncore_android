@@ -230,7 +230,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         if (product == Product.Vpn) {
             signupDone(userId)
         } else {
-            supportFragmentManager.popAllBackStackFragments()
             supportFragmentManager.showCongrats()
             supportFragmentManager.setFragmentResultListener(
                 SignupFinishedFragment.KEY_START_USING_SELECTED, this
@@ -260,12 +259,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         )
 
         finish()
-    }
-
-    private fun FragmentManager.popAllBackStackFragments() {
-        if (backStackEntryCount == 0) return
-        val entry = getBackStackEntryAt(0)
-        popBackStackImmediate(entry.id, POP_BACK_STACK_INCLUSIVE)
     }
 
     companion object {
