@@ -18,6 +18,7 @@
 
 package me.proton.core.presentation.utils
 
+import android.text.util.Linkify
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -199,7 +200,11 @@ fun View.snack(
 ): Snackbar {
     return Snackbar.make(this, message, length).apply {
         color?.let { view.background = ResourcesCompat.getDrawable(context.resources, it, null) }
-        view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply { maxLines = 5 }
+        view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply {
+            maxLines = 5
+            autoLinkMask = Linkify.WEB_URLS
+            movementMethod = android.text.method.LinkMovementMethod.getInstance()
+        }
         configBlock?.invoke(this)
     }.also { it.show() }
 }
