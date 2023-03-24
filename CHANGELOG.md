@@ -11,6 +11,26 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.18.0] - 2023-03-24
+
+### Features
+
+- gopenpgp:
+  - Update to gopenpgp v2.6.1-proton and go-srp v0.0.7.
+- user:
+  - Added User event listener that handles event which carries updated UserSpace.
+
+### Bug Fixes
+
+- auth:
+  - Wrong Congrats Fragment BackStack.
+- observability:
+  - Handle a case for `BillingResponseCode.FEATURE_NOT_SUPPORTED`.
+  - Log a case when there is no matching Google product.
+- payment-iap:
+  - Handle a case for `BillingResponseCode.FEATURE_NOT_SUPPORTED`.
+  - Log a case when there is no matching Google product.
+
 ## [9.17.1] - 2023-03-22
 
 ### Chores
