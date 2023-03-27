@@ -69,7 +69,7 @@
     <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
     <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
     <string name="auth_create_address_title">Proton address required</string>
-    <string name="auth_create_address_subtitle">%1$s will be set as your recovery address, but to secure your data a Proton address is required. You still will be able to sign in with %2$s.</string>
+    <string name="auth_create_address_subtitle">Your recovery address will be %1$s. To secure your data a Proton address is required. You still will be able to sign in with %2$s.</string>
     <string name="auth_username">Username</string>
     <string name="auth_username_next_action">Continue</string>
     <string name="auth_create_address_result_title">%s is available</string>
