@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.implementation
+import studio.forface.easygradle.dsl.`serialization-json`
 
 /*
  * Copyright (c) 2022 Proton Technologies AG
@@ -25,7 +26,7 @@ plugins {
 }
 
 application {
-    mainClass.set("me.proton.core.observability.generator.ObservabilityGeneratorKt")
+    mainClass.set("me.proton.core.observability.tools.ObservabilityToolsKt")
 }
 
 java {
@@ -37,6 +38,8 @@ dependencies {
     implementation("com.github.ajalt.clikt:clikt:3.4.0")
     implementation("com.github.victools:jsonschema-generator:4.28.0")
     implementation("com.github.victools:jsonschema-module-swagger-2:4.28.0")
+    implementation(okhttp)
+    implementation(`serialization-json`)
     implementation(`swagger-annotations`)
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation(project(Module.observabilityDomain))

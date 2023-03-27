@@ -7,10 +7,25 @@
     - Add `@Schema(description = "...")` annotation.
     - Add `@SchemaId("...")` annotation.
 2. Generate JSON schema files by
-   running `./gradlew :observability:observability-generator:run --args="generate --output-dir=../../../json-schema-registry/observability/client"`.
-   **Note**: path for `output-dir` should be absolute, or relative to `proton-libs/observability/generator`.
-3. Commit the new JSON schema files to `proton/be/json-schema-registry` repository
+   running
+  ```shell
+  cd proton-libs
+  ./gradlew :observability:observability-tools:run --args="generate --output-dir=../../../json-schema-registry/observability/client"
+  ```
+   **Note**: path for `output-dir` should be absolute, or relative to `proton-libs/observability/tools`.
+4. Commit the new JSON schema files to `proton/be/json-schema-registry` repository
    and create a new Merge Request.
    The CI job will run some checks, to make sure the schemas are valid.
-4. Merge JSON schemas to the `main` branch of `json-schema-registry`.
-5. Use `ObservabilityManager.enqueue` to track new metric events.
+5. Merge JSON schemas to the `main` branch of `json-schema-registry`.
+6. Use `ObservabilityManager.enqueue` to track new metric events.
+
+#### Download dashboards from Grafana
+
+You can export the dashboards from Grafana as JSON files. The JSON files can be later used if
+you need to restore/re-import the dashboards into Grafana.
+You will need to pass your session cookie (`grafana_session`) from Grafana.
+
+```shell
+cd proton-libs
+./gradlew :observability:observability-tools:run --args="download --grafana-session-cookie=your_session_cookie --grafana-url=https://grafana-url --output-dir=../dashboard"
+```
