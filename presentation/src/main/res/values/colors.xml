@@ -244,9 +244,6 @@
     -->
     <color name="ripple_norm_workaround">#1f17181C</color>
 
-    <!-- Background for adaptive icons -->
-    <color name="ic_logo_adaptive_background">#FFFFFF</color>
-
     <!-- Accent colors for rebranding -->
     <array name="accent_colors_base">
         <item>@color/purple_base</item>
