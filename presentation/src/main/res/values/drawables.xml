@@ -24,4 +24,8 @@
     <item name="logo_vpn_daylight" type="drawable" format="reference">@drawable/logo_vpn_dark</item>
     <drawable name="ic_proton_arrow_back">@drawable/ic_arrow_back</drawable>
     <drawable name="ic_proton_close">@drawable/ic_close</drawable>
+    <item name="logo_mail_with_text" type="drawable" format="reference">@drawable/logo_mail_with_text_light</item>
+    <item name="logo_calendar_with_text" type="drawable" format="reference">@drawable/logo_calendar_with_text_light</item>
+    <item name="logo_drive_with_text" type="drawable" format="reference">@drawable/logo_drive_with_text_light</item>
+    <item name="logo_vpn_with_text" type="drawable" format="reference">@drawable/logo_vpn_with_text_light</item>
 </resources>

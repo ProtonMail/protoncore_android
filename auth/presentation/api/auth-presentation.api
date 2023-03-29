@@ -373,9 +373,8 @@ public final class me/proton/core/auth/presentation/databinding/Activity2faBindi
 }
 
 public final class me/proton/core/auth/presentation/databinding/ActivityAddAccountBinding : androidx/viewbinding/ViewBinding {
-	public final field footer Landroid/widget/LinearLayout;
+	public final field footer Landroid/widget/ImageView;
 	public final field guideHeader Landroidx/constraintlayout/widget/Guideline;
-	public final field logoIcon Landroid/widget/ImageView;
 	public final field logoText Landroid/widget/ImageView;
 	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field signUp Lme/proton/core/presentation/ui/view/ProtonButton;
