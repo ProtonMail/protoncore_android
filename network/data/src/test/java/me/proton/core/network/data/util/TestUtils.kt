@@ -17,7 +17,7 @@
  */
 package me.proton.core.network.data.util
 
-import me.proton.core.network.data.initPinning
+import me.proton.core.network.data.initRegularPinning
 import me.proton.core.network.data.initSPKIleafPinning
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -70,7 +70,7 @@ class TestTLSHelper {
 
     fun initPinning(builder: OkHttpClient.Builder, pins: Array<String>) {
         builder.sslSocketFactory(sslContext.socketFactory, trustManagers.first() as X509TrustManager)
-        initPinning(builder, "localhost", pins)
+        initRegularPinning(builder, "localhost", pins.toList())
     }
 
     fun setupSPKIleafPinning(builder: OkHttpClient.Builder, pins: List<String>) {

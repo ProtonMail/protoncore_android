@@ -21,6 +21,7 @@ public abstract interface class me/proton/core/network/domain/ApiClient {
 	public abstract fun getProxyValidityPeriodMs ()J
 	public abstract fun getReadTimeoutSeconds ()J
 	public abstract fun getShouldUseDoh ()Z
+	public abstract fun getUseAltRoutingCertVerificationForMainRoute ()Z
 	public abstract fun getUserAgent ()Ljava/lang/String;
 	public abstract fun getWriteTimeoutSeconds ()J
 }
@@ -36,6 +37,7 @@ public final class me/proton/core/network/domain/ApiClient$DefaultImpls {
 	public static fun getPingTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)I
 	public static fun getProxyValidityPeriodMs (Lme/proton/core/network/domain/ApiClient;)J
 	public static fun getReadTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
+	public static fun getUseAltRoutingCertVerificationForMainRoute (Lme/proton/core/network/domain/ApiClient;)Z
 	public static fun getWriteTimeoutSeconds (Lme/proton/core/network/domain/ApiClient;)J
 }
 

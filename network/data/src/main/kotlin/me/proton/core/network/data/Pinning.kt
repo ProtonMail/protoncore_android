@@ -29,6 +29,28 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 /**
+ * Type of pinning to be used with OkHttp. See
+ * [initRegularPinning] and [initSPKIleafPinning] for details.
+ */
+enum class PinningMethod {
+    Regular,
+    LeafSPKI
+}
+
+/** Inits given okhttp builder with pinning using specified [method]. */
+internal fun initPinning(
+    method: PinningMethod,
+    okBuilder: OkHttpClient.Builder,
+    host: String,
+    pins: List<String>
+) = when(method) {
+    PinningMethod.Regular ->
+        initRegularPinning(okBuilder, host, pins)
+    PinningMethod.LeafSPKI ->
+        initSPKIleafPinning(okBuilder, pins)
+}
+
+/**
  * Inits given okhttp builder with pinning.
  *
  * @param okBuilder builder to introduce pinning to.
@@ -36,7 +58,7 @@ import javax.net.ssl.X509TrustManager
  * @param pins list of pins (base64, SHA-256). When empty pinning will be disabled (should be used
  *   only for testing).
  */
-internal fun initPinning(okBuilder: OkHttpClient.Builder, host: String, pins: Array<String>) {
+internal fun initRegularPinning(okBuilder: OkHttpClient.Builder, host: String, pins: List<String>) {
     if (pins.isNotEmpty()) {
         val pinner = CertificatePinner.Builder()
             .add("**.$host", *pins.map { "sha256/$it" }.toTypedArray())

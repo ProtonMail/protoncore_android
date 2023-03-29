@@ -100,6 +100,11 @@ interface ApiClient {
     val dohRecordType get() = DohRecordType.TXT
 
     /**
+     * Uses SPKI leaf pinning for main route as well, required in some testing environments.
+     */
+    val useAltRoutingCertVerificationForMainRoute get() = false
+
+    /**
      * Tells client to force update (this client will no longer be accepted by the API).
      *
      * @param errorMessage the localized error message the user should see.

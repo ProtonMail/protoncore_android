@@ -173,7 +173,9 @@ class ApiManagerFactory(
         alternativeApiPins: List<String> = this@ApiManagerFactory.alternativeApiPins
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
-            initPinning(builder, baseUrl.host, certificatePins)
+            val mainPinningMethod = if (apiClient.useAltRoutingCertVerificationForMainRoute)
+                PinningMethod.LeafSPKI else PinningMethod.Regular
+            initPinning(mainPinningMethod, builder, baseUrl.host, certificatePins.toList())
         }
         val primaryBackend = ProtonApiBackend(
             context,
