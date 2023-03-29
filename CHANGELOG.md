@@ -11,6 +11,24 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.0.0] - 2023-03-29
+
+### Chores
+
+- auth:
+  - Payments availability pre-check.
+- payment:
+  - Add unit tests for signup in context of paid plans.
+  - Payments availability pre-check.
+- plan:
+  - Add mem cache into Plans repository.
+- presentation:
+  - Update splash icon for VPN.
+  - Update splash icon for Drive.
+  - Update splash icon for Calendar.
+  - Update splash icon for Mail.
+  - Remove adaptive app icons (unused).
+
 ## [9.19.0] - 2023-03-29
 
 ### Chores
