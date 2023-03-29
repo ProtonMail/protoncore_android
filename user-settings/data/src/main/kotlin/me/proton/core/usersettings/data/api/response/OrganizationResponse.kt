@@ -29,8 +29,6 @@ data class OrganizationResponse(
     val displayName: String?,
     @SerialName("PlanName")
     val planName: String?,
-    @SerialName("VPNPlanName")
-    val vpnPlanName: String?,
     @SerialName("TwoFactorGracePeriod")
     val twoFactorGracePeriod: Int?,
     @SerialName("Theme")

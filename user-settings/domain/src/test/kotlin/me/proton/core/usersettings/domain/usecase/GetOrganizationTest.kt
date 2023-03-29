@@ -44,7 +44,6 @@ class GetOrganizationTest {
         flags = 1,
         displayName = "test-display-name",
         planName = "test-plan-name",
-        vpnPlanName = null,
         twoFactorGracePeriod = null,
         maxDomains = 1,
         maxAddresses = 10,

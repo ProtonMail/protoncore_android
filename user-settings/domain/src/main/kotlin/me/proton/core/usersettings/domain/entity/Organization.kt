@@ -25,7 +25,6 @@ data class Organization(
     val name: String,
     val displayName: String?,
     val planName: String?,
-    val vpnPlanName: String?,
     val twoFactorGracePeriod: Int?,
     val theme: String?,
     val email: String?,

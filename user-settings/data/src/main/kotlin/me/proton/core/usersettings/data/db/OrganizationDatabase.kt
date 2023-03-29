@@ -21,6 +21,7 @@ package me.proton.core.usersettings.data.db
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.extension.addTableColumn
+import me.proton.core.data.room.db.extension.dropTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.usersettings.data.db.dao.OrganizationDao
 import me.proton.core.usersettings.data.db.dao.OrganizationKeysDao
@@ -51,6 +52,22 @@ interface OrganizationDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.addTableColumn(table = "OrganizationEntity", column = "maxCalendars", type = "INTEGER")
                 database.addTableColumn(table = "OrganizationEntity", column = "usedCalendars", type = "INTEGER")
+            }
+        }
+
+        /**
+         * - Remove OrganizationEntity vpnPlanName.
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.dropTableColumn(
+                    table = "OrganizationEntity",
+                    createTable = {
+                        execSQL("CREATE TABLE IF NOT EXISTS `OrganizationEntity` (`userId` TEXT NOT NULL, `name` TEXT NOT NULL, `displayName` TEXT, `planName` TEXT, `twoFactorGracePeriod` INTEGER, `theme` TEXT, `email` TEXT, `maxDomains` INTEGER, `maxAddresses` INTEGER, `maxSpace` INTEGER, `maxMembers` INTEGER, `maxVPN` INTEGER, `maxCalendars` INTEGER, `features` INTEGER, `flags` INTEGER, `usedDomains` INTEGER, `usedAddresses` INTEGER, `usedSpace` INTEGER, `assignedSpace` INTEGER, `usedMembers` INTEGER, `usedVPN` INTEGER, `usedCalendars` INTEGER, `hasKeys` INTEGER, `toMigrate` INTEGER, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                    },
+                    createIndices = {},
+                    column = "vpnPlanName"
+                )
             }
         }
     }
