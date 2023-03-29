@@ -11,6 +11,31 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [9.19.0] - 2023-03-29
+
+### Chores
+
+- observability:
+  - Update Grafana dashboards.
+  - Add command to download dashboards from Grafana.
+
+### Features
+
+- network:
+  - Make alt. cert verification method available for main route.
+
+    Clients should normally use regular method but for some testing environments
+    alt. routing method of cert verification will be used.
+
+### Bug Fixes
+
+- auth:
+  - Changed Choose Address subtitle.
+
+### Theming
+
+- ProtonTextView.Subtitle lineHeight 20sp for API>=28.
+
 ## [9.18.0] - 2023-03-24
 
 ### Features
