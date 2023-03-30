@@ -38,4 +38,10 @@ dependencies {
     implementation(
         `android-ktx`,
     )
+
+    testImplementation(
+        `android-test-core-ktx`,
+        `kotlin-test`,
+        robolectric
+    )
 }

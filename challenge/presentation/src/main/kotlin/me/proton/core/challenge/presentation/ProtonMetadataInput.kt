@@ -20,8 +20,6 @@ package me.proton.core.challenge.presentation
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -37,13 +35,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.presentation.ProtonCopyPasteEditText.OnCopyPasteListener
 import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding
-import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding.*
+import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding.inflate
 import me.proton.core.presentation.ui.view.ProtonInput
 import javax.inject.Inject
 
 @AndroidEntryPoint
-public class ProtonMetadataInput : ProtonInput,
-    TextWatcher, OnKeyListener, OnTouchListener, OnCopyPasteListener {
+public class ProtonMetadataInput : ProtonInput, OnKeyListener, OnTouchListener,
+    OnCopyPasteListener {
 
     @Inject
     public lateinit var challengeManager: ChallengeManager
@@ -107,7 +105,7 @@ public class ProtonMetadataInput : ProtonInput,
         }
         input.setOnTouchListener(this)
         input.setOnKeyListener(this)
-        input.addTextChangedListener(this)
+        input.addTextChangedListener(ProtonMetadataInputWatcher(keyList, pasteList))
         input.setOnCopyPasteListener(this)
     }
 
@@ -171,32 +169,10 @@ public class ProtonMetadataInput : ProtonInput,
         }
     }
 
-    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-    override fun afterTextChanged(s: Editable) {}
-    override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-        val diffCount = count - before
-        when {
-            diffCount == 0 -> Unit
-            diffCount > 1 -> {
-                val range = IntRange(start, start + count - 1)
-                val newText = text.substring(range)
-                keyList.add(PASTE)
-                pasteList.add(newText)
-            }
-            diffCount < 0 -> {
-                keyList.add(BACKSPACE)
-            }
-            // diffCount == 1
-            else -> {
-                keyList.add(text[input.selectionStart - 1].toString())
-            }
-        }
-    }
-
-    private companion object {
-        private const val BACKSPACE = "Backspace"
+    internal companion object {
+        internal const val BACKSPACE = "Backspace"
+        internal const val PASTE = "Paste"
         private const val COPY = "Copy"
-        private const val PASTE = "Paste"
         private const val TAB = "Tab"
         private const val CAPS = "Caps"
         private const val SHIFT = "Shift"
