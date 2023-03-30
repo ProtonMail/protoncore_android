@@ -334,6 +334,7 @@
     <style name="ProtonSnackbarText" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textAppearance">@style/Proton.Text.DefaultSmall</item>
         <item name="android:textColor">@color/text_inverted</item>
+        <item name="android:textColorLink">@color/text_inverted</item>
     </style>
     <!-- endregion -->
 
