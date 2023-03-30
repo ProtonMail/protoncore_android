@@ -4,7 +4,7 @@ include:
 .gradle-job:
   before_script:
     - source /load-env.sh
-  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.3
+  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
   variables:
     GRADLE_USER_HOME: '$CI_PROJECT_DIR/.gradle'
   tags:
@@ -13,7 +13,7 @@ include:
     - !reference [.gradle-cache, cache]
 
 .ruby-job:
-  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.3
+  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
   variables:
     BUNDLE_GEM_PATH: 'vendor/ruby'
   cache:
@@ -24,5 +24,5 @@ include:
     - bundle install
 
 .script-job:
-  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.3
+  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
   cache: []

@@ -1,5 +1,5 @@
 .startReview:
-  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.3
+  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
   stage: startReview
   environment:
     name: review/$CI_COMMIT_REF_SLUG
@@ -45,7 +45,7 @@
       - review.env
 
 .stopReview:
-  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.3
+  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
   stage: .post
   environment:
     name: review/$CI_COMMIT_REF_SLUG
