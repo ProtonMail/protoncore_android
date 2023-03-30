@@ -22,7 +22,39 @@
 
     <application>
 
-        <activity android:name=".ui.ConfirmPasswordActivity" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
+            android:theme="@style/ProtonTheme.AddAccount"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.ChooseAddressActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.ConfirmPasswordActivity"
+            android:theme="@style/ProtonTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.TwoPassModeActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

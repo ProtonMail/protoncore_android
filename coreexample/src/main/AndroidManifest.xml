@@ -119,36 +119,6 @@
         <activity
             android:name=".ui.CreateLabelActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.ChooseAddressActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.CreateAddressActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ProtonTheme.AddAccount"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.ConfirmPasswordActivity"
-            android:theme="@style/ProtonTheme.Transparent"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.LoginActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.TwoPassModeActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
-            android:windowSoftInputMode="adjustResize" />
         <activity android:name="me.proton.core.presentation.ui.alert.ForceUpdateActivity" />
         <activity
             android:name="me.proton.core.report.presentation.ui.BugReportActivity"
