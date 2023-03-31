@@ -18,9 +18,14 @@
 
 package me.proton.core.featureflag.data.remote
 
+import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
+import me.proton.core.featureflag.data.remote.response.PutFeatureResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 internal interface FeaturesApi : BaseRetrofitApi {
@@ -33,5 +38,11 @@ internal interface FeaturesApi : BaseRetrofitApi {
         @Query("Code") code: String,
         @Query("Type") type: String = "boolean"
     ): GetFeaturesResponse
+
+    @PUT("core/v4/features/{id}/value")
+    suspend fun putFeatureFlag(
+        @Path("id") featureId: String,
+        @Body putFeatureFlagBody: PutFeatureFlagBody
+    ): PutFeatureResponse
 
 }

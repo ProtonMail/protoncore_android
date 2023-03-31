@@ -44,6 +44,7 @@ import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureApiResponse
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureEntity
@@ -105,7 +106,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     fun setUp() {
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, coroutinesRule.dispatchers)
         local = spyk(FeatureFlagLocalDataSourceImpl(database))
-        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider))
+        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider, workManager))
         repository = FeatureFlagRepositoryImpl(
             local,
             remote,
@@ -323,5 +324,18 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         val name = "${FeatureFlagRepositoryImpl::class.simpleName}-prefetch-$userId"
         verify { workManager.enqueueUniqueWork(name, ExistingWorkPolicy.REPLACE, any<OneTimeWorkRequest>()) }
+    }
+
+    @Test
+    fun updateUpsertTheGivenFeatureFlagLocallyAndEnqueuesRemoteCall() = coroutinesTest {
+        // Given
+        val featureFlag = FeatureFlagTestData.disabledFeature
+
+        // When
+        repository.update(featureFlag)
+
+        // Then
+        coVerify { local.upsert(listOf(featureFlag)) }
+        coVerify { remote.update(featureFlag) }
     }
 }

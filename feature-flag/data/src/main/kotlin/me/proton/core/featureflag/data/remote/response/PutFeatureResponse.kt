@@ -16,13 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.repository
+package me.proton.core.featureflag.data.remote.response
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.domain.entity.FeatureFlag
-import me.proton.core.featureflag.domain.entity.FeatureId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.featureflag.data.remote.resource.FeatureResource
 
-public interface FeatureFlagRemoteDataSource {
-    public suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag>
-    public suspend fun update(featureFlag: FeatureFlag)
-}
+@Serializable
+internal data class PutFeatureResponse(
+    @SerialName("Code")
+    val resultCode: Int,
+    @SerialName("Feature")
+    val feature: FeatureResource
+)

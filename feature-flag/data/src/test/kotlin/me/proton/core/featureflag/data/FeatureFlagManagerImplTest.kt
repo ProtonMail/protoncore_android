@@ -99,4 +99,17 @@ class FeatureFlagManagerImplTest {
         // Then
         coVerify { repository.prefetch(UserIdTestData.userId, featureIds) }
     }
+
+    @Test
+    fun updateFeatureCallsRepository() = runTest {
+        // Given
+        val featureFlag = FeatureFlagTestData.enabledFeature
+        coEvery { repository.update(any()) } just Runs
+
+        // When
+        manager.update(featureFlag)
+
+        // Then
+        coVerify { repository.update(featureFlag) }
+    }
 }

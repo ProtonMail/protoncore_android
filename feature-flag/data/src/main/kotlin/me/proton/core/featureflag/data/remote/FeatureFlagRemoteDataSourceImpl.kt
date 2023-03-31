@@ -18,8 +18,10 @@
 
 package me.proton.core.featureflag.data.remote
 
+import androidx.work.WorkManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.LogTag
+import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
@@ -29,6 +31,7 @@ import javax.inject.Inject
 
 public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider,
+    private val workManager: WorkManager
 ) : FeatureFlagRemoteDataSource {
 
     override suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag> =
@@ -44,4 +47,13 @@ public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
                 }
             }
         }.valueOrThrow
+
+    override suspend fun update(featureFlag: FeatureFlag) {
+        val request = UpdateFeatureFlagWorker.getRequest(
+            featureFlag.userId,
+            featureFlag.featureId,
+            featureFlag.value
+        )
+        workManager.enqueue(request)
+    }
 }

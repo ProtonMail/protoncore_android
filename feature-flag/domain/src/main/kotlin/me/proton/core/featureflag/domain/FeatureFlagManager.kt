@@ -92,4 +92,9 @@ public interface FeatureFlagManager {
      * remote source will not have no consequence (said ids will just be ignored).
      */
     public fun prefetch(userId: UserId?, featureIds: Set<FeatureId>)
+
+    /**
+     * Updates the given feature flag with the given values
+     */
+    public suspend fun update(featureFlag: FeatureFlag)
 }

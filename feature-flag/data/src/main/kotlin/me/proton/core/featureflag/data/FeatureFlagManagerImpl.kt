@@ -62,4 +62,7 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
         userId: UserId?,
         featureIds: Set<FeatureId>
     ): Unit = repository.prefetch(userId, featureIds)
+
+    override suspend fun update(featureFlag: FeatureFlag): Unit = repository.update(featureFlag)
+
 }

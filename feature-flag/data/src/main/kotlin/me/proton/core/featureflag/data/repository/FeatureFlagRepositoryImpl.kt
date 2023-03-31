@@ -98,7 +98,13 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         )
     }
 
+    override suspend fun update(featureFlag: FeatureFlag) {
+        localDataSource.upsert(listOf(featureFlag))
+        remoteDataSource.update(featureFlag)
+    }
+
     private companion object {
+
         // Currently for: FetchFeatureIdsWorker (ExistingWorkPolicy.REPLACE).
         private fun getUniqueWorkName(userId: UserId?) =
             "${FeatureFlagRepositoryImpl::class.simpleName}-prefetch-$userId"
