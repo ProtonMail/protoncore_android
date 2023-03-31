@@ -184,6 +184,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:report-data                          |
 | me.proton.core:report-domain                        |
 | me.proton.core:report-presentation                  |
+| me.proton.core:report-test                          |
 | me.proton.core:challenge                            |
 | me.proton.core:challenge-dagger                     |
 | me.proton.core:challenge-data                       |
