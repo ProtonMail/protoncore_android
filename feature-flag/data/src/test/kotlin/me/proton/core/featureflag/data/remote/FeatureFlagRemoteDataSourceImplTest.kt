@@ -19,16 +19,18 @@
 
 package me.proton.core.featureflag.data.remote
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
+import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
+import me.proton.core.featureflag.data.testdata.UserIdTestData
 import me.proton.core.network.data.ApiProvider
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -36,7 +38,8 @@ import kotlin.test.assertEquals
 class FeatureFlagRemoteDataSourceImplTest {
 
     private val workManager: WorkManager = mockk {
-        coEvery { enqueue(any<WorkRequest>()) } returns mockk()
+        coEvery { enqueue(any<OneTimeWorkRequest>()) } returns mockk()
+        coEvery { enqueueUniqueWork(any(), any(), any<OneTimeWorkRequest>()) } returns mockk()
     }
     private val apiProvider: ApiProvider = mockk()
 
@@ -55,5 +58,22 @@ class FeatureFlagRemoteDataSourceImplTest {
         verify { workManager.enqueue(capture(requestSlot)) }
         val workSpec = requestSlot.captured.workSpec
         assertEquals(UpdateFeatureFlagWorker::class.qualifiedName, workSpec.workerClassName)
+    }
+
+    @Test
+    fun `prefetch enqueues worker to prefetch on remote`() = runTest {
+        // given
+        val featureIds = setOf(FeatureFlagTestData.featureId, FeatureFlagTestData.featureId1)
+        val userId = UserIdTestData.userId
+
+        // when
+        remoteDataSource.prefetch(userId, featureIds)
+
+        // then
+        val requestSlot = slot<OneTimeWorkRequest>()
+        val expectedName = FetchFeatureIdsWorker.getUniqueWorkName(userId)
+        verify { workManager.enqueueUniqueWork(expectedName, ExistingWorkPolicy.REPLACE, capture(requestSlot)) }
+        val workSpec = requestSlot.captured.workSpec
+        assertEquals(FetchFeatureIdsWorker::class.qualifiedName, workSpec.workerClassName)
     }
 }

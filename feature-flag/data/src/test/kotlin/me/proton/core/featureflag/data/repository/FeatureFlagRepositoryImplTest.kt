@@ -18,8 +18,6 @@
 
 package me.proton.core.featureflag.data.repository
 
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import app.cash.turbine.test
 import io.mockk.Called
@@ -110,7 +108,6 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         repository = FeatureFlagRepositoryImpl(
             local,
             remote,
-            workManager,
             TestCoroutineScopeProvider(coroutinesRule.dispatchers)
         )
     }
@@ -312,18 +309,11 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     }
 
     @Test
-    fun prefetchFeatureFlagsEnqueueFetchWorker() = coroutinesTest {
-        val featureIdsString = "${featureId.id},${featureId1.id}"
-        coEvery { featuresApi.getFeatureFlags(featureIdsString) } returns GetFeaturesResponse(
-            resultCode = 1000,
-            features = listOf(enabledFeatureApiResponse, disabledFeatureApiResponse)
-        )
-
+    fun prefetchFeatureFlagsCallsRemoteDataSource() = coroutinesTest {
         val featureIds = setOf(featureId, featureId1)
         repository.prefetch(userId, featureIds)
 
-        val name = "${FeatureFlagRepositoryImpl::class.simpleName}-prefetch-$userId"
-        verify { workManager.enqueueUniqueWork(name, ExistingWorkPolicy.REPLACE, any<OneTimeWorkRequest>()) }
+        coVerify { remote.prefetch(userId, featureIds) }
     }
 
     @Test

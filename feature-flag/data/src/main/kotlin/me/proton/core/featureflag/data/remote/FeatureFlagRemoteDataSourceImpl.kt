@@ -18,9 +18,11 @@
 
 package me.proton.core.featureflag.data.remote
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.LogTag
+import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -55,5 +57,14 @@ public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
             featureFlag.value
         )
         workManager.enqueue(request)
+    }
+
+    override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {
+        workManager.enqueueUniqueWork(
+            FetchFeatureIdsWorker.getUniqueWorkName(userId),
+            ExistingWorkPolicy.REPLACE,
+            FetchFeatureIdsWorker.getRequest(userId, featureIds),
+        )
+
     }
 }

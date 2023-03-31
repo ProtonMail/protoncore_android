@@ -18,8 +18,6 @@
 
 package me.proton.core.featureflag.data.repository
 
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkManager
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -28,7 +26,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.entity.Scope
@@ -43,7 +40,6 @@ import javax.inject.Singleton
 public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val localDataSource: FeatureFlagLocalDataSource,
     private val remoteDataSource: FeatureFlagRemoteDataSource,
-    private val workManager: WorkManager,
     scopeProvider: CoroutineScopeProvider
 ) : FeatureFlagRepository {
 
@@ -90,23 +86,11 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         get(userId, setOf(featureId), refresh).firstOrNull()
 
     override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {
-        // Replace any existing FetchFeatureIdsWorker.
-        workManager.enqueueUniqueWork(
-            getUniqueWorkName(userId),
-            ExistingWorkPolicy.REPLACE,
-            FetchFeatureIdsWorker.getRequest(userId, featureIds),
-        )
+        remoteDataSource.prefetch(userId, featureIds)
     }
 
     override suspend fun update(featureFlag: FeatureFlag) {
         localDataSource.upsert(listOf(featureFlag))
         remoteDataSource.update(featureFlag)
-    }
-
-    private companion object {
-
-        // Currently for: FetchFeatureIdsWorker (ExistingWorkPolicy.REPLACE).
-        private fun getUniqueWorkName(userId: UserId?) =
-            "${FeatureFlagRepositoryImpl::class.simpleName}-prefetch-$userId"
     }
 }

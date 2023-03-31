@@ -79,5 +79,7 @@ internal class FetchFeatureIdsWorker @AssistedInject constructor(
                 .setInputData(inputData)
                 .build()
         }
+
+        fun getUniqueWorkName(userId: UserId?) = "${FetchFeatureIdsWorker::class.simpleName}-prefetch-$userId"
     }
 }
