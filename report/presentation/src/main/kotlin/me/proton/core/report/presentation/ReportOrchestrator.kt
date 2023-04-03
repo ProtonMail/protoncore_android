@@ -20,12 +20,18 @@ package me.proton.core.report.presentation
 
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.report.presentation.entity.BugReportOutput
 import me.proton.core.report.presentation.ui.BugReportActivity
+import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
-public class ReportOrchestrator @Inject constructor() {
+public class ReportOrchestrator @Inject constructor(
+    private val accountManager: AccountManager,
+    private val userManager: UserManager,
+) {
     private var bugReportLauncher: ActivityResultLauncher<BugReportInput>? = null
 
     /** Registers a [caller] for launching report activities.
@@ -48,7 +54,22 @@ public class ReportOrchestrator @Inject constructor() {
     /** Starts a Bug Report screen with given [input].
      * Make sure that [register] method has been called, before calling this method.
      */
+    @Deprecated("Use startBugReport without argument", ReplaceWith("startBugReport"))
     public fun startBugReport(input: BugReportInput) {
+        checkNotNull(bugReportLauncher) {
+            "You must call reportOrchestrator.register(context, callback) before starting workflow!"
+        }.launch(input)
+    }
+
+    /** Starts a Bug Report screen using current [User] data if exist.
+     * Make sure that [register] method has been called, before calling this method.
+     */
+    public suspend fun startBugReport() {
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val user = userId?.let { userManager.getUser(it) }
+        val email = user?.email ?: "unknown"
+        val username = user?.name ?: userId?.id ?: "unknown"
+        val input = BugReportInput(email = email, username = username)
         checkNotNull(bugReportLauncher) {
             "You must call reportOrchestrator.register(context, callback) before starting workflow!"
         }.launch(input)

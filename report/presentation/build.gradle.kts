@@ -36,6 +36,8 @@ dependencies {
     api(
         project(Module.presentation),
         project(Module.reportDomain),
+        project(Module.userDomain),
+        project(Module.accountManagerDomain),
         coordinatorlayout,
         `hilt-android`,
         `javax-inject`,
