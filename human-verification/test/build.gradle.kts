@@ -35,6 +35,7 @@ dependencies {
 
     implementation(
         project(Module.humanVerificationPresentation),
+        `androidx-test-monitor`,
         fusion,
         uiautomator,
         `kotlin-test`,
