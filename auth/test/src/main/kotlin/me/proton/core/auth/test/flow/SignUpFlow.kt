@@ -18,8 +18,10 @@
 
 package me.proton.core.auth.test.flow
 
+import me.proton.core.auth.test.robot.signup.RecoveryMethodRobot
 import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignUpRobot
+import me.proton.core.humanverification.test.robot.HvCodeRobot
 
 public object SignUpFlow {
 
@@ -38,5 +40,20 @@ public object SignUpFlow {
             .clickVerify()
         SetPasswordRobot
             .fillAndClickNext("123123123")
+    }
+
+    /** Sign up for a Proton internal Account. */
+    public fun signUpInternal(username: String) {
+        SignUpRobot
+            .forInternal()
+            .fillUsername(username)
+            .clickNext()
+        SetPasswordRobot
+            .fillAndClickNext("123123123")
+        RecoveryMethodRobot
+            .skip()
+            .skipConfirm()
+        HvCodeRobot
+            .iAmHuman()
     }
 }

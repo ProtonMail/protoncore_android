@@ -45,4 +45,23 @@ public interface MinimalSignUpExternalTests {
         }
         verifyAfter()
     }
+
+    @Test
+    public fun signupSwitchToInternalAccountHappyPath() {
+        val testUsername = "test-${String.random()}"
+
+        AddAccountRobot
+            .clickSignUp()
+            .forExternal()
+            .clickSwitch()
+
+        SignUpFlow.signUpInternal(testUsername)
+
+        CongratsRobot.takeIf { isCongratsDisplayed }?.apply {
+            uiElementsDisplayed()
+            clickStart()
+        }
+
+        verifyAfter()
+    }
 }

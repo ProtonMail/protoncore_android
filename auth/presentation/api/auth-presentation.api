@@ -2193,11 +2193,11 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewMod
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules {

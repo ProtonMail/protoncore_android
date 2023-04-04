@@ -99,11 +99,13 @@ public final class me/proton/core/auth/test/MinimalSignInInternalTests$DefaultIm
 public abstract interface class me/proton/core/auth/test/MinimalSignUpExternalTests {
 	public abstract fun isCongratsDisplayed ()Z
 	public abstract fun signupExternalAccountHappyPath ()V
+	public abstract fun signupSwitchToInternalAccountHappyPath ()V
 	public abstract fun verifyAfter ()V
 }
 
 public final class me/proton/core/auth/test/MinimalSignUpExternalTests$DefaultImpls {
 	public static fun signupExternalAccountHappyPath (Lme/proton/core/auth/test/MinimalSignUpExternalTests;)V
+	public static fun signupSwitchToInternalAccountHappyPath (Lme/proton/core/auth/test/MinimalSignUpExternalTests;)V
 }
 
 public final class me/proton/core/auth/test/flow/SignInFlow {
@@ -116,6 +118,7 @@ public final class me/proton/core/auth/test/flow/SignInFlow {
 public final class me/proton/core/auth/test/flow/SignUpFlow {
 	public static final field INSTANCE Lme/proton/core/auth/test/flow/SignUpFlow;
 	public final fun signUpExternalEmail (Ljava/lang/String;)V
+	public final fun signUpInternal (Ljava/lang/String;)V
 }
 
 public final class me/proton/core/auth/test/robot/AddAccountRobot {
