@@ -51,6 +51,8 @@ import me.proton.core.network.domain.UnAuthSessionsRepository
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -86,6 +88,8 @@ public class CoreNetworkModule {
         sessionListener: SessionListener,
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
+        deviceVerificationProvider: DeviceVerificationProvider,
+        deviceVerificationListener: DeviceVerificationListener,
         missingScopeListener: MissingScopeListener,
         extraHeaderProvider: ExtraHeaderProvider,
         clientVersionValidator: ClientVersionValidator,
@@ -109,6 +113,8 @@ public class CoreNetworkModule {
             sessionListener,
             humanVerificationProvider,
             humanVerificationListener,
+            deviceVerificationProvider,
+            deviceVerificationListener,
             missingScopeListener,
             cookieStore,
             CoroutineScope(Job() + Dispatchers.Default),

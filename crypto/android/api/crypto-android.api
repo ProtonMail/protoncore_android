@@ -120,6 +120,12 @@ public final class me/proton/core/crypto/android/pgp/VerificationStatusKt {
 	public static final fun toVerificationStatus (Lcom/proton/gopenpgp/crypto/SignatureVerificationError;)Lme/proton/core/crypto/common/pgp/VerificationStatus;
 }
 
+public final class me/proton/core/crypto/android/srp/GOpenPGPSrpChallenge : me/proton/core/crypto/common/srp/SrpChallenge {
+	public fun <init> ()V
+	public fun argon2PreimageChallenge (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun ecdlpChallenge (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/crypto/android/srp/GOpenPGPSrpCrypto : me/proton/core/crypto/common/srp/SrpCrypto {
 	public static final field Companion Lme/proton/core/crypto/android/srp/GOpenPGPSrpCrypto$Companion;
 	public static final field SRP_BIT_LENGTH I

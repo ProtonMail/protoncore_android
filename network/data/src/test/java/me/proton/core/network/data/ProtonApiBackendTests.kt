@@ -45,6 +45,8 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -92,6 +94,8 @@ internal class ProtonApiBackendTests {
     private val sessionProvider = mockk<SessionProvider>()
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
+    private val deviceVerificationProvider = mockk<DeviceVerificationProvider>()
+    private val deviceVerificationListener = mockk<DeviceVerificationListener>()
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
     private val clientVersionValidator = mockk<ClientVersionValidator> {
         every { validate(any()) } returns true
@@ -137,6 +141,8 @@ internal class ProtonApiBackendTests {
             sessionListener,
             humanVerificationProvider,
             humanVerificationListener,
+            deviceVerificationProvider,
+            deviceVerificationListener,
             missingScopeListener,
             cookieJar,
             scope,
@@ -167,6 +173,7 @@ internal class ProtonApiBackendTests {
         )
 
         coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
+        coEvery { deviceVerificationProvider.getSolvedChallenge(session.sessionId) } returns null
     }
 
     private fun createBackend(pinningInit: (OkHttpClient.Builder) -> Unit) =
@@ -180,6 +187,7 @@ internal class ProtonApiBackendTests {
             session.sessionId,
             sessionProvider,
             humanVerificationProvider,
+            deviceVerificationProvider,
             apiManagerFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),

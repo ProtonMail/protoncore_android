@@ -19,18 +19,19 @@
 package me.proton.core.crypto.android.srp
 
 import me.proton.core.crypto.common.srp.SrpChallenge
+import javax.inject.Inject
 
 /**
  * Implementation of [SrpChallenge] using the gopenpgp srp library.
  */
 
-class GOpenPGPSrpChallenge : SrpChallenge {
+class GOpenPGPSrpChallenge @Inject constructor(): SrpChallenge {
 
-    override fun argon2PreimageChallenge(challenge: String): String {
+    override suspend fun argon2PreimageChallenge(challenge: String): String {
         return com.proton.gopenpgp.srp.Srp.argon2PreimageChallenge(challenge, -1)
     }
 
-    override fun ecdlpChallenge(challenge: String): String {
+    override suspend fun ecdlpChallenge(challenge: String): String {
         return com.proton.gopenpgp.srp.Srp.ecdlpChallenge(challenge, -1)
     }
 }

@@ -56,6 +56,8 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -103,6 +105,12 @@ internal class PinningTests {
 
     @BindValue
     internal val humanVerificationListener: HumanVerificationListener = mockk()
+
+    @BindValue
+    internal val deviceVerificationProvider: DeviceVerificationProvider = mockk()
+
+    @BindValue
+    internal val deviceVerificationListener: DeviceVerificationListener = mockk()
 
     @BindValue
     internal val humanVerificationProvider: HumanVerificationProvider = mockk()

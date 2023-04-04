@@ -22,6 +22,8 @@ import me.proton.core.network.data.protonApi.Details
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.deviceverification.ChallengeType
+import me.proton.core.network.domain.deviceverification.DeviceVerificationMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.scopes.MissingScopes
 import me.proton.core.network.domain.scopes.Scope
@@ -36,6 +38,12 @@ fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
         verificationToken = requireNotNull(verificationToken)
     )
 
+fun Details.toDeviceVerificationEntity(): DeviceVerificationMethods =
+    DeviceVerificationMethods(
+        challengeType = requireNotNull(challengeType?.let { ChallengeType.enumOf(it) }),
+        challengePayload = requireNotNull(challengePayload)
+    )
+
 fun Details.toMissingScopes(): MissingScopes =
     MissingScopes(
         scopes = missingScopes?.mapNotNull {
@@ -47,6 +55,9 @@ fun ApiResult.Error.ProtonData.parseDetails(errorCode: Int, details: Details?): 
     when (errorCode) {
         ResponseCodes.HUMAN_VERIFICATION_REQUIRED -> {
             humanVerification = details?.toHumanVerificationEntity()
+        }
+        ResponseCodes.DEVICE_VERIFICATION_REQUIRED -> {
+            deviceVerification = details?.toDeviceVerificationEntity()
         }
         HttpResponseCodes.HTTP_FORBIDDEN -> {
             missingScopes = details?.toMissingScopes()

@@ -16,21 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.common.srp
+package me.proton.core.test.android.mocks
 
-/**
- * Type alias for a base64 encoded challenge.
- */
-typealias Based64Challenge = String;
+import me.proton.core.crypto.common.srp.SrpChallenge
 
-/**
- * Interface for SRP challenges.
- */
-interface SrpChallenge {
+@Suppress("MaxLineLength")
+class FakeSrpChallenge : SrpChallenge {
+    override suspend fun argon2PreimageChallenge(challenge: String): String {
+        return "ewAAAAAAAABXe+n/4g0Hfz40eEw7h5d3XeiKdWilfCJvz0izj7p0YA=="
 
-    //argon2 preimage challenge
-    suspend fun argon2PreimageChallenge(challenge: Based64Challenge): String;
+    }
 
-    // ecdlp challenge
-    suspend fun ecdlpChallenge(challenge: Based64Challenge): String;
+    override suspend fun ecdlpChallenge(challenge: String): String {
+        return "ewAAAAAAAABXe+n/4g0Hfz40eEw7h5d3XeiKdWilfCJvz0izj7p0YA=="
+    }
 }

@@ -472,6 +472,11 @@ public final class me/proton/core/crypto/common/srp/Auth {
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class me/proton/core/crypto/common/srp/SrpChallenge {
+	public abstract fun argon2PreimageChallenge (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun ecdlpChallenge (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/crypto/common/srp/SrpCrypto {
 	public abstract fun calculatePasswordVerifier (Ljava/lang/String;[BLjava/lang/String;Ljava/lang/String;)Lme/proton/core/crypto/common/srp/Auth;
 	public abstract fun generateSrpProofs (Ljava/lang/String;[BJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/crypto/common/srp/SrpProofs;

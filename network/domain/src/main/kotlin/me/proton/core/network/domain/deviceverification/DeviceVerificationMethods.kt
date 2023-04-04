@@ -16,21 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.common.srp
+package me.proton.core.network.domain.deviceverification
+
+import me.proton.core.domain.type.IntEnum
 
 /**
- * Type alias for a base64 encoded challenge.
+ * A data class that represents the available device verification methods.
+ *
+ * @property challengeType an integer that represents the type of challenge.
+ * @property challengePayload a string that contains the challenge payload.
  */
-typealias Based64Challenge = String;
+data class DeviceVerificationMethods(
+    val challengeType: IntEnum<ChallengeType>,
+    val challengePayload: String
+)
 
-/**
- * Interface for SRP challenges.
- */
-interface SrpChallenge {
-
-    //argon2 preimage challenge
-    suspend fun argon2PreimageChallenge(challenge: Based64Challenge): String;
-
-    // ecdlp challenge
-    suspend fun ecdlpChallenge(challenge: Based64Challenge): String;
+public enum class ChallengeType(public val value: Int) {
+    WASM(1),
+    Argon2(2),
+    Ecdlp(3);
+    companion object {
+        val map = values().associateBy { it.value }
+        fun enumOf(value: Int) = IntEnum(value, map[value])
+    }
 }

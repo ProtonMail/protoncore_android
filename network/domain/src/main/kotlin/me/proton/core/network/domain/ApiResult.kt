@@ -18,8 +18,7 @@
 
 package me.proton.core.network.domain
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.withTimeoutOrNull
+import me.proton.core.network.domain.deviceverification.DeviceVerificationMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.scopes.MissingScopes
 import kotlin.time.Duration
@@ -72,7 +71,8 @@ sealed class ApiResult<out T> {
             val code: Int,
             val error: String,
             var humanVerification: HumanVerificationAvailableMethods? = null,
-            var missingScopes: MissingScopes? = null
+            var missingScopes: MissingScopes? = null,
+            var deviceVerification: DeviceVerificationMethods? = null,
         )
 
         /**

@@ -63,5 +63,9 @@ data class Details(
     @SerialName("HumanVerificationToken")
     val verificationToken: String? = null,
     @SerialName("MissingScopes")
-    val missingScopes: List<String>? = null
+    val missingScopes: List<String>? = null,
+    @SerialName("ChallengeType")
+    val challengeType: Int? = null,
+    @SerialName("ChallengePayload")
+    val challengePayload: String? = null
 )

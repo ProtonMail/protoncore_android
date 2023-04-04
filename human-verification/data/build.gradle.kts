@@ -45,9 +45,11 @@ dependencies {
 
     implementation(
         project(Module.kotlinUtil),
+        project(Module.cryptoCommon),
         `coroutines-core`,
         `okHttp-logging`,
-        `room-ktx`
+        `room-ktx`,
+        cache4k
     )
 
     testImplementation(

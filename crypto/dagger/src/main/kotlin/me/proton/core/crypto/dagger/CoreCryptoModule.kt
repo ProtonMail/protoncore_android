@@ -24,9 +24,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
+import me.proton.core.crypto.android.srp.GOpenPGPSrpChallenge
 import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.srp.SrpChallenge
 import me.proton.core.crypto.common.srp.SrpCrypto
 import javax.inject.Singleton
 
@@ -49,4 +51,8 @@ public object CoreCryptoModule {
     @Provides
     @Singleton
     public fun provideSrpCrypto(): SrpCrypto = GOpenPGPSrpCrypto()
+
+    @Provides
+    @Singleton
+    public fun provideSrpChallenge(): SrpChallenge = GOpenPGPSrpChallenge()
 }

@@ -39,6 +39,9 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
+import me.proton.core.network.domain.handlers.DeviceVerificationNeededHandler
 import me.proton.core.network.domain.handlers.DohApiHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
@@ -82,6 +85,8 @@ class ApiManagerFactory(
     private val sessionListener: SessionListener,
     private val humanVerificationProvider: HumanVerificationProvider,
     private val humanVerificationListener: HumanVerificationListener,
+    private val deviceVerificationProvider: DeviceVerificationProvider,
+    private val deviceVerificationListener: DeviceVerificationListener,
     private val missingScopeListener: MissingScopeListener,
     private val cookieStore: ProtonCookieStore,
     scope: CoroutineScope,
@@ -144,6 +149,8 @@ class ApiManagerFactory(
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
+        val deviceVerificationErrorHandler =
+            DeviceVerificationNeededHandler<Api>(sessionId, sessionProvider, deviceVerificationListener)
         return listOf(
             dohApiHandler,
             missingScopeHandler,
@@ -151,6 +158,7 @@ class ApiManagerFactory(
             forceUpdateHandler,
             humanVerificationInvalidHandler,
             humanVerificationNeededHandler,
+            deviceVerificationErrorHandler,
         )
     }
 
@@ -187,6 +195,7 @@ class ApiManagerFactory(
             sessionId,
             sessionProvider,
             humanVerificationProvider,
+            deviceVerificationProvider,
             baseOkHttpClient,
             listOf(jsonConverter),
             interfaceClass,
@@ -231,6 +240,7 @@ class ApiManagerFactory(
                 sessionId,
                 sessionProvider,
                 humanVerificationProvider,
+                deviceVerificationProvider,
                 baseOkHttpClient,
                 listOf(jsonConverter),
                 interfaceClass,

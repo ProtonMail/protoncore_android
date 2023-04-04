@@ -51,6 +51,8 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
+import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.handlers.DohApiHandler
 import me.proton.core.network.domain.handlers.TokenErrorHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
@@ -97,6 +99,8 @@ internal class ApiManagerTests {
     )
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
+    private val deviceVerificationProvider = mockk<DeviceVerificationProvider>()
+    private val deviceVerificationListener = mockk<DeviceVerificationListener>()
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
 
     private lateinit var apiManagerFactory: ApiManagerFactory
@@ -164,6 +168,8 @@ internal class ApiManagerTests {
                 sessionListener,
                 humanVerificationProvider,
                 humanVerificationListener,
+                deviceVerificationProvider,
+                deviceVerificationListener,
                 missingScopeListener,
                 mockk(),
                 testScope,

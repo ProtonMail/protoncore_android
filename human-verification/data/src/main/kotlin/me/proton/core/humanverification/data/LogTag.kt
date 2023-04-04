@@ -16,21 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.common.srp
+package me.proton.core.humanverification.data
 
-/**
- * Type alias for a base64 encoded challenge.
- */
-typealias Based64Challenge = String;
+object LogTag {
+    /** Default tag for this module. */
+    const val DEFAULT: String = "core.humanverification"
 
-/**
- * Interface for SRP challenges.
- */
-interface SrpChallenge {
-
-    //argon2 preimage challenge
-    suspend fun argon2PreimageChallenge(challenge: Based64Challenge): String;
-
-    // ecdlp challenge
-    suspend fun ecdlpChallenge(challenge: Based64Challenge): String;
+    const val SRP_CHALLENGE_ERROR = "core.humanverification.srp.challenge.error"
 }

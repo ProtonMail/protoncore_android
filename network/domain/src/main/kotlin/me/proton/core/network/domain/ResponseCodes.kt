@@ -30,6 +30,7 @@ object ResponseCodes {
     const val APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS = 5099
     const val PASSWORD_WRONG = 8002
     const val HUMAN_VERIFICATION_REQUIRED = 9001
+    const val DEVICE_VERIFICATION_REQUIRED = 9002 // new error code for device verification
     const val USER_CREATE_NAME_INVALID = 12_081
     const val USER_CREATE_TOKEN_INVALID = 12_087
     const val PAYMENTS_SUBSCRIPTION_NOT_EXISTS = 22_110

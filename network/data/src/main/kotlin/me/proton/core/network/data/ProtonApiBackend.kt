@@ -38,6 +38,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.ResolvedSession
@@ -81,6 +82,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val humanVerificationProvider: HumanVerificationProvider,
+    private val deviceVerificationProvider: DeviceVerificationProvider,
     baseOkHttpClient: OkHttpClient,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
@@ -140,10 +142,12 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             .header("User-Agent", client.userAgent)
             .method(original.method, original.body)
 
+        // Set default Accept header if not present
         if (original.header("Accept") == null) {
             request.header("Accept", "application/vnd.protonmail.v1+json")
         }
 
+        // Add session-related headers
         when (val resolved = sessionProvider.getResolvedSession(sessionId)) {
             is ResolvedSession.Found -> {
                 resolved.session.sessionId.id.takeIfNotBlank()?.let { uid ->
@@ -156,6 +160,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             is ResolvedSession.NotFound -> Unit
         }
 
+        // Add human verification and device verification headers
         clientIdProvider.getClientId(sessionId)?.let { clientId ->
             humanVerificationProvider.getHumanVerificationDetails(clientId)?.let { details ->
                 details.tokenType?.let { tokenType ->
@@ -165,8 +170,13 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                     request.header("x-pm-human-verification-token", tokenCode)
                 }
             }
+
+            deviceVerificationProvider.getSolvedChallenge(sessionId)?.let { solvedChallenge ->
+                request.header("x-pm-dv", solvedChallenge)
+            }
         }
 
+        // Add any additional headers
         extraHeaderProvider?.headers?.forEach {
             request.header(it.first, it.second)
         }

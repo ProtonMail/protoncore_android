@@ -33,6 +33,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.crypto.common.srp.SrpChallenge
 import me.proton.core.crypto.dagger.CoreCryptoModule
 import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.CertificatePins
@@ -44,6 +45,7 @@ import me.proton.core.test.android.mocks.FakeApiClient
 import me.proton.core.test.android.mocks.FakeKeyStoreCrypto
 import me.proton.core.test.android.mocks.FakePGPCrypto
 import me.proton.core.test.android.mocks.FakeSrpCrypto
+import me.proton.core.test.android.mocks.FakeSrpChallenge
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import javax.inject.Singleton
 
@@ -117,4 +119,8 @@ object TestComponent {
     @Singleton
     fun provideWorkManager(): WorkManager = mockk(relaxed = true)
     // endregion
+
+    @Provides
+    @Singleton
+    fun provideSrpChallenge(): SrpChallenge = FakeSrpChallenge()
 }

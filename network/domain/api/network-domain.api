@@ -131,20 +131,23 @@ public final class me/proton/core/network/domain/ApiResult$Error$Parse : me/prot
 }
 
 public final class me/proton/core/network/domain/ApiResult$Error$ProtonData {
-	public fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;)V
-	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;)V
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;
 	public final fun component4 ()Lme/proton/core/network/domain/scopes/MissingScopes;
-	public final fun copy (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
-	public static synthetic fun copy$default (Lme/proton/core/network/domain/ApiResult$Error$ProtonData;ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;ILjava/lang/Object;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
+	public final fun component5 ()Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;
+	public final fun copy (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/ApiResult$Error$ProtonData;ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;ILjava/lang/Object;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
+	public final fun getDeviceVerification ()Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;
 	public final fun getError ()Ljava/lang/String;
 	public final fun getHumanVerification ()Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;
 	public final fun getMissingScopes ()Lme/proton/core/network/domain/scopes/MissingScopes;
 	public fun hashCode ()I
+	public final fun setDeviceVerification (Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;)V
 	public final fun setHumanVerification (Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;)V
 	public final fun setMissingScopes (Lme/proton/core/network/domain/scopes/MissingScopes;)V
 	public fun toString ()Ljava/lang/String;
@@ -249,6 +252,7 @@ public final class me/proton/core/network/domain/ResponseCodes {
 	public static final field API_VERSION_INVALID I
 	public static final field APP_VERSION_BAD I
 	public static final field APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS I
+	public static final field DEVICE_VERIFICATION_REQUIRED I
 	public static final field HUMAN_VERIFICATION_REQUIRED I
 	public static final field INSTANCE Lme/proton/core/network/domain/ResponseCodes;
 	public static final field NOT_ALLOWED I
@@ -357,6 +361,65 @@ public abstract interface class me/proton/core/network/domain/client/ExtraHeader
 	public abstract fun getHeaders ()Ljava/util/List;
 	public abstract fun removeAll (Ljava/lang/String;)V
 	public abstract fun removeFirst (Ljava/lang/String;)V
+}
+
+public final class me/proton/core/network/domain/deviceverification/ChallengeType : java/lang/Enum {
+	public static final field Argon2 Lme/proton/core/network/domain/deviceverification/ChallengeType;
+	public static final field Companion Lme/proton/core/network/domain/deviceverification/ChallengeType$Companion;
+	public static final field Ecdlp Lme/proton/core/network/domain/deviceverification/ChallengeType;
+	public static final field WASM Lme/proton/core/network/domain/deviceverification/ChallengeType;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/network/domain/deviceverification/ChallengeType;
+	public static fun values ()[Lme/proton/core/network/domain/deviceverification/ChallengeType;
+}
+
+public final class me/proton/core/network/domain/deviceverification/ChallengeType$Companion {
+	public final fun enumOf (I)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public abstract interface class me/proton/core/network/domain/deviceverification/DeviceVerificationListener {
+	public abstract fun onDeviceVerification (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult {
+}
+
+public final class me/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult$Failure : me/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult {
+	public static final field INSTANCE Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult$Failure;
+}
+
+public final class me/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult$Success : me/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult {
+	public static final field INSTANCE Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener$DeviceVerificationResult$Success;
+}
+
+public final class me/proton/core/network/domain/deviceverification/DeviceVerificationMethods {
+	public fun <init> (Lme/proton/core/domain/type/IntEnum;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/type/IntEnum;Ljava/lang/String;)Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;Lme/proton/core/domain/type/IntEnum;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/network/domain/deviceverification/DeviceVerificationMethods;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChallengePayload ()Ljava/lang/String;
+	public final fun getChallengeType ()Lme/proton/core/domain/type/IntEnum;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/network/domain/deviceverification/DeviceVerificationProvider {
+	public abstract fun getSolvedChallenge (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSolvedChallenge (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setSolvedChallenge (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/domain/handlers/DeviceVerificationNeededHandler : me/proton/core/network/domain/ApiErrorHandler {
+	public static final field Companion Lme/proton/core/network/domain/handlers/DeviceVerificationNeededHandler$Companion;
+	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener;)V
+	public fun invoke (Lme/proton/core/network/domain/ApiBackend;Lme/proton/core/network/domain/ApiResult$Error;Lme/proton/core/network/domain/ApiManager$Call;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/domain/handlers/DeviceVerificationNeededHandler$Companion {
+	public final fun sessionMutex (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/domain/handlers/DohApiHandler : me/proton/core/network/domain/ApiErrorHandler {

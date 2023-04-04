@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.humanverification.data.DeviceVerificationListenerImpl
+import me.proton.core.humanverification.data.DeviceVerificationProviderImpl
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
 import me.proton.core.humanverification.data.HumanVerificationProviderImpl
@@ -33,6 +35,8 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
+import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
+import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import javax.inject.Singleton
@@ -55,6 +59,14 @@ public interface CoreHumanVerificationModule {
     @Binds
     @Singleton
     public fun provideHumanVerificationProvider(impl: HumanVerificationProviderImpl): HumanVerificationProvider
+
+    @Binds
+    @Singleton
+    public fun provideDeviceVerificationProvider(impl: DeviceVerificationProviderImpl): DeviceVerificationProvider
+
+    @Binds
+    @Singleton
+    public fun provideDeviceVerificationListener(impl: DeviceVerificationListenerImpl): DeviceVerificationListener
 
     @Binds
     @Singleton
