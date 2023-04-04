@@ -29,4 +29,5 @@ public fun Product.framePrefix(): String = when (this) {
     Product.Drive -> "drive-android-v4-$CHALLENGE_FRAME_SUFFIX"
     Product.Mail -> "mail-android-v4-$CHALLENGE_FRAME_SUFFIX"
     Product.Vpn -> "vpn-android-v4-$CHALLENGE_FRAME_SUFFIX"
+    Product.Pass -> "pass-android-v4-$CHALLENGE_FRAME_SUFFIX"
 }.exhaustive

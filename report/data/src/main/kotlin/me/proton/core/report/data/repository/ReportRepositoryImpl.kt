@@ -43,6 +43,7 @@ public class ReportRepositoryImpl @Inject constructor(
             Product.Vpn -> 2
             Product.Calendar -> 3
             Product.Drive -> 4
+            Product.Pass -> 5
         }
 
         val request = BugReportRequest(

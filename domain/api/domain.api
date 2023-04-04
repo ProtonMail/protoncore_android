@@ -105,6 +105,7 @@ public final class me/proton/core/domain/entity/Product : java/lang/Enum {
 	public static final field Calendar Lme/proton/core/domain/entity/Product;
 	public static final field Drive Lme/proton/core/domain/entity/Product;
 	public static final field Mail Lme/proton/core/domain/entity/Product;
+	public static final field Pass Lme/proton/core/domain/entity/Product;
 	public static final field Vpn Lme/proton/core/domain/entity/Product;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/domain/entity/Product;
 	public static fun values ()[Lme/proton/core/domain/entity/Product;

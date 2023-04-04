@@ -25,6 +25,7 @@ import me.proton.core.plan.domain.ProductOnlyPaidPlans
 import me.proton.core.plan.domain.entity.MASK_CALENDAR
 import me.proton.core.plan.domain.entity.MASK_DRIVE
 import me.proton.core.plan.domain.entity.MASK_MAIL
+import me.proton.core.plan.domain.entity.MASK_PASS
 import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
@@ -48,6 +49,7 @@ class GetPlans @Inject constructor(
                     Product.Drive -> it.hasServiceFor(MASK_DRIVE)
                     Product.Mail -> it.hasServiceFor(MASK_MAIL)
                     Product.Vpn -> it.hasServiceFor(MASK_VPN)
+                    Product.Pass -> it.hasServiceFor(MASK_PASS)
                 }.exhaustive
             }.filter(clientPlanFilter?.filter() ?: { true })
             .sortedByDescending { it.services }

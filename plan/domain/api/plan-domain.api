@@ -83,6 +83,7 @@ public final class me/proton/core/plan/domain/entity/PlanKt {
 	public static final field MASK_DRIVE I
 	public static final field MASK_MAIL I
 	public static final field MASK_NONE I
+	public static final field MASK_PASS I
 	public static final field MASK_VPN I
 	public static final field PLAN_ADDON I
 	public static final field PLAN_PRODUCT I

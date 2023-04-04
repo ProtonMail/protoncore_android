@@ -53,6 +53,7 @@ class SignupFinishedFragment : SignupFragment(R.layout.fragment_signup_finished)
                     Product.Drive -> R.string.auth_signup_start_using_drive
                     Product.Mail -> R.string.auth_signup_start_using_mail
                     Product.Vpn -> R.string.auth_signup_start_using_vpn
+                    Product.Pass -> R.string.auth_signup_start_using_pass
                     else -> R.string.auth_signup_start_using_proton
                 }.exhaustive
             )

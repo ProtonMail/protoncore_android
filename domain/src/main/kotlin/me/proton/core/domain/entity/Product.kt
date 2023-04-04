@@ -22,5 +22,6 @@ enum class Product {
     Calendar,
     Drive,
     Mail,
-    Vpn
+    Vpn,
+    Pass
 }

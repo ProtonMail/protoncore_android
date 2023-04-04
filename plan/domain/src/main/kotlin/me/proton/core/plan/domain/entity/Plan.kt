@@ -28,7 +28,8 @@ const val MASK_MAIL = 1 // bitmap
 const val MASK_CALENDAR = MASK_MAIL // bitmap
 const val MASK_DRIVE = 2 // bitmap
 const val MASK_VPN = 4 // bitmap
-const val MASK_ALL = 7 // bitmap
+const val MASK_PASS = 8 // bitmap
+const val MASK_ALL = 15 // bitmap
 
 const val PLAN_VENDOR_GOOGLE = "Google"
 
