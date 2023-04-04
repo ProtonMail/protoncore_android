@@ -11,6 +11,49 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.1.0] - 2023-04-04
+
+### Chores
+
+- auth:
+  - Update Welcome Screen UI.
+- domain:
+  - Add Proton Pass product enum.
+- presentation:
+  - Update Welcome Screen UI.
+- user-settings:
+  - Clean up recovery screen texts.
+
+### Features
+
+- crypto:
+  - Add API to add and verify signature contexts.
+
+    Add the possibility to add a context when generating detached
+    signatures.
+    And add the possibility to enforce that a signature has a given
+    context during verification.
+- key:
+  - Add API to add and verify signature contexts.
+
+    Add the possibility to add a context when generating detached
+    signatures.
+    And add the possibility to enforce that a signature has a given
+    context during verification.
+
+### Bug Fixes
+
+- auth:
+  - Make Auth Activities Screen Orientation portrait.
+  - Make Auth Activities scrollable (SoftInput).
+- challenge:
+  - Fix `IndexOutOfBoundsException` during auto-fill.
+- presentation:
+  - The hyperlink color same as text color.
+  - Added Snackbar auto detect weblinks.
+- report:
+  - Added simplified ReportOrchestrator startBugReport function.
+
 ## [10.0.0] - 2023-03-29
 
 ### Chores
