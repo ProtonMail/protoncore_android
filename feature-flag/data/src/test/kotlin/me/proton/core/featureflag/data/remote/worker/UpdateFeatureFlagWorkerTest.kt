@@ -23,6 +23,7 @@ import android.content.Context
 import androidx.work.NetworkType
 import androidx.work.WorkerParameters
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -31,7 +32,10 @@ import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
 import me.proton.core.featureflag.data.remote.response.PutFeatureResponse
 import me.proton.core.featureflag.data.testdata.UserIdTestData
+import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
+import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -70,11 +74,13 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
             }
         }
     }
+    private val localDataSource: FeatureFlagLocalDataSource = mockk(relaxUnitFun = true)
 
     private val worker = UpdateFeatureFlagWorker(
         context,
         parameters,
-        apiProvider
+        apiProvider,
+        localDataSource
     )
 
     @Test
@@ -151,5 +157,23 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
 
         // then
         assertEquals(androidx.work.ListenableWorker.Result.failure(), actual)
+    }
+
+    @Test
+    fun `worker rollbacks local feature flag value when API calls fails with non retryable exception`() = runTest {
+        // given
+        coEvery {
+            featuresApi.putFeatureFlag(
+                featureId.id,
+                PutFeatureFlagBody(featureFlagValue)
+            )
+        } throws nonRetryableException
+
+        // when
+        worker.doWork()
+
+        // then
+        val expected = FeatureFlag(userId, featureId, Scope.User, false, featureFlagValue.not())
+        coVerify { localDataSource.upsert(listOf(expected)) }
     }
 }

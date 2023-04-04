@@ -159,10 +159,10 @@ public final class me/proton/core/featureflag/data/remote/worker/UpdateFeatureFl
 }
 
 public final class me/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker_Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker_Factory;
 	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker;
-	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;)Lme/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker;
 }
 
 public abstract interface class me/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker_HiltModule {

@@ -34,7 +34,10 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
+import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
+import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.isRetryable
@@ -43,7 +46,8 @@ import me.proton.core.network.domain.isRetryable
 internal class UpdateFeatureFlagWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val localDataSource: FeatureFlagLocalDataSource
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -59,10 +63,26 @@ internal class UpdateFeatureFlagWorker @AssistedInject constructor(
                 if (result.isRetryable()) {
                     Result.retry()
                 } else {
+                    rollbackLocalFeatureFlag(userId, FeatureId(featureId), isEnabled)
                     Result.failure()
                 }
             }
         }
+    }
+
+    private suspend fun rollbackLocalFeatureFlag(
+        userId: UserId?,
+        featureId: FeatureId,
+        value: Boolean
+    ) {
+        val featureFlag = FeatureFlag(
+            userId = userId,
+            featureId = featureId,
+            scope = Scope.User,
+            defaultValue = false,
+            value = value.not()
+        )
+        localDataSource.upsert(listOf(featureFlag))
     }
 
     companion object {
