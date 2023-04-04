@@ -180,7 +180,7 @@ unit-tests-and-coverage-report:
         path: ./build/reports/cobertura-coverage.xml
 
 start-review:
-  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
+  image: ${CI_REGISTRY}/android/shared/docker-android/ndk:v1.1.0
   needs:
     - assemble
   before_script:
@@ -268,7 +268,7 @@ pass-integration-tests:
 .firebase-tests-common:
   stage: firebase
   when: always
-  image: ${CI_REGISTRY}/android/shared/docker-android:1.0.3-github-ssh-key-snapshot
+  image: ${CI_REGISTRY}/android/shared/docker-android/ndk:v1.1.0
   variables:
     APP_APK: "coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk"
