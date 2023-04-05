@@ -103,8 +103,8 @@ internal class DriveEventDeserializer(
                 eventId = eventId,
                 config = config,
                 nextEventId = EventId(it.eventId),
-                refresh = RefreshType.Nothing,
-                more = false,
+                refresh = RefreshType.mapByValue[it.refresh],
+                more = it.more > 0,
                 response = response,
                 createdAt = System.currentTimeMillis()
             )

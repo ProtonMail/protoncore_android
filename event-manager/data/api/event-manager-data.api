@@ -231,13 +231,17 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEv
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;II)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
-	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (Ljava/lang/String;II)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;Ljava/lang/String;IIILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEventId ()Ljava/lang/String;
+	public final fun getMore ()I
+	public final fun getRefresh ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V

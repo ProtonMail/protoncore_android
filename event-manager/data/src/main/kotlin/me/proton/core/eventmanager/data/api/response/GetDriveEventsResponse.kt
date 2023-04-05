@@ -24,5 +24,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GetDriveEventsResponse(
     @SerialName("EventID")
-    val eventId: String
+    val eventId: String,
+    @SerialName("Refresh")
+    val refresh: Int, // Bitmask to know what to refresh, 0: nothing, 1: client needs to refresh.
+    @SerialName("More")
+    val more: Int, // 1 if there is more to poll.
 )
