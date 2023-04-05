@@ -18,5 +18,5 @@
   -->
 
 <resources>
-    <string name="force_update_link">https://protonmail.com/support/knowledge-base/update-required</string>
+    <string name="force_update_link">https://proton.me/support/update-required</string>
 </resources>

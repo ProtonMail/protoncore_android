@@ -17,5 +17,5 @@
   -->
 
 <resources>
-    <string name="crypto_keystore_help_url">https://protonmail.com/support/knowledge-base/android-keystore-issues/</string>
+    <string name="crypto_keystore_help_url">https://proton.me/support/android-keystore-issues</string>
 </resources>
