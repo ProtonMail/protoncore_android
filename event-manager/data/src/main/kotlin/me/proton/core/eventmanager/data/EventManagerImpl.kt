@@ -184,7 +184,7 @@ class EventManagerImpl @AssistedInject constructor(
             eventMetadataRepository.updateNextEventId(config, metadata.eventId, nextEventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach {
-                it.notifyResetAll(config)
+                it.notifyResetAll(config, metadata)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)

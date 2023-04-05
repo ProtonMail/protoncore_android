@@ -28,6 +28,7 @@ import me.proton.core.util.kotlin.takeIfNotEmpty
 abstract class EventListener<K : Any, T : Any> : TransactionHandler {
 
     private val actionMapByConfig = mutableMapOf<EventManagerConfig, Map<Action, List<Event<K, T>>>>()
+    private val eventMetadataByConfig = mutableMapOf<EventManagerConfig, EventMetadata>()
 
     /**
      * Type of Event loop.
@@ -71,13 +72,15 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      */
     abstract val order: Int
 
-    private suspend fun setActionMap(config: EventManagerConfig, metadata: EventMetadata) {
+    private suspend fun setMetadata(config: EventManagerConfig, metadata: EventMetadata) {
         val events = metadata.response?.let { deserializeEvents(config, it) }.orEmpty()
         actionMapByConfig[config] = events.groupByAction()
+        eventMetadataByConfig[config] = metadata
     }
 
-    private fun clearActionMap(config: EventManagerConfig) {
+    private fun clearMetadata(config: EventManagerConfig) {
         actionMapByConfig.remove(config)
+        eventMetadataByConfig.remove(config)
     }
 
     /**
@@ -89,13 +92,21 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
         actionMapByConfig.getOrPut(config) { emptyMap() }
 
     /**
+     * Get [EventMetadata] part of the current set of modifications.
+     *
+     * Note: The map is created in first place just before [onPrepare], and cleared after [onComplete].
+     */
+    fun getEventMetadata(config: EventManagerConfig): EventMetadata =
+        eventMetadataByConfig.getValue(config)
+
+    /**
      * Notify to prepare any additional data (e.g. foreign key).
      *
      * Note: No transaction wraps this function.
      */
     suspend fun notifyPrepare(config: EventManagerConfig, metadata: EventMetadata) {
         requireNotNull(metadata.response)
-        setActionMap(config, metadata)
+        setMetadata(config, metadata)
         val actions = getActionMap(config)
         val entities = actions[Action.Create].orEmpty() + actions[Action.Update].orEmpty()
         entities.takeIfNotEmpty()?.let { list -> onPrepare(config, list.mapNotNull { it.entity }) }
@@ -108,7 +119,7 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      */
     suspend fun notifyEvents(config: EventManagerConfig, metadata: EventMetadata) {
         requireNotNull(metadata.response)
-        setActionMap(config, metadata)
+        setMetadata(config, metadata)
         val actions = getActionMap(config)
         actions[Action.Create]?.takeIfNotEmpty()?.let { list -> onCreate(config, list.mapNotNull { it.entity }) }
         actions[Action.Update]?.takeIfNotEmpty()?.let { list -> onUpdate(config, list.mapNotNull { it.entity }) }
@@ -121,7 +132,8 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyResetAll(config: EventManagerConfig) {
+    suspend fun notifyResetAll(config: EventManagerConfig, metadata: EventMetadata) {
+        setMetadata(config, metadata)
         onResetAll(config)
     }
 
@@ -132,7 +144,7 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      */
     suspend fun notifySuccess(config: EventManagerConfig, metadata: EventMetadata) {
         requireNotNull(metadata.response)
-        setActionMap(config, metadata)
+        setMetadata(config, metadata)
         onSuccess(config)
     }
 
@@ -142,7 +154,7 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      * Note: No transaction wraps this function.
      */
     suspend fun notifyFailure(config: EventManagerConfig, metadata: EventMetadata) {
-        setActionMap(config, metadata)
+        setMetadata(config, metadata)
         onFailure(config)
     }
 
@@ -152,9 +164,9 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      * Note: No transaction wraps this function.
      */
     suspend fun notifyComplete(config: EventManagerConfig, metadata: EventMetadata) {
-        setActionMap(config, metadata)
+        setMetadata(config, metadata)
         onComplete(config)
-        clearActionMap(config)
+        clearMetadata(config)
     }
 
     /**
