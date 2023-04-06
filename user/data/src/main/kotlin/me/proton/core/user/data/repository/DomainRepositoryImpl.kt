@@ -18,20 +18,25 @@
 
 package me.proton.core.user.data.repository
 
+import io.github.reactivecircus.cache4k.Cache
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.DomainApi
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.minutes
 
 @Singleton
 class DomainRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : DomainRepository {
 
-    override suspend fun getAvailableDomains(): List<Domain> =
+    private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Domain>>()
+
+    override suspend fun getAvailableDomains(): List<Domain> = cache.get(Unit) {
         provider.get<DomainApi>().invoke {
             getAvailableDomains().domains
         }.valueOrThrow
+    }
 }

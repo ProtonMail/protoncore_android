@@ -61,7 +61,8 @@ dependencies {
 
         // Other
         `room-ktx`,
-        store4
+        store4,
+        cache4k
     )
 
     androidTestImplementation(project(Module.androidTest)) {

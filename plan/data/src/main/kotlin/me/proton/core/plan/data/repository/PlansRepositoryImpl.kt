@@ -18,8 +18,7 @@
 
 package me.proton.core.plan.data.repository
 
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import io.github.reactivecircus.cache4k.Cache
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.api.PlansApi
@@ -27,35 +26,22 @@ import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.minutes
 
 @Singleton
 class PlansRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : PlansRepository {
 
-    private val defaultResponseExpirationTimeMs = 60000
-    private val mutex: Mutex = Mutex()
-    private var paidPlansCache: List<Plan>? = null
-    private var lastAccessTime: Long = 0
+    private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
 
     /**
      * Returns from the API all plans available for the user in the moment.
      */
-    override suspend fun getPlans(sessionUserId: SessionUserId?): List<Plan> {
-        mutex.withLock {
-            val currentTime = System.currentTimeMillis()
-            return if (currentTime - lastAccessTime > defaultResponseExpirationTimeMs) {
-                provider.get<PlansApi>(sessionUserId).invoke {
-                    paidPlansCache = getPlans().plans.map {
-                        it.toPlan()
-                    }
-                    lastAccessTime = currentTime
-                    paidPlansCache ?: emptyList()
-                }.valueOrThrow
-            } else {
-                paidPlansCache ?: emptyList()
-            }
-        }
+    override suspend fun getPlans(sessionUserId: SessionUserId?) = cache.get(Unit) {
+        provider.get<PlansApi>(sessionUserId).invoke {
+            getPlans().plans.map { it.toPlan() }
+        }.valueOrThrow
     }
 
     override suspend fun getPlansDefault(sessionUserId: SessionUserId?): Plan =

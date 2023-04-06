@@ -41,7 +41,8 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.networkDomain),
         retrofit,
-        serialization("core")
+        serialization("core"),
+        cache4k
     )
 
     testImplementation(
