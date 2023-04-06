@@ -26,4 +26,5 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 public interface FeatureFlagLocalDataSource {
     public fun observe(userId: UserId?, featureIds: Set<FeatureId>): Flow<List<FeatureFlag>>
     public suspend fun upsert(flags: List<FeatureFlag>)
+    public suspend fun updateValue(userId: UserId?, featureId: FeatureId, value: Boolean)
 }

@@ -34,9 +34,7 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
-import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
-import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
@@ -74,16 +72,7 @@ internal class UpdateFeatureFlagWorker @AssistedInject constructor(
         userId: UserId?,
         featureId: FeatureId,
         value: Boolean
-    ) {
-        val featureFlag = FeatureFlag(
-            userId = userId,
-            featureId = featureId,
-            scope = Scope.User,
-            defaultValue = false,
-            value = value.not()
-        )
-        localDataSource.upsert(listOf(featureFlag))
-    }
+    ) = localDataSource.updateValue(userId, featureId, value.not())
 
     companion object {
 

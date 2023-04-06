@@ -33,4 +33,7 @@ public abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
 
     @Query("DELETE FROM FeatureFlagEntity WHERE userId IN (:userIds)")
     internal abstract suspend fun deleteAll(userIds: List<UserId>)
+
+    @Query("UPDATE FeatureFlagEntity SET value = :value WHERE userId = :userId AND featureId = :featureId")
+    internal abstract fun updateValue(userId: UserId?, featureId: String, value: Boolean)
 }

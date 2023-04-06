@@ -61,6 +61,7 @@ public final class me/proton/core/featureflag/domain/entity/Scope : java/lang/En
 
 public abstract interface class me/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource {
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun upsert (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

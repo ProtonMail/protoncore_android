@@ -32,9 +32,7 @@ import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
 import me.proton.core.featureflag.data.remote.response.PutFeatureResponse
 import me.proton.core.featureflag.data.testdata.UserIdTestData
-import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
-import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
@@ -173,7 +171,6 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
         worker.doWork()
 
         // then
-        val expected = FeatureFlag(userId, featureId, Scope.User, false, featureFlagValue.not())
-        coVerify { localDataSource.upsert(listOf(expected)) }
+        coVerify { localDataSource.updateValue(userId, featureId, featureFlagValue.not()) }
     }
 }

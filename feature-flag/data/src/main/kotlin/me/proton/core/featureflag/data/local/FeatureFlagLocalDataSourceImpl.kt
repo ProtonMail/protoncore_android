@@ -39,4 +39,8 @@ public class FeatureFlagLocalDataSourceImpl @Inject constructor(
 
     override suspend fun upsert(flags: List<FeatureFlag>): Unit =
         dao.insertOrUpdate(*flags.map { it.toEntity() }.toTypedArray())
+
+    override suspend fun updateValue(userId: UserId?, featureId: FeatureId, value: Boolean) {
+        dao.updateValue(userId, featureId.id, value)
+    }
 }
