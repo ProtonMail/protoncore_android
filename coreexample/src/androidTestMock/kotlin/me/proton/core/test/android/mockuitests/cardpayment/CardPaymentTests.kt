@@ -63,6 +63,10 @@ class CardPaymentTests : BaseMockTest {
     @Test
     fun signupWithCreditCardOnly() {
         dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
+        dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google-card-only.json"
         )
@@ -103,6 +107,11 @@ class CardPaymentTests : BaseMockTest {
     @Test
     fun signupAndPayWithCreditCardWhenAllProvidersAvailable() {
         billingClientFactory.mockBillingClientSuccess()
+
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
             "POST/payments/v4/subscription-mail-plus-google-managed.json"

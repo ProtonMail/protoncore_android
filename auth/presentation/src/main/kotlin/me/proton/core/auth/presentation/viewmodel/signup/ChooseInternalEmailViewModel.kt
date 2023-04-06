@@ -20,13 +20,17 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.retry
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.isRetryable
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
@@ -39,37 +43,56 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
 ) : ProtonViewModel() {
 
-    private val mutableDomains = MutableStateFlow<List<Domain>>(emptyList())
-    private val mutableState = MutableStateFlow<State>(State.Idle)
+    private var preFillUsername: String? = null
+    private var preFillDomain: String? = null
+    private val domainsState = MutableStateFlow<List<Domain>>(emptyList())
+    private val mainState = MutableStateFlow<State>(State.Idle)
 
-    val state = mutableState.asStateFlow()
+    val state = mainState.asStateFlow()
 
     sealed class State {
         object Idle : State()
+
         object Processing : State()
-        data class Domains(val domains: List<String>) : State()
+        data class Ready(
+            val username: String? = null,
+            val domain: String? = null,
+            val domains: List<String>,
+        ) : State()
+
         data class Success(val username: String, val domain: String) : State()
         sealed class Error : State() {
-            object DomainsNotAvailable : Error()
+            data class DomainsNotAvailable(val error: Throwable) : Error()
             data class Message(val error: Throwable) : Error()
         }
     }
 
     init {
-        fetchDomains()
+        getDomains()
     }
 
-    private fun fetchDomains() = flow {
-        if (mutableDomains.value.isEmpty()) {
-            emit(State.Processing)
-            mutableDomains.value =
-                accountAvailability.getDomains(metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) })
-        }
-        emit(State.Domains(mutableDomains.value))
+    fun getDomains() = flow {
+        emit(State.Processing)
+        // See CP-5335.
+        domainsState.value = accountAvailability.getDomains(
+            metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }
+        )
+        emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
+    }.catch { error ->
+        emit(State.Error.DomainsNotAvailable(error))
+    }.onEach {
+        mainState.tryEmit(it)
+    }.launchIn(viewModelScope)
+
+    fun preFill(username: String?, domain: String?) = flow {
+        emit(State.Processing)
+        preFillUsername = username
+        preFillDomain = domain
+        emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {
-        mutableState.tryEmit(it)
+        mainState.tryEmit(it)
     }.launchIn(viewModelScope)
 
     fun checkUsername(username: String, domain: String) = flow {
@@ -82,6 +105,6 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {
-        mutableState.tryEmit(it)
+        mainState.tryEmit(it)
     }.launchIn(viewModelScope)
 }

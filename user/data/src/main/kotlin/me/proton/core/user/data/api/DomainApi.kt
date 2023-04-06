@@ -25,7 +25,7 @@ import retrofit2.http.Query
 
 interface DomainApi : BaseRetrofitApi {
 
-    @GET("domains/available")
+    @GET("core/v4/domains/available")
     suspend fun getAvailableDomains(
         @Query("Type") type: String = "signup",
     ): AvailableDomainsResponse

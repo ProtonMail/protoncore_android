@@ -94,9 +94,11 @@ internal fun FragmentManager.showUsernameChooser(
 
 internal fun FragmentManager.showInternalEmailChooser(
     creatableAccountType: AccountType,
+    username: String? = null,
+    domain: String? = null,
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseInternalEmailFragment(creatableAccountType)
+    val fragment = ChooseInternalEmailFragment(creatableAccountType, username, domain)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
@@ -118,9 +120,11 @@ internal fun FragmentManager.showExternalEmailChooser(
 
 internal fun FragmentManager.replaceByInternalEmailChooser(
     creatableAccountType: AccountType,
+    username: String? = null,
+    domain: String? = null,
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseInternalEmailFragment(creatableAccountType)
+    val fragment = ChooseInternalEmailFragment(creatableAccountType, username, domain)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)

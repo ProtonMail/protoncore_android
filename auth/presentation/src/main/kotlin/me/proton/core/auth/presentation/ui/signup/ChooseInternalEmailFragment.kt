@@ -63,6 +63,9 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         AccountType.valueOf(requireNotNull(requireArguments().getString(ARG_INPUT_ACCOUNT_TYPE)))
     }
 
+    private val username by lazy { requireArguments().getString(ARG_INPUT_USERNAME) }
+    private val domain by lazy { requireArguments().getString(ARG_INPUT_DOMAIN) }
+
     override fun onBackPressed() {
         signupViewModel.onFinish()
         activity?.finish()
@@ -100,6 +103,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             }
         }
 
+        viewModel.preFill(username, domain)
         viewModel.state
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
@@ -107,10 +111,10 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                 when (it) {
                     is State.Idle -> showLoading(false)
                     is State.Processing -> showLoading(true)
-                    is State.Domains -> onDomains(it.domains)
+                    is State.Ready -> onReady(it.username, it.domain, it.domains)
                     is State.Success -> onUsernameAvailable(it.username, it.domain)
+                    is State.Error.DomainsNotAvailable -> onDomainsNotAvailable(it.error.getUserMessage(resources))
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
-                    is State.Error.DomainsNotAvailable -> onError(getString(R.string.auth_create_address_error_no_available_domain))
                 }.exhaustive
             }
             .onLongState(ChooseUsernameViewModel.State.Processing) {
@@ -140,22 +144,24 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         parentFragmentManager.replaceByExternalEmailChooser(creatableAccountType)
     }
 
-    private fun onDomains(domains: List<Domain>) {
-        showLoading(false)
+    private fun onReady(username: String?, domain: String?, domains: List<Domain>) {
+        val isLoading = domains.isEmpty()
+        showLoading(isLoading)
         with(binding) {
-            nextButton.isEnabled = true
+            nextButton.isEnabled = !isLoading
             switchButton.isEnabled = true
 
-            if (domains.count() == 1) {
-                usernameInput.suffixText = "@${domains.first()}"
-                usernameInput.setOnDoneActionListener { onNextClicked() }
-            }
-
-            domainInput.apply {
-                val items = domains.map { "@$it" }
-                text = items.firstOrNull()
-                setAdapter(ArrayAdapter(context, R.layout.list_item_domain, R.id.title, items))
-            }
+            usernameInput.text = username
+            val items = domains.map { "@$it" }
+            domainInput.text = items.firstOrNull { it.contains(domain.orEmpty()) }
+            domainInput.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    R.layout.list_item_domain,
+                    R.id.title,
+                    items
+                )
+            )
         }
     }
 
@@ -166,6 +172,18 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         signupViewModel.username = username
         signupViewModel.domain = domain
         parentFragmentManager.showPasswordChooser()
+    }
+
+    private fun onDomainsNotAvailable(message: String?) {
+        showLoading(false)
+        binding.nextButton.isEnabled = false
+        showIndefiniteError(message, getString(R.string.presentation_retry)) {
+            onRetryClicked()
+        }
+    }
+
+    private fun onRetryClicked() {
+        viewModel.getDomains()
     }
 
     private fun onError(message: String?) {
@@ -183,12 +201,18 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     companion object {
         const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
+        const val ARG_INPUT_USERNAME = "arg.username"
+        const val ARG_INPUT_DOMAIN = "arg.domain"
 
         operator fun invoke(
-            creatableAccountType: AccountType
+            creatableAccountType: AccountType,
+            username: String?,
+            domain: String?
         ) = ChooseInternalEmailFragment().apply {
             arguments = bundleOf(
-                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name
+                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name,
+                ARG_INPUT_USERNAME to username,
+                ARG_INPUT_DOMAIN to domain
             )
         }
     }

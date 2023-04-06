@@ -40,7 +40,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.assertIs
 
 class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     private lateinit var accountAvailability: AccountAvailability
@@ -73,8 +73,8 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
             val item = awaitItem() as State.Success
             assertEquals(testEmail, item.email)
             cancelAndConsumeRemainingEvents()
@@ -102,9 +102,48 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Error.Message)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Error.Message>(awaitItem())
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `check proton domain, switch to internal`() = coroutinesTest {
+        // GIVEN
+        val testUsername = "username"
+        val testDomain = "proton.me"
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { domainRepository.getAvailableDomains() } returns listOf("proton.me", "proton.ch")
+        // WHEN
+        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel.state.test {
+            viewModel.checkExternalEmail(testEmail)
+            // THEN
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.SwitchInternal>(awaitItem())
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `check proton domain, don't switch to internal`() = coroutinesTest {
+        // GIVEN
+        val testUsername = "test-username"
+        val testDomain = "test-domain"
+        val testEmail = "$testUsername@$testDomain"
+        coEvery { domainRepository.getAvailableDomains() } returns listOf("proton.me", "proton.ch")
+        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
+        // WHEN
+        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel.state.test {
+            viewModel.checkExternalEmail(testEmail)
+            // THEN
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Success>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -120,9 +159,9 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             // WHEN
             viewModel.checkExternalEmail(testEmail)
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Success)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Success>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
         // THEN

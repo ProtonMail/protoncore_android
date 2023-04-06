@@ -39,6 +39,7 @@
     <!-- Other -->
     <string name="presentation_back">Back</string>
     <string name="presentation_close">Close</string>
+    <string name="presentation_retry">Retry</string>
     <string name="presentation_skip">Skip</string>
     <string name="presentation_phone_calling_code_template">+%s</string>
     <string name="presentation_general_connection_error">Could not connect to server.</string>

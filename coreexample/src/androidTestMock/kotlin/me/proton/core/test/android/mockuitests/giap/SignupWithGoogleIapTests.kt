@@ -86,6 +86,10 @@ class SignupWithGoogleIapTests : BaseMockTest {
         billingClientFactory.mockBillingClientSuccess()
 
         dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
+        dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google-iap-only.json"
         )
@@ -129,6 +133,10 @@ class SignupWithGoogleIapTests : BaseMockTest {
     fun signUpAndSubscribeAllPaymentProviders() {
         billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
 
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
         dispatcher.mockFromAssets(
             "GET", "/core/v4/users",
             "GET/core/v4/users-with-keys-subscribed.json"
@@ -189,6 +197,10 @@ class SignupWithGoogleIapTests : BaseMockTest {
 
     @Test
     fun createFreeAccountWithoutPaymentProviders() {
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google-all-disabled.json"

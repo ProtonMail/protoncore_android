@@ -20,19 +20,21 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.retry
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.isRetryable
 import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.entity.Domain
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,17 +42,13 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability
 ) : ProtonViewModel() {
 
-    // See CP-5335.
-    private val getDomainsJob: Job = viewModelScope.launch {
-        runCatching { accountAvailability.getDomains(metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }) }
-    }
-
-    private val mutableState = MutableStateFlow<State>(State.Idle)
-    val state = mutableState.asStateFlow()
+    private val mainState = MutableStateFlow<State>(State.Idle)
+    val state = mainState.asStateFlow()
 
     sealed class State {
         object Idle : State()
         object Processing : State()
+        data class SwitchInternal(val username: String, val domain: String) : State()
         data class Success(val email: String) : State()
         sealed class Error : State() {
             data class Message(val error: Throwable) : Error()
@@ -59,15 +57,30 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
 
     fun checkExternalEmail(email: String) = flow {
         emit(State.Processing)
-        getDomainsJob.join()
-        accountAvailability.checkExternalEmail(
-            email,
-            metricData = { SignupEmailAvailabilityTotalV1(it.toHttpApiStatus()) }
+
+        // See CP-5335.
+        val domains = accountAvailability.getDomains(
+            metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }
         )
-        emit(State.Success(email))
+        val emailSplit = email.split("@")
+        val username = emailSplit.getOrNull(0)
+        val domain = emailSplit.getOrNull(1)
+
+        when {
+            username != null && domain != null && domain in domains -> {
+                emit(State.SwitchInternal(username, domain))
+            }
+            else -> {
+                accountAvailability.checkExternalEmail(
+                    email = email,
+                    metricData = { SignupEmailAvailabilityTotalV1(it.toHttpApiStatus()) }
+                )
+                emit(State.Success(email))
+            }
+        }
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {
-        mutableState.tryEmit(it)
+        mainState.tryEmit(it)
     }.launchIn(viewModelScope)
 }

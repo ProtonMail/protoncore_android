@@ -96,6 +96,10 @@ class SignupWithGoogleIapNoGIAPModuleTests {
         billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
 
         dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
+        dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google-all-disabled.json"
         )
@@ -129,6 +133,10 @@ class SignupWithGoogleIapNoGIAPModuleTests {
     fun signUpAndSubscribeAllPaymentProvidersGIAPModuleUnavailable() {
         billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
 
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
         dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google.json"

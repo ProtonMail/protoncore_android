@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
+import com.google.android.material.snackbar.Snackbar
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -46,5 +47,19 @@ abstract class SignupFragment : ProtonSecureFragment {
     open fun showError(message: String?) {
         showLoading(false)
         requireView().errorSnack(message = message ?: getString(R.string.auth_login_general_error))
+    }
+
+    open fun showIndefiniteError(
+        message: String?,
+        action: String? = null,
+        actionOnClick: (() -> Unit)? = null,
+    ) {
+        showLoading(false)
+        requireView().errorSnack(
+            message = message ?: getString(R.string.auth_login_general_error),
+            action = action,
+            actionOnClick = actionOnClick,
+            length = Snackbar.LENGTH_INDEFINITE,
+        )
     }
 }

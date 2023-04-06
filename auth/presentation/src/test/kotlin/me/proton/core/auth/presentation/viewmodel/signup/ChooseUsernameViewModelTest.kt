@@ -40,6 +40,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
@@ -72,9 +73,9 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Success)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Success>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -98,9 +99,9 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Error.Message)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Error.Message>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -114,9 +115,9 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel = ChooseUsernameViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Success)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Success>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
         // THEN

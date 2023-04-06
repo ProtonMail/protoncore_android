@@ -80,7 +80,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             }
 
             nextButton.onClick(::onNextClicked)
-            switchButton.onClick(::onSwitchClicked)
+            switchButton.onClick(::onSwitchInternal)
         }
 
         viewModel.state
@@ -90,6 +90,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                 when (it) {
                     is State.Idle -> showLoading(false)
                     is State.Processing -> showLoading(true)
+                    is State.SwitchInternal -> onSwitchInternal(it.username, it.domain)
                     is State.Success -> onExternalEmailAvailable(it.email)
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
@@ -114,8 +115,8 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         }
     }
 
-    private fun onSwitchClicked() {
-        parentFragmentManager.replaceByInternalEmailChooser(creatableAccountType)
+    private fun onSwitchInternal(username: String? = null, domain: String? = null) {
+        parentFragmentManager.replaceByInternalEmailChooser(creatableAccountType, username, domain)
     }
 
     private fun onExternalEmailAvailable(email: String) {

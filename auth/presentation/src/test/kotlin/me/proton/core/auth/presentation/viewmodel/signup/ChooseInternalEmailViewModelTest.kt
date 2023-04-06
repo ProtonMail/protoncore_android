@@ -19,7 +19,9 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
+import io.mockk.ManyAnswersAnswer
 import io.mockk.Ordering
+import io.mockk.ThrowingAnswer
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -42,6 +44,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
@@ -70,52 +73,30 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         // WHEN
         viewModel.state.test {
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            val domainsItem = awaitItem() as State.Domains
-            assertEquals(listOf("protonmail.com", "protonmail.ch"), domainsItem.domains)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            val domains = (awaitItem() as State.Ready).domains
+            assertEquals(listOf("protonmail.com", "protonmail.ch"), domains)
             cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
-    fun `domains loading connectivity error`() = coroutinesTest {
-        // GIVEN
-        coEvery { domainRepository.getAvailableDomains() } throws ApiException(
-            ApiResult.Error.NoInternet()
-        )
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
-        // WHEN
-        viewModel.state.test {
-            // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Error)
-            cancelAndConsumeRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `domains loading api error`() = coroutinesTest {
+    fun `domains loading non-retryable error`() = coroutinesTest {
         // GIVEN
         coEvery { domainRepository.getAvailableDomains() } throws ApiException(
             ApiResult.Error.Http(
-                httpCode = 123,
-                "http error",
-                ApiResult.Error.ProtonData(
-                    code = 1234,
-                    error = "domains error"
-                )
+                httpCode = 404,
+                message = "Error"
             )
         )
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
         // WHEN
         viewModel.state.test {
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            val errorItem = awaitItem() as State.Error.Message
-            assertEquals("domains error", errorItem.error.getUserMessage(mockk()))
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Error>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -131,10 +112,10 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Domains)
-            assertTrue(awaitItem() is State.Processing)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Ready>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
             val item = awaitItem() as State.Success
             assertEquals(testUsername, item.username)
             assertEquals(testDomain, item.domain)
@@ -163,11 +144,11 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Domains)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Error.Message)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Ready>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Error.Message>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -182,11 +163,11 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
-            assertTrue(awaitItem() is State.Idle)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Domains)
-            assertTrue(awaitItem() is State.Processing)
-            assertTrue(awaitItem() is State.Success)
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Ready>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Success>(awaitItem())
             cancelAndConsumeRemainingEvents()
         }
         // THEN
@@ -202,7 +183,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         // WHEN
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
-        viewModel.state.first { it is State.Domains } // wait for domains
+        viewModel.state.first { it is State.Ready } // wait for domains
 
         // THEN
         verify(exactly = 1) { observabilityManager.enqueue(capture(dataSlot), any()) }
