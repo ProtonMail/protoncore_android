@@ -248,6 +248,10 @@
         <item name="lineHeight">24sp</item>
     </style>
 
+    <style name="ProtonButton.Rounded">
+        <item name="cornerRadius">@dimen/rounded_corner_radius</item>
+    </style>
+
     <style name="ProtonButtonTextAppearance" parent="@style/TextAppearance.MaterialComponents.Button">
         <item name="android:textAllCaps">false</item>
     </style>
@@ -274,6 +278,10 @@
         <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
         <item name="strokeColor">@color/btn_stroke_color_selector</item>
         <item name="cornerRadius">@dimen/default_corner_radius</item>
+    </style>
+
+    <style name="ProtonButton.OutlinedButton.Rounded">
+        <item name="cornerRadius">@dimen/rounded_corner_radius</item>
     </style>
 
     <style name="ProtonButton.OutlinedButton.Toggle">

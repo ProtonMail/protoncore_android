@@ -54,42 +54,22 @@
             app:layout_constraintTop_toBottomOf="@id/guide_header"
             app:srcCompat="?add_account_icon" />
 
-        <LinearLayout
-            android:id="@+id/texts"
+        <TextView
+            android:id="@+id/subtitle"
+            style="@style/Proton.Text.DefaultSmall.Weak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_huge"
             android:layout_marginTop="@dimen/gap_large_plus"
-            android:orientation="vertical"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:gravity="center"
+            android:text="?attr/add_account_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo_text">
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/Proton.Text.Headline.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/gap_medium"
-                android:gravity="center"
-                android:text="?attr/add_account_title"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/subtitle"
-                style="@style/Proton.Text.DefaultSmall.Weak"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/gap_huge"
-                android:layout_marginEnd="@dimen/gap_huge"
-                android:gravity="center"
-                android:text="?attr/add_account_subtitle"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/logo_text" />
 
         <me.proton.core.presentation.ui.view.ProtonButton
             android:id="@+id/sign_up"
-            style="@style/ProtonButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_horizontal_padding"
@@ -98,7 +78,7 @@
             android:text="@string/auth_create_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/texts" />
+            app:layout_constraintTop_toBottomOf="@id/subtitle" />
 
         <me.proton.core.presentation.ui.view.ProtonButton
             android:id="@+id/sign_in"

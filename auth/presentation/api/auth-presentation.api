@@ -379,8 +379,6 @@ public final class me/proton/core/auth/presentation/databinding/ActivityAddAccou
 	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field signUp Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field subtitle Landroid/widget/TextView;
-	public final field texts Landroid/widget/LinearLayout;
-	public final field title Landroid/widget/TextView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroid/widget/ScrollView;

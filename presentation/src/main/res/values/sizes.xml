@@ -28,6 +28,7 @@
     <dimen name="icon_size">24dp</dimen>
     <dimen name="icon_button_size">@dimen/button_height</dimen>
     <dimen name="default_corner_radius">8dp</dimen>
+    <dimen name="rounded_corner_radius">24dp</dimen>
 
     <!-- general dimensions gaps -->
     <dimen name="gap_single">1dp</dimen>

@@ -23,6 +23,7 @@
     <color name="scrim">#C3000000</color>
 
     <color name="cinder">#0C0C14</color>
+    <color name="pass_bg">#191927</color>
     <color name="baltic_sea">#1C1B24</color>
     <color name="bastille">#292733</color>
     <color name="steel_gray">#343140</color>
@@ -62,7 +63,9 @@
     <color name="chambray">#372580</color>
     <color name="san_marino">#4D34B3</color>
     <color name="cornflower_blue">#6D4AFF</color>
+    <color name="cornflower_blue_pass">#7777F8</color>
     <color name="portage">#8A6EFF</color>
+    <color name="portage_pass">#9292F9</color>
     <color name="perano">#C4B7FF</color>
 
     <color name="green_pea">#2F6336</color>
@@ -199,6 +202,7 @@
     <color name="background_norm">@color/shade_0</color>
     <color name="background_secondary">@color/shade_10</color>
     <color name="background_deep">@color/shade_15</color>
+    <color name="background_pass">@color/shade_0</color>
 
     <color name="separator_norm">@color/shade_20</color>
 

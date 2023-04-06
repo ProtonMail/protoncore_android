@@ -25,7 +25,6 @@
         <item name="add_account_illustration">@drawable/welcome_header_mail</item>
         <item name="add_account_title">@string/welcome_title</item>
         <item name="add_account_subtitle">@string/welcome_subtitle</item>
-        <item name="add_account_logo">@drawable/logo_proton_brand</item>
         <item name="add_account_logo_height">@dimen/add_account_product_logo_height_default</item>
         <item name="add_account_icon">@drawable/logo_mail_with_text</item>
     </style>
@@ -35,9 +34,7 @@
         <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_mail</item>
-        <item name="add_account_title">@string/welcome_title_mail</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_mail_alt</item>
-        <item name="add_account_logo">@drawable/logo_mail_daylight</item>
         <item name="add_account_logo_height">@dimen/add_account_product_logo_height_default</item>
         <item name="add_account_icon">@drawable/logo_mail_with_text</item>
     </style>
@@ -47,9 +44,7 @@
         <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_calendar</item>
-        <item name="add_account_title">@string/welcome_title_calendar</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_calendar_alt</item>
-        <item name="add_account_logo">@drawable/logo_calendar_daylight</item>
         <item name="add_account_logo_height">@dimen/add_account_product_logo_height_calendar</item>
         <item name="add_account_icon">@drawable/logo_calendar_with_text</item>
     </style>
@@ -59,9 +54,7 @@
         <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_drive</item>
-        <item name="add_account_title">@string/welcome_title_drive</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_drive_alt</item>
-        <item name="add_account_logo">@drawable/logo_drive_daylight</item>
         <item name="add_account_logo_height">@dimen/add_account_product_logo_height_default</item>
         <item name="add_account_icon">@drawable/logo_drive_with_text</item>
     </style>
@@ -71,11 +64,19 @@
         <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_vpn</item>
-        <item name="add_account_title">@string/welcome_title_vpn</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_vpn_alt</item>
-        <item name="add_account_logo">@drawable/logo_vpn_daylight</item>
         <item name="add_account_logo_height">@dimen/add_account_product_logo_height_default</item>
         <item name="add_account_icon">@drawable/logo_vpn_with_text</item>
+    </style>
+
+    <style name="ProtonTheme.Pass.AddAccount">
+        <!-- ProtonTheme override -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- ProtonTheme.AddAccount attributes override -->
+        <item name="add_account_illustration">@drawable/welcome_header_pass</item>
+        <item name="add_account_subtitle">@string/welcome_subtitle_pass_alt</item>
+        <item name="add_account_logo_height">@dimen/add_account_product_logo_height_default</item>
+        <item name="add_account_icon">@drawable/logo_pass_with_text</item>
     </style>
 
     <style name="AuthContent">

@@ -22,7 +22,6 @@
         <attr name="add_account_illustration" format="reference" />
         <attr name="add_account_title" format="reference" />
         <attr name="add_account_subtitle" format="reference" />
-        <attr name="add_account_logo" format="reference" />
         <attr name="add_account_logo_height" format="reference" />
         <attr name="add_account_icon" format="reference" />
     </declare-styleable>
