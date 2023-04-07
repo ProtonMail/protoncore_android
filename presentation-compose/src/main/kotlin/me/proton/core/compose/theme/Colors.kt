@@ -119,13 +119,21 @@ class ProtonColors(
     shade10: Color,
     shade0: Color,
 
+    brandDarken40: Color = ProtonPalette.Chambray,
+    brandDarken20: Color = ProtonPalette.SanMarino,
+    brandNorm: Color = ProtonPalette.CornflowerBlue,
+    brandLighten20: Color = ProtonPalette.Portage,
+    brandLighten40: Color = ProtonPalette.Perano,
+
     textNorm: Color = shade100,
+    textAccent: Color = brandNorm,
     textWeak: Color = shade80,
     textHint: Color = shade60,
     textDisabled: Color = shade50,
     textInverted: Color = shade0,
 
     iconNorm: Color = shade100,
+    iconAccent: Color = brandNorm,
     iconWeak: Color = shade80,
     iconHint: Color = shade60,
     iconDisabled: Color = shade50,
@@ -145,12 +153,6 @@ class ProtonColors(
     separatorNorm: Color = shade20,
 
     blenderNorm: Color,
-
-    brandDarken40: Color = ProtonPalette.Chambray,
-    brandDarken20: Color = ProtonPalette.SanMarino,
-    brandNorm: Color = ProtonPalette.CornflowerBlue,
-    brandLighten20: Color = ProtonPalette.Portage,
-    brandLighten40: Color = ProtonPalette.Perano,
 
     notificationNorm: Color = shade100,
     notificationError: Color = ProtonPalette.Pomegranate,
@@ -195,6 +197,8 @@ class ProtonColors(
 
     var textNorm: Color by mutableStateOf(textNorm, structuralEqualityPolicy())
         internal set
+    var textAccent: Color by mutableStateOf(textAccent, structuralEqualityPolicy())
+        internal set
     var textWeak: Color by mutableStateOf(textWeak, structuralEqualityPolicy())
         internal set
     var textHint: Color by mutableStateOf(textHint, structuralEqualityPolicy())
@@ -205,6 +209,8 @@ class ProtonColors(
         internal set
 
     var iconNorm: Color by mutableStateOf(iconNorm, structuralEqualityPolicy())
+        internal set
+    var iconAccent: Color by mutableStateOf(iconAccent, structuralEqualityPolicy())
         internal set
     var iconWeak: Color by mutableStateOf(iconWeak, structuralEqualityPolicy())
         internal set
@@ -297,12 +303,14 @@ class ProtonColors(
         shade0: Color = this.shade0,
 
         textNorm: Color = this.textNorm,
+        textAccent: Color = this.textAccent,
         textWeak: Color = this.textWeak,
         textHint: Color = this.textHint,
         textDisabled: Color = this.textDisabled,
         textInverted: Color = this.textInverted,
 
         iconNorm: Color = this.iconNorm,
+        iconAccent: Color = this.iconAccent,
         iconWeak: Color = this.iconWeak,
         iconHint: Color = this.iconHint,
         iconDisabled: Color = this.iconDisabled,
@@ -361,12 +369,14 @@ class ProtonColors(
         shade0 = shade0,
 
         textNorm = textNorm,
+        textAccent = textAccent,
         textWeak = textWeak,
         textHint = textHint,
         textDisabled = textDisabled,
         textInverted = textInverted,
 
         iconNorm = iconNorm,
+        iconAccent = iconAccent,
         iconWeak = iconWeak,
         iconHint = iconHint,
         iconDisabled = iconDisabled,
@@ -478,6 +488,8 @@ class ProtonColors(
             shadowRaised = Color.Black.copy(alpha = 0.8f),
             shadowLifted = Color.Black.copy(alpha = 0.86f),
             blenderNorm = Color.Black.copy(alpha = 0.52f),
+            textAccent = brandLighten20,
+            iconAccent = brandLighten20,
         ).let {
             it.copy(
                 interactionWeakNorm = it.shade20,

@@ -141,7 +141,7 @@ fun ButtonDefaults.protonOutlinedBorder(
 fun ButtonDefaults.protonOutlinedButtonColors(
     loading: Boolean = false,
     backgroundColor: Color = ProtonTheme.colors.backgroundNorm,
-    contentColor: Color = ProtonTheme.colors.interactionNorm,
+    contentColor: Color = ProtonTheme.colors.textAccent,
     disabledBackgroundColor: Color = if (loading) {
         ProtonTheme.colors.backgroundSecondary
     } else {
@@ -194,7 +194,7 @@ fun ButtonDefaults.protonTextButtonColors(
     } else {
         Color.Transparent
     },
-    contentColor: Color = ProtonTheme.colors.interactionNorm,
+    contentColor: Color = ProtonTheme.colors.textAccent,
     disabledBackgroundColor: Color = if (loading) {
         ProtonTheme.colors.backgroundSecondary
     } else {

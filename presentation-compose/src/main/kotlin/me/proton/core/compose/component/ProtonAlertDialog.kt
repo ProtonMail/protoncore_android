@@ -239,7 +239,7 @@ fun ProtonAlertDialogButton(
         Text(
             text = title,
             style = ProtonTheme.typography.body1Medium,
-            color = ProtonTheme.colors.interactionNorm,
+            color = ProtonTheme.colors.textAccent,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
