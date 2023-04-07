@@ -122,36 +122,81 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Core$Co
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive : me/proton/core/eventmanager/domain/EventManagerConfig {
+public abstract class me/proton/core/eventmanager/domain/EventManagerConfig$Drive : me/proton/core/eventmanager/domain/EventManagerConfig {
 	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Companion;
-	public synthetic fun <init> (ILme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public abstract fun getEndpoint ()Ljava/lang/String;
+	public fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share : me/proton/core/eventmanager/domain/EventManagerConfig$Drive {
+	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share$Companion;
+	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;
-	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun getEndpoint ()Ljava/lang/String;
 	public final fun getShareId ()Ljava/lang/String;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$$serializer;
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Companion {
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume : me/proton/core/eventmanager/domain/EventManagerConfig$Drive {
+	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume$Companion;
+	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getEndpoint ()Ljava/lang/String;
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun getVolumeId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

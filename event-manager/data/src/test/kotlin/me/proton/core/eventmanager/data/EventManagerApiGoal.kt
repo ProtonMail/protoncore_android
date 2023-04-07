@@ -47,10 +47,18 @@ class EventManagerApiGoal {
     }
 
     suspend fun onDriveShareActive(userId: UserId, shareId: String) {
-        provider.get(EventManagerConfig.Drive(userId, shareId)).start()
+        provider.get(EventManagerConfig.Drive.Share(userId, shareId)).start()
     }
 
     suspend fun onDriveShareInactive(userId: UserId, shareId: String) {
-        provider.get(EventManagerConfig.Drive(userId, shareId)).stop()
+        provider.get(EventManagerConfig.Drive.Share(userId, shareId)).stop()
+    }
+
+    suspend fun onDriveVolumeActive(userId: UserId, volumeId: String) {
+        provider.get(EventManagerConfig.Drive.Volume(userId, volumeId)).start()
+    }
+
+    suspend fun onDriveVolumeInactive(userId: UserId, volumeId: String) {
+        provider.get(EventManagerConfig.Drive.Volume(userId, volumeId)).stop()
     }
 }

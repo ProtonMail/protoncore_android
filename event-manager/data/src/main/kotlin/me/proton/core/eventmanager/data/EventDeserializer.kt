@@ -91,7 +91,7 @@ internal class DriveEventDeserializer(
     override val config: EventManagerConfig.Drive
 ) : EventDeserializer {
 
-    override val endpoint = "drive/shares/${config.shareId}/events"
+    override val endpoint = config.endpoint
 
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetDriveLatestEventIdResponse>().eventId)

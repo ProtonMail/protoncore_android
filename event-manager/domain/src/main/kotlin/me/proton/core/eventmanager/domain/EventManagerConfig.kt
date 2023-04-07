@@ -44,10 +44,24 @@ sealed class EventManagerConfig {
     }
 
     @Serializable
-    data class Drive(
-        override val userId: UserId,
-        val shareId: String,
-    ) : EventManagerConfig() {
+    sealed class Drive : EventManagerConfig() {
+        abstract val endpoint: String
         override val listenerType = EventListener.Type.Drive
+
+        @Serializable
+        data class Share(
+            override val userId: UserId,
+            val shareId: String,
+        ) : Drive() {
+            override val endpoint = "drive/shares/${shareId}/events"
+        }
+
+        @Serializable
+        data class Volume(
+            override val userId: UserId,
+            val volumeId: String,
+        ) : Drive() {
+            override val endpoint = "drive/volumes/${volumeId}/events"
+        }
     }
 }
