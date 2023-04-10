@@ -43,7 +43,7 @@
   <string name="plans_upgrade_your_plan">Ulepsz plan</string>
   <string name="plans_proton_for_free">Wybierz plan Proton Free</string>
   <string name="plans_get_proton">Wybierz plan %s</string>
-  <string name="plans_manage_your_subscription">Zarządzaj swoją subskrypcją na stronie <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s z %s</string>
   <string name="plans_payments_info_not_available">nie dotyczy</string>
   <string name="plans_manage_your_subscription_google">Twoja subskrypcja jest zarządzana przez Google Play.</string>
@@ -153,7 +153,7 @@
   <string name="streaming_services_access" comment="new_plans">Dostęp do usług streamingu na całym świecie</string>
   <string name="secure_core" comment="new_plans">Serwery Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor przez VPN</string>
-  <string name="p2p_bittorrent" comment="new_plans">P2P / BitTorrent</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Bezpieczna poczta e-mail z zaawansowanymi funkcjami do codziennej komunikacji.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Twoja prywatność i bezpieczeństwo są naszym priorytetem.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Bezpieczna przestrzeń dyskowa w chmurze, w której możesz przechowywać, synchronizować i udostępniać pliki w łatwy sposób.</string>

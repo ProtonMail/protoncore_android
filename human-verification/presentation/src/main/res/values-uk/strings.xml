@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">Отримати код заміни, надісланий до %s.</string>
   <string name="email">Електронна пошта</string>
   <string name="email_hint">email@example.com</string>
-  <string name="sms_hint">XXX XXX XX XX</string>
+  <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Запитати запрошення</string>

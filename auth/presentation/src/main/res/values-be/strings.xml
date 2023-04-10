@@ -47,7 +47,7 @@
   <string name="auth_help_option_forgot_username">Забылі сваё імя карыстальніка</string>
   <string name="auth_help_option_forgot_password">Забылі пароль</string>
   <string name="auth_help_option_other">Іншыя праблемы ўваходу</string>
-  <string name="auth_help_other">Усё яшчэ неабходна дапамога? Звяжыцеся з намі наўпрост.</string>
+  <string name="auth_help_other">Усё яшчэ неабходна дапамога? Вы можаце звязацца непасрэдна з намі.</string>
   <string name="auth_help_option_customer_support">Падтрымка кліентаў</string>
   <string name="auth_2fa_title">Двухфактарная аўтэнтыфікацыя</string>
   <string name="auth_2fa_label">Двухфактарны код</string>
@@ -68,17 +68,17 @@
   <string name="auth_login_external_account_unsupported_help_action">Даведацца больш</string>
   <string name="auth_login_empty_credentials">Уліковыя даныя не павінны быць пустыя.</string>
   <string name="auth_mailbox_empty_credentials">Уліковыя даныя не павінны быць пустыя.</string>
-  <string name="auth_create_address_title">Стварыць адрас Proton Mail</string>
-  <string name="auth_create_address_subtitle">Ваш уліковы запіс Proton звязаны з %1$s. Каб карыстацца Proton Mail, стварыце адрас.</string>
+  <string name="auth_create_address_title">Патрабуецца адрас Proton</string>
+  <string name="auth_create_address_subtitle">Ваш адрас для аднаўлення доступу будзе %1$s. Для бяспекі вашых даных патрабуецца адрас Proton. У вас усё яшчэ будзе магчымасць уваходзіць з %2$s.</string>
   <string name="auth_username">Імя карыстальніка</string>
-  <string name="auth_username_next_action">Далей</string>
+  <string name="auth_username_next_action">Працягнуць</string>
   <string name="auth_create_address_result_title">Адрас %s даступны</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s будзе вашым новым адрасам электроннай пошты ў Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">Выкарыстоўвайце гэты адрас для ўваходу ва ўсе сэрвісы Proton.</string>
   <string name="auth_create_address_result_recovery_title">Ваша электронная пошта для аднаўлення доступу:</string>
   <string name="auth_create_address_create">Стварыць адрас</string>
   <string name="auth_create_address_creating">Стварэнне адраса</string>
-  <string name="auth_create_address_terms">Націскаючы кнопку \"Стварыць адрас\", вы пагаджаецеся з <a href="https://protonmail.com/terms-and-conditions">Умовамі выкарыстання</a> Proton.</string>
+  <string name="auth_create_address_terms">Націскаючы кнопку \"Стварыць адрас\", вы пагаджаецеся з <a href="https://proton.me/legal/terms">Умовамі выкарыстання</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Уліковыя даныя не павінны быць пустыя.</string>
   <string name="auth_create_address_error_no_available_domain">Няма даступных даменаў.</string>
   <string name="auth_create_address_error_private_key">Збой генерацыі прыватнага ключа.</string>
@@ -97,12 +97,12 @@
   <string name="auth_account_not_found_error">Памылка ўліковага запісу</string>
   <string name="auth_one_account_all_services">Адзін уліковы запіс для ўсіх сэрвісаў Proton.</string>
   <string name="auth_create_account">Стварыць уліковы запіс</string>
-  <string name="auth_long_signup">Адбываецца ўваход. Пачакайце…</string>
-  <string name="auth_long_login">Пачакайце…</string>
+  <string name="auth_long_signup">Пачакайце…</string>
+  <string name="auth_long_login">Адбываецца ўваход. Пачакайце…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Стварыць уліковы запіс Proton</string>
   <string name="auth_signup_current_email">Выкарыстоўваць бягучы адрас электроннай пошты</string>
-  <string name="auth_signup_external_footnote">З адрасам Proton, вы можаце карыстацца ўсімі службамі Proton</string>
+  <string name="auth_signup_external_footnote">З адрасам Proton, вы можаце карыстацца ўсімі сэрвісамі Proton</string>
   <string name="auth_signup_internal_footnote">Вам спатрэбіцца адрас Proton, каб выкарыстоўваць Proton Mail і Proton Calendar</string>
   <string name="auth_signup_create_secure_proton_address">Атрымаць новы зашыфраваны адрас электроннай пошты</string>
   <string name="auth_signup_username">Імя карыстальніка</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Пачаць выкарыстоўваць Proton Mail</string>
   <string name="auth_signup_start_using_drive">Пачаць выкарыстоўваць Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Пачаць выкарыстоўваць Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Пачаць выкарыстоўваць Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Памылковы метад аднаўлення доступу.</string>
 </resources>

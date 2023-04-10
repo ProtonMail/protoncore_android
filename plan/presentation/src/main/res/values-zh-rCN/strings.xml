@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">账户等级对所有 Proton 服务均有效</string>
   <string name="plans_fetching_general_error">获取账户等级失败。</string>
   <string name="plans_payment_error">发生了支付错误。请稍后重试或创建免费计划。</string>
-  <string name="plans_free_name">免费版</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">每月</string>
   <string name="plan_price_annually">每年</string>
   <string name="plans_current_plan">当前等级</string>
@@ -40,7 +40,7 @@
   <string name="plans_upgrade_your_plan">升级您的计划</string>
   <string name="plans_proton_for_free">免费获得Proton</string>
   <string name="plans_get_proton">获得 %s</string>
-  <string name="plans_manage_your_subscription">通过 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的订阅</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
   <string name="plans_payments_info_not_available">不适用</string>
   <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
@@ -118,8 +118,8 @@
   <string name="plan_id_bundle2022_header" comment="new_plans">各项 Proton 服务深度融合，为您提供全方位的隐私保护。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
-    <item>欧元</item>
-    <item>美元</item>
-    <item>瑞士法郎</item>
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
   </string-array>
 </resources>

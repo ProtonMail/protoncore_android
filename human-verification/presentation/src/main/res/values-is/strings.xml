@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">Get a replacement code sent to %s.</string>
   <string name="email">Tölvupóstur</string>
   <string name="email_hint">póstfang@lén.is</string>
-  <string name="sms_hint">XXX XXXX</string>
+  <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Beiðni um boð</string>

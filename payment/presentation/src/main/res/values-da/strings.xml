@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Navn på kort påkrævet.</string>
   <string name="payments_error_card_number">Ugyldigt kortnummer.</string>
   <string name="payments_error_cvc">Indtast en gyldig sikkerhedskode.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">Gyldigt sessions-ID er nødvendigt ved oprettelse af abonnement for en bruger, som er logget ind.</string>
   <string name="payments_error_signup_paymentmethod">Kunne ikke tilmelde med eksisterende betalingsmetode.</string>
   <string name="payments_error_invalid_session">Ugyldig session.</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalingsudbyder fundet.</string>

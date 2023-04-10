@@ -19,21 +19,21 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Herstel-e-mailadres</string>
-  <string name="settings_recovery_email_current">Huidig herstel-e-mailadres</string>
-  <string name="settings_recovery_email_new">Nieuwe herstel- of notificatie-e-mail</string>
-  <string name="settings_recovery_email_confirm">Bevestig Reset/Notificatie e-mail</string>
-  <string name="settings_recovery_email_new_hint">E-mailadres invoeren</string>
-  <string name="settings_recovery_email_confirm_hint">Voer e-mailadres opnieuw in</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_new_hint">Enter email address</string>
+  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
   <string name="settings_save">Opslaan</string>
   <string name="settings_password_required">Voer uw wachtwoord in</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Niet ingesteld</string>
-  <string name="settings_recovery_email_error_no_match">Herstel en Bevestig herstel e-mail komen niet overeen.</string>
+  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
   <string name="settings_validation_email">E-mailadres is ongeldig.</string>
   <string name="settings_general_error">Er is iets fout gegaan.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Wachtwoord wijzigen</string>
-  <string name="settings_password_management_change_mailbox_password">Wijzig mailbox-wachtwoord</string>
+  <string name="settings_password_management_change_login_password">Change password</string>
+  <string name="settings_password_management_change_mailbox_password">Change mailbox password</string>
   <string name="settings_password_management_header">Wachtwoordbeheer</string>
   <string name="settings_login_password_hint_current">Huidig loginwachtwoord</string>
   <string name="settings_login_password_hint_new">Nieuw inlogwachtwoord</string>

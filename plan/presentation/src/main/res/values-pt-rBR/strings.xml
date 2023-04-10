@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Um plano para todos os serviços da Proton</string>
   <string name="plans_fetching_general_error">Ocorreu um erro ao buscar os planos.</string>
   <string name="plans_payment_error">Ocorreu um erro de pagamento. Tente novamente mais tarde ou crie um plano gratuito.</string>
-  <string name="plans_free_name">Gratuito</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>
   <string name="plans_current_plan">Plano atual</string>
@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Faça upgrade do seu plano</string>
   <string name="plans_proton_for_free">Obter Proton grátis</string>
   <string name="plans_get_proton">Obter %s</string>
-  <string name="plans_manage_your_subscription">Gerenciar a sua assinatura em <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Sua assinatura é gerenciada pela Google Play.</string>
@@ -105,7 +105,7 @@
   <!-- region plans headers -->
   <string name="plan_id_free_header">O básico para comunicações seguras e privadas.</string>
   <string name="plan_id_plus_header">Caixa de entrada completa com proteção avançada.</string>
-  <string name="plan_id_vpnbasic_header">VPN básica</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 países</string>
   <string name="plan_id_vpnbasic_high_speed">Alta velocidade</string>
   <string name="plan_id_vpnplus_adblock">Bloqueador de anúncios (NetShield)</string>

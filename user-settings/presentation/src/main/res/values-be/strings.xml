@@ -19,16 +19,16 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Электронная пошта для аднаўлення доступу</string>
-  <string name="settings_recovery_email_current">Бягучы адрас электроннай пошты для скідання/апавяшчэння</string>
-  <string name="settings_recovery_email_new">Новы адрас электроннай пошты для скідання/апавяшчэння</string>
-  <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для скідання/апавяшчэння</string>
+  <string name="settings_recovery_email_current">Цяперашні адрас электроннай пошты для аднаўлення доступу</string>
+  <string name="settings_recovery_email_new">Новы адрас электроннай пошты для аднаўлення доступу</string>
+  <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>
   <string name="settings_recovery_email_confirm_hint">Увядзіце адрас электроннай пошты яшчэ раз</string>
   <string name="settings_save">Захаваць</string>
   <string name="settings_password_required">Увядзіце ваш пароль для ўваходу</string>
   <string name="settings_password_required_ok">Добра</string>
   <string name="settings_not_set">Не зададзена</string>
-  <string name="settings_recovery_email_error_no_match">Электронная пошта для аднаўлення і пацвярджэння не супадаюць.</string>
+  <string name="settings_recovery_email_error_no_match">Новыя адрасы электроннай пошты для аднаўлення доступу не супадаюць</string>
   <string name="settings_validation_email">Памылковы адрас электроннай пошты.</string>
   <string name="settings_general_error">Адбылася памылка.</string>
   <!-- login and mailbox password settings -->

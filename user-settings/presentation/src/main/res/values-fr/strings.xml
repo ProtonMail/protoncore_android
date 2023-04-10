@@ -19,20 +19,20 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">E-mail de récupération</string>
-  <string name="settings_recovery_email_current">Adresse e-mail actuelle de réinitialisation/notification</string>
-  <string name="settings_recovery_email_new">Nouvelle adresse e-mail de récupération/notification</string>
-  <string name="settings_recovery_email_confirm">Confirmer la nouvelle adresse e-mail de réinitialisation/notification</string>
-  <string name="settings_recovery_email_new_hint">Saisissez votre adresse e-mail</string>
-  <string name="settings_recovery_email_confirm_hint">Saisissez à nouveau votre adresse e-mail</string>
+  <string name="settings_recovery_email_current">Actuelle adresse e-mail de récupération</string>
+  <string name="settings_recovery_email_new">Nouvelle adresse e-mail de récupération</string>
+  <string name="settings_recovery_email_confirm">Confirmer l\'adresse e-mail de récupération</string>
+  <string name="settings_recovery_email_new_hint">Saisissez votre adresse e-mail.</string>
+  <string name="settings_recovery_email_confirm_hint">Saisissez à nouveau votre adresse e-mail.</string>
   <string name="settings_save">Enregistrer</string>
   <string name="settings_password_required">Saisissez votre mot de passe de connexion</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non défini</string>
-  <string name="settings_recovery_email_error_no_match">L’adresse e-mail de récupération et sa confirmation ne correspondent pas.</string>
-  <string name="settings_validation_email">L’adresse e-mail est invalide.</string>
+  <string name="settings_recovery_email_error_no_match">Les nouvelles adresses e-mail de récupération ne correspondent pas.</string>
+  <string name="settings_validation_email">L’adresse e-mail n\'est pas valide.</string>
   <string name="settings_general_error">Une erreur s’est produite.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Modifier le mot de passe</string>
+  <string name="settings_password_management_change_login_password">Changer le mot de passe</string>
   <string name="settings_password_management_change_mailbox_password">Modifier le mot de passe de la messagerie</string>
   <string name="settings_password_management_header">Gestion des mots de passe</string>
   <string name="settings_login_password_hint_current">Mot de passe de connexion actuel</string>

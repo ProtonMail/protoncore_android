@@ -21,8 +21,8 @@
   <string name="payments_iap_terms_conditions">En tocar \"Compra amb Google Pay\", acceptes els termes i condicions de Google Pay i acceptes configurar un pagament recurrent amb Google.</string>
   <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
   <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
-  <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
+  <string name="payments_iap_error_fetching_google_plan">Un problema està sortit carregant el producte de Google. Recomenceu.</string>
+  <string name="payments_iap_error_already_owned">Ja teniu el producte. Seleccioneu-en un altre.</string>
   <string name="payments_iap_error_billing_client_unavailable">Actualment, el client de facturació de Google no està disponible o està desconnectat.</string>
   <string name="payments_iap_general_error">S\'ha produït un error. Reinicieu el procés.</string>
 </resources>

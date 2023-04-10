@@ -38,9 +38,9 @@
   <string name="human_verification_code">Код подтверждения</string>
   <string name="human_verification_code_request_new_code_title">Запросить новый код?</string>
   <string name="human_verification_code_request_new_code_action">Запросить новый код</string>
-  <string name="human_verification_code_request_new_code">Получить замену кода на %s.</string>
+  <string name="human_verification_code_request_new_code">Получить замену кода, отправленного на %s.</string>
   <string name="email">Эл. почта</string>
-  <string name="email_hint">pochta@primer.com</string>
+  <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

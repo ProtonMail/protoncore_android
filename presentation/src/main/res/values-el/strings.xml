@@ -20,10 +20,10 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Δε βρέθηκε πρόγραμμα περιήγησης για να ανοίξει ο σύνδεσμος.</string>
   <string name="presentation_force_update_title">Απαιτείται ενημέρωση</string>
-  <string name="presentation_force_update_message">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον. Ενημερώστε την για να συνεχίσετε να τη χρησιμοποιείτε.</string>
+  <string name="presentation_force_update_message">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον. Ενημερώστε τη για να συνεχίσετε να τη χρησιμοποιείτε.</string>
   <string name="presentation_force_update_learn_more">Μάθετε περισσότερα</string>
-  <string name="presentation_force_update_update">Αναβάθμιση</string>
-  <string name="presentation_market_missing">Δε βρέθηκε η εφαρμογή εγκατεστημένη στη συσκευή σας. Παρακαλούμε, μεταβείτε στο κατάστημα και εγκαταστήσετε την εφαρμογή.</string>
+  <string name="presentation_force_update_update">Ενημέρωση</string>
+  <string name="presentation_market_missing">Δε βρέθηκε η εφαρμογή εγκατεστημένη στη συσκευή σας. Παρακαλούμε, μεταβείτε στο ηλεκτρονικό κατάστημα εφαρμογών και εγκαταστήσετε την εφαρμογή.</string>
   <string name="presentation_authenticate">Ταυτοποίηση</string>
   <string name="presentation_signin_to_continue">Εισέλθετε για να συνεχίσετε</string>
   <string name="presentation_alert_title">Προειδοποίηση</string>

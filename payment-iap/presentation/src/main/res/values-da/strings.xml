@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Inkluderer tillæg for ekstra gebyrer fra andre udbydere og afgifter.</string>
   <string name="payments_iap_terms_conditions">Ved at trykke på \"Køb med Google Pay\" accepterer du Google Pay\'s vilkår og betingelser og accepterer, at du opretter en tilbagevendende betaling med Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Der er valgt et ugyldigt abonnementnavn. Genstart venligst processen.</string>
   <string name="payments_iap_error_google_plan_price">Problem med Googles produktpris. Genstart venligst processen.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem med at hente Google-produkt. Genstart venligst processen.</string>
   <string name="payments_iap_error_already_owned">Du ejer allerede dette produkt. Vælg venligst et andet.</string>

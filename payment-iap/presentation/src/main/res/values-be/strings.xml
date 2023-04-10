@@ -23,6 +23,6 @@
   <string name="payments_iap_error_google_plan_price">Праблема з цаною прадукту Google. Перазапусціце працэс.</string>
   <string name="payments_iap_error_fetching_google_plan">Праблема з атрыманнем прадукту Google. Перазапусціце працэс.</string>
   <string name="payments_iap_error_already_owned">Вы ўжо валодаеце гэтым прадуктам. Выберыце іншы.</string>
-  <string name="payments_iap_error_billing_client_unavailable">Плацежны кліент Google зараз недаступны або адлучаны.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Плацежны кліент Google зараз недаступны або адключаны.</string>
   <string name="payments_iap_general_error">Адбылася памылка. Перазапусціце працэс.</string>
 </resources>

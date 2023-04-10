@@ -19,16 +19,16 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">E-mail til gendannelse</string>
-  <string name="settings_recovery_email_current">Nuværende e-mail til nulstilling / notifikation</string>
-  <string name="settings_recovery_email_new">Ny e-mail til gendannelse/notifikation</string>
-  <string name="settings_recovery_email_confirm">Bekræft e-mail til nulstilling / notifikation</string>
+  <string name="settings_recovery_email_current">Nuværende gendannelses-e-mailadresse</string>
+  <string name="settings_recovery_email_new">Ny gendannelses-e-mailadresse</string>
+  <string name="settings_recovery_email_confirm">Bekræft gendannelses-e-mailadresse</string>
   <string name="settings_recovery_email_new_hint">Indtast e-mailadresse</string>
   <string name="settings_recovery_email_confirm_hint">Indtast e-mailadresse igen</string>
   <string name="settings_save">Gem</string>
   <string name="settings_password_required">Indtast din login-adgangskode</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Ikke indstillet</string>
-  <string name="settings_recovery_email_error_no_match">E-mail til gendannelse og bekræftelse er ikke ens.</string>
+  <string name="settings_recovery_email_error_no_match">Nye gendannelses-e-mails matcher ikke</string>
   <string name="settings_validation_email">E-mail er ikke gyldig.</string>
   <string name="settings_general_error">Der opstod en fejl.</string>
   <!-- login and mailbox password settings -->

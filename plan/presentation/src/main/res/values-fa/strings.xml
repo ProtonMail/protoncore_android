@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">یک طرح سرویس برای همه سرویس‌های Proton</string>
   <string name="plans_fetching_general_error">خطای در واکشی طرح سرویس ها رخ داد.</string>
   <string name="plans_payment_error">خطایی در پرداخت رخ داد. لطفا بعدا دوباره امتحان کنید یا یک طرح سرویس رایگان ایجاد کنید.</string>
-  <string name="plans_free_name">رایگان</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">هر ماه</string>
   <string name="plan_price_annually">در سال</string>
   <string name="plans_current_plan">طرح کنونی</string>
@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">طرح خود را ارتقا دهید</string>
   <string name="plans_proton_for_free">دریافت رایگان Proton</string>
   <string name="plans_get_proton">%s را دریافت کنید</string>
-  <string name="plans_manage_your_subscription">اشتراک خود را در <a href="https://account.protonmail.com">account.protonmail.com</a> مدیریت کنید</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s از %s</string>
   <string name="plans_payments_info_not_available">در دسترس/ نیست</string>
   <string name="plans_manage_your_subscription_google">اشتراک شما توسط Google Play مدیریت میشود.</string>
@@ -132,7 +132,7 @@
   <string name="plan_id_bundle2022_header" comment="new_plans">حریم خصوصی و امنیت جامع با ترکیبی از تمام خدمات Proton.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
-    <item>یورو</item>
+    <item>EUR</item>
     <item>USD</item>
     <item>CHF</item>
   </string-array>

@@ -41,7 +41,7 @@
   <string name="presentation_close">Закрыць</string>
   <string name="presentation_skip">Прапусціць</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Немагчыма падлучыцца да сервера.</string>
+  <string name="presentation_general_connection_error">Немагчыма падключыцца да сервера.</string>
   <string name="presentation_check_your_connection">Праверце сваё злучэнне</string>
   <string name="presentation_connectivity_issues">Праблемы са злучэннем</string>
 </resources>

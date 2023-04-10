@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Indirizzo Proton richiesto</string>
   <string name="auth_login_external_account_unsupported_message">Ottieni un indirizzo di posta Proton collegato a questo account nelle impostazioni web di Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Per saperne di più</string>
-  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
-  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
-  <string name="auth_create_address_title">Crea un indirizzo Proton Mail</string>
-  <string name="auth_create_address_subtitle">Il tuo account Proton è associato a %1$s. Per utilizzare Proton Mail, crea un indirizzo.</string>
+  <string name="auth_login_empty_credentials">Le credenziali non devono essere vuote.</string>
+  <string name="auth_mailbox_empty_credentials">Le credenziali non devono essere vuote.</string>
+  <string name="auth_create_address_title">Indirizzo Proton richiesto</string>
+  <string name="auth_create_address_subtitle">Your recovery address will be %1$s. To secure your data a Proton address is required. You still will be able to sign in with %2$s.</string>
   <string name="auth_username">Nome utente</string>
-  <string name="auth_username_next_action">Prossimo</string>
+  <string name="auth_username_next_action">Continua</string>
   <string name="auth_create_address_result_title">%s è disponibile</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s sarà il tuo nuovo indirizzo email di Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">Utilizzerai questo indirizzo per accedere a tutti i servizi Proton.</string>
   <string name="auth_create_address_result_recovery_title">Il tuo indirizzo email di recupero è:</string>
   <string name="auth_create_address_create">Crea indirizzo</string>
   <string name="auth_create_address_creating">Creazione indirizzo</string>
-  <string name="auth_create_address_terms">Facendo clic su Crea indirizzo, si accettano i <a href="https://protonmail.com/terms-and-conditions">Termini e condizioni</a> di Proton</string>
-  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_error_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_create_address_error_no_available_domain">Nessun dominio disponibile.</string>
   <string name="auth_create_address_error_private_key">Generazione della chiave privata non riuscita.</string>
   <string name="auth_create_address_error_signed_key_list">Generazione dell\'elenco di chiavi non riuscita.</string>
@@ -97,8 +97,8 @@
   <string name="auth_account_not_found_error">Errore con l\'account</string>
   <string name="auth_one_account_all_services">Un account per tutti i servizi Proton.</string>
   <string name="auth_create_account">Crea un account</string>
-  <string name="auth_long_signup">Accesso, attendere…</string>
-  <string name="auth_long_login">Attendere prego…</string>
+  <string name="auth_long_signup">Attendere prego…</string>
+  <string name="auth_long_login">Accesso, attendere…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crea il tuo Account Proton</string>
   <string name="auth_signup_current_email">Usa invece la tua email attuale</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Il nome utente non deve essere vuoto.</string>
   <string name="auth_signup_error_passwords_do_not_match">Le password non corrispondono.</string>
   <string name="auth_signup_validation_password_length">La password deve essere lunga almeno 8 caratteri.</string>
-  <string name="auth_signup_validation_password">Password must not be empty.</string>
+  <string name="auth_signup_validation_password">La password non può essere vuota.</string>
   <string name="auth_signup_your_account_is_being_setup">Il tuo account è in fase di creazione…</string>
   <string name="auth_signup_please_wait">Di solito non ci vuole più di un minuto.</string>
   <string name="auth_signup_replacement_code">Non hai ricevuto il codice?</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Inizia a usare Proton Mail</string>
   <string name="auth_signup_start_using_drive">Inizia a usare Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Inizia a utilizzare Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">La destinazione di ripristino non è valida.</string>
 </resources>

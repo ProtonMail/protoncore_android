@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Acest dispozitiv folosește o implementare defectuoasă a Android Keystore, folosit pentru a vă păstra datele în siguranță. Asta înseamnă că datele vă pot fi compromise dacă un atacator are acces fizic la acest dispozitiv. Ce ați dori să faceți?</string>
   <string name="crypto_keystore_error_continue_action">Continuare</string>
   <string name="crypto_keystore_error_more_info_action">Aflați mai multe</string>
-  <string name="crypto_keystore_error_logout_action">Sign out</string>
+  <string name="crypto_keystore_error_logout_action">Deconectare</string>
   <string name="crypto_keystore_error_exit_action">Ieșire</string>
 </resources>

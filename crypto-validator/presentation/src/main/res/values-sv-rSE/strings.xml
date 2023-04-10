@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Denna enhet använder en felaktig implementering av Android Keystore som vi använder för att hålla din data säker. Detta innebär att din data kan äventyras om en angripare får fysisk åtkomst till denna enhet. Vad vill du göra?</string>
   <string name="crypto_keystore_error_continue_action">Fortsätt</string>
   <string name="crypto_keystore_error_more_info_action">Få mer information</string>
-  <string name="crypto_keystore_error_logout_action">Sign out</string>
+  <string name="crypto_keystore_error_logout_action">Logga ut</string>
   <string name="crypto_keystore_error_exit_action">Avsluta</string>
 </resources>

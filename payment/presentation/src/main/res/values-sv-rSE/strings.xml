@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Namn på kort krävs.</string>
   <string name="payments_error_card_number">Ogiltigt kortnummer.</string>
   <string name="payments_error_cvc">Ange en giltig säkerhetskod.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">Giltigt sessions-ID behövs vid prenumeration på en inloggad användare.</string>
   <string name="payments_error_signup_paymentmethod">Kunde inte registrera med befintlig betalningsmetod.</string>
   <string name="payments_error_invalid_session">Ogiltig session.</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalningsleverantör hittades.</string>

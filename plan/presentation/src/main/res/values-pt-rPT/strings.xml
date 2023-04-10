@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
   <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Gratuito</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>
   <string name="plans_current_plan">Plano actual</string>
@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Atualizar o seu plano</string>
   <string name="plans_proton_for_free">Obtenha Proton gratuitamente</string>
   <string name="plans_get_proton">Obter %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>

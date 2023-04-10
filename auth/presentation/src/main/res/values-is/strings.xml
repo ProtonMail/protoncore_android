@@ -68,17 +68,17 @@
   <string name="auth_login_external_account_unsupported_help_action">Læra meira</string>
   <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
   <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
-  <string name="auth_create_address_title">Búa til Proton Mail-tölvupóstfang</string>
-  <string name="auth_create_address_subtitle">Proton-notandaaðgangurinn þinn er tengdur %1$s. Til að nota Proton Mail þarftu að útbúa póstfang.</string>
+  <string name="auth_create_address_title">Proton address required</string>
+  <string name="auth_create_address_subtitle">Your recovery address will be %1$s. To secure your data a Proton address is required. You still will be able to sign in with %2$s.</string>
   <string name="auth_username">Notandanafn</string>
-  <string name="auth_username_next_action">Næsta</string>
+  <string name="auth_username_next_action">Continue</string>
   <string name="auth_create_address_result_title">%s er tiltækt</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s verður nýja Proton Mail-tölvupóstfangið þitt.</string>
   <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
   <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
   <string name="auth_create_address_create">Búa til vistfang</string>
   <string name="auth_create_address_creating">Creating address</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">No available domain.</string>
   <string name="auth_create_address_error_private_key">Generating private key failed.</string>
@@ -97,8 +97,8 @@
   <string name="auth_account_not_found_error">Error with the account</string>
   <string name="auth_one_account_all_services">Einn aðgangur fyrir allar Proton-þjónustur.</string>
   <string name="auth_create_account">Stofna notandaaðgang</string>
-  <string name="auth_long_signup">Signing in, please wait…</string>
-  <string name="auth_long_login">Bíddu aðeins…</string>
+  <string name="auth_long_signup">Please wait…</string>
+  <string name="auth_long_login">Signing in, please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Búa til Proton-notandaaðgang fyrir þig</string>
   <string name="auth_signup_current_email">Nota núverandi netfang þitt í staðinn</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Byrjaðu að nota Proton Mail</string>
   <string name="auth_signup_start_using_drive">Byrjaðu að nota Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Byrjaðu að nota Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
 </resources>

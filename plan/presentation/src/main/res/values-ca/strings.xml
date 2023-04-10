@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Un pla per a tots els serveis de Proton</string>
   <string name="plans_fetching_general_error">S\'ha produït un error al carregar els plans.</string>
   <string name="plans_payment_error">S\'ha produït un error de pagament. Torna-ho a provar més tard o crea un pla gratuït.</string>
-  <string name="plans_free_name">Gratuït</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">al mes</string>
   <string name="plan_price_annually">per any</string>
   <string name="plans_current_plan">Pla actual</string>
@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Milloreu-vos el pla</string>
   <string name="plans_proton_for_free">Obtingueu Proton gratuïtament</string>
   <string name="plans_get_proton">Obtingueu %s</string>
-  <string name="plans_manage_your_subscription">Gestioneu la subscripció en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">La seva suscripció es gestionada per Google Play.</string>

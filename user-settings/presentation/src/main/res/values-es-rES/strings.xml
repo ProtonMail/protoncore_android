@@ -19,21 +19,21 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Correo electrónico de recuperación</string>
-  <string name="settings_recovery_email_current">Dirección de correo electrónico de recuperación/notificación actual</string>
-  <string name="settings_recovery_email_new">Nuevo correo electrónico de recuperación/notificación</string>
-  <string name="settings_recovery_email_confirm">Confirmar correo de recuperación/notificación</string>
-  <string name="settings_recovery_email_new_hint">Introduce tu dirección de correo electrónico</string>
-  <string name="settings_recovery_email_confirm_hint">Vuelve a introducir tu dirección de correo electrónico</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_new_hint">Enter email address</string>
+  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
   <string name="settings_save">Guardar</string>
   <string name="settings_password_required">Introduce tu contraseña de inicio de sesión</string>
   <string name="settings_password_required_ok">Aceptar</string>
   <string name="settings_not_set">No establecido</string>
-  <string name="settings_recovery_email_error_no_match">Los correos electrónicos de recuperación y confirmación no coinciden.</string>
+  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
   <string name="settings_validation_email">El correo electrónico no es válido.</string>
   <string name="settings_general_error">Se ha producido un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Cambiar contraseña</string>
-  <string name="settings_password_management_change_mailbox_password">Cambiar contraseña de buzón</string>
+  <string name="settings_password_management_change_login_password">Change password</string>
+  <string name="settings_password_management_change_mailbox_password">Change mailbox password</string>
   <string name="settings_password_management_header">Administrador de contraseñas</string>
   <string name="settings_login_password_hint_current">Contraseña de inicio de sesión actual</string>
   <string name="settings_login_password_hint_new">Nueva contraseña de inicio de sesión</string>

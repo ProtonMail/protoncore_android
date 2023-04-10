@@ -18,26 +18,26 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Helyreállítási email</string>
-  <string name="settings_recovery_email_current">Jelenlegi visszaállító és értesítési e-mail</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
-  <string name="settings_recovery_email_confirm">Visszaállító és értesítési e-mail megerősítése</string>
+  <string name="settings_recovery_email_header">Helyreállítási e-mail cím</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
   <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>
   <string name="settings_save">Mentés</string>
   <string name="settings_password_required">Adja meg a bejelentkezési jelszavát</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nincs beállítva</string>
-  <string name="settings_recovery_email_error_no_match">A helyreállító és a megerősítő e-mail nem egyezik meg.</string>
+  <string name="settings_recovery_email_error_no_match">Az új helyreállítási címek nem egyeznek</string>
   <string name="settings_validation_email">Hibás email cím.</string>
   <string name="settings_general_error">Hiba történt.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Jelszó megváltoztatása</string>
-  <string name="settings_password_management_change_mailbox_password">Postafiók jelszó módosítása</string>
+  <string name="settings_password_management_change_mailbox_password">E-mail titkosítási jelszó megváltoztatása</string>
   <string name="settings_password_management_header">Jelszókezelő</string>
   <string name="settings_login_password_hint_current">Jelenlegi bejelentkezési jelszó</string>
   <string name="settings_login_password_hint_new">Új bejelentkezési jelszó</string>
-  <string name="settings_login_password_hint_new_confirm">Új bejelentkezési jelszó megerősítése</string>
+  <string name="settings_login_password_hint_new_confirm">Új jelszó megerősítése</string>
   <string name="settings_mailbox_password_hint_new">Új e-mail jelszó</string>
   <string name="settings_mailbox_password_hint_new_confirm">Új e-mail jelszó megerősítése</string>
   <string name="settings_change_password_error">Hiba történt a jelszó megváltoztatása közben.</string>
@@ -46,8 +46,8 @@
   <string name="settings_password_management_login_password_success">Bejelentkezési jelszó frissítve</string>
   <string name="settings_password_management_mailbox_password_success">E-mail titkosítási jelszó frissítve</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
-  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
-  <string name="device_settings_crashreport_title">Anonymous crash reports</string>
-  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
+  <string name="device_settings_telemetry_title">Névtelen adatgyűjtés</string>
+  <string name="device_settings_telemetry_hint">A szolgáltatásaink fejlesztése érdekében, időnként névtelen felhasználási adatokat gyűjtünk.</string>
+  <string name="device_settings_crashreport_title">Névtelen összeomlási jelentések</string>
+  <string name="device_settings_crashreport_hint">Az alkalmazás összeomlása esetén, jelentést küld a fejlesztőknek a hiba részleteivel. Az adatokat csak az alkalmazás fejlesztésére használjuk.</string>
 </resources>

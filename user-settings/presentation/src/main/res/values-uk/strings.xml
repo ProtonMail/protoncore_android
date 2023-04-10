@@ -19,16 +19,16 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Пошта для відновлення доступу</string>
-  <string name="settings_recovery_email_current">Поточна поштова адреса для відновлення</string>
-  <string name="settings_recovery_email_new">Нова е-пошта для відновлення/сповіщень</string>
-  <string name="settings_recovery_email_confirm">Підтвердити е-пошту для відновлення/сповіщень</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Введіть адресу е-пошти</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введіть адресу е-пошти</string>
   <string name="settings_save">Зберегти</string>
   <string name="settings_password_required">Введіть свій пароль входу</string>
   <string name="settings_password_required_ok">Гаразд</string>
   <string name="settings_not_set">Не встановлено</string>
-  <string name="settings_recovery_email_error_no_match">Електронна адреса для відновлення та підтвердження відрізняються.</string>
+  <string name="settings_recovery_email_error_no_match">Нові адреси е-пошти для відновлення не збігаються</string>
   <string name="settings_validation_email">Недійсна електронна адреса.</string>
   <string name="settings_general_error">Сталася помилка.</string>
   <!-- login and mailbox password settings -->

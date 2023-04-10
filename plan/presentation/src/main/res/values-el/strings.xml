@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Ένα πρόγραμμα για όλες τις υπηρεσίες Proton</string>
   <string name="plans_fetching_general_error">Παρουσιάστηκε σφάλμα κατά τη λήψη πλάνων.</string>
   <string name="plans_payment_error">Παρουσιάστηκε σφάλμα πληρωμής. Δοκιμάστε ξανά αργότερα ή δημιουργήστε ένα δωρεάν πρόγραμμα.</string>
-  <string name="plans_free_name">Δωρεάν</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">ανά μήνα</string>
   <string name="plan_price_annually">ανά έτος</string>
   <string name="plans_current_plan">Τρέχων Πλάνο</string>
@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_proton_for_free">Αποκτήστε το Proton δωρεάν</string>
   <string name="plans_get_proton">Αποκτήστε %s</string>
-  <string name="plans_manage_your_subscription">Διαχειριστείτε τη συνδρομή σας στο <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s από %s</string>
   <string name="plans_payments_info_not_available">δ/υ</string>
   <string name="plans_manage_your_subscription_google">Η συνδρομή σας διαχειρίζεται από το Google Play.</string>

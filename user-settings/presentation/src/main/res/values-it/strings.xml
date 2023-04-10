@@ -19,21 +19,21 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Email di recupero</string>
-  <string name="settings_recovery_email_current">Indirizzo email di recupero/notifica attuale</string>
-  <string name="settings_recovery_email_new">Nuova e-mail di recupero/notifica</string>
-  <string name="settings_recovery_email_confirm">Conferma email di Reset/Notifica</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Inserisci l\'indirizzo email</string>
   <string name="settings_recovery_email_confirm_hint">Inserisci di nuovo l\'indirizzo email</string>
   <string name="settings_save">Salva</string>
   <string name="settings_password_required">Inserisca la sua password di accesso</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non impostato</string>
-  <string name="settings_recovery_email_error_no_match">L\'email di Ripristino e di Conferma del ripristino non corrispondono.</string>
+  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
   <string name="settings_validation_email">Email non valida.</string>
   <string name="settings_general_error">Si è verificato un errore.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Modifica della password</string>
-  <string name="settings_password_management_change_mailbox_password">Modifica della password della casella email</string>
+  <string name="settings_password_management_change_login_password">Modifica la password</string>
+  <string name="settings_password_management_change_mailbox_password">Cambia la password della casella email</string>
   <string name="settings_password_management_header">Gestione password</string>
   <string name="settings_login_password_hint_current">Password d\'accesso attuale</string>
   <string name="settings_login_password_hint_new">Nuova password di accesso</string>

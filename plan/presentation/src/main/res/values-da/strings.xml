@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Opgradér dit abonnement</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>
-  <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s af %s</string>
   <string name="plans_payments_info_not_available">Ikke tilgængelig</string>
   <string name="plans_manage_your_subscription_google">Dit abonnement håndteres af Google Play.</string>
@@ -128,7 +128,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-mail med avancerede funktioner til din daglige kommunikation.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Vores topprioritet er dit privatliv og sikkerhed.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Sikker lagring i skyen der lader dig gemme, synkronisere og dele dine filer nemt og sikkert.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Omfattende privatliv og sikkerhed med alle Proton-tjenester kombineret.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

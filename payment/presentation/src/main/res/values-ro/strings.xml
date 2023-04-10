@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Numele de pe card este obligatoriu.</string>
   <string name="payments_error_card_number">Număr de card nevalid.</string>
   <string name="payments_error_cvc">Introduceți un cod de securitate valid.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">Este necesar un ID de sesiune valid pentru abonarea unui utilizator conectat.</string>
   <string name="payments_error_signup_paymentmethod">Nu se poate crea un cont cu metoda de plată existentă.</string>
   <string name="payments_error_invalid_session">Sesiune nevalidă.</string>
   <string name="payments_no_payment_provider">Nu s-a găsit un furnizor de plată activ.</string>

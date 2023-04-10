@@ -39,7 +39,7 @@
   <string name="human_verification_code_request_new_code_title">Minta kode baru?</string>
   <string name="human_verification_code_request_new_code_action">Minta kode baru</string>
   <string name="human_verification_code_request_new_code">Dapatkan kode pengganti yang akan dikirim ke %s.</string>
-  <string name="email">Surel</string>
+  <string name="email">Email</string>
   <string name="email_hint">alamatemail@contoh.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>

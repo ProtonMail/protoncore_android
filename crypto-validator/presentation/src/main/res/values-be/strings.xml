@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Гэта прылада выкарыстоўвае дэфектную рэалізацыю Android Keystore, якую мы выкарыстоўваем для захавання вашых даных. Гэта значыць, што вашы даныя могуць быць скампраметаваныя, калі зламыснік атрымае фізічны доступ да вашай прылады. Што б вы хацелі зрабіць?</string>
   <string name="crypto_keystore_error_continue_action">Працягнуць</string>
   <string name="crypto_keystore_error_more_info_action">Атрымаць больш інфармацыі</string>
-  <string name="crypto_keystore_error_logout_action">Sign out</string>
+  <string name="crypto_keystore_error_logout_action">Выйсці</string>
   <string name="crypto_keystore_error_exit_action">Выхад</string>
 </resources>

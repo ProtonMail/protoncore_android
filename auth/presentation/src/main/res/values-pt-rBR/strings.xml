@@ -68,17 +68,17 @@
   <string name="auth_login_external_account_unsupported_help_action">Saiba mais</string>
   <string name="auth_login_empty_credentials">As credenciais não deveriam estar vazias.</string>
   <string name="auth_mailbox_empty_credentials">As credenciais não deveriam estar vazias.</string>
-  <string name="auth_create_address_title">Criar um endereço Proton Mail</string>
-  <string name="auth_create_address_subtitle">Sua conta Proton está associada com $%1$s. Para usar o Proton Mail, por favor crie um endereço.</string>
+  <string name="auth_create_address_title">Endereço da Proton obrigatório</string>
+  <string name="auth_create_address_subtitle">Seu endereço de recuperação será %1$s. Para proteger seus dados, é necessário um endereço da Proton. Você ainda poderá entrar com %2$s.</string>
   <string name="auth_username">Nome de usuário</string>
-  <string name="auth_username_next_action">Próximo</string>
+  <string name="auth_username_next_action">Continuar</string>
   <string name="auth_create_address_result_title">%s está disponível</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s será seu novo endereço de e-mail Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s será seu novo endereço de e-mail do Proton Mail.</string>
+  <string name="auth_create_address_result_subtitle">Você usará este endereço para acessar todos os serviços da Proton.</string>
   <string name="auth_create_address_result_recovery_title">Seu endereço de e-mail de recuperação é:</string>
   <string name="auth_create_address_create">Criar endereço</string>
   <string name="auth_create_address_creating">Criando endereço</string>
-  <string name="auth_create_address_terms">Ao clicar em Criar endereço, você concorda com os <a href="https://protonmail.com/terms-and-conditions">Termos e Condições</a> da Proton</string>
+  <string name="auth_create_address_terms">Ao clicar em Criar endereço, você concorda com os <a href="https://proton.me/legal/terms">termos e condições da Proton</a></string>
   <string name="auth_create_address_error_credentials">As credenciais não deveriam estar vazias.</string>
   <string name="auth_create_address_error_no_available_domain">Sem domínios disponíveis.</string>
   <string name="auth_create_address_error_private_key">A geração da chave privada falhou.</string>
@@ -97,13 +97,13 @@
   <string name="auth_account_not_found_error">Erro com a conta</string>
   <string name="auth_one_account_all_services">Uma conta para todos os serviços da Proton.</string>
   <string name="auth_create_account">Criar uma conta</string>
-  <string name="auth_long_signup">Iniciando sessão, por favor aguarde…</string>
-  <string name="auth_long_login">Por favor, aguarde…</string>
+  <string name="auth_long_signup">Por favor, aguarde…</string>
+  <string name="auth_long_login">Iniciando sessão, por favor aguarde…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crie sua conta Proton</string>
   <string name="auth_signup_current_email">Usar seu endereço de e-mail atual</string>
-  <string name="auth_signup_external_footnote">Com um endereço do Proton, você pode usar todos os serviços do Proton</string>
-  <string name="auth_signup_internal_footnote">Você precisará de um endereço do Proton para usar o Proton Mail e o Proton Calendar</string>
+  <string name="auth_signup_external_footnote">Com um endereço da Proton, você pode usar todos os serviços da Proton</string>
+  <string name="auth_signup_internal_footnote">Você precisará de um endereço da Proton para usar o Proton Mail e o Proton Calendar</string>
   <string name="auth_signup_create_secure_proton_address">Obter um novo endereço de e-mail criptografado</string>
   <string name="auth_signup_username">Nome de usuário</string>
   <string name="auth_signup_domain">Domínio</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Iniciar usando o Proton Mail</string>
   <string name="auth_signup_start_using_drive">Iniciar usando o Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Iniciar usando o Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Comece a usar o Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Destino de recuperação é inválido.</string>
 </resources>

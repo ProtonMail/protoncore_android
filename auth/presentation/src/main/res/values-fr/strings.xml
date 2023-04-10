@@ -66,27 +66,27 @@
   <string name="auth_login_external_account_unsupported_title">Une adresse Proton est nécessaire.</string>
   <string name="auth_login_external_account_unsupported_message">Obtenez une adresse Proton Mail liée à ce compte dans vos paramètres web Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">En savoir plus</string>
-  <string name="auth_login_empty_credentials">Les identifiants ne doivent pas être vides.</string>
-  <string name="auth_mailbox_empty_credentials">Les identifiants ne doivent pas être vides.</string>
-  <string name="auth_create_address_title">Créer une adresse Proton Mail</string>
-  <string name="auth_create_address_subtitle">Votre compte Proton est associé à %1$s. Pour utiliser Proton Mail, veuillez créer une adresse.</string>
+  <string name="auth_login_empty_credentials">Saisissez vos identifiants.</string>
+  <string name="auth_mailbox_empty_credentials">Saisissez vos identifiants.</string>
+  <string name="auth_create_address_title">Une adresse Proton est nécessaire.</string>
+  <string name="auth_create_address_subtitle">Votre adresse de récupération sera %1$s. Pour sécuriser vos données, une adresse Proton est nécessaire. Vous pourrez toujours vous connecter avec %2$s.</string>
   <string name="auth_username">Nom d\'utilisateur</string>
-  <string name="auth_username_next_action">Suivant</string>
+  <string name="auth_username_next_action">Continuer</string>
   <string name="auth_create_address_result_title">%s est disponible.</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s sera votre nouvelle adresse e-mail Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">Vous utiliserez cette adresse pour vous connecter à tous les services Proton.</string>
   <string name="auth_create_address_result_recovery_title">Votre adresse e-mail de récupération est :</string>
   <string name="auth_create_address_create">Créer une adresse</string>
   <string name="auth_create_address_creating">Création de l’adresse</string>
-  <string name="auth_create_address_terms">En cliquant sur Créer une adresse, vous acceptez les <a href="https://protonmail.com/terms-and-conditions">conditions générales d\'utilisation</a> de Proton.</string>
-  <string name="auth_create_address_error_credentials">Les identifiants ne doivent pas être vides.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_error_credentials">Saisissez vos identifiants.</string>
   <string name="auth_create_address_error_no_available_domain">Aucun domaine n\'est disponible.</string>
   <string name="auth_create_address_error_private_key">La clé privée n\'a pas pu être générée.</string>
   <string name="auth_create_address_error_signed_key_list">La liste des clés n\'a pas pu être générée.</string>
   <string name="auth_create_address_error_setusername">Le nom d\'utilisateur n\'a pas pu être associé.</string>
   <string name="auth_create_address_error_username_unavailable">Le nom d\'utilisateur choisi n\'est pas disponible.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Aucune clé principale n\'a été trouvée.</string>
-  <string name="auth_mailbox_login_error_primary_key_error">Erreur de clé principale.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Erreur de clé principale</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">La phrase d\'authentification n\'est pas valide.</string>
   <string name="auth_password_chooser_title">Modifier votre mot de passe</string>
   <string name="auth_password_chooser_description">Pour utiliser l\'application Proton en tant que membre d\'une organisation, vous devez d\'abord changer votre mot de passe en vous connectant à Proton via un navigateur.</string>
@@ -97,8 +97,8 @@
   <string name="auth_account_not_found_error">Erreur avec le compte</string>
   <string name="auth_one_account_all_services">Un seul compte pour tous les services Proton.</string>
   <string name="auth_create_account">Créer un compte</string>
-  <string name="auth_long_signup">Connexion, veuillez patienter…</string>
-  <string name="auth_long_login">Veuillez patienter…</string>
+  <string name="auth_long_signup">Veuillez patienter…</string>
+  <string name="auth_long_login">Connexion en cours, veuillez patienter…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Créez votre compte Proton</string>
   <string name="auth_signup_current_email">Utiliser plutôt votre adresse e-mail actuelle</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur ne doit pas être vide.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
-  <string name="auth_signup_validation_password">Le mot de passe ne doit pas être vide.</string>
+  <string name="auth_signup_validation_password">Saisissez votre mot de passe.</string>
   <string name="auth_signup_your_account_is_being_setup">Nous créons votre compte…</string>
   <string name="auth_signup_please_wait">Cela ne prend généralement pas plus d\'une minute.</string>
   <string name="auth_signup_replacement_code">Vous n\'avez pas reçu le code ?</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Commencez à utiliser Proton Mail</string>
   <string name="auth_signup_start_using_drive">Commencez à utiliser Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Commencez à utiliser Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">La destination de récupération n\'est pas valide.</string>
 </resources>

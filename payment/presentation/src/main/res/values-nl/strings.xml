@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Naam op kaart vereist.</string>
   <string name="payments_error_card_number">Ongeldig kaartnummer.</string>
   <string name="payments_error_cvc">Voer een geldige beveiligingscode in.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">Geldige sessie-ID is nodig bij het abonneren van een ingelogde gebruiker.</string>
   <string name="payments_error_signup_paymentmethod">Kon niet aanmelden met bestaande betaalmethode.</string>
   <string name="payments_error_invalid_session">Ongeldige sessie.</string>
   <string name="payments_no_payment_provider">Geen actieve betalingsprovider gevonden.</string>

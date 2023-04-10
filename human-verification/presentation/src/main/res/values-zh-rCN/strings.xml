@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">向 %s 重新发送验证码。</string>
   <string name="email">邮箱</string>
   <string name="email_hint">email@example.com</string>
-  <string name="sms_hint">XXX XXXX XXXX</string>
+  <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">申请注册</string>

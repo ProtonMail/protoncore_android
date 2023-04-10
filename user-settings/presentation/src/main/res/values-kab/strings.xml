@@ -19,18 +19,18 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Imayl n tririt</string>
-  <string name="settings_recovery_email_current">Tansa imayl tamirant n tririt</string>
-  <string name="settings_recovery_email_new">New recovery/notification email</string>
-  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
-  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_new_hint">Sekcem tansa n yimayl</string>
+  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
   <string name="settings_save">Sekles</string>
   <string name="settings_password_required">Sekcem awal-ik uffir</string>
   <string name="settings_password_required_ok">IH</string>
   <string name="settings_not_set">Ur yettwaslugen</string>
-  <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
+  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
   <string name="settings_validation_email">Email is invalid.</string>
-  <string name="settings_general_error">An error occurred.</string>
+  <string name="settings_general_error">Ylla-d neẓri.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Snifel awal uffir</string>
   <string name="settings_password_management_change_mailbox_password">Snifel awal uffir n tnaka n yimayl</string>

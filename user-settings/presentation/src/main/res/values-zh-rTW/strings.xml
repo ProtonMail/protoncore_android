@@ -19,21 +19,21 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">復原電郵</string>
-  <string name="settings_recovery_email_current">目前的復原電郵位址</string>
-  <string name="settings_recovery_email_new">新的備援/通知電子郵件</string>
-  <string name="settings_recovery_email_confirm">確認重設或通知電郵</string>
-  <string name="settings_recovery_email_new_hint">請輸入電郵位址</string>
-  <string name="settings_recovery_email_confirm_hint">重新輸入電郵</string>
+  <string name="settings_recovery_email_current">目前的備援電子郵件地址</string>
+  <string name="settings_recovery_email_new">新的備援電子郵件地址</string>
+  <string name="settings_recovery_email_confirm">確認備援電子郵件地址</string>
+  <string name="settings_recovery_email_new_hint">請輸入電子郵件地址</string>
+  <string name="settings_recovery_email_confirm_hint">重新輸入電子郵件地址</string>
   <string name="settings_save">儲存</string>
   <string name="settings_password_required">輸入您的登入密碼</string>
   <string name="settings_password_required_ok">確定</string>
   <string name="settings_not_set">未設定</string>
-  <string name="settings_recovery_email_error_no_match">復原與確認復原電郵不相符。</string>
+  <string name="settings_recovery_email_error_no_match">新增的復原用電子郵件地址不一致</string>
   <string name="settings_validation_email">電郵無效。</string>
   <string name="settings_general_error">發生錯誤。</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">變更密碼</string>
-  <string name="settings_password_management_change_mailbox_password">更改信箱密碼</string>
+  <string name="settings_password_management_change_mailbox_password">更改郵箱密碼</string>
   <string name="settings_password_management_header">密碼管理</string>
   <string name="settings_login_password_hint_current">目前的登入密碼</string>
   <string name="settings_login_password_hint_new">新的登入密碼</string>

@@ -20,12 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">Aide</string>
   <string name="human_verification_title">Vérification que vous n\'êtes pas un robot</string>
-  <string name="human_verification_main_subtitle">Pour lutter contre les abus, veuillez prouver que vous êtes humain en utilisant l\'une des options suivantes</string>
+  <string name="human_verification_main_subtitle">Pour lutter contre les abus, vous devez confirmer que vous n\'êtes pas un robot en utilisant l\'une des options suivantes</string>
   <string name="human_verification_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Saisissez le code de vérification qui a été envoyé à %s. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Saisissez le code de vérification que vous avez déjà :</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Adresse e-mail</string>
+  <string name="human_verification_option_email">E-mail</string>
   <string name="human_verification_option_email_subtitle">Votre adresse e-mail ne sera utilisée que pour cette vérification. Si vous ne trouvez pas le message dans votre boîte de réception, vérifiez dans votre dossier Indésirables/spam.</string>
   <string name="human_verification_option_sms">Numéro de téléphone</string>
   <string name="human_verification_option_sms_subtitle">Votre numéro de téléphone ne sera utilisé que pour cette vérification.</string>
@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">Obtenir un code de remplacement à envoyer à %s.</string>
   <string name="email">E-mail</string>
   <string name="email_hint">email@exemple.com</string>
-  <string name="sms_hint">XX XX XX XX XX</string>
+  <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Demander une invitation</string>

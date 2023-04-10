@@ -24,7 +24,7 @@
   <string name="presentation_force_update_learn_more">Pelajari lebih lanjut</string>
   <string name="presentation_force_update_update">Perbarui</string>
   <string name="presentation_market_missing">Aplikasi tidak ditemukan pada perangkat. Silakan tuju app store untuk menginstal aplikasi.</string>
-  <string name="presentation_authenticate">Otentikasi</string>
+  <string name="presentation_authenticate">Autentikasi</string>
   <string name="presentation_signin_to_continue">Masuk untuk melanjutkan</string>
   <string name="presentation_alert_title">Peringatan</string>
   <string name="presentation_alert_ok">OK</string>

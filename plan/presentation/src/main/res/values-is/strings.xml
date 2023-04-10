@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Uppfærðu áskriftina þína</string>
   <string name="plans_proton_for_free">Fáðu Proton ókeypis</string>
   <string name="plans_get_proton">Fáðu %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s af %s</string>
   <string name="plans_payments_info_not_available">ekki tiltækt</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>

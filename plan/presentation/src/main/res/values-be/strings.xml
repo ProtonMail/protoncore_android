@@ -43,7 +43,7 @@
   <string name="plans_upgrade_your_plan">Палепшыце свой тарыфны план</string>
   <string name="plans_proton_for_free">Атрымаць Proton бясплатна</string>
   <string name="plans_get_proton">Перайсці на %s</string>
-  <string name="plans_manage_your_subscription">Кіраванне вашай падпіскай на <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s з %s</string>
   <string name="plans_payments_info_not_available">н/д</string>
   <string name="plans_manage_your_subscription_google">Ваша падпіска кіруецца Google Play.</string>

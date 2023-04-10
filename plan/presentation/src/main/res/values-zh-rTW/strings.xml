@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">單一方案，Proton 服務吃到飽</string>
   <string name="plans_fetching_general_error">接收方案時發生錯誤。</string>
   <string name="plans_payment_error">出現付款錯誤。請稍候再嘗試一次，或試著創建一個免費方案。</string>
-  <string name="plans_free_name">免費</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">每月</string>
   <string name="plan_price_annually">每年</string>
   <string name="plans_current_plan">目前方案</string>
@@ -40,7 +40,7 @@
   <string name="plans_upgrade_your_plan">更新升級您的方案</string>
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">取得 %s</string>
-  <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s 中的 %s</string>
   <string name="plans_payments_info_not_available">不適用</string>
   <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
@@ -118,8 +118,8 @@
   <string name="plan_id_bundle2022_header" comment="new_plans">結合所有 Proton 服務的全面隱私與安全性。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
-    <item>歐元</item>
-    <item>美金</item>
-    <item>瑞郎</item>
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
   </string-array>
 </resources>

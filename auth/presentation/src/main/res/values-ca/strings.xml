@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Es requereix l\'adreça del Proton</string>
   <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton enllaçada a aquest compte a la configuració web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
-  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
-  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
-  <string name="auth_create_address_title">Creeu una adreça de Proton Mail</string>
-  <string name="auth_create_address_subtitle">El vostre compte de Proton està associat amb %1$s. Per a utilitzar Proton Mail, creeu una adreça.</string>
+  <string name="auth_login_empty_credentials">Les credencials no poden estar buides.</string>
+  <string name="auth_mailbox_empty_credentials">Les credencials no poden estar buides.</string>
+  <string name="auth_create_address_title">Es requereix l\'adreça del Proton</string>
+  <string name="auth_create_address_subtitle">La vostra adreça de recuperació serà %1$s. Per protegir les vostres dades cal una adreça de Proton. Encara podreu iniciar la sessió amb %2$s.</string>
   <string name="auth_username">Nom d\'usuari</string>
-  <string name="auth_username_next_action">Següent</string>
+  <string name="auth_username_next_action">Continuar</string>
   <string name="auth_create_address_result_title">%s està disponible</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s serà la vostra nova adreça de correu de Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">Utilitzareu aquesta adreça per iniciar sessió a tots els serveis de Proton.</string>
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">S\'està creant l\'adreça</string>
-  <string name="auth_create_address_terms">Clicant a Crear adreça accepteu els <a href="https://protonmail.com/terms-and-conditions">Termes i Condicions</a> de Proton</string>
-  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>
   <string name="auth_create_address_error_signed_key_list">Ha fallat la generació de la llista de claus.</string>
@@ -97,8 +97,8 @@
   <string name="auth_account_not_found_error">Error amb el compte</string>
   <string name="auth_one_account_all_services">Un compte per a tots els serveis Proton.</string>
   <string name="auth_create_account">Crea un compte</string>
-  <string name="auth_long_signup">S\'està iniciant, espereu…</string>
-  <string name="auth_long_login">Espereu…</string>
+  <string name="auth_long_signup">Si us plau, esperi…</string>
+  <string name="auth_long_login">S\'està iniciant, espereu…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creeu el vostre compte Proton</string>
   <string name="auth_signup_current_email">Utilitzeu el vostre correu electrònic actual.</string>
@@ -129,7 +129,7 @@
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot ser blanc.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les contrasenyes no coincideixen.</string>
   <string name="auth_signup_validation_password_length">La contrasenya ha de tenir almenys 8 caràcters.</string>
-  <string name="auth_signup_validation_password">Password must not be empty.</string>
+  <string name="auth_signup_validation_password">La contrasenya no pot ser buida.</string>
   <string name="auth_signup_your_account_is_being_setup">S\'està creant el vostre compte…</string>
   <string name="auth_signup_please_wait">No sol tardar més d\'un minut.</string>
   <string name="auth_signup_replacement_code">No heu rebut el codi?</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Comenceu a utilitzar Proton Mail</string>
   <string name="auth_signup_start_using_drive">Comenceu a utilitzar Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Comenceu a utilitzar Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">La destinació de recuperació és invàlida.</string>
 </resources>

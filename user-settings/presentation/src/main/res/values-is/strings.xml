@@ -19,21 +19,21 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Endurheimtupóstur</string>
-  <string name="settings_recovery_email_current">Núgildandi endurheimtu/tilkynningapóstfang</string>
-  <string name="settings_recovery_email_new">Nýr endurstillinga/tilkynningapóstur</string>
-  <string name="settings_recovery_email_confirm">Staðfestu endurstillinga/tilkynningapóst</string>
-  <string name="settings_recovery_email_new_hint">Settu inn tölvupóstfang</string>
-  <string name="settings_recovery_email_confirm_hint">Settu aftur inn tölvupóstfang</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_new_hint">Enter email address</string>
+  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
   <string name="settings_save">Vista</string>
   <string name="settings_password_required">Settu inn lykilorð fyrir innskráninguna þína</string>
   <string name="settings_password_required_ok">Í lagi</string>
   <string name="settings_not_set">Ekki stillt</string>
-  <string name="settings_recovery_email_error_no_match">Endurheimtupóstfang og staðfesting þess samsvara ekki.</string>
+  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
   <string name="settings_validation_email">Póstfangið er ógilt.</string>
   <string name="settings_general_error">Villa kom upp.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Breyta lykilorði</string>
-  <string name="settings_password_management_change_mailbox_password">Breyta lykilorði á pósthólfi</string>
+  <string name="settings_password_management_change_login_password">Change password</string>
+  <string name="settings_password_management_change_mailbox_password">Change mailbox password</string>
   <string name="settings_password_management_header">Sýsl með lykilorð</string>
   <string name="settings_login_password_hint_current">Núverandi lykilorð innskráningar</string>
   <string name="settings_login_password_hint_new">Nýtt innskráningarlykilorð</string>

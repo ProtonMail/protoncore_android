@@ -43,7 +43,7 @@
   <string name="plans_upgrade_your_plan">Улучшить тариф</string>
   <string name="plans_proton_for_free">Получить Proton бесплатно</string>
   <string name="plans_get_proton">Получить %s</string>
-  <string name="plans_manage_your_subscription">Управляйте своей подпиской по ссылке: <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s из %s</string>
   <string name="plans_payments_info_not_available">недоступно</string>
   <string name="plans_manage_your_subscription_google">Ваша подписка управляется Google Play.</string>
@@ -82,16 +82,16 @@
     <item quantity="other">#proton_addresses# адресов на пользователя</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d из #proton_addresses# адреса</item>
-    <item quantity="few">%d из #proton_addresses# адресов</item>
-    <item quantity="many">%d из #proton_addresses# адресов</item>
-    <item quantity="other">%d из #proton_addresses# адресов</item>
+    <item quantity="one">%d из адресов #proton_addresses#</item>
+    <item quantity="few">%d из адресов #proton_addresses#</item>
+    <item quantity="many">%d из адресов #proton_addresses#</item>
+    <item quantity="other">%d из адресов #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Поддержка #proton_domains# пользовательского домена электронной почты</item>
-    <item quantity="few">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
-    <item quantity="many">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
-    <item quantity="other">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
+    <item quantity="one">Поддержка пользовательского домена электронной почты #proton_domains#</item>
+    <item quantity="few">Поддержка пользовательских доменов электронной почты #proton_domains#</item>
+    <item quantity="many">Поддержка пользовательских доменов электронной почты #proton_domains#</item>
+    <item quantity="other">Поддержка пользовательских доменов электронной почты #proton_domains#</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# личный календарь</item>
@@ -100,10 +100,10 @@
     <item quantity="other">#proton_calendars# личных календарей</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d из #proton_calendars# календаря</item>
-    <item quantity="few">%d из #proton_calendars# календарей</item>
-    <item quantity="many">%d из #proton_calendars# календарей</item>
-    <item quantity="other">%d из #proton_calendars# календарей</item>
+    <item quantity="one">%d из календаря #proton_calendars#</item>
+    <item quantity="few">%d из календарей #proton_calendars#</item>
+    <item quantity="many">%d из календарей #proton_calendars#</item>
+    <item quantity="other">%d из календарей #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Бесплатный VPN на одном устройстве</item>
@@ -156,7 +156,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Защищенная электронная почта с дополнительными возможностями для повседневного общения.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Наш приоритет — ваша конфиденциальность и безопасность.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Защищенное облачное хранилище для удобного и надежного хранения, синхронизации и обмена файлами.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Защищённое облачное хранилище для удобного и надежного хранения, синхронизации и обмена файлами.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная конфиденциальность и безопасность со всеми службами Proton вместе взятыми.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

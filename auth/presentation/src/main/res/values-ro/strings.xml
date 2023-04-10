@@ -68,17 +68,17 @@
   <string name="auth_login_external_account_unsupported_help_action">Detalii</string>
   <string name="auth_login_empty_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_mailbox_empty_credentials">Datele de autentificare nu pot fi goale.</string>
-  <string name="auth_create_address_title">Creare adresă Proton Mail</string>
-  <string name="auth_create_address_subtitle">Contul Proton este asociat cu %1$s. Pentru a utiliza Proton Mail, creați o adresă.</string>
+  <string name="auth_create_address_title">Este necesară o adresă Proton</string>
+  <string name="auth_create_address_subtitle">Adresa de recuperare va fi %1$s. Pentru a vă securiza datele este necesară o adresă Proton. Vă veți putea autentifica în continuare cu %2$s.</string>
   <string name="auth_username">Nume utilizator</string>
-  <string name="auth_username_next_action">Înainte</string>
+  <string name="auth_username_next_action">Continuare</string>
   <string name="auth_create_address_result_title">%s este disponibilă</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s va fi noua adresă personală din Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">Veți folosi această adresă pentru conectarea la toate serviciile Proton.</string>
   <string name="auth_create_address_result_recovery_title">Adresa de e-mail de recuperare este:</string>
   <string name="auth_create_address_create">Creare adresă</string>
   <string name="auth_create_address_creating">Se creează adresa</string>
-  <string name="auth_create_address_terms">Făcând clic pe «Creare adresă», sunteți de acord cu <a href="https://protonmail.com/terms-and-conditions">Termenii și condițiile</a> Proton.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
   <string name="auth_create_address_error_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_create_address_error_no_available_domain">Nu sunt domenii disponibile.</string>
   <string name="auth_create_address_error_private_key">Generarea cheii private a eșuat.</string>
@@ -97,8 +97,8 @@
   <string name="auth_account_not_found_error">Eroare cont</string>
   <string name="auth_one_account_all_services">Un singur cont pentru toate serviciile Proton.</string>
   <string name="auth_create_account">Creare cont</string>
-  <string name="auth_long_signup">Se conectează, așteptați…</string>
-  <string name="auth_long_login">Așteptați…</string>
+  <string name="auth_long_signup">Așteptați…</string>
+  <string name="auth_long_login">Se conectează, așteptați…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Creare cont Proton</string>
   <string name="auth_signup_current_email">Folosire adresă de e-mail actuală</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Începeți să utilizați Proton Mail</string>
   <string name="auth_signup_start_using_drive">Începeți să utilizați Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Începeți să utilizați Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Destinația pentru recuperare nu este validă.</string>
 </resources>

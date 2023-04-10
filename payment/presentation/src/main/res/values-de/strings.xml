@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Name des Karteninhabers erforderlich.</string>
   <string name="payments_error_card_number">Ungültige Kartennummer.</string>
   <string name="payments_error_cvc">Bitte gültigen Sicherheitscode eingeben.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">Eine gültige Sitzungs-ID wird benötigt, um einen angemeldeten Benutzer abonnieren zu können.</string>
   <string name="payments_error_signup_paymentmethod">Anmeldung mit bestehender Zahlungsmethode nicht möglich.</string>
   <string name="payments_error_invalid_session">Ungültige Sitzung.</string>
   <string name="payments_no_payment_provider">Es wurde kein aktiver Zahlungsanbieter gefunden.</string>

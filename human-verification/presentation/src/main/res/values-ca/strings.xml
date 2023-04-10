@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Ajuda</string>
   <string name="human_verification_title">Verificació humana</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_main_subtitle">Per evitar abusos, verifiqueu que sou humà utilitzant una de les opcions següents</string>
   <string name="human_verification_enter_code_subtitle">Introduïu el codi de verificació que s’ha enviat a %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Introduïu el codi de verificació que s\'ha enviat a $%s. Si no trobeu el missatge a la vostra safata d\'entrada, comproveu la carpeta de correu brossa.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Introduïu el codi de verificació que ja teniu:</string>

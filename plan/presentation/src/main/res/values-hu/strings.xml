@@ -20,8 +20,8 @@
   <string name="plans_select_a_plan">Csomag kiválasztása</string>
   <string name="plans_select_a_plan_subtitle">Egy csomag minden Proton szolgáltatáshoz</string>
   <string name="plans_fetching_general_error">Hiba történt a csomagok letöltése közben.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Ingyenes</string>
+  <string name="plans_payment_error">Hiba történt a fizetés során. Kérjük, próbája meg újra vagy válassza az ingyenes csomagot.</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">havonta</string>
   <string name="plan_price_annually">évente</string>
   <string name="plans_current_plan">Jelenlegi előfizetés</string>
@@ -41,12 +41,12 @@
   <string name="plans_upgrade_your_plan">Váltás nagyobb csomagra</string>
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
-  <string name="plans_manage_your_subscription">Az elfizetését az <a href="https://account.protonmail.com">account.protonmail.com</a> címen kezelheti</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s / %s</string>
   <string name="plans_payments_info_not_available">nem elérhető</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
-  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
+  <string name="plans_manage_your_subscription_google">Az előfizetését a Google Play kezeli.</string>
+  <string name="plans_manage_your_subscription_other">Az előfizetését nem lehet a mobile alkalmazásban kezelni.</string>
+  <string name="plans_autorenew_subscriptions">Az alkalmazásból csak éves, automatikusan megújuló előfizetés érhető el.</string>
   <string name="plans_can_not_upgrade_from_mobile">A mobil alkalmazásból a csomag nem változtatható.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -128,7 +128,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Biztonságos e-mail, fejlett lehetőségekkel a mindennapi kommunikációjához.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Magánszférája és biztonsága az elődleges szempontunk.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Biztonságos felhőtárhely, mellyel könnyedén és biztonságosan tárolhat, szinkronizálhat és oszthat meg fájlokat.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Széleskörű adatvédelem és biztonság az összes Proton szolgáltatással.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

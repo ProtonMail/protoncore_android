@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">すべての Proton サービスのための 1 つのプラン</string>
   <string name="plans_fetching_general_error">プランの読み込み時にエラーが発生しました。</string>
   <string name="plans_payment_error">支払いエラーが発生しました。再度お試しいただくか、無料プランを作成してください。</string>
-  <string name="plans_free_name">無料</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
   <string name="plan_price_annually">年あたり</string>
   <string name="plans_current_plan">現在のプラン</string>
@@ -40,7 +40,7 @@
   <string name="plans_upgrade_your_plan">プランをアップグレード</string>
   <string name="plans_proton_for_free">Proton を無料を入手</string>
   <string name="plans_get_proton">%s を入手</string>
-  <string name="plans_manage_your_subscription"><a href="https://account.protonmail.com">account.protonmail.com</a> からサブスクリプションを管理</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s / %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
@@ -118,8 +118,8 @@
   <string name="plan_id_bundle2022_header" comment="new_plans">包括的なプライバシーとセキュリティを提供する、すべての Proton サービスが利用できるプランです。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
-    <item>ユーロ</item>
-    <item>米ドル</item>
-    <item>スイス フラン</item>
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
   </string-array>
 </resources>

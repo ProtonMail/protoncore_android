@@ -19,16 +19,16 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Kurtarma e-postası adresi</string>
-  <string name="settings_recovery_email_current">Geçerli sıfırlama ve bildirim e-posta adresi</string>
-  <string name="settings_recovery_email_new">Yeni kurtarma ve bildirim e-posta adresi</string>
-  <string name="settings_recovery_email_confirm">Sıfırlama ve bildirim e-posta adresi onayı</string>
+  <string name="settings_recovery_email_current">Geçerli kurtarma e-posta adresi</string>
+  <string name="settings_recovery_email_new">Yeni kurtarma e-posta adresi</string>
+  <string name="settings_recovery_email_confirm">Kurtarma e-posta adresini onaylayın</string>
   <string name="settings_recovery_email_new_hint">E-posta adresini yazın</string>
   <string name="settings_recovery_email_confirm_hint">E-posta adresini yeniden yazın</string>
   <string name="settings_save">Kaydet</string>
   <string name="settings_password_required">Oturum açma parolanızı yazın</string>
   <string name="settings_password_required_ok">Tamam</string>
   <string name="settings_not_set">Ayarlanmamış</string>
-  <string name="settings_recovery_email_error_no_match">Kurtarma e-postası adresi ile onayı aynı değil.</string>
+  <string name="settings_recovery_email_error_no_match">Yeni kurtarma e-postası ile onayı aynı değil</string>
   <string name="settings_validation_email">E-posta adresi geçersiz.</string>
   <string name="settings_general_error">Bir sorun çıktı.</string>
   <!-- login and mailbox password settings -->

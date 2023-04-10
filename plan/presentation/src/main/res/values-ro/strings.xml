@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Un singur abonament pentru toate serviciile Proton</string>
   <string name="plans_fetching_general_error">A apărut o eroare în timpul preluării planurilor.</string>
   <string name="plans_payment_error">A apărut o eroare la plată. Încercați mai târziu sau alegeți un plan gratuit.</string>
-  <string name="plans_free_name">Gratuit</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pe lună</string>
   <string name="plan_price_annually">pe an</string>
   <string name="plans_current_plan">Plan actual</string>
@@ -42,7 +42,7 @@
   <string name="plans_upgrade_your_plan">Modernizare plan</string>
   <string name="plans_proton_for_free">Luați Proton gratuit</string>
   <string name="plans_get_proton">Luați %s</string>
-  <string name="plans_manage_your_subscription">Gestionați abonamentul la <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s din %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Abonamentul este gestionat de către Google Play.</string>
@@ -139,7 +139,7 @@
   <string name="streaming_services_access" comment="new_plans">Acces la serviciile de transmisie în flux la nivel global</string>
   <string name="secure_core" comment="new_plans">Servere Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor peste VPN</string>
-  <string name="p2p_bittorrent" comment="new_plans">P2P / BitTorrent</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="plan_id_mail2022_header" comment="new_plans">E-mail securizat cu funcții avansate pentru comunicațiile personale zilnice.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Intimitatea și securitatea dvs. sunt prioritatea noastră.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Stocare sigură în cloud care permite stocarea, sincronizarea și partajarea ușoară și sigură a fișierelor.</string>

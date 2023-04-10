@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">Obtener un código de reemplazo enviado a %s.</string>
   <string name="email">Correo</string>
   <string name="email_hint">correo@ejemplo.com</string>
-  <string name="sms_hint">XX XXXX XXXX</string>
+  <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Solicitar una invitación</string>

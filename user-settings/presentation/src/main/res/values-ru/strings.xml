@@ -19,16 +19,16 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Резервный адрес электронной почты</string>
-  <string name="settings_recovery_email_current">Текущий адрес электронной почты для сброса/уведомлений</string>
-  <string name="settings_recovery_email_new">Новая электронная почта для восстановления/уведомлений</string>
-  <string name="settings_recovery_email_confirm">Подтвердите электронную почту для сброса/уведомлений</string>
+  <string name="settings_recovery_email_current">Current recovery email address</string>
+  <string name="settings_recovery_email_new">New recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Введите адрес электронной почты</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введите адрес электронной почты</string>
   <string name="settings_save">Сохранить</string>
   <string name="settings_password_required">Введите свой пароль для входа</string>
   <string name="settings_password_required_ok">ОК</string>
   <string name="settings_not_set">Не задано</string>
-  <string name="settings_recovery_email_error_no_match">Резервный адрес и его подтверждение не совпадают.</string>
+  <string name="settings_recovery_email_error_no_match">Новые адреса электронной почты для восстановления не совпадают</string>
   <string name="settings_validation_email">Недопустимый адрес электронной почты.</string>
   <string name="settings_general_error">Произошла ошибка.</string>
   <!-- login and mailbox password settings -->

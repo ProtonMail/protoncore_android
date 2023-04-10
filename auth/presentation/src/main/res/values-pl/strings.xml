@@ -66,20 +66,20 @@
   <string name="auth_login_external_account_unsupported_title">Adres Proton jest wymagany</string>
   <string name="auth_login_external_account_unsupported_message">Uzyskaj adres Proton Mail powiązany z tym kontem.</string>
   <string name="auth_login_external_account_unsupported_help_action">Dowiedz się więcej</string>
-  <string name="auth_login_empty_credentials">Dane logowania nie mogą być puste.</string>
-  <string name="auth_mailbox_empty_credentials">Dane logowania nie mogą być puste.</string>
-  <string name="auth_create_address_title">Utwórz adres Proton Mail</string>
-  <string name="auth_create_address_subtitle">Twoje konto Proton jest powiązane z adresem %1$s. Utwórz adres, aby korzystać z poczty Proton Mail.</string>
+  <string name="auth_login_empty_credentials">Pola z danymi logowania nie mogą być puste.</string>
+  <string name="auth_mailbox_empty_credentials">Pola z danymi logowania nie mogą być puste.</string>
+  <string name="auth_create_address_title">Adres Proton jest wymagany</string>
+  <string name="auth_create_address_subtitle">Adres %1$s zostanie Twoim adresem pomocniczym, ale do zabezpieczenia Twoich danych adres Proton jest wymagany. Nadal będziesz mógł zalogować się za pomocą %2$s.</string>
   <string name="auth_username">Nazwa użytkownika</string>
-  <string name="auth_username_next_action">Dalej</string>
+  <string name="auth_username_next_action">Kontynuuj</string>
   <string name="auth_create_address_result_title">Adres %s jest dostępny</string>
   <string name="auth_create_address_result_title_username">Twoim nowym adresem Proton Mail będzie %1$s@%2$s.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">Będziesz używać tego adresu do logowania się do wszystkich usług Proton.</string>
   <string name="auth_create_address_result_recovery_title">Twój adres pomocniczy:</string>
   <string name="auth_create_address_create">Utwórz adres</string>
   <string name="auth_create_address_creating">Tworzenie adresu</string>
-  <string name="auth_create_address_terms">Klikając przycisk Utwórz adres, akceptujesz <a href="https://protonmail.com/terms-and-conditions">regulamin</a> usługi Proton.</string>
-  <string name="auth_create_address_error_credentials">Dane logowania nie mogą być puste.</string>
+  <string name="auth_create_address_terms">Klikając przycisk Utwórz adres, akceptujesz <a href="https://proton.me/legal/terms">regulamin</a> usługi Proton.</string>
+  <string name="auth_create_address_error_credentials">Pola z danymi logowania nie mogą być puste.</string>
   <string name="auth_create_address_error_no_available_domain">Brak dostępnej domeny.</string>
   <string name="auth_create_address_error_private_key">Generowanie klucza prywatnego nie powiodło się.</string>
   <string name="auth_create_address_error_signed_key_list">Generowanie listy kluczy nie powiodło się.</string>
@@ -97,8 +97,8 @@
   <string name="auth_account_not_found_error">Wystąpił błąd konta</string>
   <string name="auth_one_account_all_services">Jedno konto do wszystkich usług Proton.</string>
   <string name="auth_create_account">Utwórz konto</string>
-  <string name="auth_long_signup">Trwa logowanie. Poczekaj chwilę…</string>
-  <string name="auth_long_login">Poczekaj chwilę…</string>
+  <string name="auth_long_signup">Poczekaj chwilę…</string>
+  <string name="auth_long_login">Trwa logowanie. Poczekaj chwilę…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Utwórz konto Proton</string>
   <string name="auth_signup_current_email">Użyj swojego obecnego adresu e-mail</string>
@@ -145,5 +145,6 @@
   <string name="auth_signup_start_using_mail">Zacznij korzystać z Proton Mail</string>
   <string name="auth_signup_start_using_drive">Zacznij korzystać z Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Zacznij korzystać z Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Zacznij korzystać z Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Kontakt pomocniczy jest nieprawidłowy.</string>
 </resources>

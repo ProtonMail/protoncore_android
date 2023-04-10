@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hjælp</string>
   <string name="human_verification_title">Menneskelig verifikation</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_main_subtitle">For at forhindre misbrug bedes du bekræfte, at du er menneske ved hjælp af en af følgende muligheder</string>
   <string name="human_verification_enter_code_subtitle">Indtast den bekræftelseskode, der blev sendt til %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Indtast den bekræftelseskode, der blev sendt til %s. Hvis du ikke kan finde beskeden i din indbakke, så tjek venligst din spam-mappe.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Indtast den bekræftelseskode, du allerede har:</string>
@@ -41,7 +41,7 @@
   <string name="human_verification_code_request_new_code">Få en erstatningskode sendt til %s.</string>
   <string name="email">E-mail</string>
   <string name="email_hint">mail@eksempel.dk</string>
-  <string name="sms_hint">+45 XX XX XX XX</string>
+  <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Anmod om en invitation</string>
