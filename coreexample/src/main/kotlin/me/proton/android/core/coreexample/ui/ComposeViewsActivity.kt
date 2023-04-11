@@ -30,10 +30,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,22 +42,22 @@ import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.caption
 import me.proton.core.compose.theme.captionHint
-import me.proton.core.compose.theme.captionStrong
+import me.proton.core.compose.theme.captionNorm
+import me.proton.core.compose.theme.captionStrongNorm
 import me.proton.core.compose.theme.captionWeak
-import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultHint
 import me.proton.core.compose.theme.defaultInverted
-import me.proton.core.compose.theme.defaultSmall
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallInverted
-import me.proton.core.compose.theme.defaultSmallStrong
+import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.defaultSmallStrongNorm
 import me.proton.core.compose.theme.defaultSmallWeak
-import me.proton.core.compose.theme.defaultStrong
+import me.proton.core.compose.theme.defaultStrongNorm
 import me.proton.core.compose.theme.defaultWeak
-import me.proton.core.compose.theme.headline
 import me.proton.core.compose.theme.headlineHint
-import me.proton.core.compose.theme.headlineSmall
+import me.proton.core.compose.theme.headlineNorm
+import me.proton.core.compose.theme.headlineSmallNorm
 import me.proton.core.presentation.ui.ProtonActivity
 
 private val elementPadding = 8.dp
@@ -93,7 +90,7 @@ fun Texts() {
     // Headline
     Text(
         text = stringResource(id = R.string.proton_text_headline),
-        style = ProtonTheme.typography.headline,
+        style = ProtonTheme.typography.headlineNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
@@ -103,19 +100,19 @@ fun Texts() {
     )
     Text(
         text = stringResource(id = R.string.proton_text_headline_small),
-        style = ProtonTheme.typography.headlineSmall,
+        style = ProtonTheme.typography.headlineSmallNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
 
     // Default
     Text(
         text = stringResource(id = R.string.proton_text_default),
-        style = ProtonTheme.typography.default,
+        style = ProtonTheme.typography.defaultNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
         text = stringResource(id = R.string.proton_text_default_bold),
-        style = ProtonTheme.typography.defaultStrong,
+        style = ProtonTheme.typography.defaultStrongNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
@@ -139,12 +136,12 @@ fun Texts() {
     // Default small
     Text(
         text = stringResource(id = R.string.proton_text_default_small),
-        style = ProtonTheme.typography.defaultSmall,
+        style = ProtonTheme.typography.defaultSmallNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
         text = stringResource(id = R.string.proton_text_default_small_medium),
-        style = ProtonTheme.typography.defaultSmallStrong,
+        style = ProtonTheme.typography.defaultSmallStrongNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
@@ -163,12 +160,12 @@ fun Texts() {
     // Caption
     Text(
         text = stringResource(id = R.string.proton_text_caption),
-        style = ProtonTheme.typography.caption,
+        style = ProtonTheme.typography.captionNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
         text = stringResource(id = R.string.proton_text_caption_strong),
-        style = ProtonTheme.typography.captionStrong,
+        style = ProtonTheme.typography.captionStrongNorm,
         modifier = Modifier.padding(top = elementPadding)
     )
     Text(
