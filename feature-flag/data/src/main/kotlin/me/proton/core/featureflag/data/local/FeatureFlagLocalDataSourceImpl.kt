@@ -41,6 +41,6 @@ public class FeatureFlagLocalDataSourceImpl @Inject constructor(
         dao.insertOrUpdate(*flags.map { it.toEntity() }.toTypedArray())
 
     override suspend fun updateValue(userId: UserId?, featureId: FeatureId, value: Boolean) {
-        dao.updateValue(userId, featureId.id, value)
+        dao.updateValue(userId.orGlobal(), featureId.id, value)
     }
 }
