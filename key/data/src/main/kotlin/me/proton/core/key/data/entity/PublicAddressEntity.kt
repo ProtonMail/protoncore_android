@@ -34,4 +34,5 @@ data class PublicAddressEntity(
     val mimeType: String?,
     @Embedded(prefix = "signedKeyList_")
     val signedKeyListEntity: SignedKeyListEntity?,
+    val ignoreKT: Int?,
 )

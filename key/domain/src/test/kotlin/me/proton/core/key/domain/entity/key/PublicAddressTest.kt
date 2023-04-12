@@ -43,7 +43,8 @@ class PublicAddressTest {
         mimeType = null,
         recipientType = 0,
         keys = listOf(publicAddressKey),
-        signedKeyList = null
+        signedKeyList = null,
+        ignoreKT = 0
     )
 
     @Test

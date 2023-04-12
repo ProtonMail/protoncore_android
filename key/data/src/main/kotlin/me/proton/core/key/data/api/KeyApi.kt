@@ -18,15 +18,17 @@
 
 package me.proton.core.key.data.api
 
+import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.key.data.api.request.CreateAddressKeyRequest
 import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.request.UpdateKeysForPasswordChangeRequest
+import me.proton.core.key.data.api.response.CreateAddressKeyResponse
 import me.proton.core.key.data.api.response.KeySaltsResponse
 import me.proton.core.key.data.api.response.PublicAddressKeysResponse
-import me.proton.core.key.data.api.response.CreateAddressKeyResponse
 import me.proton.core.key.data.api.response.SetupInitialKeysResponse
+import me.proton.core.key.data.api.response.SingleSignedKeyListResponse
+import me.proton.core.key.data.api.response.SignedKeyListsResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.network.domain.CacheOverride
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -57,4 +59,16 @@ interface KeyApi : BaseRetrofitApi {
 
     @PUT("core/v4/keys/private")
     suspend fun updatePrivateKeys(@Body request: UpdateKeysForPasswordChangeRequest): SRPAuthenticationResponse
+
+    @GET("core/v4/keys/signedkeylists")
+    suspend fun getSKLsAfterEpoch(
+        @Query("Email") email: String,
+        @Query("AfterEpochID") epochID: Int,
+    ): SignedKeyListsResponse
+
+    @GET("core/v4/keys/signedkeylist")
+    suspend fun getSKLAtEpoch(
+        @Query("Email") email: String,
+        @Query("EpochID") epochID: Int,
+    ): SingleSignedKeyListResponse
 }

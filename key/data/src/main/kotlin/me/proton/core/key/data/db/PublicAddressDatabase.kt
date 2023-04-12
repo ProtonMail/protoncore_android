@@ -61,5 +61,34 @@ interface PublicAddressDatabase : Database {
                 )
             }
         }
+
+        /**
+         * - Added KeyTransparency properties to PublicAddressEntity.signedKeyList.
+         * - Added IgnoreKT flag to PublicAddressEntity
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "PublicAddressEntity",
+                    column = "signedKeyList_minEpochId",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "PublicAddressEntity",
+                    column = "signedKeyList_maxEpochId",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "PublicAddressEntity",
+                    column = "signedKeyList_expectedMinEpochId",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "PublicAddressEntity",
+                    column = "ignoreKT",
+                    type = "INTEGER"
+                )
+            }
+        }
     }
 }

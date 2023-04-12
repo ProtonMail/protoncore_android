@@ -20,11 +20,11 @@ package me.proton.core.key.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.key.data.extension.toPublicSignedKeyList
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicAddressKeyFlags
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.key.isCompromised
 import me.proton.core.key.domain.entity.key.isObsolete
 
@@ -37,14 +37,17 @@ data class PublicAddressKeysResponse(
     @SerialName("Keys")
     val keys: List<PublicAddressKeyResponse>? = null,
     @SerialName("SignedKeyList")
-    val signedKeyList: SignedKeyListResponse? = null
+    val signedKeyList: SignedKeyListResponse? = null,
+    @SerialName("IgnoreKT")
+    val ignoreKT: Int? = null
 ) {
     fun toPublicAddress(email: String) = PublicAddress(
         email = email,
         recipientType = recipientType,
         mimeType = mimeType,
         keys = keys.orEmpty().mapIndexed { index, response -> response.toPublicAddressKey(email, index == 0) },
-        signedKeyList = signedKeyList?.let { PublicSignedKeyList(data = it.data, signature = it.signature) }
+        signedKeyList = signedKeyList?.toPublicSignedKeyList(),
+        ignoreKT = ignoreKT
     )
 }
 

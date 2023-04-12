@@ -25,7 +25,8 @@ data class PublicAddress(
     val recipientType: Int,
     val mimeType: String?,
     val keys: List<PublicAddressKey>,
-    val signedKeyList: PublicSignedKeyList?
+    val signedKeyList: PublicSignedKeyList?,
+    val ignoreKT: Int?,
 ) {
     val primaryKey by lazy {
         keys.firstOrNull { it.publicKey.isPrimary } ?: throw CryptoException("No primary key available.")

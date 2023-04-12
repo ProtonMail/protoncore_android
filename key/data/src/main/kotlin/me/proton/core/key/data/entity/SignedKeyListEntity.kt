@@ -23,5 +23,8 @@ import androidx.room.Entity
 @Entity
 data class SignedKeyListEntity(
     val data: String?,
-    val signature: String?
+    val signature: String?,
+    val minEpochId: Int?,
+    val maxEpochId: Int?,
+    val expectedMinEpochId: Int?,
 )

@@ -431,16 +431,18 @@ public final class me/proton/core/key/domain/entity/key/PrivateKeySalt {
 }
 
 public final class me/proton/core/key/domain/entity/key/PublicAddress {
-	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;)V
+	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
-	public final fun copy (Ljava/lang/String;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;)Lme/proton/core/key/domain/entity/key/PublicAddress;
-	public static synthetic fun copy$default (Lme/proton/core/key/domain/entity/key/PublicAddress;Ljava/lang/String;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/PublicAddress;
+	public final fun component6 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Ljava/lang/Integer;)Lme/proton/core/key/domain/entity/key/PublicAddress;
+	public static synthetic fun copy$default (Lme/proton/core/key/domain/entity/key/PublicAddress;Ljava/lang/String;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/PublicAddress;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEmail ()Ljava/lang/String;
+	public final fun getIgnoreKT ()Ljava/lang/Integer;
 	public final fun getKeys ()Ljava/util/List;
 	public final fun getMimeType ()Ljava/lang/String;
 	public final fun getPrimaryKey ()Lme/proton/core/key/domain/entity/key/PublicAddressKey;
@@ -518,13 +520,19 @@ public final class me/proton/core/key/domain/entity/key/PublicKeyRing {
 }
 
 public final class me/proton/core/key/domain/entity/key/PublicSignedKeyList {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
-	public static synthetic fun copy$default (Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
+	public static synthetic fun copy$default (Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getData ()Ljava/lang/String;
+	public final fun getExpectedMinEpochId ()Ljava/lang/Integer;
+	public final fun getMaxEpochId ()Ljava/lang/Integer;
+	public final fun getMinEpochId ()Ljava/lang/Integer;
 	public final fun getSignature ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -635,6 +643,8 @@ public final class me/proton/core/key/domain/repository/PrivateKeyRepository$Def
 public abstract interface class me/proton/core/key/domain/repository/PublicAddressRepository {
 	public abstract fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPublicAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/repository/Source;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSKLAtEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSKLsAfterEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/key/domain/repository/PublicAddressRepository$DefaultImpls {

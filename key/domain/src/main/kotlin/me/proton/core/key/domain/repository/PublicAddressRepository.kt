@@ -19,7 +19,9 @@
 package me.proton.core.key.domain.repository
 
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicAddress
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 
 interface PublicAddressRepository {
     /**
@@ -36,6 +38,37 @@ interface PublicAddressRepository {
         email: String,
         source: Source = Source.RemoteNoCache,
     ): PublicAddress
+
+    /**
+     * Get signed key lists published for [email] after [epochId], using [userId].
+     *
+     * @param userId: the id of the user
+     * @param epochId: the id of the epoch after which to fetch new SKLs
+     * @param email: the email for which to fetch new SKLs
+     *
+     * @return the list of signed key lists
+     */
+    suspend fun getSKLsAfterEpoch(
+        userId: UserId,
+        epochId: Int,
+        email: String
+    ): List<PublicSignedKeyList>
+
+
+    /**
+     * Get signed key lists published for [email] at [epochId], using [userId].
+     *
+     * @param userId: the id of the user
+     * @param epochId: the id of the epoch at which to fetch
+     * @param email: the email of the SKL to fetch
+     *
+     * @return the signed key list
+     */
+    suspend fun getSKLAtEpoch(
+        userId: UserId,
+        epochId: Int,
+        email: String
+    ): PublicSignedKeyList
 
     /**
      * Clear all persisted [PublicAddress].

@@ -31,7 +31,9 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.extension.toEntity
 import me.proton.core.key.data.extension.toEntityList
 import me.proton.core.key.data.extension.toPublicAddress
+import me.proton.core.key.data.extension.toPublicSignedKeyList
 import me.proton.core.key.domain.entity.key.PublicAddress
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.data.ApiProvider
@@ -89,6 +91,24 @@ class PublicAddressRepositoryImpl @Inject constructor(
         source: Source
     ): PublicAddress = StoreKey(sessionUserId, email, source == Source.RemoteNoCache)
         .let { if (source == Source.LocalIfAvailable) store.get(it) else store.fresh(it) }
+
+    override suspend fun getSKLsAfterEpoch(
+        userId: UserId,
+        epochId: Int,
+        email: String
+    ): List<PublicSignedKeyList> = provider.get<KeyApi>(userId).invoke {
+        val sklListResponse = getSKLsAfterEpoch(email, epochId)
+        sklListResponse.list.map { it.toPublicSignedKeyList() }
+    }.valueOrThrow
+
+    override suspend fun getSKLAtEpoch(
+        userId: UserId,
+        epochId: Int,
+        email: String
+    ): PublicSignedKeyList = provider.get<KeyApi>(userId).invoke {
+        val sklListResponse = getSKLAtEpoch(email, epochId)
+        sklListResponse.signedKeyList.toPublicSignedKeyList()
+    }.valueOrThrow
 
     override suspend fun clearAll() = store.clearAll()
 }

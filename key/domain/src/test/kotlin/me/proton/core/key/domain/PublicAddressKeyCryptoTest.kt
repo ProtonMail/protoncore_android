@@ -68,7 +68,8 @@ class PublicAddressKeyCryptoTest {
         recipientType = 1,
         mimeType = null,
         keys = listOf(publicAddressKey1),
-        signedKeyList = null
+        signedKeyList = null,
+        ignoreKT = 0
     )
 
     private val publicAddress2 = PublicAddress(
@@ -76,7 +77,8 @@ class PublicAddressKeyCryptoTest {
         recipientType = 1,
         mimeType = null,
         keys = listOf(publicAddressKey2),
-        signedKeyList = null
+        signedKeyList = null,
+        ignoreKT = 0
     )
 
     private val context = TestCryptoContext().also {

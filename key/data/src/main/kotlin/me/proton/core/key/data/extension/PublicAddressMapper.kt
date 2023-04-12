@@ -18,6 +18,7 @@
 
 package me.proton.core.key.data.extension
 
+import me.proton.core.key.data.api.response.SignedKeyListResponse
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.key.data.entity.SignedKeyListEntity
@@ -28,14 +29,22 @@ import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.key.isCompromised
 import me.proton.core.key.domain.entity.key.isObsolete
 
+
 internal fun PublicSignedKeyList.toEntity() =
-    SignedKeyListEntity(data = data, signature = signature)
+    SignedKeyListEntity(
+        data = data,
+        signature = signature,
+        minEpochId = minEpochId,
+        maxEpochId = maxEpochId,
+        expectedMinEpochId = expectedMinEpochId,
+    )
 
 internal fun PublicAddress.toEntity() = PublicAddressEntity(
     email = email,
     recipientType = recipientType,
     mimeType = mimeType,
-    signedKeyListEntity = signedKeyList?.toEntity()
+    signedKeyListEntity = signedKeyList?.toEntity(),
+    ignoreKT = ignoreKT
 )
 
 internal fun PublicAddressKey.toEntity() = PublicAddressKeyEntity(
@@ -47,15 +56,30 @@ internal fun PublicAddressKey.toEntity() = PublicAddressKeyEntity(
 
 internal fun List<PublicAddressKey>.toEntityList() = map { it.toEntity() }
 
+internal fun SignedKeyListResponse.toPublicSignedKeyList() = PublicSignedKeyList(
+    data = data,
+    signature = signature,
+    minEpochId = minEpochId,
+    maxEpochId = maxEpochId,
+    expectedMinEpochId = expectedMinEpochId,
+)
+
 internal fun SignedKeyListEntity.toPublicSignedKeyList() =
-    PublicSignedKeyList(data = data, signature = signature)
+    PublicSignedKeyList(
+        data = data,
+        signature = signature,
+        minEpochId = minEpochId,
+        maxEpochId = maxEpochId,
+        expectedMinEpochId = expectedMinEpochId,
+    )
 
 internal fun PublicAddressEntity.toPublicAddress(keys: List<PublicAddressKeyEntity>) = PublicAddress(
     email = email,
     recipientType = recipientType,
     mimeType = mimeType,
     keys = keys.map { it.toPublicAddressKey() },
-    signedKeyList = signedKeyListEntity?.toPublicSignedKeyList()
+    signedKeyList = signedKeyListEntity?.toPublicSignedKeyList(),
+    ignoreKT = ignoreKT
 )
 
 internal fun PublicAddressKeyEntity.toPublicAddressKey() = PublicAddressKey(

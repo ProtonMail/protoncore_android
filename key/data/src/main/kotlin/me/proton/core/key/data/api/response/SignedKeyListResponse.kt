@@ -26,5 +26,23 @@ data class SignedKeyListResponse(
     @SerialName("Data")
     val data: String?,
     @SerialName("Signature")
-    val signature: String?
+    val signature: String?,
+    @SerialName("MinEpochID")
+    val minEpochId: Int?,
+    @SerialName("MaxEpochID")
+    val maxEpochId: Int?,
+    @SerialName("ExpectedMinEpochID")
+    val expectedMinEpochId: Int?,
+)
+
+@Serializable
+data class SingleSignedKeyListResponse(
+    @SerialName("SignedKeyList")
+    val signedKeyList: SignedKeyListResponse,
+)
+
+@Serializable
+data class SignedKeyListsResponse(
+    @SerialName("SignedKeyLists")
+    val list: List<SignedKeyListResponse>,
 )

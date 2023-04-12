@@ -519,6 +519,7 @@ open class TestCryptoContext : CryptoContext {
         ): Armored = "privateKey"
 
         override fun updateTime(epochSeconds: Long) = Unit
+        override suspend fun getCurrentTime(): Long = 0
 
         override fun isPublicKey(key: Armored): Boolean = key.contains("privateKey")
         override fun isPrivateKey(key: Armored): Boolean = key.contains("privateKey")

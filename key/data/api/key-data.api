@@ -9,6 +9,8 @@ public abstract interface class me/proton/core/key/data/api/KeyApi : me/proton/c
 	public abstract fun createAddressKey (Lme/proton/core/key/data/api/request/CreateAddressKeyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createAddressKeyOld (Lme/proton/core/key/data/api/request/CreateAddressKeyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPublicAddressKeys (Ljava/lang/String;Lme/proton/core/network/domain/CacheOverride;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSKLAtEpoch (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSKLsAfterEpoch (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSalts (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun setupInitialKeys (Lme/proton/core/key/data/api/request/SetupInitialKeysRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updatePrivateKeys (Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -511,16 +513,18 @@ public final class me/proton/core/key/data/api/response/PublicAddressKeyResponse
 public final class me/proton/core/key/data/api/response/PublicAddressKeysResponse {
 	public static final field Companion Lme/proton/core/key/data/api/response/PublicAddressKeysResponse$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (IILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;)V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (IILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/Integer;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Lme/proton/core/key/data/api/response/SignedKeyListResponse;
-	public final fun copy (ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;)Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun copy (ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/Integer;)Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;ILjava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIgnoreKT ()Ljava/lang/Integer;
 	public final fun getKeys ()Ljava/util/List;
 	public final fun getMimeType ()Ljava/lang/String;
 	public final fun getRecipientType ()I
@@ -579,14 +583,20 @@ public final class me/proton/core/key/data/api/response/SetupInitialKeysResponse
 
 public final class me/proton/core/key/data/api/response/SignedKeyListResponse {
 	public static final field Companion Lme/proton/core/key/data/api/response/SignedKeyListResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/key/data/api/response/SignedKeyListResponse;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/SignedKeyListResponse;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/key/data/api/response/SignedKeyListResponse;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/SignedKeyListResponse;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/SignedKeyListResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getData ()Ljava/lang/String;
+	public final fun getExpectedMinEpochId ()Ljava/lang/Integer;
+	public final fun getMaxEpochId ()Ljava/lang/Integer;
+	public final fun getMinEpochId ()Ljava/lang/Integer;
 	public final fun getSignature ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -606,6 +616,36 @@ public final class me/proton/core/key/data/api/response/SignedKeyListResponse$$s
 }
 
 public final class me/proton/core/key/data/api/response/SignedKeyListResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/key/data/api/response/SignedKeyListsResponse {
+	public static final field Companion Lme/proton/core/key/data/api/response/SignedKeyListsResponse$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/key/data/api/response/SignedKeyListsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/SignedKeyListsResponse;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/SignedKeyListsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getList ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/key/data/api/response/SignedKeyListsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/key/data/api/response/SignedKeyListsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/key/data/api/response/SignedKeyListsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SignedKeyListsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/key/data/api/response/SignedKeyListsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/key/data/api/response/SignedKeyListsResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -636,6 +676,36 @@ public final class me/proton/core/key/data/api/response/SingleAddressResponse$$s
 }
 
 public final class me/proton/core/key/data/api/response/SingleAddressResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/key/data/api/response/SingleSignedKeyListResponse {
+	public static final field Companion Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse$Companion;
+	public synthetic fun <init> (ILme/proton/core/key/data/api/response/SignedKeyListResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/key/data/api/response/SignedKeyListResponse;)V
+	public final fun component1 ()Lme/proton/core/key/data/api/response/SignedKeyListResponse;
+	public final fun copy (Lme/proton/core/key/data/api/response/SignedKeyListResponse;)Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;Lme/proton/core/key/data/api/response/SignedKeyListResponse;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSignedKeyList ()Lme/proton/core/key/data/api/response/SignedKeyListResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/key/data/api/response/SingleSignedKeyListResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/key/data/api/response/SingleSignedKeyListResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -804,6 +874,7 @@ public abstract interface class me/proton/core/key/data/db/PublicAddressDatabase
 public final class me/proton/core/key/data/db/PublicAddressDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/key/data/db/PublicAddressKeyDao : me/proton/core/data/room/db/BaseDao {
@@ -836,15 +907,17 @@ public final class me/proton/core/key/data/entity/KeySaltEntity {
 }
 
 public final class me/proton/core/key/data/entity/PublicAddressEntity {
-	public fun <init> (Ljava/lang/String;ILjava/lang/String;Lme/proton/core/key/data/entity/SignedKeyListEntity;)V
+	public fun <init> (Ljava/lang/String;ILjava/lang/String;Lme/proton/core/key/data/entity/SignedKeyListEntity;Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
-	public final fun copy (Ljava/lang/String;ILjava/lang/String;Lme/proton/core/key/data/entity/SignedKeyListEntity;)Lme/proton/core/key/data/entity/PublicAddressEntity;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/PublicAddressEntity;Ljava/lang/String;ILjava/lang/String;Lme/proton/core/key/data/entity/SignedKeyListEntity;ILjava/lang/Object;)Lme/proton/core/key/data/entity/PublicAddressEntity;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;ILjava/lang/String;Lme/proton/core/key/data/entity/SignedKeyListEntity;Ljava/lang/Integer;)Lme/proton/core/key/data/entity/PublicAddressEntity;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/PublicAddressEntity;Ljava/lang/String;ILjava/lang/String;Lme/proton/core/key/data/entity/SignedKeyListEntity;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/data/entity/PublicAddressEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEmail ()Ljava/lang/String;
+	public final fun getIgnoreKT ()Ljava/lang/Integer;
 	public final fun getMimeType ()Ljava/lang/String;
 	public final fun getRecipientType ()I
 	public final fun getSignedKeyListEntity ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
@@ -883,13 +956,19 @@ public final class me/proton/core/key/data/entity/PublicAddressWithKeys {
 }
 
 public final class me/proton/core/key/data/entity/SignedKeyListEntity {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/key/data/entity/SignedKeyListEntity;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/SignedKeyListEntity;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/SignedKeyListEntity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/data/entity/SignedKeyListEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getData ()Ljava/lang/String;
+	public final fun getExpectedMinEpochId ()Ljava/lang/Integer;
+	public final fun getMaxEpochId ()Ljava/lang/Integer;
+	public final fun getMinEpochId ()Ljava/lang/Integer;
 	public final fun getSignature ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -913,5 +992,7 @@ public final class me/proton/core/key/data/repository/PublicAddressRepositoryImp
 	public fun <init> (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPublicAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/repository/Source;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSKLAtEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSKLsAfterEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

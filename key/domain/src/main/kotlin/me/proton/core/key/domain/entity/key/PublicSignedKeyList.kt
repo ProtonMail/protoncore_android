@@ -22,5 +22,8 @@ import me.proton.core.crypto.common.pgp.Signature
 
 data class PublicSignedKeyList(
     val data: String?,
-    val signature: Signature?
+    val signature: Signature?,
+    val minEpochId: Int?,
+    val maxEpochId: Int?,
+    val expectedMinEpochId: Int?,
 )
