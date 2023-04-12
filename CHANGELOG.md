@@ -11,6 +11,82 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.2.0] - 2023-04-12
+
+### Chores
+
+- Added Cache4k (in-memory key-value, time-based/size-based evictions).
+- Bump Android Gradle Plugin to 7.4.2.
+- Update links from `protonmail.com` to `proton.me`.
+- auth:
+  - Add Proton Pass theming and welcome activity UI.
+  - In VPN, during signup, bring back the ability to switch to Internal account.
+- presentation:
+  - Add Proton Pass theming and welcome activity UI.
+
+### Features
+
+- event-manager:
+  - Extend EventListener with getEventMetadata.
+
+    This allows specialized event listeners to get event metadata before processing certain event.
+    For example onResetAll does not carry information if refresh was requested from BE or is it because of internal event manager state.
+- feature-flag:
+  - Update value defaults to "global" user id when null.
+
+    MAILANDR-3071
+  - Rollback feature flag only changes the value.
+
+    MAILAND-3071
+  - Rollback local feature flag value when update request fails.
+
+    MAILAND-3071
+  - Feature flag manager can update feature flag values.
+
+    MAILAND-3071
+
+### Bug Fixes
+
+- Fixes bottom sheet corner radius to align with figma designs.
+- auth:
+  - Automatically switch from EA to PA on Proton domain.
+- event-manager:
+  - Drive events should use Refresh and More from api.
+- feature-flag:
+  - Move worker related op to remote data source.
+
+    - Update api definition.
+    
+    MAILAND-3071
+- presentation-compose:
+  - Add textAccent and iconAccent colors.
+  - Add typography without color.
+
+    Add ProtonTypography styles with unspecified color. For each style the
+    pattern is:
+    1. A style with suffix 'Unspecified' is introduced. It doesn't specify
+       any color.
+    2. A style with suffix 'Norm' is introduced. It replaces the style with
+       no suffix.
+    3. Style with no suffix is deprecated, the *Norm style should be used
+       instead.
+    
+    E.g. for the default style:
+    1. defaultUnspecified is added.
+    2. defaultNorm is added.
+    3. default is deprecated but it still points to defaultNorm for
+       backwards compatibility.
+
+### Internationalization
+
+- Upgrade translations from crowdin (5ed6e14a).
+
+### Refactoring
+
+- Split EventManagerConfig.Drive into share based and volume based.
+
+  Drive can fetch events either through Shares or through Volumes, thus two different endpoints.
+
 ## [10.1.0] - 2023-04-04
 
 ### Chores
