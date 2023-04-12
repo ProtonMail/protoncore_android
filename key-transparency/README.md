@@ -56,7 +56,11 @@ and are checked by the [VerifyAddressChangeWasIncluded](domain/src/main/kotlin/m
 
 ### Modifying keys
 
-TODO
+- When modifying keys, or adding new keys, the [SignedKeyListChangeListenerImpl](domain/src/main/kotlin/me/proton/core/keytransparency/domain/SignedKeyListChangeListenerImpl.kt)
+implements the necessary KT checks. It is called by the user manager during signup via an optional binding of [SignedKeyListChangeListener](../user/domain/src/main/kotlin/me/proton/core/user/domain/SignedKeyListChangeListener.kt).
+- The [SignedKeyListChangeListener](../user/domain/src/main/kotlin/me/proton/core/user/domain/SignedKeyListChangeListener.kt) provides two methods:
+  1. `listener.onSKLChangeRequested(userId, userAddress)` is called before generating the new SKL, to check that the current state of KT is correct.
+  2. `listener.onSKLChangeAccepted(userId, userAddress, newSKL)` is called after the new SKL has been uploaded.
 
 ### Verifying public keys
 
@@ -73,3 +77,9 @@ The worker can be scheduled via the [KeyTransparencyInitializer](presentation/sr
 The config contains a local feature flag to enable/disable the checks globally. If the product wants to
 enable KT, it needs to provide an instance of [KeyTransparencyParameters](domain/src/main/kotlin/me/proton/core/keytransparency/domain/KeyTransparencyConfig.kt),
 the module provides several instances, for each environment that supports KT on the backend.
+
+## UI-less integration:
+
+As a first iteration, KT will be integrated without any UI.
+To avoid weird interactions for the user, all the logic of KT is wrapped in 
+error catching. Errors are logged and not propagated.

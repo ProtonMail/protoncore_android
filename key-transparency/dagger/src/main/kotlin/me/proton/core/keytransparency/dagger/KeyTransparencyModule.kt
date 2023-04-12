@@ -27,11 +27,13 @@ import me.proton.core.keytransparency.data.usecase.GetHostTypeImpl
 import me.proton.core.keytransparency.data.usecase.IsKeyTransparencyEnabledImpl
 import me.proton.core.keytransparency.data.usecase.VerifyEpochGolangImpl
 import me.proton.core.keytransparency.data.usecase.VerifyProofGolangImpl
+import me.proton.core.keytransparency.domain.SignedKeyListChangeListenerImpl
 import me.proton.core.keytransparency.domain.repository.KeyTransparencyRepository
 import me.proton.core.keytransparency.domain.usecase.GetHostType
 import me.proton.core.keytransparency.domain.usecase.IsKeyTransparencyEnabled
 import me.proton.core.keytransparency.domain.usecase.VerifyEpoch
 import me.proton.core.keytransparency.domain.usecase.VerifyProof
+import me.proton.core.user.domain.SignedKeyListChangeListener
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -47,6 +49,9 @@ internal interface KeyTransparencyModule {
 
     @Binds
     fun provideIsKeyTransparencyEnabled(impl: IsKeyTransparencyEnabledImpl): IsKeyTransparencyEnabled
+
+    @Binds
+    fun provideSignedKeyListChangeListener(impl: SignedKeyListChangeListenerImpl): SignedKeyListChangeListener
 
     @Binds
     fun provideGetHostType(impl: GetHostTypeImpl): GetHostType
