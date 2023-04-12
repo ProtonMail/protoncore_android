@@ -66,6 +66,7 @@ dependencies {
         project(Module.userDomain),
         project(Module.userSettingsData),
         project(Module.observabilityData),
+        project(Module.keyTransparencyData),
     )
 
     implementation(
