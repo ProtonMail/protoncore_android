@@ -10,8 +10,8 @@
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message": "feat(gopenpgp): Update to gopenpgp v2.6.1-proton and go-srp v0.0.7.",
-    "upload_branch": "update-2.6.1-proton+0.0.7",
+    "commit_message": "feat(gopenpgp): Update to gopenpgp v2.6.1-proton and go-srp v0.0.7 and KT lib.",
+    "upload_branch": "update-2.6.1-proton+0.0.7+kt",
     "java_pkg":"com.proton.gopenpgp",
     "targets":["android"],
     "requirements": [
@@ -27,6 +27,12 @@
             "module":{
                 "path":"github.com/ProtonMail/go-srp",
                 "version": "v0.0.7"
+            }
+        },
+        {
+            "module":{
+                "path":"github.com/ProtonMail/pm-key-transparency-go-client",
+                "version": "v0.0.1"
             }
         }
     ]
