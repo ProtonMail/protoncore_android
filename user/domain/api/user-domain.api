@@ -1,6 +1,28 @@
+public abstract interface class me/proton/core/user/domain/SignedKeyListChangeListener {
+	public abstract fun onSKLChangeAccepted (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/UserAddress;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onSKLChangeRequested (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/UserAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/user/domain/SignedKeyListChangeListener$Result {
+}
+
+public final class me/proton/core/user/domain/SignedKeyListChangeListener$Result$Failure : me/proton/core/user/domain/SignedKeyListChangeListener$Result {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/user/domain/SignedKeyListChangeListener$Result$Failure;
+	public static synthetic fun copy$default (Lme/proton/core/user/domain/SignedKeyListChangeListener$Result$Failure;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/user/domain/SignedKeyListChangeListener$Result$Failure;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getReason ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/domain/SignedKeyListChangeListener$Result$Success : me/proton/core/user/domain/SignedKeyListChangeListener$Result {
+	public static final field INSTANCE Lme/proton/core/user/domain/SignedKeyListChangeListener$Result$Success;
+}
+
 public final class me/proton/core/user/domain/UserAddressCryptoKt {
 	public static final fun generateNestedPrivateKey (Lme/proton/core/user/domain/entity/UserAddress;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/key/domain/entity/key/NestedPrivateKey;
-	public static final fun signKeyList (Lme/proton/core/user/domain/entity/UserAddress;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
 }
 
 public abstract interface class me/proton/core/user/domain/UserAddressManager {

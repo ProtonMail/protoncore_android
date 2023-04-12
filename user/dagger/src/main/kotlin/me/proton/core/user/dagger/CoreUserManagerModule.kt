@@ -19,6 +19,7 @@
 package me.proton.core.user.dagger
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -33,6 +34,7 @@ import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.user.domain.SignedKeyListChangeListener
 import javax.inject.Singleton
 
 @Module
@@ -66,4 +68,7 @@ public interface CoreUserManagersModule {
     @Binds
     @Singleton
     public fun provideUserAddressManager(impl: UserAddressManagerImpl): UserAddressManager
+
+    @BindsOptionalOf
+    public fun optionalSignedKeyListChangeListener(): SignedKeyListChangeListener
 }

@@ -39,6 +39,8 @@ import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.user.data.usecase.GenerateSignedKeyList
+import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
@@ -49,7 +51,7 @@ import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.user.domain.signKeyList
+import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,7 +63,9 @@ class UserManagerImpl @Inject constructor(
     private val keySaltRepository: KeySaltRepository,
     private val privateKeyRepository: PrivateKeyRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val generateSignedKeyList: GenerateSignedKeyList,
+    private val signedKeyListChangeListener: Optional<SignedKeyListChangeListener>
 ) : UserManager {
 
     private val keyStore = cryptoContext.keyStoreCrypto
@@ -227,22 +231,41 @@ class UserManagerImpl @Inject constructor(
             val userAddressesWithoutKeys = userAddresses.filter { it.keys.isEmpty() }
 
             // Generate new address keys.
-            val newAddressKeys = userAddressesWithoutKeys.map { address ->
+            val newKeys = userAddressesWithoutKeys.map { address ->
                 userAddressKeySecretProvider.generateUserAddressKey(
                     generateNewKeyFormat = userAddresses.generateNewKeyFormat(),
                     userAddress = address,
                     userPrivateKey = userPrivateKey,
                     isPrimary = true
-                ).let { key ->
-                    val userAddressWithKeys = address.copy(keys = address.keys.plus(key))
-                    PrivateAddressKey(
-                        addressId = address.addressId.id,
-                        privateKey = key.privateKey,
-                        token = key.token,
-                        signature = key.signature,
-                        signedKeyList = userAddressWithKeys.signKeyList(cryptoContext)
-                    )
+                )
+            }
+
+            val userAddressesWithNewKeys = userAddressesWithoutKeys.zip(newKeys).map { (address, newKey) ->
+                address.copy(keys = listOf(newKey))
+            }
+
+            // Generate new SKL
+            val newSKLs = userAddressesWithNewKeys.map { generateSignedKeyList(it) }
+
+            // Check key transparency state
+            userAddressesWithNewKeys.map { userAddressWithNewKeys ->
+                if (signedKeyListChangeListener.isPresent) {
+                    // Key transparency needs to be checked before generating SKLs
+                    signedKeyListChangeListener.get().onSKLChangeRequested(sessionUserId, userAddressWithNewKeys)
                 }
+            }
+
+            // Make the key objects to submit to the API
+            val newAddressKeys = userAddressesWithNewKeys.mapIndexed { index, address ->
+                val skl = newSKLs[index]
+                val key = newKeys[index]
+                PrivateAddressKey(
+                    addressId = address.addressId.id,
+                    privateKey = key.privateKey,
+                    token = key.token,
+                    signature = key.signature,
+                    signedKeyList = skl
+                )
             }
 
             // Setup initial primary UserKey and UserAddressKey, remotely.
@@ -258,8 +281,19 @@ class UserManagerImpl @Inject constructor(
             passphraseRepository.setPassphrase(sessionUserId, encryptedPassphrase)
 
             // Refresh User and Addresses.
-            userAddressRepository.getAddresses(sessionUserId, refresh = true)
-            return checkNotNull(userRepository.getUser(sessionUserId, refresh = true))
+            val user = checkNotNull(userRepository.getUser(sessionUserId, refresh = true))
+            val updatedAddresses = userAddressRepository.getAddresses(sessionUserId, refresh = true)
+
+            if (signedKeyListChangeListener.isPresent) {
+                // Key transparency needs to be checked later for new keys
+                userAddressesWithNewKeys.forEachIndexed { index, address ->
+                    val updatedUserAddress = checkNotNull(updatedAddresses.find { it.addressId == address.addressId })
+                    val skl = newSKLs[index]
+                    signedKeyListChangeListener.get().onSKLChangeAccepted(sessionUserId, updatedUserAddress, skl)
+                }
+            }
+
+            return user
         }
     }
 }

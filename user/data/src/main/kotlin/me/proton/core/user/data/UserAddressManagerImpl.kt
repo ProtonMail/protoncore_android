@@ -19,12 +19,12 @@
 package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.user.data.usecase.GenerateSignedKeyList
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -32,7 +32,8 @@ import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.extension.generateNewKeyFormat
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.user.domain.signKeyList
+import me.proton.core.user.domain.SignedKeyListChangeListener
+import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -42,7 +43,8 @@ class UserAddressManagerImpl @Inject constructor(
     private val userAddressRepository: UserAddressRepository,
     private val privateKeyRepository: PrivateKeyRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
-    private val cryptoContext: CryptoContext
+    private val generateSignedKeyList: GenerateSignedKeyList,
+    private val signedKeyListChangeListener: Optional<SignedKeyListChangeListener>
 ) : UserAddressManager {
 
     override fun observeAddresses(
@@ -109,6 +111,12 @@ class UserAddressManagerImpl @Inject constructor(
         )
         val userAddressWithKeys = userAddress.copy(keys = userAddress.keys.plus(userAddressKey))
 
+        if (signedKeyListChangeListener.isPresent) {
+            // Key transparency needs to be checked before generating SKLs
+            signedKeyListChangeListener.get().onSKLChangeRequested(user.userId, userAddressWithKeys)
+        }
+        val skl = generateSignedKeyList(userAddressWithKeys)
+
         // Create the new generated UserAddressKey, remotely.
         privateKeyRepository.createAddressKey(
             sessionUserId = sessionUserId,
@@ -117,10 +125,16 @@ class UserAddressManagerImpl @Inject constructor(
                 privateKey = userAddressKey.privateKey,
                 token = userAddressKey.token,
                 signature = userAddressKey.signature,
-                signedKeyList = userAddressWithKeys.signKeyList(cryptoContext),
+                signedKeyList = skl
             )
         )
-        return checkNotNull(userAddressRepository.getAddress(sessionUserId, addressId, refresh = true))
+
+        val address = checkNotNull(userAddressRepository.getAddress(sessionUserId, addressId, refresh = true))
+        if (signedKeyListChangeListener.isPresent) {
+            // Key transparency needs to be checked later for new keys
+            signedKeyListChangeListener.get().onSKLChangeAccepted(user.userId, address, skl)
+        }
+        return address
     }
 
     override suspend fun updateAddress(
@@ -132,6 +146,6 @@ class UserAddressManagerImpl @Inject constructor(
 
     override suspend fun updateOrder(
         sessionUserId: SessionUserId,
-        addressIds: List<AddressId>,
+        addressIds: List<AddressId>
     ): List<UserAddress> = userAddressRepository.updateOrder(sessionUserId, addressIds)
 }

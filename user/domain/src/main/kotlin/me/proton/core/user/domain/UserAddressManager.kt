@@ -21,6 +21,7 @@ package me.proton.core.user.domain
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey

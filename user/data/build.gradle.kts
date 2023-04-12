@@ -29,6 +29,12 @@ proton {
     apiModeDisabled()
 }
 
+android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -48,6 +54,8 @@ dependencies {
         retrofit
     )
 
+    coreLibraryDesugaring(`desugar-jdk-libs`)
+
     implementation(
         project(Module.accountData),
         project(Module.authDomain),
@@ -55,7 +63,7 @@ dependencies {
         project(Module.data),
         project(Module.kotlinUtil),
         project(Module.networkDomain),
-
+        
         // Kotlin
         `coroutines-core`,
 

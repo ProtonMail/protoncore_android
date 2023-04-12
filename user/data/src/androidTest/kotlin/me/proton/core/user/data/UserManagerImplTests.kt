@@ -64,12 +64,15 @@ import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
 import me.proton.core.user.data.repository.UserRepositoryImpl
+import me.proton.core.user.data.usecase.GenerateSignedKeyList
+import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
@@ -105,6 +108,8 @@ class UserManagerImplTests {
     private lateinit var keySaltRepository: KeySaltRepositoryImpl
     private lateinit var privateKeyRepository: PrivateKeyRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
+    private val signedKeyListChangeListener = mockk<SignedKeyListChangeListener>()
+    private val generateSignedKeyList = mockk<GenerateSignedKeyList>()
 
     private lateinit var userManager: UserManager
 
@@ -131,7 +136,15 @@ class UserManagerImplTests {
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider, validateServerProof)
 
         // UserRepositoryImpl implements PassphraseRepository.
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, validateServerProof, scopeProvider)
+        userRepository = UserRepositoryImpl(
+            db,
+            apiProvider,
+            context,
+            cryptoContext,
+            product,
+            validateServerProof,
+            scopeProvider
+        )
         passphraseRepository = userRepository
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
@@ -157,7 +170,9 @@ class UserManagerImplTests {
             keySaltRepository,
             privateKeyRepository,
             userAddressKeySecretProvider,
-            cryptoContext
+            cryptoContext,
+            generateSignedKeyList,
+            Optional.of(signedKeyListChangeListener)
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).

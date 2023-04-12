@@ -14,6 +14,7 @@ public final class me/proton/core/user/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/user/dagger/CoreUserManagersModule {
+	public abstract fun optionalSignedKeyListChangeListener ()Lme/proton/core/user/domain/SignedKeyListChangeListener;
 	public abstract fun provideUserAddressManager (Lme/proton/core/user/data/UserAddressManagerImpl;)Lme/proton/core/user/domain/UserAddressManager;
 	public abstract fun provideUserManager (Lme/proton/core/user/data/UserManagerImpl;)Lme/proton/core/user/domain/UserManager;
 }

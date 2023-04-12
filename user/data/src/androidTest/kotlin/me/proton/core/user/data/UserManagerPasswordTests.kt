@@ -47,6 +47,8 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.data.usecase.GenerateSignedKeyList
+import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.Role
@@ -54,13 +56,13 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
-import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertTrue
 
 class UserManagerPasswordTests {
@@ -74,6 +76,8 @@ class UserManagerPasswordTests {
     private val passphraseRepository: PassphraseRepository = mockk(relaxed = true)
     private val keySaltRepository: KeySaltRepositoryImpl = mockk(relaxed = true)
     private val privateKeyRepository: PrivateKeyRepository = mockk(relaxed = true)
+    private val generateSignedKeyList: GenerateSignedKeyList = mockk()
+    private val signedKeyListChangeListener: SignedKeyListChangeListener = mockk()
     // endregion
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
@@ -154,7 +158,9 @@ class UserManagerPasswordTests {
             keySaltRepository,
             privateKeyRepository,
             userAddressKeySecretProvider,
-            cryptoContext
+            cryptoContext,
+            generateSignedKeyList,
+            Optional.of(signedKeyListChangeListener)
         )
     }
 
