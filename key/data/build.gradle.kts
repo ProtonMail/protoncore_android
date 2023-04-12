@@ -28,6 +28,12 @@ proton {
     apiModeDisabled()
 }
 
+android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -43,6 +49,8 @@ dependencies {
         retrofit,
         `serialization-core`,
     )
+
+    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.kotlinUtil),

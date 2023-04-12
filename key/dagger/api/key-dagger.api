@@ -10,6 +10,7 @@ public final class me/proton/core/key/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/key/dagger/CoreKeyModule {
+	public abstract fun optionalVerifyPublicAddressKeys ()Lme/proton/core/key/domain/repository/PublicAddressVerifier;
 	public abstract fun provideKeySaltRepository (Lme/proton/core/key/data/repository/KeySaltRepositoryImpl;)Lme/proton/core/key/domain/repository/KeySaltRepository;
 	public abstract fun providePrivateKeyRepository (Lme/proton/core/key/data/repository/PrivateKeyRepositoryImpl;)Lme/proton/core/key/domain/repository/PrivateKeyRepository;
 	public abstract fun providePublicAddressKeyRepository (Lme/proton/core/key/data/repository/PublicAddressRepositoryImpl;)Lme/proton/core/key/domain/repository/PublicAddressRepository;

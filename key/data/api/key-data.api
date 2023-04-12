@@ -989,7 +989,7 @@ public final class me/proton/core/key/data/repository/PrivateKeyRepositoryImpl :
 }
 
 public final class me/proton/core/key/data/repository/PublicAddressRepositoryImpl : me/proton/core/key/domain/repository/PublicAddressRepository {
-	public fun <init> (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public fun <init> (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Ljava/util/Optional;)V
 	public fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPublicAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/repository/Source;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSKLAtEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

@@ -19,6 +19,7 @@
 package me.proton.core.key.dagger
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -28,6 +29,7 @@ import me.proton.core.key.data.repository.PublicAddressRepositoryImpl
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
+import me.proton.core.key.domain.repository.PublicAddressVerifier
 import javax.inject.Singleton
 
 @Module
@@ -45,4 +47,7 @@ public interface CoreKeyModule {
     @Binds
     @Singleton
     public fun providePublicAddressKeyRepository(impl: PublicAddressRepositoryImpl): PublicAddressRepository
+
+    @BindsOptionalOf
+    public fun optionalVerifyPublicAddressKeys(): PublicAddressVerifier
 }

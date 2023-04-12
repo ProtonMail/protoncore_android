@@ -34,6 +34,7 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.db.PublicAddressKeyDao
 import me.proton.core.key.data.db.PublicAddressWithKeysDao
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.key.domain.repository.PublicAddressVerifier
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiManager
@@ -45,6 +46,7 @@ import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 
 class PublicAddressRepositoryImplTest {
 
@@ -63,6 +65,8 @@ class PublicAddressRepositoryImplTest {
     private val publicAddressDao = mockk<PublicAddressDao>()
     private val publicAddressWithKeysDao = mockk<PublicAddressWithKeysDao>()
     private val publicAddressKeyDao = mockk<PublicAddressKeyDao>()
+
+    private val publicAddressVerifier = mockk<PublicAddressVerifier>()
 
     @Before
     fun setUp() {
@@ -83,10 +87,14 @@ class PublicAddressRepositoryImplTest {
         coEvery { db.inTransaction(capture(transactionLambda)) } coAnswers {
             transactionLambda.captured.invoke()
         }
+        coJustRun {
+            publicAddressVerifier.verifyPublicAddress(any(), any())
+        }
         repositoryImpl = PublicAddressRepositoryImpl(
             db,
             apiProvider,
-            TestCoroutineScopeProvider(dispatcherProvider)
+            TestCoroutineScopeProvider(dispatcherProvider),
+            Optional.of(publicAddressVerifier)
         )
     }
 
@@ -145,6 +153,10 @@ class PublicAddressRepositoryImplTest {
         assertEquals(expectedKeys, address.keys.map { it.publicKey.key })
         assertEquals(testEmail, address.email)
         coVerify {
+            publicAddressVerifier.verifyPublicAddress(
+                testUserId,
+                any()
+            )
             keyApi.getPublicAddressKeys(testEmail, any())
             publicAddressDao.insertOrUpdate(match { it.email == testEmail })
             publicAddressKeyDao.deleteByEmail(testEmail)

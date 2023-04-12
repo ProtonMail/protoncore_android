@@ -36,15 +36,18 @@ import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
+import me.proton.core.key.domain.repository.PublicAddressVerifier
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.CacheOverride
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import java.util.Optional
 import javax.inject.Inject
 
 class PublicAddressRepositoryImpl @Inject constructor(
     private val db: PublicAddressDatabase,
     private val provider: ApiProvider,
-    scopeProvider: CoroutineScopeProvider
+    scopeProvider: CoroutineScopeProvider,
+    private val publicAddressVerifier: Optional<PublicAddressVerifier>
 ) : PublicAddressRepository {
 
     private val publicAddressDao = db.publicAddressDao()
@@ -56,11 +59,22 @@ class PublicAddressRepositoryImpl @Inject constructor(
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
             provider.get<KeyApi>(key.userId).invoke {
-                getPublicAddressKeys(
+                val publicAddress = getPublicAddressKeys(
                     key.email,
                     if (key.forceNoCache) CacheOverride().noCache() else null
                 ).toPublicAddress(key.email)
-            }.valueOrThrow
+                publicAddress
+            }.valueOrThrow.also { publicAddress ->
+                if (publicAddressVerifier.isPresent) {
+                    /**
+                     *  KT verification happens silently for now (with some logs),
+                     *  some UI will be needed later on to communicate the state
+                     */
+                    publicAddressVerifier
+                        .get()
+                        .verifyPublicAddress(key.userId, publicAddress)
+                }
+            }
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { key -> getPublicAddressLocal(key.email) },
