@@ -1,0 +1,197 @@
+public class hilt_aggregated_deps/_me_proton_core_keytransparency_data_SelfAuditWorker_HiltModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/keytransparency/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditStarter {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditStarter_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/SelfAuditStarter_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/SelfAuditStarter;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;)Lme/proton/core/keytransparency/data/SelfAuditStarter;
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditWorker : androidx/work/CoroutineWorker {
+	public static final field INPUT_USER_ID Ljava/lang/String;
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/keytransparency/domain/RunSelfAudit;)V
+	public fun doWork (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditWorker$Scheduler {
+	public fun <init> (Landroidx/work/WorkManager;)V
+}
+
+public abstract interface class me/proton/core/keytransparency/data/SelfAuditWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditWorker_AssistedFactory_Impl : me/proton/core/keytransparency/data/SelfAuditWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/keytransparency/data/SelfAuditWorker;
+	public static fun create (Lme/proton/core/keytransparency/data/SelfAuditWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/SelfAuditWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/keytransparency/data/SelfAuditWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/keytransparency/domain/RunSelfAudit;)Lme/proton/core/keytransparency/data/SelfAuditWorker;
+}
+
+public abstract interface class me/proton/core/keytransparency/data/SelfAuditWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/keytransparency/data/SelfAuditWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public final class me/proton/core/keytransparency/data/SelfAuditWorker_Scheduler_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/SelfAuditWorker_Scheduler_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;
+	public static fun newInstance (Landroidx/work/WorkManager;)Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;
+}
+
+public abstract class me/proton/core/keytransparency/data/local/AddressChangeDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteAddressChange (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAddressChanges (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/keytransparency/data/local/KeyTransparencyDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/keytransparency/data/local/KeyTransparencyDatabase$Companion;
+	public abstract fun addressChangeDao ()Lme/proton/core/keytransparency/data/local/AddressChangeDao;
+	public abstract fun selfAuditResultDao ()Lme/proton/core/keytransparency/data/local/SelfAuditResultDao;
+}
+
+public final class me/proton/core/keytransparency/data/local/KeyTransparencyDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract class me/proton/core/keytransparency/data/local/SelfAuditResultDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun getTimestampOfSelfAudit (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/data/local/entity/AddressChangeEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/util/List;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/keytransparency/data/local/entity/AddressChangeEntity;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/data/local/entity/AddressChangeEntity;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/keytransparency/data/local/entity/AddressChangeEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChangeId ()Ljava/lang/String;
+	public final fun getCounterEncrypted ()Ljava/lang/String;
+	public final fun getCreationTimestampEncrypted ()Ljava/lang/String;
+	public final fun getEmailEncrypted ()Ljava/lang/String;
+	public final fun getEpochIdEncrypted ()Ljava/lang/String;
+	public final fun getPublicKeysEncrypted ()Ljava/util/List;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public final fun isObsolete ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/data/local/entity/SelfAuditResultEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;J)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/domain/entity/UserId;J)Lme/proton/core/keytransparency/data/local/entity/SelfAuditResultEntity;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/data/local/entity/SelfAuditResultEntity;Lme/proton/core/domain/entity/UserId;JILjava/lang/Object;)Lme/proton/core/keytransparency/data/local/entity/SelfAuditResultEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTimestamp ()J
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/data/repository/KeyTransparencyRepositoryImpl : me/proton/core/keytransparency/domain/repository/KeyTransparencyRepository {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/keytransparency/data/local/KeyTransparencyDatabase;Lme/proton/core/keytransparency/domain/usecase/NormalizeEmail;)V
+	public fun getAddressChangesForAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllAddressChanges (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getEpoch (Lme/proton/core/domain/entity/UserId;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLastEpoch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getProof (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getTimestampOfSelfAudit (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getVerifiedEpoch (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun removeAddressChange (Lme/proton/core/keytransparency/domain/entity/AddressChange;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun removeAddressChangesForAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun storeAddressChange (Lme/proton/core/keytransparency/domain/entity/AddressChange;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun storeSelfAuditResult (Lme/proton/core/domain/entity/UserId;Lme/proton/core/keytransparency/domain/entity/SelfAuditResult;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun uploadVerifiedEpoch (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Lme/proton/core/keytransparency/domain/entity/VerifiedEpoch;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/data/repository/KeyTransparencyRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/repository/KeyTransparencyRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/repository/KeyTransparencyRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/keytransparency/data/local/KeyTransparencyDatabase;Lme/proton/core/keytransparency/domain/usecase/NormalizeEmail;)Lme/proton/core/keytransparency/data/repository/KeyTransparencyRepositoryImpl;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/GetHostTypeImpl : me/proton/core/keytransparency/domain/usecase/GetHostType {
+	public fun <init> (Lokhttp3/HttpUrl;)V
+	public fun invoke ()Lme/proton/core/keytransparency/domain/usecase/HostType;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/GetHostTypeImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/usecase/GetHostTypeImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/usecase/GetHostTypeImpl;
+	public static fun newInstance (Lokhttp3/HttpUrl;)Lme/proton/core/keytransparency/data/usecase/GetHostTypeImpl;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl : me/proton/core/keytransparency/domain/usecase/IsKeyTransparencyEnabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/keytransparency/domain/usecase/GetHostType;)V
+	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/keytransparency/domain/usecase/GetHostType;)Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl : me/proton/core/keytransparency/domain/usecase/VerifyEpoch {
+	public fun <init> (Lme/proton/core/keytransparency/domain/usecase/GetKeyTransparencyParameters;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;)V
+	public fun invoke (Lme/proton/core/keytransparency/domain/entity/Epoch;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl;
+	public static fun newInstance (Lme/proton/core/keytransparency/domain/usecase/GetKeyTransparencyParameters;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;)Lme/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl;
+}
+
+public final class me/proton/core/keytransparency/data/usecase/VerifyProofGolangImpl : me/proton/core/keytransparency/domain/usecase/VerifyProof {
+	public fun <init> (Lme/proton/core/keytransparency/domain/usecase/GetKeyTransparencyParameters;)V
+	public fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/keytransparency/domain/entity/Proof;Ljava/lang/String;)V
+}
+
+public final class me/proton/core/keytransparency/data/usecase/VerifyProofGolangImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/usecase/VerifyProofGolangImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/keytransparency/data/usecase/VerifyProofGolangImpl;
+	public static fun newInstance (Lme/proton/core/keytransparency/domain/usecase/GetKeyTransparencyParameters;)Lme/proton/core/keytransparency/data/usecase/VerifyProofGolangImpl;
+}
+

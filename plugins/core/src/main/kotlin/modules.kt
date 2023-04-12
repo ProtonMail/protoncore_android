@@ -226,5 +226,12 @@ public object Module {
     // Proguard rules
     public const val proguardRules: String = ":proguard-rules"
 
+
+    // Key transparency
+    public const val keyTransparency: String = ":key-transparency"
+    public const val keyTransparencyDomain: String = "$keyTransparency:key-transparency-domain"
+    public const val keyTransparencyData: String = "$keyTransparency:key-transparency-data"
+    public const val keyTransparencyDagger: String = "$keyTransparency:key-transparency-dagger"
+    public const val keyTransparencyPresentation: String = "$keyTransparency:key-transparency-presentation"
     // endregion
 }

@@ -1,0 +1,338 @@
+public final class me/proton/core/keytransparency/domain/Constants {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/Constants;
+	public static final field KT_SELF_AUDIT_INTERVAL_HOURS I
+	public final fun getKT_SELF_AUDIT_INTERVAL_SECONDS ()J
+}
+
+public final class me/proton/core/keytransparency/domain/KeyTransparencyLogger {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/KeyTransparencyLogger;
+	public final fun d (Ljava/lang/String;)V
+	public final fun d (Ljava/lang/Throwable;Ljava/lang/String;)V
+	public final fun e (Ljava/lang/Throwable;)V
+	public final fun e (Ljava/lang/Throwable;Ljava/lang/String;)V
+}
+
+public abstract class me/proton/core/keytransparency/domain/KeyTransparencyParameters {
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCertificateDomain ()Ljava/lang/String;
+	public final fun getVrfPublicKey ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/KeyTransparencyParameters$Dev : me/proton/core/keytransparency/domain/KeyTransparencyParameters {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/KeyTransparencyParameters$Dev;
+}
+
+public final class me/proton/core/keytransparency/domain/KeyTransparencyParameters$Production : me/proton/core/keytransparency/domain/KeyTransparencyParameters {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/KeyTransparencyParameters$Production;
+}
+
+public final class me/proton/core/keytransparency/domain/RunSelfAudit {
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/keytransparency/domain/RunSelfAudit;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/AddressChange {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/String;IJLjava/util/List;Z)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()I
+	public final fun component6 ()J
+	public final fun component7 ()Ljava/util/List;
+	public final fun component8 ()Z
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/String;IJLjava/util/List;Z)Lme/proton/core/keytransparency/domain/entity/AddressChange;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/AddressChange;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/String;IJLjava/util/List;ZILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/AddressChange;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChangeId ()Ljava/lang/String;
+	public final fun getCounter ()I
+	public final fun getCreationTimestamp ()J
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getEpochId ()I
+	public final fun getPublicKeys ()Ljava/util/List;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public final fun isObsolete ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/keytransparency/domain/entity/AddressChangeAuditResult {
+}
+
+public final class me/proton/core/keytransparency/domain/entity/AddressChangeAuditResult$Failure : me/proton/core/keytransparency/domain/entity/AddressChangeAuditResult {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/keytransparency/domain/entity/AddressChangeAuditResult$Failure;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/AddressChangeAuditResult$Failure;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/AddressChangeAuditResult$Failure;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/AddressChangeAuditResult$Success : me/proton/core/keytransparency/domain/entity/AddressChangeAuditResult {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/AddressChangeAuditResult$Success;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/CertificateIssuer : java/lang/Enum {
+	public static final field Companion Lme/proton/core/keytransparency/domain/entity/CertificateIssuer$Companion;
+	public static final field LetsEncrypt Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
+	public static final field ZeroSsl Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
+	public static fun values ()[Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/CertificateIssuer$Companion {
+	public final fun enumOf (I)Lme/proton/core/domain/type/IntEnum;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/Epoch {
+	public fun <init> (ILjava/lang/String;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/lang/String;Ljava/lang/String;J)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()J
+	public final fun copy (ILjava/lang/String;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/lang/String;Ljava/lang/String;J)Lme/proton/core/keytransparency/domain/entity/Epoch;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/Epoch;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/lang/String;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/Epoch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCertificateChain ()Ljava/lang/String;
+	public final fun getCertificateIssuer ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getCertificateTime ()J
+	public final fun getChainHash ()Ljava/lang/String;
+	public final fun getEpochId ()I
+	public final fun getPreviousChainHash ()Ljava/lang/String;
+	public final fun getTreeHash ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/Proof {
+	public fun <init> (Lme/proton/core/domain/type/IntEnum;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/type/IntEnum;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;)Lme/proton/core/keytransparency/domain/entity/Proof;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/Proof;Lme/proton/core/domain/type/IntEnum;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/Proof;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNeighbors ()Ljava/util/Map;
+	public final fun getObsolescenceToken ()Ljava/lang/String;
+	public final fun getRevision ()Ljava/lang/Integer;
+	public final fun getType ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getVrfProof ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/ProofPair {
+	public fun <init> (Lme/proton/core/keytransparency/domain/entity/Proof;Lme/proton/core/keytransparency/domain/entity/Proof;)V
+	public final fun component1 ()Lme/proton/core/keytransparency/domain/entity/Proof;
+	public final fun component2 ()Lme/proton/core/keytransparency/domain/entity/Proof;
+	public final fun copy (Lme/proton/core/keytransparency/domain/entity/Proof;Lme/proton/core/keytransparency/domain/entity/Proof;)Lme/proton/core/keytransparency/domain/entity/ProofPair;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/ProofPair;Lme/proton/core/keytransparency/domain/entity/Proof;Lme/proton/core/keytransparency/domain/entity/Proof;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/ProofPair;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCatchAllProof ()Lme/proton/core/keytransparency/domain/entity/Proof;
+	public final fun getProof ()Lme/proton/core/keytransparency/domain/entity/Proof;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/ProofType : java/lang/Enum {
+	public static final field ABSENCE Lme/proton/core/keytransparency/domain/entity/ProofType;
+	public static final field Companion Lme/proton/core/keytransparency/domain/entity/ProofType$Companion;
+	public static final field EXISTENCE Lme/proton/core/keytransparency/domain/entity/ProofType;
+	public static final field OBSOLESCENCE Lme/proton/core/keytransparency/domain/entity/ProofType;
+	public final fun getIntEnum ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/keytransparency/domain/entity/ProofType;
+	public static fun values ()[Lme/proton/core/keytransparency/domain/entity/ProofType;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/ProofType$Companion {
+	public final fun enumOf (I)Lme/proton/core/domain/type/IntEnum;
+}
+
+public abstract class me/proton/core/keytransparency/domain/entity/SelfAuditResult {
+	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getTimestamp ()J
+}
+
+public final class me/proton/core/keytransparency/domain/entity/SelfAuditResult$Failure : me/proton/core/keytransparency/domain/entity/SelfAuditResult {
+	public fun <init> (JLjava/lang/Throwable;)V
+	public final fun getCause ()Ljava/lang/Throwable;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/SelfAuditResult$Success : me/proton/core/keytransparency/domain/entity/SelfAuditResult {
+	public fun <init> (JLjava/util/Map;Ljava/util/Map;)V
+	public final fun getContactAudits ()Ljava/util/Map;
+	public final fun getSelfAddressAudits ()Ljava/util/Map;
+}
+
+public abstract class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult {
+}
+
+public final class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Failure : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Failure;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Failure;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Failure;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getReason ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Success : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Success;
+}
+
+public abstract class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult {
+}
+
+public final class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$AddressNotInKT : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$AddressNotInKT;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$CreationTooRecent : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$CreationTooRecent;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$Disabled : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$Disabled;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$ObsolescenceWarning : me/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/UserAddressAuditResult$Warning$ObsolescenceWarning;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/VerifiedEpoch {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/keytransparency/domain/entity/VerifiedEpoch;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/VerifiedEpoch;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/VerifiedEpoch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ljava/lang/String;
+	public final fun getSignature ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/keytransparency/domain/entity/VerifiedState {
+}
+
+public final class me/proton/core/keytransparency/domain/entity/VerifiedState$Absent : me/proton/core/keytransparency/domain/entity/VerifiedState, me/proton/core/keytransparency/domain/entity/TimedState {
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Lme/proton/core/keytransparency/domain/entity/VerifiedState$Absent;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/VerifiedState$Absent;JILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/VerifiedState$Absent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getNotBefore ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/VerifiedState$Existent : me/proton/core/keytransparency/domain/entity/VerifiedState, me/proton/core/keytransparency/domain/entity/TimedState {
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Lme/proton/core/keytransparency/domain/entity/VerifiedState$Existent;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/VerifiedState$Existent;JILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/VerifiedState$Existent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getNotBefore ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/VerifiedState$NotYetIncluded : me/proton/core/keytransparency/domain/entity/VerifiedState {
+	public static final field INSTANCE Lme/proton/core/keytransparency/domain/entity/VerifiedState$NotYetIncluded;
+}
+
+public final class me/proton/core/keytransparency/domain/entity/VerifiedState$Obsolete : me/proton/core/keytransparency/domain/entity/VerifiedState, me/proton/core/keytransparency/domain/entity/TimedState {
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Lme/proton/core/keytransparency/domain/entity/VerifiedState$Obsolete;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/entity/VerifiedState$Obsolete;JILjava/lang/Object;)Lme/proton/core/keytransparency/domain/entity/VerifiedState$Obsolete;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getNotBefore ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/exception/CheckKt {
+	public static final fun keyTransparencyCheck (Z)V
+	public static final fun keyTransparencyCheck (ZLkotlin/jvm/functions/Function0;)V
+	public static final fun keyTransparencyCheckNotNull (Ljava/lang/Object;)Ljava/lang/Object;
+	public static final fun keyTransparencyCheckNotNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+}
+
+public class me/proton/core/keytransparency/domain/exception/KeyTransparencyException : java/lang/Exception {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public final class me/proton/core/keytransparency/domain/exception/UnverifiableSKLException : me/proton/core/keytransparency/domain/exception/KeyTransparencyException {
+	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public abstract interface class me/proton/core/keytransparency/domain/repository/KeyTransparencyRepository {
+	public abstract fun getAddressChangesForAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAllAddressChanges (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEpoch (Lme/proton/core/domain/entity/UserId;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLastEpoch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getProof (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getTimestampOfSelfAudit (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getVerifiedEpoch (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun removeAddressChange (Lme/proton/core/keytransparency/domain/entity/AddressChange;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun removeAddressChangesForAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun storeAddressChange (Lme/proton/core/keytransparency/domain/entity/AddressChange;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun storeSelfAuditResult (Lme/proton/core/domain/entity/UserId;Lme/proton/core/keytransparency/domain/entity/SelfAuditResult;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun uploadVerifiedEpoch (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Lme/proton/core/keytransparency/domain/entity/VerifiedEpoch;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/domain/usecase/GetCurrentTime {
+	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/keytransparency/domain/usecase/GetHostType {
+	public abstract fun invoke ()Lme/proton/core/keytransparency/domain/usecase/HostType;
+}
+
+public final class me/proton/core/keytransparency/domain/usecase/GetKeyTransparencyParameters {
+	public fun <init> (Lme/proton/core/keytransparency/domain/usecase/GetHostType;)V
+	public final fun invoke ()Lme/proton/core/keytransparency/domain/KeyTransparencyParameters;
+}
+
+public final class me/proton/core/keytransparency/domain/usecase/HostType : java/lang/Enum {
+	public static final field Black Lme/proton/core/keytransparency/domain/usecase/HostType;
+	public static final field Other Lme/proton/core/keytransparency/domain/usecase/HostType;
+	public static final field Production Lme/proton/core/keytransparency/domain/usecase/HostType;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/keytransparency/domain/usecase/HostType;
+	public static fun values ()[Lme/proton/core/keytransparency/domain/usecase/HostType;
+}
+
+public abstract interface class me/proton/core/keytransparency/domain/usecase/IsKeyTransparencyEnabled {
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/keytransparency/domain/usecase/NormalizeEmail {
+	public fun <init> ()V
+	public final fun invoke (Ljava/lang/String;Z)Ljava/lang/String;
+	public static synthetic fun invoke$default (Lme/proton/core/keytransparency/domain/usecase/NormalizeEmail;Ljava/lang/String;ZILjava/lang/Object;)Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/keytransparency/domain/usecase/VerifyEpoch {
+	public abstract fun invoke (Lme/proton/core/keytransparency/domain/entity/Epoch;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/keytransparency/domain/usecase/VerifyProof {
+	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/keytransparency/domain/entity/Proof;Ljava/lang/String;)V
+}
+

@@ -130,6 +130,11 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:key-dagger                           |
 | me.proton.core:key-data                             |
 | me.proton.core:key-domain                           |
+| me.proton.core:key-transparency                     |
+| me.proton.core:key-transparency-dagger              |
+| me.proton.core:key-transparency-data                |
+| me.proton.core:key-transparency-domain              |
+| me.proton.core:key-transparency-presentation        |
 | me.proton.core:label                                |
 | me.proton.core:label-dagger                         |
 | me.proton.core:label-data                           |
