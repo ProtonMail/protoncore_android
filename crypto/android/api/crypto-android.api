@@ -76,6 +76,7 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun getArmored ([BLme/proton/core/crypto/common/pgp/PGPHeader;)Ljava/lang/String;
 	public fun getBase64Decoded (Ljava/lang/String;)[B
 	public fun getBase64Encoded ([B)Ljava/lang/String;
+	public fun getCurrentTime (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEncryptedPackets (Ljava/lang/String;)Ljava/util/List;
 	public fun getFingerprint (Ljava/lang/String;)Ljava/lang/String;
 	public fun getJsonSHA256Fingerprints (Ljava/lang/String;)Ljava/lang/String;

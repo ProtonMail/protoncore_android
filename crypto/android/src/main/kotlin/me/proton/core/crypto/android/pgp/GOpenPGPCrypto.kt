@@ -38,6 +38,8 @@ import com.proton.gopenpgp.helper.Helper
 import com.proton.gopenpgp.helper.Mobile2GoReader
 import com.proton.gopenpgp.helper.Mobile2GoWriter
 import com.proton.gopenpgp.srp.Srp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.pgp.trimLinesEnd
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
@@ -409,12 +411,12 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // region Private Verify
 
-    private fun VerificationContext.toGolang() : GolangVerificationContext {
+    private fun VerificationContext.toGolang(): GolangVerificationContext {
         val required = this.required
         return GolangVerificationContext(
             value,
             required is VerificationContext.ContextRequirement.Required,
-            if(required is VerificationContext.ContextRequirement.Required.After) required.timestamp else 0
+            if (required is VerificationContext.ContextRequirement.Required.After) required.timestamp else 0
         )
     }
 
@@ -664,7 +666,7 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun decryptMimeMessage(
         message: EncryptedMessage,
         unlockedKeys: List<Unarmored>
-    ): DecryptedMimeMessage = runCatching{
+    ): DecryptedMimeMessage = runCatching {
         val pgpMessage = Crypto.newPGPMessageFromArmored(message)
         return newKeys(unlockedKeys).use { keys ->
             newKeyRing(keys).use { decryptionKeyRing ->
@@ -719,7 +721,7 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
         time: VerificationTime
-    ): DecryptedMimeMessage = runCatching{
+    ): DecryptedMimeMessage = runCatching {
         val pgpMessage = Crypto.newPGPMessageFromArmored(message)
         val verificationKeyRing = publicKeys.keyRing()
         newKeys(unlockedKeys).use { keys ->
@@ -1121,6 +1123,10 @@ class GOpenPGPCrypto : PGPCrypto {
 
     override fun updateTime(epochSeconds: Long) {
         Crypto.updateTime(epochSeconds)
+    }
+
+    override suspend fun getCurrentTime(): Long = withContext(Dispatchers.IO) {
+        Crypto.getUnixTime()
     }
 
     // endregion

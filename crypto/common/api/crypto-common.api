@@ -232,6 +232,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun getArmored ([BLme/proton/core/crypto/common/pgp/PGPHeader;)Ljava/lang/String;
 	public abstract fun getBase64Decoded (Ljava/lang/String;)[B
 	public abstract fun getBase64Encoded ([B)Ljava/lang/String;
+	public abstract fun getCurrentTime (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getEncryptedPackets (Ljava/lang/String;)Ljava/util/List;
 	public abstract fun getFingerprint (Ljava/lang/String;)Ljava/lang/String;
 	public abstract fun getJsonSHA256Fingerprints (Ljava/lang/String;)Ljava/lang/String;

@@ -753,6 +753,11 @@ interface PGPCrypto {
      */
     fun updateTime(epochSeconds: Long)
 
+    /**
+     * Get the current time (unix epoch in seconds) used for crypto functions (e.g. signing)
+     */
+    suspend fun getCurrentTime(): Long
+
     enum class KeyType(private val value: String) {
         X25519("x25519");
 
