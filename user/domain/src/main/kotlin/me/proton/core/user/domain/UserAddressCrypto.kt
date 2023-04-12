@@ -51,7 +51,10 @@ fun UserAddress.signKeyList(context: CryptoContext): PublicSignedKeyList = keys
         val keyListJSON = "[$keyList]"
         PublicSignedKeyList(
             data = keyListJSON,
-            signature = useKeys(context) { signText(keyListJSON) }
+            signature = useKeys(context) { signText(keyListJSON) },
+            expectedMinEpochId = null,
+            minEpochId = null,
+            maxEpochId = null
         )
     }
 

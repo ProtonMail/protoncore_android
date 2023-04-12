@@ -95,5 +95,28 @@ interface AddressDatabase : Database, AddressKeyDatabase {
                 )
             }
         }
+
+        /**
+         * - Added KeyTransparency properties to PublicAddressEntity.signedKeyList.
+         */
+        val MIGRATION_4 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "AddressEntity",
+                    column = "signedKeyList_minEpochId",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "AddressEntity",
+                    column = "signedKeyList_maxEpochId",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "AddressEntity",
+                    column = "signedKeyList_expectedMinEpochId",
+                    type = "INTEGER"
+                )
+            }
+        }
     }
 }

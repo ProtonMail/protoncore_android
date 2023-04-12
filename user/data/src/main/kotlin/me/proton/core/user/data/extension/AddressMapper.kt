@@ -88,9 +88,21 @@ internal fun AddressResponse.toEntity(userId: UserId) = AddressEntity(
     signedKeyList = signedKeyList?.toEntity()
 )
 
-internal fun SignedKeyListResponse.toEntity() = SignedKeyListEntity(data, signature)
+internal fun SignedKeyListResponse.toEntity() = SignedKeyListEntity(
+    data = data,
+    signature = signature,
+    minEpochId = minEpochId,
+    maxEpochId = maxEpochId,
+    expectedMinEpochId = expectedMinEpochId,
+)
 
-internal fun SignedKeyListResponse.toPublicSignedKeyList() = PublicSignedKeyList(data, signature)
+internal fun SignedKeyListResponse.toPublicSignedKeyList() = PublicSignedKeyList(
+    data = data,
+    signature = signature,
+    minEpochId = minEpochId,
+    maxEpochId = maxEpochId,
+    expectedMinEpochId = expectedMinEpochId,
+)
 
 internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntity(
     addressId = addressId,
@@ -109,7 +121,13 @@ internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntit
     active = active.toBooleanOrFalse()
 )
 
-internal fun SignedKeyListEntity.toPublicSignedKeyList() = PublicSignedKeyList(data, signature)
+internal fun SignedKeyListEntity.toPublicSignedKeyList() = PublicSignedKeyList(
+    data = data,
+    signature = signature,
+    minEpochId = minEpochId,
+    maxEpochId = maxEpochId,
+    expectedMinEpochId = expectedMinEpochId,
+)
 
 internal fun AddressEntity.toUserAddress(keys: List<UserAddressKey>) = UserAddress(
     userId = userId,
@@ -148,7 +166,13 @@ internal fun AddressKeyEntity.toUserAddressKey() = UserAddressKey(
     )
 )
 
-internal fun PublicSignedKeyList.toEntity() = SignedKeyListEntity(data = data, signature = signature)
+internal fun PublicSignedKeyList.toEntity() = SignedKeyListEntity(
+    data = data,
+    signature = signature,
+    minEpochId = minEpochId,
+    maxEpochId = maxEpochId,
+    expectedMinEpochId = expectedMinEpochId,
+)
 
 internal fun UserAddress.toEntity() = AddressEntity(
     userId = userId,

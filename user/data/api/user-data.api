@@ -651,6 +651,7 @@ public final class me/proton/core/user/data/db/AddressDatabase$Companion {
 	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_3 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_4 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract interface class me/proton/core/user/data/db/AddressKeyDatabase : me/proton/core/data/room/db/Database {
