@@ -403,5 +403,9 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: updatePrivateKeyPassphrase")
     }
 
+    override suspend fun getCurrentTime(): Long {
+        TODO("Not yet implemented: getCurrentTime")
+    }
+
     override fun updateTime(epochSeconds: Long) = Unit
 }

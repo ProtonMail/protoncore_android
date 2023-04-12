@@ -90,6 +90,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val QUARK_HOST = "QUARK_HOST"
             val USE_DEFAULT_PINS = "USE_DEFAULT_PINS"
             val CAN_USE_DOH = "USE_DOH"
+            val KEY_TRANSPARENCY_ENV = "KEY_TRANSPARENCY_ENV"
         }
         val flavorDimensions = object {
             val env = "env"
@@ -101,6 +102,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, null.toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, true.toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, false.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
         }
 
         productFlavors.register("dev") {
@@ -110,6 +112,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.proton.black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "proton.black".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "black".toBuildConfigValue())
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
@@ -117,6 +120,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.proton.me".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "production".toBuildConfigValue())
         }
         productFlavors.register("localProperties") {
             dimension = flavorDimensions.env
@@ -134,18 +138,25 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val hv3Host = localProperties.getProperty(buildConfigFieldKeys.HV3_HOST) ?: "verify.$host"
             val quarkHost = localProperties.getProperty(buildConfigFieldKeys.QUARK_HOST) ?: host
             val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
+            val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
 
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, useDefaultPins.toBoolean().toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, proxyToken.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.API_HOST, apiHost.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, hv3Host.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, quarkHost.toBuildConfigValue())
+            buildConfigField(
+                "String",
+                buildConfigFieldKeys.KEY_TRANSPARENCY_ENV,
+                keyTransparencyEnv.toBuildConfigValue()
+            )
         }
         productFlavors.register("mock") {
             buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.mock".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.mock".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "quark.mock".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
 
             dimension = flavorDimensions.env
             testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
@@ -200,6 +211,7 @@ dependencies {
         project(Module.user),
         project(Module.userSettings),
         project(Module.strictModeUtil),
+        project(Module.keyTransparency),
 
         // Android
         activity,

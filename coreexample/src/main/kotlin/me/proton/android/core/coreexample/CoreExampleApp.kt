@@ -23,6 +23,7 @@ import androidx.startup.AppInitializer
 import dagger.hilt.android.HiltAndroidApp
 import me.proton.android.core.coreexample.init.AccountStateHandlerInitializer
 import me.proton.android.core.coreexample.init.EventManagerInitializer
+import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
 import me.proton.android.core.coreexample.init.WorkManagerInitializer
 import me.proton.core.auth.presentation.MissingScopeInitializer
 import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
@@ -43,6 +44,7 @@ class CoreExampleApp : Application() {
             initializeComponent(MissingScopeInitializer::class.java)
             initializeComponent(HumanVerificationInitializer::class.java)
             initializeComponent(UnAuthSessionFetcherInitializer::class.java)
+            initializeComponent(KeyTransparencyInitializer::class.java)
         }
     }
 }

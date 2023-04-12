@@ -28,6 +28,7 @@ import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
+import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.label.data.local.LabelDatabase
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
@@ -208,6 +209,14 @@ object AppDatabaseMigrations {
     val MIGRATION_27_28 = object : Migration(27, 28) {
         override fun migrate(database: SupportSQLiteDatabase) {
             OrganizationDatabase.MIGRATION_2.migrate(database)
+        }
+    }
+
+    val MIGRATION_28_29 = object : Migration(28, 29) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            AddressDatabase.MIGRATION_4.migrate(database)
+            PublicAddressDatabase.MIGRATION_2.migrate(database)
+            KeyTransparencyDatabase.MIGRATION_0.migrate(database)
         }
     }
 }
