@@ -38,47 +38,47 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     implementation(
         project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.domain),
-        project(Module.keyDomain),
-        project(Module.keyTransparencyDomain),
-        project(Module.crypto),
         project(Module.userData),
-        project(Module.userDomain),
-        project(Module.dataRoom),
-        project(Module.account),
-        project(Module.accountManager),
-        project(Module.presentation),
-
-        // Kotlin
-        `serialization-json`,
-        `coroutines-core`,
+        project(Module.accountManagerPresentation),
+        project(Module.accountDomain),
+        project(Module.keyData),
+        project(Module.networkDomain),
 
         // Other
         `android-work-runtime`,
-        `okHttp-logging`,
         retrofit,
-        `retrofit-kotlin-serialization`,
+        `lifecycle-common`,
+        `serialization-core`,
         `room-ktx`,
+
     )
-    implementation(project(mapOf("path" to ":account-manager:account-manager-domain")))
-    testImplementation(project(Module.androidTest))
+
+    api(
+        project(Module.cryptoCommon),
+        project(Module.networkData),
+        project(Module.accountManagerDomain),
+        project(Module.dataRoom),
+        project(Module.domain),
+        project(Module.keyTransparencyDomain),
+        project(Module.keyDomain),
+        project(Module.presentation),
+        project(Module.userDomain),
+    )
 
     compileOnly(project(Module.gopenpgp))
 
-    kaptTest(`room-compiler`)
-
     androidTestImplementation(project(Module.androidTest)) {
-        exclude(mockk) // We're including `mock-android` instead.
+        exclude(mockk)
     }
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
-        project(Module.androidTest),
-        project(Module.kotlinTest),
         project(Module.gopenpgp),
+        project(Module.kotlinTest),
+        junit,
         `kotlin-test`,
         `mockk-android`,
+        project(Module.cryptoAndroid),
     )
 
     testImplementation(

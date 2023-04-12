@@ -22,11 +22,32 @@ import me.proton.core.keytransparency.domain.KeyTransparencyLogger
 import me.proton.core.keytransparency.domain.entity.AddressChangeAuditResult
 import me.proton.core.keytransparency.domain.entity.SelfAuditResult
 import me.proton.core.keytransparency.domain.entity.UserAddressAuditResult
+import me.proton.core.keytransparency.domain.entity.VerifiedState
 import me.proton.core.keytransparency.domain.exception.UnverifiableSKLException
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 internal class LogKeyTransparency @Inject constructor() {
+
+    fun logPublicAddressVerification(result: PublicKeyVerificationResult) {
+        when (result) {
+            is PublicKeyVerificationResult.Failure -> {
+                KeyTransparencyLogger.e(result.cause, "Public address verification failed")
+            }
+            is PublicKeyVerificationResult.Success -> {
+                when (result.state) {
+                    is VerifiedState.Existent ->
+                        KeyTransparencyLogger.d("Public address is correctly included in KT")
+                    is VerifiedState.Absent ->
+                        KeyTransparencyLogger.d("Public address is not included in KT")
+                    is VerifiedState.Obsolete ->
+                        KeyTransparencyLogger.d("Public address is obsolete in KT")
+                    is VerifiedState.NotYetIncluded ->
+                        KeyTransparencyLogger.d("Public address is not yet in KT")
+                }.exhaustive
+            }
+        }
+    }
 
     fun logSelfAuditResult(result: SelfAuditResult) {
         when (result) {

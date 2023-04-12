@@ -22,11 +22,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.key.domain.repository.PublicAddressVerifier
 import me.proton.core.keytransparency.data.repository.KeyTransparencyRepositoryImpl
 import me.proton.core.keytransparency.data.usecase.GetHostTypeImpl
 import me.proton.core.keytransparency.data.usecase.IsKeyTransparencyEnabledImpl
 import me.proton.core.keytransparency.data.usecase.VerifyEpochGolangImpl
 import me.proton.core.keytransparency.data.usecase.VerifyProofGolangImpl
+import me.proton.core.keytransparency.domain.PublicAddressVerifierImpl
 import me.proton.core.keytransparency.domain.SignedKeyListChangeListenerImpl
 import me.proton.core.keytransparency.domain.repository.KeyTransparencyRepository
 import me.proton.core.keytransparency.domain.usecase.GetHostType
@@ -52,6 +54,9 @@ internal interface KeyTransparencyModule {
 
     @Binds
     fun provideSignedKeyListChangeListener(impl: SignedKeyListChangeListenerImpl): SignedKeyListChangeListener
+
+    @Binds
+    fun providePublicAddressVerifier(impl: PublicAddressVerifierImpl): PublicAddressVerifier
 
     @Binds
     fun provideGetHostType(impl: GetHostTypeImpl): GetHostType

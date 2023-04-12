@@ -43,9 +43,7 @@ dependencies {
         `javax-inject`,
         project(Module.cryptoCommon),
         project(Module.domain),
-        project(Module.cryptoCommon),
         project(Module.keyDomain),
-        project(Module.networkDomain),
         project(Module.userDomain),
     )
 

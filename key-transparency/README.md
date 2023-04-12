@@ -64,7 +64,13 @@ implements the necessary KT checks. It is called by the user manager during sign
 
 ### Verifying public keys
 
-TODO
+- The [VerifyPublicAddress](domain/src/main/kotlin/me/proton/core/keytransparency/domain/usecase/VerifyPublicAddress.kt)
+usecase implements the logic to verify public address keys served by the user. It does the necessary checks
+and returns an instance of a [VerifiedState](domain/src/main/kotlin/me/proton/core/keytransparency/domain/entity/VerifiedState.kt).
+- The verification is called by the key module via an optional binding of [PublicAddressVerifier](../key/domain/src/main/kotlin/me/proton/core/key/domain/repository/PublicAddressVerifier.kt)
+- The optional binding is provided by the key transparency module with the [PublicAddressVerifierImpl](domain/src/main/kotlin/me/proton/core/keytransparency/domain/PublicAddressVerifierImpl.kt) implementation.
+- This logic is integrated into the [key](../key) module, in the [PublicAddressRepositoryImpl](../key/data/src/main/kotlin/me/proton/core/key/data/repository/PublicAddressRepositoryImpl.kt) which handles fetching public keys.
+Temporarily, KT errors are caught and logged, to avoid interrupting the operation.
 
 ## Using the module:
 

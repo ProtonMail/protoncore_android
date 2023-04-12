@@ -26,6 +26,10 @@ public final class me/proton/core/keytransparency/domain/KeyTransparencyParamete
 	public static final field INSTANCE Lme/proton/core/keytransparency/domain/KeyTransparencyParameters$Production;
 }
 
+public final class me/proton/core/keytransparency/domain/PublicAddressVerifierImpl : me/proton/core/key/domain/repository/PublicAddressVerifier {
+	public fun verifyPublicAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/PublicAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/keytransparency/domain/RunSelfAudit {
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/keytransparency/domain/RunSelfAudit;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
@@ -331,6 +335,31 @@ public final class me/proton/core/keytransparency/domain/usecase/NormalizeEmail 
 	public fun <init> ()V
 	public final fun invoke (Ljava/lang/String;Z)Ljava/lang/String;
 	public static synthetic fun invoke$default (Lme/proton/core/keytransparency/domain/usecase/NormalizeEmail;Ljava/lang/String;ZILjava/lang/Object;)Ljava/lang/String;
+}
+
+public abstract class me/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult {
+}
+
+public final class me/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Failure : me/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Failure;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Failure;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Failure;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Success : me/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult {
+	public fun <init> (Lme/proton/core/keytransparency/domain/entity/VerifiedState;)V
+	public final fun component1 ()Lme/proton/core/keytransparency/domain/entity/VerifiedState;
+	public final fun copy (Lme/proton/core/keytransparency/domain/entity/VerifiedState;)Lme/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Success;
+	public static synthetic fun copy$default (Lme/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Success;Lme/proton/core/keytransparency/domain/entity/VerifiedState;ILjava/lang/Object;)Lme/proton/core/keytransparency/domain/usecase/PublicKeyVerificationResult$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getState ()Lme/proton/core/keytransparency/domain/entity/VerifiedState;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class me/proton/core/keytransparency/domain/usecase/VerifyEpoch {
