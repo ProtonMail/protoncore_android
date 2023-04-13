@@ -457,6 +457,8 @@ class ProtonColors(
             shadowRaised = Color.Black.copy(alpha = 0.1f),
             shadowLifted = Color.Black.copy(alpha = 0.1f),
             blenderNorm = ProtonPalette.Woodsmoke.copy(alpha = 0.48f),
+            textAccent = brandNorm,
+            iconAccent = brandNorm,
         )
 
         private fun baseDark(
@@ -662,12 +664,14 @@ internal fun ProtonColors.updateColorsFrom(other: ProtonColors) {
     shade0 = other.shade0
 
     textNorm = other.textNorm
+    textAccent = other.textAccent
     textWeak = other.textWeak
     textHint = other.textHint
     textDisabled = other.textDisabled
     textInverted = other.textInverted
 
     iconNorm = other.iconNorm
+    iconAccent = other.iconAccent
     iconWeak = other.iconWeak
     iconHint = other.iconHint
     iconDisabled = other.iconDisabled
