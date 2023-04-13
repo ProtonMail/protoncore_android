@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.keytransparency.domain.exception.KeyTransparencyException
+import me.proton.core.user.domain.Constants
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertFailsWith
@@ -58,12 +59,24 @@ class VerifySignedKeyListSignatureTest {
             every { data } returns sklData
             every { signature } returns sklSignature
         }
-        every { cryptoContext.pgpCrypto.getVerifiedTimestampOfText(sklData, sklSignature, testKey, any()) } returns null
+        every {
+            cryptoContext.pgpCrypto.getVerifiedTimestampOfText(
+                sklData,
+                sklSignature,
+                testKey,
+                verificationContext = any()
+            )
+        } returns null
         // when
         assertFailsWith<KeyTransparencyException> { verifySignedKeyListSignature(publicAddress, skl) }
         // then
         verify {
-            cryptoContext.pgpCrypto.getVerifiedTimestampOfText(sklData, sklSignature, testKey, any())
+            cryptoContext.pgpCrypto.getVerifiedTimestampOfText(
+                sklData,
+                sklSignature,
+                testKey,
+                verificationContext = match { it.value == Constants.signedKeyListContextValue }
+            )
         }
     }
 }

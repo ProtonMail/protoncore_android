@@ -25,6 +25,7 @@ import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.getVerifiedTimestampOfText
 import me.proton.core.keytransparency.domain.exception.keyTransparencyCheckNotNull
+import me.proton.core.user.domain.Constants
 import me.proton.core.user.domain.entity.UserAddress
 import javax.inject.Inject
 
@@ -41,7 +42,12 @@ internal class VerifySignedKeyListSignature @Inject constructor(
         val sklData = requireNotNull(skl.data) { "The signed key list's data was null" }
         val sklSignature = requireNotNull(skl.signature) { "Signed key list had no signature" }
         return keyTransparencyCheckNotNull(
-            keyRing.getVerifiedTimestampOfText(cryptoContext, sklData, sklSignature)
+            keyRing.getVerifiedTimestampOfText(
+                cryptoContext,
+                sklData,
+                sklSignature,
+                verificationContext = Constants.signedKeyListVerificationContext
+            )
         ) { "Failed to verify the signature of the SKL" }
     }
 }
