@@ -81,6 +81,6 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
     }
 
     companion object {
-        const val TERMS_CONDITIONS_URL = "https://protonmail.com/ios-terms-and-conditions.html"
+        const val TERMS_CONDITIONS_URL = "https://proton.me/legal/terms-ios"
     }
 }

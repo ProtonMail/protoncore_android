@@ -75,7 +75,7 @@
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>
-  <string name="auth_create_address_terms">Dengan mengklik Buat alamat, Anda menyetujui <a href="https://protonmail.com/terms-and-conditions">Syarat dan Ketentuan</a> Proton.</string>
+  <string name="auth_create_address_terms">Dengan mengklik Buat alamat, Anda menyetujui <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh dikosongkan.</string>
   <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
   <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>
