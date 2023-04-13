@@ -23,6 +23,7 @@ import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.fingerprint
 import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.Constants
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import javax.inject.Inject
@@ -46,7 +47,12 @@ class GenerateSignedKeyList @Inject constructor(
                 val keyListJSON = "[$keyList]"
                 PublicSignedKeyList(
                     data = keyListJSON,
-                    signature = useKeys(cryptoContext) { signText(keyListJSON) },
+                    signature = useKeys(cryptoContext) {
+                        signText(
+                            keyListJSON,
+                            signatureContext = Constants.signedKeyListSignatureContext
+                        )
+                    },
                     minEpochId = null,
                     maxEpochId = null,
                     expectedMinEpochId = null

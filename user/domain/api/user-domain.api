@@ -1,3 +1,10 @@
+public final class me/proton/core/user/domain/Constants {
+	public static final field INSTANCE Lme/proton/core/user/domain/Constants;
+	public static final field signedKeyListContextValue Ljava/lang/String;
+	public final fun getSignedKeyListSignatureContext ()Lme/proton/core/crypto/common/pgp/SignatureContext;
+	public final fun getSignedKeyListVerificationContext ()Lme/proton/core/crypto/common/pgp/VerificationContext;
+}
+
 public abstract interface class me/proton/core/user/domain/SignedKeyListChangeListener {
 	public abstract fun onSKLChangeAccepted (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/UserAddress;Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onSKLChangeRequested (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/UserAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

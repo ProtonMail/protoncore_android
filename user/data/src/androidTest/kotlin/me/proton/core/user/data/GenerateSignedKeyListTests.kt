@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
@@ -33,6 +34,7 @@ import me.proton.core.key.domain.verifyText
 import me.proton.core.test.kotlin.assertEquals
 import me.proton.core.test.kotlin.assertTrue
 import me.proton.core.user.data.usecase.GenerateSignedKeyList
+import me.proton.core.user.domain.Constants
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
@@ -110,7 +112,11 @@ class GenerateSignedKeyListTests {
             verifyText(
                 text = requireNotNull(signedKeyList.data),
                 signature = requireNotNull(signedKeyList.signature),
-                time = VerificationTime.Ignore
+                time = VerificationTime.Ignore,
+                verificationContext = VerificationContext(
+                    value = Constants.signedKeyListContextValue,
+                    required = VerificationContext.ContextRequirement.Required.Always
+                )
             )
         }
         assertTrue(verified) { "Couldn't verify the key list signature" }
