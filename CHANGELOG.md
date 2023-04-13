@@ -11,6 +11,42 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.3.0] - 2023-04-13
+
+### Features
+
+- account-manager:
+  - Migrate DB for key transparency.
+- coreexample:
+  - Integrate self audit in example app.
+- crypto:
+  - Add getCurrentTime() function.
+- gopenpgp:
+  - Add key transparency lib to golang build.
+- key:
+  - Verify public addresses in key transparency.
+  - Add key transparency values to model.
+- key-transparency:
+  - Implement PublicAddressVerifier.
+
+    The PublicAddressVerifier is used by the key module to
+    verify the public addresses fetched from the API.
+  - Implement SignedKeyListChangeListener.
+  - Implement self audit logic.
+- user:
+  - Add SignedKeyListChangeListener for signup.
+
+    During signup, the app generates new address keys and
+    a new signed key list. To check that the KT state is correct
+    at that time, the user manager will call the
+    SignedKeyListChangeListener.
+  - Add key transparency values to model.
+
+### Bug Fixes
+
+- presentation-compose:
+  - Fix accent colors not updating with theme change.
+
 ## [10.2.0] - 2023-04-12
 
 ### Chores
