@@ -212,6 +212,7 @@ public abstract interface class me/proton/core/network/domain/DohService {
 
 public final class me/proton/core/network/domain/HttpResponseCodes {
 	public static final field HTTP_BAD_REQUEST I
+	public static final field HTTP_CONFLICT I
 	public static final field HTTP_FORBIDDEN I
 	public static final field HTTP_REQUEST_TIMEOUT I
 	public static final field HTTP_SERVICE_UNAVAILABLE I

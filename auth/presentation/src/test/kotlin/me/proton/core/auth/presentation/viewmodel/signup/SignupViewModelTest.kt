@@ -48,8 +48,7 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupAccountCreationTotalV1
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
 import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
@@ -658,9 +657,12 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         viewModel.startCreateUserWorkflow().join()
 
         // THEN
-        val accountCreationEventSlot = slot<SignupAccountCreationTotalV1>()
+        val accountCreationEventSlot = slot<SignupAccountCreationTotal>()
         verify { observabilityManager.enqueue(capture(accountCreationEventSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, accountCreationEventSlot.captured.Labels.status)
+        assertEquals(
+            SignupAccountCreationTotal.ApiStatus.http2xx,
+            accountCreationEventSlot.captured.Labels.status
+        )
     }
 
     @Test
@@ -688,8 +690,11 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         viewModel.startCreateUserWorkflow().join()
 
         // THEN
-        val accountCreationEventSlot = slot<SignupAccountCreationTotalV1>()
+        val accountCreationEventSlot = slot<SignupAccountCreationTotal>()
         verify { observabilityManager.enqueue(capture(accountCreationEventSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, accountCreationEventSlot.captured.Labels.status)
+        assertEquals(
+            SignupAccountCreationTotal.ApiStatus.http2xx,
+            accountCreationEventSlot.captured.Labels.status
+        )
     }
 }

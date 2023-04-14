@@ -27,6 +27,7 @@ object HttpResponseCodes {
     const val HTTP_UNPROCESSABLE = 422
     const val HTTP_FORBIDDEN = 403
     const val HTTP_REQUEST_TIMEOUT = 408
+    const val HTTP_CONFLICT = 409
     const val HTTP_TOO_MANY_REQUESTS = 429
     const val HTTP_SERVICE_UNAVAILABLE = 503
 }
