@@ -33,6 +33,12 @@ proton {
     // apiModeDisabled()
 }
 
+android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -52,6 +58,8 @@ dependencies {
         `room-ktx`,
 
     )
+
+    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     api(
         project(Module.cryptoCommon),

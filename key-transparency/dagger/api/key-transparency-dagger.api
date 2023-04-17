@@ -1,4 +1,4 @@
-public class hilt_aggregated_deps/_me_proton_core_keytransparency_dagger_HiltWrapper_KeyTransparencyModule {
+public class hilt_aggregated_deps/_me_proton_core_keytransparency_dagger_KeyTransparencyModule {
 	public fun <init> ()V
 }
 
@@ -9,7 +9,14 @@ public final class me/proton/core/keytransparency/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/keytransparency/dagger/HiltWrapper_KeyTransparencyModule {
-	public fun <init> ()V
+public abstract interface class me/proton/core/keytransparency/dagger/KeyTransparencyModule {
+	public abstract fun optionalKeyTransparencyEnabled ()Z
+	public abstract fun provideEpochVerifier (Lme/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl;)Lme/proton/core/keytransparency/domain/usecase/VerifyEpoch;
+	public abstract fun provideGetHostType (Lme/proton/core/keytransparency/data/usecase/GetHostTypeImpl;)Lme/proton/core/keytransparency/domain/usecase/GetHostType;
+	public abstract fun provideIsKeyTransparencyEnabled (Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl;)Lme/proton/core/keytransparency/domain/usecase/IsKeyTransparencyEnabled;
+	public abstract fun provideKeyTransparencyRepository (Lme/proton/core/keytransparency/data/repository/KeyTransparencyRepositoryImpl;)Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;
+	public abstract fun provideProofVerifier (Lme/proton/core/keytransparency/data/usecase/VerifyProofGolangImpl;)Lme/proton/core/keytransparency/domain/usecase/VerifyProof;
+	public abstract fun providePublicAddressVerifier (Lme/proton/core/keytransparency/domain/PublicAddressVerifierImpl;)Lme/proton/core/key/domain/repository/PublicAddressVerifier;
+	public abstract fun provideSignedKeyListChangeListener (Lme/proton/core/keytransparency/domain/SignedKeyListChangeListenerImpl;)Lme/proton/core/user/domain/SignedKeyListChangeListener;
 }
 

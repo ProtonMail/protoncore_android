@@ -19,10 +19,12 @@
 package me.proton.core.keytransparency.dagger
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.key.domain.repository.PublicAddressVerifier
+import me.proton.core.keytransparency.data.KeyTransparencyEnabled
 import me.proton.core.keytransparency.data.repository.KeyTransparencyRepositoryImpl
 import me.proton.core.keytransparency.data.usecase.GetHostTypeImpl
 import me.proton.core.keytransparency.data.usecase.IsKeyTransparencyEnabledImpl
@@ -39,25 +41,33 @@ import me.proton.core.user.domain.SignedKeyListChangeListener
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface KeyTransparencyModule {
+public interface KeyTransparencyModule {
     @Binds
-    fun provideKeyTransparencyRepository(impl: KeyTransparencyRepositoryImpl): KeyTransparencyRepository
+    public fun provideKeyTransparencyRepository(impl: KeyTransparencyRepositoryImpl): KeyTransparencyRepository
 
     @Binds
-    fun provideProofVerifier(impl: VerifyProofGolangImpl): VerifyProof
+    public fun provideProofVerifier(impl: VerifyProofGolangImpl): VerifyProof
 
     @Binds
-    fun provideEpochVerifier(impl: VerifyEpochGolangImpl): VerifyEpoch
+    public fun provideEpochVerifier(impl: VerifyEpochGolangImpl): VerifyEpoch
 
     @Binds
-    fun provideIsKeyTransparencyEnabled(impl: IsKeyTransparencyEnabledImpl): IsKeyTransparencyEnabled
+    public fun provideIsKeyTransparencyEnabled(impl: IsKeyTransparencyEnabledImpl): IsKeyTransparencyEnabled
 
     @Binds
-    fun provideSignedKeyListChangeListener(impl: SignedKeyListChangeListenerImpl): SignedKeyListChangeListener
+    public fun provideSignedKeyListChangeListener(impl: SignedKeyListChangeListenerImpl): SignedKeyListChangeListener
 
     @Binds
-    fun providePublicAddressVerifier(impl: PublicAddressVerifierImpl): PublicAddressVerifier
+    public fun providePublicAddressVerifier(impl: PublicAddressVerifierImpl): PublicAddressVerifier
 
     @Binds
-    fun provideGetHostType(impl: GetHostTypeImpl): GetHostType
+    public fun provideGetHostType(impl: GetHostTypeImpl): GetHostType
+
+    @BindsOptionalOf
+    @KeyTransparencyEnabled
+    public fun optionalKeyTransparencyEnabled(): Boolean
 }
+
+
+
+

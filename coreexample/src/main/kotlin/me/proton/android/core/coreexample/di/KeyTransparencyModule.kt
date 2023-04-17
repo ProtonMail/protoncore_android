@@ -16,24 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.keytransparency.data.usecase
+package me.proton.android.core.coreexample.di
 
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import me.proton.core.keytransparency.data.KeyTransparencyEnabled
-import me.proton.core.keytransparency.domain.usecase.GetHostType
-import me.proton.core.keytransparency.domain.usecase.HostType
-import me.proton.core.keytransparency.domain.usecase.IsKeyTransparencyEnabled
-import java.util.Optional
-import javax.inject.Inject
 
-public class IsKeyTransparencyEnabledImpl @Inject constructor(
+@Module
+@InstallIn(SingletonComponent::class)
+object KeyTransparencyModule {
+
+    @Provides
     @KeyTransparencyEnabled
-    private val keyTransparencyEnabled: Optional<Boolean>,
-    private val getHostType: GetHostType
-) : IsKeyTransparencyEnabled {
-
-    override suspend fun invoke(): Boolean {
-        // If not present, KT is disabled by default
-        val localFeatureFlag = keyTransparencyEnabled.isPresent && keyTransparencyEnabled.get()
-        return localFeatureFlag && getHostType() != HostType.Other
-    }
+    fun provideKeyTransparencyEnabled(): Boolean = true
 }
