@@ -37,7 +37,7 @@ public class RunSelfAudit @Inject internal constructor(
 ) {
 
     public suspend operator fun invoke(userId: UserId, forceRefresh: Boolean = false) {
-        if (isKeyTransparencyEnabled()) {
+        if (isKeyTransparencyEnabled(userId)) {
             if (forceRefresh || selfAuditIsExpired(userId)) {
                 val userAddresses = userManager.getAddresses(userId, refresh = true)
                 KeyTransparencyLogger.d("Running self audit")

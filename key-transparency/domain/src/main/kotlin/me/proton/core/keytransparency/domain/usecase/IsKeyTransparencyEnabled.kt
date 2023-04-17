@@ -18,6 +18,8 @@
 
 package me.proton.core.keytransparency.domain.usecase
 
+import me.proton.core.domain.entity.UserId
+
 public interface IsKeyTransparencyEnabled {
-    public suspend operator fun invoke(): Boolean
+    public suspend operator fun invoke(userId: UserId): Boolean
 }

@@ -24,6 +24,8 @@ import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.FeatureFlagManager
+import me.proton.core.keytransparency.data.usecase.IsKeyTransparencyEnabledImpl
 import me.proton.core.keytransparency.domain.Constants
 import me.proton.core.keytransparency.domain.repository.KeyTransparencyRepository
 import me.proton.core.keytransparency.domain.usecase.GetCurrentTime
@@ -37,7 +39,8 @@ public class SelfAuditStarter @Inject constructor(
     private val appLifecycleProvider: AppLifecycleProvider,
     private val keyTransparencyRepository: KeyTransparencyRepository,
     private val getCurrentTime: GetCurrentTime,
-    private val selfAuditWorkScheduler: SelfAuditWorker.Scheduler
+    private val selfAuditWorkScheduler: SelfAuditWorker.Scheduler,
+    private val featureFlagManager: FeatureFlagManager
 ) {
 
     private fun scheduleAuditForEachUser() {
@@ -52,6 +55,7 @@ public class SelfAuditStarter @Inject constructor(
 
     private suspend fun scheduleSelfAudit(userId: UserId) {
         val delay = getDelayForSelfAuditWorker(userId)
+        featureFlagManager.prefetch(userId, setOf(IsKeyTransparencyEnabledImpl.featureId))
         selfAuditWorkScheduler.scheduleSelfAudit(userId, delay)
     }
 

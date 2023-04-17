@@ -328,7 +328,7 @@ public final class me/proton/core/keytransparency/domain/usecase/HostType : java
 }
 
 public abstract interface class me/proton/core/keytransparency/domain/usecase/IsKeyTransparencyEnabled {
-	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/keytransparency/domain/usecase/NormalizeEmail {

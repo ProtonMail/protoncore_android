@@ -18,6 +18,9 @@
 
 package me.proton.core.keytransparency.data.usecase
 
+import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.FeatureFlagManager
+import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.keytransparency.data.KeyTransparencyEnabled
 import me.proton.core.keytransparency.domain.usecase.GetHostType
 import me.proton.core.keytransparency.domain.usecase.HostType
@@ -28,12 +31,24 @@ import javax.inject.Inject
 public class IsKeyTransparencyEnabledImpl @Inject constructor(
     @KeyTransparencyEnabled
     private val keyTransparencyEnabled: Optional<Boolean>,
-    private val getHostType: GetHostType
+    getHostType: GetHostType,
+    private val featureFlagManager: FeatureFlagManager
 ) : IsKeyTransparencyEnabled {
 
-    override suspend fun invoke(): Boolean {
-        // If not present, KT is disabled by default
-        val localFeatureFlag = keyTransparencyEnabled.isPresent && keyTransparencyEnabled.get()
-        return localFeatureFlag && getHostType() != HostType.Other
+    // If local FF is not present, KT is disabled by default
+    private val localFeatureFlag = keyTransparencyEnabled.isPresent && keyTransparencyEnabled.get()
+    private val hostSupportsKT = getHostType() != HostType.Other
+    private val globalFlag = localFeatureFlag && hostSupportsKT
+
+    override suspend fun invoke(userId: UserId): Boolean {
+        if (!globalFlag) {
+            return false
+        }
+        val backendFeatureFlag = featureFlagManager.get(userId, featureId)
+        return backendFeatureFlag?.value == true
+    }
+
+    internal companion object {
+        val featureId = FeatureId("KeyTransparencyAndroid")
     }
 }

@@ -13,16 +13,16 @@ public abstract interface annotation class me/proton/core/keytransparency/data/K
 }
 
 public final class me/proton/core/keytransparency/data/SelfAuditStarter {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 	public final fun start ()V
 }
 
 public final class me/proton/core/keytransparency/data/SelfAuditStarter_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/SelfAuditStarter_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/SelfAuditStarter_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/keytransparency/data/SelfAuditStarter;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;)Lme/proton/core/keytransparency/data/SelfAuditStarter;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/keytransparency/domain/repository/KeyTransparencyRepository;Lme/proton/core/keytransparency/domain/usecase/GetCurrentTime;Lme/proton/core/keytransparency/data/SelfAuditWorker$Scheduler;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/keytransparency/data/SelfAuditStarter;
 }
 
 public final class me/proton/core/keytransparency/data/SelfAuditWorker : androidx/work/CoroutineWorker {
@@ -160,16 +160,16 @@ public final class me/proton/core/keytransparency/data/usecase/GetHostTypeImpl_F
 }
 
 public final class me/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl : me/proton/core/keytransparency/domain/usecase/IsKeyTransparencyEnabled {
-	public fun <init> (Ljava/util/Optional;Lme/proton/core/keytransparency/domain/usecase/GetHostType;)V
-	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun <init> (Ljava/util/Optional;Lme/proton/core/keytransparency/domain/usecase/GetHostType;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/keytransparency/domain/usecase/GetHostType;)Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/keytransparency/domain/usecase/GetHostType;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/keytransparency/data/usecase/IsKeyTransparencyEnabledImpl;
 }
 
 public final class me/proton/core/keytransparency/data/usecase/VerifyEpochGolangImpl : me/proton/core/keytransparency/domain/usecase/VerifyEpoch {

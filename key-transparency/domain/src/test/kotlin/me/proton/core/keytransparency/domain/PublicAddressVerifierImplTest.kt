@@ -55,7 +55,7 @@ class PublicAddressVerifierImplTest {
         // given
         val userId = UserId("test-user-id")
         val publicAddress = mockk<PublicAddress>()
-        coEvery { isKeyTransparencyEnabled() } returns false
+        coEvery { isKeyTransparencyEnabled(userId) } returns false
         // when
         publicAddressVerifierImpl.verifyPublicAddress(userId, publicAddress)
         // then
@@ -72,7 +72,7 @@ class PublicAddressVerifierImplTest {
         val publicAddress = mockk<PublicAddress> {
             every { email } returns testEmail
         }
-        coEvery { isKeyTransparencyEnabled() } returns true
+        coEvery { isKeyTransparencyEnabled(userId) } returns true
         val result = PublicKeyVerificationResult.Success(VerifiedState.Existent(0))
         coEvery { verifyPublicAddress(userId, publicAddress) } returns result
         coJustRun { logKeyTransparency.logPublicAddressVerification(result) }

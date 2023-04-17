@@ -60,7 +60,7 @@ class RunSelfAuditTest {
     fun `when KT is deactivated, do nothing`() = runTest {
         // given
         val userId = UserId("test-user-id")
-        coEvery { isKeyTransparencyEnabled() } returns false
+        coEvery { isKeyTransparencyEnabled(userId) } returns false
         // when
         runSelfAudit(userId)
         // then
@@ -73,7 +73,7 @@ class RunSelfAuditTest {
     fun `when self audit ran recently, do nothing`() = runTest {
         // given
         val userId = UserId("test-user-id")
-        coEvery { isKeyTransparencyEnabled() } returns true
+        coEvery { isKeyTransparencyEnabled(userId) } returns true
         val selfAuditTimestamp = 1000L
         coEvery { keyTransparencyRepository.getTimestampOfSelfAudit(userId) } returns selfAuditTimestamp
         val currentTime = selfAuditTimestamp + 10L
@@ -90,7 +90,7 @@ class RunSelfAuditTest {
     fun `when self audit ran too long ago, run self audit`() = runTest {
         // given
         val userId = UserId("test-user-id")
-        coEvery { isKeyTransparencyEnabled() } returns true
+        coEvery { isKeyTransparencyEnabled(userId) } returns true
         val selfAuditTimestamp = 1000L
         coEvery { keyTransparencyRepository.getTimestampOfSelfAudit(userId) } returns selfAuditTimestamp
         val currentTime = selfAuditTimestamp + Constants.KT_SELF_AUDIT_INTERVAL_SECONDS + 10
@@ -119,7 +119,7 @@ class RunSelfAuditTest {
     fun `when self audit is forced refresh, run self audit`() = runTest {
         // given
         val userId = UserId("test-user-id")
-        coEvery { isKeyTransparencyEnabled() } returns true
+        coEvery { isKeyTransparencyEnabled(userId) } returns true
         val selfAuditTimestamp = 1000L
         coEvery { keyTransparencyRepository.getTimestampOfSelfAudit(userId) } returns selfAuditTimestamp
         val currentTime = selfAuditTimestamp + 10

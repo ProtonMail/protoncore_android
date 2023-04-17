@@ -63,7 +63,7 @@ class SignedKeyListChangeListenerImplTest {
             every { email } returns testEmail
             every { signedKeyList } returns oldSKL
         }
-        coEvery { isKeyTransparencyEnabled() } returns false
+        coEvery { isKeyTransparencyEnabled(userId) } returns false
         // when
         val result = listener.onSKLChangeRequested(
             userId,
@@ -86,7 +86,7 @@ class SignedKeyListChangeListenerImplTest {
             every { email } returns testEmail
             every { signedKeyList } returns oldSKL
         }
-        coEvery { isKeyTransparencyEnabled() } returns true
+        coEvery { isKeyTransparencyEnabled(userId) } returns true
         coEvery { checkAbsenceProof(userId, userAddress) } throws KeyTransparencyException("test: no absence proof")
         // when
         val result = listener.onSKLChangeRequested(
@@ -113,7 +113,7 @@ class SignedKeyListChangeListenerImplTest {
             every { email } returns testEmail
             every { signedKeyList } returns oldSKL
         }
-        coEvery { isKeyTransparencyEnabled() } returns true
+        coEvery { isKeyTransparencyEnabled(userId) } returns true
         val newSKL = mockk<PublicSignedKeyList>()
         coJustRun { storeAddressChange(userId, userAddress, newSKL) }
         // when
@@ -139,7 +139,7 @@ class SignedKeyListChangeListenerImplTest {
             every { email } returns testEmail
             every { signedKeyList } returns oldSKL
         }
-        coEvery { isKeyTransparencyEnabled() } returns false
+        coEvery { isKeyTransparencyEnabled(userId) } returns false
         val newSKL = mockk<PublicSignedKeyList>()
         // when
         val result = listener.onSKLChangeAccepted(

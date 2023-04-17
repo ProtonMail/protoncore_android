@@ -38,7 +38,7 @@ public class SignedKeyListChangeListenerImpl @Inject internal constructor(
         userId: UserId,
         userAddress: UserAddress
     ): SignedKeyListChangeListener.Result {
-        if (isKeyTransparencyEnabled()) {
+        if (isKeyTransparencyEnabled(userId)) {
             try {
                 KeyTransparencyLogger.d("Checking KT state before SKL change.")
                 // Android only creates SKL on signup
@@ -56,7 +56,7 @@ public class SignedKeyListChangeListenerImpl @Inject internal constructor(
         userAddress: UserAddress,
         skl: PublicSignedKeyList
     ): SignedKeyListChangeListener.Result {
-        if (isKeyTransparencyEnabled()) {
+        if (isKeyTransparencyEnabled(userId)) {
             try {
                 KeyTransparencyLogger.d("Storing address change after SKL upload.")
                 storeAddressChange(userId, userAddress, skl)

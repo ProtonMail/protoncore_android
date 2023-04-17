@@ -33,7 +33,7 @@ public class PublicAddressVerifierImpl @Inject internal constructor(
 ) : PublicAddressVerifier {
 
     override suspend fun verifyPublicAddress(userId: UserId, address: PublicAddress) {
-        if (isKeyTransparencyEnabled()) {
+        if (isKeyTransparencyEnabled(userId)) {
             KeyTransparencyLogger.d("Verifying public keys of address")
             val verifiedState = verifyPublicAddressUsecase(userId, address)
             logKeyTransparency.logPublicAddressVerification(verifiedState)
