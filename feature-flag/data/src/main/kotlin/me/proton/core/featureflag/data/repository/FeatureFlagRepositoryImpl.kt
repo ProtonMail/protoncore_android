@@ -60,7 +60,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
                 localDataSource.upsert(fetched + unknownFlags)
             },
         )
-    ).buildProtonStore(scopeProvider)
+    ).disableCache().buildProtonStore(scopeProvider)
 
     override fun observe(
         userId: UserId?,
@@ -92,6 +92,5 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     override suspend fun update(featureFlag: FeatureFlag) {
         localDataSource.upsert(listOf(featureFlag))
         remoteDataSource.update(featureFlag)
-        store.clear(StoreKey(featureFlag.userId, setOf(featureFlag.featureId)))
     }
 }
