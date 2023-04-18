@@ -11,6 +11,29 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.4.0] - 2023-04-18
+
+### Features
+
+- crypto:
+  - Add SRP challenge api for device verification.
+- human-verification:
+  - Add proof of work to the core library.
+
+### Bug Fixes
+
+- feature-flags:
+  - Fully disable in memory caching for feature flags
+
+    MAILAND-3071
+  - Clear store cache when updating feature flag value.
+
+    This ensures when the value of a feature flag is updated and then
+    immediately queried by the client, the updated value is returned over
+    the previous, outdated one that store keeps in its memory cache.
+    
+    MAILAND-3071
+
 ## [10.3.0] - 2023-04-13
 
 ### Features
