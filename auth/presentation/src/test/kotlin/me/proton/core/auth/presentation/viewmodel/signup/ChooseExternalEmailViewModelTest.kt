@@ -30,8 +30,8 @@ import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailView
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -181,8 +181,8 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.checkExternalEmail("username@email.text").join()
 
         // THEN
-        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotalV1>()
-        val usernameAvailabilityEventSlot = slot<SignupEmailAvailabilityTotalV1>()
+        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotal>()
+        val usernameAvailabilityEventSlot = slot<SignupEmailAvailabilityTotal>()
 
         coVerify {
             observabilityManager.enqueue(capture(fetchDomainsEventSlot), any())

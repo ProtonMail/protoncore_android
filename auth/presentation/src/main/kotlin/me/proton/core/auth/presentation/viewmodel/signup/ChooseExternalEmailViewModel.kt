@@ -26,15 +26,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.retry
 import me.proton.core.auth.domain.usecase.AccountAvailability
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.isRetryable
-import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.entity.Domain
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,7 +56,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
 
         // See CP-5335.
         val domains = accountAvailability.getDomains(
-            metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
         )
         val emailSplit = email.split("@")
         val username = emailSplit.getOrNull(0)
@@ -73,7 +69,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
             else -> {
                 accountAvailability.checkExternalEmail(
                     email = email,
-                    metricData = { SignupEmailAvailabilityTotalV1(it.toHttpApiStatus()) }
+                    metricData = { SignupEmailAvailabilityTotal(it.toHttpApiStatus()) }
                 )
                 emit(State.Success(email))
             }

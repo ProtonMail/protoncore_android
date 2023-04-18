@@ -23,7 +23,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import kotlin.test.BeforeTest
@@ -48,7 +48,7 @@ class CreatePaymentTokenWithNewPayPalTest {
             amount = 1,
             currency = Currency.CHF,
             paymentType = mockk(relaxed = true),
-            metricData = { CheckoutPaymentMethodsCreatePaymentTokenTotalV1(it.toHttpApiStatus()) }
+            metricData = { CheckoutPaymentMethodsCreatePaymentTokenTotal(it.toHttpApiStatus()) }
         )
     }
 }

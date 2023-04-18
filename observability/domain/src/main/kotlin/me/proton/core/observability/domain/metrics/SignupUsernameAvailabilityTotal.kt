@@ -23,28 +23,14 @@ import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Subscribing to a paid plan (after the login).")
-@SchemaId("https://proton.me/android_core_checkout_billing_subscribe_total_v1.schema.json")
-public data class CheckoutBillingSubscribeTotalV1(
-    override val Labels: LabelsData,
-    @Required override val Value: Long = 1,
+@Schema(description = "Checking for username availability during the signup.")
+@SchemaId("https://proton.me/android_core_signup_usernameAvailability_total_v2.schema.json")
+public data class SignupUsernameAvailabilityTotal(
+    override val Labels: HttpStatusLabels,
+    @Required override val Value: Long = 1
 ) : ObservabilityData() {
-    public constructor(status: HttpApiStatus, manager: Manager) : this(LabelsData(status, manager))
-
-    @Serializable
-    public data class LabelsData constructor(
-        @get:Schema(required = true)
-        val status: HttpApiStatus,
-
-        @get:Schema(required = true)
-        val manager: Manager
-    )
-
-    @Suppress("EnumEntryName", "EnumNaming")
-    public enum class Manager {
-        proton,
-        google
-    }
+    public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
 }

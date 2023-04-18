@@ -26,9 +26,9 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Validate a plan for Card billing.")
-@SchemaId("https://proton.me/android_core_checkout_cardBilling_validatePlan_total_v1.schema.json")
-public data class CheckoutCardBillingValidatePlanTotalV1(
+@Schema(description = "Fetching payment methods on Existing Payment Options screen.")
+@SchemaId("https://proton.me/android_core_checkout_paymentMethods_getPaymentMethods_total_v2.schema.json")
+public data class CheckoutPaymentMethodsGetPaymentMethodsTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

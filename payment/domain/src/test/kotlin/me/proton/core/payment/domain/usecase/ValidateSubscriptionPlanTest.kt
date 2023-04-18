@@ -26,7 +26,7 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
@@ -141,10 +141,10 @@ class ValidateSubscriptionPlanTest {
             plans = listOf(testPlanName),
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
-            metricData = { CheckoutCardBillingValidatePlanTotalV1(it.toHttpApiStatus()) }
+            metricData = { CheckoutCardBillingValidatePlanTotal(it.toHttpApiStatus()) }
         )
 
-        val dataSlot = slot<CheckoutCardBillingValidatePlanTotalV1>()
+        val dataSlot = slot<CheckoutCardBillingValidatePlanTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }

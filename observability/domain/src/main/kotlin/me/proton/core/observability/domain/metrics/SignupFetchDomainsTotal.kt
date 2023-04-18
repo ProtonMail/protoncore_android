@@ -26,9 +26,9 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Fetching payment methods on Existing Payment Options screen.")
-@SchemaId("https://proton.me/android_core_checkout_paymentMethods_getPaymentMethods_total_v1.schema.json")
-public data class CheckoutPaymentMethodsGetPaymentMethodsTotalV1(
+@Schema(description = "Fetching the domains during the signup.")
+@SchemaId("https://proton.me/android_core_signup_fetchDomains_total_v2.schema.json")
+public data class SignupFetchDomainsTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

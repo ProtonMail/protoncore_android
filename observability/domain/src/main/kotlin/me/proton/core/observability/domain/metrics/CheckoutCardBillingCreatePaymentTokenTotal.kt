@@ -26,9 +26,9 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Logging in just after the signup.")
-@SchemaId("https://proton.me/android_core_signup_login_total_v1.schema.json")
-public data class SignupLoginTotalV1(
+@Schema(description = "Creating payment token for Card billing.")
+@SchemaId("https://proton.me/android_core_checkout_cardBilling_createPaymentToken_total_v2.schema.json")
+public data class CheckoutCardBillingCreatePaymentTokenTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

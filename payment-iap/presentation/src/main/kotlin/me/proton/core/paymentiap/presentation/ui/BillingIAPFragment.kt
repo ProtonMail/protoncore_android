@@ -29,10 +29,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotal
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
@@ -183,14 +182,14 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     customerId = customerId
                 ),
                 subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED,
-                paymentTokenMetricData = { r -> CheckoutGiapBillingCreatePaymentTokenTotalV1(r.toHttpApiStatus()) },
+                paymentTokenMetricData = { r -> CheckoutGiapBillingCreatePaymentTokenTotal(r.toHttpApiStatus()) },
                 subscribeMetricData = { result, management ->
-                    CheckoutBillingSubscribeTotalV1(
+                    CheckoutBillingSubscribeTotal(
                         result.toHttpApiStatus(),
                         management.toCheckoutBillingSubscribeManager()
                     )
                 },
-                validatePlanMetricData = { result -> CheckoutGiapBillingValidatePlanTotalV1(result.toHttpApiStatus()) }
+                validatePlanMetricData = { result -> CheckoutGiapBillingValidatePlanTotal(result.toHttpApiStatus()) }
             )
         }
     }

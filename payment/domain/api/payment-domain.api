@@ -370,7 +370,7 @@ public final class me/proton/core/payment/domain/entity/SubscriptionManagement$C
 }
 
 public final class me/proton/core/payment/domain/entity/SubscriptionManagementKt {
-	public static final fun toCheckoutBillingSubscribeManager (Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotalV1$Manager;
+	public static final fun toCheckoutBillingSubscribeManager (Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$Manager;
 }
 
 public final class me/proton/core/payment/domain/entity/SubscriptionStatus {

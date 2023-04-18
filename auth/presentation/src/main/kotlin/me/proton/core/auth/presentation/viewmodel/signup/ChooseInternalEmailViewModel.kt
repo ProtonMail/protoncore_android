@@ -20,19 +20,15 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.retry
 import me.proton.core.auth.domain.usecase.AccountAvailability
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.isRetryable
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
-import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
@@ -75,7 +71,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
         emit(State.Processing)
         // See CP-5335.
         domainsState.value = accountAvailability.getDomains(
-            metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
         )
         emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
     }.catch { error ->
@@ -99,7 +95,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
         emit(State.Processing)
         accountAvailability.checkUsername(
             "$username@$domain",
-            metricData = { SignupUsernameAvailabilityTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
         )
         emit(State.Success(username, domain))
     }.catch { error ->

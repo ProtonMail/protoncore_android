@@ -39,7 +39,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -101,7 +101,7 @@ class SecondFactorViewModel @Inject constructor(
             isTwoPassModeNeeded = isTwoPassModeNeeded,
             temporaryPassword = false,
             subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotalV1(
+                CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )

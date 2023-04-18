@@ -29,9 +29,9 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotal
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotal
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
@@ -166,14 +166,14 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                 )
             ),
             SubscriptionManagement.PROTON_MANAGED,
-            paymentTokenMetricData = { CheckoutCardBillingCreatePaymentTokenTotalV1(it.toHttpApiStatus()) },
+            paymentTokenMetricData = { CheckoutCardBillingCreatePaymentTokenTotal(it.toHttpApiStatus()) },
             subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotalV1(
+                CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )
             },
-            validatePlanMetricData = { CheckoutCardBillingValidatePlanTotalV1(it.toHttpApiStatus()) }
+            validatePlanMetricData = { CheckoutCardBillingValidatePlanTotal(it.toHttpApiStatus()) }
         )
     }
 

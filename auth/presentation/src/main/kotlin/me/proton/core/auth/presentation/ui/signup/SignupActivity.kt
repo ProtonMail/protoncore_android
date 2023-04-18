@@ -23,8 +23,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -51,7 +49,7 @@ import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.SignupLoginTotalV1
+import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
@@ -213,7 +211,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             state.password,
             signUpViewModel.currentAccountType,
             billingDetails,
-            loginMetricData = { SignupLoginTotalV1(it.toHttpApiStatus()) },
+            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus()) },
             unlockUserMetricData = { SignupUnlockUserTotalV1(it.toUnlockUserStatus()) },
             userCheckMetricData = { SignupUserCheckTotalV1(it.toUserCheckStatus()) }
         )

@@ -26,9 +26,9 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Checking for username availability during the signup.")
-@SchemaId("https://proton.me/android_core_signup_usernameAvailability_total_v1.schema.json")
-public data class SignupUsernameAvailabilityTotalV1(
+@Schema(description = "Creating payment token for GIAP billing.")
+@SchemaId("https://proton.me/android_core_checkout_giapBilling_createPaymentToken_total_v2.schema.json")
+public data class CheckoutGiapBillingCreatePaymentTokenTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

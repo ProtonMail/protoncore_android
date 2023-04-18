@@ -26,9 +26,9 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Fetching the domains during the signup.")
-@SchemaId("https://proton.me/android_core_signup_fetchDomains_total_v1.schema.json")
-public data class SignupFetchDomainsTotalV1(
+@Schema(description = "Validating a plan for GIAP billing.")
+@SchemaId("https://proton.me/android_core_checkout_giapBilling_validatePlan_total_v2.schema.json")
+public data class CheckoutGiapBillingValidatePlanTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

@@ -30,7 +30,7 @@ import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupLoginTotalV1
+import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import kotlin.test.BeforeTest
@@ -77,11 +77,11 @@ class PerformLoginTest {
         tested.invoke(
             username = "test-username",
             password = "encrypted-test-password",
-            loginMetricData = { SignupLoginTotalV1(it.toHttpApiStatus()) }
+            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus()) }
         )
 
         // THEN
-        val loginEventSlot = slot<SignupLoginTotalV1>()
+        val loginEventSlot = slot<SignupLoginTotal>()
         verify { observabilityManager.enqueue(capture(loginEventSlot), any()) }
         assertEquals(HttpApiStatus.http2xx, loginEventSlot.captured.Labels.status)
     }

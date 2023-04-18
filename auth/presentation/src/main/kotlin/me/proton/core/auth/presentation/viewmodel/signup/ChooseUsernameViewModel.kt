@@ -27,8 +27,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AccountAvailability
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
-import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
@@ -54,11 +54,11 @@ internal class ChooseUsernameViewModel @Inject constructor(
         emit(State.Processing)
         // See CP-5335.
         accountAvailability.getDomains(
-            metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
         )
         accountAvailability.checkUsername(
             username = username,
-            metricData = { SignupUsernameAvailabilityTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
         )
         emit(State.Success(username))
     }.catch { error ->

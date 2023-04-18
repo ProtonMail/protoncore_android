@@ -26,11 +26,11 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
-@Schema(description = "Creating a payment token on Existing Payment Options screen.")
-@SchemaId("https://proton.me/android_core_checkout_paymentMethods_createPaymentToken_total_v1.schema.json")
-public data class CheckoutPaymentMethodsCreatePaymentTokenTotalV1(
+@Schema(description = "Checking for external email availability during the signup.")
+@SchemaId("https://proton.me/android_core_signup_emailAvailability_total_v2.schema.json")
+public data class SignupEmailAvailabilityTotal(
     override val Labels: HttpStatusLabels,
-    @Required override val Value: Long = 1
+    @Required override val Value: Long = 1,
 ) : ObservabilityData() {
     public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
 }

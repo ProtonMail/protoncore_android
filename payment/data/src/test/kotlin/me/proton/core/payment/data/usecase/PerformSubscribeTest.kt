@@ -32,7 +32,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
@@ -356,16 +356,16 @@ class PerformSubscribeTest {
             paymentToken = testPaymentToken,
             subscriptionManagement = SubscriptionManagement.PROTON_MANAGED,
             subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotalV1(
+                CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )
             }
         )
 
-        val dataSlot = slot<CheckoutBillingSubscribeTotalV1>()
+        val dataSlot = slot<CheckoutBillingSubscribeTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(CheckoutBillingSubscribeTotalV1.Manager.proton, dataSlot.captured.Labels.manager)
+        assertEquals(CheckoutBillingSubscribeTotal.Manager.proton, dataSlot.captured.Labels.manager)
         assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

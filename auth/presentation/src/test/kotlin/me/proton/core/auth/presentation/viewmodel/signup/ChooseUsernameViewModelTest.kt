@@ -30,8 +30,8 @@ import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
-import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -41,7 +41,6 @@ import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
-import kotlin.test.assertTrue
 
 class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     private lateinit var accountAvailability: AccountAvailability
@@ -137,8 +136,8 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel.checkUsername("test-username").join()
 
         // THEN
-        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotalV1>()
-        val usernameAvailabilityEventSlot = slot<SignupUsernameAvailabilityTotalV1>()
+        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotal>()
+        val usernameAvailabilityEventSlot = slot<SignupUsernameAvailabilityTotal>()
 
         coVerify {
             observabilityManager.enqueue(capture(fetchDomainsEventSlot), any())

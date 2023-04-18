@@ -25,7 +25,7 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
@@ -98,8 +98,8 @@ class GetAvailablePaymentMethodsTest {
 
     @Test
     fun `observability data is recorded`() = runTest {
-        useCase(testUserId, metricData = { CheckoutPaymentMethodsGetPaymentMethodsTotalV1(it.toHttpApiStatus()) })
-        val dataSlot = slot<CheckoutPaymentMethodsGetPaymentMethodsTotalV1>()
+        useCase(testUserId, metricData = { CheckoutPaymentMethodsGetPaymentMethodsTotal(it.toHttpApiStatus()) })
+        val dataSlot = slot<CheckoutPaymentMethodsGetPaymentMethodsTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }

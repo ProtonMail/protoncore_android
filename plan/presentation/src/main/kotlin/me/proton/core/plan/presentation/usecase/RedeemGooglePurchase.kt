@@ -20,7 +20,7 @@ package me.proton.core.plan.presentation.usecase
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
@@ -75,7 +75,7 @@ internal class RedeemGooglePurchase @Inject constructor(
             plans = planNames,
             currency.toSubscriptionCurrency(),
             planCycle.toSubscriptionCycle(),
-            metricData  = { CheckoutGiapBillingValidatePlanTotalV1(it.toHttpApiStatus()) }
+            metricData  = { CheckoutGiapBillingValidatePlanTotal(it.toHttpApiStatus()) }
         )
         val tokenResult = createPaymentTokenWithGoogleIAP(
             userId,

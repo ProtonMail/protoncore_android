@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.presentation.LogTag
@@ -65,7 +65,7 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
             unredeemedPurchase.status,
             userId,
             subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotalV1(
+                CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )

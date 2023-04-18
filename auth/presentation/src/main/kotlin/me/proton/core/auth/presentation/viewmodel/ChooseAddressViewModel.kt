@@ -40,11 +40,11 @@ import me.proton.core.auth.presentation.observability.toUserCheckStatus
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
-import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
+import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.LoginEaToIaUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.LoginEaToIaUserCheckTotalV1
-import me.proton.core.observability.domain.metrics.LoginEaToIaUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.LoginEaToIaUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
@@ -90,7 +90,7 @@ class ChooseAddressViewModel @Inject constructor(
     fun setUserId(userId: UserId) = flow {
         emit(ChooseAddressState.Processing)
         val domains = accountAvailability.getDomains(
-            metricData = { LoginEaToIaFetchDomainsTotalV1(it.toHttpApiStatus()) })
+            metricData = { LoginEaToIaFetchDomainsTotal(it.toHttpApiStatus()) })
         if (domains.isEmpty()) {
             emit(ChooseAddressState.Error.DomainsNotAvailable)
             return@flow
@@ -153,7 +153,7 @@ class ChooseAddressViewModel @Inject constructor(
         accountAvailability.checkUsername(
             userId = userId,
             username = "$username@$domain",
-            metricData = { LoginEaToIaUsernameAvailabilityTotalV1(it.toHttpApiStatus()) })
+            metricData = { LoginEaToIaUsernameAvailabilityTotal(it.toHttpApiStatus()) })
         emit(Result.success(username))
     }.catch {
         emit(Result.failure(it))
@@ -180,7 +180,7 @@ class ChooseAddressViewModel @Inject constructor(
             onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
             internalAddressDomain = domain,
             subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotalV1(
+                CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )

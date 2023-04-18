@@ -54,6 +54,7 @@ public data class SignupAccountCreationTotal(
         http4xx,
         http5xx,
         connectionError,
+        notConnected,
         parseError,
         sslError,
         unknown
@@ -84,6 +85,7 @@ private fun HttpApiStatus.toAccountCreationApiStatus(): SignupAccountCreationTot
         HttpApiStatus.http4xx -> SignupAccountCreationTotal.ApiStatus.http4xx
         HttpApiStatus.http5xx -> SignupAccountCreationTotal.ApiStatus.http5xx
         HttpApiStatus.connectionError -> SignupAccountCreationTotal.ApiStatus.connectionError
+        HttpApiStatus.notConnected -> SignupAccountCreationTotal.ApiStatus.notConnected
         HttpApiStatus.parseError -> SignupAccountCreationTotal.ApiStatus.parseError
         HttpApiStatus.sslError -> SignupAccountCreationTotal.ApiStatus.sslError
         HttpApiStatus.unknown -> SignupAccountCreationTotal.ApiStatus.unknown

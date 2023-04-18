@@ -13,9 +13,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotalV1
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
-import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.user.domain.repository.DomainRepository
@@ -48,11 +48,11 @@ internal class AccountAvailabilityTest {
         coEvery { domainRepository.getAvailableDomains() } returns listOf("a", "b")
 
         // WHEN
-        tested.getDomains(metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) })
+        tested.getDomains(metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) })
 
         // THEN
         verify {
-            observabilityManager.enqueue(SignupFetchDomainsTotalV1(HttpApiStatus.http2xx), any())
+            observabilityManager.enqueue(SignupFetchDomainsTotal(HttpApiStatus.http2xx), any())
         }
     }
 
@@ -65,12 +65,12 @@ internal class AccountAvailabilityTest {
 
         // WHEN
         assertFailsWith<ApiException> {
-            tested.getDomains(metricData = { SignupFetchDomainsTotalV1(it.toHttpApiStatus()) })
+            tested.getDomains(metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) })
         }
 
         // THEN
         verify {
-            observabilityManager.enqueue(SignupFetchDomainsTotalV1(HttpApiStatus.http4xx), any())
+            observabilityManager.enqueue(SignupFetchDomainsTotal(HttpApiStatus.http4xx), any())
         }
     }
 
@@ -86,13 +86,13 @@ internal class AccountAvailabilityTest {
         tested.checkUsername(
             userId = UserId("123"),
             username = "test-user",
-            metricData = { SignupUsernameAvailabilityTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
         )
 
         // THEN
         verify {
             observabilityManager.enqueue(
-                SignupUsernameAvailabilityTotalV1(HttpApiStatus.http2xx),
+                SignupUsernameAvailabilityTotal(HttpApiStatus.http2xx),
                 any()
             )
         }
@@ -113,14 +113,14 @@ internal class AccountAvailabilityTest {
             tested.checkUsername(
                 userId = UserId("123"),
                 username = "test-user",
-                metricData = { SignupUsernameAvailabilityTotalV1(it.toHttpApiStatus()) }
+                metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
             )
         }
 
         // THEN
         verify {
             observabilityManager.enqueue(
-                SignupUsernameAvailabilityTotalV1(HttpApiStatus.connectionError),
+                SignupUsernameAvailabilityTotal(HttpApiStatus.notConnected),
                 any()
             )
         }
@@ -134,13 +134,13 @@ internal class AccountAvailabilityTest {
         // WHEN
         tested.checkExternalEmail(
             email = "test@email.test",
-            metricData = { SignupEmailAvailabilityTotalV1(it.toHttpApiStatus()) }
+            metricData = { SignupEmailAvailabilityTotal(it.toHttpApiStatus()) }
         )
 
         // THEN
         verify {
             observabilityManager.enqueue(
-                SignupEmailAvailabilityTotalV1(HttpApiStatus.http2xx),
+                SignupEmailAvailabilityTotal(HttpApiStatus.http2xx),
                 any()
             )
         }
@@ -157,14 +157,14 @@ internal class AccountAvailabilityTest {
         assertFailsWith<ApiException> {
             tested.checkExternalEmail(
                 email = "test@email.test",
-                metricData = { SignupEmailAvailabilityTotalV1(it.toHttpApiStatus()) }
+                metricData = { SignupEmailAvailabilityTotal(it.toHttpApiStatus()) }
             )
         }
 
         // THEN
         verify {
             observabilityManager.enqueue(
-                SignupEmailAvailabilityTotalV1(HttpApiStatus.http5xx),
+                SignupEmailAvailabilityTotal(HttpApiStatus.http5xx),
                 any()
             )
         }

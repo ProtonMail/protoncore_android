@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.domain.entity
 
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 
 public enum class SubscriptionManagement(public val value: Int) {
     PROTON_MANAGED(0), GOOGLE_MANAGED(2);
@@ -28,9 +28,9 @@ public enum class SubscriptionManagement(public val value: Int) {
     }
 }
 
-public fun SubscriptionManagement.toCheckoutBillingSubscribeManager(): CheckoutBillingSubscribeTotalV1.Manager {
+public fun SubscriptionManagement.toCheckoutBillingSubscribeManager(): CheckoutBillingSubscribeTotal.Manager {
     return when (this) {
-        SubscriptionManagement.PROTON_MANAGED -> CheckoutBillingSubscribeTotalV1.Manager.proton
-        SubscriptionManagement.GOOGLE_MANAGED -> CheckoutBillingSubscribeTotalV1.Manager.google
+        SubscriptionManagement.PROTON_MANAGED -> CheckoutBillingSubscribeTotal.Manager.proton
+        SubscriptionManagement.GOOGLE_MANAGED -> CheckoutBillingSubscribeTotal.Manager.google
     }
 }

@@ -9,8 +9,8 @@ import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
 @Schema(description = "Fetching the domains when converting External account to Internal.")
-@SchemaId("https://proton.me/android_core_login_eaToIafetchDomains_total_v1.schema.json")
-public data class LoginEaToIaFetchDomainsTotalV1(
+@SchemaId("https://proton.me/android_core_login_eaToIafetchDomains_total_v2.schema.json")
+public data class LoginEaToIaFetchDomainsTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

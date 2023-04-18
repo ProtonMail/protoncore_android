@@ -46,7 +46,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
 import me.proton.core.network.domain.isPotentialBlocking
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
@@ -127,7 +127,7 @@ internal class LoginViewModel @Inject constructor(
             temporaryPassword = sessionInfo.temporaryPassword,
             billingDetails = billingDetails,
             subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotalV1(
+                CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )

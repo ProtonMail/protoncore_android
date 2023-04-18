@@ -33,10 +33,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsSubscribeTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsValidatePlanTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotal
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotal
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsSubscribeTotal
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsValidatePlanTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
@@ -134,7 +134,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
 
         val paymentProviders = getAvailablePaymentProviders()
         val paymentMethods = availablePaymentMethods(userId, metricData = {
-            CheckoutPaymentMethodsGetPaymentMethodsTotalV1(it.toHttpApiStatus())
+            CheckoutPaymentMethodsGetPaymentMethodsTotal(it.toHttpApiStatus())
         }).filter {
             when (it.type) {
                 PaymentMethodType.CARD -> PaymentProvider.CardPayment in paymentProviders
@@ -172,9 +172,9 @@ internal class PaymentOptionsViewModel @Inject constructor(
         cycle,
         paymentType,
         subscriptionManagement,
-        paymentTokenMetricData = { CheckoutPaymentMethodsCreatePaymentTokenTotalV1(it.toHttpApiStatus()) },
-        subscribeMetricData = { result, _ -> CheckoutPaymentMethodsSubscribeTotalV1(result.toHttpApiStatus()) },
-        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotalV1(it.toHttpApiStatus()) }
+        paymentTokenMetricData = { CheckoutPaymentMethodsCreatePaymentTokenTotal(it.toHttpApiStatus()) },
+        subscribeMetricData = { result, _ -> CheckoutPaymentMethodsSubscribeTotal(result.toHttpApiStatus()) },
+        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotal(it.toHttpApiStatus()) }
     )
 
     fun onThreeDSTokenApproved(
@@ -198,7 +198,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
         token,
         external,
         subscribeMetricData = { result, _ ->
-            CheckoutPaymentMethodsSubscribeTotalV1(result.toHttpApiStatus())
+            CheckoutPaymentMethodsSubscribeTotal(result.toHttpApiStatus())
         }
     )
 
@@ -216,7 +216,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
         codes,
         currency,
         cycle,
-        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotalV1(it.toHttpApiStatus()) }
+        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotal(it.toHttpApiStatus()) }
     )
 
     private fun Set<PaymentProvider>.createGIAPPaymentMethod() =

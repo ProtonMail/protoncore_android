@@ -19,9 +19,7 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
-import io.mockk.ManyAnswersAnswer
 import io.mockk.Ordering
-import io.mockk.ThrowingAnswer
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -33,10 +31,9 @@ import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailView
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotalV1
-import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotalV1
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.repository.DomainRepository
@@ -45,7 +42,6 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
-import kotlin.test.assertTrue
 
 class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
@@ -179,7 +175,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
     @Test
     fun `fetchDomains observability`() = coroutinesTest {
-        val dataSlot = slot<SignupFetchDomainsTotalV1>()
+        val dataSlot = slot<SignupFetchDomainsTotal>()
 
         // WHEN
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
@@ -192,7 +188,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
     @Test
     fun `checkUsername observability`() = coroutinesTest {
-        val dataSlot = slot<SignupUsernameAvailabilityTotalV1>()
+        val dataSlot = slot<SignupUsernameAvailabilityTotal>()
 
         // WHEN
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
