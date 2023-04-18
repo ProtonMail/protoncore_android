@@ -1774,6 +1774,7 @@ public final class me/proton/core/observability/domain/metrics/common/HttpApiSta
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
+	public static final field notConnected Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field parseError Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field sslError Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field unknown Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;

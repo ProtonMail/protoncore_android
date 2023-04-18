@@ -105,6 +105,7 @@ public class me/proton/core/network/domain/ApiResult$Error$Connection : me/proto
 	public fun <init> ()V
 	public fun <init> (ZLjava/lang/Throwable;)V
 	public synthetic fun <init> (ZLjava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun isConnectedToNetwork ()Z
 	public fun isPotentialBlocking ()Z
 	public fun toString ()Ljava/lang/String;
 }

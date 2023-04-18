@@ -86,24 +86,22 @@ sealed class ApiResult<out T> {
         /**
          * Base class for connection errors (no response available)
          *
-         * @property potentialBlock [true] if our API might have been blocked.
+         * @property isConnectedToNetwork Indicates if the device is connected to the network.
          */
         open class Connection(
-            private val potentialBlock: Boolean = false,
+            val isConnectedToNetwork: Boolean = false,
             cause: Throwable? = null
         ) : Error(cause) {
-            override val isPotentialBlocking get() = potentialBlock
+            override val isPotentialBlocking get() = isConnectedToNetwork
 
             override fun toString() =
-                "${this::class.simpleName} potentialBlock=$potentialBlock cause=$cause"
+                "${this::class.simpleName} potentialBlock=$isPotentialBlocking cause=$cause"
         }
 
         /**
          * Connection timed out.
-         *
-         * @param potentialBlock [true] if our API might have been blocked.
          */
-        class Timeout(potentialBlock: Boolean, cause: Throwable? = null) : Connection(potentialBlock, cause)
+        class Timeout(isConnectedToNetwork: Boolean, cause: Throwable? = null) : Connection(isConnectedToNetwork, cause)
 
         /**
          * Certificate verification failed.

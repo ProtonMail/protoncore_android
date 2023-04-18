@@ -28,6 +28,7 @@ public enum class HttpApiStatus {
     http4xx,
     http5xx,
     connectionError,
+    notConnected,
     parseError,
     sslError,
     unknown
@@ -40,14 +41,20 @@ public fun <R> Result<R>.toHttpApiStatus(): HttpApiStatus =
 public fun Throwable.toHttpApiStatus(): HttpApiStatus = when (this) {
     is ApiException -> when (val apiError = this.error) {
         is ApiResult.Error.Certificate -> HttpApiStatus.sslError
-        is ApiResult.Error.Connection -> HttpApiStatus.connectionError
+        is ApiResult.Error.Connection -> when (apiError.isConnectedToNetwork) {
+            true -> HttpApiStatus.connectionError
+            false -> HttpApiStatus.notConnected
+        }
+
         is ApiResult.Error.Http -> when (apiError.httpCode) {
             in 400..499 -> HttpApiStatus.http4xx
             in 500..599 -> HttpApiStatus.http5xx
             else -> HttpApiStatus.unknown
         }
+
         is ApiResult.Error.Parse -> HttpApiStatus.parseError
     }
+
     is SSLException -> HttpApiStatus.sslError
     else -> HttpApiStatus.unknown
 }

@@ -293,7 +293,7 @@ class AuthRepositoryImplTest {
     fun `logout connectivity error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Connection(
-            potentialBlock = false, cause = ConnectException("connection refused")
+            isConnectedToNetwork = false, cause = ConnectException("connection refused")
         )
         // WHEN
         val response = repository.revokeSession(testSessionId)
