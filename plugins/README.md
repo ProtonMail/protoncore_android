@@ -29,7 +29,11 @@ More info about setup, like groovy variant or legacy setup can be found at https
   , `protonKotlinLibrary`
 - Not published on MavenCentral.
 
-Use internally in core project to orchestrate dependencies and apply android/kotlin/dagger convention config. 
+Use internally in core project to orchestrate dependencies and apply android/kotlin/dagger convention config.
+
+## Coverage plugin
+- Plugin id: `me.proton.core.gradle-plugins.coverage`
+- Published on MavenCentral.
 
 ## Detekt plugin
 - Plugin id: `me.proton.core.gradle-plugins.detekt`

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,34 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "CoreGradlePlugins"
+package me.proton.core.gradle.plugins.coverage
 
-includeBuild("publish-core-plugins")
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
-include(
-    "core",
-    "coverage",
-    "detekt",
-    "jacoco",
-    "tests",
-    "include-core-build",
-    "publish-core-libraries"
-)
-
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://plugins.gradle.org/m2/")
-    }
-}
-
-enableFeaturePreview("VERSION_CATALOGS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../gradle/libs.versions.toml"))
-        }
+public class ProtonCoveragePlugin : Plugin<Project> {
+    override fun apply(target: Project) {
+        TODO("Not yet implemented")
     }
 }
