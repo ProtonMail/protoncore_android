@@ -13,6 +13,7 @@ kotlinDokka = "1.7.20"
 kotlinCoroutines = "1.6.4"
 kotlinSerialization = "1.4.1"
 kotlinBinaryCompatibilityValidator = "0.12.1"
+kotlinx-kover = "0.7.0-Alpha"
 vanniktechPublish = "0.18.0"
 
 [plugins]
@@ -39,4 +40,5 @@ easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easy
 easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", version.ref = "easyGradle" }
 gradleNexus-publish = { module = "io.github.gradle-nexus:publish-plugin", version.ref = "gradleNexusPublish" }
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
+kotlinx-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kotlinx-kover" }
 vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktechPublish" }

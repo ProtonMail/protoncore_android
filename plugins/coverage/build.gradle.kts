@@ -30,6 +30,10 @@ plugins {
     `java-gradle-plugin`
 }
 
+val functionalTest: SourceSet by sourceSets.creating {
+    java.srcDir(file("src/functionalTest"))
+}
+
 publishOption.shouldBePublishedAsPlugin = true
 
 gradlePlugin {
@@ -41,6 +45,8 @@ gradlePlugin {
             implementationClass = "me.proton.core.gradle.plugins.coverage.ProtonCoveragePlugin"
         }
     }
+
+    testSourceSets(functionalTest)
 }
 
 kotlin {
@@ -53,6 +59,22 @@ repositories {
 }
 
 dependencies {
+    api(libs.kotlinx.kover)
+
     implementation(gradleApi())
     implementation(kotlin("gradle-plugin"))
+
+    "functionalTestImplementation"("junit:junit:4.13.2")
+}
+
+val functionalTestTask = tasks.register<Test>("functionalTest") {
+    description = "Runs the functional tests."
+    group = "verification"
+    testClassesDirs = functionalTest.output.classesDirs
+    classpath = functionalTest.runtimeClasspath
+    mustRunAfter(tasks.test)
+}
+
+tasks.check {
+    dependsOn(functionalTestTask)
 }

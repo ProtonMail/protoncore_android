@@ -18,15 +18,21 @@
 
 package me.proton.core.gradle.plugins.coverage
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.create
+import kotlinx.kover.gradle.plugin.dsl.KoverReportFilter
+import org.gradle.api.provider.Property
 
-internal const val PROTON_COVERAGE_EXT: String = "protonCoverage"
+private const val DEFAULT_MIN_BRANCH_PERCENTAGE_COVERAGE = 90
+private const val DEFAULT_MIN_LINE_PERCENTAGE_COVERAGE = 90
 
-public class ProtonCoveragePlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        val ext = target.extensions.create<ProtonCoverageExtension>(PROTON_COVERAGE_EXT)
-        ext.applyConventions()
-    }
+public interface ProtonCoverageExtension {
+    public val disabledForProject: Property<Boolean>
+    public val excludes: Property<KoverReportFilter.() -> Unit>
+    public val minBranchCoveragePercentage: Property<Int>
+    public val minLineCoveragePercentage: Property<Int>
+}
+
+internal fun ProtonCoverageExtension.applyConventions() {
+    disabledForProject.convention(false)
+    minBranchCoveragePercentage.convention(DEFAULT_MIN_BRANCH_PERCENTAGE_COVERAGE)
+    minLineCoveragePercentage.convention(DEFAULT_MIN_LINE_PERCENTAGE_COVERAGE)
 }
