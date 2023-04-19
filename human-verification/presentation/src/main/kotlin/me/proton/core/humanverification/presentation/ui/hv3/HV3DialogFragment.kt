@@ -59,7 +59,7 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.client.getId
-import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1
+import me.proton.core.observability.domain.metrics.HvPageLoadTotal
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.launchOnScreenView
@@ -221,7 +221,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             }
             Type.Loaded -> {
                 setLoading(false)
-                viewModel.onPageLoad(HvPageLoadTotalV1.Status.http2xx)
+                viewModel.onPageLoad(HvPageLoadTotal.Status.http2xx)
             }
             Type.Resize -> {} // No action needed
         }

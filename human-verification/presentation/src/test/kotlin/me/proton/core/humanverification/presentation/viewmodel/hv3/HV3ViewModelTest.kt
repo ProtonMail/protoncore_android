@@ -36,10 +36,10 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1
-import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1.Routing
-import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1.Status
-import me.proton.core.observability.domain.metrics.HvScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.HvPageLoadTotal
+import me.proton.core.observability.domain.metrics.HvPageLoadTotal.Routing
+import me.proton.core.observability.domain.metrics.HvPageLoadTotal.Status
+import me.proton.core.observability.domain.metrics.HvScreenViewTotal
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -150,7 +150,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
     @Test
     fun `when onScreenView, enqueue hv observability screenView`() = coroutinesTest {
         // GIVEN
-        val screenView = HvScreenViewTotalV1(HvScreenViewTotalV1.ScreenId.hv3)
+        val screenView = HvScreenViewTotal(HvScreenViewTotal.ScreenId.hv3)
 
         viewModel = HV3ViewModel(
             humanVerificationWorkflowHandler,
@@ -169,7 +169,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
     @Test
     fun `when onPageLoad, enqueue hv observability pageLoad, standard routing`() = coroutinesTest {
         // GIVEN
-        val pageLoad = HvPageLoadTotalV1(status = Status.http2xx, routing = Routing.standard)
+        val pageLoad = HvPageLoadTotal(status = Status.http2xx, routing = Routing.standard)
         every { networkPrefs.activeAltBaseUrl } returns null
 
         viewModel = HV3ViewModel(
@@ -189,7 +189,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
     @Test
     fun `when onPageLoad, enqueue hv observability pageLoad, alternative routing`() = coroutinesTest {
         // GIVEN
-        val pageLoad = HvPageLoadTotalV1(status = Status.http2xx, routing = Routing.alternative)
+        val pageLoad = HvPageLoadTotal(status = Status.http2xx, routing = Routing.alternative)
         every { networkPrefs.activeAltBaseUrl } returns "alternativeBaseUrl"
 
         viewModel = HV3ViewModel(

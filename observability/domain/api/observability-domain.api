@@ -699,232 +699,235 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$ScreenId;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;J)V
-	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;J)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
-	public fun getLabels ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public final fun component2 ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public final fun component2 ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getRouting ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;
-	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
+	public final fun getRouting ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData$$serializer;
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$LabelsData$Companion {
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing : java/lang/Enum {
-	public static final field alternative Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;
-	public static final field standard Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Routing;
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing : java/lang/Enum {
+	public static final field alternative Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;
+	public static final field standard Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Routing;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status : java/lang/Enum {
-	public static final field connectionError Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public static final field http2xx Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public static final field http4xx Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public static final field http5xx Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public static final field sslError Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$Status : java/lang/Enum {
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field http400 Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field http404 Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field http422 Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;J)V
-	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/HvResultTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/HvResultTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;J)Lme/proton/core/observability/domain/metrics/HvResultTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvResultTotalV1;Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvResultTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/HvResultTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvResultTotal;Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvResultTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
-	public fun getLabels ()Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvResultTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/HvResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvResultTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvResultTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvResultTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvResultTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvResultTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/HvResultTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;)Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/HvResultTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvResultTotal$Status;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;)Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData$$serializer;
+public final class me/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1$LabelsData$Companion {
+public final class me/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotalV1$Status : java/lang/Enum {
-	public static final field cancellation Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
-	public static final field failure Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
-	public static final field success Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvResultTotalV1$Status;
+public final class me/proton/core/observability/domain/metrics/HvResultTotal$Status : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
+	public static final field failure Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
+	public static final field success Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;J)V
-	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;J)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1;Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
-	public fun getLabels ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;
+	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData$$serializer;
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1$LabelsData$Companion {
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId : java/lang/Enum {
-	public static final field hv3 Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvScreenViewTotalV1$ScreenId;
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId : java/lang/Enum {
+	public static final field hv3 Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {

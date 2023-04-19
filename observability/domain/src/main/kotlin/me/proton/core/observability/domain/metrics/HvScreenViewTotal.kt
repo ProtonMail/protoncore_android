@@ -24,32 +24,22 @@ import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
 
 @Serializable
-@Schema(description = "Loading the Verify web app inside Android's web view.")
-@SchemaId("https://proton.me/android_core_hv_pageLoad_total_v1.schema.json")
-public data class HvPageLoadTotalV1(
+@Schema(description = "Screen views during the Human Verification.")
+@SchemaId("https://proton.me/android_core_hv_screenView_total_v1.schema.json")
+public data class HvScreenViewTotal(
     override val Labels: LabelsData,
-    @Required override val Value: Long = 1
+    @Required override val Value: Long = 1,
 ) : ObservabilityData() {
-    public constructor(status: Status, routing: Routing) : this(LabelsData(status, routing))
+    public constructor(screenId: ScreenId) : this(LabelsData(screenId))
 
     @Serializable
+    @Suppress("ConstructorParameterNaming")
     public data class LabelsData constructor(
-        val status: Status,
-        val routing: Routing
+        val screen_id: ScreenId
     )
 
     @Suppress("EnumNaming", "EnumEntryName")
-    public enum class Status {
-        http2xx,
-        http4xx,
-        http5xx,
-        connectionError,
-        sslError
-    }
-
-    @Suppress("EnumNaming", "EnumEntryName")
-    public enum class Routing {
-        standard,
-        alternative
+    public enum class ScreenId {
+        hv3
     }
 }

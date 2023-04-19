@@ -37,7 +37,7 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.HvResultTotalV1
+import me.proton.core.observability.domain.metrics.HvResultTotal
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -175,7 +175,7 @@ class HumanVerificationManagerImplTest {
     @Test
     fun `on handleHumanVerificationSuccess, enqueue hv observability success`() = runTest {
         // GIVEN
-        val result = HvResultTotalV1(HvResultTotalV1.Status.success)
+        val result = HvResultTotal(HvResultTotal.Status.success)
         // WHEN
         humanVerificationManager.handleHumanVerificationSuccess(clientId, "token", "code")
         // THEN
@@ -185,7 +185,7 @@ class HumanVerificationManagerImplTest {
     @Test
     fun `on handleHumanVerificationFailed, enqueue hv observability failure`() = runTest {
         // GIVEN
-        val result = HvResultTotalV1(HvResultTotalV1.Status.failure)
+        val result = HvResultTotal(HvResultTotal.Status.failure)
         // WHEN
         humanVerificationManager.handleHumanVerificationFailed(clientId)
         // THEN
@@ -195,7 +195,7 @@ class HumanVerificationManagerImplTest {
     @Test
     fun `on handleHumanVerificationCancelled, enqueue hv observability cancellation`() = runTest {
         // GIVEN
-        val result = HvResultTotalV1(HvResultTotalV1.Status.cancellation)
+        val result = HvResultTotal(HvResultTotal.Status.cancellation)
         // WHEN
         humanVerificationManager.handleHumanVerificationCancelled(clientId)
         // THEN

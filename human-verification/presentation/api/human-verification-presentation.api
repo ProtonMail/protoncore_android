@@ -622,7 +622,7 @@ public final class me/proton/core/humanverification/presentation/viewmodel/hv3/H
 	public final fun getActiveAltUrlForDoH ()Ljava/lang/String;
 	public final fun getHumanVerificationExtraParams (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onHumanVerificationResult (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/humanverification/presentation/entity/HumanVerificationToken;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun onPageLoad (Lme/proton/core/observability/domain/metrics/HvPageLoadTotalV1$Status;)V
+	public final fun onPageLoad (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;)V
 	public final fun onScreenView ()V
 }
 

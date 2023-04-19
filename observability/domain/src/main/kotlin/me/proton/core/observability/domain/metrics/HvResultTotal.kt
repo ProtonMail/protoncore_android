@@ -26,7 +26,7 @@ import me.proton.core.observability.domain.entity.SchemaId
 @Serializable
 @Schema(description = "Result of the human verification.")
 @SchemaId("https://proton.me/android_core_hv_result_total_v1.schema.json")
-public data class HvResultTotalV1(
+public data class HvResultTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

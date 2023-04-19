@@ -30,8 +30,8 @@ import me.proton.core.humanverification.presentation.entity.HumanVerificationTok
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.HvPageLoadTotalV1
-import me.proton.core.observability.domain.metrics.HvScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.HvPageLoadTotal
+import me.proton.core.observability.domain.metrics.HvScreenViewTotal
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import javax.inject.Inject
@@ -86,14 +86,14 @@ class HV3ViewModel @Inject constructor(
     }
 
     fun onScreenView() {
-        observabilityManager.enqueue(HvScreenViewTotalV1(HvScreenViewTotalV1.ScreenId.hv3))
+        observabilityManager.enqueue(HvScreenViewTotal(HvScreenViewTotal.ScreenId.hv3))
     }
 
-    fun onPageLoad(status: HvPageLoadTotalV1.Status) {
+    fun onPageLoad(status: HvPageLoadTotal.Status) {
         val routing = when {
-            activeAltUrlForDoH != null -> HvPageLoadTotalV1.Routing.alternative
-            else -> HvPageLoadTotalV1.Routing.standard
+            activeAltUrlForDoH != null -> HvPageLoadTotal.Routing.alternative
+            else -> HvPageLoadTotal.Routing.standard
         }
-        observabilityManager.enqueue(HvPageLoadTotalV1(status, routing))
+        observabilityManager.enqueue(HvPageLoadTotal(status, routing))
     }
 }
