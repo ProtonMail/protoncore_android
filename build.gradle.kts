@@ -39,6 +39,7 @@ plugins {
     alias(libs.plugins.kotlin.gradle)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dependencyAnalysis)
+    alias(libs.plugins.kotlinx.kover) apply false
 }
 
 buildscript {

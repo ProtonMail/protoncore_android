@@ -23,6 +23,7 @@ easyGradle = { id = "studio.forface.easygradle", version.ref = "easyGradle" }
 kotlin-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBinaryCompatibilityValidator" }
 kotlin-gradle = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlinx-kover" }
 
 [libraries]
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradle" }

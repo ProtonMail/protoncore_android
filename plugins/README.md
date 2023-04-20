@@ -35,6 +35,10 @@ Use internally in core project to orchestrate dependencies and apply android/kot
 - Plugin id: `me.proton.core.gradle-plugins.coverage`
 - Published on MavenCentral.
 
+Apply the plugin to each module for which the code coverage is needed.
+Additional settings can be configured via `protonCoverage` extension,
+e.g. setting custom minimum coverage levels, excluding additional files.
+
 ## Detekt plugin
 - Plugin id: `me.proton.core.gradle-plugins.detekt`
 - Published on MavenCentral.

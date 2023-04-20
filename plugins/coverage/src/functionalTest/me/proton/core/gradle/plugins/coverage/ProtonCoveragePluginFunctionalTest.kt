@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ class ProtonCoveragePluginFunctionalTest {
         buildFile.appendText(
             """
                 protonCoverage {
-                    disabledForProject.set(false)
+                    disabled.set(false)
                     excludes.add {
                         annotatedBy("kotlinx.serialization.Serializable")
                     }
@@ -60,9 +60,12 @@ class ProtonCoveragePluginFunctionalTest {
 
         val result = GradleRunner.create()
             .withProjectDir(buildFile.parentFile)
+            .withArguments("tasks")
             .withPluginClasspath()
             .build()
 
+        result.output.contains("koverVerify")
+        result.output.contains("koverXmlReport")
         result.output.contains("BUILD SUCCESSFUL")
     }
 }
