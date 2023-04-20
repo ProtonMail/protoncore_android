@@ -49,7 +49,7 @@ class ProtonCoveragePluginFunctionalTest {
             """
                 protonCoverage {
                     disabledForProject.set(false)
-                    excludes.set {
+                    excludes.add {
                         annotatedBy("kotlinx.serialization.Serializable")
                     }
                     minBranchCoveragePercentage.set(74)
