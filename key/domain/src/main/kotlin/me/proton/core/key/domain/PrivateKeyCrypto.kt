@@ -314,12 +314,14 @@ fun PrivateKeyRing.signData(data: ByteArray, signatureContext: SignatureContext?
 /**
  * Sign [file] using primary [UnlockedPrivateKey].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [file] cannot be signed.
  *
  * @see [PublicKeyRing.verifyFile]
  */
-fun PrivateKeyRing.signFile(file: File): Signature =
-    unlockedPrimaryKey.signFile(context, file)
+fun PrivateKeyRing.signFile(file: File, signatureContext: SignatureContext? = null): Signature =
+    unlockedPrimaryKey.signFile(context, file, signatureContext)
 
 /**
  * Sign [text] using this [UnlockedPrivateKey]
@@ -365,6 +367,8 @@ fun PrivateKeyRing.signDataEncrypted(
  * Sign [file] using this [UnlockedPrivateKey]
  * and then encrypt the signature with [encryptionKeyRing].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [file] cannot be signed.
  *
  * @see [PrivateKeyRing.verifyFileEncrypted]
@@ -372,9 +376,10 @@ fun PrivateKeyRing.signDataEncrypted(
 fun PrivateKeyRing.signFileEncrypted(
     context: CryptoContext,
     file: File,
-    encryptionKeyRing: PublicKeyRing
+    encryptionKeyRing: PublicKeyRing,
+    signatureContext: SignatureContext? = null
 ): Signature =
-    unlockedPrimaryKey.signFileEncrypted(context, file, encryptionKeyRing)
+    unlockedPrimaryKey.signFileEncrypted(context, file, encryptionKeyRing, signatureContext)
 
 /**
  * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]

@@ -143,34 +143,63 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // region Private Encrypt
 
+    private data class SignatureParameters(
+        val signingUnlockedKey: Unarmored,
+        val signatureContext: SignatureContext?
+    )
+
     private fun encryptMessage(
         plainMessage: PlainMessage,
         publicKey: Armored,
-        signKeyRing: KeyRing? = null
     ): EncryptedMessage {
         val publicKeyRing = publicKey.keyRing()
-        return publicKeyRing.encrypt(plainMessage, signKeyRing).armored
+        return publicKeyRing.encrypt(plainMessage, null).armored
     }
 
-    private fun encryptMessageWithCompression(
+    private fun encryptAndSignMessage(
         plainMessage: PlainMessage,
         publicKey: Armored,
-        signKeyRing: KeyRing? = null
+        signatureParameters: SignatureParameters
     ): EncryptedMessage {
         val publicKeyRing = publicKey.keyRing()
-        return publicKeyRing.encryptWithCompression(plainMessage, signKeyRing).armored
+        return newKey(signatureParameters.signingUnlockedKey).use { key ->
+            newKeyRing(key).use { signKeyRing ->
+                val context = signatureParameters.signatureContext?.toGolang()
+                publicKeyRing.encryptWithContext(plainMessage, signKeyRing.value, context).armored
+            }
+        }
+    }
+
+    private fun encryptAndSignMessageWithCompression(
+        plainMessage: PlainMessage,
+        publicKey: Armored,
+        signatureParameters: SignatureParameters
+    ): EncryptedMessage {
+        val publicKeyRing = publicKey.keyRing()
+        return newKey(signatureParameters.signingUnlockedKey).use { key ->
+            newKeyRing(key).use { signKeyRing ->
+                val context = signatureParameters.signatureContext?.toGolang()
+                publicKeyRing.encryptWithContextAndCompression(plainMessage, signKeyRing.value, context).armored
+            }
+        }
     }
 
     private fun encryptMessageSessionKey(
         plainMessage: PlainMessage,
         sessionKey: SessionKey,
-        signKeyRing: KeyRing? = null
+    ): DataPacket = sessionKey.toInternalSessionKey().encrypt(plainMessage)
+
+    private fun encryptAndSignMessageSessionKey(
+        plainMessage: PlainMessage,
+        sessionKey: SessionKey,
+        signatureParameters: SignatureParameters
     ): DataPacket {
         return sessionKey.toInternalSessionKey().let { internalSessionKey ->
-            if (signKeyRing != null) {
-                internalSessionKey.encryptAndSign(plainMessage, signKeyRing)
-            } else {
-                internalSessionKey.encrypt(plainMessage)
+            newKey(signatureParameters.signingUnlockedKey).use { key ->
+                newKeyRing(key).use { signKeyRing ->
+                    val context = signatureParameters.signatureContext?.toGolang()
+                    internalSessionKey.encryptAndSignWithContext(plainMessage, signKeyRing.value, context)
+                }
             }
         }
     }
@@ -178,15 +207,14 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun encryptFileSessionKey(
         source: File,
         destination: File,
-        sessionKey: SessionKey,
-        signKeyRing: KeyRing? = null
+        sessionKey: SessionKey
     ): EncryptedFile {
         source.inputStream().use { fileInputStream ->
             destination.outputStream().use { fileOutputStream ->
                 val writer = Mobile2GoWriter(fileOutputStream.writer())
                 val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
                 val internalSessionKey = sessionKey.toInternalSessionKey()
-                val writeCloser = internalSessionKey.encryptStream(writer, plainMessageMetadata, signKeyRing)
+                val writeCloser = internalSessionKey.encryptStream(writer, plainMessageMetadata, null)
                 fileInputStream.reader().copyTo(writeCloser)
                 writeCloser.close()
                 return destination
@@ -198,48 +226,28 @@ class GOpenPGPCrypto : PGPCrypto {
         source: File,
         destination: File,
         sessionKey: SessionKey,
-        unlockedKey: Unarmored
+        signatureParameters: SignatureParameters
     ): EncryptedFile {
-        newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                return encryptFileSessionKey(source, destination, sessionKey, keyRing.value)
-            }
-        }
-    }
+        source.inputStream().use { fileInputStream ->
+            destination.outputStream().use { fileOutputStream ->
+                newKey(signatureParameters.signingUnlockedKey).use { key ->
+                    newKeyRing(key).use { signKeyRing ->
+                        val writer = Mobile2GoWriter(fileOutputStream.writer())
+                        val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
+                        val internalSessionKey = sessionKey.toInternalSessionKey()
+                        val context = signatureParameters.signatureContext?.toGolang()
+                        val writeCloser = internalSessionKey.encryptStreamWithContext(
+                            writer,
+                            plainMessageMetadata,
+                            signKeyRing.value,
+                            context
+                        )
+                        fileInputStream.reader().copyTo(writeCloser)
+                        writeCloser.close()
+                        return destination
+                    }
+                }
 
-    private fun encryptAndSignMessage(
-        plainMessage: PlainMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored
-    ): EncryptedMessage {
-        newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                return encryptMessage(plainMessage, publicKey, keyRing.value)
-            }
-        }
-    }
-
-    private fun encryptAndSignMessageWithCompression(
-        plainMessage: PlainMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored
-    ): EncryptedMessage {
-        newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                return encryptMessageWithCompression(plainMessage, publicKey, keyRing.value)
-            }
-        }
-    }
-
-
-    private fun encryptAndSignMessageSessionKey(
-        plainMessage: PlainMessage,
-        sessionKey: SessionKey,
-        unlockedKey: Unarmored
-    ): DataPacket {
-        newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                return encryptMessageSessionKey(plainMessage, sessionKey, keyRing.value)
             }
         }
     }
@@ -247,6 +255,12 @@ class GOpenPGPCrypto : PGPCrypto {
     // endregion
 
     // region Private Decrypt
+
+    private data class VerificationParameters(
+        val verificationKeys: List<Armored>,
+        val validAtUtc: Long,
+        val verificationContext: VerificationContext?,
+    )
 
     private inline fun <T> decryptMessage(
         message: EncryptedMessage,
@@ -281,20 +295,47 @@ class GOpenPGPCrypto : PGPCrypto {
         source: File,
         destination: File,
         sessionKey: SessionKey,
-        verifyKeyRing: KeyRing? = null,
-        validAtUtc: Long = 0
     ): DecryptedFile {
         source.inputStream().use { fileInputStream ->
             destination.outputStream().use { fileOutputStream ->
                 val reader = Mobile2GoReader(fileInputStream.mobileReader())
                 val internalSessionKey = sessionKey.toInternalSessionKey()
-                val plainMessageReader = internalSessionKey.decryptStream(reader, verifyKeyRing, validAtUtc)
+                val plainMessageReader = internalSessionKey.decryptStream(
+                    reader,
+                    null,
+                    0
+                )
                 Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
                 return DecryptedFile(
                     file = destination,
-                    status = verifyKeyRing?.let {
-                        Helper.verifySignatureExplicit(plainMessageReader).toVerificationStatus()
-                    } ?: VerificationStatus.Unknown,
+                    status = VerificationStatus.Unknown,
+                    filename = plainMessageReader.metadata.filename,
+                    lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
+                )
+            }
+        }
+    }
+
+    private fun decryptAndVerifyFileSessionKey(
+        source: File,
+        destination: File,
+        sessionKey: SessionKey,
+        verificationParameters: VerificationParameters
+    ): DecryptedFile {
+        source.inputStream().use { fileInputStream ->
+            destination.outputStream().use { fileOutputStream ->
+                val reader = Mobile2GoReader(fileInputStream.mobileReader())
+                val internalSessionKey = sessionKey.toInternalSessionKey()
+                val plainMessageReader = internalSessionKey.decryptStreamWithContext(
+                    reader,
+                    verificationParameters.verificationKeys.keyRing(),
+                    verificationParameters.validAtUtc,
+                    verificationParameters.verificationContext?.toGolang()
+                )
+                Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
+                return DecryptedFile(
+                    file = destination,
+                    status = Helper.verifySignatureExplicit(plainMessageReader).toVerificationStatus(),
                     filename = plainMessageReader.metadata.filename,
                     lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
                 )
@@ -304,16 +345,21 @@ class GOpenPGPCrypto : PGPCrypto {
 
     private inline fun <T> decryptAndVerifyMessage(
         msg: EncryptedMessage,
-        publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        validAtUtc: Long,
+        verificationParameters: VerificationParameters,
         crossinline block: (ExplicitVerifyMessage) -> T
     ): T {
         val pgpMessage = Crypto.newPGPMessageFromArmored(msg)
-        val publicKeyRing = publicKeys.keyRing()
         return newKeys(unlockedKeys).use { keys ->
             newKeyRing(keys).use { keyRing ->
-                block(Helper.decryptExplicitVerify(pgpMessage, keyRing.value, publicKeyRing, validAtUtc))
+                val decryptResult = Helper.decryptExplicitVerifyWithContext(
+                    pgpMessage,
+                    keyRing.value,
+                    verificationParameters.verificationKeys.keyRing(),
+                    verificationParameters.validAtUtc,
+                    verificationParameters.verificationContext?.toGolang()
+                )
+                block(decryptResult)
             }
         }
     }
@@ -321,23 +367,16 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun decryptAndVerifyDataSessionKey(
         data: DataPacket,
         sessionKey: SessionKey,
-        publicKeys: List<Armored>,
-        validAtUtc: Long = 0
+        verificationParameters: VerificationParameters
     ): ExplicitVerifyMessage {
         val internalSessionKey = sessionKey.toInternalSessionKey()
-        val publicKeyRing = publicKeys.keyRing()
-        return Helper.decryptSessionKeyExplicitVerify(data, internalSessionKey, publicKeyRing, validAtUtc)
-    }
-
-    private fun decryptAndVerifyFileSessionKey(
-        source: File,
-        destination: File,
-        sessionKey: SessionKey,
-        publicKeys: List<Armored>,
-        validAtUtc: Long
-    ): DecryptedFile {
-        val publicKeyRing = publicKeys.keyRing()
-        return decryptFileSessionKey(source, destination, sessionKey, publicKeyRing, validAtUtc)
+        return Helper.decryptSessionKeyExplicitVerifyWithContext(
+            data,
+            internalSessionKey,
+            verificationParameters.verificationKeys.keyRing(),
+            verificationParameters.validAtUtc,
+            verificationParameters.verificationContext?.toGolang()
+        )
     }
 
     // endregion
@@ -366,13 +405,14 @@ class GOpenPGPCrypto : PGPCrypto {
 
     private fun signFileDetached(
         source: File,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): Signature {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
             newKey(unlockedKey).use { key ->
                 newKeyRing(key).use { keyRing ->
-                    return keyRing.value.signDetachedStream(reader).armored
+                    return keyRing.value.signDetachedStreamWithContext(reader, signatureContext?.toGolang()).armored
                 }
             }
         }
@@ -395,13 +435,15 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun signFileDetachedEncrypted(
         source: File,
         unlockedKey: Unarmored,
-        encryptionKeyRing: KeyRing
+        encryptionKeyRing: KeyRing,
+        signatureContext: SignatureContext?
     ): EncryptedSignature {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
             newKey(unlockedKey).use { key ->
                 newKeyRing(key).use { keyRing ->
-                    return keyRing.value.signDetachedEncryptedStream(reader, encryptionKeyRing).armored
+                    val signature = keyRing.value.signDetachedStreamWithContext(reader, signatureContext?.toGolang())
+                    return encryptionKeyRing.encrypt(PlainMessage(signature.data), null).armored
                 }
             }
         }
@@ -589,50 +631,62 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun encryptAndSignText(
         plainText: String,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedMessage = runCatching {
-        encryptAndSignMessage(PlainMessage(plainText), publicKey, unlockedKey)
+        val signatureParameters = SignatureParameters(unlockedKey, signatureContext)
+        encryptAndSignMessage(PlainMessage(plainText), publicKey, signatureParameters)
     }.getOrElse { throw CryptoException("PlainText cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignTextWithCompression(
         plainText: String,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedMessage = runCatching {
-        encryptAndSignMessageWithCompression(PlainMessage(plainText), publicKey, unlockedKey)
+        val signatureParameters = SignatureParameters(unlockedKey, signatureContext)
+        encryptAndSignMessageWithCompression(PlainMessage(plainText), publicKey, signatureParameters)
     }.getOrElse { throw CryptoException("PlainText cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignData(
         data: ByteArray,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedMessage = runCatching {
-        encryptAndSignMessage(PlainMessage(data), publicKey, unlockedKey)
+        val signatureParameters = SignatureParameters(unlockedKey, signatureContext)
+        encryptAndSignMessage(PlainMessage(data), publicKey, signatureParameters)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignData(
         data: ByteArray,
         sessionKey: SessionKey,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): DataPacket = runCatching {
-        encryptAndSignMessageSessionKey(PlainMessage(data), sessionKey, unlockedKey)
+        val signatureParameters = SignatureParameters(unlockedKey, signatureContext)
+        encryptAndSignMessageSessionKey(PlainMessage(data), sessionKey, signatureParameters)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignDataWithCompression(
         data: ByteArray,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedMessage = runCatching {
-        encryptAndSignMessageWithCompression(PlainMessage(data), publicKey, unlockedKey)
+        val signatureParameters = SignatureParameters(unlockedKey, signatureContext)
+        encryptAndSignMessageWithCompression(PlainMessage(data), publicKey, signatureParameters)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignFile(
         source: File,
         destination: File,
         sessionKey: SessionKey,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedFile = runCatching {
-        encryptAndSignFileSessionKey(source, destination, sessionKey, unlockedKey)
+        val signatureParameters = SignatureParameters(unlockedKey, signatureContext)
+        encryptAndSignFileSessionKey(source, destination, sessionKey, signatureParameters)
     }.getOrElse { throw CryptoException("File cannot be encrypted or signed.", it) }
 
     override fun encryptSessionKey(
@@ -706,9 +760,11 @@ class GOpenPGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedText = runCatching {
-        decryptAndVerifyMessage(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
+        val verificationParameters = VerificationParameters(publicKeys, time.toUtcSeconds(), verificationContext)
+        decryptAndVerifyMessage(message, unlockedKeys, verificationParameters) {
             DecryptedText(
                 it.message.string,
                 it.signatureVerificationError.toVerificationStatus()
@@ -740,9 +796,11 @@ class GOpenPGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedData = runCatching {
-        decryptAndVerifyMessage(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
+        val verificationParameters = VerificationParameters(publicKeys, time.toUtcSeconds(), verificationContext)
+        decryptAndVerifyMessage(message, unlockedKeys, verificationParameters) {
             DecryptedData(
                 it.message.getBinaryOrEmpty(),
                 it.signatureVerificationError.toVerificationStatus()
@@ -754,9 +812,11 @@ class GOpenPGPCrypto : PGPCrypto {
         data: DataPacket,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedData = runCatching {
-        decryptAndVerifyDataSessionKey(data, sessionKey, publicKeys, time.toUtcSeconds()).let {
+        val verificationParameters = VerificationParameters(publicKeys, time.toUtcSeconds(), verificationContext)
+        decryptAndVerifyDataSessionKey(data, sessionKey, verificationParameters).let {
             DecryptedData(
                 it.message.getBinaryOrEmpty(),
                 it.signatureVerificationError.toVerificationStatus()
@@ -769,9 +829,11 @@ class GOpenPGPCrypto : PGPCrypto {
         destination: File,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedFile = runCatching {
-        decryptAndVerifyFileSessionKey(source, destination, sessionKey, publicKeys, time.toUtcSeconds())
+        val verificationParameters = VerificationParameters(publicKeys, time.toUtcSeconds(), verificationContext)
+        decryptAndVerifyFileSessionKey(source, destination, sessionKey, verificationParameters)
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptSessionKey(
@@ -816,9 +878,10 @@ class GOpenPGPCrypto : PGPCrypto {
 
     override fun signFile(
         file: File,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): Signature = runCatching {
-        signFileDetached(file, unlockedKey)
+        signFileDetached(file, unlockedKey, signatureContext)
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
     override fun signTextEncrypted(
@@ -851,8 +914,9 @@ class GOpenPGPCrypto : PGPCrypto {
         file: File,
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext?
     ): EncryptedSignature = runCatching {
-        signFileDetachedEncrypted(file, unlockedKey, encryptionKeys.keyRing())
+        signFileDetachedEncrypted(file, unlockedKey, encryptionKeys.keyRing(), signatureContext)
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
     // endregion

@@ -25,7 +25,9 @@ import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.SessionKey
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
@@ -50,6 +52,8 @@ fun SessionKey.encryptData(
 /**
  * Encrypt [byteArray] using this [SessionKey] and sign using [unlockedKey].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [byteArray] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptData]
@@ -58,7 +62,8 @@ fun SessionKey.encryptAndSignData(
     context: CryptoContext,
     byteArray: ByteArray,
     unlockedKey: Unarmored,
-): DataPacket = context.pgpCrypto.encryptAndSignData(byteArray, this, unlockedKey)
+    signatureContext: SignatureContext? = null
+): DataPacket = context.pgpCrypto.encryptAndSignData(byteArray, this, unlockedKey, signatureContext)
 
 /**
  * Encrypt [source] into [destination] using this [SessionKey].
@@ -76,6 +81,8 @@ fun SessionKey.encryptFile(
 /**
  * Encrypt [source] using this [SessionKey] and sign using [unlockedKey].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [source] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptAndVerifyFile]
@@ -84,8 +91,9 @@ fun SessionKey.encryptAndSignFile(
     context: CryptoContext,
     source: File,
     destination: File,
-    unlockedKey: Unarmored
-): EncryptedFile = context.pgpCrypto.encryptAndSignFile(source, destination, this, unlockedKey)
+    unlockedKey: Unarmored,
+    signatureContext: SignatureContext? = null
+): EncryptedFile = context.pgpCrypto.encryptAndSignFile(source, destination, this, unlockedKey, signatureContext)
 
 /**
  * Decrypt [data] using this [SessionKey].
@@ -104,6 +112,7 @@ fun SessionKey.decryptData(
  * Decrypt [data] using this [SessionKey] and verify using [publicKeys].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [data] cannot be encrypted.
  *
@@ -114,8 +123,9 @@ fun SessionKey.decryptAndVerifyData(
     context: CryptoContext,
     data: DataPacket,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedData = context.pgpCrypto.decryptAndVerifyData(data, this, publicKeys, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): DecryptedData = context.pgpCrypto.decryptAndVerifyData(data, this, publicKeys, time, verificationContext)
 
 /**
  * Decrypt [source] into [destination] using this [SessionKey].
@@ -135,6 +145,7 @@ fun SessionKey.decryptFile(
  * Decrypt [source] using this [SessionKey] and verify using [publicKeys].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [source] cannot be encrypted.
  *
@@ -146,8 +157,16 @@ fun SessionKey.decryptAndVerifyFile(
     source: EncryptedFile,
     destination: File,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedFile = context.pgpCrypto.decryptAndVerifyFile(source, destination, this, publicKeys, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): DecryptedFile = context.pgpCrypto.decryptAndVerifyFile(
+    source,
+    destination,
+    this,
+    publicKeys,
+    time,
+    verificationContext
+)
 
 /**
  * Decrypt [data] using this [SessionKey].
@@ -164,6 +183,7 @@ fun SessionKey.decryptDataOrNull(
 
 /**
  * Decrypt [data] using this [SessionKey] and verify using [publicKeys].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [DecryptedFile], or `null` if [data] cannot be decrypted.
  *
@@ -174,8 +194,9 @@ fun SessionKey.decryptAndVerifyDataOrNull(
     context: CryptoContext,
     data: DataPacket,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedData? = context.pgpCrypto.decryptAndVerifyDataOrNull(data, this, publicKeys, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): DecryptedData? = context.pgpCrypto.decryptAndVerifyDataOrNull(data, this, publicKeys, time, verificationContext)
 
 /**
  * Decrypt [source] into [destination] using this [SessionKey].
@@ -194,6 +215,8 @@ fun SessionKey.decryptFileOrNull(
 /**
  * Decrypt [source] using this [SessionKey] and verify using [publicKeys].
  *
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
+ *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
  * @see [SessionKey.encryptAndSignFile]
@@ -204,5 +227,13 @@ fun SessionKey.decryptAndVerifyFileOrNull(
     source: EncryptedFile,
     destination: File,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedFile? = context.pgpCrypto.decryptAndVerifyFileOrNull(source, destination, this, publicKeys, time)
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
+): DecryptedFile? = context.pgpCrypto.decryptAndVerifyFileOrNull(
+    source,
+    destination,
+    this,
+    publicKeys,
+    time,
+    verificationContext
+)

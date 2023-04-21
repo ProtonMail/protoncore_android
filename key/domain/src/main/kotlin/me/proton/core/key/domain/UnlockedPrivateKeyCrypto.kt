@@ -212,12 +212,18 @@ fun UnlockedPrivateKey.signData(
 /**
  * Sign [file] using this [UnlockedPrivateKey].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [file] cannot be signed.
  *
  * @see [PublicKey.verifyFile]
  */
-fun UnlockedPrivateKey.signFile(context: CryptoContext, file: File): Signature =
-    context.pgpCrypto.signFile(file, unlockedKey.value)
+fun UnlockedPrivateKey.signFile(
+    context: CryptoContext,
+    file: File,
+    signatureContext: SignatureContext? = null
+): Signature =
+    context.pgpCrypto.signFile(file, unlockedKey.value, signatureContext)
 
 /**
  * Sign [text] using this [UnlockedPrivateKey]
@@ -273,6 +279,8 @@ fun UnlockedPrivateKey.signDataEncrypted(
  * Sign [file] using this [UnlockedPrivateKey]
  * and then encrypt the signature with [encryptionKeyRing].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [file] cannot be signed.
  *
  * @see [UnlockedPrivateKey.verifyFileEncrypted]
@@ -280,11 +288,13 @@ fun UnlockedPrivateKey.signDataEncrypted(
 fun UnlockedPrivateKey.signFileEncrypted(
     context: CryptoContext,
     file: File,
-    encryptionKeyRing: PublicKeyRing
+    encryptionKeyRing: PublicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedSignature = context.pgpCrypto.signFileEncrypted(
     file,
     unlockedKey.value,
-    encryptionKeyRing.keys.map { it.key }
+    encryptionKeyRing.keys.map { it.key },
+    signatureContext
 )
 
 /**

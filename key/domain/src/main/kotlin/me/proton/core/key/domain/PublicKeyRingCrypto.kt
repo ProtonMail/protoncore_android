@@ -144,14 +144,16 @@ fun PublicKeyRing.getVerifiedTimestampOfText(
     verificationContext: VerificationContext? = null
 ): Long? = keys
     .asSequence()
-    .mapNotNull { key -> key.getVerifiedTimestampOfText(
-        context,
-        text,
-        signature,
-        time,
-        trimTrailingSpaces,
-        verificationContext
-    )}
+    .mapNotNull { key ->
+        key.getVerifiedTimestampOfText(
+            context,
+            text,
+            signature,
+            time,
+            trimTrailingSpaces,
+            verificationContext
+        )
+    }
     .firstOrNull()
 
 /**

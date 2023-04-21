@@ -86,31 +86,33 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: encryptFile")
     }
 
-    override fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage {
+    override fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored, signatureContext: SignatureContext?): EncryptedMessage {
         TODO("Not yet implemented: encryptAndSignText")
     }
 
     override fun encryptAndSignTextWithCompression(
         plainText: String,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedMessage {
         TODO("Not yet implemented: encryptAndSignTextWithCompression")
     }
 
-    override fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage {
+    override fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored, signatureContext: SignatureContext?): EncryptedMessage {
         TODO("Not yet implemented: encryptAndSignData")
     }
 
     override fun encryptAndSignDataWithCompression(
         data: ByteArray,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedMessage {
         TODO("Not yet implemented: encryptAndSignDataWithCompression")
     }
 
-    override fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey, unlockedKey: Unarmored): DataPacket {
+    override fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey, unlockedKey: Unarmored, signatureContext: SignatureContext?): DataPacket {
         TODO("Not yet implemented: encryptAndSignData")
     }
 
@@ -118,7 +120,8 @@ class FakePGPCrypto : PGPCrypto {
         source: File,
         destination: File,
         sessionKey: SessionKey,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
     ): EncryptedFile {
         TODO("Not yet implemented: encryptAndSignFile")
     }
@@ -155,7 +158,8 @@ class FakePGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedText {
         TODO("Not yet implemented: decryptAndVerifyText")
     }
@@ -164,7 +168,8 @@ class FakePGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedData {
         TODO("Not yet implemented: decryptAndVerifyData")
     }
@@ -173,7 +178,8 @@ class FakePGPCrypto : PGPCrypto {
         data: DataPacket,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedData {
         TODO("Not yet implemented: decryptAndVerifyData")
     }
@@ -183,7 +189,8 @@ class FakePGPCrypto : PGPCrypto {
         destination: File,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        verificationContext: VerificationContext?
     ): DecryptedFile {
         TODO("Not yet implemented: decryptAndVerifyFile")
     }
@@ -218,7 +225,7 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: signData")
     }
 
-    override fun signFile(file: File, unlockedKey: Unarmored): Signature {
+    override fun signFile(file: File, unlockedKey: Unarmored, signatureContext: SignatureContext?): Signature {
         TODO("Not yet implemented: signFile")
     }
 
@@ -244,7 +251,8 @@ class FakePGPCrypto : PGPCrypto {
     override fun signFileEncrypted(
         file: File,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext?
     ): EncryptedSignature {
         TODO("Not yet implemented: signFileEncrypted")
     }

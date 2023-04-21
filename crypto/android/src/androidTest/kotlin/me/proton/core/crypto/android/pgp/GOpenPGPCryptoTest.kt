@@ -25,12 +25,15 @@ import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.PGPHeader
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import org.junit.Test
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFalse
+
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -1259,12 +1262,14 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = null
         )
         val verifiedWithContext = crypto.verifyText(
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue,
                 required = VerificationContext.ContextRequirement.Required.Always
@@ -1274,6 +1279,7 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue + "wrong",
                 required = VerificationContext.ContextRequirement.Required.Always
@@ -1314,12 +1320,14 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = null
         )
         val verifiedWithContext = crypto.verifyText(
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue,
                 required = VerificationContext.ContextRequirement.Required.Always
@@ -1329,6 +1337,7 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue + "wrong",
                 required = VerificationContext.ContextRequirement.Required.Always
@@ -1368,12 +1377,14 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = null
         )
         val verifiedWithContextAlwaysRequired = crypto.verifyText(
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue,
                 required = VerificationContext.ContextRequirement.Required.Always
@@ -1383,6 +1394,7 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue,
                 required = VerificationContext.ContextRequirement.Required.After(sigCreationTime - 100_000)
@@ -1392,6 +1404,7 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue,
                 required = VerificationContext.ContextRequirement.Required.After(sigCreationTime + 100_000)
@@ -1401,6 +1414,7 @@ internal class GOpenPGPCryptoTest {
             plainText,
             signature,
             publicKey,
+            time = VerificationTime.Ignore,
             verificationContext = VerificationContext(
                 value = contextValue + "wrong",
                 required = VerificationContext.ContextRequirement.Required.Always
@@ -1412,5 +1426,283 @@ internal class GOpenPGPCryptoTest {
         assertTrue(verifiedWithContextRequiredAfterSig)
         assertTrue(verifiedWithoutContext)
         assertFalse(verifiedWithWrongContext)
+    }
+
+    @Test
+    fun encryptAndSignWithCriticalContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signingKey = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase)
+        val decryptionKey = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase)
+        val encryptionKey = crypto.getPublicKey(TestKey.privateKey2)
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        // when
+        val encryptedAndSigned = crypto.encryptAndSignText(
+            plainText,
+            encryptionKey,
+            signingKey.value,
+            signatureContext = SignatureContext(
+                contextValue,
+                isCritical = true
+            )
+        )
+        // then
+        val verifiedWithoutContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithWrongContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        assertEquals(VerificationStatus.Failure, verifiedWithoutContext.status)
+        assertEquals(VerificationStatus.Success, verifiedWithContext.status)
+        assertEquals(VerificationStatus.BadContext, verifiedWithWrongContext.status)
+    }
+
+    @Test
+    fun encryptAndSignWithNonCriticalContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signingKey = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase)
+        val decryptionKey = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase)
+        val encryptionKey = crypto.getPublicKey(TestKey.privateKey2)
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        // when
+        val encryptedAndSigned = crypto.encryptAndSignText(
+            plainText,
+            encryptionKey,
+            signingKey.value,
+            signatureContext = SignatureContext(
+                contextValue,
+                isCritical = false
+            )
+        )
+        // then
+        val verifiedWithoutContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithWrongContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        assertEquals(VerificationStatus.Success, verifiedWithoutContext.status)
+        assertEquals(VerificationStatus.Success, verifiedWithContext.status)
+        assertEquals(VerificationStatus.BadContext, verifiedWithWrongContext.status)
+    }
+
+    @Test
+    fun encryptAndSignWithoutContext() = runTest {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signingKey = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase)
+        val decryptionKey = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase)
+        val encryptionKey = crypto.getPublicKey(TestKey.privateKey2)
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        val now = crypto.getCurrentTime()
+        // when
+        val encryptedAndSigned = crypto.encryptAndSignText(
+            plainText,
+            encryptionKey,
+            signingKey.value
+        )
+        // then
+        val verifiedWithoutContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithContextBeforeCutoff = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.After(now + 100_000L)
+            )
+        )
+        val verifiedWithContextAfterCutoff = crypto.decryptAndVerifyText(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.After(now - 100_000L)
+            )
+        )
+        assertEquals(VerificationStatus.Success, verifiedWithoutContext.status)
+        assertEquals(VerificationStatus.BadContext, verifiedWithContext.status)
+        assertEquals(VerificationStatus.Success, verifiedWithContextBeforeCutoff.status)
+        assertEquals(VerificationStatus.BadContext, verifiedWithContextAfterCutoff.status)
+    }
+
+    @Test
+    fun encryptAndSignStreamWithCriticalContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signingKey = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase)
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        val sessionKey = crypto.generateNewSessionKey()
+        val plaintextFile = File.createTempFile("plaintext", "txt")
+        val ciphertextFile = File.createTempFile("ciphertext", "gpg")
+        plaintextFile.deleteOnExit()
+        ciphertextFile.deleteOnExit()
+        plaintextFile.printWriter().use {
+            it.print(plainText)
+        }
+        // when
+        val encryptedAndSigned = crypto.encryptAndSignFile(
+            plaintextFile,
+            ciphertextFile,
+            sessionKey,
+            signingKey.value,
+            signatureContext = SignatureContext(
+                contextValue,
+                isCritical = true
+            )
+        )
+        // then
+        val verifiedWithoutContext = crypto.decryptAndVerifyFile(
+            encryptedAndSigned,
+            File.createTempFile("decrypted", "txt").also { it.deleteOnExit() },
+            sessionKey,
+            listOf(verificationKey),
+            time = VerificationTime.Ignore,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.decryptAndVerifyFile(
+            encryptedAndSigned,
+            File.createTempFile("decrypted", "txt").also { it.deleteOnExit() },
+            sessionKey,
+            listOf(verificationKey),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithWrongContext = crypto.decryptAndVerifyFile(
+            encryptedAndSigned,
+            File.createTempFile("decrypted", "txt").also { it.deleteOnExit() },
+            sessionKey,
+            listOf(verificationKey),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        assertEquals(VerificationStatus.Failure, verifiedWithoutContext.status)
+        assertEquals(VerificationStatus.Success, verifiedWithContext.status)
+        assertEquals(VerificationStatus.BadContext, verifiedWithWrongContext.status)
+    }
+
+    @Test
+    fun encryptAndSignDataWithCriticalContext() {
+        // given
+        val plainText = "Hello world!"
+        val contextValue = "test-context"
+        val signingKey = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase)
+        val decryptionKey = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase)
+        val encryptionKey = crypto.getPublicKey(TestKey.privateKey2)
+        val verificationKey = crypto.getPublicKey(TestKey.privateKey)
+        // when
+        val encryptedAndSigned = crypto.encryptAndSignData(
+            plainText.toByteArray(),
+            encryptionKey,
+            signingKey.value,
+            signatureContext = SignatureContext(
+                contextValue,
+                isCritical = true
+            )
+        )
+        // then
+        val verifiedWithoutContext = crypto.decryptAndVerifyData(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = null
+        )
+        val verifiedWithContext = crypto.decryptAndVerifyData(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue,
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        val verifiedWithWrongContext = crypto.decryptAndVerifyData(
+            encryptedAndSigned,
+            listOf(verificationKey),
+            listOf(decryptionKey.value),
+            time = VerificationTime.Ignore,
+            verificationContext = VerificationContext(
+                value = contextValue + "wrong",
+                required = VerificationContext.ContextRequirement.Required.Always
+            )
+        )
+        assertEquals(VerificationStatus.Failure, verifiedWithoutContext.status)
+        assertEquals(VerificationStatus.Success, verifiedWithContext.status)
+        assertEquals(VerificationStatus.BadContext, verifiedWithWrongContext.status)
     }
 }

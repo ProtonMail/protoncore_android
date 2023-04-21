@@ -202,6 +202,7 @@ fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): SessionKey =
  * Decrypt [hashKey] as [HashKey] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [hashKey] cannot be decrypted.
  *
@@ -210,8 +211,9 @@ fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): SessionKey =
  */
 fun KeyHolderContext.decryptAndVerifyHashKey(
     hashKey: EncryptedMessage,
-    verifyKeyRing: PublicKeyRing = publicKeyRing
-): HashKey = decryptAndVerifyData(hashKey, verifyKeyRing).let {
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    verificationContext: VerificationContext? = null
+): HashKey = decryptAndVerifyData(hashKey, verifyKeyRing, verificationContext = verificationContext).let {
     HashKey(it.data, it.status)
 }
 
@@ -288,6 +290,7 @@ fun KeyHolderContext.decryptSessionKeyOrNull(keyPacket: KeyPacket): SessionKey? 
  * Decrypt [hashKey] as [HashKey] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [HashKey], or `null` if [hashKey] cannot be decrypted.
  *
@@ -295,8 +298,9 @@ fun KeyHolderContext.decryptSessionKeyOrNull(keyPacket: KeyPacket): SessionKey? 
  */
 fun KeyHolderContext.decryptAndVerifyHashKeyOrNull(
     hashKey: EncryptedMessage,
-    verifyKeyRing: PublicKeyRing = publicKeyRing
-): HashKey? = runCatching { decryptAndVerifyHashKey(hashKey, verifyKeyRing) }.getOrNull()
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    verificationContext: VerificationContext? = null
+): HashKey? = runCatching { decryptAndVerifyHashKey(hashKey, verifyKeyRing, verificationContext) }.getOrNull()
 
 /**
  * Sign [text] using [PrivateKeyRing].
@@ -333,12 +337,14 @@ fun KeyHolderContext.signData(data: ByteArray, signatureContext: SignatureContex
 /**
  * Sign [file] using [PrivateKeyRing].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [file] cannot be signed.
  *
  * @see [KeyHolderContext.verifyFile]
  */
-fun KeyHolderContext.signFile(file: File): Signature =
-    privateKeyRing.signFile(file)
+fun KeyHolderContext.signFile(file: File, signatureContext: SignatureContext? = null): Signature =
+    privateKeyRing.signFile(file, signatureContext)
 
 /**
  * Sign [text] using [PrivateKeyRing]
@@ -393,18 +399,22 @@ fun KeyHolderContext.signDataEncrypted(
  * Sign [file] using [PrivateKeyRing]
  * and then encrypt the signature with [encryptionKeyRing].
  *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
+ *
  * @throws [CryptoException] if [file] cannot be signed.
  *
  * @see [KeyHolderContext.verifyFileEncrypted]
  */
 fun KeyHolderContext.signFileEncrypted(
     file: File,
-    encryptionKeyRing: PublicKeyRing = publicKeyRing
+    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedSignature =
     privateKeyRing.signFileEncrypted(
         context,
         file,
-        encryptionKeyRing
+        encryptionKeyRing,
+        signatureContext
     )
 
 /**
@@ -692,6 +702,7 @@ fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray, keyPacket: K
  * Encrypt [text] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @return [EncryptedMessage] with embedded signature.
  *
@@ -701,18 +712,21 @@ fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray, keyPacket: K
  */
 fun KeyHolderContext.encryptAndSignText(
     text: String,
-    encryptKeyRing: PublicKeyRing = publicKeyRing
+    encryptKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedMessage =
     context.pgpCrypto.encryptAndSignText(
         text,
         encryptKeyRing.primaryKey.key,
-        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value,
+        signatureContext
     )
 
 /**
  * Compress and encrypt [text] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @return [EncryptedMessage] with embedded signature.
  *
@@ -722,18 +736,21 @@ fun KeyHolderContext.encryptAndSignText(
  */
 fun KeyHolderContext.encryptAndSignTextWithCompression(
     text: String,
-    encryptKeyRing: PublicKeyRing = publicKeyRing
+    encryptKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedMessage =
     context.pgpCrypto.encryptAndSignTextWithCompression(
         text,
         encryptKeyRing.primaryKey.key,
-        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value,
+        signatureContext
     )
 
 /**
  * Encrypt [data] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @return [EncryptedMessage] with embedded signature.
  *
@@ -743,18 +760,21 @@ fun KeyHolderContext.encryptAndSignTextWithCompression(
  */
 fun KeyHolderContext.encryptAndSignData(
     data: ByteArray,
-    encryptKeyRing: PublicKeyRing = publicKeyRing
+    encryptKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedMessage =
     context.pgpCrypto.encryptAndSignData(
         data,
         encryptKeyRing.primaryKey.key,
-        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value,
+        signatureContext
     )
 
 /**
  * Compress and encrypt [data] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @return [EncryptedMessage] with embedded signature.
  *
@@ -764,16 +784,20 @@ fun KeyHolderContext.encryptAndSignData(
  */
 fun KeyHolderContext.encryptAndSignDataWithCompression(
     data: ByteArray,
-    encryptKeyRing: PublicKeyRing = publicKeyRing
+    encryptKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
 ): EncryptedMessage =
     context.pgpCrypto.encryptAndSignDataWithCompression(
         data,
         encryptKeyRing.primaryKey.key,
-        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value,
+        signatureContext
     )
 
 /**
  * Encrypt [data] using [keyPacket] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * Note: If several operations use the same [keyPacket], prefer using [decryptSessionKey].
  *
@@ -785,13 +809,16 @@ fun KeyHolderContext.encryptAndSignDataWithCompression(
  */
 fun KeyHolderContext.encryptAndSignData(
     data: ByteArray,
-    keyPacket: KeyPacket
+    keyPacket: KeyPacket,
+    signatureContext: SignatureContext? = null
 ): DataPacket = decryptSessionKey(keyPacket).use { sessionKey ->
-    sessionKey.encryptAndSignData(context, data, privateKeyRing.unlockedPrimaryKey.unlockedKey.value)
+    sessionKey.encryptAndSignData(context, data, privateKeyRing.unlockedPrimaryKey.unlockedKey.value, signatureContext)
 }
 
 /**
  * Encrypt [data] using [sessionKey] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @return [DataPacket] with embedded signature.
  *
@@ -801,12 +828,15 @@ fun KeyHolderContext.encryptAndSignData(
  */
 fun KeyHolderContext.encryptAndSignData(
     data: ByteArray,
-    sessionKey: SessionKey
+    sessionKey: SessionKey,
+    signatureContext: SignatureContext? = null
 ): DataPacket =
-    sessionKey.encryptAndSignData(context, data, privateKeyRing.unlockedPrimaryKey.unlockedKey.value)
+    sessionKey.encryptAndSignData(context, data, privateKeyRing.unlockedPrimaryKey.unlockedKey.value, signatureContext)
 
 /**
  * Encrypt [source] into [destination] using [keyPacket] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [source] cannot be encrypted or signed.
  *
@@ -816,13 +846,26 @@ fun KeyHolderContext.encryptAndSignData(
  *
  * @see [KeyHolderContext.decryptAndVerifyFile].
  */
-fun KeyHolderContext.encryptAndSignFile(source: File, destination: File, keyPacket: KeyPacket): EncryptedFile =
+fun KeyHolderContext.encryptAndSignFile(
+    source: File,
+    destination: File,
+    keyPacket: KeyPacket,
+    signatureContext: SignatureContext? = null
+): EncryptedFile =
     decryptSessionKey(keyPacket).use { sessionKey ->
-        sessionKey.encryptAndSignFile(context, source, destination, privateKeyRing.unlockedPrimaryKey.unlockedKey.value)
+        sessionKey.encryptAndSignFile(
+            context,
+            source,
+            destination,
+            privateKeyRing.unlockedPrimaryKey.unlockedKey.value,
+            signatureContext
+        )
     }
 
 /**
  * Encrypt [source] into [destination] using [sessionKey] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [source] cannot be encrypted or signed.
  *
@@ -830,8 +873,18 @@ fun KeyHolderContext.encryptAndSignFile(source: File, destination: File, keyPack
  *
  * @see [KeyHolderContext.decryptAndVerifyFile].
  */
-fun KeyHolderContext.encryptAndSignFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
-    sessionKey.encryptAndSignFile(context, source, destination, privateKeyRing.unlockedPrimaryKey.unlockedKey.value)
+fun KeyHolderContext.encryptAndSignFile(
+    source: File,
+    destination: File,
+    sessionKey: SessionKey,
+    signatureContext: SignatureContext? = null
+): EncryptedFile = sessionKey.encryptAndSignFile(
+    context,
+    source,
+    destination,
+    privateKeyRing.unlockedPrimaryKey.unlockedKey.value,
+    signatureContext
+)
 
 /**
  * Encrypt [sessionKey] using [PublicKeyRing].
@@ -847,6 +900,7 @@ fun KeyHolderContext.encryptSessionKey(sessionKey: SessionKey): KeyPacket =
  * Encrypt [hashKey] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
  *
  * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
+ * @param signatureContext: If a context is given, it is added to the signature as notation data.
  *
  * @throws [CryptoException] if [hashKey] cannot be encrypted.
  *
@@ -854,8 +908,9 @@ fun KeyHolderContext.encryptSessionKey(sessionKey: SessionKey): KeyPacket =
  */
 fun KeyHolderContext.encryptAndSignHashKey(
     hashKey: HashKey,
-    encryptKeyRing: PublicKeyRing = publicKeyRing
-): EncryptedMessage = encryptAndSignData(hashKey.key, encryptKeyRing)
+    encryptKeyRing: PublicKeyRing = publicKeyRing,
+    signatureContext: SignatureContext? = null
+): EncryptedMessage = encryptAndSignData(hashKey.key, encryptKeyRing, signatureContext)
 
 /**
  * Decrypt [message] as [String] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
@@ -864,6 +919,7 @@ fun KeyHolderContext.encryptAndSignHashKey(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [message] cannot be decrypted.
  *
@@ -872,13 +928,15 @@ fun KeyHolderContext.encryptAndSignHashKey(
 fun KeyHolderContext.decryptAndVerifyText(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedText =
     context.pgpCrypto.decryptAndVerifyText(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        time
+        time,
+        verificationContext
     )
 
 /**
@@ -886,6 +944,7 @@ fun KeyHolderContext.decryptAndVerifyText(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [message] cannot be decrypted.
  *
@@ -894,13 +953,15 @@ fun KeyHolderContext.decryptAndVerifyText(
 fun KeyHolderContext.decryptAndVerifyData(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedData =
     context.pgpCrypto.decryptAndVerifyData(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        time
+        time,
+        verificationContext
     )
 
 /**
@@ -944,6 +1005,7 @@ fun KeyHolderContext.decryptAndVerifyMimeMessage(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [data] cannot be decrypted.
  *
@@ -954,9 +1016,10 @@ fun KeyHolderContext.decryptAndVerifyData(
     data: DataPacket,
     keyPacket: KeyPacket,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedData = decryptSessionKey(keyPacket).use { sessionKey ->
-    sessionKey.decryptAndVerifyData(context, data, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyData(context, data, verifyKeyRing.keys.map { it.key }, time, verificationContext)
 }
 
 /**
@@ -964,6 +1027,7 @@ fun KeyHolderContext.decryptAndVerifyData(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify, default to [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [data] cannot be decrypted.
  *
@@ -974,9 +1038,10 @@ fun KeyHolderContext.decryptAndVerifyData(
     data: DataPacket,
     sessionKey: SessionKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedData =
-    sessionKey.decryptAndVerifyData(context, data, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyData(context, data, verifyKeyRing.keys.map { it.key }, time, verificationContext)
 
 /**
  * Decrypt [source] into [destination] using [keyPacket] and verify using [verifyKeyRing].
@@ -985,6 +1050,7 @@ fun KeyHolderContext.decryptAndVerifyData(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify, default to [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
  *
@@ -995,9 +1061,17 @@ fun KeyHolderContext.decryptAndVerifyFile(
     destination: File,
     keyPacket: KeyPacket,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedFile = decryptSessionKey(keyPacket).use { sessionKey ->
-    sessionKey.decryptAndVerifyFile(context, source, destination, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyFile(
+        context,
+        source,
+        destination,
+        verifyKeyRing.keys.map { it.key },
+        time,
+        verificationContext
+    )
 }
 
 /**
@@ -1005,6 +1079,7 @@ fun KeyHolderContext.decryptAndVerifyFile(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify, default to [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
  *
@@ -1015,9 +1090,17 @@ fun KeyHolderContext.decryptAndVerifyFile(
     destination: File,
     sessionKey: SessionKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedFile =
-    sessionKey.decryptAndVerifyFile(context, source, destination, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyFile(
+        context,
+        source,
+        destination,
+        verifyKeyRing.keys.map { it.key },
+        time,
+        verificationContext
+    )
 
 /**
  * Decrypt [message] as [String] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
@@ -1026,6 +1109,7 @@ fun KeyHolderContext.decryptAndVerifyFile(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify, default to [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [DecryptedText], or `null` if [message] cannot be decrypted.
  *
@@ -1034,13 +1118,15 @@ fun KeyHolderContext.decryptAndVerifyFile(
 fun KeyHolderContext.decryptAndVerifyTextOrNull(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedText? =
     context.pgpCrypto.decryptAndVerifyTextOrNull(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        time
+        time,
+        verificationContext
     )
 
 /**
@@ -1048,6 +1134,7 @@ fun KeyHolderContext.decryptAndVerifyTextOrNull(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify, default to [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [DecryptedData], or `null` if [message] cannot be decrypted.
  *
@@ -1056,13 +1143,15 @@ fun KeyHolderContext.decryptAndVerifyTextOrNull(
 fun KeyHolderContext.decryptAndVerifyDataOrNull(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedData? =
     context.pgpCrypto.decryptAndVerifyDataOrNull(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        time
+        time,
+        verificationContext
     )
 
 /**
@@ -1070,6 +1159,7 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify, default to [KeyHolderContext.publicKeyRing].
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [DecryptedData], or `null` if [data] cannot be decrypted.
  *
@@ -1079,9 +1169,10 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(
     data: DataPacket,
     sessionKey: SessionKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedData? =
-    sessionKey.decryptAndVerifyDataOrNull(context, data, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyDataOrNull(context, data, verifyKeyRing.keys.map { it.key }, time, verificationContext)
 
 /**
  * Decrypt [source] into [destination] using [keyPacket] and verify using [verifyKeyRing].
@@ -1089,6 +1180,7 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(
  * Note: If several operations use the same [keyPacket], prefer using [decryptSessionKey].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
@@ -1099,15 +1191,24 @@ fun KeyHolderContext.decryptAndVerifyFileOrNull(
     destination: File,
     keyPacket: KeyPacket,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedFile? = decryptSessionKeyOrNull(keyPacket)?.use { sessionKey ->
-    sessionKey.decryptAndVerifyFileOrNull(context, source, destination, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyFileOrNull(
+        context,
+        source,
+        destination,
+        verifyKeyRing.keys.map { it.key },
+        time,
+        verificationContext
+    )
 }
 
 /**
  * Decrypt [source] into [destination] using [sessionKey] and verify using [verifyKeyRing].
  *
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
@@ -1118,9 +1219,17 @@ fun KeyHolderContext.decryptAndVerifyFileOrNull(
     destination: File,
     sessionKey: SessionKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    time: VerificationTime = VerificationTime.Now
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext? = null
 ): DecryptedFile? =
-    sessionKey.decryptAndVerifyFileOrNull(context, source, destination, verifyKeyRing.keys.map { it.key }, time)
+    sessionKey.decryptAndVerifyFileOrNull(
+        context,
+        source,
+        destination,
+        verifyKeyRing.keys.map { it.key },
+        time,
+        verificationContext
+    )
 
 /**
  * Get [Armored] from [Unarmored].

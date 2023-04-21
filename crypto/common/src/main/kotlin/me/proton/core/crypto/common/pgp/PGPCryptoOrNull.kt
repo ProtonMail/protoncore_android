@@ -124,8 +124,9 @@ fun PGPCrypto.signDataOrNull(
  */
 fun PGPCrypto.signFileOrNull(
     file: File,
-    unlockedKey: Unarmored
-): Signature? = runCatching { signFile(file, unlockedKey) }.getOrNull()
+    unlockedKey: Unarmored,
+    signatureContext: SignatureContext?
+): Signature? = runCatching { signFile(file, unlockedKey, signatureContext) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted.
@@ -166,8 +167,9 @@ fun PGPCrypto.encryptFileOrNull(
 fun PGPCrypto.encryptAndSignTextOrNull(
     plainText: String,
     publicKey: Armored,
-    unlockedKey: Unarmored
-): EncryptedMessage? = runCatching { encryptAndSignText(plainText, publicKey, unlockedKey) }.getOrNull()
+    unlockedKey: Unarmored,
+    signatureContext: SignatureContext?
+): EncryptedMessage? = runCatching { encryptAndSignText(plainText, publicKey, unlockedKey, signatureContext) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [data] cannot be encrypted and signed.
@@ -177,8 +179,9 @@ fun PGPCrypto.encryptAndSignTextOrNull(
 fun PGPCrypto.encryptAndSignDataOrNull(
     data: ByteArray,
     publicKey: Armored,
-    unlockedKey: Unarmored
-): EncryptedMessage? = runCatching { encryptAndSignData(data, publicKey, unlockedKey) }.getOrNull()
+    unlockedKey: Unarmored,
+    signatureContext: SignatureContext?
+): EncryptedMessage? = runCatching { encryptAndSignData(data, publicKey, unlockedKey, signatureContext) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted and signed.
@@ -188,8 +191,9 @@ fun PGPCrypto.encryptAndSignDataOrNull(
 fun PGPCrypto.encryptAndSignTextWithCompressionOrNull(
     plainText: String,
     publicKey: Armored,
-    unlockedKey: Unarmored
-): EncryptedMessage? = runCatching { encryptAndSignTextWithCompression(plainText, publicKey, unlockedKey) }.getOrNull()
+    unlockedKey: Unarmored,
+    signatureContext: SignatureContext?
+): EncryptedMessage? = runCatching { encryptAndSignTextWithCompression(plainText, publicKey, unlockedKey, signatureContext) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [data] cannot be encrypted and signed.
@@ -199,8 +203,9 @@ fun PGPCrypto.encryptAndSignTextWithCompressionOrNull(
 fun PGPCrypto.encryptAndSignDataWithCompressionOrNull(
     data: ByteArray,
     publicKey: Armored,
-    unlockedKey: Unarmored
-): EncryptedMessage? = runCatching { encryptAndSignDataWithCompression(data, publicKey, unlockedKey) }.getOrNull()
+    unlockedKey: Unarmored,
+    signatureContext: SignatureContext?
+): EncryptedMessage? = runCatching { encryptAndSignDataWithCompression(data, publicKey, unlockedKey, signatureContext) }.getOrNull()
 
 /**
  * @return [DataPacket], or `null` if [data] cannot be encrypted and signed.
@@ -210,8 +215,9 @@ fun PGPCrypto.encryptAndSignDataWithCompressionOrNull(
 fun PGPCrypto.encryptAndSignDataOrNull(
     data: ByteArray,
     sessionKey: SessionKey,
-    publicKey: Unarmored
-): DataPacket? = runCatching { encryptAndSignData(data, sessionKey, publicKey) }.getOrNull()
+    publicKey: Unarmored,
+    signatureContext: SignatureContext?
+): DataPacket? = runCatching { encryptAndSignData(data, sessionKey, publicKey, signatureContext) }.getOrNull()
 
 /**
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
@@ -224,8 +230,9 @@ fun PGPCrypto.decryptAndVerifyTextOrNull(
     message: EncryptedMessage,
     publicKeys: List<Armored>,
     unlockedKeys: List<Unarmored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedText? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys, time) }.getOrNull()
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext?
+): DecryptedText? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys, time, verificationContext) }.getOrNull()
 
 /**
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
@@ -238,8 +245,9 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
     message: EncryptedMessage,
     publicKeys: List<Armored>,
     unlockedKeys: List<Unarmored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, time) }.getOrNull()
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext?
+): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, time, verificationContext) }.getOrNull()
 
 /**
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
@@ -252,8 +260,9 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
     data: DataPacket,
     sessionKey: SessionKey,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedData? = runCatching { decryptAndVerifyData(data, sessionKey, publicKeys, time) }.getOrNull()
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext?
+): DecryptedData? = runCatching { decryptAndVerifyData(data, sessionKey, publicKeys, time, verificationContext) }.getOrNull()
 
 /**
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
@@ -267,9 +276,18 @@ fun PGPCrypto.decryptAndVerifyFileOrNull(
     destination: File,
     sessionKey: SessionKey,
     publicKeys: List<Armored>,
-    time: VerificationTime = VerificationTime.Now
-): DecryptedFile? =
-    runCatching { decryptAndVerifyFile(source, destination, sessionKey, publicKeys, time) }.getOrNull()
+    time: VerificationTime = VerificationTime.Now,
+    verificationContext: VerificationContext?
+): DecryptedFile? = runCatching {
+    decryptAndVerifyFile(
+        source,
+        destination,
+        sessionKey,
+        publicKeys,
+        time,
+        verificationContext
+    )
+}.getOrNull()
 
 /**
  * @return [Armored] public key, or `null` if public key cannot be extracted from [privateKey].

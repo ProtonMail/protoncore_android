@@ -102,16 +102,25 @@ interface PGPCrypto {
     /**
      * Encrypt [plainText] using [publicKey] and sign using [unlockedKey].
      *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
+     *
      * @return [EncryptedMessage] with embedded signature.
      *
      * @throws [CryptoException] if [plainText] cannot be encrypted or signed.
      *
      * @see [decryptAndVerifyText].
      */
-    fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+    fun encryptAndSignText(
+        plainText: String,
+        publicKey: Armored,
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext? = null
+    ): EncryptedMessage
 
     /**
      * Compress and encrypt [plainText] using [publicKey] and sign using [unlockedKey].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @return [EncryptedMessage] with embedded signature.
      *
@@ -122,11 +131,14 @@ interface PGPCrypto {
     fun encryptAndSignTextWithCompression(
         plainText: String,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext? = null
     ): EncryptedMessage
 
     /**
      * Encrypt [data] using [publicKey] and sign using [unlockedKey].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @return [EncryptedMessage] with embedded signature.
      *
@@ -134,10 +146,17 @@ interface PGPCrypto {
      *
      * @see [decryptAndVerifyData].
      */
-    fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+    fun encryptAndSignData(
+        data: ByteArray,
+        publicKey: Armored,
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext? = null
+    ): EncryptedMessage
 
     /**
      * Compress and encrypt [data] using [publicKey] and sign using [unlockedKey].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @return [EncryptedMessage] with embedded signature.
      *
@@ -148,11 +167,14 @@ interface PGPCrypto {
     fun encryptAndSignDataWithCompression(
         data: ByteArray,
         publicKey: Armored,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext? = null
     ): EncryptedMessage
 
     /**
      * Encrypt [data] using [sessionKey] and sign using [unlockedKey].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @return [DataPacket] with embedded signature.
      *
@@ -160,10 +182,17 @@ interface PGPCrypto {
      *
      * @see [decryptAndVerifyData].
      */
-    fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey, unlockedKey: Unarmored): DataPacket
+    fun encryptAndSignData(
+        data: ByteArray,
+        sessionKey: SessionKey,
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext? = null
+    ): DataPacket
 
     /**
      * Encrypt [source] into [destination] using [sessionKey] and sign using [unlockedKey].
+     *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @throws [CryptoException] if [source] cannot be encrypted or signed.
      *
@@ -173,7 +202,8 @@ interface PGPCrypto {
         source: File,
         destination: File,
         sessionKey: SessionKey,
-        unlockedKey: Unarmored
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext? = null
     ): EncryptedFile
 
     /**
@@ -248,6 +278,8 @@ interface PGPCrypto {
      * Note: String canonicalization/standardization is applied.
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
      *
      * @throws [CryptoException] if [message] cannot be decrypted.
      *
@@ -259,7 +291,8 @@ interface PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): DecryptedText
 
     /**
@@ -285,6 +318,8 @@ interface PGPCrypto {
      * Decrypt [message] as [ByteArray] using [unlockedKeys] and verify using [publicKeys].
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
      *
      * @throws [CryptoException] if [message] cannot be decrypted.
      *
@@ -296,13 +331,16 @@ interface PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): DecryptedData
 
     /**
      * Decrypt [data] as [ByteArray] using [sessionKey] and verify using [publicKeys].
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
      *
      * @throws [CryptoException] if [data] cannot be decrypted.
      *
@@ -314,13 +352,17 @@ interface PGPCrypto {
         data: DataPacket,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): DecryptedData
 
     /**
      * Decrypt [source] into [destination] using [sessionKey] and verify using [publicKeys].
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     *
+     * @param verificationContext: If a context is given, the signature is verified using the context.
+     * The context requirement condition is enforced by the verification.
      *
      * @throws [CryptoException] if [source] cannot be decrypted.
      *
@@ -333,7 +375,8 @@ interface PGPCrypto {
         destination: File,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        time: VerificationTime = VerificationTime.Now
+        time: VerificationTime = VerificationTime.Now,
+        verificationContext: VerificationContext? = null
     ): DecryptedFile
 
     /**
@@ -389,11 +432,13 @@ interface PGPCrypto {
     /**
      * Sign [file] using [unlockedKey].
      *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
+     *
      * @throws [CryptoException] if [file] cannot be signed.
      *
      * @see [verifyFile]
      */
-    fun signFile(file: File, unlockedKey: Unarmored): Signature
+    fun signFile(file: File, unlockedKey: Unarmored, signatureContext: SignatureContext? = null): Signature
 
     /**
      * Sign [plainText] using [unlockedKey] and encrypt the signature using [encryptionKeys].
@@ -436,6 +481,7 @@ interface PGPCrypto {
     /**
      * Sign [file] using [unlockedKey] and encrypt the signature using [encryptionKeys].
      *
+     * @param signatureContext: If a context is given, it is included in the signature as notation data.
      *
      * @throws [CryptoException] if [file] cannot be signed.
      *
@@ -444,7 +490,8 @@ interface PGPCrypto {
     fun signFileEncrypted(
         file: File,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext? = null
     ): EncryptedSignature
 
     /**
