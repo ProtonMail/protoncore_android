@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import org.gradle.api.Project
 
 public class AndroidTestPlugin : BaseAndroidPlugin<AndroidTestExtension>() {
     override val androidPluginId: String get() = PluginIds.androidTest
+    override val applyCoveragePlugin: Boolean = false
 
     override fun createConventionSettings(): AndroidConventionSettings =
         object : AndroidConventionSettings {
@@ -33,5 +34,6 @@ public class AndroidTestPlugin : BaseAndroidPlugin<AndroidTestExtension>() {
             override var viewBinding: Boolean = false
         }
 
-    override fun createPluginExtension(target: Project): AndroidTestExtension = target.createProtonExt()
+    override fun createPluginExtension(target: Project): AndroidTestExtension =
+        target.createProtonExt()
 }

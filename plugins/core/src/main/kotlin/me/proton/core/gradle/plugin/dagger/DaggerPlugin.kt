@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,13 +26,12 @@ import me.proton.core.gradle.plugin.createProtonExt
 import org.gradle.api.Project
 
 public class DaggerPlugin : BuildConventionPlugin() {
+    override fun apply(target: Project) {
+        super.apply(target)
 
-    override fun onApplyPlugins(target: Project) {
         target.pluginManager.apply(PluginIds.kapt)
         target.pluginManager.apply(PluginIds.hilt)
-    }
 
-    override fun onPluginsApplied(target: Project) {
         val ext = target.createProtonExt<DaggerExtension>("protonDagger")
         target.applyDaggerConvention(ext)
     }

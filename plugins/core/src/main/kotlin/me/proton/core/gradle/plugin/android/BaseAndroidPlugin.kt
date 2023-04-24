@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,21 +24,27 @@ import me.proton.core.gradle.plugin.BuildConventionPlugin
 import me.proton.core.gradle.plugin.PluginIds
 import me.proton.core.gradle.plugin.applyAndroidConvention
 import me.proton.core.gradle.plugin.applyKotlinConvention
+import me.proton.core.gradle.plugins.coverage.ProtonCoveragePlugin
 import org.gradle.api.Project
 
 public abstract class BaseAndroidPlugin<E> : BuildConventionPlugin() where E : KotlinConventionSettings {
     protected abstract val androidPluginId: String
+    protected open val applyCoveragePlugin: Boolean = true
     protected abstract fun createConventionSettings(): AndroidConventionSettings
     protected abstract fun createPluginExtension(target: Project): E
 
-    override fun onApplyPlugins(target: Project) {
+    override fun apply(target: Project) {
+        super.apply(target)
+
         target.pluginManager.apply(androidPluginId)
         target.pluginManager.apply(PluginIds.kotlinAndroid)
-    }
 
-    override fun onPluginsApplied(target: Project) {
         val ext = createPluginExtension(target)
         target.applyAndroidConvention(createConventionSettings())
         target.applyKotlinConvention(ext)
+
+        if (applyCoveragePlugin) {
+            target.pluginManager.apply(ProtonCoveragePlugin::class.java)
+        }
     }
 }

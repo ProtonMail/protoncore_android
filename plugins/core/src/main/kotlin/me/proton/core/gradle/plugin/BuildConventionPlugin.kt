@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,14 +28,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper
 
 public abstract class BuildConventionPlugin : Plugin<Project> {
     @OverridingMethodsMustInvokeSuper
-    final override fun apply(target: Project) {
+    override fun apply(target: Project) {
         initVersions(target.rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs"))
         target.applyRepositories()
-
-        onApplyPlugins(target)
-        onPluginsApplied(target)
     }
-
-    protected abstract fun onApplyPlugins(target: Project)
-    protected abstract fun onPluginsApplied(target: Project)
 }

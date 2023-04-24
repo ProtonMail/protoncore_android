@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,17 @@ import me.proton.core.gradle.plugin.PluginIds
 import me.proton.core.gradle.plugin.applyJavaConvention
 import me.proton.core.gradle.plugin.applyKotlinConvention
 import me.proton.core.gradle.plugin.createProtonExt
+import me.proton.core.gradle.plugins.coverage.ProtonCoveragePlugin
 import org.gradle.api.Project
 
 public class KotlinLibraryPlugin : BuildConventionPlugin() {
-    override fun onApplyPlugins(target: Project) {
+    override fun apply(target: Project) {
+        super.apply(target)
+
         target.pluginManager.apply(PluginIds.javaLibrary)
         target.pluginManager.apply(PluginIds.kotlinJvm)
-    }
+        target.pluginManager.apply(ProtonCoveragePlugin::class.java)
 
-    override fun onPluginsApplied(target: Project) {
         val ext = target.createProtonExt<KotlinLibraryExtension>()
         target.applyJavaConvention()
         target.applyKotlinConvention(ext)
