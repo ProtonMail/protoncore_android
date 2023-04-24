@@ -1,9 +1,6 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import java.io.ByteArrayOutputStream
-
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +15,9 @@ import java.io.ByteArrayOutputStream
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import java.io.ByteArrayOutputStream
 
 /**
  * Registered tasks:
@@ -49,6 +49,10 @@ buildscript {
         classpath(libs.android.gradle)
         classpath(libs.dagger.hilt.android.gradle)
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 fun isNonStable(version: String): Boolean {
