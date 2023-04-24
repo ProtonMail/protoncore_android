@@ -629,7 +629,7 @@ internal fun ProtonColors.toMaterial3ThemeColors() = androidx.compose.material3.
     errorContainer = backgroundNorm,
     onErrorContainer = textNorm,
     outline = brandNorm,
-    surfaceTint = brandNorm,
+    surfaceTint = Color.Unspecified,
     outlineVariant = brandNorm,
     scrim = brandDarken40
 )
