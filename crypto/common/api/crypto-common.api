@@ -417,6 +417,7 @@ public final class me/proton/core/crypto/common/pgp/VerificationContext$ContextR
 }
 
 public final class me/proton/core/crypto/common/pgp/VerificationStatus : java/lang/Enum {
+	public static final field BadContext Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static final field Failure Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static final field NotMatchKey Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static final field NotSigned Lme/proton/core/crypto/common/pgp/VerificationStatus;

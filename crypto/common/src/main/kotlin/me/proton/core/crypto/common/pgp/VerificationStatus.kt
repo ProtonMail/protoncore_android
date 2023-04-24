@@ -37,6 +37,9 @@ enum class VerificationStatus {
     /** Embedded signature doesn't match the provided publicKey to verify. */
     NotMatchKey,
 
+    /** Embedded signature's context was not the one expected */
+    BadContext,
+
     /** Embedded signature match the provided publicKey but is incorrect. */
     Failure,
 }

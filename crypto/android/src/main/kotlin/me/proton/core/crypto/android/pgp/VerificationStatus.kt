@@ -34,5 +34,6 @@ fun Long.toVerificationStatus(): VerificationStatus = when (this) {
     Constants.SIGNATURE_NOT_SIGNED -> VerificationStatus.NotSigned
     Constants.SIGNATURE_NO_VERIFIER -> VerificationStatus.NotMatchKey
     Constants.SIGNATURE_FAILED -> VerificationStatus.Failure
+    Constants.SIGNATURE_BAD_CONTEXT -> VerificationStatus.BadContext
     else -> throw CryptoException("Unknown SignatureVerificationError status: $this")
 }
