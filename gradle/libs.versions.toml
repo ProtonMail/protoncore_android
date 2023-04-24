@@ -13,7 +13,7 @@ kotlinDokka = "1.7.20"
 kotlinCoroutines = "1.6.4"
 kotlinSerialization = "1.4.1"
 kotlinBinaryCompatibilityValidator = "0.12.1"
-kotlinx-kover = "0.7.0-Alpha"
+kotlinx-kover = "0.7.0-Beta"
 vanniktechPublish = "0.18.0"
 
 [plugins]
