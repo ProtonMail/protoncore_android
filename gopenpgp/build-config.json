@@ -1,5 +1,5 @@
 {
-    "go_version":"1.20.2",
+    "go_version":"1.20.3",
     "go_checksum_linux-amd64":"4eaea32f59cde4dc635fbc42161031d13e1c780b87097f4b4234cfce671f1768",
     "build_dir":"build",
     "out_dir":"out",
@@ -10,8 +10,8 @@
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message": "feat(gopenpgp): Update to gopenpgp v2.6.1-proton and go-srp v0.0.7 and KT lib.",
-    "upload_branch": "update-2.6.1-proton+0.0.7+kt",
+    "commit_message": "feat(gopenpgp): Update to gopenpgp v2.7.1-proton.",
+    "upload_branch": "update-2.7.1",
     "java_pkg":"com.proton.gopenpgp",
     "targets":["android"],
     "requirements": [
@@ -19,7 +19,7 @@
             "module":
             {
                 "path":"github.com/ProtonMail/gopenpgp/v2",
-                "version":"v2.6.1-proton"
+                "version":"v2.7.1-proton"
             },
             "packages": ["crypto", "armor", "constants", "models", "subtle", "helper"]
         },
