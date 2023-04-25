@@ -488,8 +488,12 @@ public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentProv
 }
 
 public final class me/proton/core/payment/domain/usecase/GetCurrentSubscription {
-	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/usecase/GetCurrentSubscriptionKt {
+	public static final fun toProtonErrorCode (Ljava/lang/Object;I)Ljava/lang/Integer;
 }
 
 public final class me/proton/core/payment/domain/usecase/GetPaymentStatus {

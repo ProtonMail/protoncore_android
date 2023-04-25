@@ -20,11 +20,14 @@ package me.proton.core.payment.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGetSubscriptionTotal
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.repository.PaymentsRepository
@@ -38,6 +41,7 @@ import kotlin.test.assertNull
 class GetCurrentSubscriptionTest {
     // region mocks
     private val repository = mockk<PaymentsRepository>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -64,12 +68,13 @@ class GetCurrentSubscriptionTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetCurrentSubscription(repository)
+        useCase = GetCurrentSubscription(repository, observabilityManager)
     }
 
     @Test
-    fun `get subscription returns success`() = runTest {
+    fun `get subscription returns success, enqueue getsubscription observability success`() = runTest {
         // GIVEN
+        val observabilityResult = CheckoutGetSubscriptionTotal(CheckoutGetSubscriptionTotal.ApiStatus.http2xx)
         coEvery { repository.getSubscription(testUserId) } returns testSubscription
         // WHEN
         val result = useCase.invoke(testUserId)
@@ -77,11 +82,13 @@ class GetCurrentSubscriptionTest {
         assertEquals(testSubscription, result)
         assertNotNull(result)
         assertEquals(5, result.amount)
+        verify { observabilityManager.enqueue(observabilityResult, any()) }
     }
 
     @Test
     fun `get subscription returns error`() = runTest {
         // GIVEN
+        val observabilityResult = CheckoutGetSubscriptionTotal(CheckoutGetSubscriptionTotal.ApiStatus.notConnected)
         coEvery { repository.getSubscription(testUserId) } throws ApiException(
             ApiResult.Error.Connection(
                 false,
@@ -95,11 +102,14 @@ class GetCurrentSubscriptionTest {
         // THEN
         assertNotNull(throwable)
         assertEquals("Test error", throwable.message)
+        verify { observabilityManager.enqueue(observabilityResult, any()) }
     }
 
     @Test
     fun `get subscription returns no active subscription`() = runTest {
         // GIVEN
+        val observabilityResult =
+            CheckoutGetSubscriptionTotal(CheckoutGetSubscriptionTotal.ApiStatus.failureNoSubscription)
         coEvery { repository.getSubscription(testUserId) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
@@ -114,5 +124,6 @@ class GetCurrentSubscriptionTest {
         val result = useCase.invoke(testUserId)
         // THEN
         assertNull(result)
+        verify { observabilityManager.enqueue(observabilityResult, any()) }
     }
 }

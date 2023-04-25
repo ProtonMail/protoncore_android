@@ -21,10 +21,15 @@ package me.proton.core.payment.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.HttpResponseCodes
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.PAYMENTS_SUBSCRIPTION_NOT_EXISTS
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGetSubscriptionTotal
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.observability.domain.metrics.toGetSubscriptionApiStatus
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.repository.PaymentsRepository
-
 import javax.inject.Inject
 
 /**
@@ -34,18 +39,36 @@ import javax.inject.Inject
  * have existing subscriptions.
  */
 public class GetCurrentSubscription @Inject constructor(
-    private val paymentsRepository: PaymentsRepository
+    private val paymentsRepository: PaymentsRepository,
+    private val observabilityManager: ObservabilityManager
 ) {
     public suspend operator fun invoke(userId: UserId): Subscription? {
-        return try {
+        val result = try {
             paymentsRepository.getSubscription(userId)
         } catch (exception: ApiException) {
             val error = exception.error
             if (error is ApiResult.Error.Http && error.proton?.code == PAYMENTS_SUBSCRIPTION_NOT_EXISTS) {
-                return null
+                null
             } else {
+                val status = exception.toHttpApiStatus().toGetSubscriptionApiStatus()
+                observabilityManager.enqueue(
+                    CheckoutGetSubscriptionTotal(status)
+                )
                 throw exception
             }
         }
+        val status = if (result != null) {
+            CheckoutGetSubscriptionTotal.ApiStatus.http2xx
+        } else {
+            CheckoutGetSubscriptionTotal.ApiStatus.failureNoSubscription
+        }
+        observabilityManager.enqueue(CheckoutGetSubscriptionTotal(status))
+        return result
     }
 }
+
+public fun Result<*>.toProtonErrorCode(filterByHttpCode: Int): Int? =
+    ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)
+        ?.takeIf { it.httpCode == filterByHttpCode }
+        ?.proton
+        ?.code
