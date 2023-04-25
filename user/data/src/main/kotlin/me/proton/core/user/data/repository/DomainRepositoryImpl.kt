@@ -19,6 +19,7 @@
 package me.proton.core.user.data.repository
 
 import io.github.reactivecircus.cache4k.Cache
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.DomainApi
 import me.proton.core.user.domain.entity.Domain
@@ -34,8 +35,8 @@ class DomainRepositoryImpl @Inject constructor(
 
     private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Domain>>()
 
-    override suspend fun getAvailableDomains(): List<Domain> = cache.get(Unit) {
-        provider.get<DomainApi>().invoke {
+    override suspend fun getAvailableDomains(sessionUserId: UserId?): List<Domain> = cache.get(Unit) {
+        provider.get<DomainApi>(sessionUserId).invoke {
             getAvailableDomains().domains
         }.valueOrThrow
     }

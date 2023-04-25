@@ -23,6 +23,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.user.domain.entity.Domain
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -35,47 +36,48 @@ class AccountAvailability @Inject constructor(
     private val domainRepository: DomainRepository,
     private val observabilityManager: ObservabilityManager
 ) {
-    /** Fetch the domains.
-     * @param metricData Optionally, a function that produces [ObservabilityData]
-     *  that will be [enqueued][ObservabilityManager.enqueue].
-     */
-    suspend fun getDomains(metricData: ((Result<List<Domain>>) -> ObservabilityData)? = null): List<Domain> {
-        return domainRepository.runWithObservability(observabilityManager, metricData) {
-            getAvailableDomains()
-        }
+
+    suspend fun getDomains(
+        userId: UserId?,
+        metricData: ((Result<List<Domain>>) -> ObservabilityData)? = null
+    ): List<Domain> = domainRepository.runWithObservability(observabilityManager, metricData) {
+        getAvailableDomains(userId)
     }
 
-    suspend fun getUser(userId: UserId) = userRepository.getUser(userId)
+    suspend fun getUser(
+        userId: UserId,
+        refresh: Boolean
+    ): User = userRepository.getUser(userId, refresh)
 
-    suspend fun checkUsername(
+    suspend fun checkUsernameAuthenticated(
         userId: UserId,
         username: String,
         metricData: ((Result<Unit>) -> ObservabilityData)? = null
-    ) {
-        val user = userRepository.getUser(userId)
-        if (user.name == username) return
-        return checkUsername(username, metricData)
-    }
+    ) = checkUsername(userId, username, metricData)
 
-    suspend fun checkUsername(
+    suspend fun checkUsernameUnauthenticated(
         username: String,
         metricData: ((Result<Unit>) -> ObservabilityData)? = null
-    ) {
-        check(username.isNotBlank()) { "Username must not be blank." }
-
-        return userRepository.runWithObservability(observabilityManager, metricData) {
-            checkUsernameAvailable(username)
-        }
-    }
+    ) = checkUsername(null, username, metricData)
 
     suspend fun checkExternalEmail(
         email: String,
         metricData: ((Result<Unit>) -> ObservabilityData)? = null
     ) {
         check(email.isNotBlank()) { "Email must not be blank." }
-
         userRepository.runWithObservability(observabilityManager, metricData) {
             checkExternalEmailAvailable(email)
+        }
+    }
+
+    private suspend fun checkUsername(
+        userId: UserId?,
+        username: String,
+        metricData: ((Result<Unit>) -> ObservabilityData)? = null
+    ) {
+        check(username.isNotBlank()) { "Username must not be blank." }
+        userRepository.runWithObservability(observabilityManager, metricData) {
+            checkUsernameAvailable(sessionUserId = userId, username = username)
         }
     }
 }

@@ -49,7 +49,7 @@ class SetupInternalAddress @Inject constructor(
     ) {
         val user = userRepository.getUser(userId)
 
-        val finalDomain = domain ?: domainRepository.getAvailableDomains().first()
+        val finalDomain = domain ?: domainRepository.getAvailableDomains(sessionUserId = userId).first()
         val internalAddresses = userAddressManager.getAddresses(userId).filterInternal()
 
         if (internalAddresses.isEmpty()) {

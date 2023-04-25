@@ -37,7 +37,7 @@ import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
-import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.ChooseAddressState
+import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.State
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotalV1
 import me.proton.core.presentation.utils.getUserMessage
@@ -60,8 +60,11 @@ import me.proton.core.util.kotlin.exhaustive
  * checks with the API.
  */
 @AndroidEntryPoint
-class ChooseAddressActivity :
-    AuthActivity<ActivityChooseAddressBinding>(ActivityChooseAddressBinding::inflate) {
+class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(
+    ActivityChooseAddressBinding::inflate
+) {
+
+    private val viewModel by viewModels<ChooseAddressViewModel>()
 
     private val input: ChooseAddressInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -73,18 +76,14 @@ class ChooseAddressActivity :
         }
     }
 
-    private val viewModel by viewModels<ChooseAddressViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                stopWorkflow()
-            }
-            cancelButton.onClick { stopWorkflow() }
+            toolbar.setNavigationOnClickListener { stopWorkflow() }
+            cancelButton.onClick(::stopWorkflow)
             nextButton.onClick(::onNextClicked)
             subtitleText.text = String.format(
                 getString(R.string.auth_create_address_subtitle),
@@ -93,31 +92,23 @@ class ChooseAddressActivity :
             )
         }
 
-        viewModel.setUserId(UserId(input.userId))
-        viewModel.chooseAddressState
+        viewModel.startWorkFlow(UserId(input.userId))
+        viewModel.state
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is ChooseAddressState.Idle -> onIdle()
-                    is ChooseAddressState.Processing -> onProcessing()
-                    is ChooseAddressState.Data.Domains -> onDomains(it.domains)
-                    is ChooseAddressState.Data.UsernameProposal ->
-                        onUsernameProposalAvailable(it.username)
-                    is ChooseAddressState.AccountSetupResult ->
-                        onAccountSetupResult(it.result)
-                    is ChooseAddressState.Error.Message ->
-                        onError(false, it.error.getUserMessage(resources))
-                    is ChooseAddressState.Error.DomainsNotAvailable ->
-                        onError(
-                            false,
-                            getString(R.string.auth_create_address_error_no_available_domain)
-                        )
-                    is ChooseAddressState.Error.UsernameNotAvailable ->
-                        onUsernameUnAvailable()
+                    is State.Idle -> onIdle()
+                    is State.Processing -> onProcessing()
+                    is State.Data.Domains -> onDomains(it.domains)
+                    is State.Data.UsernameOption -> onUsernameProposalAvailable(it.username)
+                    is State.Data.UsernameAlreadySet -> onUsernameAlreadySet(it.username)
+                    is State.Error.Start -> onError(it.error.getUserMessage(resources), retry = true)
+                    is State.Error.SetUsername -> onError(it.error.getUserMessage(resources), retry = false)
+                    is State.AccountSetupResult -> onAccountSetupResult(it.result)
+                    is State.Finished -> finish()
                 }.exhaustive
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         launchOnScreenView {
             viewModel.onScreenView(LoginScreenViewTotalV1.ScreenId.chooseInternalAddress)
@@ -125,14 +116,20 @@ class ChooseAddressActivity :
     }
 
     private fun stopWorkflow() {
-        viewModel.stopChooseAddressWorkflow(UserId(input.userId)).invokeOnCompletion { finish() }
+        viewModel.stopWorkflow(UserId(input.userId))
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {
         if (loading) {
             nextButton.setLoading()
+            nextButton.isEnabled = false
+            usernameInput.isEnabled = false
+            domainInput.isEnabled = false
         } else {
             nextButton.setIdle()
+            nextButton.isEnabled = true
+            usernameInput.isEnabled = true
+            domainInput.isEnabled = true
         }
     }
 
@@ -140,9 +137,9 @@ class ChooseAddressActivity :
         with(binding) {
             hideKeyboard()
             usernameInput.validateUsername()
-                .onFailure { usernameInput.setInputError() }
+                .onFailure { usernameInput.setInputError(getString(R.string.presentation_field_required)) }
                 .onSuccess {
-                    viewModel.submit(
+                    viewModel.setUsername(
                         UserId(input.userId),
                         username = it,
                         password = input.password,
@@ -155,55 +152,45 @@ class ChooseAddressActivity :
 
     private fun onIdle() {
         showLoading(false)
-        enableForm()
     }
 
     private fun onProcessing() {
         showLoading(true)
-        binding.usernameInput.isEnabled = false
     }
 
-    override fun onError(
-        triggerValidation: Boolean,
+    fun onError(
         message: String?,
-        isPotentialBlocking: Boolean
+        retry: Boolean,
     ) {
-        super.onError(triggerValidation, message, isPotentialBlocking)
         showLoading(false)
-        binding.usernameInput.isEnabled = true
-        showError(message)
+        binding.nextButton.isEnabled = false
+        when {
+            retry -> showError(message, getString(R.string.presentation_retry), { onRetryClicked() }, false)
+            else -> showError(message)
+        }
     }
 
     private fun onDomains(domains: List<Domain>) {
-        showLoading(false)
-        with(binding) {
-            if (domains.count() == 1) {
-                usernameInput.setOnDoneActionListener { onNextClicked() }
-            }
-
-            domainInput.apply {
-                val items = domains.map { "@$it" }
-                text = items.firstOrNull()
-                setAdapter(ArrayAdapter(context, R.layout.list_item_domain, R.id.title, items))
-            }
+        binding.domainInput.apply {
+            val items = domains.map { "@$it" }
+            text = items.firstOrNull()
+            setAdapter(ArrayAdapter(context, R.layout.list_item_domain, R.id.title, items))
         }
     }
 
-    private fun onUsernameUnAvailable() {
-        showError(getString(R.string.auth_create_address_error_username_unavailable))
-        with(binding.usernameInput) {
-            setInputError()
-            isEnabled = true
-        }
+    private fun onRetryClicked() {
+        viewModel.startWorkFlow(UserId(input.userId))
     }
 
     private fun onUsernameProposalAvailable(username: String) {
-        with(binding.usernameInput) {
-            text = username
-            isEnabled = true
-        }
         showLoading(false)
-        enableForm()
+        binding.usernameInput.text = username
+    }
+
+    private fun onUsernameAlreadySet(username: String) {
+        showLoading(false)
+        binding.usernameInput.text = username
+        binding.usernameInput.isEnabled = false
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
@@ -232,15 +219,6 @@ class ChooseAddressActivity :
         val intent = Intent().putExtra(ARG_RESULT, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
-    }
-
-    private fun enableForm() {
-        with(binding) {
-            usernameInput.isEnabled = true
-            nextButton.isEnabled = true
-            cancelButton.isEnabled = true
-            domainInput.isEnabled = true
-        }
     }
 
     companion object {

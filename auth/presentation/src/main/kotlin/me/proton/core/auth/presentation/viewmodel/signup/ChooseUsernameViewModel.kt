@@ -54,9 +54,10 @@ internal class ChooseUsernameViewModel @Inject constructor(
         emit(State.Processing)
         // See CP-5335.
         accountAvailability.getDomains(
+            userId = null,
             metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
         )
-        accountAvailability.checkUsername(
+        accountAvailability.checkUsernameUnauthenticated(
             username = username,
             metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
         )

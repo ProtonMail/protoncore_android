@@ -1300,7 +1300,7 @@ public final class me/proton/core/auth/presentation/ui/ChooseAddressActivity : m
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/ChooseAddressActivity$Companion;
 	public fun <init> ()V
-	public fun onError (ZLjava/lang/String;Z)V
+	public final fun onError (Ljava/lang/String;Z)V
 	public fun showLoading (Z)V
 }
 
@@ -1817,79 +1817,97 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Terms
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
-	public final fun getChooseAddressState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
-	public final fun stopChooseAddressWorkflow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
-	public final fun submit (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lkotlinx/coroutines/Job;
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lkotlinx/coroutines/Job;
+	public final fun startWorkFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+	public final fun stopWorkflow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 }
 
-public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
+public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$AccountSetupResult : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$AccountSetupResult : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
 	public fun <init> (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;)V
 	public final fun component1 ()Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;
-	public final fun copy (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$AccountSetupResult;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$AccountSetupResult;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$AccountSetupResult;
+	public final fun copy (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$AccountSetupResult;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$AccountSetupResult;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$AccountSetupResult;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getResult ()Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
+public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$Domains : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data {
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$Domains : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data {
 	public fun <init> (Ljava/util/List;)V
 	public final fun component1 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$Domains;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$Domains;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$Domains;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$Domains;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$Domains;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$Domains;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDomains ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data {
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameAlreadySet : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Data$UsernameProposal;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameAlreadySet;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameAlreadySet;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameAlreadySet;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameOption : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameOption;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameOption;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Data$UsernameOption;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUsername ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$DomainsNotAvailable : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$DomainsNotAvailable;
+public abstract class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$Message : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error {
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$SetUsername : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error {
 	public fun <init> (Ljava/lang/Throwable;)V
 	public final fun component1 ()Ljava/lang/Throwable;
-	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$Message;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$Message;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$SetUsername;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$SetUsername;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$SetUsername;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$UsernameNotAvailable : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Error$UsernameNotAvailable;
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Start : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Start;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Start;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Start;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Idle : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Idle;
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Finished : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Finished;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Processing : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$ChooseAddressState$Processing;
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Idle;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Processing : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Processing;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_Factory : dagger/internal/Factory {

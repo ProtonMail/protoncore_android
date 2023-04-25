@@ -24,7 +24,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -33,6 +32,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.observability.toUnlockUserStatus
@@ -50,6 +50,8 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.usersettings.domain.usecase.SetupUsername
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.retryOnceWhen
@@ -64,112 +66,100 @@ class ChooseAddressViewModel @Inject constructor(
     private val setupUsername: SetupUsername
 ) : ProtonViewModel() {
 
-    private val _chooseAddressState =
-        MutableStateFlow<ChooseAddressState>(ChooseAddressState.Processing)
+    private val mainState = MutableStateFlow<State>(State.Processing)
+    val state = mainState.asStateFlow()
 
-    val chooseAddressState = _chooseAddressState.asStateFlow()
-
-    sealed class ChooseAddressState {
-        object Idle : ChooseAddressState()
-        object Processing : ChooseAddressState()
-        sealed class Data : ChooseAddressState() {
+    sealed class State {
+        object Idle : State()
+        object Processing : State()
+        sealed class Data : State() {
             data class Domains(val domains: List<Domain>) : Data()
-            data class UsernameProposal(val username: String) : Data()
+            data class UsernameOption(val username: String) : Data()
+            data class UsernameAlreadySet(val username: String) : Data()
         }
 
-        data class AccountSetupResult(val result: PostLoginAccountSetup.Result) :
-            ChooseAddressState()
-
-        sealed class Error : ChooseAddressState() {
-            object DomainsNotAvailable : Error()
-            object UsernameNotAvailable : Error()
-            data class Message(val error: Throwable) : Error()
+        sealed class Error : State() {
+            data class Start(val error: Throwable) : Error()
+            data class SetUsername(val error: Throwable) : Error()
         }
+
+        data class AccountSetupResult(val result: Result) : State()
+        object Finished : State()
     }
 
-    fun setUserId(userId: UserId) = flow {
-        emit(ChooseAddressState.Processing)
-        val domains = accountAvailability.getDomains(
-            metricData = { LoginEaToIaFetchDomainsTotal(it.toHttpApiStatus()) })
-        if (domains.isEmpty()) {
-            emit(ChooseAddressState.Error.DomainsNotAvailable)
-            return@flow
-        }
-        emit(ChooseAddressState.Data.Domains(domains))
-        val user = accountAvailability.getUser(userId)
-        val username = user.email?.split("@")?.firstOrNull()
-        if (username == null) {
-            emit(ChooseAddressState.Idle)
-            return@flow
-        }
-
-        checkUsername(userId, username, domains.first())
-            .onFailure { emit(ChooseAddressState.Idle) }
-            .onSuccess { emit(ChooseAddressState.Data.UsernameProposal(it)) }
-    }.catch { error ->
-        emit(ChooseAddressState.Error.Message(error))
-    }.onEach {
-        _chooseAddressState.tryEmit(it)
-    }.launchIn(viewModelScope)
-
-    fun stopChooseAddressWorkflow(
+    fun stopWorkflow(
         userId: UserId
     ): Job = viewModelScope.launch {
         accountWorkflow.handleCreateAddressFailed(userId)
+        mainState.emit(State.Finished)
     }
 
-    fun submit(
-        userId: UserId,
-        username: String,
-        password: EncryptedString,
-        domain: Domain,
-        isTwoPassModeNeeded: Boolean
-    ) = viewModelScope.launch {
-        _chooseAddressState.emit(ChooseAddressState.Processing)
-
-        checkUsername(userId, username, domain)
-            .onFailure {
-                _chooseAddressState.emit(ChooseAddressState.Error.UsernameNotAvailable)
-            }.onSuccess { username ->
-                setUsernameAndUpgradeToProtonAccount(
-                    userId,
-                    username = username,
-                    password = password,
-                    domain = domain,
-                    isTwoPassModeNeeded = isTwoPassModeNeeded
-                )
-            }
-    }
-
-    internal fun onScreenView(screenId: LoginScreenViewTotalV1.ScreenId) {
-        observabilityManager.enqueue(LoginScreenViewTotalV1(screenId))
-    }
-
-    private suspend fun checkUsername(
-        userId: UserId,
-        username: String,
-        domain: Domain
-    ): Result<String> = flow {
-        accountAvailability.checkUsername(
+    fun startWorkFlow(userId: UserId) = flow {
+        emit(State.Processing)
+        val domains = accountAvailability.getDomains(
             userId = userId,
-            username = "$username@$domain",
-            metricData = { LoginEaToIaUsernameAvailabilityTotal(it.toHttpApiStatus()) })
-        emit(Result.success(username))
-    }.catch {
-        emit(Result.failure(it))
-    }.first()
+            metricData = { LoginEaToIaFetchDomainsTotal(it.toHttpApiStatus()) }
+        )
+        emit(State.Data.Domains(domains))
+        emit(checkAccount(userId, domains))
+    }.catch { error ->
+        emit(State.Error.Start(error))
+    }.onEach {
+        mainState.tryEmit(it)
+    }.launchIn(viewModelScope)
 
-    private fun setUsernameAndUpgradeToProtonAccount(
+    fun setUsername(
         userId: UserId,
         username: String,
         password: EncryptedString,
         domain: String,
         isTwoPassModeNeeded: Boolean
     ) = flow {
-        emit(ChooseAddressState.Processing)
+        emit(State.Processing)
+        setupUsername(userId, username)
+        emit(postLoginSetup(userId, password, domain, isTwoPassModeNeeded))
+    }.retryOnceWhen(Throwable::primaryKeyExists) {
+        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
+    }.catch { error ->
+        emit(State.Error.SetUsername(error))
+    }.onEach {
+        mainState.tryEmit(it)
+    }.launchIn(viewModelScope)
 
-        setupUsername.invoke(userId, username)
+    private suspend fun checkAccount(userId: UserId, domains: List<Domain>): State {
+        val user = accountAvailability.getUser(userId, refresh = true)
+        return when (user.name) {
+            null -> checkUsernameOption(userId, user, domains)
+            else -> State.Data.UsernameAlreadySet(requireNotNull(user.name))
+        }
+    }
 
+    private suspend fun checkUsernameOption(userId: UserId, user: User, domains: List<Domain>): State {
+        return when (val username = user.emailSplit?.username) {
+            null -> State.Idle
+            else -> checkUsername(userId, username, domains.first())
+        }
+    }
+
+    private suspend fun checkUsername(userId: UserId, username: String, domain: String): State {
+        return runCatching {
+            accountAvailability.checkUsernameAuthenticated(
+                userId = userId,
+                username = "$username@$domain",
+                metricData = { LoginEaToIaUsernameAvailabilityTotal(it.toHttpApiStatus()) }
+            )
+        }.fold(
+            onSuccess = { State.Data.UsernameOption(username) },
+            onFailure = { State.Idle }
+        )
+    }
+
+    private suspend fun postLoginSetup(
+        userId: UserId,
+        password: EncryptedString,
+        domain: String,
+        isTwoPassModeNeeded: Boolean
+    ): State.AccountSetupResult {
         val result = postLoginAccountSetup(
             userId = userId,
             encryptedPassword = password,
@@ -188,12 +178,10 @@ class ChooseAddressViewModel @Inject constructor(
             userCheckMetricData = { LoginEaToIaUserCheckTotalV1(it.toUserCheckStatus()) },
             unlockUserMetricData = { LoginEaToIaUnlockUserTotalV1(it.toUnlockUserStatus()) }
         )
-        emit(ChooseAddressState.AccountSetupResult(result))
-    }.retryOnceWhen(Throwable::primaryKeyExists) {
-        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
-    }.catch { error ->
-        emit(ChooseAddressState.Error.Message(error))
-    }.onEach {
-        _chooseAddressState.tryEmit(it)
-    }.launchIn(viewModelScope)
+        return State.AccountSetupResult(result)
+    }
+
+    internal fun onScreenView(screenId: LoginScreenViewTotalV1.ScreenId) {
+        observabilityManager.enqueue(LoginScreenViewTotalV1(screenId))
+    }
 }

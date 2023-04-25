@@ -56,6 +56,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
 
         // See CP-5335.
         val domains = accountAvailability.getDomains(
+            userId = null,
             metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
         )
         val emailSplit = email.split("@")

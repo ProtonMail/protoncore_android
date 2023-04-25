@@ -25,7 +25,7 @@ import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 /**
- * Setup the username, then available as [User.name].
+ * Set the username if not already set, then available as [User.name].
  */
 class SetupUsername @Inject constructor(
     private val userRepository: UserRepository,
@@ -35,13 +35,11 @@ class SetupUsername @Inject constructor(
         userId: UserId,
         username: String
     ) {
-        val user = userRepository.getUser(userId)
+        val user = userRepository.getUser(userId, refresh = true)
         if (user.name == null) {
             userSettingRepository.setUsername(userId, username)
-            val updatedUser = userRepository.getUser(userId, refresh = true)
-            check(updatedUser.name == username) { "Username has not been correctly set remotely." }
-        } else {
-            check(user.name == username) { "Username already set, and cannot be changed." }
+            val refreshed = userRepository.getUser(userId, refresh = true)
+            checkNotNull(refreshed.name) { "Username has not been correctly set remotely." }
         }
     }
 }

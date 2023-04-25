@@ -18,6 +18,7 @@
 
 package me.proton.core.user.domain.repository
 
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.user.domain.entity.Domain
 
 interface DomainRepository {
@@ -25,5 +26,5 @@ interface DomainRepository {
     /**
      * Return the list of all available domains, for signup.
      */
-    suspend fun getAvailableDomains(): List<Domain>
+    suspend fun getAvailableDomains(sessionUserId: SessionUserId?): List<Domain>
 }

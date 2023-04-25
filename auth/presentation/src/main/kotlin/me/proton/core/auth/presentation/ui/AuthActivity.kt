@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui
 
 import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.R
@@ -52,7 +53,11 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
             binding.root.errorSnack(
                 message = message ?: getString(R.string.auth_login_general_error),
                 action = action,
-                actionOnClick = actionOnClick
+                actionOnClick = actionOnClick,
+                length = when {
+                    action != null && actionOnClick != null -> Snackbar.LENGTH_INDEFINITE
+                    else -> Snackbar.LENGTH_LONG
+                }
             )
         } else {
             // No action possible with Toast.

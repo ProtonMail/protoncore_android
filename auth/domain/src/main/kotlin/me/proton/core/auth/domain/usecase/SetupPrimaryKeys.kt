@@ -106,7 +106,7 @@ class SetupPrimaryKeys @Inject constructor(
         suspend fun createAddress() = userAddressRepository.createAddress(
             sessionUserId = userId,
             displayName = displayName,
-            domain = internalDomain ?: domainRepository.getAvailableDomains().first()
+            domain = internalDomain ?: domainRepository.getAvailableDomains(sessionUserId = userId).first()
         )
 
         return getAddresses().firstInternalOrNull() ?: createAddress()

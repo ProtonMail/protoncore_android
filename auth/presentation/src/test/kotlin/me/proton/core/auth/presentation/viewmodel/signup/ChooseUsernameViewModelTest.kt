@@ -66,7 +66,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     fun `check username success`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { userRepository.checkUsernameAvailable(testUsername) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(any(), testUsername) } returns Unit
         // WHEN
         viewModel = ChooseUsernameViewModel(accountAvailability)
         viewModel.state.test {
@@ -83,7 +83,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     fun `check username error`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { userRepository.checkUsernameAvailable(testUsername) } throws ApiException(
+        coEvery { userRepository.checkUsernameAvailable(any(), testUsername) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -109,7 +109,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     fun `get domains is initially called, before checkUsername`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { userRepository.checkUsernameAvailable(testUsername) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(any(), testUsername) } returns Unit
         // WHEN
         viewModel = ChooseUsernameViewModel(accountAvailability)
         viewModel.state.test {
@@ -121,15 +121,15 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         }
         // THEN
         coVerify(ordering = Ordering.ORDERED) {
-            domainRepository.getAvailableDomains()
-            userRepository.checkUsernameAvailable(testUsername)
+            domainRepository.getAvailableDomains(any())
+            userRepository.checkUsernameAvailable(any(), testUsername)
         }
     }
 
     @Test
     fun `observability data is enqueued`() = coroutinesTest {
         // GIVEN
-        coEvery { userRepository.checkUsernameAvailable(any()) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(any(), any()) } returns Unit
 
         // WHEN
         viewModel = ChooseUsernameViewModel(accountAvailability)

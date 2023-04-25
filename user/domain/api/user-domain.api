@@ -372,7 +372,7 @@ public final class me/proton/core/user/domain/extension/UserPlanKt {
 }
 
 public abstract interface class me/proton/core/user/domain/repository/DomainRepository {
-	public abstract fun getAvailableDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAvailableDomains (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/user/domain/repository/PassphraseRepository {
@@ -413,7 +413,7 @@ public final class me/proton/core/user/domain/repository/UserAddressRepository$D
 public abstract interface class me/proton/core/user/domain/repository/UserRepository : me/proton/core/user/domain/repository/PassphraseRepository {
 	public abstract fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun checkExternalEmailAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun checkUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun checkUsernameAvailable (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;

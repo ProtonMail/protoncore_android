@@ -343,7 +343,7 @@ class SetupPrimaryKeysTest {
     }
 
     private fun DomainRepository.mockGetAvailableDomains() {
-        coEvery { getAvailableDomains() } returns listOf(testDomain, testAlternativeDomain)
+        coEvery { getAvailableDomains(any()) } returns listOf(testDomain, testAlternativeDomain)
     }
 
     private fun KeyStoreCrypto.mockDecrypt() {

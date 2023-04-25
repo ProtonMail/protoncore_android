@@ -208,13 +208,13 @@ public final class me/proton/core/auth/domain/usecase/AccountAvailability {
 	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/DomainRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun checkExternalEmail (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun checkExternalEmail$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun checkUsername (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun checkUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun checkUsername$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun checkUsername$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getDomains (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getDomains$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun checkUsernameAuthenticated (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun checkUsernameAuthenticated$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun checkUsernameUnauthenticated (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun checkUsernameUnauthenticated$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getDomains (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getDomains$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginSession {

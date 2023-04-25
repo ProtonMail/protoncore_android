@@ -71,6 +71,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
         emit(State.Processing)
         // See CP-5335.
         domainsState.value = accountAvailability.getDomains(
+            userId = null,
             metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
         )
         emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
@@ -93,7 +94,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
 
     fun checkUsername(username: String, domain: String) = flow {
         emit(State.Processing)
-        accountAvailability.checkUsername(
+        accountAvailability.checkUsernameUnauthenticated(
             "$username@$domain",
             metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
         )

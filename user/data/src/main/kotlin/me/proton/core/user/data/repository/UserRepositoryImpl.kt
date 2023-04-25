@@ -226,8 +226,8 @@ class UserRepositoryImpl @Inject constructor(
             response.isSuccess()
         }.valueOrThrow
 
-    override suspend fun checkUsernameAvailable(username: String) =
-        provider.get<UserApi>().invoke {
+    override suspend fun checkUsernameAvailable(sessionUserId: SessionUserId?, username: String) =
+        provider.get<UserApi>(sessionUserId).invoke {
             usernameAvailable(username)
         }.throwIfError()
 

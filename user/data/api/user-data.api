@@ -903,7 +903,7 @@ public final class me/proton/core/user/data/extension/UserMapperKt {
 
 public final class me/proton/core/user/data/repository/DomainRepositoryImpl : me/proton/core/user/domain/repository/DomainRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
-	public fun getAvailableDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAvailableDomains (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/user/data/repository/DomainRepositoryImpl_Factory : dagger/internal/Factory {
@@ -948,7 +948,7 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 	public fun addOnPassphraseChangedListener (Lme/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener;)V
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun checkExternalEmailAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun checkUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun checkUsernameAvailable (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun clearPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun createUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

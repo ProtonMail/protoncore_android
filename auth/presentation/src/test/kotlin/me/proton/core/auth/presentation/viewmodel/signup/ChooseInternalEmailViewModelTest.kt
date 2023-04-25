@@ -55,7 +55,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @Before
     fun beforeEveryTest() {
         domainRepository = mockk(relaxed = true) {
-            coEvery { getAvailableDomains() } returns listOf("protonmail.com", "protonmail.ch")
+            coEvery { getAvailableDomains(any()) } returns listOf("protonmail.com", "protonmail.ch")
         }
         userRepository = mockk(relaxed = true)
         observabilityManager = mockk(relaxed = true)
@@ -80,7 +80,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @Test
     fun `domains loading non-retryable error`() = coroutinesTest {
         // GIVEN
-        coEvery { domainRepository.getAvailableDomains() } throws ApiException(
+        coEvery { domainRepository.getAvailableDomains(any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 404,
                 message = "Error"
@@ -103,7 +103,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { userRepository.checkUsernameAvailable(testEmail) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(any(), testEmail) } returns Unit
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
@@ -125,7 +125,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { userRepository.checkUsernameAvailable(testEmail) } throws ApiException(
+        coEvery { userRepository.checkUsernameAvailable(any(), testEmail) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -155,7 +155,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { userRepository.checkUsernameAvailable(testEmail) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(any(), testEmail) } returns Unit
         viewModel = ChooseInternalEmailViewModel(accountAvailability)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
@@ -168,8 +168,8 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         }
         // THEN
         coVerify(ordering = Ordering.ORDERED) {
-            domainRepository.getAvailableDomains()
-            userRepository.checkUsernameAvailable(testEmail)
+            domainRepository.getAvailableDomains(any())
+            userRepository.checkUsernameAvailable(any(), testEmail)
         }
     }
 

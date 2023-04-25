@@ -45,10 +45,13 @@ internal class AccountAvailabilityTest {
     @Test
     fun `getDomains observability success`() = runTest {
         // GIVEN
-        coEvery { domainRepository.getAvailableDomains() } returns listOf("a", "b")
+        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf("a", "b")
 
         // WHEN
-        tested.getDomains(metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) })
+        tested.getDomains(
+            userId = null,
+            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
+        )
 
         // THEN
         verify {
@@ -59,13 +62,16 @@ internal class AccountAvailabilityTest {
     @Test
     fun `getDomains observability 4xx failure`() = runTest {
         // GIVEN
-        coEvery { domainRepository.getAvailableDomains() } throws ApiException(
+        coEvery { domainRepository.getAvailableDomains(any()) } throws ApiException(
             ApiResult.Error.Http(400, "Bad request")
         )
 
         // WHEN
         assertFailsWith<ApiException> {
-            tested.getDomains(metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) })
+            tested.getDomains(
+                userId = null,
+                metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
+            )
         }
 
         // THEN
@@ -80,10 +86,10 @@ internal class AccountAvailabilityTest {
         coEvery { userRepository.getUser(any()) } returns mockk {
             every { name } returns null
         }
-        coEvery { userRepository.checkUsernameAvailable(any()) } just runs
+        coEvery { userRepository.checkUsernameAvailable(any(), any()) } just runs
 
         // WHEN
-        tested.checkUsername(
+        tested.checkUsernameAuthenticated(
             userId = UserId("123"),
             username = "test-user",
             metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
@@ -104,13 +110,13 @@ internal class AccountAvailabilityTest {
         coEvery { userRepository.getUser(any()) } returns mockk {
             every { name } returns null
         }
-        coEvery { userRepository.checkUsernameAvailable(any()) } throws ApiException(
+        coEvery { userRepository.checkUsernameAvailable(any(), any()) } throws ApiException(
             ApiResult.Error.Connection()
         )
 
         // WHEN
         assertFailsWith<ApiException> {
-            tested.checkUsername(
+            tested.checkUsernameAuthenticated(
                 userId = UserId("123"),
                 username = "test-user",
                 metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }

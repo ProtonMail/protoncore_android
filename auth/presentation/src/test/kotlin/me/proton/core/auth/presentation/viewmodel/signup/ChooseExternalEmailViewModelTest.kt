@@ -115,7 +115,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "username"
         val testDomain = "proton.me"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { domainRepository.getAvailableDomains() } returns listOf("proton.me", "proton.ch")
+        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf("proton.me", "proton.ch")
         // WHEN
         viewModel = ChooseExternalEmailViewModel(accountAvailability)
         viewModel.state.test {
@@ -134,7 +134,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { domainRepository.getAvailableDomains() } returns listOf("proton.me", "proton.ch")
+        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf("proton.me", "proton.ch")
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
         // WHEN
         viewModel = ChooseExternalEmailViewModel(accountAvailability)
@@ -166,7 +166,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         }
         // THEN
         coVerify(ordering = Ordering.ORDERED) {
-            accountAvailability.getDomains()
+            accountAvailability.getDomains(any())
             accountAvailability.checkExternalEmail(testEmail)
         }
     }
