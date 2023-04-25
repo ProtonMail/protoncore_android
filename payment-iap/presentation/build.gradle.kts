@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -23,6 +23,11 @@ plugins {
     protonAndroidUiLibrary
     protonDagger
     id("kotlin-parcelize")
+}
+
+protonCoverage {
+    minBranchCoveragePercentage.set(14)
+    minLineCoveragePercentage.set(26)
 }
 
 publishOption.shouldBePublishedAsLib = true

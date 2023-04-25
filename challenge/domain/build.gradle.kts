@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -20,6 +20,10 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonKotlinLibrary
+}
+
+protonCoverage {
+    minBranchCoveragePercentage.set(66)
 }
 
 publishOption.shouldBePublishedAsLib = true

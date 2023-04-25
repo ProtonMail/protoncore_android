@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,11 @@ plugins {
 
 proton {
     apiModeDisabled()
+}
+
+protonCoverage {
+    minBranchCoveragePercentage.set(37)
+    minLineCoveragePercentage.set(67)
 }
 
 publishOption.shouldBePublishedAsLib = true
