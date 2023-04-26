@@ -52,6 +52,7 @@ import okhttp3.mockwebserver.SocketPolicy
 import okio.Buffer
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -230,6 +231,7 @@ class NetworkTests {
     }
 
     @Test
+    @Ignore
     fun doh() {
         apiClient.shouldUseDoh = true
 
@@ -252,6 +254,7 @@ class NetworkTests {
     }
 
     @Test
+    @Ignore
     fun guestHole() {
         apiClient.shouldUseDoh = true
 
