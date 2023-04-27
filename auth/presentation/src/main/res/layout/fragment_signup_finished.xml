@@ -62,7 +62,6 @@
 
     <me.proton.core.presentation.ui.view.ProtonButton
         android:id="@+id/startUsingProton"
-        style="@style/ProtonButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/gap_large_plus"
