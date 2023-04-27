@@ -25,6 +25,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
@@ -55,6 +56,22 @@ class PlanItemView @JvmOverloads constructor(
     private lateinit var cycle: PlanCycle
     private lateinit var planDetailsItem: PlanDetailsItem
 
+    // For all plan ids.
+    private val mappedPlanIds by lazy { context.getStringArrayByName(R.array.plan_mapping_plan_ids) }
+    // There are 3 type of layouts: current, free and paid.
+    private val mappedCurrentPlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_current_plan_layouts) }
+    private val mappedFreePlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_free_plan_layouts) }
+    private val mappedPaidPlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_paid_plan_layouts) }
+
+    private fun getMappedLayout(plan: PlanDetailsItem, mappedPlanLayouts: Array<String>?): String {
+        val indexOfPlanName = mappedPlanIds?.indexOf(plan.name) ?: return "plan_id_${plan.name}"
+        return mappedPlanLayouts?.get(indexOfPlanName) ?: "plan_id_${plan.name}"
+    }
+
+    private fun getCurrentLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedCurrentPlanLayouts)
+    private fun getFreeLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedFreePlanLayouts)
+    private fun getPaidLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedPaidPlanLayouts)
+
     fun setData(
         subscribedPlan: SubscribedPlan
     ) {
@@ -69,6 +86,7 @@ class PlanItemView @JvmOverloads constructor(
             is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(subscribedPlan.plan)
             is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(
                 subscribedPlan.amount?.toDouble(),
+                subscribedPlan.storageBar,
                 subscribedPlan.plan
             )
         }.exhaustive
@@ -86,7 +104,11 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
-    private fun bindCurrentPlan(amount: Price?, plan: PlanDetailsItem.CurrentPlanDetailsItem) = with(binding) {
+    private fun bindCurrentPlan(
+        amount: Price?,
+        storageBar: Boolean,
+        plan: PlanDetailsItem.CurrentPlanDetailsItem
+    ) = with(binding) {
         currentPlanGroup.visibility = VISIBLE
         storageProgress.apply {
             val usedPercentage = plan.usedSpace.toDouble() / plan.maxSpace
@@ -99,21 +121,24 @@ class PlanItemView @JvmOverloads constructor(
             progress = plan.progressValue
         }
         storageText.text = formatUsedSpace(context, plan.usedSpace, plan.maxSpace)
+        storageText.isVisible = storageBar
+        storageProgress.isVisible = storageBar
 
         planDescriptionText.text = context.getString(R.string.plans_current_plan)
         planPercentageText.visibility = GONE
         select.visibility = GONE
-        val featureOrder = context.getStringArrayByName(R.array.plan_current_order)
-        val featureIcons = context.getIntegerArrayByName(R.array.plan_current_icons)
-        context.getIntegerArrayByName(R.array.plan_current)?.let {
+        val mappedLayout = getCurrentLayout(plan)
+        val featureOrder = context.getStringArrayByName("${mappedLayout}_order")
+        val featureIcons = context.getIntegerArrayByName("${mappedLayout}_icons")
+        context.getIntegerArrayByName(mappedLayout)?.let {
             bindPlanFeatures(
-                length = it.length()
+                length = it.length().minus(1)
             ) { index: Int ->
                 createCurrentPlanFeature(
                     featureOrder!![index - 1],
                     featureIcons?.getResourceId(index - 1, 0) ?: 0,
                     it,
-                    index - 1,
+                    index,
                     context,
                     plan
                 )
@@ -162,10 +187,11 @@ class PlanItemView @JvmOverloads constructor(
         select.text = context.getString(R.string.plans_proton_for_free)
         planCycleText.visibility = View.GONE
         planPriceText.text = PRICE_ZERO.formatCentsPriceDefaultLocale(currency.name)
-        val featureOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
-        val featureIcons = context.getIntegerArrayByName("plan_id_${plan.name}_icons")
 
-        context.getIntegerArrayByName("plan_id_${plan.name}")?.let {
+        val mappedLayout = getFreeLayout(plan)
+        val featureOrder = context.getStringArrayByName("${mappedLayout}_order")
+        val featureIcons = context.getIntegerArrayByName("${mappedLayout}_icons")
+        context.getIntegerArrayByName(mappedLayout)?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->
@@ -190,9 +216,10 @@ class PlanItemView @JvmOverloads constructor(
     private fun bindPaidPlan(plan: PlanDetailsItem.PaidPlanDetailsItem) = with(binding) {
         select.text = String.format(context.getString(R.string.plans_get_proton), plan.displayName)
         starred.visibility = if (plan.starred) VISIBLE else INVISIBLE
-        val featureOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
-        val featureIcons = context.getIntegerArrayByName("plan_id_${plan.name}_icons")
-        context.getIntegerArrayByName("plan_id_${plan.name}")?.let {
+        val mappedLayout = getPaidLayout(plan)
+        val featureOrder = context.getStringArrayByName("${mappedLayout}_order")
+        val featureIcons = context.getIntegerArrayByName("${mappedLayout}_icons")
+        context.getIntegerArrayByName(mappedLayout)?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->

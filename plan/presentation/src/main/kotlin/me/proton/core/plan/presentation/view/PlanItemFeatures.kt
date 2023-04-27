@@ -86,6 +86,11 @@ internal fun createCurrentPlanFeature(
     context: Context,
     plan: PlanDetailsItem.CurrentPlanDetailsItem
 ): Pair<String, Int> {
+    if (type.contains(KEY_FEATURE_STORAGE)) {
+        val quantity = plan.storage.formatByteToHumanReadable()
+        val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), 0)
+        return Pair(value.replace(KEY_FEATURE_STORAGE, quantity), icon)
+    }
     if (type.contains(KEY_FEATURE_ADDRESSES)) {
         val quantity = plan.addresses
         val value = String.format(

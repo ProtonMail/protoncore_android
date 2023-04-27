@@ -247,6 +247,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         )
 
         viewModel = UpgradePlansViewModel(
+            Product.Mail,
             checkUnredeemedGooglePurchase,
             getAvailablePaymentProviders,
             getPlansUseCase,
@@ -360,6 +361,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         val plansRepository = mockk<PlansRepository>(relaxed = true)
         coEvery { plansRepository.getPlans(testUserId) } returns listOf(testPlan.copy(enabled = false))
         viewModel = UpgradePlansViewModel(
+            Product.Mail,
             checkUnredeemedGooglePurchase,
             getAvailablePaymentProviders,
             GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
@@ -397,6 +399,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
                 testPlan.copy(services = 5)
             )
             viewModel = UpgradePlansViewModel(
+                Product.Mail,
                 checkUnredeemedGooglePurchase,
                 getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = false),
@@ -488,6 +491,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
                 testPlan.copy(services = 5)
             )
             viewModel = UpgradePlansViewModel(
+                Product.Mail,
                 checkUnredeemedGooglePurchase,
                 getAvailablePaymentProviders,
                 GetPlans(plansRepository = plansRepository, product = Product.Mail, productExclusivePlans = true),

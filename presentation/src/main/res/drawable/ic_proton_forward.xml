@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M12.47,3.063C12.742,2.944 13.06,2.996 13.279,3.198L22.257,11.448C22.412,11.59 22.5,11.79 22.5,12C22.5,12.21 22.412,12.41 22.257,12.552L13.279,20.802C13.06,21.004 12.742,21.056 12.47,20.937C12.197,20.817 12.021,20.548 12.021,20.25L12.021,15.72C10.411,15.736 6.225,16.238 2.92,20.667C2.765,20.875 2.509,20.997 2.237,20.973C2.094,20.961 1.926,20.904 1.784,20.771C1.635,20.632 1.561,20.452 1.546,20.285C1.522,20.025 1.411,18.621 1.656,16.902C1.898,15.196 2.504,13.079 3.993,11.488C5.335,10.053 7.178,9.268 8.777,8.832C10.089,8.474 11.289,8.336 12.021,8.283L12.021,3.75C12.021,3.452 12.197,3.183 12.47,3.063ZM13.521,5.458L13.521,8.7C13.521,9.272 13.069,9.733 12.507,9.758C11.953,9.781 10.634,9.88 9.172,10.279C7.699,10.681 6.16,11.367 5.088,12.512C3.903,13.779 3.364,15.54 3.141,17.113C3.084,17.508 3.049,17.884 3.028,18.23C6.901,14.241 11.358,14.17 12.546,14.231C13.122,14.26 13.521,14.741 13.521,15.265L13.521,18.542L20.642,12L13.521,5.458Z"
+      android:fillColor="@color/icon_norm"
+      android:fillType="evenOdd"/>
+</vector>

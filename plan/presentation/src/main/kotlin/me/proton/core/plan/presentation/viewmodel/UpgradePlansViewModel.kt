@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -51,6 +52,7 @@ import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") constructor(
+    private val product: Product,
     private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getPlans: GetPlans,
@@ -131,7 +133,8 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
                 subscribedPlan = SubscribedPlan(
                     plan = subscribedPlans[0],
                     amount = currentSubscription?.amount,
-                    currency = PlanCurrency.map[user.currency]
+                    currency = PlanCurrency.map[user.currency],
+                    storageBar = product != Product.Pass
                 ),
                 subscriptionManagement = external,
                 unredeemedGooglePurchase = unredeemed

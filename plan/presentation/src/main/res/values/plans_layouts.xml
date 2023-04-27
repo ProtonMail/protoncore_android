@@ -31,6 +31,7 @@
         <item>@drawable/ic_proton_shield</item>
     </integer-array>
     <integer-array name="plan_current">
+        <item>@string/plans_current_plan</item>
         <item>@plurals/item_users_current</item>
         <item>@plurals/item_address_current</item>
         <item>@plurals/item_calendar_current</item>
@@ -82,7 +83,6 @@
         <item>#proton_vpn#</item>
         <item>string</item>
     </string-array>
-
     <integer-array name="plan_id_vpnbasic_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>@drawable/ic_proton_shield</item>
         <item>@drawable/ic_proton_checkmark</item>
@@ -275,6 +275,39 @@
         <item>@string/unlimited_folders_labels_filters</item>
         <item>@plurals/item_calendar</item>
         <item>@plurals/item_connections</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region pass 2023 -->
+    <string-array name="plan_id_pass2023_order" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+    </string-array>
+    <integer-array name="plan_id_pass2023_icons" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_infinite</item>
+        <item>@drawable/ic_proton_infinite</item>
+        <item>@drawable/ic_proton_lock</item>
+        <item>@drawable/ic_proton_vault</item>
+        <item>@drawable/ic_proton_alias</item>
+        <item>@drawable/ic_proton_at</item>
+        <item>@drawable/ic_proton_forward</item>
+        <item>@drawable/ic_proton_shield</item>
+    </integer-array>
+    <integer-array name="plan_id_pass2023">
+        <item>@string/plan_id_pass2023_header</item>
+        <item>@string/unlimited_logins_and_notes</item>
+        <item>@string/unlimited_devices</item>
+        <item>@string/integrated_2fa_authenticator</item>
+        <item>@string/multiple_vaults</item>
+        <item>@string/unlimited_email_alias</item>
+        <item>@string/custom_email_alias_domains</item>
+        <item>@string/multiple_forwarding_mailboxes</item>
+        <item>@string/priority_support</item>
     </integer-array>
     <!-- endregion -->
 </resources>

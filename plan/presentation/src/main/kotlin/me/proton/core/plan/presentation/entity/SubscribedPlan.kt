@@ -23,5 +23,6 @@ data class SubscribedPlan(
     val amount: Long?,
     val cycle: PlanCycle = PlanCycle.YEARLY,
     val currency: PlanCurrency?,
-    val collapsible: Boolean = true
+    val collapsible: Boolean = true,
+    val storageBar: Boolean = false
 )
