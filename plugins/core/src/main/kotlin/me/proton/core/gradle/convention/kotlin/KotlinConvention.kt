@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,10 @@
 
 package me.proton.core.gradle.convention.kotlin
 
-import me.proton.core.gradle.JvmDefaults
 import me.proton.core.gradle.convention.BuildConvention
+import me.proton.core.gradle.plugin.CommonConfigurationExtension
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -34,30 +35,41 @@ internal class KotlinConvention : BuildConvention<KotlinConventionSettings> {
         )
 
     override fun apply(target: Project, settings: KotlinConventionSettings) {
+        val commonConfig = target.rootProject.extensions.getByType<CommonConfigurationExtension>()
+
         target.tasks.withType<KotlinCompile> {
-            applyConvention()
+            applyConvention(commonConfig)
         }
 
         target.afterEvaluate {
-            applyApiMode(target, settings)
+            applyApiMode(target, settings, commonConfig)
         }
     }
 
-    private fun KotlinCompile.applyConvention() {
+    private fun KotlinCompile.applyConvention(commonConfig: CommonConfigurationExtension) {
         kotlinOptions {
             freeCompilerArgs = freeCompilerArgs + defaultCompilerArgs
-            jvmTarget = JvmDefaults.jvmTarget.toString()
+            jvmTarget = commonConfig.jvmTarget.get().toString()
         }
     }
 
-    private fun applyApiMode(target: Project, settings: KotlinConventionSettings) {
-        if (settings.apiMode != ExplicitApiMode.Disabled) {
+    private fun applyApiMode(
+        target: Project,
+        settings: KotlinConventionSettings,
+        commonConfig: CommonConfigurationExtension
+    ) {
+        val apiMode: ExplicitApiMode = when {
+            settings.apiMode.isPresent -> settings.apiMode.get()
+            commonConfig.apiMode.isPresent -> commonConfig.apiMode.get()
+            else -> settings.apiMode.get()
+        }
+        if (apiMode != ExplicitApiMode.Disabled) {
             target.tasks.withType<KotlinCompile> {
                 // Workaround for https://youtrack.jetbrains.com/issue/KT-37652
                 if (name.endsWith("TestKotlin")) return@withType
 
                 kotlinOptions {
-                    freeCompilerArgs = freeCompilerArgs + settings.apiMode.toCompilerArg()
+                    freeCompilerArgs = freeCompilerArgs + apiMode.toCompilerArg()
                 }
             }
         }

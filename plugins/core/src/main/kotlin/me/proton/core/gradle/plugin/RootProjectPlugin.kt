@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,7 @@ import org.gradle.api.Project
 
 public class RootProjectPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        // This plugin is currently empty.
-        // However, it should be applied to the root project,
-        // so that the public functions defined in this project can be used throughout the builds scripts
-        // (i.e. see PluginDependenciesSpecExt file, which defines Core convention plugins).
+        if (target != target.rootProject) error("${this::class.simpleName} should  be applied on the root project.")
+        target.createProtonExt<CommonConfigurationExtension>()
     }
 }

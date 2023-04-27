@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,16 @@
 
 package me.proton.core.gradle.plugin
 
+import me.proton.core.gradle.AndroidDefaults
 import me.proton.core.gradle.DaggerDefaults
+import me.proton.core.gradle.JvmDefaults
 import me.proton.core.gradle.KotlinDefaults
 import me.proton.core.gradle.convention.dagger.DaggerConventionSettings
 import me.proton.core.gradle.convention.kotlin.KotlinConventionSettings
+import org.gradle.api.JavaVersion
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
+import org.gradle.kotlin.dsl.property
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import javax.inject.Inject
 
@@ -29,26 +35,55 @@ public open class DaggerExtension @Inject constructor() : DaggerConventionSettin
     override var workManagerHiltIntegration: Boolean = DaggerDefaults.workManagerHiltIntegration
 }
 
-public open class AndroidAppExtension @Inject constructor() : KotlinConventionSettings {
-    override var apiMode: ExplicitApiMode = ExplicitApiMode.Disabled
+public open class AndroidAppExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(ExplicitApiMode.Disabled)
 }
 
-public open class AndroidLibraryExtension @Inject constructor() : KotlinConventionSettings {
-    override var apiMode: ExplicitApiMode = KotlinDefaults.apiMode
+public open class AndroidLibraryExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(KotlinDefaults.apiMode)
 }
 
-public open class AndroidTestExtension @Inject constructor() : KotlinConventionSettings {
-    override var apiMode: ExplicitApiMode = ExplicitApiMode.Disabled
+public open class AndroidTestExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(ExplicitApiMode.Disabled)
 }
 
-public open class AndroidUiLibraryExtension @Inject constructor() : KotlinConventionSettings {
-    override var apiMode: ExplicitApiMode = KotlinDefaults.apiMode
+public open class AndroidUiLibraryExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(KotlinDefaults.apiMode)
 }
 
-public open class ComposeUiLibraryExtension @Inject constructor() : KotlinConventionSettings {
-    override var apiMode: ExplicitApiMode = KotlinDefaults.apiMode
+public open class ComposeUiLibraryExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(KotlinDefaults.apiMode)
 }
 
-public open class KotlinLibraryExtension @Inject constructor() : KotlinConventionSettings {
-    override var apiMode: ExplicitApiMode = KotlinDefaults.apiMode
+public open class CommonConfigurationExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(KotlinDefaults.apiMode)
+    public var compileSdk: Property<Int> =
+        objects.property<Int>().convention(AndroidDefaults.compileSdk)
+    public var jvmTarget: Property<JavaVersion> =
+        objects.property<JavaVersion>().convention(JvmDefaults.jvmTarget)
+    public var minSdk: Property<Int> = objects.property<Int>().convention(AndroidDefaults.minSdk)
+    public var ndkVersion: Property<String> =
+        objects.property<String>().convention(AndroidDefaults.ndkVersion)
+    public var targetSdk: Property<Int> =
+        objects.property<Int>().convention(AndroidDefaults.targetSdk)
+    public var testInstrumentationRunner: Property<String> =
+        objects.property<String>().convention(AndroidDefaults.testInstrumentationRunner)
+}
+
+public open class KotlinLibraryExtension @Inject constructor(objects: ObjectFactory) :
+    KotlinConventionSettings {
+    override var apiMode: Property<ExplicitApiMode> =
+        objects.property<ExplicitApiMode>().convention(KotlinDefaults.apiMode)
 }

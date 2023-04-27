@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,19 @@
 
 package me.proton.core.gradle.convention.java
 
-import me.proton.core.gradle.JvmDefaults
 import me.proton.core.gradle.convention.BuildConvention
+import me.proton.core.gradle.plugin.CommonConfigurationExtension
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.getByType
 
 internal class JavaConvention : BuildConvention<Unit> {
     override fun apply(target: Project, settings: Unit) {
+        val commonConfig = target.rootProject.extensions.getByType<CommonConfigurationExtension>()
         target.extensions.configure<JavaPluginExtension> {
-            sourceCompatibility = JvmDefaults.jvmTarget
-            targetCompatibility = JvmDefaults.jvmTarget
+            sourceCompatibility = commonConfig.jvmTarget.get()
+            targetCompatibility = commonConfig.jvmTarget.get()
         }
     }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,21 @@
 
 package me.proton.core.gradle.convention.kotlin
 
+import org.gradle.api.provider.Property
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 public interface KotlinConventionSettings {
-    public var apiMode: ExplicitApiMode
+    public var apiMode: Property<ExplicitApiMode>
 
     public fun apiModeDisabled() {
-        apiMode = ExplicitApiMode.Disabled
+        apiMode.set(ExplicitApiMode.Disabled)
     }
 
     public fun apiModeStrict() {
-        apiMode = ExplicitApiMode.Strict
+        apiMode.set(ExplicitApiMode.Strict)
     }
 
     public fun apiModeWarning() {
-        apiMode = ExplicitApiMode.Warning
+        apiMode.set(ExplicitApiMode.Warning)
     }
 }
