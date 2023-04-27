@@ -25,7 +25,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

@@ -24,7 +24,7 @@ plugins {
     protonDagger
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

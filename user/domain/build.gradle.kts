@@ -22,7 +22,7 @@ plugins {
     protonKotlinLibrary
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import me.proton.core.gradle.convention.kotlin.KotlinConvention
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
 
-internal inline fun <reified E : Any> Project.createProtonExt(name: String = "proton"): E =
+internal inline fun <reified E : Any> Project.createProtonExt(name: String = "protonBuild"): E =
     extensions.create(name)
 
 internal fun Project.applyAndroidConvention(settings: AndroidConventionSettings) =

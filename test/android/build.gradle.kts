@@ -23,7 +23,7 @@ plugins {
     protonAndroidLibrary
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

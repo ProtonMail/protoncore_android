@@ -23,7 +23,7 @@ plugins {
     protonComposeUiLibrary
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

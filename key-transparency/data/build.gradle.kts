@@ -34,7 +34,7 @@ protonDagger {
     workManagerHiltIntegration = true
 }
 
-proton {
+protonBuild {
     // apiModeDisabled()
 }
 

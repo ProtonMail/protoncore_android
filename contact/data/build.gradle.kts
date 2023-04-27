@@ -25,7 +25,7 @@ plugins {
     kotlin("kapt")
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

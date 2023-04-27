@@ -25,7 +25,7 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 

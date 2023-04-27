@@ -26,7 +26,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-proton {
+protonBuild {
     apiModeDisabled()
 }
 
