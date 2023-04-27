@@ -82,7 +82,8 @@ class UploadVerifiedEpochTest {
         val revision = 10
         val inputVerifiedEpoch = VerifiedEpochData(
             epochID,
-            revision
+            revision,
+            100
         )
         val serialized = inputVerifiedEpoch.toJson()
         val unlocked = "unlocked".toByteArray()

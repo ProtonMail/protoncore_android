@@ -103,7 +103,11 @@ internal class AuditUserAddress @Inject constructor(
         keyTransparencyCheck(revision == initialEpoch.revision) { "Revision has changed but no SKL were provided" }
         if (maxEpochId > initialEpoch.epochId) {
             // Update the verified epoch
-            uploadVerifiedEpoch(userId, userAddress.addressId, VerifiedEpochData(maxEpochId, initialEpoch.revision))
+            uploadVerifiedEpoch(
+                userId,
+                userAddress.addressId,
+                VerifiedEpochData(maxEpochId, initialEpoch.revision, initialEpoch.sklCreationTime)
+            )
         }
     }
 
@@ -116,6 +120,7 @@ internal class AuditUserAddress @Inject constructor(
     ) {
         var previousVerifiedEpoch = initialEpoch
         var previousCertificateDate: Long? = null
+        var previousSKLCreationTime = initialEpoch.sklCreationTime
         newSKLs.forEachIndexed { index, newSKL ->
             val isLast = index == newSKLs.size - 1
             val isFirst = index == 0
@@ -127,6 +132,12 @@ internal class AuditUserAddress @Inject constructor(
             val timestamp = if (newSKL.data != null) {
                 verifySignedKeyListSignature(userAddress, newSKL)
             } else null
+            if (timestamp != null) {
+                keyTransparencyCheck(
+                    timestamp >= previousSKLCreationTime
+                ) { "SKL Creation time must increase monotonically."}
+                previousSKLCreationTime = timestamp
+            }
             if (maxEpochId != null) {
                 val (verifiedState, revision) = verifyMaxEpoch(userId, maxEpochId, userAddress, newSKL)
                 val isRevisionConsistent = if (isFirst) {
@@ -135,7 +146,11 @@ internal class AuditUserAddress @Inject constructor(
                     revision == previousVerifiedEpoch.revision + 1
                 }
                 keyTransparencyCheck(isRevisionConsistent) { "Revision chain is inconsistent" }
-                previousVerifiedEpoch = VerifiedEpochData(revision = revision, epochId = maxEpochId)
+                previousVerifiedEpoch = VerifiedEpochData(
+                    maxEpochId,
+                    revision,
+                    timestamp ?: previousVerifiedEpoch.sklCreationTime
+                )
                 previousCertificateDate = (verifiedState as TimedState).notBefore
             } else {
                 // the last SKL cannot be an obsolescence because the address is not disabled

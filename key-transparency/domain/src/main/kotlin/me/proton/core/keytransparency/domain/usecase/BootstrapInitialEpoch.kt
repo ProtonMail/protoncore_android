@@ -46,7 +46,10 @@ internal class BootstrapInitialEpoch @Inject constructor(
         keyTransparencyCheck(newSKLs.isNotEmpty()) { "Can't bootstrap, no SKL available" }
         val oldestSKL = newSKLs[0]
         if (oldestSKL.minEpochId == null) {
-            keyTransparencyCheck(oldestSKL.data == inputSKL.data)
+            keyTransparencyCheck(
+                oldestSKL.data == inputSKL.data &&
+                    oldestSKL.signature == inputSKL.signature
+            ) { "Input SKL did not equal the only SKL" }
             // The address is too recent to bootstrap the verified epoch
             keyTransparencyCheck(newSKLs.size == 1) { "New address had more SKLs than the current one" }
             val timestamp = verifySignedKeyListSignature(userAddress, inputSKL)
@@ -70,6 +73,6 @@ internal class BootstrapInitialEpoch @Inject constructor(
             ) { "Oldest epoch is not in range" }
         }
         val bootstrappedRevision = keyTransparencyCheckNotNull(revision) { "Bootstrapped epoch had no revision" }
-        return VerifiedEpochData(minEpochId, bootstrappedRevision)
+        return VerifiedEpochData(minEpochId, bootstrappedRevision, 0)
     }
 }

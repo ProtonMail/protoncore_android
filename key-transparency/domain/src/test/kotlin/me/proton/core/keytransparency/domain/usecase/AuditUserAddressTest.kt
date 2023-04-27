@@ -267,9 +267,11 @@ class AuditUserAddressTest {
             every { maxEpochId } returns 101
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         coEvery { publicAddressRepository.getSKLsAfterEpoch(testUserId, 100, testEmail) } returns emptyList()
@@ -283,7 +285,7 @@ class AuditUserAddressTest {
         val certificateTime = currentTime - Constants.KT_MAX_EPOCH_INTERVAL_SECONDS + 1000
         val verifiedState = VerifiedState.Existent(certificateTime)
         coEvery { verifyProofInEpoch(testEmail, skl, epoch, proof) } returns verifiedState
-        val expectedVE = VerifiedEpochData(101, 1)
+        val expectedVE = VerifiedEpochData(101, 1, lastVerifiedTimestamp)
         coJustRun { uploadVerifiedEpoch(testUserId, testAddressId, expectedVE) }
         // when
         auditUserAddress(testUserId, userAddress).unwrap()
@@ -303,9 +305,11 @@ class AuditUserAddressTest {
             every { maxEpochId } returns 100
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         coEvery { publicAddressRepository.getSKLsAfterEpoch(testUserId, 100, testEmail) } returns emptyList()
@@ -344,9 +348,11 @@ class AuditUserAddressTest {
             every { maxEpochId } returns 100
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKLs = listOf<PublicSignedKeyList>(
@@ -369,9 +375,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -399,9 +407,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -438,9 +448,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -479,9 +491,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -524,9 +538,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -573,9 +589,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -612,15 +630,17 @@ class AuditUserAddressTest {
     }
 
     @Test
-    fun `New changes - If a new skl is included, the verified epoch is updated`() = runTest {
+    fun `New changes - If the creation time is decreasing, audit fails`() = runTest {
         // given
         val skl = mockk<PublicSignedKeyList> {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -629,7 +649,8 @@ class AuditUserAddressTest {
         }
         coEvery { publicAddressRepository.getSKLsAfterEpoch(testUserId, 100, testEmail) } returns listOf(newSKL)
         coEvery { buildInitialEpoch(verifiedEpoch, any(), testUserId, userAddress, skl) } returns verifiedEpoch
-        coEvery { verifySignedKeyListSignature(userAddress, newSKL) } returns 10_000
+        val newSKLTimestamp = lastVerifiedTimestamp - 100 // SKL creation time is decreasing
+        coEvery { verifySignedKeyListSignature(userAddress, newSKL) } returns newSKLTimestamp
         val epoch = mockk<Epoch>()
         coEvery { keyTransparencyRepository.getEpoch(testUserId, 110) } returns epoch
         val proof = mockk<ProofPair> {
@@ -647,6 +668,61 @@ class AuditUserAddressTest {
         val expectedNewVerifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 2
             every { epochId } returns 110
+            every { sklCreationTime } returns newSKLTimestamp
+        }
+        coJustRun { uploadVerifiedEpoch(testUserId, testAddressId, expectedNewVerifiedEpoch) }
+        // when
+        assertFailsWith<KeyTransparencyException> {
+            auditUserAddress(testUserId, userAddress).unwrap()
+        }
+        // then
+        coVerify {
+            fetchVerifiedEpoch(testUserId, userAddress)
+            publicAddressRepository.getSKLsAfterEpoch(testUserId, 100, testEmail)
+            verifySignedKeyListSignature(userAddress, newSKL)
+        }
+    }
+
+    @Test
+    fun `New changes - If a new skl is included, the verified epoch is updated`() = runTest {
+        // given
+        val skl = mockk<PublicSignedKeyList> {
+            every { data } returns "data"
+        }
+        every { userAddress.signedKeyList } returns skl
+        val lastVerifiedTimestamp = 1000L
+        val verifiedEpoch = mockk<VerifiedEpochData> {
+            every { revision } returns 1
+            every { epochId } returns 100
+            every { sklCreationTime } returns lastVerifiedTimestamp
+        }
+        coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
+        val newSKL = mockk<PublicSignedKeyList> {
+            every { data } returns "data"
+            every { maxEpochId } returns 110
+        }
+        coEvery { publicAddressRepository.getSKLsAfterEpoch(testUserId, 100, testEmail) } returns listOf(newSKL)
+        coEvery { buildInitialEpoch(verifiedEpoch, any(), testUserId, userAddress, skl) } returns verifiedEpoch
+        val newSKLTimestamp = lastVerifiedTimestamp + 10
+        coEvery { verifySignedKeyListSignature(userAddress, newSKL) } returns newSKLTimestamp
+        val epoch = mockk<Epoch>()
+        coEvery { keyTransparencyRepository.getEpoch(testUserId, 110) } returns epoch
+        val proof = mockk<ProofPair> {
+            every { proof.revision } returns 2
+        }
+        coEvery { keyTransparencyRepository.getProof(testUserId, 110, testEmail) } returns proof
+        val currentTime = 10_000L
+        coEvery { getCurrentTime() } returns currentTime
+        val certificateTime = currentTime - Constants.KT_MAX_EPOCH_INTERVAL_SECONDS + 1000
+        val verifiedState = VerifiedState.Existent(certificateTime)
+        coEvery {
+            verifyProofInEpoch(testEmail, newSKL, epoch, proof)
+        } returns verifiedState
+        coJustRun { checkSignedKeyListMatch(userAddress, skl) }
+        val expectedNewVerifiedEpoch = mockk<VerifiedEpochData> {
+            every { revision } returns 2
+            every { epochId } returns 110
+            every { sklCreationTime } returns newSKLTimestamp
         }
         coJustRun { uploadVerifiedEpoch(testUserId, testAddressId, expectedNewVerifiedEpoch) }
         // when
@@ -671,9 +747,11 @@ class AuditUserAddressTest {
             every { data } returns "data"
         }
         every { userAddress.signedKeyList } returns skl
+        val signatureTimestamp = currentTime - Constants.KT_MAX_EPOCH_INTERVAL_SECONDS + 1000
         val verifiedEpoch = mockk<VerifiedEpochData> {
             every { revision } returns 1
             every { epochId } returns 100
+            every { sklCreationTime } returns signatureTimestamp - 1000
         }
         coEvery { fetchVerifiedEpoch(testUserId, userAddress) } returns verifiedEpoch
         val newSKL = mockk<PublicSignedKeyList> {
@@ -684,7 +762,6 @@ class AuditUserAddressTest {
         coEvery { buildInitialEpoch(verifiedEpoch, any(), testUserId, userAddress, skl) } returns verifiedEpoch
         val currentTime = 10_000L
         coEvery { getCurrentTime() } returns currentTime
-        val signatureTimestamp = currentTime - Constants.KT_MAX_EPOCH_INTERVAL_SECONDS + 1000
         coEvery { verifySignedKeyListSignature(userAddress, newSKL) } returns signatureTimestamp
         coJustRun { checkSignedKeyListMatch(userAddress, skl) }
         // when

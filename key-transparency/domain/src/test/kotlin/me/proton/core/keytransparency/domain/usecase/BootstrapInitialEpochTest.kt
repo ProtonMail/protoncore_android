@@ -78,16 +78,17 @@ class BootstrapInitialEpochTest {
         val userAddress = mockk<UserAddress>()
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data1"
+            every { signature } returns "signature"
             every { minEpochId } returns null
         }
         // when
         assertFailsWith<KeyTransparencyException> {
             bootstrapInitialEpoch(userId, userAddress, inputSKL, listOf(newSKL))
         }
-        // then
     }
 
     @Test
@@ -96,9 +97,11 @@ class BootstrapInitialEpochTest {
         val userAddress = mockk<UserAddress>()
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns null
         }
         coEvery {
@@ -120,9 +123,11 @@ class BootstrapInitialEpochTest {
         val userAddress = mockk<UserAddress>()
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns null
         }
         val signatureTimestamp = currentTime - Constants.KT_MAX_EPOCH_INTERVAL_SECONDS - 1000
@@ -143,9 +148,11 @@ class BootstrapInitialEpochTest {
         val userAddress = mockk<UserAddress>()
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns null
         }
         val signatureTimestamp = currentTime - Constants.KT_MAX_EPOCH_INTERVAL_SECONDS + 1000
@@ -167,9 +174,11 @@ class BootstrapInitialEpochTest {
         }
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns 100
         }
         val epoch = mockk<Epoch>()
@@ -197,9 +206,11 @@ class BootstrapInitialEpochTest {
         }
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns 100
         }
         val epoch = mockk<Epoch>()
@@ -227,9 +238,11 @@ class BootstrapInitialEpochTest {
         }
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns 100
         }
         val epoch = mockk<Epoch>()
@@ -247,6 +260,7 @@ class BootstrapInitialEpochTest {
         assertNotNull(bootstrappedEpoch)
         assertEquals(100, bootstrappedEpoch.epochId)
         assertEquals(0, bootstrappedEpoch.revision)
+        assertEquals(0, bootstrappedEpoch.sklCreationTime)
     }
 
     @Test
@@ -257,9 +271,11 @@ class BootstrapInitialEpochTest {
         }
         val inputSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
         }
         val newSKL = mockk<PublicSignedKeyList> {
             every { data } returns "data"
+            every { signature } returns "signature"
             every { minEpochId } returns 100
         }
         val epoch = mockk<Epoch>()
@@ -277,5 +293,6 @@ class BootstrapInitialEpochTest {
         assertNotNull(bootstrappedEpoch)
         assertEquals(100, bootstrappedEpoch.epochId)
         assertEquals(1, bootstrappedEpoch.revision)
+        assertEquals(0, bootstrappedEpoch.sklCreationTime)
     }
 }

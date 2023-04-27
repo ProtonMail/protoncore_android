@@ -28,7 +28,9 @@ internal data class VerifiedEpochData(
     @SerialName("EpochID")
     val epochId: EpochId,
     @SerialName("Revision")
-    val revision: Int
+    val revision: Int,
+    @SerialName("SKLCreationTime")
+    val sklCreationTime: Long
 ) {
     companion object {
         fun fromJson(json: String): VerifiedEpochData = json.deserialize()

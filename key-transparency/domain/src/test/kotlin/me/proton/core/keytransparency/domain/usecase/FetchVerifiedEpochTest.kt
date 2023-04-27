@@ -87,7 +87,8 @@ class FetchVerifiedEpochTest {
         // given
         val verifiedEpochData = VerifiedEpochData(
             10,
-            2
+            2,
+            100
         )
         val verifiedEpoch = mockk<VerifiedEpoch> {
             every { data } returns "data"
