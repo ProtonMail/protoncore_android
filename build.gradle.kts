@@ -34,6 +34,7 @@ plugins {
     id("publish-core-libraries")
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.jacoco")
+    id("me.proton.core.gradle-plugins.coverage-config")
     alias(libs.plugins.benManes.versions.gradle)
     alias(libs.plugins.kotlin.binaryCompatibilityValidator)
     alias(libs.plugins.kotlin.gradle)
@@ -54,6 +55,17 @@ buildscript {
 
 repositories {
     mavenCentral()
+}
+
+protonCoverage {
+    excludes.add {
+        classes(
+            "me.proton.core.accountmanager.data.db.AccountManagerDatabaseMigrations*",
+            "*Database_Impl*",
+            "*Database\$Companion*", // DB migrations
+            "*LogTag"
+        )
+    }
 }
 
 fun isNonStable(version: String): Boolean {

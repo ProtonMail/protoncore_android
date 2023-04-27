@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,18 @@ gradlePlugin {
             displayName = "Proton coverage plugin"
             description = "Plugin to generate coverage reports compatible with GitLab"
             implementationClass = "me.proton.core.gradle.plugins.coverage.ProtonCoveragePlugin"
+        }
+        create("globalCoveragePlugin") {
+            id = "me.proton.core.gradle-plugins.global-coverage"
+            displayName = "Proton global coverage plugin"
+            description = "Plugin to generate global coverage reports compatible with GitLab"
+            implementationClass = "me.proton.core.gradle.plugins.coverage.ProtonGlobalCoveragePlugin"
+        }
+        create("coverageCommonConfigPlugin") {
+            id = "me.proton.core.gradle-plugins.coverage-config"
+            displayName = "Proton coverage config plugin"
+            description = "Plugin to configure common coverage settings"
+            implementationClass = "me.proton.core.gradle.plugins.coverage.ProtonCoverageCommonConfigPlugin"
         }
     }
 

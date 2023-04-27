@@ -19,6 +19,7 @@
 package me.proton.core.gradle.plugins.coverage
 
 import kotlinx.kover.gradle.plugin.dsl.KoverReportFilter
+import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 
@@ -65,6 +66,27 @@ public interface ProtonCoverageExtension {
      * Use only if you want to override a default value.
      */
     public val minLineCoveragePercentage: Property<Int>
+}
+
+internal fun ProtonCoverageExtension.applyConventionsFrom(project: Project) {
+    project.extensions.findByType(ProtonCoverageExtension::class.java)?.let { otherExt ->
+        require(otherExt != this) { "Cannot apply the convention from the same object." }
+        applyConventionsFrom(otherExt)
+    }
+}
+
+internal fun ProtonCoverageExtension.applyConventionsFrom(other: ProtonCoverageExtension) {
+    other.androidBuildVariant.orNull?.let { androidBuildVariant.convention(it) }
+    other.disabled.orNull?.let { disabled.convention(it) }
+    other.enableAllRules.orNull?.let { enableAllRules.convention(it) }
+    other.enableAndroidRules.orNull?.let { enableAndroidRules.convention(it) }
+    other.enableDaggerRules.orNull?.let { enableDaggerRules.convention(it) }
+    other.enableKotlinParcelizeRules.orNull?.let { enableKotlinParcelizeRules.convention(it) }
+    other.enableKotlinSerializationRules.orNull?.let { enableKotlinSerializationRules.convention(it) }
+    other.enableRoomDbRules.orNull?.let { enableRoomDbRules.convention(it) }
+    other.excludes.orNull?.let { excludes.convention(it) }
+    other.minBranchCoveragePercentage.orNull?.let { minBranchCoveragePercentage.convention(it) }
+    other.minLineCoveragePercentage.orNull?.let { minLineCoveragePercentage.convention(it) }
 }
 
 internal fun ProtonCoverageExtension.applyGeneralConventions() {

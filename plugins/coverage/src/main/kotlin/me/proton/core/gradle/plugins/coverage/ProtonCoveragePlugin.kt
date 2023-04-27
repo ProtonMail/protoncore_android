@@ -25,6 +25,11 @@ import kotlinx.kover.gradle.plugin.dsl.KoverReportExtension
 import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
 import kotlinx.kover.gradle.plugin.dsl.KoverVerifyReportConfig
 import kotlinx.kover.gradle.plugin.dsl.MetricType
+import me.proton.core.gradle.plugins.coverage.rules.androidRules
+import me.proton.core.gradle.plugins.coverage.rules.daggerRules
+import me.proton.core.gradle.plugins.coverage.rules.kotlinParcelizeRules
+import me.proton.core.gradle.plugins.coverage.rules.kotlinSerializationRules
+import me.proton.core.gradle.plugins.coverage.rules.roomDbRules
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -38,11 +43,14 @@ private const val DEFAULT_XML_REPORT_FILE = "reports/kover/report.xml"
 
 internal const val PROTON_COVERAGE_EXT: String = "protonCoverage"
 
+/**
+ * The plugin can be applied on a non-root project.
+ * It can be used to generate coverage HTML/XML report, and verify minimum coverage percentages.
+ */
 public class ProtonCoveragePlugin : Plugin<Project> {
-    private val koverTaskNameRegex = Regex("(.*:)?kover.*")
-    private val tasksTaskNameRegex = Regex("(.*:)?tasks")
-
     override fun apply(target: Project) {
+        if (target == target.rootProject) error("${this::class.simpleName} should not be applied on the root project.")
+
         val ext = target.extensions.create<ProtonCoverageExtension>(PROTON_COVERAGE_EXT)
 
         if (target.shouldSkipPluginApplication()) {
@@ -50,6 +58,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         }
 
         ext.applyGeneralConventions()
+        ext.applyConventionsFrom(target.rootProject)
         ext.finalizeValuesOnRead()
 
         target.afterEvaluate {
@@ -59,31 +68,11 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         }
     }
 
-    /** Optional optimization.
-     * Avoid further configuration if we're not trying to run a `kover` task,
-     * or display the project's tasks.
-     * Example:
-     * > ./gradlew koverHtmlReport # <- The kover plugin will be configured
-     * > ./gradlew tasks # <- The kover plugin will be configured
-     * > ./gradlew someOtherTask # <- The kover plugin will NOT be configured
-     */
-    private fun Project.shouldSkipPluginApplication(): Boolean =
-        !gradle.startParameter.taskNames.any {
-            it.matches(koverTaskNameRegex) || it.matches(tasksTaskNameRegex)
-        }
-
     private fun Project.onAfterEvaluate(ext: ProtonCoverageExtension) {
         extensions.configure<KoverProjectExtension> {
             useKoverTool()
         }
 
-        if (ext.enableAllRules.orNull == true) {
-            ext.enableAndroidRules.convention(true)
-            ext.enableDaggerRules.convention(true)
-            ext.enableKotlinParcelizeRules.convention(true)
-            ext.enableKotlinSerializationRules.convention(true)
-            ext.enableRoomDbRules.convention(true)
-        }
         if (hasAndroidPlugin()) {
             ext.androidBuildVariant.convention(DEFAULT_ANDROID_BUILD_VARIANT)
             ext.enableAndroidRules.convention(true)
@@ -97,6 +86,13 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         }
         if (plugins.hasPlugin(PluginIds.kotlinSerialization)) {
             ext.enableKotlinSerializationRules.convention(true)
+        }
+        if (ext.enableAllRules.orNull == true) {
+            ext.enableAndroidRules.convention(true)
+            ext.enableDaggerRules.convention(true)
+            ext.enableKotlinParcelizeRules.convention(true)
+            ext.enableKotlinSerializationRules.convention(true)
+            ext.enableRoomDbRules.convention(true)
         }
 
         configureKoverExtension(ext)
@@ -150,55 +146,6 @@ public class ProtonCoveragePlugin : Plugin<Project> {
                 MetricType.LINE,
                 AggregationType.COVERED_PERCENTAGE
             )
-        }
-    }
-
-    private fun KoverReportFilters.androidRules() {
-        excludes {
-            classes(
-                "*Activity",
-                "*Fragment",
-                "*.BuildConfig",
-                "*.R",
-                "*.R$*"
-            )
-        }
-    }
-
-    private fun KoverReportFilters.daggerRules() {
-        excludes {
-            annotatedBy(
-                "dagger.internal.DaggerGenerated",
-                "dagger.Module",
-                "javax.annotation.processing.Generated"
-            )
-            packages("hilt_aggregated_deps")
-        }
-    }
-
-    private fun KoverReportFilters.kotlinSerializationRules() {
-        excludes {
-            annotatedBy(
-                "kotlinx.serialization.SerialName",
-                "kotlinx.serialization.Serializable"
-            )
-            classes("*\$\$serializer")
-        }
-    }
-
-    private fun KoverReportFilters.kotlinParcelizeRules() {
-        excludes {
-            annotatedBy("kotlinx.parcelize.Parcelize")
-        }
-    }
-
-    private fun KoverReportFilters.roomDbRules() {
-        excludes {
-            annotatedBy(
-                "androidx.room.Dao",
-                "androidx.room.Entity"
-            )
-            classes("*Database\$Companion*") // For DB migrations
         }
     }
 }
