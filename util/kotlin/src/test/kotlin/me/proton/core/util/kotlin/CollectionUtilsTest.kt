@@ -1,10 +1,29 @@
+/*
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.util.kotlin
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 
 /**
@@ -18,12 +37,15 @@ internal class CollectionUtilsTest {
     fun `forEachAsync executes concurrently`() {
         val task = suspend { delay(100) }
         val tasks = (1..10).map { task }
+        val scheduler = TestCoroutineScheduler()
 
-        val asyncTime = runBlocking {
-            measureTimeMillis { tasks.forEachAsync { it() } }
+        runTest(scheduler) {
+            val t1 = scheduler.currentTime
+            tasks.forEachAsync { it() }
+            val t2 = scheduler.currentTime
+            val timeDelta = t2 - t1
+            assert(timeDelta in 100..200) { "Expected the duration to be between [100; 200] but was: $timeDelta ms." }
         }
-
-        assert(asyncTime in 100..200)
     }
 
     @Test
@@ -43,12 +65,15 @@ internal class CollectionUtilsTest {
     fun `mapAsync executes concurrently`() {
         val task = suspend { delay(100) }
         val tasks = (1..10).map { task }
+        val scheduler = TestCoroutineScheduler()
 
-        val asyncTime = runBlocking {
-            measureTimeMillis { tasks.mapAsync { it() } }
+        runTest(scheduler) {
+            val t1 = scheduler.currentTime
+            tasks.mapAsync { it() }
+            val t2 = scheduler.currentTime
+            val timeDelta = t2 - t1
+            assert(timeDelta in 100..200) { "Expected the duration to be between [100; 200] but was: $timeDelta ms." }
         }
-
-        assert(asyncTime in 100..200)
     }
 
     @Test
