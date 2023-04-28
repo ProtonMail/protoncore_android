@@ -39,7 +39,7 @@ import org.gradle.kotlin.dsl.create
 private const val DEFAULT_HTML_REPORT_DIR = "reports/kover/html"
 
 /** Default file path for the XML report, relative to the build directory. */
-private const val DEFAULT_XML_REPORT_FILE = "reports/kover/report.xml"
+internal const val DEFAULT_XML_REPORT_FILE = "reports/kover/report.xml"
 
 internal const val PROTON_COVERAGE_EXT: String = "protonCoverage"
 

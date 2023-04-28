@@ -22,6 +22,8 @@ internal object PluginIds {
     const val androidApp = "com.android.application"
     const val androidLibrary = "com.android.library"
     const val hilt = "dagger.hilt.android.plugin"
+    const val javaLibrary = "org.gradle.java-library"
+    const val kotlinJvm = "org.jetbrains.kotlin.jvm"
     const val kotlinParcelize = "kotlin-parcelize"
     const val kotlinSerialization = "org.jetbrains.kotlin.plugin.serialization"
 }
