@@ -42,7 +42,7 @@
   <string name="plans_upgrade_your_plan">Modernizare plan</string>
   <string name="plans_proton_for_free">Luați Proton gratuit</string>
   <string name="plans_get_proton">Luați %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Gestionați abonamentul la <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s din %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Abonamentul este gestionat de către Google Play.</string>

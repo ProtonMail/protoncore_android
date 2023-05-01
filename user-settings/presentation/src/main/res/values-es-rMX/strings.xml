@@ -28,7 +28,7 @@
   <string name="settings_password_required">Ingrese su contraseña de inicio de sesión</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">No definido</string>
-  <string name="settings_recovery_email_error_no_match">Las direcciones de correo nuevas no coinciden</string>
+  <string name="settings_recovery_email_error_no_match">Las direcciones de correo de recuperación nuevas no coinciden.</string>
   <string name="settings_validation_email">Correo inválido.</string>
   <string name="settings_general_error">Ocurrió un error.</string>
   <!-- login and mailbox password settings -->

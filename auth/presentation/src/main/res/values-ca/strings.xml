@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Protegiu la vostra privadesa amb Proton</string>
   <string name="welcome_subtitle">El xifratge manté privades les vostres dades. Les vostres dades us pertanyen.</string>
-  <string name="welcome_title_mail">Protegiu la vostra privadesa amb Proton Mail</string>
   <string name="welcome_subtitle_mail">El correu electrònic xifrat manté en privat les vostres converses. La vostra safata d\'entrada us pertany.</string>
   <string name="welcome_subtitle_mail_alt">Privadesa. Seguretat. Comoditat. Correu electrònic xifrat que us ofereix un control complet sobre les dades personals.</string>
-  <string name="welcome_title_drive">Protegiu la vostra privadesa amb ProtonDrive</string>
   <string name="welcome_subtitle_drive">La comoditat de l\'emmagatzematge al núvol i la seguretat de la tecnologia del xifratge. Per fi una solució d\'emmagatzematge al núvol en la qual podeu confiar.</string>
   <string name="welcome_subtitle_drive_alt">La manera més segura d\'emmagatzemar fitxers. Pugeu-ne, sincronitzeu i compartiu amb el xifratge més potent disponible.</string>
-  <string name="welcome_title_calendar">Protegiu la vostra privadesa amb ProtonCalendar</string>
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_subtitle_calendar_alt">El nostre calendari xifrat d\'extrem a extrem us ajuda a mantenir-vos organitzat, al dia i en control.</string>
-  <string name="welcome_title_vpn">Protegiu la vostra privadesa amb Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privadesa xifrant la vostra connexió a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que us protegeix la privadesa. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">Privadesa per defecte</string>
   <string name="auth_password_label">Contrasenya</string>
   <string name="auth_password_help">La contrasenya ha de tenir com a mínim 8 caràcters</string>

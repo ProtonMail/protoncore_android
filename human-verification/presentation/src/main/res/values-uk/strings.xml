@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Неправильний код. Повторіть спробу.</string>
   <string name="human_verification_resent_code">Ми надіслали вам інший код.</string>
   <string name="human_verification_captcha_failed">Не вдалося виконати перевірку CAPTCHA. Повторіть спробу або оберіть інший варіант перевірки.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Немає з\'єднання. Не вдалося завантажити CAPTCHA.</string>
   <string name="human_verification_action_retry">Повторити спробу</string>
   <string name="human_verification_method_loading_failed">Не вдалося завантажити поточний метод перевірки. Якщо проблема не зникає, спробуйте один з інших методів, якщо вони доступні або перегляньте довідку.</string>

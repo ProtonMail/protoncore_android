@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Codi incorrecte. Torneu-ho a provar.</string>
   <string name="human_verification_resent_code">Us hem enviat un altre codi.</string>
   <string name="human_verification_captcha_failed">Ha fallat la verificació CAPTCHA. Torneu-ho a provar o trieu una altra opció de verificació.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">No hi ha connexió. No s\'ha pogut carregar el CAPTCHA.</string>
   <string name="human_verification_action_retry">Reintenta</string>
   <string name="human_verification_method_loading_failed">No s\'ha pogut carregar el mètode de verificació actual. Si el problema persisteix, proveu un dels altres mètodes si estan disponibles o consulteu la pantalla d\'Ajuda.</string>

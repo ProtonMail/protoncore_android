@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">Aceitar</string>
   <string name="settings_not_set">Não definido</string>
   <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
-  <string name="settings_validation_email">O email é inválido.</string>
+  <string name="settings_validation_email">O email não é válido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Change password</string>
@@ -42,9 +42,9 @@
   <string name="settings_mailbox_password_hint_new_confirm">Confirmar a nova palavra-passe da caixa de correio</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da palavra-passe.</string>
   <string name="settings_recovery_email_success">Email de recuperação atualizado</string>
-  <string name="settings_password_management_success">Palavra-passe actualizada</string>
+  <string name="settings_password_management_success">Palavra-passe atualizada</string>
   <string name="settings_password_management_login_password_success">Palavra-passe de início de sessão atualizada</string>
-  <string name="settings_password_management_mailbox_password_success">A palavra-passe da caixa de correio foi actualizada.</string>
+  <string name="settings_password_management_mailbox_password_success">A palavra-passe da caixa de correio foi atualizada.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymous telemetry</string>
   <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>

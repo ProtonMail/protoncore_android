@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Защитите свою приватность с Proton</string>
   <string name="welcome_subtitle">Шифрование сохраняет конфиденциальность ваших данных. Ваши данные действительно принадлежат вам.</string>
-  <string name="welcome_title_mail">Защитите свою конфиденциальность с Proton Mail</string>
   <string name="welcome_subtitle_mail">Зашифрованная электронная почта, обеспечивающая конфиденциальность вашей переписки. Ваш почтовый ящик действительно принадлежит вам.</string>
   <string name="welcome_subtitle_mail_alt">Конфиденциальность. Безопасность. Удобство. Зашифрованная электронная почта, которая дает вам полный контроль над вашими личными данными.</string>
-  <string name="welcome_title_drive">Защитите свою конфиденциальность с помощью Proton Drive</string>
   <string name="welcome_subtitle_drive">Удобство облачного хранилища и безопасность технологии шифрования. Наконец-то появилось облачное хранилище, которому можно доверять.</string>
   <string name="welcome_subtitle_drive_alt">Самый безопасный способ хранения файлов. Загружайте, синхронизируйте и делитесь файлами с самым надежным шифрованием.</string>
-  <string name="welcome_title_calendar">Защитите свою конфиденциальность с Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Зашифрованный календарь, обеспечивающий конфиденциальность, безопасность и защищенность событий вашей жизни.</string>
   <string name="welcome_subtitle_calendar_alt">Наш календарь со сквозным шифрованием поможет вам оставаться организованным, идти в ногу со временем и контролировать ситуацию.</string>
-  <string name="welcome_title_vpn">Защитите свою конфиденциальность с Proton VPN</string>
   <string name="welcome_subtitle_vpn">Высокоскоростной VPN из Швейцарии, который защищает вашу частную жизнь, шифруя интернет-соединение.</string>
   <string name="welcome_subtitle_vpn_alt">Высокоскоростной VPN из Швейцарии, защищающий вашу частную жизнь. Максимальная безопасность, 1600+ серверов и никаких ограничений.</string>
+  <string name="welcome_subtitle_pass">Все ваши пароли. В одном месте и под защитой самого авторитетного имени в области конфиденциальности.</string>
+  <string name="welcome_subtitle_pass_alt">Все ваши пароли. В одном месте и под защитой самого авторитетного имени в области конфиденциальности.</string>
   <string name="welcome_privacy_by_default">Конфиденциальность по умолчанию</string>
   <string name="auth_password_label">Пароль</string>
   <string name="auth_password_help">Пароль должен содержать хотя бы 8 символов</string>
@@ -78,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Ваш резервный адрес электронной почты:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\", вы соглашаетесь с <a href="https://proton.me/legal/terms"> условиями Proton.</a></string>
   <string name="auth_create_address_error_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
@@ -145,6 +143,6 @@
   <string name="auth_signup_start_using_mail">Начать использовать Proton Mail</string>
   <string name="auth_signup_start_using_drive">Начать использовать Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Начать использовать Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">Начать использовать Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Место назначения восстановления недействительно.</string>
 </resources>

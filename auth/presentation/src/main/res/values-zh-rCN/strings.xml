@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">使用 Proton 来保护您的隐私</string>
   <string name="welcome_subtitle">我们依靠加密机制保护个人隐私，让您的数据真正归您所有。</string>
-  <string name="welcome_title_mail">使用 Proton Mail 捍卫您的隐私</string>
   <string name="welcome_subtitle_mail">加密邮件保护您的通讯隐私，打造您的专属收件箱。</string>
   <string name="welcome_subtitle_mail_alt">隐私、安全、便利相辅相成。将个人数据掌控权交给您自己的加密邮箱。</string>
-  <string name="welcome_title_drive">使用 Proton Drive 来保护您的隐私</string>
   <string name="welcome_subtitle_drive">便捷的云端存储与安全的加密技术完美结合，众望所归的可信云存储服务。</string>
   <string name="welcome_subtitle_drive_alt">最安全的文件存储方式。上传、同步、分享文件均有前沿加密技术保护。</string>
-  <string name="welcome_title_calendar">使用 Proton Calendar 来保护您的隐私</string>
   <string name="welcome_subtitle_calendar">加密日历让您的生活大小事保持隐私、安全和可靠。</string>
   <string name="welcome_subtitle_calendar_alt">我们的端到端加密日历能让您的生活时刻井然有序，掌控自如。</string>
-  <string name="welcome_title_vpn">使用 Proton VPN 捍卫您的隐私</string>
   <string name="welcome_subtitle_vpn">加密网络连接、保护隐私的瑞士高速 VPN。</string>
   <string name="welcome_subtitle_vpn_alt">真正保护隐私的瑞士高速 VPN。极致的安全性，超过 1600 台服务器，流量无限制。</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">隐私优先</string>
   <string name="auth_password_label">密码</string>
   <string name="auth_password_help">密码必须至少包含 8 个字符</string>

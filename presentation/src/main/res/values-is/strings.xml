@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Til baka</string>
   <string name="presentation_close">Loka</string>
+  <string name="presentation_retry">Retry</string>
   <string name="presentation_skip">Sleppa</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Gat ekki tengst við þjón.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

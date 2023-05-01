@@ -22,7 +22,7 @@
   <string name="human_verification_title">Verificação humana</string>
   <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
   <string name="human_verification_enter_code_subtitle">Insira o código de verificação enviado para %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Insira o código de verificação enviado para %s. Se não encontrar o email na sua caixa de entrada, por favor verifique a pasta de assédio.</string>
+  <string name="human_verification_enter_code_subtitle_email">Insira o código de verificação enviado para %s. Se não encontrar o email na sua caixa de entrada, verifique a pasta de assédio.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Enter the verification code that you already have:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Email</string>
@@ -45,14 +45,13 @@
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Pedir um convite</string>
-  <string name="human_verification_help_manual">Se tiver problemas para criar a conta, por favor solicite um convite e responderemos dentro de 1 dia útil.</string>
+  <string name="human_verification_help_manual">Se tiver problemas para criar a conta, solicite um convite e responderemos dentro de 1 dia útil.</string>
   <string name="human_verification_help_website_title">Visit our Help Center</string>
   <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
   <string name="human_verification_sending_failed">Verification code sending failed. Please try again.</string>
   <string name="human_verification_incorrect_code">Palavra-passe incorreta. Tente novamente.</string>
   <string name="human_verification_resent_code">We have sent you another code.</string>
   <string name="human_verification_captcha_failed">CAPTCHA verification failed. Please try one more time or choose another verification option.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load CAPTCHA.</string>
   <string name="human_verification_action_retry">Tentar novamente</string>
   <string name="human_verification_method_loading_failed">Could not load the current verification method. If the problem persists, please try one of the other methods if they are available or check the Help screen.</string>

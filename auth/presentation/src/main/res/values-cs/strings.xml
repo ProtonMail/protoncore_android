@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Chraňte své soukromí pomocí Proton</string>
   <string name="welcome_subtitle">Šifrování udržuje Vaše data v soukromí. Vaše data skutečně patří Vám.</string>
-  <string name="welcome_title_mail">Chraňte své soukromí pomocí Proton Mail</string>
   <string name="welcome_subtitle_mail">Šifrovaný e-mail, který udržuje Vaše konverzace soukromé. Vaše doručená pošta skutečně patří Vám.</string>
   <string name="welcome_subtitle_mail_alt">Soukromí. Bezpečnostní. Pohodlí. Šifrovaný e-mail, který vám dává plnou kontrolu nad vašimi osobními údaji.</string>
-  <string name="welcome_title_drive">Chraňte své soukromí pomocí Proton Drive</string>
   <string name="welcome_subtitle_drive">Pohodlí cloudového úložiště a bezpečnost šifrovací technologie. Konečně cloudové úložiště, kterému můžete důvěřovat.</string>
   <string name="welcome_subtitle_drive_alt">Nejbezpečnější způsob ukládání souborů. Nahrávejte, synchronizujte a sdílejte pomocí nejsilnějšího dostupného šifrování.</string>
-  <string name="welcome_title_calendar">Chraňte své soukromí pomocí Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Šifrovaný kalendář, který udržuje Vaše životní události v soukromí, v bezpečí a chráněné.</string>
   <string name="welcome_subtitle_calendar_alt">Náš kalendář s koncovým šifrováním vám pomůže udržet si pořádek, přehled a kontrolu.</string>
-  <string name="welcome_title_vpn">Chraňte své soukromí pomocí Proton VPN</string>
   <string name="welcome_subtitle_vpn">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí šifrováním internetového připojení.</string>
   <string name="welcome_subtitle_vpn_alt">Vysokorychlostní švýcarská VPN, která chrání vaše soukromí. Maximální zabezpečení, více než 1 600 serverů a žádná omezení.</string>
+  <string name="welcome_subtitle_pass">Všechna vaše hesla. Bezpečně na jednou místě a pod ochranou nejdůvěryhodnější značky v oblasti soukromí.</string>
+  <string name="welcome_subtitle_pass_alt">Všechna vaše hesla. Bezpečně na jednou místě a pod ochranou nejdůvěryhodnější značky v oblasti soukromí.</string>
   <string name="welcome_privacy_by_default">Soukromí především</string>
   <string name="auth_password_label">Heslo</string>
   <string name="auth_password_help">Heslo musí obsahovat alespoň 8 znaků</string>
@@ -78,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
   <string name="auth_create_address_creating">Vytváření adresy</string>
-  <string name="auth_create_address_terms">Kliknutím na Vytvořit adresu souhlasíte se <a href="https://proton.me/legal/terms">smluvními podmínkami užívání</a> společnosti Proton</string>
+  <string name="auth_create_address_terms">Kliknutím na Vytvořit adresu, souhlasíte se <a href="https://proton.me/legal/terms">smluvními podmínkami užívání</a> společnosti Proton.</string>
   <string name="auth_create_address_error_credentials">Přihlašovací údaje by neměly chybět.</string>
   <string name="auth_create_address_error_no_available_domain">Žádná dostupná doména.</string>
   <string name="auth_create_address_error_private_key">Generování soukromého klíče se nezdařilo.</string>

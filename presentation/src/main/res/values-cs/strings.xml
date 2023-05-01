@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Zpět</string>
   <string name="presentation_close">Zavřít</string>
+  <string name="presentation_retry">Zkusit znovu</string>
   <string name="presentation_skip">Přeskočit</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Nelze se připojit k serveru.</string>
   <string name="presentation_check_your_connection">Zkontrolujte své připojení</string>
   <string name="presentation_connectivity_issues">Chyba připojení</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

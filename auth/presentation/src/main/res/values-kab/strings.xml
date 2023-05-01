@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Mmesten tabaḍnit-ik·im s Proton</string>
   <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
-  <string name="welcome_title_mail">Mmesten tabaḍnit-ik·im s Proton Mail</string>
   <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
-  <string name="welcome_title_drive">Mmesten tabaḍnit-ik·im s Proton Drive</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
-  <string name="welcome_title_calendar">Mmesten tabaḍnit-ik·im s Proton Calender</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
   <string name="welcome_subtitle_calendar_alt">Awitay-nneɣ yettwawgelhen seg yixef ɣer yixef ad k·kem-iɛawen deg tuddsa-k·m, deg uḍfar n yisenfaren-ik·im d usenqed-ik·im.</string>
-  <string name="welcome_title_vpn">Mmesten tabaḍnit-ik·im s Proton VPN</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Awal uffir</string>
   <string name="auth_password_help">Awal uffir ilaq ad isɛu ma drus 8 n yisekkilen</string>

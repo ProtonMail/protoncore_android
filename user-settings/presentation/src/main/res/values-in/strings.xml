@@ -30,7 +30,7 @@
   <string name="settings_not_set">Belum ditentukan</string>
   <string name="settings_recovery_email_error_no_match">Email pemulihan baru tidak cocok</string>
   <string name="settings_validation_email">Email tidak valid.</string>
-  <string name="settings_general_error">Terjadi kesalahan.</string>
+  <string name="settings_general_error">Terdapat suatu kesalahan.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Ubah kata sandi</string>
   <string name="settings_password_management_change_mailbox_password">Ubah kata sandi kotak surat</string>
@@ -40,7 +40,7 @@
   <string name="settings_login_password_hint_new_confirm">Konfirmasikan kata sandi login baru</string>
   <string name="settings_mailbox_password_hint_new">Kata sandi kotak surat baru</string>
   <string name="settings_mailbox_password_hint_new_confirm">Konfirmasi kata sandi kotak surat baru</string>
-  <string name="settings_change_password_error">Terjadi eror pada perubahan kata sandi.</string>
+  <string name="settings_change_password_error">Terdapat kesalahan dalam proses perubahan kata sandi.</string>
   <string name="settings_recovery_email_success">Email pemulihan sudah diperbarui</string>
   <string name="settings_password_management_success">Kata sandi diperbarui</string>
   <string name="settings_password_management_login_password_success">Kata sandi masuk sudah diperbarui</string>

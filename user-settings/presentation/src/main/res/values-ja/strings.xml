@@ -19,21 +19,21 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">回復用のメールアドレス</string>
-  <string name="settings_recovery_email_current">Current recovery email address</string>
-  <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
-  <string name="settings_recovery_email_new_hint">Enter email address</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
+  <string name="settings_recovery_email_current">現在の回復用メールアドレス</string>
+  <string name="settings_recovery_email_new">新しい回復用メールアドレス</string>
+  <string name="settings_recovery_email_confirm">回復用メールアドレスを確認</string>
+  <string name="settings_recovery_email_new_hint">メールアドレスを入力</string>
+  <string name="settings_recovery_email_confirm_hint">メールアドレスを再入力</string>
   <string name="settings_save">保存</string>
   <string name="settings_password_required">ログインパスワードを入力</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">未設定</string>
-  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
+  <string name="settings_recovery_email_error_no_match">新しい回復用メールアドレスが一致しません</string>
   <string name="settings_validation_email">メールアドレスが無効です。</string>
   <string name="settings_general_error">エラーが発生しました。</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Change password</string>
-  <string name="settings_password_management_change_mailbox_password">Change mailbox password</string>
+  <string name="settings_password_management_change_login_password">パスワードを変更</string>
+  <string name="settings_password_management_change_mailbox_password">メールボックスのパスワードの変更</string>
   <string name="settings_password_management_header">パスワード管理</string>
   <string name="settings_login_password_hint_current">現在のログインパスワード</string>
   <string name="settings_login_password_hint_new">新しいログインパスワード</string>

@@ -19,7 +19,7 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Адбылася памылка.</string>
-  <string name="payments_no_connectivity">Няма злучэння, каб паказаць старонкі пацвярджэння 3DS.</string>
+  <string name="payments_no_connectivity">Няма падключэння, каб паказаць старонкі пацвярджэння 3DS.</string>
   <string name="payments_3ds_not_approved">Пацвярджэнне 3DS было адхілена.</string>
   <string name="payments_error_card_name">Неабходна ўвесці імя азначанае на картцы.</string>
   <string name="payments_error_card_number">Памылковы нумар карткі.</string>

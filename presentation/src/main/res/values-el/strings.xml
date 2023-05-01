@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Πίσω</string>
   <string name="presentation_close">Κλείσιμο</string>
+  <string name="presentation_retry">Retry</string>
   <string name="presentation_skip">Παράλειψη</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Αδυναμία σύνδεσης στον διακομιστή.</string>
   <string name="presentation_check_your_connection">Ελέγξτε τη σύνδεσή σας</string>
   <string name="presentation_connectivity_issues">Προβλήματα συνδεσιμότητας</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

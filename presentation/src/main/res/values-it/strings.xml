@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Indietro</string>
   <string name="presentation_close">Chiudi</string>
+  <string name="presentation_retry">Riprova</string>
   <string name="presentation_skip">Salta</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Impossibile connettersi al server.</string>
   <string name="presentation_check_your_connection">Controlla la tua connessione</string>
   <string name="presentation_connectivity_issues">Problemi di connessione</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

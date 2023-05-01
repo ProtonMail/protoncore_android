@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Hibás kód. Próbálja meg újra.</string>
   <string name="human_verification_resent_code">Küldtünk egy újabb kódot.</string>
   <string name="human_verification_captcha_failed">CAPTCHA ellenőrzés sikertelen. Próbálja meg újra, vagy válasszon egy másik ellenőrzési módot.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Nincs kapcsolat. CAPTCHA betöltése sikertelen.</string>
   <string name="human_verification_action_retry">Újra</string>
   <string name="human_verification_method_loading_failed">Nem sikerült a kiválasztott ellenőrzési mód betöltése. Ha a probléma továbbra is fennáll, próbáljon meg egy másik módot, ha van, vagy nézze meg a Súgó képernyőt.</string>

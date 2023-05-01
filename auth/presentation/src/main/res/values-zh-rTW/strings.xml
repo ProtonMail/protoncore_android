@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">使用 Proton 保護您的隱私</string>
   <string name="welcome_subtitle">高階加密把守您的資料隱密。您的資料真實地掌握手中。</string>
-  <string name="welcome_title_mail">有 Proton Mail 保護您的隱私權</string>
   <string name="welcome_subtitle_mail">經加密過的電郵，守住來往訊息隱密。您的收件匣真實地掌握手中。</string>
   <string name="welcome_subtitle_mail_alt">隱私權。安全防護。便捷。加密電郵提供您個資的完全控管。</string>
-  <string name="welcome_title_drive">Proton Drive 保護您隱私權</string>
   <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。千呼萬喚終於出現讓您可完全信賴的雲端儲存。</string>
   <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。使用最強大的加密方式上載、同步並分享。</string>
-  <string name="welcome_title_calendar">使用 Proton Calendar 保護您的隱私</string>
   <string name="welcome_subtitle_calendar">讓您的生活大事維持隱密、安全且可靠的加密行事曆。</string>
   <string name="welcome_subtitle_calendar_alt">我們的端到端加密行事曆可協助您井然有序地步入正軌，一切都在掌控之中。</string>
-  <string name="welcome_title_vpn">使用 Proton VPN 保護您的隱私</string>
   <string name="welcome_subtitle_vpn">極飆速Swiss VPN會透過把您的網際網路連線加密好以保護您的隱私。</string>
   <string name="welcome_subtitle_vpn_alt">極飆速的瑞士 VPN 保護您的隱私。最強的安全性，超過 1600 台伺服器，而且沒有限制。</string>
+  <string name="welcome_subtitle_pass">安放所有密碼。取得最可信的保護。</string>
+  <string name="welcome_subtitle_pass_alt">安放所有密碼。取得最可信的保護。</string>
   <string name="welcome_privacy_by_default">隱私權為根本</string>
   <string name="auth_password_label">密碼</string>
   <string name="auth_password_help">密碼必須包含至少 8 個字元</string>

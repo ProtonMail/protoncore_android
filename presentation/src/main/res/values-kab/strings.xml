@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Ɣer deffir</string>
   <string name="presentation_close">Mdel</string>
+  <string name="presentation_retry">Retry</string>
   <string name="presentation_skip">Zgel</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Ur izmir ara ad yeqqen ɣer uqeddac.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

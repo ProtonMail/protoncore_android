@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">后退</string>
   <string name="presentation_close">关闭</string>
+  <string name="presentation_retry">Retry</string>
   <string name="presentation_skip">跳过</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">无法连接服务器。</string>
   <string name="presentation_check_your_connection">检查您的网络连接</string>
   <string name="presentation_connectivity_issues">连接问题</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

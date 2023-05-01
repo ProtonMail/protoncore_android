@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Абараніце сваю прыватнасць з дапамогай Proton</string>
   <string name="welcome_subtitle">Шыфраванне зберагае прыватнасць вашых даных. Вашы даныя сапраўды належаць вам.</string>
-  <string name="welcome_title_mail">Абараніце сваю прыватнасць з Proton Mail</string>
   <string name="welcome_subtitle_mail">Зашыфраваная электронная пошта, якая захоўвае прыватнасць вашых размоў. Ваша паштовая скрыня сапраўды належыць вам.</string>
   <string name="welcome_subtitle_mail_alt">Прыватнасць. Бяспека. Зручнасць. Зашыфраваная пошта, якая дае вам поўны кантроль над вашымі персанальнымі данымі.</string>
-  <string name="welcome_title_drive">Абараніце сваю прыватнасць з Proton Drive</string>
   <string name="welcome_subtitle_drive">Зручнасць воблачнага сховішча і бяспека тэхналогіі шыфравання. Нарэшце з\'явілася рашэнне для воблачнага сховішча, якому можна давяраць.</string>
   <string name="welcome_subtitle_drive_alt">Бяспечны спосаб захоўваць вашы файлы. Запампоўвайце, сінхранізуйце і дзяліцеся файламі з дапамогай надзейнага шыфравання.</string>
-  <string name="welcome_title_calendar">Абараніце сваю прыватнасць з Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Зашыфраваны каляндар, які захоўвае вашы падзеі з жыцця прыватнымі, бяспечнымі і абароненымі.</string>
   <string name="welcome_subtitle_calendar_alt">Наш каляндар са скразным шыфраваннем дапаможа вам заставацца арганізаваным, прытрымлівацца графіка і кантраляваць сітуацыю.</string>
-  <string name="welcome_title_vpn">Абараніце сваю прыватнасць з Proton VPN</string>
-  <string name="welcome_subtitle_vpn">Высакахуткасны швейцарскі VPN, які абараняе вашу прыватнасць, шыфруючы ваша злучэнне з інтэрнэтам.</string>
+  <string name="welcome_subtitle_vpn">Высакахуткасны швейцарскі VPN, які абараняе вашу прыватнасць, шыфруючы ваша падключэнне да інтэрнэту.</string>
   <string name="welcome_subtitle_vpn_alt">Васокахуткасны швейцарскі VPN, які абараняе вашу прыватнасць. Максімум бяспекі, больш за 1600 сервераў і ніякіх абмежаванняў.</string>
+  <string name="welcome_subtitle_pass">Усе вашы паролі захоўваюцца бяспечна ў адным месцы і абаронены самай надзейнай кампаніяй у галіне прыватнасці.</string>
+  <string name="welcome_subtitle_pass_alt">Усе вашы паролі захоўваюцца бяспечна ў адным месцы і абаронены самай надзейнай кампаніяй у галіне прыватнасці.</string>
   <string name="welcome_privacy_by_default">Прадвызначаная прыватнасць</string>
   <string name="auth_password_label">Пароль</string>
   <string name="auth_password_help">Пароль павінен змяшчаць прынамсі 8 сімвалаў</string>
@@ -125,7 +123,7 @@
   <string name="auth_signup_skip_recovery_description">Метад аднаўлення дапаможа атрымаць доступ да вашага ўліковага запісу ў выпадку, калі вы забудзеце пароль або заблакіруеце ўліковы запіс.</string>
   <string name="auth_signup_skip_recovery">Прапусціць</string>
   <string name="auth_signup_set_recovery">Задаць метад аднаўлення</string>
-  <string name="auth_signup_no_connectivity">Няма злучэння, каб паказаць умовы выкарыстання.</string>
+  <string name="auth_signup_no_connectivity">Няма падключэння, каб паказаць умовы выкарыстання.</string>
   <string name="auth_signup_error_username_blank">Поле з імем карыстальніка не можа быць пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі не супадаюць.</string>
   <string name="auth_signup_validation_password_length">Пароль павінен змяшчаць прынамсі 8 сімвалаў.</string>

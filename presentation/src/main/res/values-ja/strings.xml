@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">戻る</string>
   <string name="presentation_close">閉じる</string>
+  <string name="presentation_retry">再試行</string>
   <string name="presentation_skip">スキップ</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">サーバーに接続できません。</string>
   <string name="presentation_check_your_connection">接続をご確認ください</string>
   <string name="presentation_connectivity_issues">接続の問題</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

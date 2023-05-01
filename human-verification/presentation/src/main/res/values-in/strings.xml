@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Kode salah. Silakan coba lagi.</string>
   <string name="human_verification_resent_code">Kami telah mengirimkan Anda kode yang baru.</string>
   <string name="human_verification_captcha_failed">Verifikasi CAPTCHA gagal. Silakan coba satu kali lagi atau pilih metode verifikasi lainnya.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Tidak ada konektivitas internet. CAPTCHA tidak dapat dimuat.</string>
   <string name="human_verification_action_retry">Coba Lagi</string>
   <string name="human_verification_method_loading_failed">Tidak dapat memuat metode verifikasi yang saat ini dipilih. Apabila masalah ini berlanjut, silakan coba metode verfikasi lain yang tersedia atau rujuk menu Bantuan kami.</string>

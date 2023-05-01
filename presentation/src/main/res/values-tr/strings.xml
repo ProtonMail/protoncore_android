@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Geri</string>
   <string name="presentation_close">Kapat</string>
+  <string name="presentation_retry">Yeniden dene</string>
   <string name="presentation_skip">Atla</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Sunucu ile bağlantı kurulamadı.</string>
   <string name="presentation_check_your_connection">Bağlantınızı denetleyin</string>
   <string name="presentation_connectivity_issues">Bağlantı sorunları</string>
+  <string name="presentation_field_required">Bu alanın doldurulması zorunludur.</string>
 </resources>

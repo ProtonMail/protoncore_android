@@ -52,8 +52,7 @@
   <string name="human_verification_incorrect_code">Няправільны код. Паспрабуйце яшчэ раз.</string>
   <string name="human_verification_resent_code">Мы адправілі вам іншы код.</string>
   <string name="human_verification_captcha_failed">Збой праверкі CAPTCHA. Паспрабуйце яшчэ раз або выберыце іншы варыянт праверкі.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
-  <string name="human_verification_captcha_no_connectivity">Няма злучэння. Немагчыма загрузіць CAPTCHA.</string>
+  <string name="human_verification_captcha_no_connectivity">Няма падключэння. Немагчыма загрузіць CAPTCHA.</string>
   <string name="human_verification_action_retry">Паўтарыць</string>
   <string name="human_verification_method_loading_failed">Немагчыма загрузіць бягучы метад праверкі. Калі праблема застанецца, паспрабуйце адзін з іншых метадаў пры іх даступнасці, або звярніцеся да даведкі.</string>
 </resources>

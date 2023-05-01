@@ -19,7 +19,7 @@
 <resources>
   <string name="plans_select_a_plan">Pilih Paket</string>
   <string name="plans_select_a_plan_subtitle">Satu paket untuk seluruh layanan Proton</string>
-  <string name="plans_fetching_general_error">Terjadi kesalahan dalam mengambil daftar paket.</string>
+  <string name="plans_fetching_general_error">Terdapat kesalahan dalam mengambil daftar paket.</string>
   <string name="plans_payment_error">Terdapat kesalahan dalam pembayaran. Silakan coba lagi nanti atau buat akun gratis.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per bulan</string>
@@ -40,7 +40,7 @@
   <string name="plans_upgrade_your_plan">Tingkatkan paket Anda</string>
   <string name="plans_proton_for_free">Dapatkan Proton secara cuma-cuma</string>
   <string name="plans_get_proton">Dapatkan %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Kelola langganan Anda di <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s dari %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Langganan Anda dikelola oleh Google Play.</string>

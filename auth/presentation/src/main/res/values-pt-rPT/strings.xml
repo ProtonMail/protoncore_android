@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Proteja a sua privacidade com Proton</string>
   <string name="welcome_subtitle">A encriptação mantém os seus dados privados. Os seus dados pertencem apenas a si.</string>
-  <string name="welcome_title_mail">Proteja a sua privacidade com Proton Mail</string>
   <string name="welcome_subtitle_mail">O correio electrónico encriptado que mantém as suas conversas privadas. A caixa de entrada pertence apenas a si.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Security. Convenience. Encrypted email that gives you full control of your personal data.</string>
-  <string name="welcome_title_drive">Proteja a sua privacidade com Proton Drive</string>
   <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
   <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
-  <string name="welcome_title_calendar">Proteja a sua privacidade com Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Proteja a sua privacidade com Proton VPN</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">Privacidade por padrão</string>
   <string name="auth_password_label">Palavra-passe</string>
   <string name="auth_password_help">A palavra-passe deve conter pelo menos 8 caracteres.</string>
@@ -87,7 +85,7 @@
   <string name="auth_create_address_error_username_unavailable">O nome de utilizador escolhido está indisponível.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Nenhuma chave primária encontrada.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Erro na chave primária.</string>
-  <string name="auth_mailbox_login_error_invalid_passphrase">Frase-passe inválido.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Frase-passe no válida.</string>
   <string name="auth_password_chooser_title">Altere a sua palavra-passe</string>
   <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
   <string name="auth_password_chooser_change">Alterar a palavra-passe</string>
@@ -101,7 +99,7 @@
   <string name="auth_long_login">Signing in, please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Criar conta Proton</string>
-  <string name="auth_signup_current_email">Utilizar o seu email actual</string>
+  <string name="auth_signup_current_email">Utilizar o seu correio electrónico atual</string>
   <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
   <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
   <string name="auth_signup_create_secure_proton_address">Get a new encrypted email address</string>
@@ -146,5 +144,5 @@
   <string name="auth_signup_start_using_drive">Comece a usar o Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Comece a usar o Proton VPN</string>
   <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
-  <string name="auth_signup_error_validation_recovery_destination">O destino de recuperação inválido.</string>
+  <string name="auth_signup_error_validation_recovery_destination">O destino de recuperação não é válido.</string>
 </resources>

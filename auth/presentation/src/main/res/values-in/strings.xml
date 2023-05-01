@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Lindungi privasi Anda dengan Proton</string>
   <string name="welcome_subtitle">Enkripsi memastikan data Anda tetap privat. Data Anda adalah milik Anda.</string>
-  <string name="welcome_title_mail">Lindungi privasi Anda dengan Proton Mail</string>
   <string name="welcome_subtitle_mail">Email terenkripsi yang menjaga percakapan Anda tetap privat. Kotak masuk Anda adalah milik Anda.</string>
   <string name="welcome_subtitle_mail_alt">Privasi. Keamanan. Kenyamanan. Email terenkripsi yang memberi Anda kendali penuh terhadap data pribadi Anda.</string>
-  <string name="welcome_title_drive">Lindungi privasi Anda dengan Proton Drive</string>
   <string name="welcome_subtitle_drive">Kenyamanan penyimpanan awan dan keamanan teknologi enkripsi. Akhirnya, solusi penyimpanan awan yang bisa Anda percayai.</string>
   <string name="welcome_subtitle_drive_alt">Cara teraman untuk menyimpan berkas Anda. Unggah, sinkronisasikan, dan bagikan menggunakan enkripsi terkuat yang pernah ada.</string>
-  <string name="welcome_title_calendar">Lindungi privasi Anda dengan Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga hidup Anda tetap privat, aman, dan terkunci rapat.</string>
   <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi secara end-to-end membantu Anda agar tetap teratur, terjadwal, dan terkendali.</string>
-  <string name="welcome_title_vpn">Lindungi privasi Anda dengan Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
+  <string name="welcome_subtitle_pass">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindungi oleh nama yang paling terpercaya dalam dunia privasi.</string>
+  <string name="welcome_subtitle_pass_alt">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindungi oleh nama yang paling terpercaya dalam dunia privasi.</string>
   <string name="welcome_privacy_by_default">Berstandar privasi</string>
   <string name="auth_password_label">Kata Sandi</string>
   <string name="auth_password_help">Kata sandi harus mengandung minimal 8 karakter</string>
@@ -62,7 +60,7 @@
   <string name="auth_mailbox_password_label">Kata sandi kotak surat</string>
   <string name="auth_mailbox_unlock_action">Membuka kunci</string>
   <string name="auth_forgot_password">Lupa kata sandi</string>
-  <string name="auth_login_general_error">Terjadi galat.</string>
+  <string name="auth_login_general_error">Terdapat suatu kesalahan.</string>
   <string name="auth_login_external_account_unsupported_title">Alamat Proton dibutuhkan</string>
   <string name="auth_login_external_account_unsupported_message">Dapatkan alamat Proton Mail yang terhubung dengan akun ini pada pengaturan web Proton Anda.</string>
   <string name="auth_login_external_account_unsupported_help_action">Pelajari lebih lanjut</string>

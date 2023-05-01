@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Proteja su privacidad con Proton</string>
   <string name="welcome_subtitle">El cifrado mantiene sus datos privados. Sus datos realmente le pertenecen.</string>
-  <string name="welcome_title_mail">Proteja su privacidad con Proton Mail</string>
   <string name="welcome_subtitle_mail">Correo electrónico cifrado que mantiene sus conversaciones privadas. Su bandeja de entrada realmente le pertenece.</string>
   <string name="welcome_subtitle_mail_alt">Privacidad. Seguridad. Conveniencia. Correo electrónico cifrado que le brinda control total de sus datos personales.</string>
-  <string name="welcome_title_drive">Proteja su privacidad con Proton Drive</string>
   <string name="welcome_subtitle_drive">La conveniencia de un almacenamiento en la nube y la seguridad de la tecnología de cifrado. Por fin una solución de almacenamiento en la nube en la que puede confiar.</string>
   <string name="welcome_subtitle_drive_alt">La manera más segura de almacenar sus archivos. Cargue, sincronice y comparta con el cifrado más robusto disponible.</string>
-  <string name="welcome_title_calendar">Proteja su privacidad con Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendario cifrado que mantiene sus eventos de vida privados, seguros y protegidos.</string>
   <string name="welcome_subtitle_calendar_alt">Nuestro calendario con cifrado de extremo a extremo le ayuda a organizarse, a estar al día y en control.</string>
-  <string name="welcome_title_vpn">Proteja su privacidad con Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suiza de alta velocidad que protege su privacidad cifrando su conexión a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suiza de gran velocidad que protege su privacidad. Seguridad máxima, más de 1600 servidores y sin restricciones.</string>
+  <string name="welcome_subtitle_pass">Todas sus contraseñas aseguradas en un solo lugar y protegidas por el nombre más confiable en privacidad.</string>
+  <string name="welcome_subtitle_pass_alt">Todas sus contraseñas aseguradas en un solo lugar y protegidas por el nombre más confiable en privacidad.</string>
   <string name="welcome_privacy_by_default">Privacidad por defecto</string>
   <string name="auth_password_label">Contraseña</string>
   <string name="auth_password_help">La contraseña debe tener al menos 8 caracteres</string>
@@ -138,7 +136,7 @@
   <string name="auth_signup_enter_code_subtitle">Ingrese el código de verificación enviado a %s:</string>
   <string name="auth_signup_error_human_verification_failed">Falló la verificación humana.</string>
   <string name="auth_signup_token_code_resent">Código token reenviado.</string>
-  <string name="auth_signup_congratulations_subtitle">Su cuenta de Proton se creó con éxito.\nDisfrute del mundo de la privacidad.</string>
+  <string name="auth_signup_congratulations_subtitle">Su cuenta de Proton se creó corectamente.\nDisfrute del mundo de la privacidad.</string>
   <string name="auth_signup_congratulations">¡Felicitaciones!</string>
   <string name="auth_signup_start_using_proton">Comenzar con Proton</string>
   <string name="auth_signup_start_using_calendar">Comenzar con Proton Calendar</string>

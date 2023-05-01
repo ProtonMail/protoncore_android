@@ -43,7 +43,7 @@
   <string name="plans_upgrade_your_plan">Улучшить тариф</string>
   <string name="plans_proton_for_free">Получить Proton бесплатно</string>
   <string name="plans_get_proton">Получить %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Управляйте своей подпиской по ссылке: <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s из %s</string>
   <string name="plans_payments_info_not_available">недоступно</string>
   <string name="plans_manage_your_subscription_google">Ваша подписка управляется Google Play.</string>

@@ -19,9 +19,9 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Резервный адрес электронной почты</string>
-  <string name="settings_recovery_email_current">Current recovery email address</string>
-  <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_current">Текущий резервный адрес электронной почты</string>
+  <string name="settings_recovery_email_new">Новый резервный адрес электронной почты</string>
+  <string name="settings_recovery_email_confirm">Подтвердить резервный адрес электронной почты</string>
   <string name="settings_recovery_email_new_hint">Введите адрес электронной почты</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введите адрес электронной почты</string>
   <string name="settings_save">Сохранить</string>

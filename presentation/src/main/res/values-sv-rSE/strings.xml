@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Tillbaka</string>
   <string name="presentation_close">Stäng</string>
+  <string name="presentation_retry">Försök igen</string>
   <string name="presentation_skip">Hoppa över</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Kunde inte ansluta till server.</string>
   <string name="presentation_check_your_connection">Kontrollera din anslutning</string>
   <string name="presentation_connectivity_issues">Anslutningsproblem</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

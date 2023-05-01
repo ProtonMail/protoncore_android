@@ -24,7 +24,7 @@
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>
-  <string name="plans_current_plan">Plano actual</string>
+  <string name="plans_current_plan">Plano atual</string>
   <string name="plans_upgrade_plan">Atualizar o seu plano</string>
   <string name="plans_subscription">Subscrição</string>
   <string name="plans_renewal_date">Your plan will automatically renew on &lt;b&gt;%s&lt;/b&gt;</string>
@@ -78,8 +78,8 @@
     <item quantity="other">Support for #proton_domains# custom email domains</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# personal calendar</item>
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="one">#proton_calendars# calendário pessoal</item>
+    <item quantity="other">#proton_calendars# calendários pessoais</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d of #proton_calendars# calendar</item>
@@ -120,16 +120,16 @@
   <!-- region new plans -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Pastas, etiquetas e filtros ilimitados</string>
   <string name="highest_vpn_speed" comment="new_plans">Velocidade VPN máxima</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
+  <string name="servers_in_countries" comment="new_plans">Mais de 1500 servidores em 63 países</string>
   <string name="ad_blocker" comment="new_plans">Bloqueador integrado (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Aceda a serviços de streaming globalmente</string>
   <string name="secure_core" comment="new_plans">Servidores Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Correio electrónico seguro com características avançadas para as suas comunicações diárias.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privacidade e segurança abrangentes com todos os serviços da Proton combinados.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

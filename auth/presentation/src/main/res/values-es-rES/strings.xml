@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Protege tu privacidad con Proton</string>
   <string name="welcome_subtitle">El cifrado mantiene tus datos privados. Tus datos realmente te pertenecen.</string>
-  <string name="welcome_title_mail">Protege tu privacidad con Proton Mail</string>
   <string name="welcome_subtitle_mail">Correo electrónico cifrado que mantiene las conversaciones privadas. Tu bandeja de entrada realmente te pertenece.</string>
   <string name="welcome_subtitle_mail_alt">Privacidad. Seguridad. Comodidad. Correo electrónico cifrado que te da control total de tus datos personales.</string>
-  <string name="welcome_title_drive">Protege tu privacidad con Proton Drive</string>
   <string name="welcome_subtitle_drive">La comodidad del almacenamiento en la nube y la seguridad de la tecnología de cifrado. Por fin una solución de almacenamiento en la nube en la que puedes confiar.</string>
   <string name="welcome_subtitle_drive_alt">La forma más segura de almacenar tus ficheros. Sube, sincroniza y comparte con el cifrado más sólido disponible.</string>
-  <string name="welcome_title_calendar">Protege tu privacidad con Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendario cifrado que mantiene tus eventos privados, seguros y protegidos.</string>
   <string name="welcome_subtitle_calendar_alt">Nuestro calendario cifrado de extremo a extremo te ayuda a organizarte, mantenerte enfocado y en control.</string>
-  <string name="welcome_title_vpn">Protege tu privacidad con Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suiza de alta velocidad que salvaguarda tu privacidad cifrando tu conexión a internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suizo de alta velocidad que protege tu privacidad. Máxima seguridad, más de 1,600 servidores sin restricciones.</string>
+  <string name="welcome_subtitle_pass">Todas tus contraseñas aseguradas en un solo lugar y protegidas por el nombre más confiable en privacidad.</string>
+  <string name="welcome_subtitle_pass_alt">Todas tus contraseñas aseguradas en un solo lugar y protegidas por el nombre más confiable en privacidad.</string>
   <string name="welcome_privacy_by_default">Privacidad por defecto</string>
   <string name="auth_password_label">Contraseña</string>
   <string name="auth_password_help">La contraseña debe contener al menos $ caracteres</string>
@@ -78,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Tu dirección de correo electrónico de recuperación:</string>
   <string name="auth_create_address_create">Crear dirección</string>
   <string name="auth_create_address_creating">Creando dirección</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Al hacer clic en Crear dirección, aceptas los <a href="https://proton.me/legal/terms">Términos y condiciones</a> de Proton.</string>
   <string name="auth_create_address_error_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_create_address_error_no_available_domain">No hay dominio disponible.</string>
   <string name="auth_create_address_error_private_key">La generación de la clave privada ha fallado.</string>
@@ -145,6 +143,6 @@
   <string name="auth_signup_start_using_mail">Empezar a usar Proton Mail</string>
   <string name="auth_signup_start_using_drive">Empezar a usar Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Empezar a usar Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">Empezar a usar Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">El destino de recuperación no es válido.</string>
 </resources>

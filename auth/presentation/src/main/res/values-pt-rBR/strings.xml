@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Proteja a sua privacidade com Proton</string>
   <string name="welcome_subtitle">Criptografia mantém seus dados privados. Seus dados pertencem a você.</string>
-  <string name="welcome_title_mail">Proteja sua privacidade com Proton Mail</string>
   <string name="welcome_subtitle_mail">E-mail criptografado que mantém suas conversas privadas. Sua caixa de mensagens pertence a você.</string>
   <string name="welcome_subtitle_mail_alt">Privacidade. Segurança. Conveniência. E-mail criptografado que oferece a você o controle total dos seus dados pessoais.</string>
-  <string name="welcome_title_drive">Proteja sua privacidade com Proton Drive</string>
   <string name="welcome_subtitle_drive">A conveniência do armazenamento na nuvem e a segurança da tecnologia de criptografia. Finalmente, uma solução de armazenamento na nuvem em que você pode confiar.</string>
   <string name="welcome_subtitle_drive_alt">A maneira mais segura de armazenar seus arquivos. Envie, sincronize e compartilhe com a criptografia mais forte disponível.</string>
-  <string name="welcome_title_calendar">Proteja sua privacidade com Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendário criptografado que mantém seus eventos particulares privados e a salvo.</string>
   <string name="welcome_subtitle_calendar_alt">Nosso calendário criptografado de ponta a ponta ajuda você a se organizar, manter tudo em dia e ficar no controle.</string>
-  <string name="welcome_title_vpn">Proteja sua privacidade com Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN suiça de alta velocidade que protege sua privacidade criptografando sua conexão à internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suíça de alta velocidade que protege sua privacidade. Segurança máxima, mais de 1.600 servidores e nenhuma restrição.</string>
+  <string name="welcome_subtitle_pass">Todas as suas senhas. Com segurança em um só lugar e protegido pelo nome mais confiável em privacidade.</string>
+  <string name="welcome_subtitle_pass_alt">Todas as suas senhas. Com segurança em um só lugar e protegido pelo nome mais confiável em privacidade.</string>
   <string name="welcome_privacy_by_default">Privacidade por padrão</string>
   <string name="auth_password_label">Senha</string>
   <string name="auth_password_help">A senha deve conter ao menos 8 caracteres</string>

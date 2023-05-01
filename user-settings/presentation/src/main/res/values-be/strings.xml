@@ -19,7 +19,7 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Электронная пошта для аднаўлення доступу</string>
-  <string name="settings_recovery_email_current">Цяперашні адрас электроннай пошты для аднаўлення доступу</string>
+  <string name="settings_recovery_email_current">Бягучы адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new">Новы адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>

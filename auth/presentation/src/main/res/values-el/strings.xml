@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Προστατέψτε την ιδιωτικότητά σας με το Proton</string>
   <string name="welcome_subtitle">Η κρυπτογράφηση διατηρεί τα δεδομένα σας απόρρητα. Τα δεδομένα σας ανήκουν πραγματικά σε εσάς.</string>
-  <string name="welcome_title_mail">Προστατέψτε την ιδιωτικότητά σας με το Proton Mail</string>
   <string name="welcome_subtitle_mail">Το κρυπτογραφημένο email διατηρεί τις συνομιλίες σας απόρρητες. Τα εισερχόμενά σας ανήκουν πραγματικά σε εσάς.</string>
   <string name="welcome_subtitle_mail_alt">Ιδιωτικότητα. Διασφάλιση. Ευκολία. Κρυπτογραφημένο ταχυδρομείο που σας δίνει πλήρη έλεγχο των προσωπικών σας δεδομένων.</string>
-  <string name="welcome_title_drive">Προστατέψτε την ιδιωτικότητά σας με το Proton Drive</string>
   <string name="welcome_subtitle_drive">Η άνεση της αποθήκευσης στο νέφος και η διασφάλιση της τεχνολογίας κρυπτογράφησης. Επιτέλους μια αξιόπιστη λύση αποθήκευσης στο νέφος.</string>
   <string name="welcome_subtitle_drive_alt">Ο ασφαλέστερος τρόπος αποθήκευσης των αρχείων σας. Ανεβάστε, συγχρονίστε και μοιραστείτε με την ισχυρότερη διαθέσιμη κρυπτογράφηση.</string>
-  <string name="welcome_title_calendar">Προστατέψτε την ιδιωτικότητά σας με το Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Κρυπτογραφημένο ημερολόγιο που κρατά τις εκδηλώσεις σας ιδιωτικές, ασφαλείς και διασφαλισμένες.</string>
   <string name="welcome_subtitle_calendar_alt">Το κρυπτογραφημένο ημερολόγιό μας από άκρο σε άκρο σάς βοηθά να παραμένετε οργανωμένοι, σε καλό δρόμο και να έχετε τον έλεγχο.</string>
-  <string name="welcome_title_vpn">Προστατέψτε την ιδιωτικότητά σας με το Proton VPN</string>
   <string name="welcome_subtitle_vpn">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει το απόρρητό σας, κρυπτογραφώντας τη διαδικτυακή σύνδεσή σας.</string>
   <string name="welcome_subtitle_vpn_alt">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει την ιδιωτικότητά σας. Μέγιστη διασφάλιση, 1600+ διακομιστές, και χωρίς περιορισμούς.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">Ιδιωτικότητα από προεπιλογή</string>
   <string name="auth_password_label">Κωδικός</string>
   <string name="auth_password_help">Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες</string>

@@ -20,7 +20,7 @@
   <!-- base common strings -->
   <string name="human_verification_help">ヘルプ</string>
   <string name="human_verification_title">人間であることの検証</string>
-  <string name="human_verification_main_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+  <string name="human_verification_main_subtitle">不正利用を防止するために、以下の選択肢から人間であることを証明してください</string>
   <string name="human_verification_enter_code_subtitle">%s に送信された検証コードを入力してください。</string>
   <string name="human_verification_enter_code_subtitle_email">%s に送信された検証コードを入力してください。受信トレイにメールが見当たらない場合は、迷惑メールフォルダーを確認してください。</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">既に持っている検証コードを入力:</string>
@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">無効なコードです。再度お試しください。</string>
   <string name="human_verification_resent_code">別のコードを送信しました。</string>
   <string name="human_verification_captcha_failed">CAPTCHA 検証に失敗しました。もう一度試すか、別の検証方法を選択してください。</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">接続がありません。CAPTCHA の読み込みに失敗しました。</string>
   <string name="human_verification_action_retry">再試行</string>
   <string name="human_verification_method_loading_failed">現在の検証方法を読み込めませんでした。この問題が解決しない場合は、利用できる他の方法を試すか、ヘルプスクリーンをご確認ください。</string>

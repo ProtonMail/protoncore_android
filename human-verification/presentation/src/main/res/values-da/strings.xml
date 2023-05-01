@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Forkert kode. Forsøg venligst igen.</string>
   <string name="human_verification_resent_code">Vi har sendt en ny kode til dig.</string>
   <string name="human_verification_captcha_failed">Captcha-verifikation mislykkedes. Prøv en gang til eller vælg en anden verifikationsmulighed.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Ingen forbindelse. Kunne ikke indlæse CAPTCHA.</string>
   <string name="human_verification_action_retry">Prøv igen</string>
   <string name="human_verification_method_loading_failed">Kunne ikke indlæse den aktuelle verifikationsmetode. Hvis problemet fortsætter, skal du prøve en af de andre metoder, hvis de er tilgængelige, eller tjekke Hjælp-skærmen.</string>

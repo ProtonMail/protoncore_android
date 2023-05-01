@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Protejați-vă confidențialitatea cu Proton</string>
   <string name="welcome_subtitle">Criptarea vă menține datele private. Acestea vă aparțin cu adevărat.</string>
-  <string name="welcome_title_mail">Protejați-vă confidențialitatea cu Proton Mail</string>
   <string name="welcome_subtitle_mail">E-mail criptat care vă păstrează conversațiile private. Mesajele primite vă aparțin cu adevărat.</string>
   <string name="welcome_subtitle_mail_alt">Confidențialitate. Securitate. Comoditate. E-mail criptat care vă oferă controlul asupra datelor personale.</string>
-  <string name="welcome_title_drive">Protejați-vă confidențialitatea cu Proton Drive</string>
   <string name="welcome_subtitle_drive">Comoditatea stocării în cloud și securitatea tehnologiilor de criptare. În sfârșit stocarea în cloud în care puteți avea încredere.</string>
   <string name="welcome_subtitle_drive_alt">Cel mai sigur mod de a vă stoca fișierele. Încărcați, sincronizați și partajați folosind cea mai puternică criptare disponibilă.</string>
-  <string name="welcome_title_calendar">Protejați-vă confidențialitatea cu Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Calendar criptat care vă asigură confidențialitatea și siguranța evenimentelor personale.</string>
   <string name="welcome_subtitle_calendar_alt">Calendarul criptat în ambele părţi vă ajută la organizare, concentrare și control.</string>
-  <string name="welcome_title_vpn">Protejați-vă confidențialitatea cu Proton VPN</string>
   <string name="welcome_subtitle_vpn">VPN elvețian de mare viteză care vă protejează confidențialitatea prin criptarea conexiunii la internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN elvețian de mare viteză care vă protejează confidențialitatea. Securitate maximă, peste 1.600 de servere și fără restricții.</string>
+  <string name="welcome_subtitle_pass">Toate parolele personale. În siguranță într-un singur loc și protejate de cel mai de încredere nume privind confidențialitatea.</string>
+  <string name="welcome_subtitle_pass_alt">Toate parolele personale. În siguranță într-un singur loc și protejate de cel mai de încredere nume privind confidențialitatea.</string>
   <string name="welcome_privacy_by_default">Confidențialitate implicită</string>
   <string name="auth_password_label">Parola</string>
   <string name="auth_password_help">Parola trebuie să conțină cel puțin 8 caractere</string>
@@ -78,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Adresa de e-mail de recuperare este:</string>
   <string name="auth_create_address_create">Creare adresă</string>
   <string name="auth_create_address_creating">Se creează adresa</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Făcând clic pe «Creare adresă», sunteți de acord cu <a href="https://proton.me/legal/terms">Termenii și condițiile</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_create_address_error_no_available_domain">Nu sunt domenii disponibile.</string>
   <string name="auth_create_address_error_private_key">Generarea cheii private a eșuat.</string>
@@ -145,6 +143,6 @@
   <string name="auth_signup_start_using_mail">Începeți să utilizați Proton Mail</string>
   <string name="auth_signup_start_using_drive">Începeți să utilizați Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Începeți să utilizați Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">Începeți să utilizați Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Destinația pentru recuperare nu este validă.</string>
 </resources>

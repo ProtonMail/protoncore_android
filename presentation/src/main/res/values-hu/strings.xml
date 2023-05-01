@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Vissza</string>
   <string name="presentation_close">Bezárás</string>
+  <string name="presentation_retry">Retry</string>
   <string name="presentation_skip">Kihagyás</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Nem sikerült kapcsolódni a szerverhez.</string>
   <string name="presentation_check_your_connection">Ellenőrizze a kapcsolatot</string>
   <string name="presentation_connectivity_issues">Kapcsolódási problémák</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

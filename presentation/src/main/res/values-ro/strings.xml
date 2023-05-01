@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Înapoi</string>
   <string name="presentation_close">Închidere</string>
+  <string name="presentation_retry">Reîncercare</string>
   <string name="presentation_skip">Omitere</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Nu s-a putut contacta serverul.</string>
   <string name="presentation_check_your_connection">Verificați-vă conexiunea</string>
   <string name="presentation_connectivity_issues">Probleme de conectare</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

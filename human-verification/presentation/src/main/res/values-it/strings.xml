@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Codice errato. Per favore riprova.</string>
   <string name="human_verification_resent_code">Ti abbiamo inviato un altro codice.</string>
   <string name="human_verification_captcha_failed">Verifica CAPTCHA non riuscita. Riprova un\'altra volta o scegli un\'altra opzione di verifica.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Nessuna connessione. Impossibile caricare CAPTCHA.</string>
   <string name="human_verification_action_retry">Riprova</string>
   <string name="human_verification_method_loading_failed">Impossibile caricare il metodo di verifica corrente. Se il problema persiste, prova uno degli altri metodi se disponibili o controlla la schermata della Guida.</string>

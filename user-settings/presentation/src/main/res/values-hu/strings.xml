@@ -19,9 +19,9 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Helyreállítási e-mail cím</string>
-  <string name="settings_recovery_email_current">Current recovery email address</string>
-  <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_current">Jelenlegi helyreállítási e-mail cím</string>
+  <string name="settings_recovery_email_new">Új helyreállítási e-mail cím</string>
+  <string name="settings_recovery_email_confirm">A helyreállítási e-mail cím megerősítése</string>
   <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
   <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>
   <string name="settings_save">Mentés</string>

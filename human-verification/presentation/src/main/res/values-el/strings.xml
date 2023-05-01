@@ -19,7 +19,7 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">Βοήθεια</string>
-  <string name="human_verification_title">Επαλήθευση ότι είστε άνθρωπος</string>
+  <string name="human_verification_title">Επαλήθευση Ανθρώπου</string>
   <string name="human_verification_main_subtitle">Προς αποτροπή κατάχρησης, παρακαλούμε επαληθεύστε ότι είστε άνθρωπος, χρησιμοποιώντας μία από τις ακόλουθες επιλογές</string>
   <string name="human_verification_enter_code_subtitle">Εισάγετε τον κωδικό επαλήθευσης ο οποίος εστάλη στο %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Εισάγετε τον κωδικό επαλήθευσης ο οποίος εστάλη στο %s. Αν δεν βρείτε το μήνυμα ηλεκτρονικού ταχυδρομείου στα Εισερχόμενα σας, ελέγξτε το φάκελο ανεπιθύμητης αλληλογραφίας.</string>
@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Λανθασμένος κωδικός. Παρακαλούμε δοκιμάστε ξανά.</string>
   <string name="human_verification_resent_code">Σας έχουμε στείλει έναν άλλον κωδικό.</string>
   <string name="human_verification_captcha_failed">Η επαλήθευση CAPTCHA απέτυχε. Δοκιμάστε ακόμα μια φορά ή επιλέξτε μια άλλη επιλογή επαλήθευσης.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Δεν υπάρχει συνδεσιμότητα. Δεν ήταν δυνατή η φόρτωση του CAPTCHA.</string>
   <string name="human_verification_action_retry">Δοκιμάστε ξανά</string>
   <string name="human_verification_method_loading_failed">Δεν ήταν δυνατή η φόρτωση της τρέχουσας μεθόδου επαλήθευσης. Εάν το πρόβλημα παραμένει, δοκιμάστε μία από τις άλλες μεθόδους, εάν είναι διαθέσιμες ή ελέγξτε την οθόνη βοήθειας.</string>

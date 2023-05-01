@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">验证码错误，请重试。</string>
   <string name="human_verification_resent_code">新验证码已发送。</string>
   <string name="human_verification_captcha_failed">验证失败，请重试或选择其他验证方式。</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">网络未连接，无法加载验证码。</string>
   <string name="human_verification_action_retry">重试</string>
   <string name="human_verification_method_loading_failed">此验证方式载入失败。如果该问题持续出现，请尝试使用其他验证方式或查看帮助页面。</string>

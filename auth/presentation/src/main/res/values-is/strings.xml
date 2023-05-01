@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Verndaðu friðhelgi þína með Proton</string>
   <string name="welcome_subtitle">Dulkóðun geymir gögnin þín sem einkamál. Gögnin þín tilheyra þér svo sannarlega.</string>
-  <string name="welcome_title_mail">Verndaðu friðhelgi þína með Proton Mail</string>
   <string name="welcome_subtitle_mail">Dulkóðaður tölvupóstur geymir samtöl þín sem einkamál. Innhólfið þitt tilheyrir þér svo sannarlega.</string>
   <string name="welcome_subtitle_mail_alt">Persónuvernd. Öryggi. Þægindi. Dulkóðaður tölvupóstur sem veitir þér fulla stjórn á þínum persónulegum gögnum.</string>
-  <string name="welcome_title_drive">Verndaðu friðhelgi þína með Proton Drive</string>
   <string name="welcome_subtitle_drive">Þægindi skýjageymslu og öryggi með dulkóðunartækni. Loksins skýjageymslulausn sem þú getur treyst.</string>
   <string name="welcome_subtitle_drive_alt">The safest way to store your files. Upload, sync, and share with the strongest encryption available.</string>
-  <string name="welcome_title_calendar">Verndaðu friðhelgi þína með Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
   <string name="welcome_subtitle_calendar_alt">Our end-to-end encrypted calendar helps you stay organized, on track, and in control.</string>
-  <string name="welcome_title_vpn">Verndaðu friðhelgi þína með Proton VPN</string>
   <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.</string>
   <string name="welcome_subtitle_vpn_alt">High-speed Swiss VPN that protects your privacy. Maximum security, 1,600+ servers, and no restrictions.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Lykilorð</string>
   <string name="auth_password_help">Lykilorð verður að innihalda að lágmarki 8 stafi</string>

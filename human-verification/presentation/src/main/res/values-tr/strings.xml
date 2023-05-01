@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">Kod yanlış. Lütfen yeniden deneyin.</string>
   <string name="human_verification_resent_code">Size başka bir kod gönderdik.</string>
   <string name="human_verification_captcha_failed">CAPTCHA doğrulanamadı. Lütfen bir kez daha deneyin ya da farklı bir doğrulama yöntemi seçin.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Bağlantı olmadığından CAPTCHA yüklenemedi.</string>
   <string name="human_verification_action_retry">Yeniden dene</string>
   <string name="human_verification_method_loading_failed">Geçerli doğrulama yöntemi yüklenemedi. Sorun sürerse, kullanılabiliyorsa diğer yöntemlerden birini seçin ya da yardım bölümüne bakın.</string>

@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Chroń swoją prywatność z Proton</string>
   <string name="welcome_subtitle">Szyfrowanie zapewnia prywatność Twoich danych. Twoje dane należą do Ciebie.</string>
-  <string name="welcome_title_mail">Chroń swoją prywatność z Proton Mail</string>
   <string name="welcome_subtitle_mail">Szyfrowana poczta e-mail, która zapewnia prywatną komunikację. Twoja skrzynka należy do Ciebie.</string>
   <string name="welcome_subtitle_mail_alt">Prywatność. Bezpieczeństwo. Wygoda. Szyfrowana poczta e-mail, która daje Ci pełną kontrolę nad danymi.</string>
-  <string name="welcome_title_drive">Chroń swoją prywatność z Proton Drive</string>
   <string name="welcome_subtitle_drive">Wygoda przechowywania danych w chmurze i bezpieczeństwo technologii szyfrowania. Wreszcie rozwiązanie do przechowywania danych w chmurze, któremu możesz zaufać.</string>
   <string name="welcome_subtitle_drive_alt">Najbezpieczniejszy sposób przechowywania plików. Przesyłaj, synchronizuj i udostępniaj pliki przy użyciu najsilniejszego szyfrowania.</string>
-  <string name="welcome_title_calendar">Chroń swoją prywatność z Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Szyfrowany kalendarz, który zapewnia Twoim wydarzeniom prywatność i bezpieczeństwo.</string>
   <string name="welcome_subtitle_calendar_alt">Szyfrowany kalendarz end-to-end pomaga organizować i kontrolować Twój harmonogram.</string>
-  <string name="welcome_title_vpn">Chroń swoją prywatność z Proton VPN</string>
   <string name="welcome_subtitle_vpn">Szybka szwajcarska usługa VPN, która chroni Twoją prywatność, szyfrując Twoje połączenie internetowe.</string>
   <string name="welcome_subtitle_vpn_alt">Szybka szwajcarska usługa VPN, która chroni Twoją prywatność. Maksymalne bezpieczeństwo, 1600 serwerów i brak ograniczeń.</string>
+  <string name="welcome_subtitle_pass">Wszystkie Twoje hasła. Bezpieczne w jednym miejscu i chronione przez najbardziej zaufaną markę w dziedzinie prywatności.</string>
+  <string name="welcome_subtitle_pass_alt">Wszystkie Twoje hasła. Bezpieczne w jednym miejscu i chronione przez najbardziej zaufaną markę w dziedzinie prywatności.</string>
   <string name="welcome_privacy_by_default">Prywatność to nasz standard</string>
   <string name="auth_password_label">Hasło</string>
   <string name="auth_password_help">Hasło musi zawierać co najmniej 8 znaków</string>

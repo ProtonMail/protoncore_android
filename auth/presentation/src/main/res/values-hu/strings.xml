@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Védje a magánszféráját a Protonnal</string>
   <string name="welcome_subtitle">A titkosítás biztosítja, hogy adatai személyesek maradjanak. Adatai csak önre tartoznak.</string>
-  <string name="welcome_title_mail">Védje a magánszféráját a Proton Maillel</string>
   <string name="welcome_subtitle_mail">Titkosított e-mail, csak ön fér hozzá a beszélgetéseihez. Levelesládája csak önre tartozik.</string>
   <string name="welcome_subtitle_mail_alt">Magánszféra. Biztonság. Kényelem. Titkosított e-mail, amellyel teljes mértékben kézben tarthatja személyes adatait.</string>
-  <string name="welcome_title_drive">Védje a magánszféráját a Proton Drive-val</string>
   <string name="welcome_subtitle_drive">A felhőtárhelyek kényelme és a titkosított technológia biztonsága. Végre egy felhőtárhely, amelyben megbízhat.</string>
   <string name="welcome_subtitle_drive_alt">Fájljai tárolásának a legbiztonságosabb módja. Töltse fel, szinkronizálja, ossza meg az elérhető legerősebb titkosítással.</string>
-  <string name="welcome_title_calendar">Védje a magánszféráját a Proton Calendarral</string>
   <string name="welcome_subtitle_calendar">Titkosított naptár, amelyben privát módon és biztonságosan tárolhatja eseményeit.</string>
   <string name="welcome_subtitle_calendar_alt">A végpontok közt titkosított naptár segíti, hogy rendezett maradjon és mindig képben legyen.</string>
-  <string name="welcome_title_vpn">Védje a magánszféráját a Proton VPN-nel</string>
   <string name="welcome_subtitle_vpn">Nagy sebességű svájci VPN, amely az internet kapcsolatának titkosításával védi az adatait.</string>
   <string name="welcome_subtitle_vpn_alt">Nagy sebességű svájci VPN, amely védi a magánszféráját. Maximális biztonság, 1600+ szerver, nincs korlátozás.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">Alapértelmezett adatvédelem</string>
   <string name="auth_password_label">Jelszó</string>
   <string name="auth_password_help">A jelszónak legalább 8 karakterből kell állnia</string>
@@ -78,7 +76,7 @@
   <string name="auth_create_address_result_recovery_title">Az ön helyreállító e-mail címe:</string>
   <string name="auth_create_address_create">Cím létrehozása</string>
   <string name="auth_create_address_creating">Cím létrehozása</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">A Cím létrehozása gombra kattintva kijelenti, hogy elfogadja a Proton <a href="https://proton.me/legal/terms">Felhasználási feltételeit</a></string>
   <string name="auth_create_address_error_credentials">Az azonosítók nem lehetnek üresek.</string>
   <string name="auth_create_address_error_no_available_domain">Nincs elérhető domain.</string>
   <string name="auth_create_address_error_private_key">Titkos kulcs létrehozása sikertelen.</string>
@@ -145,6 +143,6 @@
   <string name="auth_signup_start_using_mail">A Proton Mail használatának elkezdése</string>
   <string name="auth_signup_start_using_drive">A Proton Drive használatának elkezdése</string>
   <string name="auth_signup_start_using_vpn">A Proton VPN használatának elkezdése</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">A Proton Pass használatának elkezdése</string>
   <string name="auth_signup_error_validation_recovery_destination">A helyreállítási célpont érvénytelen.</string>
 </resources>

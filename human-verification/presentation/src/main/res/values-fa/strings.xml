@@ -52,7 +52,6 @@
   <string name="human_verification_incorrect_code">کد نادرست است. لطفا دوباره امتحان کنید.</string>
   <string name="human_verification_resent_code">یک کد دیگر برای شما فرستادیم.</string>
   <string name="human_verification_captcha_failed">اعتبارسنجی CAPTCHA ناموفق بود. لطفا یکبار دیگر امتحان کنید یا روش اعتبارسنجی دیگری انتخاب کنید.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">اتصال برقرار نیست. CAPTCHA بارگیری نشد.</string>
   <string name="human_verification_action_retry">تلاش مجدد</string>
   <string name="human_verification_method_loading_failed">نمیتوان روش فعلی اعتبارسنجی را بارگیری کرد. اگر مشکل پابرجا بود، لطفا اگر روش های دیگر در دسترس هستند یکی از آنها را امتحان کنید یا صفحه کمک را چک کنید.</string>

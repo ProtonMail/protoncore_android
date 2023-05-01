@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">Terug</string>
   <string name="presentation_close">Sluiten</string>
+  <string name="presentation_retry">Opnieuw proberen</string>
   <string name="presentation_skip">Overslaan</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Kon geen verbinding maken met de server.</string>
   <string name="presentation_check_your_connection">Controleer uw verbinding</string>
   <string name="presentation_connectivity_issues">Verbindingsproblemen</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">Beskyt dit privatliv med Proton</string>
   <string name="welcome_subtitle">Kryptering holder dine data private. Dine data tilhører kun dig.</string>
-  <string name="welcome_title_mail">Beskyt dit privatliv med Proton Mail</string>
   <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke er helt din egen.</string>
   <string name="welcome_subtitle_mail_alt">Privatliv. Sikkerhed. Bekvemmelighed. Krypteret e-mail, der giver dig fuld kontrol over dine personlige data.</string>
-  <string name="welcome_title_drive">Beskyt dit privatliv med Proton Drive</string>
   <string name="welcome_subtitle_drive">Bekvemmeligheden ved lagring i skyen og sikkerheden ved krypteringsteknologi. Endelig en lagringsløsning i skyen, du kan stole på.</string>
   <string name="welcome_subtitle_drive_alt">Den sikreste måde at opbevare dine filer på. Upload, synkroniser og del dine filer med den stærkeste kryptering, der findes.</string>
-  <string name="welcome_title_calendar">Beskyt dit privatliv med Proton Calendar</string>
   <string name="welcome_subtitle_calendar">Krypteret kalender, der holder dine livsbegivenheder private, sikre og trygge.</string>
   <string name="welcome_subtitle_calendar_alt">Vores end-to-end-krypterede kalender hjælper dig med at holde dig organiseret, på sporet og have kontrol.</string>
-  <string name="welcome_title_vpn">Beskyt dit privatliv med Proton VPN</string>
   <string name="welcome_subtitle_vpn">Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.</string>
   <string name="welcome_subtitle_vpn_alt">Højhastigheds schweizisk VPN, der beskytter dit privatliv. Maksimal sikkerhed, 1.600+ servere og ingen begrænsninger.</string>
+  <string name="welcome_subtitle_pass">Alle dine adgangskoder. Sikkert gemt ét sted og beskyttet af det mest betroede navn inden for privatliv.</string>
+  <string name="welcome_subtitle_pass_alt">Alle dine adgangskoder. Sikkert gemt ét sted og beskyttet af det mest betroede navn inden for privatliv.</string>
   <string name="welcome_privacy_by_default">Fortrolighed som standard</string>
   <string name="auth_password_label">Adgangskode</string>
   <string name="auth_password_help">Adgangskode skal indeholde mindst 8 tegn</string>

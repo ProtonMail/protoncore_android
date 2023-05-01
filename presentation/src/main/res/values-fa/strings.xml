@@ -39,9 +39,11 @@
   <!-- Other -->
   <string name="presentation_back">بازگشت</string>
   <string name="presentation_close">بستن</string>
+  <string name="presentation_retry">Retry</string>
   <string name="presentation_skip">رد شدن</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">اتصال به سرور امکان‌پذیر نیست.</string>
   <string name="presentation_check_your_connection">اتصال خود را بررسی کنید</string>
   <string name="presentation_connectivity_issues">اشکال در اتصال</string>
+  <string name="presentation_field_required">This field is required.</string>
 </resources>

@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Faça upgrade do seu plano</string>
   <string name="plans_proton_for_free">Obter Proton grátis</string>
   <string name="plans_get_proton">Obter %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Gerencie a sua assinatura em <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Sua assinatura é gerenciada pela Google Play.</string>

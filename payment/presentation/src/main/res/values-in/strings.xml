@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">Terjadi kesalahan.</string>
+  <string name="payments_general_error">Terdapat suatu kesalahan.</string>
   <string name="payments_no_connectivity">Tidak ada koneksi internet untuk menampilkan halaman konfirmasi 3DS.</string>
   <string name="payments_3ds_not_approved">Persetujuan 3DS ditolak.</string>
   <string name="payments_error_card_name">Nama pada kartu diperlukan.</string>

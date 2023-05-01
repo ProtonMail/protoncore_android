@@ -41,7 +41,7 @@
   <string name="plans_upgrade_your_plan">Váltás nagyobb csomagra</string>
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Az előfizetését az <a href="https://account.proton.me">account.proton.me</a> címen kezelheti</string>
   <string name="plans_used_space">%s / %s</string>
   <string name="plans_payments_info_not_available">nem elérhető</string>
   <string name="plans_manage_your_subscription_google">Az előfizetését a Google Play kezeli.</string>

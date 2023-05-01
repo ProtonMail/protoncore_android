@@ -19,18 +19,16 @@
 <resources>
   <string name="welcome_title">با Proton از حریم خصوصی خود حفاظت کنید</string>
   <string name="welcome_subtitle">رمزگذاری داده‌های شما را خصوصی نگاه می‌دارد. داده‌های شما حقیقتاً متعلق به شما هستند.</string>
-  <string name="welcome_title_mail">از حریم خصوصی خود با Proton Mail حفاظت کنید</string>
   <string name="welcome_subtitle_mail">ایمیل رمزگذاری شده که گفتگوهای شما را خصوصی نگه می‌دارد. صندوق دریافت شما حقیقتاً متعلق به شماست.</string>
   <string name="welcome_subtitle_mail_alt">حریم شخصی. امنیت. آسودگی. ایمیل رمزگذاری شده ای که به شما کنترل کامل داده‌‌های شخصیتان را میدهد.</string>
-  <string name="welcome_title_drive">با Proton Drive از حریم خصوصی خود حفاظت کنید</string>
   <string name="welcome_subtitle_drive">آسودگی فضای ذخیره‌ سازی ابری و امنیت تکنولوژی رمزگذاری. سرانجام راه حلی برای یک فضای ذخیره سازی ابری که میتوانید به آن اعتماد کنید.</string>
   <string name="welcome_subtitle_drive_alt">ایمن ترین راه برای ذخیره کردن فایل های شما. بارگذاری کنید، همگام‌سازی کنید و به اشتراک بگذارید با قدرتمندترین روش رمزگذاری موجود.</string>
-  <string name="welcome_title_calendar">از حریم خصوصی خود با Proton Calendar حفاظت کنید</string>
   <string name="welcome_subtitle_calendar">تقویم رمزگذاری شده ای که رویدادهای زندگی شما رو محرمانه، ایمن، و محفوظ نگه میدارد.</string>
   <string name="welcome_subtitle_calendar_alt">تقویم سرتاسر رمزگذاری شده ما به شما کمک میکند که منظم باشید، در مسیر بمانید، و کنترل در دستتان باشد.</string>
-  <string name="welcome_title_vpn">از حریم خصوصی خود با Proton VPN حفاظت کنید</string>
   <string name="welcome_subtitle_vpn">VPN پرسرعت سوئیسی که بوسیله رمزگذاری ارتباط اینترنت شما از حریم خصوصیتان محافظت میکند.</string>
   <string name="welcome_subtitle_vpn_alt">VPN پر سرعت سوئیسی که از حریم خصوصی شما محافظت میکند. حداکثر امنیت، ۱۶۰۰+ سرور، و بدون محدودیت.</string>
+  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="welcome_privacy_by_default">حریم شخصی به صورت پیشفرص</string>
   <string name="auth_password_label">گذرواژه</string>
   <string name="auth_password_help">گذرواژه باید حداقل ۸ نویسه داشته باشد</string>

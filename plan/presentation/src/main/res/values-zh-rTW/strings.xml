@@ -40,7 +40,7 @@
   <string name="plans_upgrade_your_plan">更新升級您的方案</string>
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">取得 %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
   <string name="plans_used_space">%s 中的 %s</string>
   <string name="plans_payments_info_not_available">不適用</string>
   <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
