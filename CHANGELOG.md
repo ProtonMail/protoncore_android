@@ -11,6 +11,61 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.5.0] - 2023-05-03
+
+### Chores
+
+- observability:
+  - Increment schema version metrics that use `HttpApiStatus`.
+- presentation:
+  - Add filled icons for cog wheel and earth.
+
+### Features
+
+- crypto:
+  - Add BadContext value to VerificationStatus.
+- gopenpgp:
+  - Update to gopenpgp v2.7.1-proton.
+- key-transparency:
+  - Add backend feature flag for KT.
+  - Use feature flag via provider.
+- plan:
+  - Fix info text visibility conditions.
+  - Added Plan Mapping & Pass Plus support.
+
+### Bug Fixes
+
+- auth:
+  - Improved EA to PA Conversion screen for edge cases.
+
+    When initial setup/fetch fail -> Added Snackbar with error message and retry Button.
+    When Username is already set -> Allow the postLogin process to continue.
+    Use Authenticated Session for public endpoints (getDomains, checkUsername).
+    Added Username input error help text ("This field is required.").
+    Improved Inputs & Buttons state handling.
+- key-transparency:
+  - Enforce that the SKL creation time increases.
+
+    We need to save the last creation time checked in the verified epoch.
+    And we need to verify that the SKL creation times increase
+    monotonically.
+- observability:
+  - Additional status label for HTTP requests: `notConnected`.
+  - Updated HV PageLoad status (added: 400, 404, 422).
+  - Add new label values for account creation metric.
+- presentation-compose:
+  - Don't apply Material3 tint to elements with tonal elevation (e.g. bottom bar).
+
+### Internationalization
+
+- Upgrade translations from crowdin (04696da1).
+
+### Theming
+
+- Fixed wrong style for ProtonButton.
+
+  Applying `style="@style/ProtonButton"` prevent to override globally in ProtonTheme level.
+
 ## [10.4.0] - 2023-04-18
 
 ### Features
