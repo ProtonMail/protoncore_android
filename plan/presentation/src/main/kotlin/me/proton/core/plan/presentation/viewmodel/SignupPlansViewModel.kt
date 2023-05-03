@@ -62,7 +62,7 @@ internal class SignupPlansViewModel @Inject constructor(
                 add(createFreePlan(freePlan))
             }
         }
-        emit(PlanState.Success.Plans(plans = plans, purchaseEnabled = anyPaymentEnabled))
+        emit(PlanState.Success.Plans(plans = plans, subscribed = false, purchaseEnabled = anyPaymentEnabled))
     }.catch { error ->
         state.tryEmit(PlanState.Error.Exception(error))
     }.onEach { plans ->

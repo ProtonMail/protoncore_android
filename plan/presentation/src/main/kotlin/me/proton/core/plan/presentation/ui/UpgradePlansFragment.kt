@@ -105,7 +105,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             gravity = Gravity.CENTER_HORIZONTAL
                             text = getString(R.string.plans_upgrade_plan)
                         }
-                        manageSubscriptionText.visibility = GONE
                     }
                 }
                 toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_proton_close)
@@ -118,6 +117,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         onError(it.error.getUserMessage(resources))
                         binding.connectivityIssueView.visibility = VISIBLE
                     }
+
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> with(binding) {
@@ -125,12 +125,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         val currency =
                             (plan as? PlanDetailsItem.CurrentPlanDetailsItem)?.currency ?: it.subscribedPlan.currency
 
-                        manageSubscriptionText.apply {
-                            setText(it.subscriptionManagement.subscriptionManagementText())
-                            movementMethod = LinkMovementMethod.getInstance()
-                        }
-
-                        manageSubscriptionText.visibility = VISIBLE
                         currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
@@ -178,7 +172,9 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                                 }
                                 plansTitle.visibility = if (it.plans.isNotEmpty()) VISIBLE else GONE
                             }
+                            showSubscriptionManagement(it.subscribed, it.plans.isNotEmpty(), it.subscriptionManagement)
                         }
+
                         is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
                             setResult(it.selectedPlan, it.billing)
                             // refresh
@@ -195,6 +191,26 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
             setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
+        }
+    }
+
+    private fun showSubscriptionManagement(
+        subscribed: Boolean,
+        availablePlansForPurchase: Boolean,
+        subscriptionManagement: SubscriptionManagement?
+    ) {
+        binding.manageSubscriptionText.visibility = when {
+            !subscribed && !availablePlansForPurchase -> VISIBLE
+            !subscribed -> GONE
+            else -> {
+                with(binding) {
+                    manageSubscriptionText.apply {
+                        setText(subscriptionManagement.subscriptionManagementText())
+                        movementMethod = LinkMovementMethod.getInstance()
+                    }
+                }
+                VISIBLE
+            }
         }
     }
 

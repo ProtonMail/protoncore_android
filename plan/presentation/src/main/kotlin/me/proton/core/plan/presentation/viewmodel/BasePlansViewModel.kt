@@ -34,6 +34,7 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 import me.proton.core.plan.domain.entity.MASK_ALL
@@ -69,6 +70,8 @@ internal abstract class BasePlansViewModel(
         object Processing : PlanState()
         sealed class Success : PlanState() {
             data class Plans(
+                val subscribed: Boolean,
+                val subscriptionManagement: SubscriptionManagement? = null,
                 val plans: List<PlanDetailsItem>,
                 val purchaseEnabled: Boolean
             ) : Success()

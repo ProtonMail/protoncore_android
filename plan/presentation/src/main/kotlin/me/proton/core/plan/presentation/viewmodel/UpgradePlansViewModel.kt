@@ -123,8 +123,8 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         }
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
-        getAvailablePlansForUpgrade(userId, isFree, freePlan)
         val external = currentSubscription?.external
+        getAvailablePlansForUpgrade(userId, isFree, freePlan, external)
         val unredeemed = if (checkForUnredeemedPurchase) {
             checkUnredeemedGooglePurchase(userId)
         } else null
@@ -146,7 +146,12 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private fun getAvailablePlansForUpgrade(userId: UserId, isFreeUser: Boolean, freePlan: Plan) = flow {
+    private fun getAvailablePlansForUpgrade(
+        userId: UserId,
+        isFreeUser: Boolean,
+        freePlan: Plan,
+        subscriptionManagement: SubscriptionManagement? = null
+    ) = flow {
         emit(PlanState.Processing)
 
         val paymentProviders = getAvailablePaymentProviders()
@@ -160,7 +165,13 @@ internal class UpgradePlansViewModel @Inject @Suppress("LongParameterList") cons
                 .map { plan -> plan.toPaidPlanDetailsItem(freePlan) }
         }
 
-        emit(PlanState.Success.Plans(plans = availablePlans, purchaseEnabled = anyPaymentEnabled))
+        emit(
+            PlanState.Success.Plans(
+                subscribed = !isFreeUser,
+                plans = availablePlans,
+                purchaseEnabled = anyPaymentEnabled
+            )
+        )
     }.catch { error ->
         state.tryEmit(PlanState.Error.Exception(error))
     }.onEach { plans ->
