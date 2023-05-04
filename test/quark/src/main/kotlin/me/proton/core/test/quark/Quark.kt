@@ -23,13 +23,13 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.DRIVE_POPULATE_USER_WITH_DATA
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.EXPIRE_SESSION
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.JAIL_UNBAN
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.PAYMENTS_SEED_PAYMENT_METHOD
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.PAYMENTS_SEED_SUBSCRIBER
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.SYSTEM_ENV
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE_ADDRESS
-import me.proton.core.test.quark.Quark.InternalApiEndpoint.EXPIRE_SESSION
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.randomPaidPlan
 import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse
@@ -127,7 +127,7 @@ public class Quark constructor(
             "username=${user.name}",
             "password=${user.password}",
             "plan=${user.plan.planName}",
-            "cycle=${cycleDurationMonths}"
+            "cycle=$cycleDurationMonths"
         )
         val response = quarkRequest(PAYMENTS_SEED_SUBSCRIBER, args)
         println("Quark response: $response")
@@ -195,22 +195,20 @@ public class Quark constructor(
         return json.decodeFromString(responseJson!!)
     }
 
-    public fun populateUserWithData(
-        user: User,
-    ): User {
+    public fun populateUserWithData(user: User): User {
         val args = arrayOf(
             if (user.name.isNotEmpty()) "-u=${user.name}" else "",
             if (user.password.isNotEmpty()) "-p=${user.password}" else "",
-            if (user.dataSetScenario.isNotEmpty()) "-S=${user.dataSetScenario}" else "",
+            if (user.dataSetScenario.isNotEmpty()) "-S=${user.dataSetScenario}" else ""
         )
         quarkRequest(DRIVE_POPULATE_USER_WITH_DATA, args)
         return user
     }
 
-    public fun expireSession(username: String, expireRefreshToken: Boolean = false){
+    public fun expireSession(username: String, expireRefreshToken: Boolean = false) {
         val args = arrayOf(
-            "User=${username}",
-            if(expireRefreshToken) "--refresh=null" else ""
+            "User=$username",
+            if (expireRefreshToken) "--refresh=null" else ""
         )
         quarkRequest(EXPIRE_SESSION, args)
     }
@@ -280,10 +278,7 @@ public class Quark constructor(
         )
 
         /** Assumes `internal_apis.json` file exists in quark module `resources/sensitive` directory. */
-        public fun fromDefaultResources(
-            host: String,
-            proxyToken: String?
-        ): Quark = fromJavaResources(
+        public fun fromDefaultResources(host: String, proxyToken: String?): Quark = fromJavaResources(
             Quark::class.java.classLoader,
             resourcePath = "sensitive/internal_apis.json",
             host = host,

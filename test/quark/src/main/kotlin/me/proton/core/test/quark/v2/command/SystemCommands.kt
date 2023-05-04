@@ -1,3 +1,10 @@
+package me.proton.core.test.quark.v2.command
+
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.QuarkCommand.Route
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -16,9 +23,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.quark.util
-
-internal fun randomString(length: Int = 6): String {
-    val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-    return List(length) { charPool.random() }.joinToString("")
-}
+public fun QuarkCommand.systemEnv(variable: String, value: String): Response =
+    route(Route.SYSTEM_ENV)
+        .args(arrayOf("$variable=$value"))
+        .onRequestBuilder { post("".toRequestBody()) }
+        .build()
+        .execute()

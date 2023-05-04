@@ -19,9 +19,9 @@
 package me.proton.core.test.quark.data
 
 import kotlinx.serialization.Serializable
+import me.proton.core.util.kotlin.random
 import java.util.Calendar
 import java.util.Locale
-import me.proton.core.util.kotlin.random
 
 @Serializable
 public data class Card(

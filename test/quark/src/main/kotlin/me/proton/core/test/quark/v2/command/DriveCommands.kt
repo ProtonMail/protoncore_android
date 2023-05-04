@@ -16,9 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.quark.util
+package me.proton.core.test.quark.v2.command
 
-internal fun randomString(length: Int = 6): String {
-    val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-    return List(length) { charPool.random() }.joinToString("")
-}
+import me.proton.core.test.quark.data.User
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.QuarkCommand.Route
+import okhttp3.Response
+
+
+public fun QuarkCommand.populateUserWithData(user: User): Response =
+    route(Route.DRIVE_POPULATE_USER_WITH_DATA)
+        .args(
+            arrayOf(
+                if (user.name.isNotEmpty()) "-u=${user.name}" else "",
+                if (user.password.isNotEmpty()) "-p=${user.password}" else "",
+                if (user.dataSetScenario.isNotEmpty()) "-S=${user.dataSetScenario}" else ""
+            )
+        )
+        .build()
+        .execute()
