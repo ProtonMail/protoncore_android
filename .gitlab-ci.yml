@@ -393,6 +393,21 @@ androidTest:coreexample-migration:
 
 ## publish stage ###################################################################################
 
+pages:
+  extends: .gradle-job
+  needs:
+    - assemble
+  stage: publish
+  script:
+    - ./gradlew :coverage:koverHtmlReport
+    - mkdir -p ./public/coverage
+    - mv ./coverage/build/reports/kover/html/* ./public/coverage
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+
 trigger-new-libs-release:
   extends: .script-job
   stage: publish
