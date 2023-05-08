@@ -62,4 +62,16 @@ internal class NormalizeEmailTest {
             normalizeEmail(email, isCatchAll = true)
         }
     }
+
+    @Test
+    fun normalizePlusAliasEmailTest() {
+        // given
+        val email = "normalize_this-test.proton+alias_to_remove@proton.black"
+        val expected = "normalizethistestproton@proton.black"
+        // when
+        val actual = normalizeEmail(email)
+        // then
+        kotlin.test.assertEquals(expected, actual)
+    }
+
 }

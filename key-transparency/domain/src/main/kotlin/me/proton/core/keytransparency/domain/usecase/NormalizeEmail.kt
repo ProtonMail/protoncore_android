@@ -30,7 +30,8 @@ public class NormalizeEmail @Inject constructor() {
         return if (isCatchAll) {
             "@$domain"
         } else {
-            val cleanUser = user.cleanUser()
+            val userWithoutPlusAlias = user.split("+").firstOrNull() ?: ""
+            val cleanUser = userWithoutPlusAlias.cleanUser()
             "$cleanUser@$domain"
         }
     }
