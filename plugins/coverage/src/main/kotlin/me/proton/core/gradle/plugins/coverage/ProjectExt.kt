@@ -22,19 +22,29 @@ import org.gradle.api.Project
 
 private val globalLineCoverageTaskNameRegex = Regex("(.*:)?$globalLineCoverageTaskName")
 private val koverTaskNameRegex = Regex("(.*:)?kover.*")
+private val coberturaTaskNameRegex = Regex("(.*:)?cobertura.*")
 private val tasksTaskNameRegex = Regex("(.*:)?tasks")
 
 /** Optional optimization.
  * Avoid further configuration if we're not trying to run a `kover` task,
  * or display the project's tasks.
- * Example:
- * > ./gradlew koverHtmlReport # <- The kover plugin will be configured
- * > ./gradlew tasks # <- The kover plugin will be configured
- * > ./gradlew someOtherTask # <- The kover plugin will NOT be configured
+ *
+ * Example with the kover plugin will be configured:
+ * ```
+ * > ./gradlew koverHtmlReport
+ * > ./gradlew koverXmlReport
+ * > ./gradlew coberturaXmlReport
+ * > ./gradlew tasks
+ *```
+ * Example with the kover plugin will NOT be configured:
+ * ```
+ * > ./gradlew someOtherTask
+ * ```
  */
 internal fun Project.shouldSkipPluginApplication(): Boolean =
     !gradle.startParameter.taskNames.any {
         it.matches(koverTaskNameRegex) ||
+                it.matches(coberturaTaskNameRegex) ||
                 it.matches(tasksTaskNameRegex) ||
                 it.matches(globalLineCoverageTaskNameRegex)
     }

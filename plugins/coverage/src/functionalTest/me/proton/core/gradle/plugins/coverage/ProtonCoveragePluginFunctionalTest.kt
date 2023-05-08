@@ -66,6 +66,7 @@ class ProtonCoveragePluginFunctionalTest {
 
         result.output.contains("koverVerify")
         result.output.contains("koverXmlReport")
+        result.output.contains("coberturaXmlReport")
         result.output.contains("BUILD SUCCESSFUL")
     }
 }

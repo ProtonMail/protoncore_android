@@ -14,6 +14,7 @@ kotlinCoroutines = "1.6.4"
 kotlinSerialization = "1.4.1"
 kotlinBinaryCompatibilityValidator = "0.12.1"
 kotlinx-kover = "0.7.0-Beta"
+jacoco-to-cobertura = "1.1.0"
 vanniktechPublish = "0.18.0"
 
 [plugins]
@@ -24,6 +25,7 @@ kotlin-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compa
 kotlin-gradle = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlinx-kover" }
+jacoco-to-cobertura = { id = "net.razvan.jacoco-to-cobertura", version.ref = "jacoco-to-cobertura" }
 
 [libraries]
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradle" }
@@ -42,4 +44,5 @@ easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", vers
 gradleNexus-publish = { module = "io.github.gradle-nexus:publish-plugin", version.ref = "gradleNexusPublish" }
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 kotlinx-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kotlinx-kover" }
+jacoco-to-cobertura = { module = "net.razvan:JacocoToCoberturaPlugin", version.ref = "jacoco-to-cobertura" }
 vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktechPublish" }

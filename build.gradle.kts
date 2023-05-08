@@ -33,7 +33,6 @@ plugins {
     id("me.proton.core.gradle-plugins.detekt")
     id("publish-core-libraries")
     id("me.proton.core.gradle-plugins.tests")
-    id("me.proton.core.gradle-plugins.jacoco")
     id("me.proton.core.gradle-plugins.coverage-config")
     alias(libs.plugins.benManes.versions.gradle)
     alias(libs.plugins.kotlin.binaryCompatibilityValidator)
@@ -108,23 +107,6 @@ tasks.register("generateChangelog", JavaExec::class.java) {
         }
         check(output.toString().isBlank()) { "Cannot update CHANGELOG.md file, because it has been modified." }
     }
-}
-
-protonCoverageMultiModuleOptions {
-    generatesSubModuleHtmlReports = { !project.hasProperty("ci") }
-    sharedExcludes = listOf(
-        // androidTest code, shouldn't have coverage
-        "**/me/proton/core/test/**",
-        // Room Dao classes don't need testing
-        "**/*Dao.class",
-        // Migrations need to be done in instrumented tests which are currently not included in Jacoco reports
-        "**/*MIGRATION*",
-        // These components are tested using UI tests that are currently not included in Jacoco reports
-        "**/*Activity.class",
-        "**/*Activity$*",
-        "**/*Fragment.class",
-        "**/*Fragment$*",
-    )
 }
 
 dependencyAnalysis {

@@ -166,19 +166,19 @@ unit-tests-and-coverage-report:
     - assemble
   stage: test
   script:
-    - ./gradlew -Pci --console=plain coberturaCoverageReport # This also runs allTest
+    - ./gradlew -Pci --console=plain coberturaXmlReport # This also runs allTest
   coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
   interruptible: true
   artifacts:
     when: always
     expire_in: 1 week
     paths:
-      - ./build/reports/*
+      - '**/build/reports/kover/cobertura*.xml'
     reports:
       junit: ./**/test-results/*/TEST-*.xml
       coverage_report:
         coverage_format: cobertura
-        path: ./build/reports/cobertura-coverage.xml
+        path: '**/build/reports/kover/cobertura*.xml'
 
 start-review:
   image: ${CI_REGISTRY}/android/shared/docker-android/ndk:v1.1.0

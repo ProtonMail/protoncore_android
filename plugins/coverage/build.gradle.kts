@@ -68,10 +68,12 @@ kotlin {
 repositories {
     google()
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
     api(libs.kotlinx.kover)
+    api(libs.jacoco.to.cobertura)
 
     implementation(gradleApi())
     implementation(kotlin("gradle-plugin"))

@@ -20,6 +20,7 @@ package me.proton.core.gradle.plugins.coverage
 
 import kotlinx.kover.gradle.plugin.KoverGradlePlugin
 import kotlinx.kover.gradle.plugin.dsl.AggregationType
+import kotlinx.kover.gradle.plugin.dsl.KoverNames
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import kotlinx.kover.gradle.plugin.dsl.KoverReportExtension
 import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
@@ -30,16 +31,26 @@ import me.proton.core.gradle.plugins.coverage.rules.daggerRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinParcelizeRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinSerializationRules
 import me.proton.core.gradle.plugins.coverage.rules.roomDbRules
+import net.razvan.JacocoToCoberturaExtension
+import net.razvan.JacocoToCoberturaPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
+import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 /** Default dir path for the HTML report, relative to the build directory. */
 private const val DEFAULT_HTML_REPORT_DIR = "reports/kover/html"
 
 /** Default file path for the XML report, relative to the build directory. */
 internal const val DEFAULT_XML_REPORT_FILE = "reports/kover/report.xml"
+
+/** Default file path for the XML Cobertura report, relative to the build directory. */
+private const val DEFAULT_XML_REPORT_COBERTURA_FILE = "reports/kover/cobertura.xml"
+
+private const val TASK_NAME_KOVER = KoverNames.DEFAULT_XML_REPORT_NAME
+private const val TASK_NAME_COBERTURA = "coberturaXmlReport"
+private const val TASK_NAME_JACOCO_TO_COBERTURA = "jacocoToCobertura"
 
 internal const val PROTON_COVERAGE_EXT: String = "protonCoverage"
 
@@ -64,6 +75,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         target.afterEvaluate {
             if (ext.disabled.get()) return@afterEvaluate
             target.pluginManager.apply(KoverGradlePlugin::class.java)
+            target.pluginManager.apply(JacocoToCoberturaPlugin::class.java)
             onAfterEvaluate(ext)
         }
     }
@@ -96,6 +108,8 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         }
 
         configureKoverExtension(ext)
+        configureJacocoToCoberturaExtension()
+        registerCoberturaReportTask()
     }
 
     private fun Project.hasAndroidPlugin(): Boolean =
@@ -118,6 +132,30 @@ public class ProtonCoveragePlugin : Plugin<Project> {
             filters {
                 applyFiltersConfig(ext)
             }
+        }
+    }
+
+    private fun Project.configureJacocoToCoberturaExtension() {
+        extensions.configure<JacocoToCoberturaExtension> {
+            inputFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_FILE))
+            outputFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_COBERTURA_FILE))
+            splitByPackage.set(true)
+        }
+        afterEvaluate {
+            val reportTask = tasks.named(TASK_NAME_KOVER)
+            val conversionTask = tasks.named(TASK_NAME_JACOCO_TO_COBERTURA)
+            conversionTask.configure {
+                dependsOn(reportTask)
+                onlyIf { !reportTask.get().state.skipped || reportTask.get().state.upToDate }
+            }
+        }
+    }
+
+    private fun Project.registerCoberturaReportTask() {
+        tasks.register(TASK_NAME_COBERTURA) {
+            group = LifecycleBasePlugin.VERIFICATION_GROUP
+            description = "Generates Cobertura report from koverXmlReport task."
+            dependsOn(TASK_NAME_JACOCO_TO_COBERTURA)
         }
     }
 
