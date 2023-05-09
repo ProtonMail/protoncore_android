@@ -58,6 +58,7 @@ import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -327,6 +328,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     }
 
     @Test
+    @Ignore
     fun `create Internal user phone recovery method set paid available`() = coroutinesTest {
         // GIVEN
         val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)

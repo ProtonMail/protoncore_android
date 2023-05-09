@@ -3,3 +3,9 @@ plugins {
 }
 
 publishOption.shouldBePublishedAsLib = false
+
+// Global minimum coverage percentage.
+protonCoverage {
+    minBranchCoveragePercentage.set(36)
+    minLineCoveragePercentage.set(48)
+}

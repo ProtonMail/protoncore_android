@@ -166,7 +166,7 @@ unit-tests-and-coverage-report:
     - assemble
   stage: test
   script:
-    - ./gradlew -Pci --console=plain coberturaXmlReport globalLineCoverage # This also runs allTest
+    - ./gradlew -Pci --console=plain koverVerify coberturaXmlReport globalLineCoverage -x :coverage:jacocoToCobertura
   coverage: /TotalLineCoverage.*?(\d{1,3}\.\d{0,2})%/
   interruptible: true
   artifacts:
