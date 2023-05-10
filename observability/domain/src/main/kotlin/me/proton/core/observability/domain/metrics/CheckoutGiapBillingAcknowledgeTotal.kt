@@ -26,9 +26,9 @@ import me.proton.core.observability.domain.metrics.common.GiapLabels
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 
 @Serializable
-@Schema(description = "Query for existing GIAP subscriptions before purchasing.")
-@SchemaId("https://proton.me/android_core_checkout_giapBilling_querySubscriptions_total_v1.schema.json")
-public data class CheckoutGiapBillingQuerySubscriptionsTotalV1(
+@Schema(description = "Acknowledging a purchase via Google Billing library.")
+@SchemaId("https://proton.me/android_core_checkout_giapBilling_acknowledge_total_v2.schema.json")
+public data class CheckoutGiapBillingAcknowledgeTotal(
     override val Labels: GiapLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {

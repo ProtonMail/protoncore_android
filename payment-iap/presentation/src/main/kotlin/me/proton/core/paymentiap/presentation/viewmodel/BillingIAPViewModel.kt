@@ -37,10 +37,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingLaunchBillingTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingLaunchBillingTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.common.GiapStatus
@@ -175,7 +175,7 @@ internal class BillingIAPViewModel @Inject constructor(
         val unredeemedPurchase = findUnacknowledgedGooglePurchase.byProduct(
             selectedProduct.productId,
             querySubscriptionsMetricData = { result ->
-                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotalV1(it) }
+                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotal(it) }
             }
         )
         if (unredeemedPurchase != null) {
@@ -200,7 +200,7 @@ internal class BillingIAPViewModel @Inject constructor(
         if (status == GiapStatus.notFound) {
             CoreLogger.e(LogTag.DEFAULT, GoogleProductNotFound(googlePlanName))
         }
-        return status?.let { CheckoutGiapBillingProductQueryTotalV1(it) }
+        return status?.let { CheckoutGiapBillingProductQueryTotal(it) }
     }
 
     /** Launches Google billing flow. */
@@ -223,7 +223,7 @@ internal class BillingIAPViewModel @Inject constructor(
 
         billingRepository.runWithObservability(
             observabilityManager,
-            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingLaunchBillingTotalV1(it) } }
+            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingLaunchBillingTotal(it) } }
         ) {
             launchBillingFlow(activity, billingFlowParams)
         }
@@ -257,7 +257,7 @@ internal class BillingIAPViewModel @Inject constructor(
         }
 
         billingResult.toGiapStatus()?.let {
-            observabilityManager.enqueue(CheckoutGiapBillingPurchaseTotalV1(it))
+            observabilityManager.enqueue(CheckoutGiapBillingPurchaseTotal(it))
         }
     }
 

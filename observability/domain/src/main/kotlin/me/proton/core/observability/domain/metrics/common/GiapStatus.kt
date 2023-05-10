@@ -22,11 +22,17 @@ package me.proton.core.observability.domain.metrics.common
 public enum class GiapStatus {
     success,
     billingUnavailable,
-    connectionError,
+    serviceDisconnected,
+    serviceTimeout,
+    serviceUnavailable,
     developerError,
     featureNotSupported,
     googlePlayError,
-    itemError,
+    itemAlreadyOwned,
+    itemNotOwned,
+    itemUnavailable,
+    userCanceled,
     notFound,
+    statusNull,
     unknown
 }

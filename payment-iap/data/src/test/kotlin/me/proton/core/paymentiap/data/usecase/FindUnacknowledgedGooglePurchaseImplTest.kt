@@ -28,7 +28,7 @@ import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
@@ -173,12 +173,12 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
         // WHEN
         tested(
             querySubscriptionsMetricData = { result ->
-                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotalV1(it) }
+                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotal(it) }
             }
         )
 
         // THEN
-        val dataSlot = slot<CheckoutGiapBillingQuerySubscriptionsTotalV1>()
+        val dataSlot = slot<CheckoutGiapBillingQuerySubscriptionsTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.success, dataSlot.captured.Labels.status)
     }

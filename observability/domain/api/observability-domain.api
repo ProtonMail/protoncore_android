@@ -288,38 +288,38 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 	public static final fun toGetSubscriptionApiStatus (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapStatus;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -358,143 +358,143 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapStatus;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapStatus;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapStatus;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapStatus;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;Lme/proton/core/observability/domain/metrics/common/GiapLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/GiapLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1841,14 +1841,20 @@ public final class me/proton/core/observability/domain/metrics/common/GiapLabels
 
 public final class me/proton/core/observability/domain/metrics/common/GiapStatus : java/lang/Enum {
 	public static final field billingUnavailable Lme/proton/core/observability/domain/metrics/common/GiapStatus;
-	public static final field connectionError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field developerError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field featureNotSupported Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field googlePlayError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
-	public static final field itemError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field itemAlreadyOwned Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field itemNotOwned Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field itemUnavailable Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field notFound Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field serviceDisconnected Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field serviceTimeout Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field serviceUnavailable Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field statusNull Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field success Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field unknown Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field userCanceled Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 }

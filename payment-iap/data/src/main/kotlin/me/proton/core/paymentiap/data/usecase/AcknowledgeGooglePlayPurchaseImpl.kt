@@ -19,7 +19,7 @@
 package me.proton.core.paymentiap.data.usecase
 
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
@@ -45,7 +45,7 @@ public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
 
     override suspend fun invoke(purchaseToken: GooglePurchaseToken) {
         val metricData: ((Result<Unit>) -> ObservabilityData?) =
-            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingAcknowledgeTotalV1(it) } }
+            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingAcknowledgeTotal(it) } }
 
         // Create a new instance of `GoogleBillingRepository` and clean up after it:
         googleBillingRepositoryProvider.get().use { googleBillingRepository ->

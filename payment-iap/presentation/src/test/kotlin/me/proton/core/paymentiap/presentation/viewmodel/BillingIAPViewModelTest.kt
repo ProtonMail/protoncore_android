@@ -30,8 +30,8 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotalV1
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -73,7 +73,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested.queryProductDetails("test-plan-name").join()
 
         // THEN
-        val dataSlot = slot<CheckoutGiapBillingProductQueryTotalV1>()
+        val dataSlot = slot<CheckoutGiapBillingProductQueryTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.success, dataSlot.captured.Labels.status)
     }
@@ -110,7 +110,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested.billingIAPState.first { it is BillingIAPViewModel.State.Error.ProductPurchaseError.Message }
 
         // THEN
-        val dataSlot = slot<CheckoutGiapBillingPurchaseTotalV1>()
+        val dataSlot = slot<CheckoutGiapBillingPurchaseTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.developerError, dataSlot.captured.Labels.status)
     }
@@ -130,7 +130,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
             tested.billingIAPState.value
         )
 
-        val dataSlot = slot<CheckoutGiapBillingProductQueryTotalV1>()
+        val dataSlot = slot<CheckoutGiapBillingProductQueryTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.notFound, dataSlot.captured.Labels.status)
     }
@@ -151,7 +151,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
             tested.billingIAPState.value
         )
 
-        val dataSlot = slot<CheckoutGiapBillingProductQueryTotalV1>()
+        val dataSlot = slot<CheckoutGiapBillingProductQueryTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.featureNotSupported, dataSlot.captured.Labels.status)
     }

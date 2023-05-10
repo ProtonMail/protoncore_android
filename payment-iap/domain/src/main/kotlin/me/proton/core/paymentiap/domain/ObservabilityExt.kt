@@ -32,22 +32,23 @@ public fun Result<*>.toGiapStatus(): GiapStatus? {
     }
 }
 
-public fun BillingClientError.toGiapStatus(): GiapStatus? = responseCode.toGiapStatus()
-public fun BillingResult.toGiapStatus(): GiapStatus? = responseCode.toGiapStatus()
+public fun BillingClientError.toGiapStatus(): GiapStatus = responseCode.toGiapStatus()
+public fun BillingResult.toGiapStatus(): GiapStatus = responseCode.toGiapStatus()
 
-private fun Int.toGiapStatus(): GiapStatus? =
+private fun Int?.toGiapStatus(): GiapStatus =
     when (this) {
         BillingClient.BillingResponseCode.OK -> GiapStatus.success
         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> GiapStatus.billingUnavailable
-        BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
-        BillingClient.BillingResponseCode.SERVICE_TIMEOUT,
-        BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> GiapStatus.connectionError
+        BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> GiapStatus.serviceDisconnected
+        BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> GiapStatus.serviceTimeout
+        BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> GiapStatus.serviceUnavailable
         BillingClient.BillingResponseCode.DEVELOPER_ERROR -> GiapStatus.developerError
         BillingClient.BillingResponseCode.ERROR -> GiapStatus.googlePlayError
         BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> GiapStatus.featureNotSupported
-        BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED,
-        BillingClient.BillingResponseCode.ITEM_NOT_OWNED,
-        BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> GiapStatus.itemError
-        BillingClient.BillingResponseCode.USER_CANCELED -> null
+        BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> GiapStatus.itemAlreadyOwned
+        BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> GiapStatus.itemNotOwned
+        BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> GiapStatus.itemUnavailable
+        BillingClient.BillingResponseCode.USER_CANCELED -> GiapStatus.userCanceled
+        null -> GiapStatus.statusNull
         else -> GiapStatus.unknown
     }

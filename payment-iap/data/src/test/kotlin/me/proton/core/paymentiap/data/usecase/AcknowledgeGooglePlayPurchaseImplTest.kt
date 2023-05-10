@@ -25,7 +25,7 @@ import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotal
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -75,7 +75,7 @@ internal class AcknowledgeGooglePlayPurchaseImplTest {
     @Test
     fun `observability data is recorded`() = runTest {
         tested(GooglePurchaseToken("google-purchase-token"))
-        val dataSlot = slot<CheckoutGiapBillingAcknowledgeTotalV1>()
+        val dataSlot = slot<CheckoutGiapBillingAcknowledgeTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(GiapStatus.success, dataSlot.captured.Labels.status)
     }
