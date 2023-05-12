@@ -519,6 +519,12 @@ cleanup:review:
       when: manual
       allow_failure: true
 
+finish:review:
+  # Apply same rules to finish:review job as to deploy:review.
+  rules:
+    - if: $ATLAS_DEPLOY_ENV == "true" && $CI_PIPELINE_SOURCE == "merge_request_event"
+    - when: never
+
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
   extends: .stopReview
