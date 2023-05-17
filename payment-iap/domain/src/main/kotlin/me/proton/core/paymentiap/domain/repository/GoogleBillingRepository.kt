@@ -64,8 +64,15 @@ public interface GoogleBillingRepository : AutoCloseable {
     }
 }
 
+/** Error response from the Google Billing client.
+ * @property responseCode Response code from the Google Billing client.
+ *  Possible values are marked by [BillingClient.BillingResponseCode].
+ *  If [responseCode] is `null`, it's likely because the device
+ *  is using a custom Android ROM with unofficial/fake play services.
+ * @property debugMessage The debug message returned by the Google Billing client.
+ */
 public data class BillingClientError(
     @BillingClient.BillingResponseCode
-    public val responseCode: Int,
-    public val debugMessage: String
+    public val responseCode: Int?,
+    public val debugMessage: String?
 ) : Throwable()

@@ -22,8 +22,9 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.paymentiap.domain.repository.BillingClientError
+import me.proton.core.util.kotlin.CoreLogger
 
-public fun Result<*>.toGiapStatus(): GiapStatus? {
+public fun Result<*>.toGiapStatus(): GiapStatus {
     if (isSuccess && getOrNull() == null) return GiapStatus.notFound
     return when (val throwable = exceptionOrNull()) {
         null -> GiapStatus.success
@@ -32,8 +33,21 @@ public fun Result<*>.toGiapStatus(): GiapStatus? {
     }
 }
 
-public fun BillingClientError.toGiapStatus(): GiapStatus = responseCode.toGiapStatus()
-public fun BillingResult.toGiapStatus(): GiapStatus = responseCode.toGiapStatus()
+public fun BillingClientError.toGiapStatus(): GiapStatus = responseCode.toGiapStatus().also {
+    if (it == GiapStatus.unknown) {
+        CoreLogger.e(LogTag.GIAP_ERROR, this, "Unknown BillingClientError.")
+    }
+}
+
+public fun BillingResult.toGiapStatus(): GiapStatus = responseCode.toGiapStatus().also {
+    if (it == GiapStatus.unknown) {
+        CoreLogger.e(
+            LogTag.GIAP_ERROR,
+            IllegalStateException(this.toString()),
+            "Unknown BillingResult error."
+        )
+    }
+}
 
 private fun Int?.toGiapStatus(): GiapStatus =
     when (this) {

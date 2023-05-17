@@ -154,6 +154,7 @@ internal class BillingIAPViewModel @Inject constructor(
             val error = when (throwable) {
                 is BillingClientError -> {
                     when (throwable.responseCode) {
+                        null,
                         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> State.Error.BillingClientUnavailable
                         BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> State.Error.BillingClientDisconnected
                         else -> State.Error.ProductDetailsError.ResponseCode

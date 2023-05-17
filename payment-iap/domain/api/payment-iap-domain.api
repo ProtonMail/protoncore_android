@@ -21,14 +21,14 @@ public final class me/proton/core/paymentiap/domain/entity/GooglePurchaseWrapper
 }
 
 public final class me/proton/core/paymentiap/domain/repository/BillingClientError : java/lang/Throwable {
-	public fun <init> (ILjava/lang/String;)V
-	public final fun component1 ()I
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/Integer;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (ILjava/lang/String;)Lme/proton/core/paymentiap/domain/repository/BillingClientError;
-	public static synthetic fun copy$default (Lme/proton/core/paymentiap/domain/repository/BillingClientError;ILjava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/domain/repository/BillingClientError;
+	public final fun copy (Ljava/lang/Integer;Ljava/lang/String;)Lme/proton/core/paymentiap/domain/repository/BillingClientError;
+	public static synthetic fun copy$default (Lme/proton/core/paymentiap/domain/repository/BillingClientError;Ljava/lang/Integer;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/domain/repository/BillingClientError;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDebugMessage ()Ljava/lang/String;
-	public final fun getResponseCode ()I
+	public final fun getResponseCode ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

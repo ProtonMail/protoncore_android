@@ -182,7 +182,7 @@ internal class ConnectedBillingClient @AssistedInject constructor(
         object Connecting : BillingClientConnectionState()
         object Connected : BillingClientConnectionState()
         object Destroyed : BillingClientConnectionState()
-        data class Error(val responseCode: Int, val debugMessage: String) : BillingClientConnectionState()
+        data class Error(val responseCode: Int?, val debugMessage: String?) : BillingClientConnectionState()
 
         fun isConnectingOrConnected(): Boolean = this is Connecting || this is Connected
     }
