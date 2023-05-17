@@ -89,8 +89,6 @@ detekt-analyze:
   stage: prepare
   when: always
   interruptible: true
-  tags:
-    - medium
   script:
     - ./gradlew multiModuleDetekt
   artifacts:
@@ -199,8 +197,6 @@ binary-compatibility-check:
   interruptible: true
   needs:
     - assemble
-  tags:
-    - large
   script:
     - ./gradlew apiCheck
 
