@@ -11,6 +11,33 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.6.0] - 2023-05-18
+
+### Chores
+
+- presentation:
+  - Add new icons.
+
+### Features
+
+- crypto:
+  - Add API to add context on embedded signatures.
+- key:
+  - Add API to add context on embedded signatures.
+- key-transparency:
+  - Add verification context for SKLs.
+- observability:
+  - Add GetSubscriptions event.
+- user:
+  - Add signature context for new SKLs.
+- util-kotlin:
+  - Added ResultCoroutineContext.
+
+### Bug Fixes
+
+- key-transparency:
+  - strip plus alias from email address.
+
 ## [10.5.0] - 2023-05-03
 
 ### Chores
