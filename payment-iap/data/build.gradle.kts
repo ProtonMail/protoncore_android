@@ -70,6 +70,7 @@ dependencies {
         `coroutines-test`,
         `kotlin-test`,
         `kotlin-test-junit`,
-        mockk
+        mockk,
+        turbine
     )
 }

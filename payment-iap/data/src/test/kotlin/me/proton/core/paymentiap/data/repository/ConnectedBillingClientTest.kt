@@ -56,7 +56,12 @@ internal class ConnectedBillingClientTest {
 
         tested.onBillingSetupFinished(BillingResult())
         job.join()
-        coVerify(exactly = 1) { billingClient.queryPurchasesAsync(any<QueryPurchasesParams>(), any()) }
+        coVerify(exactly = 1) {
+            billingClient.queryPurchasesAsync(
+                any<QueryPurchasesParams>(),
+                any()
+            )
+        }
     }
 
     @Test
@@ -65,7 +70,12 @@ internal class ConnectedBillingClientTest {
         tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>(), mockk()) }
 
         verify(exactly = 0) { billingClient.startConnection(tested) }
-        coVerify(exactly = 1) { billingClient.queryPurchasesAsync(any<QueryPurchasesParams>(), any()) }
+        coVerify(exactly = 1) {
+            billingClient.queryPurchasesAsync(
+                any<QueryPurchasesParams>(),
+                any()
+            )
+        }
     }
 
     @Test(expected = IllegalStateException::class)
@@ -81,7 +91,8 @@ internal class ConnectedBillingClientTest {
         }
 
         tested.onBillingSetupFinished(
-            BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.ERROR).build()
+            BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.ERROR)
+                .build()
         )
         assertFailsWith<BillingClientError> {
             result.await()
@@ -101,7 +112,12 @@ internal class ConnectedBillingClientTest {
         tested.onBillingSetupFinished(BillingResult())
         job.join()
 
-        coVerify(exactly = 1) { billingClient.queryPurchasesAsync(any<QueryPurchasesParams>(), any()) }
+        coVerify(exactly = 1) {
+            billingClient.queryPurchasesAsync(
+                any<QueryPurchasesParams>(),
+                any()
+            )
+        }
     }
 
     @Test
@@ -115,5 +131,31 @@ internal class ConnectedBillingClientTest {
         val error = deferredResult.await()
 
         assertEquals(BillingClient.BillingResponseCode.SERVICE_DISCONNECTED, error.responseCode)
+    }
+
+    @Test
+    fun `is already connecting`() = runTest {
+        // GIVEN
+        val job1 = launch(start = CoroutineStart.UNDISPATCHED) {
+            tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>(), mockk()) }
+        }
+        val job2 = launch(start = CoroutineStart.UNDISPATCHED) {
+            tested.withClient { it.launchBillingFlow(mockk(), mockk()) }
+        }
+
+        // THEN
+        verify(exactly = 1) { billingClient.startConnection(tested) }
+
+        tested.onBillingSetupFinished(BillingResult())
+        job1.join()
+        job2.join()
+
+        coVerify(exactly = 1) {
+            billingClient.queryPurchasesAsync(
+                any<QueryPurchasesParams>(),
+                any()
+            )
+        }
+        coVerify(exactly = 1) { billingClient.launchBillingFlow(any(), any()) }
     }
 }

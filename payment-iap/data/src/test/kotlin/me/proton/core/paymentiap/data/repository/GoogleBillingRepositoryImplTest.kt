@@ -18,15 +18,21 @@
 
 package me.proton.core.paymentiap.data.repository
 
+import app.cash.turbine.test
+import com.android.billingclient.api.AcknowledgePurchaseResponseListener
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
-import com.android.billingclient.api.ProductDetailsResult
+import com.android.billingclient.api.ProductDetailsResponseListener
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesResponseListener
 import com.android.billingclient.api.PurchasesResult
 import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryPurchasesParams
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
@@ -35,19 +41,22 @@ import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
 
 internal class GoogleBillingRepositoryImplTest {
     private lateinit var billingClientFactory: FakeBillingClientFactory
     private lateinit var factory: FakeConnectedBillingClientFactory
+    private lateinit var testDispatcherProvider: TestDispatcherProvider
     private lateinit var tested: GoogleBillingRepositoryImpl
 
     @BeforeTest
     fun setUp() {
         billingClientFactory = FakeBillingClientFactory()
         factory = FakeConnectedBillingClientFactory()
-        tested = GoogleBillingRepositoryImpl(factory, TestDispatcherProvider())
+        testDispatcherProvider = TestDispatcherProvider()
+        tested = GoogleBillingRepositoryImpl(factory, testDispatcherProvider)
     }
 
     @Test
@@ -59,29 +68,59 @@ internal class GoogleBillingRepositoryImplTest {
 
     @Test
     fun `acknowledge a purchase`() = runTest {
-        coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns BillingResult()
+        mockClientResult {
+            every { acknowledgePurchase(any(), any()) } answers {
+                val listener = invocation.args[1] as AcknowledgePurchaseResponseListener
+                listener.onAcknowledgePurchaseResponse(BillingResult())
+            }
+        }
         tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
     }
 
     @Test(expected = BillingClientError::class)
     fun `fails to acknowledge a purchase`() = runTest {
-        coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns
-            BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.ERROR).build()
+        mockClientResult {
+            every { acknowledgePurchase(any(), any()) } answers {
+                val listener = invocation.args[1] as AcknowledgePurchaseResponseListener
+                val result = BillingResult.newBuilder()
+                    .setResponseCode(BillingClient.BillingResponseCode.ERROR)
+                    .build()
+                listener.onAcknowledgePurchaseResponse(result)
+            }
+        }
         tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
     }
 
     @Test
     fun `get product details`() = runTest {
         val productDetails = mockk<ProductDetails>()
-        val productDetailsResult = ProductDetailsResult(BillingResult(), listOf(productDetails))
-        coEvery { factory.connectedBillingClient.withClient<ProductDetailsResult>(any()) } returns productDetailsResult
+        mockClientResult {
+            every { queryProductDetailsAsync(any(), any()) } answers {
+                val listener = invocation.args[1] as ProductDetailsResponseListener
+                listener.onProductDetailsResponse(BillingResult(), listOf(productDetails))
+            }
+        }
         val result = tested.use { it.getProductDetails("plan-name") }
         assertSame(result, productDetails)
     }
 
     @Test
+    fun `get product details null`() = runTest {
+        mockClientResult {
+            every { queryProductDetailsAsync(any(), any()) } answers {
+                val listener = invocation.args[1] as ProductDetailsResponseListener
+                listener.onProductDetailsResponse(BillingResult(), listOf())
+            }
+        }
+        val result = tested.use { it.getProductDetails("plan-name") }
+        assertSame(result, null)
+    }
+
+    @Test
     fun `launch billing flow`() = runTest {
-        coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } returns BillingResult()
+        mockClientResult {
+            every { launchBillingFlow(any(), any()) } returns BillingResult()
+        }
         tested.use { it.launchBillingFlow(mockk(), mockk()) }
     }
 
@@ -89,7 +128,32 @@ internal class GoogleBillingRepositoryImplTest {
     fun `query subscription purchases`() = runTest {
         val purchaseList = listOf(mockk<Purchase>())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
-        coEvery { factory.connectedBillingClient.withClient<PurchasesResult>(any()) } returns purchaseResult
+        mockClientResult {
+            every { queryPurchasesAsync(any<QueryPurchasesParams>(), any()) } answers {
+                val listener = invocation.args[1] as PurchasesResponseListener
+                listener.onQueryPurchasesResponse(
+                    purchaseResult.billingResult,
+                    purchaseResult.purchasesList
+                )
+            }
+        }
+        val result = tested.use { it.querySubscriptionPurchases() }
+        assertSame(result, purchaseList)
+    }
+
+    @Test
+    fun `query subscription purchases yielding`() = runTest {
+        val purchaseList = listOf(mockk<Purchase>())
+        val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
+        mockClientResult {
+            every { queryPurchasesAsync(any<QueryPurchasesParams>(), any()) } answers {
+                val listener = invocation.args[1] as PurchasesResponseListener
+                listener.onQueryPurchasesResponse(
+                    purchaseResult.billingResult,
+                    purchaseResult.purchasesList
+                )
+            }
+        }
         val result = tested.use { it.querySubscriptionPurchases() }
         assertSame(result, purchaseList)
     }
@@ -105,6 +169,33 @@ internal class GoogleBillingRepositoryImplTest {
             }
         }
     }
+
+    @Test
+    fun `purchase is emitted`() = runTest(testDispatcherProvider.Main) {
+        val expectedBillingResult = mockk<BillingResult>()
+        val expectedPurchaseList = mockk<List<Purchase>>()
+
+        factory.purchasesUpdatedListener.onPurchasesUpdated(
+            expectedBillingResult,
+            expectedPurchaseList
+        )
+        tested.purchaseUpdated.test {
+            val (billingResult, purchaseList) = awaitItem()
+            assertEquals(expectedBillingResult, billingResult)
+            assertEquals(expectedPurchaseList, purchaseList)
+        }
+    }
+
+    private inline fun <reified R> mockClientResult(billingClientMockSetup: BillingClient.() -> R) {
+        val billingClient = mockk<BillingClient> {
+            billingClientMockSetup()
+        }
+        val callbackSlot = slot<suspend (BillingClient) -> R>()
+        coEvery { factory.connectedBillingClient.withClient(capture(callbackSlot)) } coAnswers {
+            val fn = callbackSlot.captured
+            fn(billingClient)
+        }
+    }
 }
 
 private class FakeBillingClientFactory : BillingClientFactory {
@@ -118,7 +209,10 @@ private class FakeBillingClientFactory : BillingClientFactory {
 
 private class FakeConnectedBillingClientFactory : ConnectedBillingClientFactory {
     val connectedBillingClient: ConnectedBillingClient = mockk(relaxed = true)
+    lateinit var purchasesUpdatedListener: PurchasesUpdatedListener
 
-    override fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): ConnectedBillingClient =
-        connectedBillingClient
+    override fun invoke(purchasesUpdatedListener: PurchasesUpdatedListener): ConnectedBillingClient {
+        this.purchasesUpdatedListener = purchasesUpdatedListener
+        return connectedBillingClient
+    }
 }

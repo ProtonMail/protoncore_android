@@ -167,7 +167,7 @@ internal class ConnectedBillingClient @AssistedInject constructor(
         check(currentConnectionState != BillingClientConnectionState.Destroyed) {
             "Billing client has already been destroyed."
         }
-        if (!currentConnectionState.isConnectingOrConnected()) connect()
+        connect()
         connectionState
             .onEach {
                 if (it is BillingClientConnectionState.Error) {
