@@ -58,6 +58,7 @@ class PlanItemView @JvmOverloads constructor(
 
     // For all plan ids.
     private val mappedPlanIds by lazy { context.getStringArrayByName(R.array.plan_mapping_plan_ids) }
+
     // There are 3 type of layouts: current, free and paid.
     private val mappedCurrentPlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_current_plan_layouts) }
     private val mappedFreePlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_free_plan_layouts) }
@@ -239,7 +240,7 @@ class PlanItemView @JvmOverloads constructor(
 
         val maxPrice = cycle.getPrice(plan.price) ?: PRICE_ZERO
         calculatePaidPlanPrice(plan = plan, maxPrice = maxPrice)
-
+        handlePromotion(plan)
         if (!plan.purchaseEnabled) {
             select.visibility = GONE
             priceCycleLayout.visibility = GONE
@@ -284,4 +285,12 @@ class PlanItemView @JvmOverloads constructor(
             planCycleText.visibility = VISIBLE
             billableAmount = amount
         }
+
+    private fun handlePromotion(plan: PlanDetailsItem.PaidPlanDetailsItem) = with(binding) {
+        val promoPercentage = cycle.promotionPercentage(plan.promotionPercentage)
+        val promotionOngoing = if (promoPercentage > 0) VISIBLE else GONE
+        planPromoPercentage.text = "-${promoPercentage}%"
+        planPromoPercentage.visibility = promotionOngoing
+        planPromoTitle.visibility = promotionOngoing
+    }
 }

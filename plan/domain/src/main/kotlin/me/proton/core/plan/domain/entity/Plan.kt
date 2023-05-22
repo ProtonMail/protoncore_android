@@ -54,12 +54,26 @@ data class Plan(
     val maxTier: Int?,
     val enabled: Boolean,
     val pricing: PlanPricing? = null,
+    val defaultPricing: PlanPricing? = null,
+    val offers: List<PlanOffer>? = null,
     val vendors: Map<AppStore, PlanVendorData> = emptyMap()
 )
 
 data class PlanPricing(
     val monthly: Int,
     val yearly: Int,
+    val twoYearly: Int? = null
+)
+
+data class PlanOffer(
+    val name: String,
+    val startTime: Long,
+    val endTime: Long,
+    val pricing: PlanOfferPricing
+)
+data class PlanOfferPricing(
+    val monthly: Int? = null,
+    val yearly: Int? = null,
     val twoYearly: Int? = null
 )
 

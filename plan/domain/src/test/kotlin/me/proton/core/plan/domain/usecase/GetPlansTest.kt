@@ -26,6 +26,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.PlanOffer
+import me.proton.core.plan.domain.entity.PlanOfferPricing
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.repository.PlansRepository
 import org.junit.Assert.assertEquals
@@ -137,6 +139,23 @@ class GetPlansTest {
         coEvery { repository.getPlans(null) } returns listOf(testPlan.copy(services = MASK_MAIL))
         // WHEN
         val result = useCase.invoke(null)
+        // THEN
+        assertEquals(1, result.size)
+        assertEquals("plan-name-1", result[0].id)
+    }
+
+    @Test
+    fun `get plans with offers returns success`() = runTest {
+        // GIVEN
+        coEvery { repository.getPlans(testUserId) } returns listOf(
+            testPlan.copy(
+                services = MASK_MAIL,
+                defaultPricing = PlanPricing(2, 20, 40),
+                offers = listOf(PlanOffer("offer1", 1000, 2000, PlanOfferPricing(1, 10, 20)))
+            )
+        )
+        // WHEN
+        val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(1, result.size)
         assertEquals("plan-name-1", result[0].id)

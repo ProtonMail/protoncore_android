@@ -39,16 +39,32 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Proton Mail PLUS" />
 
+    <TextView
+        android:id="@+id/planPromoPercentage"
+        style="@style/Proton.Text.DefaultSmall.PromoPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/gap_small"
+        app:layout_constraintTop_toTopOf="@id/planNameText"
+        app:layout_constraintStart_toEndOf="@id/planNameText"
+        app:layout_constraintBottom_toBottomOf="@id/planNameText"
+        tools:text="-50%"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <ImageView
         android:id="@+id/starred"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/gap_medium"
-        android:layout_marginEnd="@dimen/gap_medium"
+        android:layout_marginStart="@dimen/gap_tiny"
+        android:layout_marginEnd="@dimen/gap_tiny"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/planNameText"
-        app:layout_constraintStart_toEndOf="@id/planNameText"
-        app:layout_constraintTop_toTopOf="@id/planNameText"
+        app:layout_constraintBottom_toBottomOf="@id/planPromoPercentage"
+        app:layout_constraintStart_toEndOf="@id/planPromoPercentage"
+        app:layout_constraintTop_toTopOf="@id/planPromoPercentage"
         app:srcCompat="@drawable/ic_proton_star_filled" />
 
     <LinearLayout
@@ -66,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:textSize="22sp"
             android:gravity="end"
             android:maxLines="1"
             android:padding="0dp"
@@ -97,6 +114,22 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/planPromoTitle"
+        style="@style/Proton.Text.DefaultSmall.PromoOffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/gap_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/planNameText"
+        tools:text="Limited time offer"
+        android:visibility="gone"
+        android:text="@string/plans_limited_offer"
+        tools:visibility="visible" />
+
+    <TextView
         android:id="@+id/planDescriptionText"
         style="@style/Proton.Text.Caption.Weak"
         android:layout_width="0dp"
@@ -106,7 +139,7 @@
         android:maxLines="4"
         app:layout_constraintEnd_toStartOf="@id/priceCycleLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planNameText"
+        app:layout_constraintTop_toBottomOf="@id/planPromoTitle"
         tools:text="The ultimate privacy pack with access to all premium Proton services." />
 
     <ImageButton

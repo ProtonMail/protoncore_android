@@ -42,6 +42,15 @@ enum class PlanCycle(val value: Int) {
         }?.toDouble().exhaustive
     }
 
+    fun promotionPercentage(promotion: PlanPromotionPercentage?): Int {
+        return when (this) {
+            MONTHLY -> promotion?.monthly ?: 0
+            YEARLY -> promotion?.yearly ?: 0
+            TWO_YEARS -> promotion?.twoYearly ?: 0
+            else -> 0
+        }.exhaustive
+    }
+
     fun toSubscriptionCycle(): SubscriptionCycle =
         when (this) {
             MONTHLY -> SubscriptionCycle.MONTHLY

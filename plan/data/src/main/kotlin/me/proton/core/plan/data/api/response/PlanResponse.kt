@@ -24,6 +24,8 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.domain.entity.PLAN_VENDOR_GOOGLE
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanDuration
+import me.proton.core.plan.domain.entity.PlanOffer
+import me.proton.core.plan.domain.entity.PlanOfferPricing
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.util.kotlin.toBoolean
@@ -68,6 +70,10 @@ internal data class PlanResponse(
     val maxTier: Int? = null,
     @SerialName("Pricing")
     val pricing: Pricing? = null,
+    @SerialName("DefaultPricing")
+    val defaultPricing: Pricing? = null,
+    @SerialName("Offers")
+    val offers: List<Offer>? = null,
     @SerialName("State")
     val state: Int? = null,
     @SerialName("Vendors")
@@ -93,6 +99,8 @@ internal data class PlanResponse(
         maxTier = maxTier,
         enabled = state?.toBoolean() ?: true,
         pricing = pricing?.toPlanPricing(),
+        defaultPricing = defaultPricing?.toPlanPricing(),
+        offers = offers?.map { it.toPlanOffer() },
         vendors = vendors.toPlanVendorDataMap()
     )
 }
@@ -107,6 +115,32 @@ internal data class Pricing(
     val twoYearly: Int? = null
 ) {
     fun toPlanPricing() = PlanPricing(monthly, yearly, twoYearly)
+}
+
+@Serializable
+internal data class OfferPricing(
+    @SerialName("1")
+    val monthly: Int? = null,
+    @SerialName("12")
+    val yearly: Int? = null,
+    @SerialName("24")
+    val twoYearly: Int? = null
+) {
+    fun toPlanOfferPricing() = PlanOfferPricing(monthly, yearly, twoYearly)
+}
+
+@Serializable
+internal data class Offer(
+    @SerialName("Name")
+    val name: String,
+    @SerialName("StartTime")
+    val startTime: Long,
+    @SerialName("EndTime")
+    val endTime: Long,
+    @SerialName("Pricing")
+    val pricing: OfferPricing
+) {
+    fun toPlanOffer() = PlanOffer(name, startTime, endTime, pricing.toPlanOfferPricing())
 }
 
 @Serializable

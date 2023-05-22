@@ -29,22 +29,22 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
-import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
+import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.domain.entity.MASK_ALL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanVendorData
-import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCycle.Companion.toPlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
+import me.proton.core.plan.presentation.entity.PlanPromotionPercentage
 import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.PlanVendorDetails
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -170,6 +170,8 @@ internal abstract class BasePlansViewModel(
                 }
             },
             price = PlanPricing.fromPlan(this),
+            defaultPrice = PlanPricing.fromPlanDefaultPrice(this),
+            promotionPercentage = PlanPromotionPercentage.fromPlan(this),
             storage = maxSpace,
             members = maxMembers.defaultIfZero(freePlan.maxMembers),
             addresses = maxAddresses.defaultIfZero(freePlan.maxAddresses),
@@ -182,6 +184,7 @@ internal abstract class BasePlansViewModel(
             type = type,
             vendors = vendors.toPlanVendorDetailsMap()
         )
+
 
     fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
         with(paymentsOrchestrator) {

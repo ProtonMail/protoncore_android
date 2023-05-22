@@ -16,17 +16,11 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <style name="PlanRenewalText" parent="Proton.Text.DefaultSmall.Weak">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Proton.Text.DefaultSmall.PromoPercentage">
-        <item name="android:textColor">?attr/brand_norm</item>
-        <item name="android:background">@drawable/background_plan_promo_percentage</item>
-    </style>
-    <style name="Proton.Text.DefaultSmall.PromoOffer">
-        <item name="android:textColor">?attr/proton_text_inverted</item>
-        <item name="android:background">@drawable/background_plan_promo_offer</item>
-    </style>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/background_deep" />
+    <corners android:radius="@dimen/corner_padding" />
+    <padding
+        android:left="@dimen/plan_promo_padding"
+        android:right="@dimen/plan_promo_padding" />
+</shape>

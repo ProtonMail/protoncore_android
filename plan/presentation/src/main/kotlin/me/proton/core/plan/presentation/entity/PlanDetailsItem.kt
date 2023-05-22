@@ -26,6 +26,8 @@ import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import java.util.Date
+import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 sealed class PlanDetailsItem(
     open val name: String,
@@ -104,11 +106,14 @@ sealed class PlanDetailsItem(
         override val connections: Int,
         val cycle: PlanCycle?,
         val price: PlanPricing,
+        val defaultPrice: PlanPricing,
+        val offers: List<PlanOffer>? = null,
         val currency: PlanCurrency,
         val starred: Boolean,
         val purchaseEnabled: Boolean = true,
         val services: Int,
         val type: Int,
+        val promotionPercentage: PlanPromotionPercentage?,
         val vendors: Map<AppStore, PlanVendorDetails>
     ) : PlanDetailsItem(
         name,
@@ -141,21 +146,82 @@ data class PlanPricing(
 ) : Parcelable {
 
     companion object {
-        fun fromPlan(plan: Plan) =
-            plan.pricing?.let {
+
+        fun fromPlan(plan: Plan) = getPricing(plan.pricing, plan.cycle, plan.amount)
+
+        fun fromPlanDefaultPrice(plan: Plan) = getPricing(plan.defaultPricing, plan.cycle, plan.amount)
+
+        private fun getPricing(
+            planPricing: me.proton.core.plan.domain.entity.PlanPricing?,
+            planCycle: Int?,
+            planAmount: Int
+        ) =
+            planPricing?.let {
                 PlanPricing(it.monthly.toDouble(), it.yearly.toDouble(), it.twoYearly?.toDouble())
             } ?: run {
-                val cycle = PlanCycle.map[plan.cycle]
-                val monthly = if (cycle == PlanCycle.MONTHLY) plan.amount else PRICE_ZERO
-                val yearly = if (cycle == PlanCycle.YEARLY) plan.amount else PRICE_ZERO
-                val twoYears = if (cycle == PlanCycle.TWO_YEARS) plan.amount else PRICE_ZERO
-                val otherPrice = if (plan.amount != 0 && plan.cycle != null) {
-                    plan.amount
+                val cycle = PlanCycle.map[planCycle]
+                val monthly = if (cycle == PlanCycle.MONTHLY) planAmount else PRICE_ZERO
+                val yearly = if (cycle == PlanCycle.YEARLY) planAmount else PRICE_ZERO
+                val twoYears = if (cycle == PlanCycle.TWO_YEARS) planAmount else PRICE_ZERO
+                val otherPrice = if (planAmount != 0 && cycle != null) {
+                    planAmount
                 } else null
                 PlanPricing(monthly.toDouble(), yearly.toDouble(), twoYears.toDouble(), otherPrice?.toDouble())
             }
     }
 }
+
+@Parcelize
+data class PlanPromotionPercentage(
+    val monthly: Int? = null,
+    val yearly: Int? = null,
+    val twoYearly: Int? = null,
+    val other: Int? = null
+) : Parcelable {
+    companion object {
+        private const val HUNDRED = 100
+        fun fromPlan(plan: Plan): PlanPromotionPercentage? {
+            val pricing = plan.pricing
+            val defaultPricing = plan.defaultPricing
+            return when {
+                pricing == null -> null
+                defaultPricing == null -> null
+                else -> {
+                    PlanPromotionPercentage(
+                        monthly = calculatePricePercentage(defaultPricing.monthly, pricing.monthly),
+                        yearly = calculatePricePercentage(defaultPricing.yearly, pricing.yearly),
+                        twoYearly = calculatePricePercentage(defaultPricing.twoYearly, pricing.twoYearly)
+                    )
+                }
+            }
+        }
+
+        private fun calculatePricePercentage(defaultPrice: Int?, promoPrice: Int?): Int {
+            if (defaultPrice == null || promoPrice == null) return 0
+
+            return if (defaultPrice < promoPrice) 0
+            else (promoPrice / defaultPrice.toDouble() * HUNDRED - HUNDRED).roundToAbsoluteInt()
+        }
+    }
+}
+
+private fun Double.roundToAbsoluteInt(): Int = roundToInt().absoluteValue
+
+@Parcelize
+data class PlanOfferPricing(
+    val monthly: Price? = null,
+    val yearly: Price? = null,
+    val twoYearly: Price? = null,
+    val other: Price? = null
+) : Parcelable
+
+@Parcelize
+data class PlanOffer(
+    val name: String,
+    val startTime: Long,
+    val endTime: Long,
+    val pricing: PlanOfferPricing
+) : Parcelable
 
 @Parcelize
 data class PlanVendorDetails(

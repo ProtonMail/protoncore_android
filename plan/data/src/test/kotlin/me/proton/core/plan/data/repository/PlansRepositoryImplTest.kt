@@ -33,6 +33,8 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.PlanOffer
+import me.proton.core.plan.domain.entity.PlanOfferPricing
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
@@ -40,6 +42,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class PlansRepositoryImplTest {
     // region mocks
@@ -112,6 +115,59 @@ class PlansRepositoryImplTest {
         assertEquals(1, plansResponse.size)
         val plan = plans[0]
         assertEquals("plan-id-1", plan.id)
+        assertNotNull(plan.pricing)
+        assertNull(plan.defaultPricing)
+    }
+
+    @Test
+    fun `plans return data with offers no user returns non empty`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val plans = listOf(
+            Plan(
+                id = "plan-id-1",
+                type = 1,
+                cycle = 1,
+                name = "Plan 1",
+                title = "Plan Title 1",
+                currency = "CHF",
+                amount = 10,
+                maxDomains = 1,
+                maxAddresses = 1,
+                maxCalendars = 1,
+                maxSpace = 1,
+                maxMembers = 1,
+                maxVPN = 1,
+                services = 0,
+                features = 1,
+                quantity = 1,
+                maxTier = 1,
+                enabled = true,
+                pricing = PlanPricing(
+                    1, 10, 20
+                ),
+                defaultPricing = PlanPricing(
+                    1, 10, 20
+                ),
+                offers = listOf(
+                    PlanOffer("test-offer", 1000, 2000, PlanOfferPricing(
+                        1, 10, 20
+                    ))
+                )
+            )
+        )
+        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
+        // WHEN
+        val plansResponse = repository.getPlans(sessionUserId = null)
+        // THEN
+        assertNotNull(plansResponse)
+        assertEquals(1, plansResponse.size)
+        val plan = plans[0]
+        assertEquals("plan-id-1", plan.id)
+        assertNotNull(plan.defaultPricing)
+        assertNotNull(plan.pricing)
+        assertEquals(plan.pricing!!.monthly, plan.defaultPricing!!.monthly)
+        assertNotNull(plan.offers)
+        assertEquals(1, plan.offers!!.size)
     }
 
     @Test
@@ -151,7 +207,11 @@ class PlansRepositoryImplTest {
                 enabled = true,
                 pricing = PlanPricing(
                     1, 10, 20
-                )
+                ),
+                defaultPricing = PlanPricing(
+                    1, 10, 20
+                ),
+                offers = emptyList()
             )
         )
         coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
