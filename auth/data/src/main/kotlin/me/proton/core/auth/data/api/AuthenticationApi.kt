@@ -23,12 +23,15 @@ import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
+import me.proton.core.auth.data.api.request.RefreshSessionRequest
+import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
 import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
 import me.proton.core.auth.data.api.response.SecondFactorResponse
+import me.proton.core.auth.data.api.response.SessionResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.TimeoutOverride
@@ -60,6 +63,12 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @DELETE("auth/v4")
     suspend fun revokeSession(@Tag timeout: TimeoutOverride): GenericResponse
+
+    @POST("auth/v4/sessions")
+    suspend fun requestSession(@Body request: RequestSessionRequest): SessionResponse
+
+    @POST("auth/v4/refresh")
+    suspend fun refreshSession(@Body body: RefreshSessionRequest): SessionResponse
 
     @POST("core/v4/validate/email")
     suspend fun validateEmail(@Body request: EmailValidationRequest): GenericResponse

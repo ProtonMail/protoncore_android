@@ -23,6 +23,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
@@ -48,7 +49,9 @@ class HumanVerificationListenerImplTest {
     private val humanVerificationRepository = mockk<HumanVerificationRepository>()
     private val observabilityManager = mockk<ObservabilityManager>()
 
-    private val session1 = Session(
+    private val userId = UserId("userId")
+    private val session1 = Session.Authenticated(
+        userId = userId,
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",

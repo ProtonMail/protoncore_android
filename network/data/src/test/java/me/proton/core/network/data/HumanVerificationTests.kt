@@ -19,7 +19,6 @@
 package me.proton.core.network.data
 
 import android.os.Build
-import androidx.test.core.app.ApplicationProvider
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -28,7 +27,6 @@ import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
@@ -167,8 +165,6 @@ internal class HumanVerificationTests {
 
         apiManagerFactory =
             ApiManagerFactory(
-                ApplicationProvider.getApplicationContext(),
-                Product.Mail,
                 "https://example.com/".toHttpUrl(),
                 client,
                 clientIdProvider,
@@ -201,8 +197,6 @@ internal class HumanVerificationTests {
 
     private fun createBackend(sessionId: SessionId?, pinningInit: (OkHttpClient.Builder) -> Unit) =
         ProtonApiBackend(
-            ApplicationProvider.getApplicationContext(),
-            Product.Mail,
             webServer.url("/").toString(),
             client,
             clientIdProvider,
@@ -396,8 +390,6 @@ internal class HumanVerificationTests {
         assertTrue(headers?.contains(Pair("x-pm-human-verification-token-type", "captcha")) ?: false)
         assertTrue(headers?.contains(Pair("x-pm-human-verification-token", "captcha token")) ?: false)
     }
-
-    private fun javaWallClockMs(): Long = System.currentTimeMillis()
 
     private fun testSessionCookie(): Cookie =
         Cookie.Builder().name("Session-Id").value("test-cookie-id").domain(webServer.hostName).build()

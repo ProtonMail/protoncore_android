@@ -25,9 +25,10 @@ import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
+import me.proton.core.auth.data.api.request.RefreshSessionRequest
+import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
-import me.proton.core.auth.data.api.response.AuthInfoResponse
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.AuthIntent
 import me.proton.core.auth.domain.entity.Modulus
@@ -43,7 +44,9 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 
 class AuthRepositoryImpl(
@@ -139,6 +142,30 @@ class AuthRepositoryImpl(
                 )
             ).isSuccess()
         }.valueOrNull ?: true // Ignore any error.
+
+    override suspend fun requestSession(): ApiResult<Session> =
+        provider.get<AuthenticationApi>(userId = null).invoke {
+            val name = "${product.framePrefix()}-0"
+            val frame = ChallengeFrame.Device.build(context)
+            val response = requestSession(
+                RequestSessionRequest(
+                    payload = mapOf(name to frame)
+                )
+            )
+            response.toSession(userId = null)
+        }
+
+    override suspend fun refreshSession(session: Session): ApiResult<Session> =
+        provider.get<AuthenticationApi>(session.sessionId).invoke {
+            val userId = (session as? Session.Authenticated)?.userId
+            val response = refreshSession(
+                RefreshSessionRequest(
+                    uid = session.sessionId.id,
+                    refreshToken = session.refreshToken
+                )
+            )
+            response.toSession(userId = userId)
+        }
 
     override suspend fun validateEmail(email: String): Boolean =
         provider.get<AuthenticationApi>().invoke {

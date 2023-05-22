@@ -38,6 +38,7 @@ sealed class ApiResult<out T> {
      */
     class Success<T>(val value: T) : ApiResult<T>() {
         override val valueOrNull get() = value
+        override val isSuccess: Boolean = true
     }
 
     /**
@@ -45,6 +46,7 @@ sealed class ApiResult<out T> {
      * @param cause [Exception] exception that caused this error for debugging purposes.
      */
     sealed class Error(val cause: Throwable? = Exception("Unknown error")) : ApiResult<Nothing>() {
+        override val isSuccess: Boolean = false
 
         /**
          * HTTP error.
@@ -118,6 +120,7 @@ sealed class ApiResult<out T> {
      * Value for successful calls or `null`.
      */
     open val valueOrNull: T? get() = null
+    abstract val isSuccess: Boolean
 
     /**
      * Value for successful calls or throw wrapped error if exist.

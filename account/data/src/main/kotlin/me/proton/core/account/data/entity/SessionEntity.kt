@@ -27,6 +27,8 @@ import me.proton.core.crypto.common.keystore.decryptOrElse
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.Session.Authenticated
+import me.proton.core.network.domain.session.Session.Unauthenticated
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(
@@ -52,12 +54,14 @@ data class SessionEntity(
     val scopes: List<String>,
     val product: Product
 ) {
-    fun toSession(keyStoreCrypto: KeyStoreCrypto): Session = Session(
-        sessionId = sessionId,
+    fun toSession(keyStoreCrypto: KeyStoreCrypto): Session {
         // Fall back to invalid tokens to force delete session on decryption failure.
         // See RefreshTokenHandler and sessionListener.onSessionForceLogout.
-        accessToken = requireNotNull(accessToken.decryptOrElse(keyStoreCrypto) { "invalid" }),
-        refreshToken = requireNotNull(refreshToken.decryptOrElse(keyStoreCrypto) { "invalid" }),
-        scopes = scopes
-    )
+        val access = requireNotNull(accessToken.decryptOrElse(keyStoreCrypto) { "invalid" })
+        val refresh = requireNotNull(refreshToken.decryptOrElse(keyStoreCrypto) { "invalid" })
+        return when (userId) {
+            null -> Unauthenticated(sessionId, access, refresh, scopes)
+            else -> Authenticated(userId, sessionId, access, refresh, scopes)
+        }
+    }
 }

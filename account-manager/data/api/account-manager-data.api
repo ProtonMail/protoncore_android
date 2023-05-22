@@ -1,5 +1,5 @@
 public final class me/proton/core/accountmanager/data/AccountManagerImpl : me/proton/core/accountmanager/domain/AccountManager, me/proton/core/auth/domain/AccountWorkflowHandler {
-	public fun <init> (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;)V
+	public fun <init> (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionListener;)V
 	public fun addAccount (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun disableAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAccount (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
@@ -48,27 +48,42 @@ public final class me/proton/core/accountmanager/data/LogTag {
 	public static final field INSTANCE Lme/proton/core/accountmanager/data/LogTag;
 	public static final field INVALID_USER_ADDRESS_KEY Ljava/lang/String;
 	public static final field INVALID_USER_KEY Ljava/lang/String;
+	public final fun getSESSION_CREATE-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_FORCE_LOGOUT-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_REFRESH-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_REQUEST-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_SCOPES-WnFgrgw ()Ljava/lang/String;
 }
 
 public class me/proton/core/accountmanager/data/SessionListenerImpl : me/proton/core/network/domain/session/SessionListener {
-	public fun <init> (Lme/proton/core/account/domain/repository/AccountRepository;)V
+	public fun <init> (Ldagger/Lazy;)V
 	public fun onSessionForceLogout (Lme/proton/core/network/domain/session/Session;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onSessionScopesRefreshed (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onSessionTokenCreated (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onSessionTokenCreated (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onSessionTokenRefreshed (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun refreshSession (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun requestSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun withLock (Lme/proton/core/network/domain/session/SessionId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/accountmanager/data/SessionManagerImpl : me/proton/core/accountmanager/domain/SessionManager, me/proton/core/network/domain/session/SessionListener, me/proton/core/network/domain/session/SessionProvider {
-	public fun <init> (Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/auth/domain/repository/AuthRepository;)V
+public final class me/proton/core/accountmanager/data/SessionManagerImpl : me/proton/core/accountmanager/domain/SessionManager, me/proton/core/network/domain/session/SessionProvider {
+	public static final field Companion Lme/proton/core/accountmanager/data/SessionManagerImpl$Companion;
+	public fun <init> (Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/account/domain/repository/AccountRepository;Lkotlin/jvm/functions/Function0;)V
 	public fun getSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSessionId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSessions (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onSessionForceLogout (Lme/proton/core/network/domain/session/Session;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onSessionScopesRefreshed (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onSessionTokenCreated (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onSessionTokenRefreshed (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun refreshScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun refreshSession (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun requestSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun withLock (Lme/proton/core/network/domain/session/SessionId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/accountmanager/data/SessionManagerImpl$Companion {
+	public final fun clear ()V
+	public final fun getFORCE_LOGOUT_HTTP_CODES ()Ljava/util/List;
+	public final fun reset (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun sessionMutex (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/accountmanager/data/SessionProviderImpl : me/proton/core/network/domain/session/SessionProvider {

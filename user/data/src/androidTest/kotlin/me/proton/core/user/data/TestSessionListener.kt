@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,52 +16,39 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.accountmanager.data
+package me.proton.core.user.data
 
-import me.proton.core.accountmanager.data.LogTag.SESSION_CREATE
-import me.proton.core.accountmanager.data.LogTag.SESSION_FORCE_LOGOUT
-import me.proton.core.accountmanager.data.LogTag.SESSION_REFRESH
-import me.proton.core.accountmanager.data.LogTag.SESSION_SCOPES
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
-import me.proton.core.network.domain.session.toStringLog
-import me.proton.core.util.kotlin.CoreLogger
-import javax.inject.Inject
 
-open class SessionListenerImpl @Inject constructor(
-    private val sessionManager: dagger.Lazy<SessionManager>
-) : SessionListener {
-
+class TestSessionListener : SessionListener {
     override suspend fun <T> withLock(sessionId: SessionId?, action: suspend () -> T): T {
-        return sessionManager.get().withLock(sessionId, action)
+        return action()
     }
 
     override suspend fun requestSession(): Boolean {
-        return sessionManager.get().requestSession()
+        TODO("Not yet implemented")
     }
 
     override suspend fun refreshSession(session: Session): Boolean {
-        return sessionManager.get().refreshSession(session)
+        TODO("Not yet implemented")
     }
 
     override suspend fun onSessionTokenCreated(userId: UserId?, session: Session) {
-        CoreLogger.log(SESSION_CREATE, "Session created: ${session.toStringLog()}")
+        TODO("Not yet implemented")
     }
 
     override suspend fun onSessionTokenRefreshed(session: Session) {
-        CoreLogger.log(SESSION_REFRESH, "Session refreshed: ${session.toStringLog()}")
+        TODO("Not yet implemented")
     }
 
     override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) {
-        sessionManager.get().getSession(sessionId)?.let {
-            CoreLogger.log(SESSION_SCOPES, "Session scopes refreshed: ${it.toStringLog()}")
-        }
+        TODO("Not yet implemented")
     }
 
     override suspend fun onSessionForceLogout(session: Session, httpCode: Int) {
-        CoreLogger.log(SESSION_FORCE_LOGOUT, "Session force logout: ${session.toStringLog()}")
+        TODO("Not yet implemented")
     }
 }

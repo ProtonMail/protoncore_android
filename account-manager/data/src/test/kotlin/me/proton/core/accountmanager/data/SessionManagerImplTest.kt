@@ -17,101 +17,261 @@
  */
 package me.proton.core.accountmanager.data
 
-import kotlinx.coroutines.flow.toList
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
+import io.mockk.slot
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountDetails
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.domain.entity.Product
+import me.proton.core.account.domain.entity.SessionState.ForceLogout
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class SessionManagerImplTest {
 
-    private lateinit var accountManager: AccountManagerImpl
-    private lateinit var sessionManager: SessionManagerImpl
+    private val userId = UserId("test-user-id")
 
-    private val scopes = listOf("full", "calendar", "mail")
-    private val session1 = Session(
-        sessionId = SessionId("session1"),
+    private val error401 = ApiResult.Error.Http(HttpResponseCodes.HTTP_UNAUTHORIZED, "401")
+    private val error422 = ApiResult.Error.Http(HttpResponseCodes.HTTP_UNPROCESSABLE, "422")
+
+    private val unauthSessionId = SessionId("test-session-id-unauth")
+    private val unauthSession = Session.Unauthenticated(
+        sessionId = unauthSessionId,
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        scopes = scopes
+        scopes = emptyList()
+    )
+    private val authSessionId = SessionId("test-session-id-auth")
+    private val authSession = Session.Authenticated(
+        userId = userId,
+        sessionId = authSessionId,
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
+        scopes = emptyList()
     )
 
-    private val account1 = Account(
-        userId = UserId("user1"),
-        username = "username",
-        email = "test@example.com",
-        state = AccountState.Ready,
-        sessionId = session1.sessionId,
-        sessionState = SessionState.Authenticated,
-        details = AccountDetails(null, null)
-    )
+    private val sessionListener = mockk<SessionListener>(relaxed = true)
+    private val sessionProvider = mockk<SessionProvider>(relaxed = true) {
+        coEvery { this@mockk.getSessionId(userId) } returns authSessionId
+        coEvery { this@mockk.getSessionId(null) } returns unauthSessionId
+        coEvery { this@mockk.getSession(authSessionId) } returns authSession
+        coEvery { this@mockk.getSession(unauthSessionId) } returns unauthSession
+    }
 
-    private val mocks = RepositoryMocks(session1, account1)
+    private val authRepository = mockk<AuthRepository>(relaxed = true) {
+        coEvery { this@mockk.requestSession() } returns ApiResult.Success(unauthSession)
+        coEvery { this@mockk.refreshSession(authSession) } returns ApiResult.Success(authSession)
+        coEvery { this@mockk.refreshSession(unauthSession) } returns ApiResult.Success(unauthSession)
+    }
+
+    private val accountRepository = mockk<AccountRepository>(relaxed = true)
+
+    private var time = 0L
+
+    private fun mockedManager() = SessionManagerImpl(
+        sessionListener = sessionListener,
+        sessionProvider = sessionProvider,
+        authRepository = authRepository,
+        accountRepository = accountRepository,
+        monoClock = { time }
+    )
 
     @Before
-    fun beforeEveryTest() {
-        mocks.init()
-
-        accountManager = AccountManagerImpl(
-            Product.Calendar,
-            mocks.accountRepository,
-            mocks.authRepository,
-            mocks.userManager
-        )
-        sessionManager = SessionManagerImpl(
-            mocks.sessionProvider,
-            mocks.sessionListener,
-            mocks.authRepository
-        )
+    fun before() {
+        SessionManagerImpl.clear()
     }
 
     @Test
-    fun `on onSessionTokenRefreshed`() = runTest {
-        mocks.setupAccountRepository()
+    fun `requestSession success`() = runTest {
+        // Given
+        coEvery { sessionProvider.getSessionId(any()) } returns null
+        coEvery { sessionProvider.getSession(any()) } returns null
 
-        val newAccessToken = "newAccessToken"
-        val newRefreshToken = "newRefreshToken"
-        val newScopes = listOf("scope1", "scope2")
+        // When
+        mockedManager().requestSession()
 
-        sessionManager.onSessionTokenRefreshed(
-            session1.refreshWith(
-                accessToken = newAccessToken,
-                refreshToken = newRefreshToken,
-                scopes = newScopes
-            )
-        )
-
-        val sessionLists = accountManager.getSessions().toList()
-        assertEquals(3, sessionLists.size)
-        assertEquals(session1.accessToken, sessionLists[0][0].accessToken)
-        assertEquals(session1.refreshToken, sessionLists[0][0].refreshToken)
-        assertEquals(session1.scopes, sessionLists[0][0].scopes)
-        assertEquals(newAccessToken, sessionLists[1][0].accessToken)
-        assertEquals(newRefreshToken, sessionLists[1][0].refreshToken)
-        assertEquals(newScopes, sessionLists[2][0].scopes)
+        // Then
+        coVerify(exactly = 1) { authRepository.requestSession() }
+        coVerify(exactly = 1) { accountRepository.createOrUpdateSession(any(), unauthSession) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any(), unauthSession) }
     }
 
     @Test
-    fun `on onSessionForceLogout`() = runTest {
-        mocks.setupAccountRepository()
+    fun `requestSession error`() = runTest {
+        // Given
+        coEvery { sessionProvider.getSessionId(any()) } returns null
+        coEvery { sessionProvider.getSession(any()) } returns null
+        coEvery { authRepository.requestSession() } returns error401
 
-        sessionManager.onSessionForceLogout(session1, HttpResponseCodes.HTTP_BAD_REQUEST)
+        // When
+        mockedManager().requestSession()
 
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(AccountState.Disabled, stateLists[0].state)
+        // Then
+        coVerify(exactly = 1) { authRepository.requestSession() }
+        coVerify(exactly = 0) { accountRepository.createOrUpdateSession(any(), unauthSession) }
+        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any(), unauthSession) }
+    }
 
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(1, sessionStateLists.size)
-        assertEquals(SessionState.ForceLogout, sessionStateLists[0].sessionState)
+    @Test
+    fun `requestSession unneeded`() = runTest {
+        // When
+        mockedManager().requestSession()
+
+        // Then
+        coVerify(exactly = 0) { authRepository.requestSession() }
+        coVerify(exactly = 0) { accountRepository.createOrUpdateSession(any(), unauthSession) }
+        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any(), unauthSession) }
+    }
+
+    @Test
+    fun `refreshSession success`() = runTest {
+        // When
+        mockedManager().refreshSession(unauthSession)
+
+        // Then
+        coVerify(exactly = 1) { authRepository.refreshSession(unauthSession) }
+        coVerify(exactly = 1) { accountRepository.updateSessionToken(unauthSession.sessionId, any(), any()) }
+        coVerify(exactly = 1) { accountRepository.updateSessionScopes(unauthSession.sessionId, any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(unauthSession) }
+    }
+
+    @Test
+    fun `refreshSession authenticated then forceLogout`() = runTest {
+        // Given
+        coEvery { authRepository.refreshSession(any()) } returns error422
+
+        // When
+        mockedManager().refreshSession(authSession)
+
+        // Then
+        coVerify(exactly = 1) { authRepository.refreshSession(authSession) }
+        coVerify(exactly = 1) { accountRepository.updateSessionState(authSession.sessionId, ForceLogout) }
+        coVerify(exactly = 1) { accountRepository.deleteSession(authSession.sessionId) }
+        coVerify(exactly = 0) { authRepository.requestSession() }
+        coVerify(exactly = 0) { accountRepository.createOrUpdateSession(any(), authSession) }
+        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(authSession) }
+        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(authSession, error422.httpCode) }
+    }
+
+    @Test
+    fun `refreshSession unauthenticated then requestSession`() = runTest {
+        // Given
+        coEvery { sessionProvider.getSessionId(any()) } returns null
+        coEvery { sessionProvider.getSession(any()) } returns null
+        coEvery { authRepository.refreshSession(any()) } returns error422
+
+        // When
+        mockedManager().refreshSession(unauthSession)
+
+        // Then
+        coVerify(exactly = 1) { authRepository.refreshSession(unauthSession) }
+        coVerify(exactly = 1) { accountRepository.updateSessionState(unauthSession.sessionId, ForceLogout) }
+        coVerify(exactly = 1) { accountRepository.deleteSession(unauthSession.sessionId) }
+        coVerify(exactly = 1) { authRepository.requestSession() }
+        coVerify(exactly = 1) { accountRepository.createOrUpdateSession(any(), unauthSession) }
+        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(unauthSession, error422.httpCode) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any(), unauthSession) }
+        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(unauthSession) }
+    }
+
+    @Test
+    fun `refreshScopes then updateSessionScopes`() = runTest {
+        // When
+        mockedManager().refreshScopes(authSession.sessionId)
+
+        // Then
+        coVerify(exactly = 1) { authRepository.getScopes(any()) }
+        coVerify(exactly = 1) { accountRepository.updateSessionScopes(any(), any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionScopesRefreshed(authSession.sessionId, any()) }
+    }
+
+    @Test
+    fun `requestSession concurrent`() = runTest {
+        // Given
+        var current: Session.Unauthenticated? = null
+        coEvery { sessionProvider.getSessionId(any()) } answers { current?.sessionId }
+        coEvery { sessionProvider.getSession(any()) } answers { current }
+
+        val sessionSlot = slot<Session.Unauthenticated>()
+        coEvery { accountRepository.createOrUpdateSession(any(), capture(sessionSlot)) } answers {
+            current = sessionSlot.captured
+        }
+
+        // When
+        val jobs = (1..10).map { async { mockedManager().requestSession() } }
+
+        // Then
+        jobs.awaitAll()
+
+        coVerify(exactly = 1) { authRepository.requestSession() }
+        coVerify(exactly = 1) { accountRepository.createOrUpdateSession(any(), unauthSession) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any(), unauthSession) }
+    }
+
+    @Test
+    fun `refreshSession concurrent`() = runTest {
+        // When
+        val jobs = (1..10).map { async { mockedManager().refreshSession(unauthSession) } }
+
+        // Then
+        jobs.awaitAll()
+
+        coVerify(exactly = 1) { authRepository.refreshSession(unauthSession) }
+        coVerify(exactly = 1) { accountRepository.updateSessionToken(unauthSession.sessionId, any(), any()) }
+        coVerify(exactly = 1) { accountRepository.updateSessionScopes(unauthSession.sessionId, any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(unauthSession) }
+    }
+
+    @Test
+    fun `refreshSession concurrent but different session`() = runTest {
+        // When
+        val jobs1 = (1..10).map { async { mockedManager().refreshSession(unauthSession) } }
+        val jobs2 = (1..10).map { async { mockedManager().refreshSession(authSession) } }
+
+        // Then
+        jobs1.awaitAll()
+        jobs2.awaitAll()
+
+        coVerify(exactly = 1) { authRepository.refreshSession(unauthSession) }
+        coVerify(exactly = 1) { accountRepository.updateSessionToken(unauthSession.sessionId, any(), any()) }
+        coVerify(exactly = 1) { accountRepository.updateSessionScopes(unauthSession.sessionId, any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(unauthSession) }
+
+        coVerify(exactly = 1) { authRepository.refreshSession(authSession) }
+        coVerify(exactly = 1) { accountRepository.updateSessionToken(authSession.sessionId, any(), any()) }
+        coVerify(exactly = 1) { accountRepository.updateSessionScopes(authSession.sessionId, any()) }
+        coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(authSession) }
+    }
+
+    @Test
+    fun `withLock concurrent`() = runTest {
+        // Given
+        var zero = 0
+        suspend fun modify() {
+            assertEquals(expected = 0, actual = zero)
+            zero++
+            delay(100)
+            zero--
+            assertEquals(expected = 0, actual = zero)
+        }
+        // When
+        val jobs = (1..10).map { async { mockedManager().withLock(null) { modify() } } }
+
+        // Then
+        jobs.awaitAll()
+
+        assertEquals(expected = 0, actual = zero)
     }
 }

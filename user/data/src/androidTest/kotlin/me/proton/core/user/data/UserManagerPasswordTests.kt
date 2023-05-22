@@ -137,7 +137,8 @@ class UserManagerPasswordTests {
         mockkStatic("me.proton.core.user.domain.extension.UserKt")
         mockkStatic("me.proton.core.crypto.common.keystore.EncryptedByteArrayKt")
 
-        coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
+        coEvery { sessionProvider.getSessionId(TestAccounts.User1.account.userId) } returns TestAccounts.session1Id
+        coEvery { sessionProvider.getSessionId(TestAccounts.User2.account.userId) } returns TestAccounts.session2Id
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
         every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 

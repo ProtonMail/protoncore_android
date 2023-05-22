@@ -20,17 +20,21 @@ package me.proton.core.network.presentation
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import me.proton.core.network.domain.session.unauth.OpportunisticUnAuthTokenRequest
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 public class UnAuthSessionFetcher @Inject constructor(
     private val scopeProvider: CoroutineScopeProvider,
-    private val opportunisticUnAuthTokenRequest: OpportunisticUnAuthTokenRequest
+    private val sessionProvider: SessionProvider,
+    private val sessionListener: SessionListener
 ) {
     private val scope get() = scopeProvider.GlobalIOSupervisedScope
 
     public fun fetch(): Job = scope.launch {
-        opportunisticUnAuthTokenRequest()
+        if (sessionProvider.getSessions().isEmpty()) {
+            sessionListener.requestSession()
+        }
     }
 }

@@ -32,7 +32,7 @@ object TestAccounts {
             username = TestUsers.User1.id.id,
             email = TestUsers.User1.response.email,
             state = AccountState.Ready,
-            sessionId = sessionId,
+            sessionId = session1Id,
             sessionState = SessionState.Authenticated,
             details = AccountDetails(null, null)
         )
@@ -44,15 +44,24 @@ object TestAccounts {
             username = TestUsers.User2.id.id,
             email = TestUsers.User2.response.email,
             state = AccountState.Ready,
-            sessionId = sessionId,
+            sessionId = session2Id,
             sessionState = SessionState.Authenticated,
             details = AccountDetails(null, null)
         )
     }
 
-    val sessionId = SessionId("sessionId")
-    val session = Session(
-        sessionId = sessionId,
+    val session1Id = SessionId("session1")
+    val session1 = Session.Authenticated(
+        userId = User1.account.userId,
+        sessionId = session1Id,
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
+        scopes = emptyList()
+    )
+    val session2Id = SessionId("session2")
+    val session2 = Session.Authenticated(
+        userId = User2.account.userId,
+        sessionId = session2Id,
         accessToken = "accessToken",
         refreshToken = "refreshToken",
         scopes = emptyList()

@@ -22,7 +22,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.AccountState.CreateAddressFailed
+import me.proton.core.account.domain.entity.AccountState.CreateAddressNeeded
+import me.proton.core.account.domain.entity.AccountState.CreateAddressSuccess
+import me.proton.core.account.domain.entity.AccountState.Disabled
+import me.proton.core.account.domain.entity.AccountState.NotReady
+import me.proton.core.account.domain.entity.AccountState.Ready
+import me.proton.core.account.domain.entity.AccountState.Removed
+import me.proton.core.account.domain.entity.AccountState.TwoPassModeFailed
+import me.proton.core.account.domain.entity.AccountState.TwoPassModeNeeded
+import me.proton.core.account.domain.entity.AccountState.TwoPassModeSuccess
+import me.proton.core.account.domain.entity.AccountState.UnlockFailed
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isSecondFactorNeeded
@@ -34,6 +44,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,7 +54,8 @@ class AccountManagerImpl @Inject constructor(
     product: Product,
     private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val sessionListener: SessionListener,
 ) : AccountManager(product), AccountWorkflowHandler {
 
     private val removeSessionLock = Mutex()
@@ -60,7 +72,7 @@ class AccountManagerImpl @Inject constructor(
     }
 
     private suspend fun disableAccount(account: Account) {
-        accountRepository.updateAccountState(account.userId, AccountState.Disabled)
+        accountRepository.updateAccountState(account.userId, Disabled)
         account.sessionId?.let { removeSession(it) }
         userManager.lock(account.userId)
     }
@@ -74,12 +86,12 @@ class AccountManagerImpl @Inject constructor(
     }
 
     override suspend fun addAccount(account: Account, session: Session) {
-        handleSession(account.copy(state = AccountState.Ready), session)
+        handleSession(account.copy(state = Ready), session)
     }
 
     override suspend fun removeAccount(userId: UserId) {
         accountRepository.getAccountOrNull(userId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, AccountState.Removed)
+            accountRepository.updateAccountState(account.userId, Removed)
             account.sessionId?.let { removeSession(it) }
             accountRepository.deleteAccount(account.userId)
         }
@@ -116,23 +128,25 @@ class AccountManagerImpl @Inject constructor(
     // region AccountWorkflowHandler
 
     override suspend fun handleSession(account: Account, session: Session) {
-        // Remove any existing Session.
-        accountRepository.getSessionIdOrNull(account.userId)?.let { removeSession(it) }
-        // Account state must be != Ready if SecondFactorNeeded.
-        val state = if (account.isReady() && account.isSecondFactorNeeded()) AccountState.NotReady else account.state
-        accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)
+        sessionListener.withLock(session.sessionId) {
+            // Remove any existing Session.
+            accountRepository.getSessionIdOrNull(account.userId)?.let { removeSession(it) }
+            // Account state must be != Ready if SecondFactorNeeded.
+            val state = if (account.isReady() && account.isSecondFactorNeeded()) NotReady else account.state
+            accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)
+        }
     }
 
     override suspend fun handleTwoPassModeNeeded(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.TwoPassModeNeeded)
+        accountRepository.updateAccountState(userId, TwoPassModeNeeded)
     }
 
     override suspend fun handleTwoPassModeSuccess(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.TwoPassModeSuccess)
+        accountRepository.updateAccountState(userId, TwoPassModeSuccess)
     }
 
     override suspend fun handleTwoPassModeFailed(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.TwoPassModeFailed)
+        accountRepository.updateAccountState(userId, TwoPassModeFailed)
     }
 
     override suspend fun handleSecondFactorSuccess(sessionId: SessionId, updatedScopes: List<String>) {
@@ -147,29 +161,29 @@ class AccountManagerImpl @Inject constructor(
     }
 
     override suspend fun handleCreateAddressNeeded(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.CreateAddressNeeded)
+        accountRepository.updateAccountState(userId, CreateAddressNeeded)
     }
 
     override suspend fun handleCreateAddressSuccess(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.CreateAddressSuccess)
+        accountRepository.updateAccountState(userId, CreateAddressSuccess)
     }
 
     override suspend fun handleCreateAddressFailed(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.CreateAddressFailed)
+        accountRepository.updateAccountState(userId, CreateAddressFailed)
     }
 
     override suspend fun handleUnlockFailed(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.UnlockFailed)
+        accountRepository.updateAccountState(userId, UnlockFailed)
         disableAccount(userId)
     }
 
     override suspend fun handleAccountReady(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.Ready)
+        accountRepository.updateAccountState(userId, Ready)
         clearSessionDetails(userId)
     }
 
     override suspend fun handleAccountNotReady(userId: UserId) {
-        accountRepository.updateAccountState(userId, AccountState.NotReady)
+        accountRepository.updateAccountState(userId, NotReady)
     }
 
     override suspend fun handleAccountDisabled(userId: UserId) {

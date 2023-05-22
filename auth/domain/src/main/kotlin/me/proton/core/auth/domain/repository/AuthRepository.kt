@@ -25,6 +25,8 @@ import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 
 interface AuthRepository {
@@ -90,6 +92,17 @@ interface AuthRepository {
     suspend fun getScopes(
         sessionId: SessionId?
     ): List<String>
+
+
+    /**
+     * Request a new [Session], remotely.
+     */
+    suspend fun requestSession(): ApiResult<Session>
+
+    /**
+     * Refresh a [Session], remotely.
+     */
+    suspend fun refreshSession(session: Session): ApiResult<Session>
 
     /**
      * Validate recovery email.

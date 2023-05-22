@@ -22,10 +22,9 @@ import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.plus
-import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
@@ -73,8 +72,6 @@ import kotlin.reflect.KClass
  */
 @Suppress("LongParameterList")
 class ApiManagerFactory(
-    private val context: Context,
-    private val product: Product,
     private val baseUrl: HttpUrl,
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
@@ -100,7 +97,7 @@ class ApiManagerFactory(
     private val okHttpClient: OkHttpClient
 ) {
 
-    @OptIn(ObsoleteCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class)
     private val mainScope = scope + newSingleThreadContext("core.network.main")
 
     internal val jsonConverter = ProtonCoreConfig
@@ -141,7 +138,7 @@ class ApiManagerFactory(
         monoClockMs: () -> Long,
         dohApiHandler: DohApiHandler<Api>,
     ): List<ApiErrorHandler<Api>> {
-        val tokenErrorHandler = TokenErrorHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
+        val tokenErrorHandler = TokenErrorHandler<Api>(sessionId, sessionProvider, sessionListener)
         val missingScopeHandler =
             MissingScopeHandler<Api>(sessionId, sessionProvider, missingScopeListener)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
@@ -186,8 +183,6 @@ class ApiManagerFactory(
             initPinning(mainPinningMethod, builder, baseUrl.host, certificatePins.toList())
         }
         val primaryBackend = ProtonApiBackend(
-            context,
-            product,
             baseUrl.toString(),
             apiClient,
             clientIdProvider,
@@ -231,8 +226,6 @@ class ApiManagerFactory(
             dohAlternativesListener,
         ) { baseUrl ->
             ProtonApiBackend(
-                context,
-                product,
                 baseUrl,
                 apiClient,
                 clientIdProvider,

@@ -16,15 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.data.protonApi
+package me.proton.core.auth.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.Session.Authenticated
+import me.proton.core.network.domain.session.Session.Unauthenticated
 import me.proton.core.network.domain.session.SessionId
 
 @Serializable
-data class TokenResponse(
+data class SessionResponse(
     @SerialName("AccessToken")
     val accessToken: String,
     @SerialName("RefreshToken")
@@ -36,10 +39,8 @@ data class TokenResponse(
     @SerialName("UID")
     val sessionId: String
 ) {
-    fun toSession(): Session = Session(
-        accessToken = accessToken,
-        refreshToken = refreshToken,
-        scopes = scopes,
-        sessionId = SessionId(sessionId)
-    )
+    fun toSession(userId: UserId?): Session = when (userId) {
+        null -> Unauthenticated(SessionId(sessionId), accessToken, refreshToken, scopes)
+        else -> Authenticated(userId, SessionId(sessionId), accessToken, refreshToken, scopes)
+    }
 }

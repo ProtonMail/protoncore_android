@@ -121,6 +121,7 @@ internal class PinningTests {
     @BindValue
     internal val sessionProvider: SessionProvider = mockk {
         coEvery { getSessionId(null) } returns null
+        coEvery { getSession(null) } returns null
     }
 
     @BindValue

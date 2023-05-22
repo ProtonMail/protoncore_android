@@ -24,13 +24,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
@@ -54,7 +50,6 @@ import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.handlers.DohApiHandler
-import me.proton.core.network.domain.handlers.TokenErrorHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -76,7 +71,6 @@ internal class ApiManagerTests {
     private val baseUrl = "https://primary.com/"
     private val proxy1url = "https://proxy1.com/"
     private val success5foo = ApiResult.Success(TestResult(5, "foo"))
-    private val error401 = ApiResult.Error.Http(401, "refresh token")
 
     private lateinit var apiClient: MockApiClient
 
@@ -145,7 +139,7 @@ internal class ApiManagerTests {
         clientId = MockClientId.getForSession(session.sessionId)
         coEvery { clientIdProvider.getClientId(any()) } returns clientId
         coEvery { sessionProvider.getSessionId(any()) } answers {
-            // If userId == null -> null (for unauth session tests, see TokenErrorHandlerTest).
+            // If userId == null -> null (for unauthenticated session tests).
             if (firstArg<UserId?>() != null) session.sessionId else null
         }
         coEvery { sessionProvider.getSession(any()) } returns session
@@ -156,8 +150,6 @@ internal class ApiManagerTests {
 
         apiManagerFactory =
             ApiManagerFactory(
-                mockk(),
-                Product.Mail,
                 baseUrl.toHttpUrl(),
                 apiClient,
                 clientIdProvider,
@@ -202,9 +194,6 @@ internal class ApiManagerTests {
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))
         every { altBackend1.baseUrl } returns proxy1url
-
-        // Assume no token has been refreshed between each tests.
-        runBlocking { TokenErrorHandler.reset(session.sessionId) }
     }
 
     @Test
@@ -251,92 +240,6 @@ internal class ApiManagerTests {
         )
         val result = apiManager.invoke(forceNoRetryOnConnectionErrors = true) { test() }
         assertTrue(result is ApiResult.Error.Timeout)
-    }
-
-    @Test
-    fun `test token refresh`() = runTest(dispatcher) {
-        coEvery { backend.invoke<TestResult>(any()) } answers {
-            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
-                ApiResult.Success(TestResult(5, "foo"))
-            else
-                ApiResult.Error.Http(401, "Unauthorized")
-        }
-        coEvery { backend.refreshSession(session) } returns
-            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
-        val result = apiManager.invoke { test() }
-        assertTrue(result is ApiResult.Success)
-    }
-
-    @Test
-    fun `test token refresh on concurrent calls`() = runTest(dispatcher) {
-        var count401 = 0
-        coEvery { backend.invoke<TestResult>(any()) } coAnswers {
-            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
-                ApiResult.Success(TestResult(5, "foo"))
-            else {
-                count401++
-                delay(100)
-                ApiResult.Error.Http(401, "Unauthorized")
-            }
-        }
-        coEvery { backend.refreshSession(session) } coAnswers {
-            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
-        }
-
-        // concurrent execution of 2 calls, both will receive 401 and eventually succeed but only
-        // one should refresh token
-        val result1 = async { apiManager.invoke { test() } }
-        val result2 = async { apiManager.invoke { test() } }
-
-        assertTrue(result1.await() is ApiResult.Success)
-        assertTrue(result2.await() is ApiResult.Success)
-        assertEquals(2, count401)
-        coVerify(exactly = 1) {
-            backend.refreshSession(any())
-        }
-    }
-
-    @Test
-    fun `test failed token refresh`() = runTest(dispatcher) {
-        val oldAccessToken = session.accessToken
-        coEvery { backend.invoke<TestResult>(any()) } answers {
-            if (session.accessToken == oldAccessToken)
-                ApiResult.Error.Http(401, "Unauthorized")
-            else
-                ApiResult.Success(TestResult(5, "foo"))
-        }
-        coEvery { backend.refreshSession(session) } returns ApiResult.Error.Http(400, "")
-        val result = apiManager.invoke { test() }
-        assertTrue(result is ApiResult.Error)
-    }
-
-    @Test
-    fun `test old request token refresh`() = runTest(dispatcher) {
-        coEvery { backend.invoke<TestResult>(any()) } answers {
-            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
-                ApiResult.Success(TestResult(5, "foo"))
-            else
-                ApiResult.Error.Http(401, "Unauthorized")
-        }
-        coEvery { backend.refreshSession(session) } returns
-            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
-
-        val result = apiManager.invoke { test() }
-        assertTrue(result is ApiResult.Success)
-
-        // Simulate request that started before first and gets 401 after token refresh finished
-        time = -1
-        coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
-            ApiResult.Error.Http(401, "Unauthorized"),
-            ApiResult.Success(TestResult(5, "foo"))
-        )
-        val result2 = apiManager.invoke { test() }
-        assertTrue(result2 is ApiResult.Success)
-
-        // Token should be refreshed only for the first request
-        coVerify(exactly = 1) {
-            backend.refreshSession(any())
-        }
     }
 
     @Test
@@ -417,32 +320,6 @@ internal class ApiManagerTests {
         assertNull(dohApiHandler.getActiveAltBackend())
         apiManager.invoke { test() }
         coVerify(exactly = 2) {
-            backend.invoke<TestResult>(any())
-        }
-    }
-
-    @Test
-    fun `test token refresh via doh`() = runTest(dispatcher) {
-        coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Timeout(true)
-        coEvery { backend.isPotentiallyBlocked() } returns true
-        coEvery { altBackend1.invoke<TestResult>(any()) } answers {
-            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
-                success5foo
-            else
-                error401
-        }
-        coEvery { altBackend1.refreshSession(any()) } returns
-            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
-
-        val result1 = apiManager.invoke { test() }
-        assertTrue(result1 is ApiResult.Success)
-        coVerify(exactly = 2) {
-            altBackend1.invoke<TestResult>(any())
-        }
-        coVerify(exactly = 1) {
-            altBackend1.refreshSession(any())
-        }
-        coVerify(exactly = 1) {
             backend.invoke<TestResult>(any())
         }
     }

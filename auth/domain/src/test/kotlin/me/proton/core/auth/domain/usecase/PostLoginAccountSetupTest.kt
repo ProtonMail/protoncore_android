@@ -94,7 +94,7 @@ class PostLoginAccountSetupTest {
         }
         sessionManager = mockk {
             coEvery { getSessionId(any()) } returns sessionId
-            coEvery { refreshScopes(any()) } returns emptyList()
+            coEvery { refreshScopes(any()) } returns Unit
         }
 
         tested = PostLoginAccountSetup(

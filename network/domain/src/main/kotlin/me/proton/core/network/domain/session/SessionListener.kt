@@ -18,12 +18,29 @@
 
 package me.proton.core.network.domain.session
 
+import me.proton.core.domain.entity.UserId
+
 interface SessionListener {
+
+    /**
+     * Executes the given [action] under a sessionId mutex's lock.
+     */
+    suspend fun <T> withLock(sessionId: SessionId?, action: suspend () -> T): T
+
+    /**
+     * Request a new [Session].
+     */
+    suspend fun requestSession(): Boolean
+
+    /**
+     * Refresh a [Session].
+     */
+    suspend fun refreshSession(session: Session): Boolean
 
     /**
      * Called when a [Session] token has been successfully created.
      */
-    suspend fun onSessionTokenCreated(session: Session)
+    suspend fun onSessionTokenCreated(userId: UserId?, session: Session)
 
     /**
      * Called when a [Session] token has been successfully refreshed.

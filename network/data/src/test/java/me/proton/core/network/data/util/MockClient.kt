@@ -18,6 +18,7 @@
 package me.proton.core.network.data.util
 
 import android.util.Log
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
@@ -29,7 +30,8 @@ import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.LoggerLogTag
 
 object MockSession {
-    fun getDefault() = Session(
+    fun getDefault() = Session.Authenticated(
+        userId = UserId("userId"),
         sessionId = SessionId("uid"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
@@ -43,6 +45,8 @@ object MockClientId {
 }
 
 class MockSessionListener(
+    private val request: () -> Boolean = { true },
+    private val refresh: (Session) -> Boolean = { true },
     private val onScopesRefreshed: (sessionId: SessionId, scopes: List<String>) -> Unit = { _, _ -> },
     private val onTokenCreated: (Session) -> Unit = { },
     private val onTokenRefreshed: (Session) -> Unit = { },
@@ -54,6 +58,7 @@ class MockSessionListener(
     ) = onScopesRefreshed(sessionId, scopes)
 
     override suspend fun onSessionTokenCreated(
+        userId: UserId?,
         session: Session
     ) = onTokenCreated(session)
 
@@ -65,6 +70,10 @@ class MockSessionListener(
         session: Session,
         httpCode: Int
     ) = onForceLogout(session, httpCode)
+
+    override suspend fun <T> withLock(sessionId: SessionId?, action: suspend () -> T): T = action()
+    override suspend fun requestSession(): Boolean = request()
+    override suspend fun refreshSession(session: Session): Boolean = refresh(session)
 }
 
 class MockApiClient : ApiClient {

@@ -44,33 +44,29 @@ class TokenErrorHandlerTest {
     private val userId = UserId("test-user-id")
 
     private val unauthSessionId = SessionId("test-session-id-unauth")
-    private val unauthSession = mockk<Session> {
+    private val unauthSession = mockk<Session.Unauthenticated> {
         every { sessionId } returns unauthSessionId
     }
     private val authSessionId = SessionId("test-session-id-auth")
-    private val authSession = mockk<Session> {
+    private val authSession = mockk<Session.Authenticated> {
         every { sessionId } returns authSessionId
     }
 
     private val call = mockk<ApiManager.Call<Any, Any>>()
     private val apiBackend = mockk<ApiBackend<Any>>(relaxed = true) {
         coEvery { this@mockk.invoke<Any>(any()) } returns ApiResult.Success("success")
-        coEvery { this@mockk.requestSession() } returns ApiResult.Success(unauthSession)
-        coEvery { this@mockk.refreshSession(unauthSession) } returns ApiResult.Success(unauthSession)
-        coEvery { this@mockk.refreshSession(authSession) } returns ApiResult.Success(authSession)
     }
 
-    private val sessionListener = mockk<SessionListener>(relaxed = true)
+    private val sessionListener = mockk<SessionListener>(relaxed = true) {
+        coEvery { this@mockk.requestSession() } returns true
+        coEvery { this@mockk.refreshSession(unauthSession) } returns true
+        coEvery { this@mockk.refreshSession(authSession) } returns true
+    }
     private val sessionProvider = mockk<SessionProvider>(relaxed = true) {
         coEvery { this@mockk.getSessionId(userId) } returns authSessionId
         coEvery { this@mockk.getSessionId(null) } returns unauthSessionId
         coEvery { this@mockk.getSession(authSessionId) } returns authSession
         coEvery { this@mockk.getSession(unauthSessionId) } returns unauthSession
-    }
-
-    @Before
-    fun before() = runTest {
-        TokenErrorHandler.clear()
     }
 
     @Test
@@ -80,7 +76,6 @@ class TokenErrorHandlerTest {
             sessionId = authSessionId,
             sessionProvider = sessionProvider,
             sessionListener = sessionListener,
-            monoClockMs = { currentTime }
         )
         val error = ApiResult.Error.Http(HTTP_FORBIDDEN, "403")
 
@@ -91,131 +86,61 @@ class TokenErrorHandlerTest {
         assertIs<ApiResult.Error>(result)
 
         coVerify(exactly = 0) { apiBackend.invoke(call) }
-        coVerify(exactly = 0) { apiBackend.refreshSession(any()) }
-        coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
+        coVerify(exactly = 0) { sessionListener.refreshSession(any()) }
+        coVerify(exactly = 0) { sessionListener.requestSession() }
     }
 
     @Test
     fun `request unauth on 401 given no session, then retry`() = runTest {
         // Given
-        coEvery { sessionProvider.getSessionId(userId = null) } returns null
+        coEvery { sessionProvider.getSession(any()) } returns null
 
         val handler = TokenErrorHandler<Any>(
             sessionId = null,
             sessionProvider = sessionProvider,
             sessionListener = sessionListener,
-            monoClockMs = { currentTime }
         )
         val error = ApiResult.Error.Http(HTTP_UNAUTHORIZED, "401")
 
         // When
-        val result = handler.invoke(apiBackend, error, call)
+        handler.invoke(apiBackend, error, call)
 
         // Then
-        assertIs<ApiResult.Success<Any>>(result)
-
+        coVerify(exactly = 0) { sessionListener.refreshSession(any()) }
+        coVerify(exactly = 1) { sessionListener.requestSession() }
         coVerify(exactly = 1) { apiBackend.invoke(call) }
-        coVerify(exactly = 0) { apiBackend.refreshSession(any()) }
-        coVerify(exactly = 1) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
-        coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
     }
 
     @Test
-    fun `refresh auth on 401 given auth session, then retry`() = runTest {
+    fun `refresh auth on 401, then retry`() = runTest {
         // Given
         val handler = TokenErrorHandler<Any>(
             sessionId = authSessionId,
             sessionProvider = sessionProvider,
             sessionListener = sessionListener,
-            monoClockMs = { currentTime }
         )
         val error = ApiResult.Error.Http(HTTP_UNAUTHORIZED, "401")
 
         // When
-        val result = handler.invoke(apiBackend, error, call)
+        handler.invoke(apiBackend, error, call)
 
         // Then
-        assertIs<ApiResult.Success<Any>>(result)
-
+        coVerify(exactly = 1) { sessionListener.refreshSession(authSession) }
+        coVerify(exactly = 0) { sessionListener.requestSession() }
         coVerify(exactly = 1) { apiBackend.invoke(call) }
-        coVerify(exactly = 1) { apiBackend.refreshSession(authSession) }
-        coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
-        coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(any()) }
     }
 
     @Test
-    fun `refresh unauth on 401 given no session, then retry`() = runTest {
-        // Given
-        val handler = TokenErrorHandler<Any>(
-            sessionId = null,
-            sessionProvider = sessionProvider,
-            sessionListener = sessionListener,
-            monoClockMs = { currentTime }
-        )
-        val error = ApiResult.Error.Http(HTTP_UNAUTHORIZED, "401")
-
-        // When
-        val result = handler.invoke(apiBackend, error, call)
-
-        // Then
-        assertIs<ApiResult.Success<Any>>(result)
-
-        coVerify(exactly = 1) { apiBackend.invoke(call) }
-        coVerify(exactly = 1) { apiBackend.refreshSession(unauthSession) }
-        coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(any(), any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
-        coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(any()) }
-    }
-
-    @Test
-    fun `refresh unauth on 401 given no session, refresh fail, request token, retry`() = runTest {
-        // Given
-        val handler = TokenErrorHandler<Any>(
-            sessionId = null,
-            sessionProvider = sessionProvider,
-            sessionListener = sessionListener,
-            monoClockMs = { currentTime }
-        )
-        val error401 = ApiResult.Error.Http(HTTP_UNAUTHORIZED, "401")
-        val error422 = ApiResult.Error.Http(HTTP_UNPROCESSABLE, "422")
-
-        coEvery { apiBackend.refreshSession(unauthSession) } returns error422
-
-        // When
-        val result = handler.invoke(apiBackend, error401, call)
-
-        // Then
-        assertIs<ApiResult.Success<Any>>(result)
-
-        coVerify(exactly = 1) { apiBackend.invoke(call) }
-        coVerify(exactly = 1) { apiBackend.refreshSession(unauthSession) }
-        coVerify(exactly = 1) { apiBackend.requestSession() }
-        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(any(), 422) }
-        coVerify(exactly = 1) { sessionListener.onSessionTokenCreated(any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
-    }
-
-    @Test
-    fun `refresh auth on 401 given auth session, refresh fail, no retry`() = runTest {
+    fun `refresh auth on 401 given auth session, refresh fail`() = runTest {
         // Given
         val handler = TokenErrorHandler<Any>(
             sessionId = authSessionId,
             sessionProvider = sessionProvider,
             sessionListener = sessionListener,
-            monoClockMs = { currentTime }
         )
         val error401 = ApiResult.Error.Http(HTTP_UNAUTHORIZED, "401")
-        val error422 = ApiResult.Error.Http(HTTP_UNPROCESSABLE, "422")
 
-        coEvery { apiBackend.refreshSession(authSession) } returns error422
+        coEvery { sessionListener.refreshSession(authSession) } returns false
 
         // When
         val result = handler.invoke(apiBackend, error401, call)
@@ -223,11 +148,8 @@ class TokenErrorHandlerTest {
         // Then
         assertIs<ApiResult.Error>(result)
 
+        coVerify(exactly = 1) { sessionListener.refreshSession(authSession) }
+        coVerify(exactly = 0) { sessionListener.requestSession() }
         coVerify(exactly = 0) { apiBackend.invoke(call) }
-        coVerify(exactly = 1) { apiBackend.refreshSession(authSession) }
-        coVerify(exactly = 0) { apiBackend.requestSession() }
-        coVerify(exactly = 1) { sessionListener.onSessionForceLogout(any(), 422) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any()) }
-        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(any()) }
     }
 }

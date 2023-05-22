@@ -27,7 +27,7 @@ import javax.inject.Inject
 open class CoreExampleApiClient @Inject constructor() : ApiClient {
     protected open val appName = "android-mail"
     protected open val productName = "ProtonMail"
-    protected open val versionName = "3.0.0" // imitating ProtonMail version
+    protected open val versionName = "6.0.0" // imitating ProtonMail version
     protected open val versionSuffix = if (BuildConfig.DEBUG) "-dev" else ""
 
     /**

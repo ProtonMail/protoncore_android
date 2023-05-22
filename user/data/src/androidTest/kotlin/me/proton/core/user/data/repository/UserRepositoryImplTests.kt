@@ -50,6 +50,7 @@ import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -57,6 +58,7 @@ import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
+import me.proton.core.user.data.TestSessionListener
 import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
@@ -76,6 +78,7 @@ import kotlin.test.assertTrue
 class UserRepositoryImplTests {
 
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
+    private val sessionListener = mockk<SessionListener>(relaxed = true)
     private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
 
     private val userApi = mockk<UserApi>(relaxed = true)
@@ -116,7 +119,8 @@ class UserRepositoryImplTests {
         // Build a new fresh in memory Database, for each test.
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
-        coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
+        coEvery { sessionProvider.getSessionId(TestAccounts.User1.account.userId) } returns TestAccounts.session1Id
+        coEvery { sessionProvider.getSessionId(TestAccounts.User2.account.userId) } returns TestAccounts.session2Id
         every {
             apiManagerFactory.create(
                 any(),
@@ -144,13 +148,14 @@ class UserRepositoryImplTests {
             Product.Mail,
             AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
             mockk(relaxed = true),
-            mockk(relaxed = true)
+            mockk(relaxed = true),
+            TestSessionListener()
         )
 
         // Before fetching any User, account need to be added to AccountManager (if not -> foreign key exception).
         runBlocking {
-            accountManager.addAccount(TestAccounts.User1.account, TestAccounts.session)
-            accountManager.addAccount(TestAccounts.User2.account, TestAccounts.session)
+            accountManager.addAccount(TestAccounts.User1.account, TestAccounts.session1)
+            accountManager.addAccount(TestAccounts.User2.account, TestAccounts.session2)
         }
     }
 

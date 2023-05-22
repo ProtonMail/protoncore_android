@@ -18,36 +18,49 @@
 
 package me.proton.core.network.presentation
 
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.network.domain.session.unauth.OpportunisticUnAuthTokenRequest
-import me.proton.core.test.android.ArchTest
-import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
-import me.proton.core.util.kotlin.DefaultCoroutineScopeProvider
-import me.proton.core.util.kotlin.DefaultDispatcherProvider
 import org.junit.Before
 import org.junit.Test
 
-internal class UnAuthSessionFetcherTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
+internal class UnAuthSessionFetcherTest {
+
+    private val scopeProvider: CoroutineScopeProvider = UnconfinedTestCoroutineScopeProvider()
+    private val sessionProvider: SessionProvider = mockk(relaxed = true)
+    private val sessionListener: SessionListener = mockk(relaxed = true)
 
     lateinit var unAuthSessionFetcher: UnAuthSessionFetcher
-    private lateinit var scopeProvider: CoroutineScopeProvider
-    private val opportunisticUnAuthTokenRequest = mockk<OpportunisticUnAuthTokenRequest>(relaxed = true)
 
     @Before
     fun beforeEveryTest() {
-        scopeProvider = DefaultCoroutineScopeProvider(DefaultDispatcherProvider())
-        unAuthSessionFetcher = UnAuthSessionFetcher(scopeProvider, opportunisticUnAuthTokenRequest)
+        unAuthSessionFetcher = UnAuthSessionFetcher(scopeProvider, sessionProvider, sessionListener)
     }
 
     @Test
-    fun `use case correctly called`() = runTest {
+    fun `no saved sessions calls request token`() = runTest {
+        // GIVEN
+        coEvery { sessionProvider.getSessions() } returns emptyList()
         // WHEN
         unAuthSessionFetcher.fetch()
         // THEN
-        coVerify(exactly = 1) { opportunisticUnAuthTokenRequest() }
+        coVerify(exactly = 1) { sessionProvider.getSessions() }
+        coVerify(exactly = 1) { sessionListener.requestSession() }
+    }
+
+    @Test
+    fun `saved sessions does not call request token`() = runTest {
+        // GIVEN
+        coEvery { sessionProvider.getSessions() } returns listOf(mockk())
+        // WHEN
+        unAuthSessionFetcher.fetch()
+        // THEN
+        coVerify(exactly = 1) { sessionProvider.getSessions() }
+        coVerify(exactly = 0) { sessionListener.requestSession() }
     }
 }

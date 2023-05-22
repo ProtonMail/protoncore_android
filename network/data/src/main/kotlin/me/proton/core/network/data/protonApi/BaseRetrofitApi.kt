@@ -22,19 +22,10 @@ import kotlinx.serialization.Serializable
 import me.proton.core.network.data.mapper.parseDetails
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Tag
 
 interface BaseRetrofitApi {
-
-    @POST("auth/v4/sessions")
-    suspend fun requestToken(@Body request: RequestTokenRequest): TokenResponse
-
-    @POST("auth/v4/refresh")
-    suspend fun refreshToken(@Body body: RefreshTokenRequest): TokenResponse
-
     @GET("tests/ping")
     suspend fun ping(@Tag timeoutOverride: TimeoutOverride)
 }

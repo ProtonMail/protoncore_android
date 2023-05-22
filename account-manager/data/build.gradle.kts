@@ -51,6 +51,7 @@ dependencies {
         project(Module.notificationPresentation),
         project(Module.accountRecoveryPresentationCompose),
         `coroutines-core`,
+        `dagger`,
     )
 
     testImplementation(

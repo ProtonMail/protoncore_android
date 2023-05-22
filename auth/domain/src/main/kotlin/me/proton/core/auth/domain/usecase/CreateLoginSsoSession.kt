@@ -64,7 +64,8 @@ class CreateLoginSsoSession @Inject constructor(
                 )
             )
         )
-        val session = Session(
+        val session = Session.Authenticated(
+            userId = sessionInfo.userId,
             sessionId = sessionInfo.sessionId,
             accessToken = sessionInfo.accessToken,
             refreshToken = sessionInfo.refreshToken,

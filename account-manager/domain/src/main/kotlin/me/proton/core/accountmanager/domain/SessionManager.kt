@@ -18,16 +18,32 @@
 
 package me.proton.core.accountmanager.domain
 
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 
-interface SessionManager : SessionProvider, SessionListener {
+interface SessionManager : SessionProvider {
+
+    /**
+     * Executes the given [action] under a sessionId mutex's lock.
+     */
+    suspend fun <T> withLock(sessionId: SessionId?, action: suspend () -> T): T
+
+    /**
+     * Request a new [Session].
+     */
+    suspend fun requestSession(): Boolean
+
+    /**
+     * Refresh a [Session].
+     */
+    suspend fun refreshSession(session: Session): Boolean
 
     /**
      * Refresh the session scopes.
      *
      * Note: "full" scope is needed to execute this function.
      */
-    suspend fun refreshScopes(sessionId: SessionId): List<String>
+    suspend fun refreshScopes(sessionId: SessionId)
 }

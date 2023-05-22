@@ -18,11 +18,13 @@
 
 package me.proton.core.network.domain.session
 
-data class Session(
-    val sessionId: SessionId,
-    val accessToken: String,
-    val refreshToken: String,
-    val scopes: List<String>,
+import me.proton.core.domain.entity.UserId
+
+sealed class Session(
+    open val sessionId: SessionId,
+    open val accessToken: String,
+    open val refreshToken: String,
+    open val scopes: List<String>,
 ) {
     fun isValid() = listOf(
         sessionId.id,
@@ -30,13 +32,43 @@ data class Session(
         refreshToken
     ).all { it.isNotBlank() }
 
-    fun refreshWith(
-        accessToken: String,
-        refreshToken: String,
-        scopes: List<String>
-    ) = copy(
-        accessToken = accessToken,
-        refreshToken = refreshToken,
-        scopes = scopes
-    )
+    data class Authenticated(
+        val userId: UserId,
+        override val sessionId: SessionId,
+        override val accessToken: String,
+        override val refreshToken: String,
+        override val scopes: List<String>,
+    ) : Session(sessionId, accessToken, refreshToken, scopes) {
+        constructor(userId: UserId, session: Session) : this(
+            userId,
+            session.sessionId,
+            session.accessToken,
+            session.refreshToken,
+            session.scopes
+        )
+    }
+
+    data class Unauthenticated(
+        override val sessionId: SessionId,
+        override val accessToken: String,
+        override val refreshToken: String,
+        override val scopes: List<String>,
+    ) : Session(sessionId, accessToken, refreshToken, scopes) {
+        constructor(session: Session) : this(
+            session.sessionId,
+            session.accessToken,
+            session.refreshToken,
+            session.scopes
+        )
+    }
 }
+
+fun Session.toStringLog() = when (this) {
+    is Session.Authenticated -> "authenticated"
+    is Session.Unauthenticated -> "unauthenticated"
+} + " id=${sessionId.id.take(PREFIX_LENGTH)}" +
+        " a=${accessToken.take(PREFIX_LENGTH)}" +
+        " r=${refreshToken.take(PREFIX_LENGTH)}" +
+        " s=$scopes"
+
+internal const val PREFIX_LENGTH = 5

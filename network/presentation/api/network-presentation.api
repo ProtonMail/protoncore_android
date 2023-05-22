@@ -10,16 +10,16 @@ public final class me/proton/core/network/presentation/BuildConfig {
 }
 
 public final class me/proton/core/network/presentation/UnAuthSessionFetcher {
-	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/network/domain/session/unauth/OpportunisticUnAuthTokenRequest;)V
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;)V
 	public final fun fetch ()Lkotlinx/coroutines/Job;
 }
 
 public final class me/proton/core/network/presentation/UnAuthSessionFetcher_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/presentation/UnAuthSessionFetcher_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/presentation/UnAuthSessionFetcher_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/network/presentation/UnAuthSessionFetcher;
-	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/network/domain/session/unauth/OpportunisticUnAuthTokenRequest;)Lme/proton/core/network/presentation/UnAuthSessionFetcher;
+	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;)Lme/proton/core/network/presentation/UnAuthSessionFetcher;
 }
 
 public abstract interface class me/proton/core/network/presentation/init/HiltWrapper_UnAuthSessionFetcherInitializer_UnAuthSessionFetcherInitializerEntryPoint : me/proton/core/network/presentation/init/UnAuthSessionFetcherInitializer$UnAuthSessionFetcherInitializerEntryPoint {

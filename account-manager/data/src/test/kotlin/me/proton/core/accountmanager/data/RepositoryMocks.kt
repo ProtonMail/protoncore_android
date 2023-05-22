@@ -27,6 +27,7 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
@@ -36,7 +37,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
 
 class RepositoryMocks(
-    private val session: Session,
+    private val session: Session.Authenticated,
     private val account: Account
 ) {
 
@@ -49,11 +50,13 @@ class RepositoryMocks(
     @RelaxedMockK
     lateinit var authRepository: AuthRepository
 
+    @RelaxedMockK
+    lateinit var sessionManager: SessionManager
     lateinit var sessionListener: SessionListener
     lateinit var sessionProvider: SessionProvider
 
     private val flowOfAccountLists = mutableListOf<List<Account>>()
-    private val flowOfSessionLists = mutableListOf<List<Session>>()
+    private val flowOfSessionLists = mutableListOf<List<Session.Authenticated>>()
 
     private val flowOfAccountStateChangedLists = mutableListOf<Account>()
     private val flowOfSessionStateChangedLists = mutableListOf<Account>()
@@ -62,7 +65,7 @@ class RepositoryMocks(
         MockKAnnotations.init(this)
 
         sessionProvider = SessionProviderImpl(accountRepository)
-        sessionListener = SessionListenerImpl(accountRepository)
+        sessionListener = TestSessionListener { sessionManager }
     }
 
     @Suppress("LongMethod")
@@ -131,12 +134,9 @@ class RepositoryMocks(
 
         // For each updateSessionScopes -> emit a new updated List<Session> from getSessions().
         coEvery { accountRepository.updateSessionScopes(capture(sessionIdSlot), capture(updatedScopesSlot)) } answers {
+            val session = flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }
             flowOfSessionLists.add(
-                listOf(
-                    flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        scopes = updatedScopesSlot.captured
-                    )
-                )
+                listOf(session.copy(scopes = updatedScopesSlot.captured))
             )
         }
 

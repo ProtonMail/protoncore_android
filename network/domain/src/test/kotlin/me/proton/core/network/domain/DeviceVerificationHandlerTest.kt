@@ -22,15 +22,14 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.deviceverification.ChallengeType
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationMethods
 import me.proton.core.network.domain.handlers.DeviceVerificationNeededHandler
-import me.proton.core.network.domain.session.ResolvedSession
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.network.domain.session.getResolvedSession
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertNotNull
@@ -40,22 +39,24 @@ import kotlin.test.assertNotNull
  */
 class DeviceVerificationHandlerTest {
 
+    private val userId = UserId("userId")
     private val sessionId = SessionId("sessionId")
-    private val session = Session(
-        sessionId,
-        "TokenOK",
-        "TokenOK",
-        listOf("ok1", "ok2"),
+    private val session = Session.Authenticated(
+        userId = userId,
+        sessionId = sessionId,
+        accessToken = "TokenOK",
+        refreshToken = "TokenOK",
+        scopes = listOf("ok1", "ok2"),
     )
-    private val sessionIdProvider = mockk<SessionProvider>()
+    private val sessionProvider = mockk<SessionProvider>()
     private val deviceVerificationListener = mockk<DeviceVerificationListener>()
 
     private val apiBackend = mockk<ApiBackend<Any>>()
 
     @BeforeTest
     fun beforeTest() {
-        coEvery { sessionIdProvider.getResolvedSession(any()) } returns ResolvedSession.Found.Authenticated(session)
-        coEvery { sessionIdProvider.getSession(any()) } returns session
+        coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
+        coEvery { sessionProvider.getSession(any()) } returns session
     }
 
     @Test
@@ -83,10 +84,8 @@ class DeviceVerificationHandlerTest {
 
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
-        val deviceVerificationHandler =
-            DeviceVerificationNeededHandler<Any>(sessionId, sessionIdProvider, deviceVerificationListener)
-
-        val result = deviceVerificationHandler.invoke(
+        val handler = DeviceVerificationNeededHandler<Any>(sessionId, sessionProvider, deviceVerificationListener)
+        val result = handler.invoke(
             backend = apiBackend,
             error = apiResult,
             call = mockk<ApiManager.Call<Any, Any>>()
@@ -123,9 +122,8 @@ class DeviceVerificationHandlerTest {
 
         coEvery { apiBackend.invoke<Any>(any()) } returns apiResult
 
-        val deviceVerificationHandler =
-            DeviceVerificationNeededHandler<Any>(sessionId, sessionIdProvider, deviceVerificationListener)
-        val result = deviceVerificationHandler.invoke(
+        val handler = DeviceVerificationNeededHandler<Any>(sessionId, sessionProvider, deviceVerificationListener)
+        val result = handler.invoke(
             backend = apiBackend,
             error = apiResult,
             call = mockk<ApiManager.Call<Any, Any>>()
@@ -148,10 +146,8 @@ class DeviceVerificationHandlerTest {
             )
         )
 
-        val deviceVerificationHandler =
-            DeviceVerificationNeededHandler<Any>(sessionId, sessionIdProvider, deviceVerificationListener)
-
-        val result = deviceVerificationHandler.invoke(
+        val handler = DeviceVerificationNeededHandler<Any>(sessionId, sessionProvider, deviceVerificationListener)
+        val result = handler.invoke(
             backend = mockk(),
             error = apiResult,
             call = mockk<ApiManager.Call<Any, Any>>()
@@ -171,10 +167,8 @@ class DeviceVerificationHandlerTest {
             null
         )
 
-        val deviceVerificationHandler =
-            DeviceVerificationNeededHandler<Any>(sessionId, sessionIdProvider, deviceVerificationListener)
-
-        val result = deviceVerificationHandler.invoke(
+        val handler = DeviceVerificationNeededHandler<Any>(sessionId, sessionProvider, deviceVerificationListener)
+        val result = handler.invoke(
             backend = mockk(),
             error = apiResult,
             call = mockk<ApiManager.Call<Any, Any>>()
@@ -192,10 +186,8 @@ class DeviceVerificationHandlerTest {
             false
         )
 
-        val deviceVerificationHandler =
-            DeviceVerificationNeededHandler<Any>(sessionId, sessionIdProvider, deviceVerificationListener)
-
-        val result = deviceVerificationHandler.invoke(
+        val handler = DeviceVerificationNeededHandler<Any>(sessionId, sessionProvider, deviceVerificationListener)
+        val result = handler.invoke(
             backend = mockk(),
             error = apiResult,
             call = mockk<ApiManager.Call<Any, Any>>()

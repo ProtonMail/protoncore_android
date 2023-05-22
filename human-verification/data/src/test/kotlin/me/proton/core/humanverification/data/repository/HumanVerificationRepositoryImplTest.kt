@@ -30,6 +30,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.db.HumanVerificationDetailsDao
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity
@@ -53,7 +54,9 @@ class HumanVerificationRepositoryImplTest {
     private val db = mockk<HumanVerificationDatabase>()
     private val humanVerificationDetailsDao = mockk<HumanVerificationDetailsDao>(relaxed = true)
 
-    private val session1 = Session(
+    private val userId = UserId("userId")
+    private val session1 = Session.Authenticated(
+        userId = userId,
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",

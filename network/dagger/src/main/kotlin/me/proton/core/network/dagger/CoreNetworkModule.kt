@@ -29,12 +29,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
-import me.proton.core.network.data.UnAuthSessionsRepositoryImpl
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.cookie.DiskCookieStorage
@@ -47,7 +45,6 @@ import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.UnAuthSessionsRepository
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -77,7 +74,6 @@ public class CoreNetworkModule {
     @Suppress("LongParameterList")
     internal fun provideApiFactory(
         @ApplicationContext context: Context,
-        product: Product,
         apiClient: ApiClient,
         clientIdProvider: ClientIdProvider,
         serverTimeListener: ServerTimeListener,
@@ -101,8 +97,6 @@ public class CoreNetworkModule {
         @SharedOkHttpClient okHttpClient: OkHttpClient
     ): ApiManagerFactory {
         return ApiManagerFactory(
-            context,
-            product,
             apiUrl,
             apiClient,
             clientIdProvider,
@@ -158,9 +152,6 @@ public interface CoreNetworkBindsModule {
 
     @Binds
     public fun provideClientVersionValidator(impl: ClientVersionValidatorImpl): ClientVersionValidator
-
-    @Binds
-    public fun provideUnAuthSessionRepository(repository: UnAuthSessionsRepositoryImpl): UnAuthSessionsRepository
 }
 
 @Module

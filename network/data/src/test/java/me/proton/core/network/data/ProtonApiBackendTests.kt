@@ -129,8 +129,6 @@ internal class ProtonApiBackendTests {
         every { extraHeaderProvider.headers }.answers { emptyList() }
 
         apiManagerFactory = ApiManagerFactory(
-            ApplicationProvider.getApplicationContext(),
-            Product.Mail,
             "https://example.com/".toHttpUrl(),
             client,
             clientIdProvider,
@@ -178,8 +176,6 @@ internal class ProtonApiBackendTests {
 
     private fun createBackend(pinningInit: (OkHttpClient.Builder) -> Unit) =
         ProtonApiBackend(
-            ApplicationProvider.getApplicationContext(),
-            Product.Mail,
             webServer.url("/").toString(),
             client,
             clientIdProvider,

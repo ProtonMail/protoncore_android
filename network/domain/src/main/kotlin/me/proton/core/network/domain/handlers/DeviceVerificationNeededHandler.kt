@@ -27,10 +27,8 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener.DeviceVerificationResult
-import me.proton.core.network.domain.session.ResolvedSession
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.network.domain.session.getResolvedSession
 
 class DeviceVerificationNeededHandler<Api>(
     private val sessionId: SessionId?,
@@ -50,9 +48,9 @@ class DeviceVerificationNeededHandler<Api>(
         // Return the error if there are no details in the error
         val details = error.proton.deviceVerification ?: return error
 
-        val sessionId = when (val resolvedSession = sessionProvider.getResolvedSession(sessionId)) {
-            is ResolvedSession.NotFound -> return error
-            is ResolvedSession.Found -> resolvedSession.session.sessionId
+        val sessionId = when (val session = sessionProvider.getSession(sessionId)) {
+            null -> return error
+            else -> session.sessionId
         }
 
         // Allow only one coroutine at a time per sessionId

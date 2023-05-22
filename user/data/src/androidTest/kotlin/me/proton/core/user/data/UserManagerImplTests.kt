@@ -44,6 +44,7 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.data.repository.KeySaltRepositoryImpl
@@ -56,6 +57,9 @@ import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.useKeys
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -123,7 +127,8 @@ class UserManagerImplTests {
         // Build a new fresh in memory Database, for each test.
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
-        coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
+        coEvery { sessionProvider.getSessionId(TestUsers.User1.id) } returns TestAccounts.session1Id
+        coEvery { sessionProvider.getSessionId(TestUsers.User2.id) } returns TestAccounts.session2Id
         every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
         every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 
@@ -180,13 +185,14 @@ class UserManagerImplTests {
             Product.Mail,
             AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
             mockk(relaxed = true),
-            userManager
+            userManager,
+            TestSessionListener()
         )
 
         // Before fetching any User, account need to be added to AccountManager (if not -> foreign key exception).
         runBlocking {
-            accountManager.addAccount(TestAccounts.User1.account, TestAccounts.session)
-            accountManager.addAccount(TestAccounts.User2.account, TestAccounts.session)
+            accountManager.addAccount(TestAccounts.User1.account, TestAccounts.session1)
+            accountManager.addAccount(TestAccounts.User2.account, TestAccounts.session2)
         }
     }
 

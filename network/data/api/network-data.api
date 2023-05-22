@@ -1,6 +1,6 @@
 public final class me/proton/core/network/data/ApiManagerFactory {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lokhttp3/HttpUrl;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/network/domain/server/ServerTimeListener;Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/network/domain/deviceverification/DeviceVerificationProvider;Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/network/data/ProtonCookieStore;Lkotlinx/coroutines/CoroutineScope;[Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function0;Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/client/ClientVersionValidator;Lme/proton/core/network/domain/serverconnection/DohAlternativesListener;[Ljava/lang/String;Lokhttp3/OkHttpClient;)V
-	public synthetic fun <init> (Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lokhttp3/HttpUrl;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/network/domain/server/ServerTimeListener;Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/network/domain/deviceverification/DeviceVerificationProvider;Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/network/data/ProtonCookieStore;Lkotlinx/coroutines/CoroutineScope;[Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function0;Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/client/ClientVersionValidator;Lme/proton/core/network/domain/serverconnection/DohAlternativesListener;[Ljava/lang/String;Lokhttp3/OkHttpClient;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lokhttp3/HttpUrl;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/network/domain/server/ServerTimeListener;Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/network/domain/deviceverification/DeviceVerificationProvider;Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/network/data/ProtonCookieStore;Lkotlinx/coroutines/CoroutineScope;[Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function0;Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/client/ClientVersionValidator;Lme/proton/core/network/domain/serverconnection/DohAlternativesListener;[Ljava/lang/String;Lokhttp3/OkHttpClient;)V
+	public synthetic fun <init> (Lokhttp3/HttpUrl;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/network/domain/server/ServerTimeListener;Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/humanverification/HumanVerificationProvider;Lme/proton/core/network/domain/humanverification/HumanVerificationListener;Lme/proton/core/network/domain/deviceverification/DeviceVerificationProvider;Lme/proton/core/network/domain/deviceverification/DeviceVerificationListener;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/network/data/ProtonCookieStore;Lkotlinx/coroutines/CoroutineScope;[Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function0;Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/client/ClientVersionValidator;Lme/proton/core/network/domain/serverconnection/DohAlternativesListener;[Ljava/lang/String;Lokhttp3/OkHttpClient;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun create (Lme/proton/core/network/domain/session/SessionId;Lkotlin/reflect/KClass;Ljava/util/List;[Ljava/lang/String;Ljava/util/List;)Lme/proton/core/network/domain/ApiManager;
 	public static synthetic fun create$default (Lme/proton/core/network/data/ApiManagerFactory;Lme/proton/core/network/domain/session/SessionId;Lkotlin/reflect/KClass;Ljava/util/List;[Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/network/domain/ApiManager;
 	public final fun getBaseOkHttpClient ()Lokhttp3/OkHttpClient;
@@ -51,8 +51,6 @@ public final class me/proton/core/network/data/LogTag {
 	public final fun getAPI_ERROR-WnFgrgw ()Ljava/lang/String;
 	public final fun getAPI_REQUEST-WnFgrgw ()Ljava/lang/String;
 	public final fun getAPI_RESPONSE-WnFgrgw ()Ljava/lang/String;
-	public final fun getREFRESH_TOKEN-WnFgrgw ()Ljava/lang/String;
-	public final fun getREQUEST_TOKEN-WnFgrgw ()Ljava/lang/String;
 	public final fun getSERVER_TIME_PARSE_ERROR-WnFgrgw ()Ljava/lang/String;
 }
 
@@ -120,19 +118,6 @@ public final class me/proton/core/network/data/PublicKeyPin {
 public final class me/proton/core/network/data/PublicKeyPin$Companion {
 	public final fun fromCertificate (Ljava/security/cert/Certificate;)Lme/proton/core/network/data/PublicKeyPin;
 	public final fun fromSha256HashBase64 (Ljava/lang/String;)Lme/proton/core/network/data/PublicKeyPin;
-}
-
-public final class me/proton/core/network/data/UnAuthSessionsRepositoryImpl : me/proton/core/network/domain/UnAuthSessionsRepository {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)V
-	public fun requestToken (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/network/data/UnAuthSessionsRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;)Lme/proton/core/network/data/UnAuthSessionsRepositoryImpl;
 }
 
 public final class me/proton/core/network/data/client/ClientIdProviderImpl : me/proton/core/network/domain/client/ClientIdProvider {
@@ -263,8 +248,6 @@ public final class me/proton/core/network/data/mapper/EntityMapperKt {
 
 public abstract interface class me/proton/core/network/data/protonApi/BaseRetrofitApi {
 	public abstract fun ping (Lme/proton/core/network/domain/TimeoutOverride;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun refreshToken (Lme/proton/core/network/data/protonApi/RefreshTokenRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun requestToken (Lme/proton/core/network/data/protonApi/RequestTokenRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/data/protonApi/Details {
@@ -385,114 +368,6 @@ public final class me/proton/core/network/data/protonApi/ProtonErrorData$$serial
 }
 
 public final class me/proton/core/network/data/protonApi/ProtonErrorData$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/network/data/protonApi/RefreshTokenRequest {
-	public static final field Companion Lme/proton/core/network/data/protonApi/RefreshTokenRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/network/data/protonApi/RefreshTokenRequest;
-	public static synthetic fun copy$default (Lme/proton/core/network/data/protonApi/RefreshTokenRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/network/data/protonApi/RefreshTokenRequest;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getGrantType ()Ljava/lang/String;
-	public final fun getRedirectUri ()Ljava/lang/String;
-	public final fun getRefreshToken ()Ljava/lang/String;
-	public final fun getResponseType ()Ljava/lang/String;
-	public final fun getUid ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/network/data/protonApi/RefreshTokenRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/network/data/protonApi/RefreshTokenRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/network/data/protonApi/RefreshTokenRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/network/data/protonApi/RefreshTokenRequest;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/network/data/protonApi/RefreshTokenRequest;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/network/data/protonApi/RefreshTokenRequest$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/network/data/protonApi/RequestTokenRequest {
-	public static final field Companion Lme/proton/core/network/data/protonApi/RequestTokenRequest$Companion;
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/Map;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lme/proton/core/network/data/protonApi/RequestTokenRequest;
-	public static synthetic fun copy$default (Lme/proton/core/network/data/protonApi/RequestTokenRequest;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/network/data/protonApi/RequestTokenRequest;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getPayload ()Ljava/util/Map;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/network/data/protonApi/RequestTokenRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/network/data/protonApi/RequestTokenRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/network/data/protonApi/RequestTokenRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/network/data/protonApi/RequestTokenRequest;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/network/data/protonApi/RequestTokenRequest;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/network/data/protonApi/RequestTokenRequest$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/network/data/protonApi/TokenResponse {
-	public static final field Companion Lme/proton/core/network/data/protonApi/TokenResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/util/List;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/network/data/protonApi/TokenResponse;
-	public static synthetic fun copy$default (Lme/proton/core/network/data/protonApi/TokenResponse;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/network/data/protonApi/TokenResponse;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getRefreshToken ()Ljava/lang/String;
-	public final fun getScopes ()Ljava/util/List;
-	public final fun getSessionId ()Ljava/lang/String;
-	public final fun getTokenType ()Ljava/lang/String;
-	public fun hashCode ()I
-	public final fun toSession ()Lme/proton/core/network/domain/session/Session;
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/network/data/protonApi/TokenResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/network/data/protonApi/TokenResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/network/data/protonApi/TokenResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/network/data/protonApi/TokenResponse;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/network/data/protonApi/TokenResponse;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/network/data/protonApi/TokenResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

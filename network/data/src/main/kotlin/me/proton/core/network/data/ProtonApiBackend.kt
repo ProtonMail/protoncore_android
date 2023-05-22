@@ -17,18 +17,12 @@
  */
 package me.proton.core.network.data
 
-import android.content.Context
 import kotlinx.coroutines.runBlocking
-import me.proton.core.challenge.data.frame.ChallengeFrame
-import me.proton.core.challenge.domain.framePrefix
-import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.interceptor.CacheOverrideInterceptor
 import me.proton.core.network.data.interceptor.DoHCookieInterceptor
 import me.proton.core.network.data.interceptor.ServerErrorInterceptor
 import me.proton.core.network.data.interceptor.ServerTimeInterceptor
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.RefreshTokenRequest
-import me.proton.core.network.data.protonApi.RequestTokenRequest
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
@@ -41,11 +35,8 @@ import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
-import me.proton.core.network.domain.session.ResolvedSession
-import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.network.domain.session.getResolvedSession
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Interceptor
@@ -73,8 +64,6 @@ import kotlin.reflect.KClass
  */
 @Suppress("LongParameterList")
 internal class ProtonApiBackend<Api : BaseRetrofitApi>(
-    private val context: Context,
-    private val product: Product,
     override val baseUrl: String,
     private val client: ApiClient,
     private val clientIdProvider: ClientIdProvider,
@@ -148,16 +137,13 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         }
 
         // Add session-related headers
-        when (val resolved = sessionProvider.getResolvedSession(sessionId)) {
-            is ResolvedSession.Found -> {
-                resolved.session.sessionId.id.takeIfNotBlank()?.let { uid ->
-                    request.header("x-pm-uid", uid)
-                }
-                resolved.session.accessToken.takeIfNotBlank()?.let { accessToken ->
-                    request.header("Authorization", "Bearer $accessToken")
-                }
+        sessionProvider.getSession(sessionId)?.let { session ->
+            session.sessionId.id.takeIfNotBlank()?.let { uid ->
+                request.header("x-pm-uid", uid)
             }
-            is ResolvedSession.NotFound -> Unit
+            session.accessToken.takeIfNotBlank()?.let { accessToken ->
+                request.header("Authorization", "Bearer $accessToken")
+            }
         }
 
         // Add human verification and device verification headers
@@ -189,57 +175,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
 
     private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
         api.safeCall(networkManager, block)
-
-    override suspend fun refreshSession(session: Session): ApiResult<Session> {
-        CoreLogger.log(LogTag.REFRESH_TOKEN,
-            "Refreshing tokens: uid=${session.sessionId.id.formatToken(client)}, refreshToken=${session.refreshToken.formatToken(client)}")
-        val result = invokeInternal {
-            refreshToken(
-                RefreshTokenRequest(
-                    uid = session.sessionId.id,
-                    refreshToken = session.refreshToken
-                )
-            )
-        }
-        return when (result) {
-            is ApiResult.Success -> {
-                val accessToken = result.value.accessToken
-                val refreshToken = result.value.refreshToken
-                val tokensLog = "a=${accessToken.formatToken(client)} r=${refreshToken.formatToken(client)}"
-                CoreLogger.log(LogTag.REFRESH_TOKEN, "Access & refresh tokens refreshed: $tokensLog.")
-                ApiResult.Success(
-                    session.refreshWith(
-                        accessToken = accessToken,
-                        refreshToken = refreshToken,
-                        scopes = result.value.scopes
-                    )
-                )
-            }
-            is ApiResult.Error -> result
-        }
-    }
-
-    override suspend fun requestSession(): ApiResult<Session> {
-        val name = "${product.framePrefix()}-0"
-        val frame = ChallengeFrame.Device.build(context)
-        val result = invokeInternal {
-            requestToken(RequestTokenRequest(payload = mapOf(name to frame))).toSession()
-        }
-        return when (result) {
-            is ApiResult.Success -> {
-                CoreLogger.log(LogTag.REQUEST_TOKEN, "UnAuth tokens requested.")
-                ApiResult.Success(
-                    Session(
-                        sessionId = result.value.sessionId,
-                        accessToken = result.value.accessToken,
-                        refreshToken = result.value.refreshToken,
-                        scopes = result.value.scopes
-                    )
-                )
-            }
-            is ApiResult.Error -> result
-        }
-    }
 
     override suspend fun isPotentiallyBlocked(): Boolean =
         invokeInternal {

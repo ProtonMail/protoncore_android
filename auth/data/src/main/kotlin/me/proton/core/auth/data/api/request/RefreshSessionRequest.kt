@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
- * This file is part of Proton AG and ProtonCore.
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+package me.proton.core.auth.data.api.request
 
-package me.proton.core.network.data.protonApi
-
+import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.challenge.data.frame.ChallengeFrame
 
 @Serializable
-data class RequestTokenRequest(
-    @SerialName("Payload")
-    val payload: Map<String, ChallengeFrame.Device?>
+data class RefreshSessionRequest(
+    @SerialName("UID")
+    val uid: String,
+    @SerialName("RefreshToken")
+    val refreshToken: String,
+    @SerialName("ResponseType") @Required
+    val responseType: String = "token",
+    @SerialName("GrantType") @Required
+    val grantType: String = "refresh_token",
+    @SerialName("RedirectURI") @Required
+    val redirectUri: String = "http://protonmail.ch"
 )

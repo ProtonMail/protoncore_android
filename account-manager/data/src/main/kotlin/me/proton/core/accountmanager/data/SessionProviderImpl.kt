@@ -30,8 +30,11 @@ class SessionProviderImpl @Inject constructor(
     private val accountRepository: AccountRepository,
 ) : SessionProvider {
 
-    override suspend fun getSession(sessionId: SessionId): Session? =
+    private suspend fun getSessionOrNull(sessionId: SessionId): Session? =
         accountRepository.getSessionOrNull(sessionId)
+
+    override suspend fun getSession(sessionId: SessionId?): Session? =
+        (sessionId ?: getSessionId(userId = null))?.let { getSessionOrNull(it) }
 
     override suspend fun getSessions(): List<Session> =
         accountRepository.getSessions().firstOrNull().orEmpty()

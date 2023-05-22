@@ -2,8 +2,6 @@ public abstract interface class me/proton/core/network/domain/ApiBackend {
 	public abstract fun getBaseUrl ()Ljava/lang/String;
 	public abstract fun invoke (Lme/proton/core/network/domain/ApiManager$Call;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun isPotentiallyBlocked (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun refreshSession (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun requestSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/network/domain/ApiClient {
@@ -90,6 +88,7 @@ public abstract class me/proton/core/network/domain/ApiResult {
 	public fun getValueOrNull ()Ljava/lang/Object;
 	public final fun getValueOrThrow ()Ljava/lang/Object;
 	public fun isPotentialBlocking ()Z
+	public abstract fun isSuccess ()Z
 	public final fun throwIfError ()V
 }
 
@@ -97,6 +96,7 @@ public abstract class me/proton/core/network/domain/ApiResult$Error : me/proton/
 	public synthetic fun <init> (Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ljava/lang/Throwable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getCause ()Ljava/lang/Throwable;
+	public fun isSuccess ()Z
 }
 
 public final class me/proton/core/network/domain/ApiResult$Error$Certificate : me/proton/core/network/domain/ApiResult$Error$Connection {
@@ -165,6 +165,7 @@ public final class me/proton/core/network/domain/ApiResult$Success : me/proton/c
 	public fun <init> (Ljava/lang/Object;)V
 	public final fun getValue ()Ljava/lang/Object;
 	public fun getValueOrNull ()Ljava/lang/Object;
+	public fun isSuccess ()Z
 }
 
 public final class me/proton/core/network/domain/ApiResultKt {
@@ -288,10 +289,6 @@ public final class me/proton/core/network/domain/TimeoutOverride {
 	public final fun getWriteTimeoutSeconds ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class me/proton/core/network/domain/UnAuthSessionsRepository {
-	public abstract fun requestToken (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/network/domain/client/ClientId {
@@ -478,16 +475,8 @@ public final class me/proton/core/network/domain/handlers/ProtonForceUpdateHandl
 }
 
 public final class me/proton/core/network/domain/handlers/TokenErrorHandler : me/proton/core/network/domain/ApiErrorHandler {
-	public static final field Companion Lme/proton/core/network/domain/handlers/TokenErrorHandler$Companion;
-	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lkotlin/jvm/functions/Function0;)V
+	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;)V
 	public fun invoke (Lme/proton/core/network/domain/ApiBackend;Lme/proton/core/network/domain/ApiResult$Error;Lme/proton/core/network/domain/ApiManager$Call;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/network/domain/handlers/TokenErrorHandler$Companion {
-	public final fun clear ()V
-	public final fun getFORCE_LOGOUT_HTTP_CODES ()Ljava/util/List;
-	public final fun reset (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun sessionMutex (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods {
@@ -643,63 +632,50 @@ public abstract interface class me/proton/core/network/domain/serverconnection/D
 	public abstract fun onProxiesFailed (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class me/proton/core/network/domain/session/ResolvedSession {
+public abstract class me/proton/core/network/domain/session/Session {
+	public synthetic fun <init> (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getAccessToken ()Ljava/lang/String;
+	public fun getRefreshToken ()Ljava/lang/String;
+	public fun getScopes ()Ljava/util/List;
+	public fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
+	public final fun isValid ()Z
 }
 
-public abstract class me/proton/core/network/domain/session/ResolvedSession$Found : me/proton/core/network/domain/session/ResolvedSession {
-	public synthetic fun <init> (Lme/proton/core/network/domain/session/Session;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getSession ()Lme/proton/core/network/domain/session/Session;
-}
-
-public final class me/proton/core/network/domain/session/ResolvedSession$Found$Authenticated : me/proton/core/network/domain/session/ResolvedSession$Found {
-	public fun <init> (Lme/proton/core/network/domain/session/Session;)V
-	public final fun component1 ()Lme/proton/core/network/domain/session/Session;
-	public final fun copy (Lme/proton/core/network/domain/session/Session;)Lme/proton/core/network/domain/session/ResolvedSession$Found$Authenticated;
-	public static synthetic fun copy$default (Lme/proton/core/network/domain/session/ResolvedSession$Found$Authenticated;Lme/proton/core/network/domain/session/Session;ILjava/lang/Object;)Lme/proton/core/network/domain/session/ResolvedSession$Found$Authenticated;
+public final class me/proton/core/network/domain/session/Session$Authenticated : me/proton/core/network/domain/session/Session {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/Session;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Lme/proton/core/network/domain/session/SessionId;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/network/domain/session/Session$Authenticated;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/session/Session$Authenticated;Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/network/domain/session/Session$Authenticated;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getSession ()Lme/proton/core/network/domain/session/Session;
+	public fun getAccessToken ()Ljava/lang/String;
+	public fun getRefreshToken ()Ljava/lang/String;
+	public fun getScopes ()Ljava/util/List;
+	public fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/network/domain/session/ResolvedSession$Found$Unauthenticated : me/proton/core/network/domain/session/ResolvedSession$Found {
+public final class me/proton/core/network/domain/session/Session$Unauthenticated : me/proton/core/network/domain/session/Session {
 	public fun <init> (Lme/proton/core/network/domain/session/Session;)V
-	public final fun component1 ()Lme/proton/core/network/domain/session/Session;
-	public final fun copy (Lme/proton/core/network/domain/session/Session;)Lme/proton/core/network/domain/session/ResolvedSession$Found$Unauthenticated;
-	public static synthetic fun copy$default (Lme/proton/core/network/domain/session/ResolvedSession$Found$Unauthenticated;Lme/proton/core/network/domain/session/Session;ILjava/lang/Object;)Lme/proton/core/network/domain/session/ResolvedSession$Found$Unauthenticated;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getSession ()Lme/proton/core/network/domain/session/Session;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class me/proton/core/network/domain/session/ResolvedSession$NotFound : me/proton/core/network/domain/session/ResolvedSession {
-}
-
-public final class me/proton/core/network/domain/session/ResolvedSession$NotFound$Authenticated : me/proton/core/network/domain/session/ResolvedSession$NotFound {
-	public static final field INSTANCE Lme/proton/core/network/domain/session/ResolvedSession$NotFound$Authenticated;
-}
-
-public final class me/proton/core/network/domain/session/ResolvedSession$NotFound$Unauthenticated : me/proton/core/network/domain/session/ResolvedSession$NotFound {
-	public static final field INSTANCE Lme/proton/core/network/domain/session/ResolvedSession$NotFound$Unauthenticated;
-}
-
-public final class me/proton/core/network/domain/session/Session {
 	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
 	public final fun component1 ()Lme/proton/core/network/domain/session/SessionId;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/util/List;
-	public final fun copy (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/network/domain/session/Session;
-	public static synthetic fun copy$default (Lme/proton/core/network/domain/session/Session;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/network/domain/session/Session;
+	public final fun copy (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/network/domain/session/Session$Unauthenticated;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/session/Session$Unauthenticated;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/network/domain/session/Session$Unauthenticated;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getRefreshToken ()Ljava/lang/String;
-	public final fun getScopes ()Ljava/util/List;
-	public final fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
+	public fun getAccessToken ()Ljava/lang/String;
+	public fun getRefreshToken ()Ljava/lang/String;
+	public fun getScopes ()Ljava/util/List;
+	public fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
 	public fun hashCode ()I
-	public final fun isValid ()Z
-	public final fun refreshWith (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/network/domain/session/Session;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -714,11 +690,18 @@ public final class me/proton/core/network/domain/session/SessionId {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/network/domain/session/SessionKt {
+	public static final fun toStringLog (Lme/proton/core/network/domain/session/Session;)Ljava/lang/String;
+}
+
 public abstract interface class me/proton/core/network/domain/session/SessionListener {
 	public abstract fun onSessionForceLogout (Lme/proton/core/network/domain/session/Session;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onSessionScopesRefreshed (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun onSessionTokenCreated (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onSessionTokenCreated (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun onSessionTokenRefreshed (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun refreshSession (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun requestSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun withLock (Lme/proton/core/network/domain/session/SessionId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/network/domain/session/SessionProvider {
@@ -726,19 +709,5 @@ public abstract interface class me/proton/core/network/domain/session/SessionPro
 	public abstract fun getSessionId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSessions (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUserId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/network/domain/session/SessionProviderKt {
-	public static final fun getResolvedSession (Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/network/domain/session/unauth/LogTag {
-	public static final field INSTANCE Lme/proton/core/network/domain/session/unauth/LogTag;
-	public static final field REQUEST_TOKEN Ljava/lang/String;
-}
-
-public final class me/proton/core/network/domain/session/unauth/OpportunisticUnAuthTokenRequest {
-	public fun <init> (Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lme/proton/core/network/domain/UnAuthSessionsRepository;)V
-	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

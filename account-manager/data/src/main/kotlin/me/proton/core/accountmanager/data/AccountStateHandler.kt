@@ -70,13 +70,3 @@ class AccountStateHandler @Inject constructor(
     }
 }
 
-object LogTag {
-    /** Tag for Invalid User Key. */
-    const val INVALID_USER_KEY = "core.accountmanager.invalid.user.key"
-
-    /** Tag for Invalid UserAddress Key. */
-    const val INVALID_USER_ADDRESS_KEY = "core.accountmanager.invalid.useraddress.key"
-
-    /** Default tag for any other issue we need to log */
-    const val DEFAULT = "core.accountmanager.default"
-}

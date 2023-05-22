@@ -37,7 +37,9 @@ class AccountManagerImplTest {
 
     private lateinit var accountManager: AccountManagerImpl
 
-    private val session1 = Session(
+    private val userId = UserId("user1")
+    private val session1 = Session.Authenticated(
+        userId = userId,
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
@@ -45,7 +47,7 @@ class AccountManagerImplTest {
     )
 
     private val account1 = Account(
-        userId = UserId("user1"),
+        userId = userId,
         username = "username",
         email = "test@example.com",
         state = AccountState.Ready,
@@ -64,7 +66,8 @@ class AccountManagerImplTest {
             Product.Calendar,
             mocks.accountRepository,
             mocks.authRepository,
-            mocks.userManager
+            mocks.userManager,
+            mocks.sessionListener
         )
     }
 

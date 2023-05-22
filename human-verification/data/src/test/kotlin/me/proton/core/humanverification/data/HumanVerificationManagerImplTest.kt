@@ -27,6 +27,7 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
@@ -52,7 +53,9 @@ class HumanVerificationManagerImplTest {
     private lateinit var humanVerificationManager: HumanVerificationManagerImpl
 
     private val flowOfHumanVerificationStateChangedLists = mutableListOf<HumanVerificationDetails>()
-    private val session = Session(
+    private val userId = UserId("userId")
+    private val session = Session.Authenticated(
+        userId = userId,
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",

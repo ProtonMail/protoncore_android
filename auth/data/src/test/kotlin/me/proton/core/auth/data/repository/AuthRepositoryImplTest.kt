@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.data.repository
 
-import java.net.ConnectException
 import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
@@ -26,6 +25,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.response.SessionResponse
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
@@ -40,11 +40,13 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import org.junit.Test
+import java.net.ConnectException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -114,7 +116,9 @@ class AuthRepositoryImplTest {
     @Test
     fun `login info success result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<AuthInfo>(any()) } returns ApiResult.Success(successLoginInfo)
+        coEvery { apiManager.invoke<AuthInfo>(any()) } returns ApiResult.Success(
+            successLoginInfo
+        )
         // WHEN
         val loginInfoResponse = repository.getAuthInfoSrp(testSessionId, testUsername)
         // THEN
@@ -126,7 +130,9 @@ class AuthRepositoryImplTest {
     fun `login info error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<AuthInfo>(any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
@@ -145,7 +151,9 @@ class AuthRepositoryImplTest {
         every { successSessionInfo.username } returns testUsername
         every { successSessionInfo.accessToken } returns testAccessToken
         every { successSessionInfo.serverProof } returns testSrpProofs.expectedServerProof
-        coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Success(successSessionInfo)
+        coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Success(
+            successSessionInfo
+        )
         // WHEN
         val sessionInfoResponse = repository.performLogin(
             testUsername,
@@ -165,7 +173,9 @@ class AuthRepositoryImplTest {
         every { successSessionInfo.username } returns testUsername
         every { successSessionInfo.accessToken } returns testAccessToken
         every { successSessionInfo.serverProof } returns testSrpProofs.expectedServerProof
-        coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Success(successSessionInfo)
+        coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Success(
+            successSessionInfo
+        )
         // WHEN
         val sessionInfoResponse = repository.performLogin(
             testUsername,
@@ -193,7 +203,9 @@ class AuthRepositoryImplTest {
     fun `login error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test login error")
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
@@ -215,7 +227,9 @@ class AuthRepositoryImplTest {
     fun `login error result with frames`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test login error")
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
@@ -244,28 +258,29 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login fails because server returns wrong SRP proof`() = runTest(testDispatcherProvider.Main) {
-        // GIVEN
-        val block = slot<suspend AuthenticationApi.() -> SessionInfo>()
-        coEvery { apiManager.invoke(capture(block)) } coAnswers {
-            val mockedApiCall = mockk<AuthenticationApi> {
-                coEvery { performLogin(any()) } returns mockk {
-                    every { serverProof } returns testSrpProofs.expectedServerProof + "corrupted"
+    fun `login fails because server returns wrong SRP proof`() =
+        runTest(testDispatcherProvider.Main) {
+            // GIVEN
+            val block = slot<suspend AuthenticationApi.() -> SessionInfo>()
+            coEvery { apiManager.invoke(capture(block)) } coAnswers {
+                val mockedApiCall = mockk<AuthenticationApi> {
+                    coEvery { performLogin(any()) } returns mockk {
+                        every { serverProof } returns testSrpProofs.expectedServerProof + "corrupted"
+                    }
                 }
+                val sessionInfo = block.captured(mockedApiCall)
+                ApiResult.Success(sessionInfo)
             }
-            val sessionInfo = block.captured(mockedApiCall)
-            ApiResult.Success(sessionInfo)
+            // WHEN & THEN
+            assertFailsWith<InvalidServerAuthenticationException> {
+                repository.performLogin(
+                    testUsername,
+                    testSrpProofs,
+                    testSrpSession,
+                    emptyList()
+                )
+            }
         }
-        // WHEN & THEN
-        assertFailsWith<InvalidServerAuthenticationException> {
-            repository.performLogin(
-                testUsername,
-                testSrpProofs,
-                testSrpSession,
-                emptyList()
-            )
-        }
-    }
 
     @Test
     fun `login fails because server returns null SRP proof`() = runTest(testDispatcherProvider.Main) {
@@ -305,7 +320,9 @@ class AuthRepositoryImplTest {
     fun `logout api error result`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test login error")
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test login error")
         )
         // WHEN
         val response = repository.revokeSession(testSessionId)
@@ -330,10 +347,15 @@ class AuthRepositoryImplTest {
         // GIVEN
         every { successScopeInfo.scope } returns "test-scope"
         every { successScopeInfo.scopes } returns listOf("scope1", "scope2")
-        coEvery { apiManager.invoke<ScopeInfo>(any()) } returns ApiResult.Success(successScopeInfo)
+        coEvery { apiManager.invoke<ScopeInfo>(any()) } returns ApiResult.Success(
+            successScopeInfo
+        )
         // WHEN
         val responseScopeInfo =
-            repository.performSecondFactor(testSessionId, SecondFactorProof.SecondFactorCode("123456"))
+            repository.performSecondFactor(
+                testSessionId,
+                SecondFactorProof.SecondFactorCode("123456")
+            )
         // THEN
         assertEquals(successScopeInfo, responseScopeInfo)
         assertEquals("test-scope", responseScopeInfo.scope)
@@ -345,7 +367,9 @@ class AuthRepositoryImplTest {
         // GIVEN
         every { successScopeInfo.scope } returns "test-scope"
         every { successScopeInfo.scopes } returns listOf("scope1", "scope2")
-        coEvery { apiManager.invoke<ScopeInfo>(any()) } returns ApiResult.Success(successScopeInfo)
+        coEvery { apiManager.invoke<ScopeInfo>(any()) } returns ApiResult.Success(
+            successScopeInfo
+        )
         // WHEN
         val responseScopeInfo = repository.performSecondFactor(
             testSessionId,
@@ -377,5 +401,47 @@ class AuthRepositoryImplTest {
         )
         // WHEN
         repository.performLoginSso("username@domain.com", "token")
+    }
+
+    @Test
+    fun `requestSession success`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionResponse>(any(), any()) } returns ApiResult.Success(
+            SessionResponse(
+                accessToken = "accessToken",
+                refreshToken = "refreshToken",
+                tokenType = "Bearer",
+                scopes = emptyList(),
+                sessionId = "sessionId"
+            )
+        )
+        // WHEN
+        val session = repository.requestSession()
+        // THEN
+        assertNotNull(session)
+    }
+
+    @Test
+    fun `refreshSession  success`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        val session = Session.Unauthenticated(
+            sessionId = SessionId("sessionId"),
+            accessToken = "accessToken",
+            refreshToken = "refreshToken",
+            scopes = emptyList(),
+        )
+        coEvery { apiManager.invoke<SessionResponse>(any(), any()) } returns ApiResult.Success(
+            SessionResponse(
+                accessToken = "accessToken",
+                refreshToken = "refreshToken",
+                tokenType = "Bearer",
+                scopes = emptyList(),
+                sessionId = "sessionId"
+            )
+        )
+        // WHEN
+        val refreshed = repository.refreshSession(session)
+        // THEN
+        assertNotNull(refreshed)
     }
 }
