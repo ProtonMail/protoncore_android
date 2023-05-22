@@ -45,7 +45,7 @@ import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.LoginEaToIaUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.LoginEaToIaUserCheckTotalV1
 import me.proton.core.observability.domain.metrics.LoginEaToIaUsernameAvailabilityTotal
-import me.proton.core.observability.domain.metrics.LoginScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -181,7 +181,7 @@ class ChooseAddressViewModel @Inject constructor(
         return State.AccountSetupResult(result)
     }
 
-    internal fun onScreenView(screenId: LoginScreenViewTotalV1.ScreenId) {
-        observabilityManager.enqueue(LoginScreenViewTotalV1(screenId))
+    internal fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
+        observabilityManager.enqueue(LoginScreenViewTotal(screenId))
     }
 }

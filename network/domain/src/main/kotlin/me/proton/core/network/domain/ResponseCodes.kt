@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ object ResponseCodes {
     const val API_VERSION_INVALID = 5005
     const val APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS = 5099
     const val PASSWORD_WRONG = 8002
+    const val AUTH_SWITCH_TO_SSO = 8100
+    const val AUTH_SWITCH_TO_SRP = 8101
     const val HUMAN_VERIFICATION_REQUIRED = 9001
     const val DEVICE_VERIFICATION_REQUIRED = 9002 // new error code for device verification
     const val USER_CREATE_NAME_INVALID = 12_081

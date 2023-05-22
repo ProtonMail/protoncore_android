@@ -39,7 +39,7 @@ import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.State
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.LoginScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
@@ -111,7 +111,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(
             }.launchIn(lifecycleScope)
 
         launchOnScreenView {
-            viewModel.onScreenView(LoginScreenViewTotalV1.ScreenId.chooseInternalAddress)
+            viewModel.onScreenView(LoginScreenViewTotal.ScreenId.chooseInternalAddress)
         }
     }
 

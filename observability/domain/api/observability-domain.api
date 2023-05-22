@@ -1013,6 +1013,86 @@ public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
 }
 
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;J)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;
+	public fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status : java/lang/Enum {
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field http422 Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field notConnected Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field parseError Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -1153,75 +1233,303 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserna
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;J)V
-	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;J)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;J)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
-	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status : java/lang/Enum {
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field notConnected Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field parseError Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field ssoDomainNotFound Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData$$serializer;
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$$serializer;
 	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$LabelsData$Companion {
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId : java/lang/Enum {
-	public static final field chooseInternalAddress Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginScreenViewTotalV1$ScreenId;
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;
+	public fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId : java/lang/Enum {
+	public static final field chooseInternalAddress Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public static final field signInWithSso Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public static final field ssoIdentityProvider Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
+	public fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status : java/lang/Enum {
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;
+	public fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status : java/lang/Enum {
+	public static final field error Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
+	public static final field success Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
 }
 
 public abstract class me/proton/core/observability/domain/metrics/ObservabilityData {
