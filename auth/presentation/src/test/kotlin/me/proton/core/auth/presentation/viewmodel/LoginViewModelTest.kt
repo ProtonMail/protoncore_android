@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,10 +27,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.LocalAuthFlags
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -67,13 +69,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
     @Before
     fun beforeEveryTest() {
-        viewModel = LoginViewModel(
-            savedStateHandle,
-            accountHandler,
-            createLoginSession,
-            keyStoreCrypto,
-            postLoginAccountSetup
-        )
+        viewModel = makeLoginViewModel()
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
     }
 
@@ -83,7 +79,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo(isSecondFactorNeeded = true)
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
         } returns PostLoginAccountSetup.Result.Need.SecondFactor(testUserId)
 
         viewModel.state.test {
@@ -111,7 +115,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
         } returns PostLoginAccountSetup.Result.UserUnlocked(testUserId)
 
         viewModel.state.test {
@@ -139,7 +151,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
         } throws ApiException(ApiResult.Error.NoInternet())
 
         viewModel.state.test {
@@ -193,7 +213,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
         } returns PostLoginAccountSetup.Result.Need.ChangePassword(testUserId)
 
         viewModel.state.test {
@@ -217,7 +245,16 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), any(), subscribeMetricData = any())
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                subscribeMetricData = any()
+            )
         } throws ApiException(
             ApiResult.Error.Http(
                 400,
@@ -319,6 +356,35 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun ssoButtonVisibility() {
+        val ssoMap = mapOf(
+            Product.Calendar to false,
+            Product.Drive to false,
+            Product.Mail to false,
+            Product.Pass to false,
+            Product.Vpn to false,
+        )
+        Product.values().forEach { product ->
+            val viewModel = makeLoginViewModel(LocalAuthFlags(product))
+            assertEquals(
+                ssoMap[product],
+                viewModel.isSSOEnabled,
+                "SSO for $product should be ${ssoMap[product]} but is ${viewModel.isSSOEnabled}."
+            )
+        }
+    }
+
+    private fun makeLoginViewModel(localAuthFlags: LocalAuthFlags = LocalAuthFlags(Product.Mail)): LoginViewModel =
+        LoginViewModel(
+            savedStateHandle,
+            accountHandler,
+            createLoginSession,
+            keyStoreCrypto,
+            postLoginAccountSetup,
+            localAuthFlags
+        )
 
     private fun mockSessionInfo(
         isSecondFactorNeeded: Boolean = false,

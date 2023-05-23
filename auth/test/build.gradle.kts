@@ -51,7 +51,8 @@ android {
 
 dependencies {
     api(
-        project(Module.quark)
+        project(Module.quark),
+        `espresso-intents`
     )
 
     implementation(

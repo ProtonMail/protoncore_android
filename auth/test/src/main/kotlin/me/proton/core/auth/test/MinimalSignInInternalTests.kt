@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,17 +18,23 @@
 
 package me.proton.core.auth.test
 
+import androidx.test.espresso.intent.rule.IntentsRule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
+import me.proton.core.auth.test.robot.login.LoginHelpRobot
+import me.proton.core.auth.test.robot.login.LoginRobot
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
+import org.junit.Rule
 import org.junit.Test
 
 /**
  * Minimal SignIn Tests for app providing [AccountType.Internal].
  */
 public interface MinimalSignInInternalTests {
+    @get:Rule
+    public val intentsRule: IntentsRule
 
     public val quark: Quark
     public val users: User.Users
@@ -66,5 +72,23 @@ public interface MinimalSignInInternalTests {
         AddAccountRobot.clickSignIn()
         SignInFlow.signInExternal(user.email, user.password, username)
         verifyAfter()
+    }
+
+    @Test
+    public fun opensHelp() {
+        AddAccountRobot.clickSignIn()
+        LoginRobot.help()
+
+        LoginHelpRobot
+            .forgotUsername()
+            .forgotUsernameBrowserOpened()
+
+        LoginHelpRobot
+            .forgotPassword()
+            .forgotPasswordBrowserOpened()
+
+        LoginHelpRobot
+            .otherIssues()
+            .otherIssuesBrowserOpened()
     }
 }

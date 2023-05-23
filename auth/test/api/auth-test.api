@@ -81,9 +81,23 @@ public final class me/proton/core/auth/test/BuildConfig {
 	public fun <init> ()V
 }
 
+public abstract interface class me/proton/core/auth/test/MinimalSSOSignInTests {
+	public abstract fun getLocalAuthFlags ()Lme/proton/core/auth/domain/LocalAuthFlags;
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun setUp ()V
+	public abstract fun ssoSignInHappyPath ()V
+}
+
+public final class me/proton/core/auth/test/MinimalSSOSignInTests$DefaultImpls {
+	public static fun setUp (Lme/proton/core/auth/test/MinimalSSOSignInTests;)V
+	public static fun ssoSignInHappyPath (Lme/proton/core/auth/test/MinimalSSOSignInTests;)V
+}
+
 public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTests {
+	public abstract fun getIntentsRule ()Landroidx/test/espresso/intent/rule/IntentsRule;
 	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
 	public abstract fun getUsers ()Lme/proton/core/test/quark/data/User$Users;
+	public abstract fun opensHelp ()V
 	public abstract fun signInExternalHappyPath ()V
 	public abstract fun signInInternalHappyPath ()V
 	public abstract fun signInInternalTwoPassHappyPath ()V
@@ -91,6 +105,7 @@ public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTe
 }
 
 public final class me/proton/core/auth/test/MinimalSignInInternalTests$DefaultImpls {
+	public static fun opensHelp (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
 	public static fun signInExternalHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
 	public static fun signInInternalHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
 	public static fun signInInternalTwoPassHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
@@ -128,11 +143,24 @@ public final class me/proton/core/auth/test/robot/AddAccountRobot {
 	public final fun uiElementsDisplayed ()V
 }
 
+public final class me/proton/core/auth/test/robot/login/LoginHelpRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/login/LoginHelpRobot;
+	public final fun customerSupport ()V
+	public final fun forgotPassword ()Lme/proton/core/auth/test/robot/login/LoginHelpRobot;
+	public final fun forgotPasswordBrowserOpened ()V
+	public final fun forgotUsername ()Lme/proton/core/auth/test/robot/login/LoginHelpRobot;
+	public final fun forgotUsernameBrowserOpened ()V
+	public final fun otherIssues ()Lme/proton/core/auth/test/robot/login/LoginHelpRobot;
+	public final fun otherIssuesBrowserOpened ()V
+}
+
 public final class me/proton/core/auth/test/robot/login/LoginRobot {
 	public static final field INSTANCE Lme/proton/core/auth/test/robot/login/LoginRobot;
 	public final fun fillPassword (Ljava/lang/String;)Lme/proton/core/auth/test/robot/login/LoginRobot;
 	public final fun fillUsername (Ljava/lang/String;)Lme/proton/core/auth/test/robot/login/LoginRobot;
+	public final fun help ()V
 	public final fun login ()V
+	public final fun signInWithSSO ()V
 }
 
 public final class me/proton/core/auth/test/robot/login/TwoPassRobot {

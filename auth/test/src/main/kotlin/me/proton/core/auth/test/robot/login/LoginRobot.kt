@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ import me.proton.test.fusion.Fusion.view
 public object LoginRobot {
     private val usernameInput = view.withCustomMatcher(inputFieldMatcher(R.id.usernameInput))
     private val passwordInput = view.withCustomMatcher(inputFieldMatcher(R.id.passwordInput))
+    private val helpButton = view.withId(R.id.login_menu_help)
     private val signInButton = view.withId(R.id.signInButton)
+    private val signInWithSSOButton = view.withId(R.id.signInWithSsoButton)
 
     public fun fillUsername(username: String): LoginRobot = apply {
         usernameInput.typeText(username)
@@ -36,7 +38,15 @@ public object LoginRobot {
         passwordInput.typeText(password)
     }
 
+    public fun help() {
+        helpButton.click()
+    }
+
     public fun login() {
         signInButton.click()
+    }
+
+    public fun signInWithSSO() {
+        signInWithSSOButton.click()
     }
 }
