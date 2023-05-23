@@ -18,7 +18,11 @@
 
 package me.proton.core.auth.presentation.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
@@ -33,6 +37,26 @@ import me.proton.core.user.domain.UserManager
 abstract class AuthActivity<ViewBindingT : ViewBinding>(
     bindingInflater: (LayoutInflater) -> ViewBindingT
 ) : ProtonSecureActivity<ViewBindingT>(bindingInflater) {
+
+    fun setActionBarAuthMenu(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        menuInflater.inflate(R.menu.login_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.login_menu_help -> startAuthHelpActivity()
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun startAuthHelpActivity(): Boolean {
+        startActivity(Intent(this, AuthHelpActivity::class.java))
+        return true
+    }
 
     open fun showLoading(loading: Boolean) {
         // No op

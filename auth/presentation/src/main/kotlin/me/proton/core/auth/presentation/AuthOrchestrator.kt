@@ -30,6 +30,8 @@ import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
+import me.proton.core.auth.presentation.entity.LoginSsoInput
+import me.proton.core.auth.presentation.entity.LoginSsoResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
@@ -41,6 +43,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.StartAddAccount
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
+import me.proton.core.auth.presentation.ui.StartLoginSso
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
@@ -55,6 +58,7 @@ class AuthOrchestrator @Inject constructor() {
     // region result launchers
     private var addAccountWorkflowLauncher: ActivityResultLauncher<AddAccountInput>? = null
     private var loginWorkflowLauncher: ActivityResultLauncher<LoginInput>? = null
+    private var loginSsoWorkflowLauncher: ActivityResultLauncher<LoginSsoInput>? = null
     private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
@@ -65,6 +69,7 @@ class AuthOrchestrator @Inject constructor() {
 
     private var onAddAccountResultListener: ((result: AddAccountResult?) -> Unit)? = {}
     private var onLoginResultListener: ((result: LoginResult?) -> Unit)? = {}
+    private var onLoginSsoResultListener: ((result: LoginSsoResult?) -> Unit)? = {}
     private var onTwoPassModeResultListener: ((result: TwoPassModeResult?) -> Unit)? = {}
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
@@ -77,6 +82,10 @@ class AuthOrchestrator @Inject constructor() {
 
     fun setOnLoginResult(block: (result: LoginResult?) -> Unit) {
         onLoginResultListener = block
+    }
+
+    fun setOnLoginSsoResult(block: (result: LoginSsoResult?) -> Unit) {
+        onLoginSsoResultListener = block
     }
 
     fun setOnTwoPassModeResult(block: (result: TwoPassModeResult?) -> Unit) {
@@ -118,6 +127,15 @@ class AuthOrchestrator @Inject constructor() {
             StartLogin()
         ) {
             onLoginResultListener?.invoke(it)
+        }
+
+    private fun registerLoginSsoResult(
+        caller: ActivityResultCaller
+    ): ActivityResultLauncher<LoginSsoInput> =
+        caller.registerForActivityResult(
+            StartLoginSso()
+        ) {
+            onLoginSsoResultListener?.invoke(it)
         }
 
     private fun registerTwoPassModeResult(
@@ -285,6 +303,19 @@ class AuthOrchestrator @Inject constructor() {
     }
 
     /**
+     * Starts the Login SSO workflow.
+     *
+     * @see [onLoginSsoResult]
+     */
+    fun startLoginSsoWorkflow(
+        email: String? = null,
+    ) {
+        checkRegistered(loginSsoWorkflowLauncher).launch(
+            LoginSsoInput(email)
+        )
+    }
+
+    /**
      * Start a Second Factor workflow.
      * In case the Second Factor fails with [SecondFactorResult.UnrecoverableError],
      * you should likely show/go back to the login screen and show the error message there.
@@ -385,6 +416,13 @@ fun AuthOrchestrator.onLoginResult(
     block: (result: LoginResult?) -> Unit
 ): AuthOrchestrator {
     setOnLoginResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onLoginSsoResult(
+    block: (result: LoginSsoResult?) -> Unit
+): AuthOrchestrator {
+    setOnLoginSsoResult { block(it) }
     return this
 }
 

@@ -22,8 +22,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -35,7 +33,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
@@ -76,16 +73,16 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
+    // Todo: loginSsoResultLauncher.launch(LoginSsoInput(usernameInput.text.toString()))
+    private val loginSsoResultLauncher = registerForActivityResult(StartLoginSso()) {
+        if (it != null) onSuccess(UserId(it.userId), it.nextStep)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = ""
-
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                onBackPressed()
-            }
+            setActionBarAuthMenu(toolbar)
+            toolbar.setNavigationOnClickListener { onBackPressed() }
 
             signInButton.onClick(::onSignInClicked)
             signInWithSsoButton.isVisible = viewModel.isSSOEnabled
@@ -141,21 +138,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.login_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.login_menu_help -> {
-                startActivity(Intent(this, AuthHelpActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {

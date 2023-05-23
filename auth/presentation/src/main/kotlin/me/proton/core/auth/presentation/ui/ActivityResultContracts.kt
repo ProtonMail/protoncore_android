@@ -28,6 +28,8 @@ import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
+import me.proton.core.auth.presentation.entity.LoginSsoInput
+import me.proton.core.auth.presentation.entity.LoginSsoResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
@@ -61,6 +63,20 @@ class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
     override fun parseResult(resultCode: Int, result: Intent?): LoginResult? {
         if (resultCode != Activity.RESULT_OK) return null
         return result?.getParcelableExtra(LoginActivity.ARG_RESULT)
+    }
+}
+
+class StartLoginSso : ActivityResultContract<LoginSsoInput, LoginSsoResult?>() {
+
+    override fun createIntent(context: Context, input: LoginSsoInput) =
+        Intent(context, LoginSsoActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra(LoginSsoActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, result: Intent?): LoginSsoResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return result?.getParcelableExtra(LoginSsoActivity.ARG_RESULT)
     }
 }
 
