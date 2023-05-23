@@ -34,4 +34,10 @@ public class AndroidUiLibraryPlugin : BaseAndroidPlugin<AndroidUiLibraryExtensio
         }
 
     override fun createPluginExtension(target: Project): AndroidUiLibraryExtension = target.createProtonExt()
+
+    override fun apply(target: Project) {
+        super.apply(target)
+
+        target.pluginManager.apply(PluginIds.paparazzi)
+    }
 }

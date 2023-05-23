@@ -16,6 +16,7 @@ kotlinBinaryCompatibilityValidator = "0.12.1"
 kotlinx-kover = "0.7.0"
 jacoco-to-cobertura = "1.1.0"
 vanniktechPublish = "0.18.0"
+paparazzi = "1.2.0"
 
 [plugins]
 benManes-versions-gradle = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
@@ -26,6 +27,7 @@ kotlin-gradle = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlinx-kover" }
 jacoco-to-cobertura = { id = "net.razvan.jacoco-to-cobertura", version.ref = "jacoco-to-cobertura" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 
 [libraries]
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradle" }
@@ -46,3 +48,4 @@ kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializat
 kotlinx-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kotlinx-kover" }
 jacoco-to-cobertura = { module = "net.razvan:JacocoToCoberturaPlugin", version.ref = "jacoco-to-cobertura" }
 vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktechPublish" }
+paparazzi-gradle-plugin = { module = "app.cash.paparazzi:paparazzi-gradle-plugin", version.ref = "paparazzi" }

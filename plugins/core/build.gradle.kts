@@ -85,4 +85,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
     compileOnly(libs.android.gradle)
     api(libs.easyGradle.androidDsl)
+    api(libs.paparazzi.gradle.plugin)
 }
