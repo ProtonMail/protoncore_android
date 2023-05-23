@@ -82,7 +82,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
 
     private fun Project.onAfterEvaluate(ext: ProtonCoverageExtension) {
         extensions.configure<KoverProjectExtension> {
-            useKoverTool()
+            //useJacoco()
         }
 
         if (hasAndroidPlugin()) {
