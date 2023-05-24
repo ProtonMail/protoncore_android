@@ -27,12 +27,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.LocalAuthFlags
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
+import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -358,32 +357,25 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     }
 
     @Test
-    fun ssoButtonVisibility() {
-        val ssoMap = mapOf(
-            Product.Calendar to false,
-            Product.Drive to false,
-            Product.Mail to false,
-            Product.Pass to false,
-            Product.Vpn to false,
-        )
-        Product.values().forEach { product ->
-            val viewModel = makeLoginViewModel(LocalAuthFlags(product))
-            assertEquals(
-                ssoMap[product],
-                viewModel.isSSOEnabled,
-                "SSO for $product should be ${ssoMap[product]} but is ${viewModel.isSSOEnabled}."
-            )
-        }
+    fun isSsoEnabledIsFalse() {
+        val viewModel = makeLoginViewModel(isSsoEnabled = { false })
+        assertEquals(expected = false, actual = viewModel.isSsoEnabled,)
     }
 
-    private fun makeLoginViewModel(localAuthFlags: LocalAuthFlags = LocalAuthFlags(Product.Mail)): LoginViewModel =
+    @Test
+    fun isSsoEnabledIsTrue() {
+        val viewModel = makeLoginViewModel(isSsoEnabled = { true })
+        assertEquals(expected = true, actual = viewModel.isSsoEnabled)
+    }
+
+    private fun makeLoginViewModel(isSsoEnabled: IsSsoEnabled = IsSsoEnabled { false }): LoginViewModel =
         LoginViewModel(
             savedStateHandle,
             accountHandler,
             createLoginSession,
             keyStoreCrypto,
             postLoginAccountSetup,
-            localAuthFlags
+            isSsoEnabled
         )
 
     private fun mockSessionInfo(

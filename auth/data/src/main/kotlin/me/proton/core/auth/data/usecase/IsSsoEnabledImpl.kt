@@ -16,14 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain
+package me.proton.core.auth.data.usecase
 
-import me.proton.core.domain.entity.Product
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import me.proton.core.auth.data.R
+import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class LocalAuthFlags @Inject constructor(product: Product) {
-    // TODO enable only for VPN once SSO is ready
-    var ssoEnabled: Boolean = false // product == Product.Vpn
+class IsSsoEnabledImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : IsSsoEnabled {
+
+    override fun invoke(): Boolean {
+        return context.resources.getBoolean(R.bool.core_feature_auth_sso_enabled)
+    }
 }

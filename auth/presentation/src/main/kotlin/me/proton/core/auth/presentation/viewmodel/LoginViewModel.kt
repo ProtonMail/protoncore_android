@@ -31,10 +31,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.LocalAuthFlags
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
+import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
@@ -65,12 +65,12 @@ internal class LoginViewModel @Inject constructor(
     private val createLoginSession: CreateLoginSession,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val postLoginAccountSetup: PostLoginAccountSetup,
-    localAuthFlags: LocalAuthFlags,
+    isSsoEnabled: IsSsoEnabled,
 ) : ViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
-    val isSSOEnabled: Boolean = localAuthFlags.ssoEnabled
+    val isSsoEnabled: Boolean = isSsoEnabled()
     val state = _state.asSharedFlow()
 
     sealed class State {

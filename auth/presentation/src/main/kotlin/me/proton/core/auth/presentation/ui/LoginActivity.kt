@@ -85,7 +85,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             signInButton.onClick(::onSignInClicked)
-            signInWithSsoButton.isVisible = viewModel.isSSOEnabled
+            signInWithSsoButton.isVisible = viewModel.isSsoEnabled
             signInWithSsoButton.onClick {
                 // TODO
             }
