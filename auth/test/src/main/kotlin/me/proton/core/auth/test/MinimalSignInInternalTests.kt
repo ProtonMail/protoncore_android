@@ -35,6 +35,7 @@ import org.junit.Test
 public interface MinimalSignInInternalTests {
     @get:Rule
     public val intentsRule: IntentsRule
+        get() = IntentsRule()
 
     public val quark: Quark
     public val users: User.Users

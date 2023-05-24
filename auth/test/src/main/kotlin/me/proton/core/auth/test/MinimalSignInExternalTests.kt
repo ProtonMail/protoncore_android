@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,32 +18,35 @@
 
 package me.proton.core.auth.test
 
-import androidx.annotation.CallSuper
-import me.proton.core.auth.domain.LocalAuthFlags
+import android.content.Context
+import androidx.test.platform.app.InstrumentationRegistry
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.login.LoginRobot
-import me.proton.core.test.quark.Quark
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 /**
- * Minimal Sign In Tests for apps supporting SSO.
+ * Minimal SignIn Tests for app providing [AccountType.External].
  */
-public interface MinimalSSOSignInTests {
-    public val localAuthFlags: LocalAuthFlags
-    public val quark: Quark?
+public interface MinimalSignInExternalTests {
 
-    @BeforeTest
-    @CallSuper
-    public fun setUp() {
-        localAuthFlags.ssoEnabled = true
-        quark?.jailUnban()
-    }
+    public val context: Context
+        get() = InstrumentationRegistry.getInstrumentation().context
+
+    public val isSsoEnabled: Boolean
+        get() = context.resources.getBoolean(R.bool.core_feature_auth_sso_enabled)
+
+    public val isCongratsDisplayed: Boolean
+
+    public fun verifyAfter()
 
     @Test
-    public fun ssoSignInHappyPath() {
-        AddAccountRobot.clickSignIn()
-        LoginRobot.signInWithSSO()
-        // TODO proceed with the test
+    public fun signInWithSsoHappyPath() {
+        if (isSsoEnabled) {
+            AddAccountRobot.clickSignIn()
+            LoginRobot.signInWithSSO()
+
+            verifyAfter()
+        }
     }
 }
