@@ -21,8 +21,10 @@ package me.proton.core.auth.test
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.login.LoginRobot
+import me.proton.core.auth.test.robot.login.LoginSsoRobot
 import kotlin.test.Test
 
 /**
@@ -44,7 +46,7 @@ public interface MinimalSignInExternalTests {
     public fun signInWithSsoHappyPath() {
         if (isSsoEnabled) {
             AddAccountRobot.clickSignIn()
-            LoginRobot.signInWithSSO()
+            SignInFlow.signInSso("username@domain.com")
 
             verifyAfter()
         }

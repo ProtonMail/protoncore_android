@@ -81,16 +81,18 @@ public final class me/proton/core/auth/test/BuildConfig {
 	public fun <init> ()V
 }
 
-public abstract interface class me/proton/core/auth/test/MinimalSSOSignInTests {
-	public abstract fun getLocalAuthFlags ()Lme/proton/core/auth/domain/LocalAuthFlags;
-	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
-	public abstract fun setUp ()V
-	public abstract fun ssoSignInHappyPath ()V
+public abstract interface class me/proton/core/auth/test/MinimalSignInExternalTests {
+	public abstract fun getContext ()Landroid/content/Context;
+	public abstract fun isCongratsDisplayed ()Z
+	public abstract fun isSsoEnabled ()Z
+	public abstract fun signInWithSsoHappyPath ()V
+	public abstract fun verifyAfter ()V
 }
 
-public final class me/proton/core/auth/test/MinimalSSOSignInTests$DefaultImpls {
-	public static fun setUp (Lme/proton/core/auth/test/MinimalSSOSignInTests;)V
-	public static fun ssoSignInHappyPath (Lme/proton/core/auth/test/MinimalSSOSignInTests;)V
+public final class me/proton/core/auth/test/MinimalSignInExternalTests$DefaultImpls {
+	public static fun getContext (Lme/proton/core/auth/test/MinimalSignInExternalTests;)Landroid/content/Context;
+	public static fun isSsoEnabled (Lme/proton/core/auth/test/MinimalSignInExternalTests;)Z
+	public static fun signInWithSsoHappyPath (Lme/proton/core/auth/test/MinimalSignInExternalTests;)V
 }
 
 public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTests {
@@ -105,6 +107,7 @@ public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTe
 }
 
 public final class me/proton/core/auth/test/MinimalSignInInternalTests$DefaultImpls {
+	public static fun getIntentsRule (Lme/proton/core/auth/test/MinimalSignInInternalTests;)Landroidx/test/espresso/intent/rule/IntentsRule;
 	public static fun opensHelp (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
 	public static fun signInExternalHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
 	public static fun signInInternalHappyPath (Lme/proton/core/auth/test/MinimalSignInInternalTests;)V
@@ -128,6 +131,7 @@ public final class me/proton/core/auth/test/flow/SignInFlow {
 	public final fun signInExternal (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun signInInternal (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun signInInternalTwoPass (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun signInSso (Ljava/lang/String;)V
 }
 
 public final class me/proton/core/auth/test/flow/SignUpFlow {
@@ -141,6 +145,12 @@ public final class me/proton/core/auth/test/robot/AddAccountRobot {
 	public final fun clickSignIn ()Lme/proton/core/auth/test/robot/login/LoginRobot;
 	public final fun clickSignUp ()Lme/proton/core/auth/test/robot/signup/SignUpRobot;
 	public final fun uiElementsDisplayed ()V
+}
+
+public final class me/proton/core/auth/test/robot/login/IdentityProviderRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/login/IdentityProviderRobot;
+	public final fun clickVerify ()V
+	public final fun fillAuth ()Lme/proton/core/auth/test/robot/login/IdentityProviderRobot;
 }
 
 public final class me/proton/core/auth/test/robot/login/LoginHelpRobot {
@@ -161,6 +171,14 @@ public final class me/proton/core/auth/test/robot/login/LoginRobot {
 	public final fun help ()V
 	public final fun login ()V
 	public final fun signInWithSSO ()V
+}
+
+public final class me/proton/core/auth/test/robot/login/LoginSsoRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/login/LoginSsoRobot;
+	public final fun fillEmail (Ljava/lang/String;)Lme/proton/core/auth/test/robot/login/LoginSsoRobot;
+	public final fun help ()V
+	public final fun login ()V
+	public final fun signInWithPassword ()V
 }
 
 public final class me/proton/core/auth/test/robot/login/TwoPassRobot {

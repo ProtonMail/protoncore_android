@@ -130,6 +130,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
                     is LoginViewModel.State.InvalidPassword -> onLoginError(it.error.getUserMessage(resources))
                     is LoginViewModel.State.ExternalAccountNotSupported -> {}
+                    is LoginViewModel.State.SignInWithSso -> {}
                 }.exhaustive
             }
             .launchIn(lifecycleScope)

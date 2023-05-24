@@ -48,6 +48,14 @@ interface AuthRepository {
     ): SessionInfo
 
     /**
+     * Perform SSO Login to create a session (accessToken, refreshToken, sessionId, ...).
+     */
+    suspend fun performLoginSso(
+        email: String,
+        token: String,
+    ): SessionInfo
+
+    /**
      * Perform Two Factor for the Login process for a given [SessionId].
      */
     suspend fun performSecondFactor(

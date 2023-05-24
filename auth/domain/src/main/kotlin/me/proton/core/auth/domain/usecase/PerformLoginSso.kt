@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.auth.domain.usecase
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.util.kotlin.coroutine.result
+import javax.inject.Inject
 
-@Parcelize
-data class LoginSsoResult(
-    val userId: String,
-    val nextStep: NextStep = NextStep.None,
-) : Parcelable
+class PerformLoginSso @Inject constructor(
+    private val authRepository: AuthRepository,
+) {
+    suspend operator fun invoke(
+        email: String,
+        token: String,
+    ): SessionInfo = result("performLogin") {
+        authRepository.performLoginSso(email = email, token = token)
+    }
+}

@@ -357,6 +357,28 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     }
 
     @Test
+    fun `handle SSO account`() = coroutinesTest {
+        coEvery { createLoginSession.invoke(any(), any(), any()) } throws ApiException(
+            ApiResult.Error.Http(
+                httpCode = 404,
+                message = "Email domain associated to an existing organization. Please sign in with SSO",
+                proton = ApiResult.Error.ProtonData(8100, "error")
+            )
+        )
+
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+
+            // THEN
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
+            assertIs<LoginViewModel.State.SignInWithSso>(awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun isSsoEnabledIsFalse() {
         val viewModel = makeLoginViewModel(isSsoEnabled = { false })
         assertEquals(expected = false, actual = viewModel.isSsoEnabled,)

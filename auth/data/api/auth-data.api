@@ -13,6 +13,14 @@ public final class me/proton/core/auth/data/MissingScopeListenerImpl : me/proton
 	public fun onMissingScopeSuccess (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/data/MissingScopeListenerImpl_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/data/MissingScopeListenerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/data/MissingScopeListenerImpl;
+	public static fun newInstance ()Lme/proton/core/auth/data/MissingScopeListenerImpl;
+}
+
 public abstract interface class me/proton/core/auth/data/api/AuthenticationApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
 	public abstract fun getAuthInfo (Lme/proton/core/auth/data/api/request/AuthInfoRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getRandomModulus (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -486,10 +494,24 @@ public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/p
 	public fun getAuthInfo (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun performLoginSso (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun randomModulus (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun revokeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun validateEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun validatePhone (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/data/usecase/IsSsoEnabledImpl : me/proton/core/auth/domain/usecase/IsSsoEnabled {
+	public fun <init> (Landroid/content/Context;)V
+	public fun invoke ()Z
+}
+
+public final class me/proton/core/auth/data/usecase/IsSsoEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;
 }
 

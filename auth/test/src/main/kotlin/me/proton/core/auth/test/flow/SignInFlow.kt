@@ -18,7 +18,9 @@
 
 package me.proton.core.auth.test.flow
 
+import me.proton.core.auth.test.robot.login.IdentityProviderRobot
 import me.proton.core.auth.test.robot.login.LoginRobot
+import me.proton.core.auth.test.robot.login.LoginSsoRobot
 import me.proton.core.auth.test.robot.login.TwoPassRobot
 import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
 
@@ -72,5 +74,20 @@ public object SignInFlow {
             .selectAlternativeDomain()
             .selectPrimaryDomain()
             .next()
+    }
+
+    /**
+     * SSO Account simple happy path:
+     * - Enter email.
+     * - Identity Provider.
+     * - Logged in.
+     */
+    public fun signInSso(email: String) {
+        LoginSsoRobot
+            .fillEmail(email)
+            .login()
+        IdentityProviderRobot
+            .fillAuth()
+            .clickVerify()
     }
 }

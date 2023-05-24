@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.SecondFactor
-import me.proton.core.auth.domain.usecase.scopes.GetAuthInfo
+import me.proton.core.auth.domain.usecase.GetAuthInfo
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto

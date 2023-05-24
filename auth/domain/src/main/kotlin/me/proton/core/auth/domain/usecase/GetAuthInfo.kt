@@ -16,21 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase.scopes
+package me.proton.core.auth.domain.usecase
 
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 class GetAuthInfo @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId,
+        sessionId: SessionId?,
         username: String
-    ): AuthInfo = authRepository.getAuthInfo(
-        sessionId = sessionId,
-        username = username
-    )
+    ): AuthInfo = result("getAuthInfo") {
+        authRepository.getAuthInfo(
+            sessionId = sessionId,
+            username = username
+        )
+    }
 }

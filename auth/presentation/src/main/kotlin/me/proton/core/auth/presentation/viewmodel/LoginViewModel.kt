@@ -46,6 +46,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
+import me.proton.core.network.domain.ResponseCodes.AUTH_SWITCH_TO_SSO
 import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
@@ -76,6 +77,7 @@ internal class LoginViewModel @Inject constructor(
     sealed class State {
         object Idle : State()
         object Processing : State()
+        data class SignInWithSso(val email: String, val error: Throwable) : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
         data class Error(val error: Throwable, val isPotentialBlocking: Boolean) : State()
         data class InvalidPassword(val error: Throwable) : State()
@@ -146,8 +148,10 @@ internal class LoginViewModel @Inject constructor(
         emit(State.InvalidPassword(it))
     }.catchWhen(Throwable::isExternalAccountNotSupported) {
         emit(State.ExternalAccountNotSupported(it))
-    }.catchAll(LogTag.FLOW_ERROR_LOGIN) { error ->
-        emit(State.Error(error, error.isPotentialBlocking()))
+    }.catchWhen(Throwable::isSwitchToSso) {
+        emit(State.SignInWithSso(username, it))
+    }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
+        emit(State.Error(it, it.isPotentialBlocking()))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -171,4 +175,10 @@ private fun Throwable.isExternalAccountNotSupported(): Boolean {
     if (this !is ApiException) return false
     val error = error as? ApiResult.Error.Http
     return error?.proton?.code == APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
+}
+
+private fun Throwable.isSwitchToSso(): Boolean {
+    if (this !is ApiException) return false
+    val error = error as? ApiResult.Error.Http
+    return error?.proton?.code == AUTH_SWITCH_TO_SSO
 }

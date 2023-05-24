@@ -334,4 +334,9 @@ class AuthRepositoryImplTest {
         assertEquals("test-scope", responseScopeInfo.scope)
         assertEquals(2, responseScopeInfo.scopes.size)
     }
+
+    @Test(expected = NotImplementedError::class)
+    fun `performLoginSso return SessionInfo`() = runTest(testDispatcherProvider.Main) {
+        repository.performLoginSso("username@domain.com", "token")
+    }
 }

@@ -912,6 +912,7 @@ public final class me/proton/core/auth/presentation/entity/LoginSsoInput$Creator
 public final class me/proton/core/auth/presentation/entity/LoginSsoResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/NextStep;)V
+	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/NextStep;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lme/proton/core/auth/presentation/entity/NextStep;
 	public final fun copy (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/NextStep;)Lme/proton/core/auth/presentation/entity/LoginSsoResult;
@@ -1345,11 +1346,14 @@ public final class me/proton/core/auth/presentation/ui/AddAccountActivity_Member
 
 public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/proton/core/presentation/ui/ProtonSecureActivity {
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public fun onCreateOptionsMenu (Landroid/view/Menu;)Z
 	public fun onError (ZLjava/lang/String;Z)V
 	public static synthetic fun onError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;ZLjava/lang/String;ZILjava/lang/Object;)V
+	public fun onOptionsItemSelected (Landroid/view/MenuItem;)Z
 	protected final fun onUnlockUserError (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)V
 	protected final fun onUserCheckFailed (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;Z)V
 	public static synthetic fun onUserCheckFailed$default (Lme/proton/core/auth/presentation/ui/AuthActivity;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;ZILjava/lang/Object;)V
+	public final fun setActionBarAuthMenu (Landroidx/appcompat/widget/Toolbar;)V
 	public fun showError (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Z)V
 	public static synthetic fun showError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ZILjava/lang/Object;)V
 	public fun showLoading (Z)V
@@ -1483,9 +1487,7 @@ public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton
 	public field blockingHelp Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;
 	public fun <init> ()V
 	public fun onBackPressed ()V
-	public fun onCreateOptionsMenu (Landroid/view/Menu;)Z
 	public fun onError (ZLjava/lang/String;Z)V
-	public fun onOptionsItemSelected (Landroid/view/MenuItem;)Z
 	public fun showLoading (Z)V
 }
 
@@ -1521,7 +1523,10 @@ public final class me/proton/core/auth/presentation/ui/LoginSsoActivity : me/pro
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginSsoActivity$Companion;
+	public field requiredAccountType Lme/proton/core/account/domain/entity/AccountType;
 	public fun <init> ()V
+	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
+	public final fun setRequiredAccountType (Lme/proton/core/account/domain/entity/AccountType;)V
 	public fun showLoading (Z)V
 }
 
@@ -1530,6 +1535,14 @@ public final class me/proton/core/auth/presentation/ui/LoginSsoActivity$Companio
 
 public abstract interface class me/proton/core/auth/presentation/ui/LoginSsoActivity_GeneratedInjector {
 	public abstract fun injectLoginSsoActivity (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/LoginSsoActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;)V
+	public static fun injectRequiredAccountType (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/account/domain/entity/AccountType;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me/proton/core/auth/presentation/ui/AuthActivity {
@@ -2051,7 +2064,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/scopes/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
 	public final fun checkForSecondFactorInput (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;)Lkotlinx/coroutines/Job;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun onConfirmPasswordResult (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lkotlinx/coroutines/Job;
@@ -2122,7 +2135,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/scopes/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules {
@@ -2144,12 +2157,74 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 	public static fun provide ()Ljava/lang/String;
 }
 
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel : androidx/lifecycle/ViewModel {
+	public fun <init> (Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;)V
+	public final fun createSessionWithToken (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;)Lkotlinx/coroutines/Job;
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun startLoginWorkflow (Ljava/lang/String;)Lkotlinx/coroutines/Job;
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Error;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Idle;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$SignInWithSrp : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$SignInWithSrp;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$SignInWithSrp;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$SignInWithSrp;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$StartToken : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$StartToken;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$StartToken;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$StartToken;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
-	public static fun newInstance ()Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_HiltModules {
@@ -2176,7 +2251,7 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Fac
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/LocalAuthFlags;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_HiltModules {

@@ -14,12 +14,6 @@ public abstract interface class me/proton/core/auth/domain/AccountWorkflowHandle
 	public abstract fun handleUnlockFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/auth/domain/LocalAuthFlags {
-	public fun <init> (Lme/proton/core/domain/entity/Product;)V
-	public final fun getSsoEnabled ()Z
-	public final fun setSsoEnabled (Z)V
-}
-
 public final class me/proton/core/auth/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/auth/domain/LogTag;
 	public static final field INVALID_SRP_PROOF Ljava/lang/String;
@@ -195,6 +189,7 @@ public abstract interface class me/proton/core/auth/domain/repository/AuthReposi
 	public abstract fun getAuthInfo (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun performLoginSso (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun randomModulus (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun revokeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -229,6 +224,20 @@ public final class me/proton/core/auth/domain/usecase/CreateLoginSession {
 	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/CreateLoginSession;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/domain/usecase/CreateLoginSsoSession {
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLoginSso;)V
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/GetAuthInfo {
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/auth/domain/usecase/IsSsoEnabled {
+	public abstract fun invoke ()Z
+}
+
 public final class me/proton/core/auth/domain/usecase/LoginChallengeConfig : me/proton/core/challenge/domain/ChallengeConfig {
 	public static final field Companion Lme/proton/core/auth/domain/usecase/LoginChallengeConfig$Companion;
 	public static final field LOGIN_FRAME_USERNAME Ljava/lang/String;
@@ -244,6 +253,11 @@ public final class me/proton/core/auth/domain/usecase/PerformLogin {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PerformLogin;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/PerformLoginSso {
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/PerformLogout {
@@ -456,11 +470,6 @@ public final class me/proton/core/auth/domain/usecase/UserCheckAction$OpenUrl : 
 public final class me/proton/core/auth/domain/usecase/ValidateServerProof {
 	public fun <init> ()V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-}
-
-public final class me/proton/core/auth/domain/usecase/scopes/GetAuthInfo {
-	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
-	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/ObtainLockedScope {

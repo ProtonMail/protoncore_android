@@ -38,6 +38,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
+import me.proton.core.auth.presentation.entity.LoginSsoInput
 import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.domain.entity.UserId
@@ -73,7 +74,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
-    // Todo: loginSsoResultLauncher.launch(LoginSsoInput(usernameInput.text.toString()))
     private val loginSsoResultLauncher = registerForActivityResult(StartLoginSso()) {
         if (it != null) onSuccess(UserId(it.userId), it.nextStep)
     }
@@ -87,7 +87,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             signInButton.onClick(::onSignInClicked)
             signInWithSsoButton.isVisible = viewModel.isSsoEnabled
             signInWithSsoButton.onClick {
-                // TODO
+                loginSsoResultLauncher.launch(LoginSsoInput(usernameInput.text.toString()))
             }
 
             usernameInput.text = input.username
@@ -127,6 +127,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 when (it) {
                     is LoginViewModel.State.Idle -> showLoading(false)
                     is LoginViewModel.State.Processing -> showLoading(true)
+                    is LoginViewModel.State.SignInWithSso -> onSignInWithSso(it)
                     is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
                     is LoginViewModel.State.Error -> onError(
                         true,
@@ -177,6 +178,12 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         onError(triggerValidation = true, message = message, isPotentialBlocking = false)
     }
 
+    private fun onSignInWithSso(result: LoginViewModel.State.SignInWithSso) {
+        showLoading(false)
+        showError(result.error.getUserMessage(resources), useToast = true)
+        loginSsoResultLauncher.launch(LoginSsoInput(result.email))
+    }
+
     private fun onExternalAccountNotSupported() {
         showLoading(false)
 
@@ -202,8 +209,9 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 passwordInput.setInputError()
             }
         }
-        if (isPotentialBlocking && blockingHelp != null)
+        if (isPotentialBlocking && blockingHelp != null) {
             binding.blockingHelpButton.isVisible = true
+        }
         showError(message)
     }
 

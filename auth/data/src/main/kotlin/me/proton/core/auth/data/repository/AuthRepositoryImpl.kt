@@ -30,6 +30,7 @@ import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
+import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.challenge.data.frame.ChallengeFrame
@@ -82,6 +83,10 @@ class AuthRepositoryImpl(
         validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "login failed" }
         response.toSessionInfo(username)
     }.valueOrThrow
+
+    override suspend fun performLoginSso(email: String, token: String): SessionInfo {
+        TODO("Not yet implemented")
+    }
 
     private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, ChallengeFrame?> {
         val name = "${product.framePrefix()}-0"
