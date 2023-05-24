@@ -14,6 +14,12 @@ public abstract interface class me/proton/core/auth/domain/AccountWorkflowHandle
 	public abstract fun handleUnlockFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/domain/LocalAuthFlags {
+	public fun <init> (Lme/proton/core/domain/entity/Product;)V
+	public final fun getSsoEnabled ()Z
+	public final fun setSsoEnabled (Z)V
+}
+
 public final class me/proton/core/auth/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/auth/domain/LogTag;
 	public static final field INVALID_SRP_PROOF Ljava/lang/String;

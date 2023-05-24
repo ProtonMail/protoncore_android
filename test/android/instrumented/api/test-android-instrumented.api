@@ -591,7 +591,6 @@ public final class me/proton/core/test/android/robots/auth/login/HelpRobot : me/
 
 public final class me/proton/core/test/android/robots/auth/login/LoginRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
-	public final fun needHelp ()Lme/proton/core/test/android/robots/auth/login/HelpRobot;
 	public final fun password (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/login/LoginRobot;
 	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/login/LoginRobot;
 	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/login/LoginRobot$Verify;

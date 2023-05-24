@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -76,16 +78,21 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = ""
+
         binding.apply {
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
 
-            helpButton.onClick {
-                startActivity(Intent(this@LoginActivity, AuthHelpActivity::class.java))
+            signInButton.onClick(::onSignInClicked)
+            signInWithSsoButton.isVisible = viewModel.isSSOEnabled
+            signInWithSsoButton.onClick {
+                // TODO
             }
 
-            signInButton.onClick(::onSignInClicked)
             usernameInput.text = input.username
             usernameInput.setOnFocusLostListener { _, _ ->
                 usernameInput.validateUsername()
@@ -134,6 +141,21 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.login_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.login_menu_help -> {
+                startActivity(Intent(this, AuthHelpActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {

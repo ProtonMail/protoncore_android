@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -39,7 +39,8 @@
     <string name="auth_account_details">Enter your Proton Account details.</string>
     <string name="auth_sign_in">Sign in</string>
     <string name="auth_sign_in_action">Sign in</string>
-    <string name="auth_need_help">Need help?</string>
+    <string name="auth_sign_in_with_sso">Sign in with SSO</string>
+    <string name="auth_help_label">Help</string>
     <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
     <string name="auth_help_title">How can we help?</string>
     <string name="auth_help_option_forgot_username">Forgot username</string>

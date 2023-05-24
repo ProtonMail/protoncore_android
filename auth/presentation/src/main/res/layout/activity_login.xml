@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -94,8 +94,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_content_top_margin"
-                android:inputType="textPassword"
                 android:imeOptions="actionDone"
+                android:inputType="textPassword"
                 app:actionMode="password_toggle"
                 app:label="@string/auth_password_label" />
 
@@ -107,12 +107,14 @@
                 android:text="@string/auth_sign_in_action" />
 
             <me.proton.core.presentation.ui.view.ProtonButton
-                android:id="@+id/helpButton"
+                android:id="@+id/signInWithSsoButton"
                 style="@style/ProtonButton.Borderless.Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_view_items_top_margin"
-                android:text="@string/auth_need_help" />
+                android:text="@string/auth_sign_in_with_sso"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/blockingHelpButton"
@@ -121,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_view_items_top_margin"
                 android:visibility="gone"
-                tools:text="Troubleshoot" />
+                tools:text="Troubleshoot"
+                tools:visibility="visible" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

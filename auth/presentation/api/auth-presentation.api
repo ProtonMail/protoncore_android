@@ -427,10 +427,10 @@ public final class me/proton/core/auth/presentation/databinding/ActivityConfirmP
 
 public final class me/proton/core/auth/presentation/databinding/ActivityLoginBinding : androidx/viewbinding/ViewBinding {
 	public final field blockingHelpButton Lme/proton/core/presentation/ui/view/ProtonButton;
-	public final field helpButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field passwordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
 	public final field signInButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field signInWithSsoButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field subtitleText Landroid/widget/TextView;
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
@@ -1395,7 +1395,9 @@ public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton
 	public field blockingHelp Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;
 	public fun <init> ()V
 	public fun onBackPressed ()V
+	public fun onCreateOptionsMenu (Landroid/view/Menu;)Z
 	public fun onError (ZLjava/lang/String;Z)V
+	public fun onOptionsItemSelected (Landroid/view/MenuItem;)Z
 	public fun showLoading (Z)V
 }
 
@@ -2032,11 +2034,11 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/LocalAuthFlags;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_HiltModules {

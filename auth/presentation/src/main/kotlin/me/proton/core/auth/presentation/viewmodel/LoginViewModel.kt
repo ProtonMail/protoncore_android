@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.LocalAuthFlags
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
@@ -63,11 +64,13 @@ internal class LoginViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val createLoginSession: CreateLoginSession,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val postLoginAccountSetup: PostLoginAccountSetup
+    private val postLoginAccountSetup: PostLoginAccountSetup,
+    localAuthFlags: LocalAuthFlags,
 ) : ViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
+    val isSSOEnabled: Boolean = localAuthFlags.ssoEnabled
     val state = _state.asSharedFlow()
 
     sealed class State {
@@ -114,7 +117,8 @@ internal class LoginViewModel @Inject constructor(
     ) = flow {
         emit(State.Processing)
 
-        val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType, loginMetricData)
+        val sessionInfo =
+            createLoginSession(username, encryptedPassword, requiredAccountType, loginMetricData)
 
         savedStateHandle[STATE_USER_ID] = sessionInfo.userId.id
 
