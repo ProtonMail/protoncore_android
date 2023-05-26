@@ -57,20 +57,20 @@ internal fun initVersions(libs: VersionCatalog) {
     // region Android
     `activity version` =                        "1.6.1"
     `android-annotation version` =              "1.2.0"
-    `appcompat version` =                       "1.5.1"
+    `appcompat version` =                       "1.6.1"
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
     `constraint-layout version` =               "2.1.4"
     `espresso version` =                        "3.5.0"
     `fragment version` =                        "1.5.5"
     `ktx version` =                             "1.9.0"
-    `lifecycle version` =                       "2.5.1"
+    `lifecycle version` =                       "2.6.1"
     `material version` =                        "1.7.0"
     `android-paging version` =                  "3.1.0"
     `android-work version` =                    "2.7.1"
     `android-room version` =                    "2.4.3"
 
     `android-test version` =                    "1.5.0"
-    `robolectric version` =                     "4.9.1"
+    `robolectric version` =                     "4.10.3"
     // endregion
 
     // region Others
@@ -85,13 +85,13 @@ internal fun initVersions(libs: VersionCatalog) {
 }
 
 // region Android
-public const val `android-tools version`: String =             "30.0.3"
+public const val `android-tools version`: String =             "34.0.0"
 public const val `androidx-core version`: String =             "1.8.0"
 public const val `core-splashscreen version`: String =         "1.0.0"
 public const val `androidx-collection version`: String =       "1.2.0"
-public const val `compose version`: String =                   "1.3.2"
-public const val `composeFoundation version`: String =         "1.3.1"
-public const val `composeMaterial version`: String =           "1.3.1"
+public const val `compose version`: String =                   "1.4.3"
+public const val `composeFoundation version`: String =         "1.4.3"
+public const val `composeMaterial version`: String =           "1.4.3"
 public const val `coordinatorlayout version`: String =         "1.2.0"
 public const val `googlePlayBilling version`: String =         "5.1.0"
 public const val `datastore version`: String =                 "1.0.0"

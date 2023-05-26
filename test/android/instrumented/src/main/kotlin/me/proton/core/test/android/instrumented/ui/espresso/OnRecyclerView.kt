@@ -128,9 +128,9 @@ class OnRecyclerView : ConditionWatcher {
 
     /** Performs action on [RecyclerView] based on action defined by [OnRecyclerView.Builder]. **/
     private fun perform(viewAction: ViewAction): ViewInteraction = when (true) {
-        itemChildViewMatcher != null -> viewInteraction().perform(clickOnMatchedDescendant(itemChildViewMatcher!!))
-        viewHolderMatcher != null -> viewInteraction().perform(actionOnHolderItem(viewHolderMatcher, viewAction))
-        position != null -> viewInteraction()
+        (itemChildViewMatcher != null) -> viewInteraction().perform(clickOnMatchedDescendant(itemChildViewMatcher!!))
+        (viewHolderMatcher != null) -> viewInteraction().perform(actionOnHolderItem(viewHolderMatcher, viewAction))
+        (position != null) -> viewInteraction()
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder?>(
                     position!!,

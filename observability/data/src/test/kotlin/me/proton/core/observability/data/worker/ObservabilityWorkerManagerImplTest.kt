@@ -20,7 +20,6 @@ package me.proton.core.observability.data.worker
 
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkContinuation
 import androidx.work.WorkManager
 import io.mockk.every
 import io.mockk.mockk
@@ -47,21 +46,20 @@ class ObservabilityWorkerManagerImplTest {
         val workNameSlot = slot<String>()
         val workPolicySlot = slot<ExistingWorkPolicy>()
         val requestSlot = slot<OneTimeWorkRequest>()
-        val workContinuation = mockk<WorkContinuation>(relaxed = true)
         every {
-            workManager.beginUniqueWork(
+            workManager.enqueueUniqueWork(
                 capture(workNameSlot),
                 capture(workPolicySlot),
                 capture(requestSlot)
             )
-        } returns workContinuation
+        } returns mockk()
         every { workManager.cancelUniqueWork(any()) } returns mockk()
 
         // WHEN
         tested.schedule(ZERO)
 
         // THEN
-        verify { workContinuation.enqueue() }
+        verify { workManager.enqueueUniqueWork(any(), any(), any<OneTimeWorkRequest>()) }
         assertEquals(ExistingWorkPolicy.REPLACE, workPolicySlot.captured)
         assertEquals(0, requestSlot.captured.workSpec.initialDelay)
 

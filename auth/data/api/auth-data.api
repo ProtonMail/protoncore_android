@@ -55,7 +55,6 @@ public final class me/proton/core/auth/data/api/request/AuthInfoRequest {
 
 public final class me/proton/core/auth/data/api/request/AuthInfoRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/AuthInfoRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/AuthInfoRequest;
@@ -85,7 +84,6 @@ public final class me/proton/core/auth/data/api/request/EmailValidationRequest {
 
 public final class me/proton/core/auth/data/api/request/EmailValidationRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/EmailValidationRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/EmailValidationRequest;
@@ -123,7 +121,6 @@ public final class me/proton/core/auth/data/api/request/LoginRequest {
 
 public final class me/proton/core/auth/data/api/request/LoginRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/LoginRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/LoginRequest;
@@ -153,7 +150,6 @@ public final class me/proton/core/auth/data/api/request/LoginSsoRequest {
 
 public final class me/proton/core/auth/data/api/request/LoginSsoRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/LoginSsoRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/LoginSsoRequest;
@@ -183,7 +179,6 @@ public final class me/proton/core/auth/data/api/request/PhoneValidationRequest {
 
 public final class me/proton/core/auth/data/api/request/PhoneValidationRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/PhoneValidationRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/PhoneValidationRequest;
@@ -222,7 +217,6 @@ public final class me/proton/core/auth/data/api/request/RefreshSessionRequest {
 
 public final class me/proton/core/auth/data/api/request/RefreshSessionRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/RefreshSessionRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/RefreshSessionRequest;
@@ -252,7 +246,6 @@ public final class me/proton/core/auth/data/api/request/RequestSessionRequest {
 
 public final class me/proton/core/auth/data/api/request/RequestSessionRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/RequestSessionRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/RequestSessionRequest;
@@ -286,7 +279,6 @@ public final class me/proton/core/auth/data/api/request/SecondFactorRequest {
 
 public final class me/proton/core/auth/data/api/request/SecondFactorRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/SecondFactorRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/SecondFactorRequest;
@@ -320,7 +312,6 @@ public final class me/proton/core/auth/data/api/request/UniversalTwoFactorReques
 
 public final class me/proton/core/auth/data/api/request/UniversalTwoFactorRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;
@@ -365,7 +356,6 @@ public final class me/proton/core/auth/data/api/response/AuthInfoResponse {
 
 public final class me/proton/core/auth/data/api/response/AuthInfoResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/AuthInfoResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/AuthInfoResponse;
@@ -419,7 +409,6 @@ public final class me/proton/core/auth/data/api/response/LoginResponse {
 
 public final class me/proton/core/auth/data/api/response/LoginResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/LoginResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/LoginResponse;
@@ -452,7 +441,6 @@ public final class me/proton/core/auth/data/api/response/ModulusResponse {
 
 public final class me/proton/core/auth/data/api/response/ModulusResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/ModulusResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/ModulusResponse;
@@ -484,7 +472,6 @@ public final class me/proton/core/auth/data/api/response/SRPAuthenticationRespon
 
 public final class me/proton/core/auth/data/api/response/SRPAuthenticationResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/SRPAuthenticationResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/SRPAuthenticationResponse;
@@ -518,7 +505,6 @@ public final class me/proton/core/auth/data/api/response/ScopesResponse {
 
 public final class me/proton/core/auth/data/api/response/ScopesResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/ScopesResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/ScopesResponse;
@@ -549,7 +535,6 @@ public final class me/proton/core/auth/data/api/response/SecondFactorInfoRespons
 
 public final class me/proton/core/auth/data/api/response/SecondFactorInfoResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
@@ -583,7 +568,6 @@ public final class me/proton/core/auth/data/api/response/SecondFactorResponse {
 
 public final class me/proton/core/auth/data/api/response/SecondFactorResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/SecondFactorResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/SecondFactorResponse;
@@ -622,7 +606,6 @@ public final class me/proton/core/auth/data/api/response/SessionResponse {
 
 public final class me/proton/core/auth/data/api/response/SessionResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/auth/data/api/response/SessionResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/SessionResponse;

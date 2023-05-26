@@ -3,6 +3,7 @@ public final class me/proton/core/accountmanager/presentation/compose/AccountPri
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/AccountPrimaryState {
+	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (Z)V
 	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V

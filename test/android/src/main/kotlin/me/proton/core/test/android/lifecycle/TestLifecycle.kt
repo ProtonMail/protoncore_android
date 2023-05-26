@@ -68,8 +68,8 @@ class TestLifecycle : LifecycleOwner {
     }
 
 
-    /** @see LifecycleOwner.getLifecycle */
-    override fun getLifecycle() = registry
+    /** @see LifecycleOwner.lifecycle */
+    override val lifecycle: Lifecycle = registry
 
     /** @see LifecycleRegistry.handleLifecycleEvent */
     private fun handleLifecycleEvent(event: Lifecycle.Event) = apply {

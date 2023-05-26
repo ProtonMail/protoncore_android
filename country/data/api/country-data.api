@@ -21,7 +21,6 @@ public final class me/proton/core/country/data/entity/CountriesDataModel {
 
 public final class me/proton/core/country/data/entity/CountriesDataModel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/country/data/entity/CountriesDataModel$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/country/data/entity/CountriesDataModel;
@@ -55,7 +54,6 @@ public final class me/proton/core/country/data/entity/CountryDataModel {
 
 public final class me/proton/core/country/data/entity/CountryDataModel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/country/data/entity/CountryDataModel$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/country/data/entity/CountryDataModel;

@@ -42,7 +42,6 @@ public final class me/proton/core/key/data/api/request/AuthRequest {
 
 public final class me/proton/core/key/data/api/request/AuthRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/request/AuthRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/AuthRequest;
@@ -84,7 +83,6 @@ public final class me/proton/core/key/data/api/request/CreateAddressKeyRequest {
 
 public final class me/proton/core/key/data/api/request/CreateAddressKeyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/request/CreateAddressKeyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/CreateAddressKeyRequest;
@@ -116,7 +114,6 @@ public final class me/proton/core/key/data/api/request/PrivateKeyRequest {
 
 public final class me/proton/core/key/data/api/request/PrivateKeyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/request/PrivateKeyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/PrivateKeyRequest;
@@ -153,7 +150,6 @@ public final class me/proton/core/key/data/api/request/SetupInitialKeysRequest {
 
 public final class me/proton/core/key/data/api/request/SetupInitialKeysRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/request/SetupInitialKeysRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/SetupInitialKeysRequest;
@@ -185,7 +181,6 @@ public final class me/proton/core/key/data/api/request/SignedKeyListRequest {
 
 public final class me/proton/core/key/data/api/request/SignedKeyListRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/request/SignedKeyListRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/SignedKeyListRequest;
@@ -232,7 +227,6 @@ public final class me/proton/core/key/data/api/request/UpdateKeysForPasswordChan
 
 public final class me/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;
@@ -283,7 +277,6 @@ public final class me/proton/core/key/data/api/response/AddressKeyResponse {
 
 public final class me/proton/core/key/data/api/response/AddressKeyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/AddressKeyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/AddressKeyResponse;
@@ -338,7 +331,6 @@ public final class me/proton/core/key/data/api/response/AddressResponse {
 
 public final class me/proton/core/key/data/api/response/AddressResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/AddressResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/AddressResponse;
@@ -368,7 +360,6 @@ public final class me/proton/core/key/data/api/response/AddressesResponse {
 
 public final class me/proton/core/key/data/api/response/AddressesResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/AddressesResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/AddressesResponse;
@@ -398,7 +389,6 @@ public final class me/proton/core/key/data/api/response/CreateAddressKeyResponse
 
 public final class me/proton/core/key/data/api/response/CreateAddressKeyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/CreateAddressKeyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/CreateAddressKeyResponse;
@@ -432,7 +422,6 @@ public final class me/proton/core/key/data/api/response/KeySaltResponse {
 
 public final class me/proton/core/key/data/api/response/KeySaltResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/KeySaltResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/KeySaltResponse;
@@ -463,7 +452,6 @@ public final class me/proton/core/key/data/api/response/KeySaltsResponse {
 
 public final class me/proton/core/key/data/api/response/KeySaltsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/KeySaltsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/KeySaltsResponse;
@@ -496,7 +484,6 @@ public final class me/proton/core/key/data/api/response/PublicAddressKeyResponse
 
 public final class me/proton/core/key/data/api/response/PublicAddressKeyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/PublicAddressKeyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;
@@ -537,7 +524,6 @@ public final class me/proton/core/key/data/api/response/PublicAddressKeysRespons
 
 public final class me/proton/core/key/data/api/response/PublicAddressKeysResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/PublicAddressKeysResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/PublicAddressKeysResponse;
@@ -567,7 +553,6 @@ public final class me/proton/core/key/data/api/response/SetupInitialKeysResponse
 
 public final class me/proton/core/key/data/api/response/SetupInitialKeysResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/SetupInitialKeysResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SetupInitialKeysResponse;
@@ -605,7 +590,6 @@ public final class me/proton/core/key/data/api/response/SignedKeyListResponse {
 
 public final class me/proton/core/key/data/api/response/SignedKeyListResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/SignedKeyListResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SignedKeyListResponse;
@@ -635,7 +619,6 @@ public final class me/proton/core/key/data/api/response/SignedKeyListsResponse {
 
 public final class me/proton/core/key/data/api/response/SignedKeyListsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/SignedKeyListsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SignedKeyListsResponse;
@@ -665,7 +648,6 @@ public final class me/proton/core/key/data/api/response/SingleAddressResponse {
 
 public final class me/proton/core/key/data/api/response/SingleAddressResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/SingleAddressResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SingleAddressResponse;
@@ -695,7 +677,6 @@ public final class me/proton/core/key/data/api/response/SingleSignedKeyListRespo
 
 public final class me/proton/core/key/data/api/response/SingleSignedKeyListResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/SingleSignedKeyListResponse;
@@ -738,7 +719,6 @@ public final class me/proton/core/key/data/api/response/UserKeyResponse {
 
 public final class me/proton/core/key/data/api/response/UserKeyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/UserKeyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/UserKeyResponse;
@@ -777,7 +757,6 @@ public final class me/proton/core/key/data/api/response/UserRecoveryResponse {
 
 public final class me/proton/core/key/data/api/response/UserRecoveryResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/UserRecoveryResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/UserRecoveryResponse;
@@ -838,7 +817,6 @@ public final class me/proton/core/key/data/api/response/UserResponse {
 
 public final class me/proton/core/key/data/api/response/UserResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/UserResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/UserResponse;
@@ -868,7 +846,6 @@ public final class me/proton/core/key/data/api/response/UsersResponse {
 
 public final class me/proton/core/key/data/api/response/UsersResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/key/data/api/response/UsersResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/response/UsersResponse;

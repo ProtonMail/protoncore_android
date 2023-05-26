@@ -26,7 +26,6 @@ public final class me/proton/core/user/data/UserAddressEvent {
 
 public final class me/proton/core/user/data/UserAddressEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/UserAddressEvent$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserAddressEvent;
@@ -78,7 +77,6 @@ public final class me/proton/core/user/data/UserAddressEvents {
 
 public final class me/proton/core/user/data/UserAddressEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/UserAddressEvents$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserAddressEvents;
@@ -182,7 +180,6 @@ public final class me/proton/core/user/data/UserEvents {
 
 public final class me/proton/core/user/data/UserEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/UserEvents$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserEvents;
@@ -238,7 +235,6 @@ public final class me/proton/core/user/data/UserSpaceEvent {
 
 public final class me/proton/core/user/data/UserSpaceEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/UserSpaceEvent$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserSpaceEvent;
@@ -316,7 +312,6 @@ public final class me/proton/core/user/data/api/request/ChallengeFrameType {
 
 public final class me/proton/core/user/data/api/request/ChallengeFrameType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/ChallengeFrameType$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/ChallengeFrameType;
@@ -348,7 +343,6 @@ public final class me/proton/core/user/data/api/request/CreateAddressRequest {
 
 public final class me/proton/core/user/data/api/request/CreateAddressRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/CreateAddressRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/CreateAddressRequest;
@@ -387,7 +381,6 @@ public final class me/proton/core/user/data/api/request/CreateExternalUserReques
 
 public final class me/proton/core/user/data/api/request/CreateExternalUserRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/CreateExternalUserRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
@@ -431,7 +424,6 @@ public final class me/proton/core/user/data/api/request/CreateUserRequest {
 
 public final class me/proton/core/user/data/api/request/CreateUserRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/CreateUserRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/CreateUserRequest;
@@ -468,7 +460,6 @@ public final class me/proton/core/user/data/api/request/UnlockPasswordRequest {
 
 public final class me/proton/core/user/data/api/request/UnlockPasswordRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/UnlockPasswordRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
@@ -502,7 +493,6 @@ public final class me/proton/core/user/data/api/request/UnlockRequest {
 
 public final class me/proton/core/user/data/api/request/UnlockRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/UnlockRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UnlockRequest;
@@ -536,7 +526,6 @@ public final class me/proton/core/user/data/api/request/UpdateAddressRequest {
 
 public final class me/proton/core/user/data/api/request/UpdateAddressRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/UpdateAddressRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UpdateAddressRequest;
@@ -566,7 +555,6 @@ public final class me/proton/core/user/data/api/request/UpdateOrderRequest {
 
 public final class me/proton/core/user/data/api/request/UpdateOrderRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/request/UpdateOrderRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UpdateOrderRequest;
@@ -596,7 +584,6 @@ public final class me/proton/core/user/data/api/response/AvailableDomainsRespons
 
 public final class me/proton/core/user/data/api/response/AvailableDomainsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/response/AvailableDomainsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/response/AvailableDomainsResponse;
@@ -626,7 +613,6 @@ public final class me/proton/core/user/data/api/response/CreateAddressResponse {
 
 public final class me/proton/core/user/data/api/response/CreateAddressResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/user/data/api/response/CreateAddressResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/response/CreateAddressResponse;

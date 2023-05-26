@@ -25,6 +25,10 @@ plugins {
     alias(libs.plugins.kotlin.gradle)
 }
 
+repositories {
+    mavenCentral()
+}
+
 application {
     mainClass.set("me.proton.core.observability.tools.ObservabilityToolsKt")
 }

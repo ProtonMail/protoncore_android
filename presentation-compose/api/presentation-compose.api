@@ -319,6 +319,7 @@ public final class me/proton/core/compose/component/ProtonSidebarLazyKt {
 }
 
 public final class me/proton/core/compose/component/ProtonSnackbarHostState {
+	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (Landroidx/compose/material/SnackbarHostState;Lme/proton/core/compose/component/ProtonSnackbarType;)V
 	public synthetic fun <init> (Landroidx/compose/material/SnackbarHostState;Lme/proton/core/compose/component/ProtonSnackbarType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -382,6 +383,7 @@ public final class me/proton/core/compose/component/bottomsheet/ComposableSingle
 }
 
 public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheetContentState {
+	public static final field $stable I
 	public fun <init> (Landroidx/compose/material/ModalBottomSheetState;Landroidx/compose/runtime/MutableState;)V
 	public final fun component1 ()Landroidx/compose/material/ModalBottomSheetState;
 	public final fun component2 ()Landroidx/compose/runtime/MutableState;
@@ -403,6 +405,7 @@ public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheet
 }
 
 public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheetViewState {
+	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (ZZZ)V
 	public synthetic fun <init> (ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -493,6 +496,7 @@ public final class me/proton/core/compose/theme/ProtonAccentColor {
 }
 
 public final class me/proton/core/compose/theme/ProtonColors {
+	public static final field $stable I
 	public static final field Companion Lme/proton/core/compose/theme/ProtonColors$Companion;
 	public synthetic fun <init> (ZJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJLme/proton/core/compose/theme/ProtonColors;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (ZJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJLme/proton/core/compose/theme/ProtonColors;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -583,6 +587,7 @@ public final class me/proton/core/compose/theme/ProtonDimens {
 }
 
 public final class me/proton/core/compose/theme/ProtonShapes {
+	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (Landroidx/compose/foundation/shape/CornerBasedShape;Landroidx/compose/foundation/shape/CornerBasedShape;Landroidx/compose/foundation/shape/CornerBasedShape;Landroidx/compose/ui/graphics/Shape;)V
 	public synthetic fun <init> (Landroidx/compose/foundation/shape/CornerBasedShape;Landroidx/compose/foundation/shape/CornerBasedShape;Landroidx/compose/foundation/shape/CornerBasedShape;Landroidx/compose/ui/graphics/Shape;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -610,6 +615,7 @@ public final class me/proton/core/compose/theme/ProtonTheme {
 }
 
 public final class me/proton/core/compose/theme/ProtonTypography {
+	public static final field $stable I
 	public static final field Companion Lme/proton/core/compose/theme/ProtonTypography$Companion;
 	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V
 	public fun <init> (Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V

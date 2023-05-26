@@ -402,58 +402,6 @@ public abstract interface class me/proton/core/payment/presentation/ui/BillingFr
 	public abstract fun injectBillingFragment (Lme/proton/core/payment/presentation/ui/BillingFragment;)V
 }
 
-public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public static final field ARG_RESULT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun startBilling$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)V
-}
-
-public abstract class me/proton/core/payment/presentation/ui/Hilt_BillingFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getContext ()Landroid/content/Context;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-	public fun onAttach (Landroid/app/Activity;)V
-	public fun onAttach (Landroid/content/Context;)V
-	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
-}
-
-public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentOptionsActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public static final field ARG_RESULT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun startBilling$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)V
-}
-
-public abstract class me/proton/core/payment/presentation/ui/Hilt_PaymentTokenApprovalActivity : dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public static final field ARG_RESULT Ljava/lang/String;
-	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun startBilling$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;Ljava/util/List;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;Lme/proton/core/payment/domain/usecase/PaymentProvider;ILjava/lang/Object;)V
-}
-
 public abstract interface class me/proton/core/payment/presentation/ui/PaymentOptionsActivity_GeneratedInjector {
 	public abstract fun injectPaymentOptionsActivity (Lme/proton/core/payment/presentation/ui/PaymentOptionsActivity;)V
 }

@@ -98,7 +98,6 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;
@@ -142,7 +141,6 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;
@@ -177,7 +175,6 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoverySc
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;
@@ -207,7 +204,6 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoverySc
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;
@@ -251,7 +247,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutBillingSu
 
 public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal;
@@ -283,7 +278,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutBillingSu
 
 public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData;
@@ -325,7 +319,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutCardBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal;
@@ -360,7 +353,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutCardBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal;
@@ -395,7 +387,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal;
@@ -439,7 +430,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData;
@@ -478,7 +468,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;
@@ -513,7 +502,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal;
@@ -548,7 +536,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;
@@ -583,7 +570,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;
@@ -618,7 +604,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;
@@ -653,7 +638,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;
@@ -688,7 +672,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1;
@@ -723,7 +706,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal;
@@ -758,7 +740,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal;
@@ -793,7 +774,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal;
@@ -828,7 +808,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal;
@@ -863,7 +842,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal;
@@ -898,7 +876,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 
 public final class me/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1;
@@ -928,7 +905,6 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 
 public final class me/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$LabelsData;
@@ -972,7 +948,6 @@ public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal :
 
 public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;
@@ -1004,7 +979,6 @@ public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$L
 
 public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;
@@ -1059,7 +1033,6 @@ public final class me/proton/core/observability/domain/metrics/HvResultTotal : m
 
 public final class me/proton/core/observability/domain/metrics/HvResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvResultTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvResultTotal;
@@ -1089,7 +1062,6 @@ public final class me/proton/core/observability/domain/metrics/HvResultTotal$Lab
 
 public final class me/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;
@@ -1132,7 +1104,6 @@ public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal
 
 public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;
@@ -1162,7 +1133,6 @@ public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal
 
 public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;
@@ -1204,7 +1174,6 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 
 public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;
@@ -1248,7 +1217,6 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 
 public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;
@@ -1283,7 +1251,6 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchD
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal;
@@ -1318,7 +1285,6 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlock
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1;
@@ -1353,7 +1319,6 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCh
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1;
@@ -1388,7 +1353,6 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserna
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal;
@@ -1424,7 +1388,6 @@ public final class me/proton/core/observability/domain/metrics/LoginObtainSsoCha
 
 public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;
@@ -1468,7 +1431,6 @@ public final class me/proton/core/observability/domain/metrics/LoginObtainSsoCha
 
 public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;
@@ -1503,7 +1465,6 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 
 public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;
@@ -1533,7 +1494,6 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 
 public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;
@@ -1576,7 +1536,6 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;
@@ -1606,7 +1565,6 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
@@ -1651,7 +1609,6 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;
@@ -1681,7 +1638,6 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;
@@ -1740,7 +1696,6 @@ public final class me/proton/core/observability/domain/metrics/SessionForcedLogo
 
 public final class me/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1;
@@ -1775,7 +1730,6 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 
 public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1;
@@ -1810,7 +1764,6 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 
 public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;
@@ -1845,7 +1798,6 @@ public final class me/proton/core/observability/domain/metrics/SessionRefreshTok
 
 public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;
@@ -1877,7 +1829,6 @@ public final class me/proton/core/observability/domain/metrics/SessionRefreshTok
 
 public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;
@@ -1920,7 +1871,6 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal;
@@ -1971,7 +1921,6 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;
@@ -2006,7 +1955,6 @@ public final class me/proton/core/observability/domain/metrics/SignupEmailAvaila
 
 public final class me/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal;
@@ -2041,7 +1989,6 @@ public final class me/proton/core/observability/domain/metrics/SignupFetchDomain
 
 public final class me/proton/core/observability/domain/metrics/SignupFetchDomainsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupFetchDomainsTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupFetchDomainsTotal;
@@ -2076,7 +2023,6 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal 
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupLoginTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal;
@@ -2108,7 +2054,6 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;
@@ -2143,7 +2088,6 @@ public final class me/proton/core/observability/domain/metrics/SignupScreenViewT
 
 public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1;
@@ -2173,7 +2117,6 @@ public final class me/proton/core/observability/domain/metrics/SignupScreenViewT
 
 public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData;
@@ -2219,7 +2162,6 @@ public final class me/proton/core/observability/domain/metrics/SignupUnlockUserT
 
 public final class me/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1;
@@ -2254,7 +2196,6 @@ public final class me/proton/core/observability/domain/metrics/SignupUserCheckTo
 
 public final class me/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1;
@@ -2289,7 +2230,6 @@ public final class me/proton/core/observability/domain/metrics/SignupUsernameAva
 
 public final class me/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal;
@@ -2324,7 +2264,6 @@ public final class me/proton/core/observability/domain/metrics/common/EmptyStatu
 
 public final class me/proton/core/observability/domain/metrics/common/EmptyStatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/EmptyStatusLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/EmptyStatusLabels;
@@ -2354,7 +2293,6 @@ public final class me/proton/core/observability/domain/metrics/common/GiapLabels
 
 public final class me/proton/core/observability/domain/metrics/common/GiapLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/GiapLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/GiapLabels;
@@ -2422,7 +2360,6 @@ public final class me/proton/core/observability/domain/metrics/common/HttpStatus
 
 public final class me/proton/core/observability/domain/metrics/common/HttpStatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;
@@ -2452,7 +2389,6 @@ public final class me/proton/core/observability/domain/metrics/common/UnlockUser
 
 public final class me/proton/core/observability/domain/metrics/common/UnlockUserLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/UnlockUserLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/UnlockUserLabels;
@@ -2491,7 +2427,6 @@ public final class me/proton/core/observability/domain/metrics/common/UserCheckL
 
 public final class me/proton/core/observability/domain/metrics/common/UserCheckLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/UserCheckLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/UserCheckLabels;

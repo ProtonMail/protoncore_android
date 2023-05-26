@@ -83,7 +83,6 @@ public final class me/proton/core/test/quark/Quark$InternalApi {
 
 public final class me/proton/core/test/quark/Quark$InternalApi$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/test/quark/Quark$InternalApi$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/Quark$InternalApi;
@@ -150,7 +149,6 @@ public final class me/proton/core/test/quark/data/Card {
 
 public final class me/proton/core/test/quark/data/Card$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/test/quark/data/Card$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/data/Card;
@@ -256,7 +254,6 @@ public final class me/proton/core/test/quark/data/User {
 
 public final class me/proton/core/test/quark/data/User$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/test/quark/data/User$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/data/User;
@@ -308,7 +305,6 @@ public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResp
 
 public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse;
@@ -359,7 +355,6 @@ public final class me/proton/core/test/quark/response/CreateUserQuarkResponse {
 
 public final class me/proton/core/test/quark/response/CreateUserQuarkResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/test/quark/response/CreateUserQuarkResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/response/CreateUserQuarkResponse;

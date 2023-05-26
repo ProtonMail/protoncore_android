@@ -121,7 +121,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCalendarEven
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;
@@ -151,7 +150,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCalendarLate
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;
@@ -185,7 +183,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsRe
 
 public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;
@@ -215,7 +212,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEv
 
 public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;
@@ -249,7 +245,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsR
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
@@ -279,7 +274,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestE
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;

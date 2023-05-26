@@ -102,15 +102,6 @@ public abstract interface class me/proton/core/report/presentation/ui/BugReportA
 	public abstract fun injectBugReportActivity (Lme/proton/core/report/presentation/ui/BugReportActivity;)V
 }
 
-public abstract class me/proton/core/report/presentation/ui/Hilt_BugReportActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
-	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
-	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
-	public final fun generatedComponent ()Ljava/lang/Object;
-	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
-	protected fun inject ()V
-}
-
 public final class me/proton/core/report/presentation/viewmodel/BugReportViewModel_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/report/presentation/viewmodel/BugReportViewModel_Factory;

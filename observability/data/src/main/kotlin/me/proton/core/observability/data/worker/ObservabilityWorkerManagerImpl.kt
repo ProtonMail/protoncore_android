@@ -52,7 +52,7 @@ public class ObservabilityWorkerManagerImpl @Inject constructor(
             // If there is a delay, keep the currently scheduled worker, since it'll likely run earlier.
             else -> ExistingWorkPolicy.KEEP
         }
-        workManager.beginUniqueWork(WORK_NAME, policy, request).enqueue()
+        workManager.enqueueUniqueWork(WORK_NAME, policy, request)
     }
 
     private companion object {

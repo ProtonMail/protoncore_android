@@ -45,7 +45,6 @@ public final class me/proton/core/mailsettings/data/MailSettingsEvents {
 
 public final class me/proton/core/mailsettings/data/MailSettingsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/MailSettingsEvents$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/MailSettingsEvents;
@@ -103,7 +102,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateAttachPubl
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateAttachPublicKeyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateAttachPublicKeyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateAttachPublicKeyRequest;
@@ -133,7 +131,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateAutoSaveCo
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateAutoSaveContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateAutoSaveContactsRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateAutoSaveContactsRequest;
@@ -163,7 +160,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateComposerMo
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateComposerModeRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateComposerModeRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateComposerModeRequest;
@@ -193,7 +189,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateConfirmLin
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateConfirmLinkRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateConfirmLinkRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateConfirmLinkRequest;
@@ -223,7 +218,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateDisplayNam
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateDisplayNameRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateDisplayNameRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateDisplayNameRequest;
@@ -253,7 +247,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateEnableFold
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateEnableFolderColorRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateEnableFolderColorRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateEnableFolderColorRequest;
@@ -283,7 +276,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateInheritFol
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateInheritFolderColorRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateInheritFolderColorRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateInheritFolderColorRequest;
@@ -313,7 +305,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateMessageBut
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateMessageButtonsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateMessageButtonsRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateMessageButtonsRequest;
@@ -343,7 +334,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateMimeTypeRe
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateMimeTypeRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateMimeTypeRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateMimeTypeRequest;
@@ -373,7 +363,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdatePGPSchemeR
 
 public final class me/proton/core/mailsettings/data/api/request/UpdatePGPSchemeRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdatePGPSchemeRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdatePGPSchemeRequest;
@@ -403,7 +392,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdatePMSignatur
 
 public final class me/proton/core/mailsettings/data/api/request/UpdatePMSignatureRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdatePMSignatureRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdatePMSignatureRequest;
@@ -433,7 +421,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdatePromptPinR
 
 public final class me/proton/core/mailsettings/data/api/request/UpdatePromptPinRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdatePromptPinRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdatePromptPinRequest;
@@ -463,7 +450,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateRightToLef
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateRightToLeftRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateRightToLeftRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateRightToLeftRequest;
@@ -493,7 +479,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateShowImages
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateShowImagesRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateShowImagesRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateShowImagesRequest;
@@ -523,7 +508,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateShowMovedR
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateShowMovedRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateShowMovedRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateShowMovedRequest;
@@ -553,7 +537,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateSignReques
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateSignRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateSignRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateSignRequest;
@@ -583,7 +566,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateSignatureR
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateSignatureRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateSignatureRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateSignatureRequest;
@@ -613,7 +595,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateStickyLabe
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateStickyLabelsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateStickyLabelsRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateStickyLabelsRequest;
@@ -643,7 +624,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateSwipeLeftR
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateSwipeLeftRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateSwipeLeftRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateSwipeLeftRequest;
@@ -673,7 +653,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateSwipeRight
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateSwipeRightRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateSwipeRightRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateSwipeRightRequest;
@@ -703,7 +682,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateViewLayout
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateViewLayoutRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateViewLayoutRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateViewLayoutRequest;
@@ -733,7 +711,6 @@ public final class me/proton/core/mailsettings/data/api/request/UpdateViewModeRe
 
 public final class me/proton/core/mailsettings/data/api/request/UpdateViewModeRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/request/UpdateViewModeRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/request/UpdateViewModeRequest;
@@ -813,7 +790,6 @@ public final class me/proton/core/mailsettings/data/api/response/MailSettingsRes
 
 public final class me/proton/core/mailsettings/data/api/response/MailSettingsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/response/MailSettingsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/response/MailSettingsResponse;
@@ -843,7 +819,6 @@ public final class me/proton/core/mailsettings/data/api/response/SingleMailSetti
 
 public final class me/proton/core/mailsettings/data/api/response/SingleMailSettingsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/api/response/SingleMailSettingsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/api/response/SingleMailSettingsResponse;
@@ -1002,7 +977,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Atta
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AttachPublicKey;
@@ -1032,7 +1006,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Auto
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$AutoSaveContacts;
@@ -1066,7 +1039,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Comp
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ComposerMode;
@@ -1096,7 +1068,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Conf
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ConfirmLink;
@@ -1126,7 +1097,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Disp
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DisplayName;
@@ -1156,7 +1126,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Draf
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$DraftMimeType;
@@ -1186,7 +1155,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Enab
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$EnableFolderColor;
@@ -1216,7 +1184,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Inhe
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$InheritFolderColor;
@@ -1246,7 +1213,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Mess
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$MessageButtons;
@@ -1276,7 +1242,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PgpS
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PgpScheme;
@@ -1306,7 +1271,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PmSi
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PmSignature;
@@ -1336,7 +1300,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Prom
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$PromptPin;
@@ -1366,7 +1329,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Rece
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ReceiveMimeType;
@@ -1396,7 +1358,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Righ
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$RightToLeft;
@@ -1426,7 +1387,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Show
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowImages;
@@ -1456,7 +1416,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Show
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMimeType;
@@ -1486,7 +1445,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Show
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ShowMoved;
@@ -1516,7 +1474,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Sign
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Sign$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Sign;
@@ -1546,7 +1503,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Sign
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Signature$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$Signature;
@@ -1576,7 +1532,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Stic
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$StickyLabels;
@@ -1606,7 +1561,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Swip
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeLeft;
@@ -1636,7 +1590,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$Swip
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$SwipeRight;
@@ -1666,7 +1619,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$View
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewLayout;
@@ -1696,7 +1648,6 @@ public final class me/proton/core/mailsettings/data/worker/SettingsProperty$View
 
 public final class me/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailsettings/data/worker/SettingsProperty$ViewMode;

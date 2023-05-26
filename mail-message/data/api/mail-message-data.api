@@ -39,7 +39,6 @@ public final class me/proton/core/mailmessage/data/api/request/EmailMessage {
 
 public final class me/proton/core/mailmessage/data/api/request/EmailMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/EmailMessage$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/EmailMessage;
@@ -67,7 +66,6 @@ public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Addr
 
 public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Address$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/EmailMessage$Address$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/EmailMessage$Address;
@@ -101,7 +99,6 @@ public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Atta
 
 public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Attachment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/EmailMessage$Attachment$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/EmailMessage$Attachment;
@@ -146,7 +143,6 @@ public final class me/proton/core/mailmessage/data/api/request/EmailPackage {
 
 public final class me/proton/core/mailmessage/data/api/request/EmailPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/EmailPackage$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/EmailPackage;
@@ -179,7 +175,6 @@ public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Addr
 
 public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Address$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/EmailPackage$Address$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/EmailPackage$Address;
@@ -215,7 +210,6 @@ public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Key 
 
 public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Key$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/EmailPackage$Key$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/EmailPackage$Key;
@@ -252,7 +246,6 @@ public final class me/proton/core/mailmessage/data/api/request/SendDirectRequest
 
 public final class me/proton/core/mailmessage/data/api/request/SendDirectRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/request/SendDirectRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/request/SendDirectRequest;
@@ -282,7 +275,6 @@ public final class me/proton/core/mailmessage/data/api/response/SendDirectRespon
 
 public final class me/proton/core/mailmessage/data/api/response/SendDirectResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/mailmessage/data/api/response/SendDirectResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/mailmessage/data/api/response/SendDirectResponse;

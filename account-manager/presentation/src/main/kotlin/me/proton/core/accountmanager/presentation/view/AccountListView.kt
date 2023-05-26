@@ -28,10 +28,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -151,7 +151,7 @@ class AccountListView @JvmOverloads constructor(
         ): AlertDialog =
             MaterialAlertDialogBuilder(context)
                 .setView(AccountListView(context).apply {
-                    ViewTreeLifecycleOwner.set(this, lifecycleOwner)
+                    setViewTreeLifecycleOwner(lifecycleOwner)
                     setViewModel(viewModel)
                 })
                 .create().apply { window?.setGravity(Gravity.TOP) }

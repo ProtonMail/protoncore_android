@@ -50,7 +50,7 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val configuration = target.extensions.create<ProtonDetektConfiguration>("protonDetekt")
-        target.afterEvaluate { setupDetekt(configuration) }
+        target.beforeEvaluate { setupDetekt(configuration) }
     }
 }
 

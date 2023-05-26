@@ -61,8 +61,7 @@ public final class me/proton/core/test/android/lifecycle/TestLifecycle : android
 	public final fun create ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
 	public final fun destroy ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
 	public final fun getCurrentState ()Landroidx/lifecycle/Lifecycle$State;
-	public synthetic fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
-	public fun getLifecycle ()Landroidx/lifecycle/LifecycleRegistry;
+	public fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
 	public final fun invoke ([Landroidx/lifecycle/Lifecycle$Event;)V
 	public final fun pause ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
 	public final fun resume ()Lme/proton/core/test/android/lifecycle/TestLifecycle;

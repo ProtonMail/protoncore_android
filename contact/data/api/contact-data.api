@@ -26,7 +26,6 @@ public final class me/proton/core/contact/data/ContactEmailEvent {
 
 public final class me/proton/core/contact/data/ContactEmailEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/ContactEmailEvent$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactEmailEvent;
@@ -71,7 +70,6 @@ public final class me/proton/core/contact/data/ContactEmailsEvents {
 
 public final class me/proton/core/contact/data/ContactEmailsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/ContactEmailsEvents$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactEmailsEvents;
@@ -106,7 +104,6 @@ public final class me/proton/core/contact/data/ContactEvent {
 
 public final class me/proton/core/contact/data/ContactEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/ContactEvent$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactEvent;
@@ -150,7 +147,6 @@ public final class me/proton/core/contact/data/ContactsEvents {
 
 public final class me/proton/core/contact/data/ContactsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/ContactsEvents$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactsEvents;
@@ -194,7 +190,6 @@ public final class me/proton/core/contact/data/api/request/CreateContactsRequest
 
 public final class me/proton/core/contact/data/api/request/CreateContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/request/CreateContactsRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/request/CreateContactsRequest;
@@ -226,7 +221,6 @@ public final class me/proton/core/contact/data/api/request/DeleteContactsRequest
 
 public final class me/proton/core/contact/data/api/request/DeleteContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/request/DeleteContactsRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/request/DeleteContactsRequest;
@@ -262,7 +256,6 @@ public final class me/proton/core/contact/data/api/resource/ContactCardResource 
 
 public final class me/proton/core/contact/data/api/resource/ContactCardResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactCardResource$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactCardResource;
@@ -297,7 +290,6 @@ public final class me/proton/core/contact/data/api/resource/ContactCardsResource
 
 public final class me/proton/core/contact/data/api/resource/ContactCardsResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactCardsResource$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactCardsResource;
@@ -343,7 +335,6 @@ public final class me/proton/core/contact/data/api/resource/ContactEmailResource
 
 public final class me/proton/core/contact/data/api/resource/ContactEmailResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactEmailResource$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactEmailResource;
@@ -378,7 +369,6 @@ public final class me/proton/core/contact/data/api/resource/ContactResource {
 
 public final class me/proton/core/contact/data/api/resource/ContactResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactResource$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactResource;
@@ -415,7 +405,6 @@ public final class me/proton/core/contact/data/api/resource/ContactWithCardsReso
 
 public final class me/proton/core/contact/data/api/resource/ContactWithCardsResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactWithCardsResource$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
@@ -447,7 +436,6 @@ public final class me/proton/core/contact/data/api/resource/ShortContactResource
 
 public final class me/proton/core/contact/data/api/resource/ShortContactResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ShortContactResource$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ShortContactResource;
@@ -479,7 +467,6 @@ public final class me/proton/core/contact/data/api/response/CreateContactRespons
 
 public final class me/proton/core/contact/data/api/response/CreateContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/CreateContactResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/CreateContactResponse;
@@ -509,7 +496,6 @@ public final class me/proton/core/contact/data/api/response/CreateContactsRespon
 
 public final class me/proton/core/contact/data/api/response/CreateContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/CreateContactsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/CreateContactsResponse;
@@ -542,7 +528,6 @@ public final class me/proton/core/contact/data/api/response/DeleteContactRespons
 
 public final class me/proton/core/contact/data/api/response/DeleteContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/DeleteContactResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/DeleteContactResponse;
@@ -574,7 +559,6 @@ public final class me/proton/core/contact/data/api/response/DeleteContactRespons
 
 public final class me/proton/core/contact/data/api/response/DeleteContactResponseWrapper$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;
@@ -604,7 +588,6 @@ public final class me/proton/core/contact/data/api/response/DeleteContactsRespon
 
 public final class me/proton/core/contact/data/api/response/DeleteContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/DeleteContactsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/DeleteContactsResponse;
@@ -636,7 +619,6 @@ public final class me/proton/core/contact/data/api/response/GetContactEmailsResp
 
 public final class me/proton/core/contact/data/api/response/GetContactEmailsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/GetContactEmailsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;
@@ -668,7 +650,6 @@ public final class me/proton/core/contact/data/api/response/GetContactResponse {
 
 public final class me/proton/core/contact/data/api/response/GetContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/GetContactResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/GetContactResponse;
@@ -700,7 +681,6 @@ public final class me/proton/core/contact/data/api/response/GetContactsResponse 
 
 public final class me/proton/core/contact/data/api/response/GetContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/GetContactsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/GetContactsResponse;
@@ -732,7 +712,6 @@ public final class me/proton/core/contact/data/api/response/MutateContactRespons
 
 public final class me/proton/core/contact/data/api/response/MutateContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lme/proton/core/contact/data/api/response/MutateContactResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/MutateContactResponse;
