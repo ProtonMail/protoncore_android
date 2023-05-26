@@ -38,6 +38,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.language.base.plugins.LifecycleBasePlugin
+import java.io.FilenameFilter
 
 /** Default dir path for the HTML report, relative to the build directory. */
 private const val DEFAULT_HTML_REPORT_DIR = "reports/kover/html"
@@ -45,8 +46,11 @@ private const val DEFAULT_HTML_REPORT_DIR = "reports/kover/html"
 /** Default file path for the XML report, relative to the build directory. */
 internal const val DEFAULT_XML_REPORT_FILE = "reports/kover/report.xml"
 
+private const val DEFAULT_COBERTURA_BASENAME = "cobertura"
+
 /** Default file path for the XML Cobertura report, relative to the build directory. */
-private const val DEFAULT_XML_REPORT_COBERTURA_FILE = "reports/kover/cobertura.xml"
+private const val DEFAULT_XML_REPORT_COBERTURA_FILE =
+    "reports/kover/${DEFAULT_COBERTURA_BASENAME}.xml"
 
 private const val TASK_NAME_KOVER = KoverNames.DEFAULT_XML_REPORT_NAME
 private const val TASK_NAME_COBERTURA = "coberturaXmlReport"
@@ -147,8 +151,28 @@ public class ProtonCoveragePlugin : Plugin<Project> {
             conversionTask.configure {
                 dependsOn(reportTask)
                 onlyIf { !reportTask.get().state.skipped || reportTask.get().state.upToDate }
+                doLast {
+                    fixCoberturaSourcePaths()
+                }
             }
         }
+    }
+
+    /** Fix for the `<source>` paths in Cobertura XML files.
+     * For Gitlab to generate a coverage visualization, we need to provide
+     * full path to a source file (or at least relative to the root project dir).
+     * https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html#automatic-class-path-correction
+     */
+    private fun Project.fixCoberturaSourcePaths() {
+        val baseCoberturaFile = buildDir.resolve(DEFAULT_XML_REPORT_COBERTURA_FILE)
+        baseCoberturaFile.parentFile
+            .listFiles(FilenameFilter { _, name -> name.startsWith(DEFAULT_COBERTURA_BASENAME) })
+            ?.forEach { coberturaFile ->
+                val sourceDir = projectDir.resolve("src/main/kotlin").absolutePath
+                val updatedText = coberturaFile.readText()
+                    .replace("<source>.</source>", "<source>${sourceDir}</source>")
+                coberturaFile.writeText(updatedText)
+            }
     }
 
     private fun Project.registerCoberturaReportTask() {
