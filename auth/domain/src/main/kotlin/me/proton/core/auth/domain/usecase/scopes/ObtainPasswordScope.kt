@@ -40,7 +40,7 @@ class ObtainPasswordScope @Inject constructor(
         password: EncryptedString,
         twoFactorCode: String?
     ): Boolean {
-        val authInfo = authRepository.getAuthInfo(
+        val authInfo = authRepository.getAuthInfoSrp(
             sessionId = sessionId,
             username = username
         )

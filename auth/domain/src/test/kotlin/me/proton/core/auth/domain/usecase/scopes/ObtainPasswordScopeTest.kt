@@ -71,7 +71,7 @@ class ObtainPasswordScopeTest {
         expectedServerProof = "test-expectedServerProof"
     )
 
-    private val authInfoResult = AuthInfo(
+    private val authInfoResult = AuthInfo.Srp(
         username = testUsername,
         modulus = testModulus,
         serverEphemeral = testEphemeral,
@@ -96,7 +96,7 @@ class ObtainPasswordScopeTest {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
 
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns authInfoResult
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns authInfoResult
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
@@ -112,7 +112,7 @@ class ObtainPasswordScopeTest {
     fun testUnlockingPasswordNo2FASuccess() = runTest {
         val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted, null)
 
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         assertTrue(result)
     }
 
@@ -128,7 +128,7 @@ class ObtainPasswordScopeTest {
         } returns true
         val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted, test2FACode)
 
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         assertTrue(result)
     }
 
@@ -144,7 +144,7 @@ class ObtainPasswordScopeTest {
         } returns false
         val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted, null)
 
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         assertFalse(result)
     }
 
@@ -160,7 +160,7 @@ class ObtainPasswordScopeTest {
         } returns false
         val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted, test2FACode)
 
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         assertFalse(result)
     }
 

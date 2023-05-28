@@ -52,7 +52,7 @@ class PerformUpdateLoginPassword @Inject constructor(
         val username = user.nameNotNull()
         val account = accountRepository.getAccountOrNull(userId)
         val sessionId = requireNotNull(account?.sessionId)
-        val loginInfo = authRepository.getAuthInfo(sessionId, username)
+        val loginInfo = authRepository.getAuthInfoSrp(sessionId, username)
         val modulus = authRepository.randomModulus(sessionId)
         password.decrypt(keyStore).toByteArray().use { decryptedPassword ->
             newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->

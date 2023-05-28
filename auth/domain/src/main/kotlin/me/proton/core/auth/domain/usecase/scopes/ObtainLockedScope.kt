@@ -39,7 +39,7 @@ class ObtainLockedScope @Inject constructor(
         username: String,
         password: EncryptedString
     ): Boolean {
-        val authInfo = authRepository.getAuthInfo(
+        val authInfo = authRepository.getAuthInfoSrp(
             sessionId = sessionId,
             username = username
         )

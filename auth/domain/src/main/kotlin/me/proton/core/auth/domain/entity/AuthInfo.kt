@@ -21,12 +21,19 @@ package me.proton.core.auth.domain.entity
 /**
  * Holds Auth Info data.
  */
-data class AuthInfo(
-    val username: String,
-    val modulus: String,
-    val serverEphemeral: String,
-    val version: Int,
-    val salt: String,
-    val srpSession: String,
-    val secondFactor: SecondFactor?
-)
+sealed class AuthInfo {
+
+    data class Srp(
+        val username: String,
+        val modulus: String,
+        val serverEphemeral: String,
+        val version: Int,
+        val salt: String,
+        val srpSession: String,
+        val secondFactor: SecondFactor?
+    ) : AuthInfo()
+
+    data class Sso(
+        val ssoChallengeToken: String
+    ) : AuthInfo()
+}

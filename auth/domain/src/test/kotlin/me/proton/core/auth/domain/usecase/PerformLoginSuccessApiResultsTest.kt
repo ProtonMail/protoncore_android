@@ -66,9 +66,14 @@ class PerformLoginSuccessApiResultsTest {
         expectedServerProof = "test-expectedServerProof",
     )
 
-    private val loginInfoResult = AuthInfo(
-        username = testUsername, modulus = testModulus, serverEphemeral = testEphemeral, version = testVersion,
-        salt = testSalt, srpSession = testSrpSession, secondFactor = null
+    private val loginInfoResult = AuthInfo.Srp(
+        username = testUsername,
+        modulus = testModulus,
+        serverEphemeral = testEphemeral,
+        version = testVersion,
+        salt = testSalt,
+        srpSession = testSrpSession,
+        secondFactor = null
     )
     private val sessionInfoResult = SessionInfo(
         username = testUsername,
@@ -101,7 +106,7 @@ class PerformLoginSuccessApiResultsTest {
         } returns testSrpProofs
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
-        coEvery { authRepository.getAuthInfo(null, testUsername) } returns loginInfoResult
+        coEvery { authRepository.getAuthInfoSrp(null, testUsername) } returns loginInfoResult
         coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult
     }
 
@@ -110,7 +115,7 @@ class PerformLoginSuccessApiResultsTest {
         coEvery { challengeManager.getFramesByFlowName(loginChallengeConfig.flowName) } returns emptyList()
         useCase.invoke(testUsername, testPassword)
 
-        coVerify { authRepository.getAuthInfo(null, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(null, testUsername) }
         coVerify(exactly = 1) {
             authRepository.performLogin(
                 testUsername,

@@ -30,7 +30,6 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.runWithObservability
 import javax.inject.Inject
 
@@ -43,14 +42,14 @@ class PerformLogin @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: LoginChallengeConfig,
-    private val observabilityManager: ObservabilityManager
+    private val observabilityManager: ObservabilityManager,
 ) {
     suspend operator fun invoke(
         username: String,
         password: EncryptedString,
         loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null
     ): SessionInfo {
-        val loginInfo = authRepository.getAuthInfo(
+        val loginInfo = authRepository.getAuthInfoSrp(
             sessionId = null,
             username = username,
         )

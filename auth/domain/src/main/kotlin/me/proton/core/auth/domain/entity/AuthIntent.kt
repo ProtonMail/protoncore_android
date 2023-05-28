@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.request
+package me.proton.core.auth.domain.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class AuthInfoRequest(
-    @SerialName("Username")
-    val username: String? = null,
-    @SerialName("Intent")
-    val intent: String? = null
-)
+enum class AuthIntent(val value: String) {
+    PROTON("Proton"),
+    AUTO("Auto"),
+    SSO("SSO")
+}

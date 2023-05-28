@@ -68,7 +68,7 @@ class PerformLoginApiErrorTest {
         expectedServerProof = "test-expectedServerProof",
     )
 
-    private val loginInfoResult = AuthInfo(
+    private val loginInfoResult = AuthInfo.Srp(
         username = testUsername,
         modulus = testModulus,
         serverEphemeral = testEphemeral,
@@ -90,7 +90,7 @@ class PerformLoginApiErrorTest {
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } throws ApiException(
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 401,
                 message = "auth-info error",
@@ -144,11 +144,11 @@ class PerformLoginApiErrorTest {
     @Test(expected = ApiException::class)
     fun `login error invocations work correctly`() = runTest {
         // GIVEN
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns loginInfoResult
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns loginInfoResult
         // WHEN
         useCase.invoke(testUsername, testPassword)
         // THEN
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         coVerify(exactly = 1) {
             authRepository.performLogin(
                 testUsername,

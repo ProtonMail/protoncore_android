@@ -28,7 +28,6 @@ import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.User
@@ -126,7 +125,7 @@ class PerformUpdateRecoveryEmailTest {
     @Test
     fun `update recovery email empty returns success`() = runTest {
         // GIVEN
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns AuthInfo.Srp(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,
@@ -169,7 +168,7 @@ class PerformUpdateRecoveryEmailTest {
     @Test
     fun `update recovery non empty email returns success`() = runTest {
         // GIVEN
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns AuthInfo.Srp(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,

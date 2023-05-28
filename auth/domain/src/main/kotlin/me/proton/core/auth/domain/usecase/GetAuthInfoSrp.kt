@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,15 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.request
+package me.proton.core.auth.domain.usecase
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.coroutine.result
+import javax.inject.Inject
 
-@Serializable
-data class AuthInfoRequest(
-    @SerialName("Username")
-    val username: String? = null,
-    @SerialName("Intent")
-    val intent: String? = null
-)
+class GetAuthInfoSrp @Inject constructor(
+    private val authRepository: AuthRepository
+) {
+    suspend operator fun invoke(
+        sessionId: SessionId?,
+        username: String
+    ): AuthInfo.Srp = result("getAuthInfoSrp") {
+        authRepository.getAuthInfoSrp(
+            sessionId = sessionId,
+            username = username
+        )
+    }
+}

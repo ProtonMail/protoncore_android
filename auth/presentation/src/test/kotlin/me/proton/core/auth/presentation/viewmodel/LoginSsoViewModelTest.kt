@@ -21,13 +21,16 @@ package me.proton.core.auth.presentation.viewmodel
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.CreateLoginSsoSession
-import me.proton.core.auth.domain.usecase.GetAuthInfo
+import me.proton.core.auth.domain.usecase.GetAuthInfoSso
 import me.proton.core.auth.presentation.viewmodel.LoginSsoViewModel.State
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -36,23 +39,25 @@ import org.junit.Test
 
 class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
-    private val getAuthInfo = mockk<GetAuthInfo>()
+    private val requiredAccountType = AccountType.External
+    private val getAuthInfoSso = mockk<GetAuthInfoSso>()
     private val createLoginSession = mockk<CreateLoginSsoSession>()
+    private val manager = mockk<ObservabilityManager>()
 
     private val testEmail = "username@domain.com"
-    private val testUserId = UserId("test-user-id")
+    private val testUserId = UserId("userId")
 
     private lateinit var viewModel: LoginSsoViewModel
 
     @Before
     fun beforeEveryTest() {
-        viewModel = LoginSsoViewModel(getAuthInfo, createLoginSession)
+        viewModel = LoginSsoViewModel(requiredAccountType, getAuthInfoSso, createLoginSession, manager)
     }
 
     @Test
     fun `getAuth for non SSO account switch to SRP`() = coroutinesTest {
         // GIVEN
-        coEvery { getAuthInfo.invoke(any(), any()) } throws ApiException(
+        coEvery { getAuthInfoSso.invoke(any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 404,
                 message = "Email domain not found, please sign in with a password",
@@ -69,7 +74,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
             assertIs<State.Processing>(awaitItem())
             assertIs<State.SignInWithSrp>(awaitItem())
 
-            coVerify { getAuthInfo.invoke(null, testEmail) }
+            coVerify { getAuthInfoSso.invoke(testEmail) }
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -78,7 +83,9 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
     @Test
     fun `getAuth for SSO account StartToken`() = coroutinesTest {
         // GIVEN
-        coEvery { getAuthInfo.invoke(any(), any()) } returns mockk()
+        coEvery { getAuthInfoSso.invoke(any()) } returns mockk {
+            every { ssoChallengeToken } returns "token"
+        }
 
         viewModel.state.test {
             // WHEN
@@ -88,8 +95,32 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
             assertIs<State.Idle>(awaitItem())
             assertIs<State.Processing>(awaitItem())
             assertIs<State.StartToken>(awaitItem())
+            assertIs<State.Idle>(awaitItem())
 
-            coVerify { getAuthInfo.invoke(null, testEmail) }
+            coVerify { getAuthInfoSso.invoke(testEmail) }
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `createSessionFromUrl extract token from url`() = coroutinesTest {
+        // GIVEN
+        val url = "https://app-api.proton.domain/sso/login#token=token&uid=uid"
+        coEvery { createLoginSession.invoke(any(), any(), any()) } returns mockk {
+            every { userId } returns testUserId
+        }
+
+        viewModel.state.test {
+            // WHEN
+            viewModel.createSessionFromUrl(testEmail, url)
+
+            // THEN
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.Processing>(awaitItem())
+            assertIs<State.Success>(awaitItem())
+
+            coVerify { createLoginSession.invoke(testEmail, "token", requiredAccountType) }
 
             cancelAndIgnoreRemainingEvents()
         }

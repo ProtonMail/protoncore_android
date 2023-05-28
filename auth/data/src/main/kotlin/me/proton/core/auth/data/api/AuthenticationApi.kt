@@ -21,6 +21,7 @@ package me.proton.core.auth.data.api
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
+import me.proton.core.auth.data.api.request.LoginSsoRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
@@ -50,6 +51,9 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/v4")
     suspend fun performLogin(@Body request: LoginRequest): LoginResponse
+
+    @POST("auth/v4")
+    suspend fun performLoginSso(@Body request: LoginSsoRequest): LoginResponse
 
     @POST("auth/v4/2fa")
     suspend fun performSecondFactor(@Body request: SecondFactorRequest): SecondFactorResponse

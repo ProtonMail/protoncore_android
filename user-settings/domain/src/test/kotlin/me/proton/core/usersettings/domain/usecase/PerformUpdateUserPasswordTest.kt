@@ -31,7 +31,6 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
@@ -128,7 +127,7 @@ class PerformUpdateUserPasswordTest {
             every { sessionId } returns testSessionId
         }
 
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns AuthInfo(
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns AuthInfo.Srp(
             username = testUsername,
             modulus = testModulus,
             serverEphemeral = testServerEphemeral,

@@ -23,10 +23,13 @@ import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginRequest
+import me.proton.core.auth.data.api.request.LoginSsoRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
+import me.proton.core.auth.data.api.response.AuthInfoResponse
 import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.entity.AuthIntent
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
@@ -50,10 +53,16 @@ class AuthRepositoryImpl(
     private val validateServerProof: ValidateServerProof
 ) : AuthRepository {
 
-    override suspend fun getAuthInfo(sessionId: SessionId?, username: String): AuthInfo =
+    override suspend fun getAuthInfoSrp(sessionId: SessionId?, username: String): AuthInfo.Srp =
         provider.get<AuthenticationApi>(sessionId).invoke {
-            val request = AuthInfoRequest(username)
-            getAuthInfo(request).toAuthInfo(username)
+            val request = AuthInfoRequest(username, AuthIntent.PROTON.value)
+            getAuthInfo(request).toAuthInfo(username) as AuthInfo.Srp
+        }.valueOrThrow
+
+    override suspend fun getAuthInfoSso(email: String): AuthInfo.Sso =
+        provider.get<AuthenticationApi>().invoke {
+            val request = AuthInfoRequest(email, AuthIntent.SSO.value)
+            getAuthInfo(request).toAuthInfo(email) as AuthInfo.Sso
         }.valueOrThrow
 
     override suspend fun randomModulus(sessionId: SessionId?): Modulus =
@@ -84,9 +93,15 @@ class AuthRepositoryImpl(
         response.toSessionInfo(username)
     }.valueOrThrow
 
-    override suspend fun performLoginSso(email: String, token: String): SessionInfo {
-        TODO("Not yet implemented")
-    }
+    override suspend fun performLoginSso(
+        email: String,
+        token: String
+    ): SessionInfo =
+        provider.get<AuthenticationApi>().invoke {
+        val request = LoginSsoRequest(token)
+        val response = performLoginSso(request)
+        response.toSessionInfo(email)
+    }.valueOrThrow
 
     private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, ChallengeFrame?> {
         val name = "${product.framePrefix()}-0"

@@ -10,22 +10,30 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.CreateLoginSsoSession
-import me.proton.core.auth.domain.usecase.GetAuthInfo
+import me.proton.core.auth.domain.usecase.GetAuthInfoSso
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginAuthWithSsoTotal
+import me.proton.core.observability.domain.metrics.LoginObtainSsoChallengeTokenTotal
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginSsoViewModel @Inject constructor(
-    private val getAuthInfo: GetAuthInfo,
-    private val createLoginSsoSession: CreateLoginSsoSession
-) : ViewModel() {
+    private val requiredAccountType: AccountType,
+    private val getAuthInfoSso: GetAuthInfoSso,
+    private val createLoginSsoSession: CreateLoginSsoSession,
+    override val manager: ObservabilityManager
+) : ViewModel(), ObservabilityContext {
 
     private val mutableState = MutableStateFlow<State>(State.Idle)
     val state = mutableState.asStateFlow()
@@ -42,13 +50,12 @@ class LoginSsoViewModel @Inject constructor(
     fun startLoginWorkflow(
         email: String,
     ) = viewModelScope.launchWithResultContext {
-        onResult("getAuthInfo") { }
+        onResultEnqueue("getAuthInfoSso") { LoginObtainSsoChallengeTokenTotal(this) }
         flow {
             emit(State.Processing)
-            // TODO: Add Intent to AuthInfo call.
-            // TODO: Get Token from getAuthInfo.
-            getAuthInfo(sessionId = null, username = email)
-            emit(State.StartToken("tokenFromAuthInfoCall"))
+            val result = getAuthInfoSso(email = email)
+            emit(State.StartToken(result.ssoChallengeToken))
+            emit(State.Idle)
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))
         }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
@@ -58,15 +65,20 @@ class LoginSsoViewModel @Inject constructor(
         }.collect()
     }
 
-    fun createSessionWithToken(
+    fun createSessionFromUrl(
         email: String,
-        token: String,
-        requiredAccountType: AccountType
+        url: String,
     ) = viewModelScope.launchWithResultContext {
-        onResult("performLogin") { }
+        onResultEnqueue("performLoginSso") { LoginAuthWithSsoTotal(this) }
         flow {
             emit(State.Processing)
-            val sessionInfo = createLoginSsoSession(email, token, requiredAccountType)
+            // Ex: url = "https://app-api.proton.domain/sso/login#token=token&uid=uid"
+            val params = url.toHttpUrl().fragment?.split("&")?.associate { param ->
+                val (key, value) = param.split("=")
+                Pair(key, value)
+            }
+            val token = params?.getValue("token")
+            val sessionInfo = createLoginSsoSession(email, requireNotNull(token), requiredAccountType)
             emit(State.Success(sessionInfo.userId))
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))
@@ -75,6 +87,10 @@ class LoginSsoViewModel @Inject constructor(
         }.onEach { state ->
             mutableState.tryEmit(state)
         }.collect()
+    }
+
+    fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
+        manager.enqueue(LoginScreenViewTotal(screenId))
     }
 }
 

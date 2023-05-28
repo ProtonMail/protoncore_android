@@ -32,10 +32,17 @@ interface AuthRepository {
     /**
      * Get Authentication Info (e.g. needed during login or password/locked scope).
      */
-    suspend fun getAuthInfo(
+    suspend fun getAuthInfoSrp(
         sessionId: SessionId?,
-        username: String,
-    ): AuthInfo
+        username: String
+    ): AuthInfo.Srp
+
+    /**
+     * Get Authentication Info for SSO.
+     */
+    suspend fun getAuthInfoSso(
+        email: String,
+    ): AuthInfo.Sso
 
     /**
      * Perform Login to create a session (accessToken, refreshToken, sessionId, ...).

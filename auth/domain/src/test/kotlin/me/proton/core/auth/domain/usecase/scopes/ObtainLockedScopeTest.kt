@@ -71,7 +71,7 @@ class ObtainLockedScopeTest {
         expectedServerProof = "test-expectedServerProof"
     )
 
-    private val authInfoResult = AuthInfo(
+    private val authInfoResult = AuthInfo.Srp(
         username = testUsername,
         modulus = testModulus,
         serverEphemeral = testEphemeral,
@@ -96,7 +96,7 @@ class ObtainLockedScopeTest {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
 
-        coEvery { authRepository.getAuthInfo(testSessionId, testUsername) } returns authInfoResult
+        coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns authInfoResult
         coEvery {
             userRepository.unlockUserForLockedScope(
                 testUserId,
@@ -111,7 +111,7 @@ class ObtainLockedScopeTest {
     fun testUnlockingSuccess() = runTest {
         val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted)
 
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         assertTrue(result)
     }
 
@@ -126,7 +126,7 @@ class ObtainLockedScopeTest {
         } returns false
         val result = useCase.invoke(testUserId, testSessionId, testUsername, testPasswordEncrypted)
 
-        coVerify { authRepository.getAuthInfo(testSessionId, testUsername) }
+        coVerify { authRepository.getAuthInfoSrp(testSessionId, testUsername) }
         assertFalse(result)
     }
 

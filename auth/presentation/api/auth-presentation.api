@@ -1523,10 +1523,19 @@ public final class me/proton/core/auth/presentation/ui/LoginSsoActivity : me/pro
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginSsoActivity$Companion;
-	public field requiredAccountType Lme/proton/core/account/domain/entity/AccountType;
+	public field baseApiUrl Lokhttp3/HttpUrl;
+	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public field networkPrefs Lme/proton/core/network/domain/NetworkPrefs;
+	public field sessionProvider Lme/proton/core/network/domain/session/SessionProvider;
 	public fun <init> ()V
-	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
-	public final fun setRequiredAccountType (Lme/proton/core/account/domain/entity/AccountType;)V
+	public final fun getBaseApiUrl ()Lokhttp3/HttpUrl;
+	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public final fun getNetworkPrefs ()Lme/proton/core/network/domain/NetworkPrefs;
+	public final fun getSessionProvider ()Lme/proton/core/network/domain/session/SessionProvider;
+	public final fun setBaseApiUrl (Lokhttp3/HttpUrl;)V
+	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public final fun setNetworkPrefs (Lme/proton/core/network/domain/NetworkPrefs;)V
+	public final fun setSessionProvider (Lme/proton/core/network/domain/session/SessionProvider;)V
 	public fun showLoading (Z)V
 }
 
@@ -1538,11 +1547,14 @@ public abstract interface class me/proton/core/auth/presentation/ui/LoginSsoActi
 }
 
 public final class me/proton/core/auth/presentation/ui/LoginSsoActivity_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectBaseApiUrl (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lokhttp3/HttpUrl;)V
+	public static fun injectExtraHeaderProvider (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;)V
-	public static fun injectRequiredAccountType (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/account/domain/entity/AccountType;)V
+	public static fun injectNetworkPrefs (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/network/domain/NetworkPrefs;)V
+	public static fun injectSessionProvider (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/network/domain/session/SessionProvider;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me/proton/core/auth/presentation/ui/AuthActivity {
@@ -1924,8 +1936,14 @@ public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment 
 public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion;
 	public static final field TERMS_CONDITIONS_URL Ljava/lang/String;
+	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public field networkPrefs Lme/proton/core/network/domain/NetworkPrefs;
 	public fun <init> ()V
+	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public final fun getNetworkPrefs ()Lme/proton/core/network/domain/NetworkPrefs;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public final fun setNetworkPrefs (Lme/proton/core/network/domain/NetworkPrefs;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion {
@@ -1939,6 +1957,15 @@ public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDia
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_GeneratedInjector {
 	public abstract fun injectTermsConditionsDialogFragment (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectExtraHeaderProvider (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
+	public static fun injectNetworkPrefs (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/network/domain/NetworkPrefs;)V
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
@@ -2064,7 +2091,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
 	public final fun checkForSecondFactorInput (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;)Lkotlinx/coroutines/Job;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun onConfirmPasswordResult (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lkotlinx/coroutines/Job;
@@ -2135,7 +2162,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules {
@@ -2157,10 +2184,16 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel : androidx/lifecycle/ViewModel {
-	public fun <init> (Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;)V
-	public final fun createSessionWithToken (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;)Lkotlinx/coroutines/Job;
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public final fun createSessionFromUrl (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
+	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)V
 	public final fun startLoginWorkflow (Ljava/lang/String;)Lkotlinx/coroutines/Job;
 }
 
@@ -2220,11 +2253,11 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/GetAuthInfo;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
+	public static fun newInstance (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_HiltModules {

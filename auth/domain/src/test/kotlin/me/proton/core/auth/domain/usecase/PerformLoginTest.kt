@@ -56,7 +56,7 @@ class PerformLoginTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        coEvery { authRepository.getAuthInfo(any(), any()) } returns mockk(relaxed = true)
+        coEvery { authRepository.getAuthInfoSrp(any(), any()) } returns mockk(relaxed = true)
         coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns mockk(relaxed = true)
         coEvery { challengeManager.getFramesByFlowName(any()) } returns mockk()
         every { keyStoreCrypto.decrypt(any<String>()) } returns "test-password"

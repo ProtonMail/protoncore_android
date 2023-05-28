@@ -26,31 +26,57 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.account.domain.entity.AccountType
+import kotlinx.coroutines.launch
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginSsoBinding
 import me.proton.core.auth.presentation.entity.LoginSsoInput
 import me.proton.core.auth.presentation.entity.LoginSsoResult
 import me.proton.core.auth.presentation.viewmodel.LoginSsoViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
+import me.proton.core.presentation.ui.ProtonWebViewActivity.Companion.ResultContract
+import me.proton.core.presentation.ui.ProtonWebViewActivity.Input
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
+import okhttp3.HttpUrl
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoBinding::inflate) {
 
     @Inject
-    lateinit var requiredAccountType: AccountType
+    @BaseProtonApiUrl
+    lateinit var baseApiUrl: HttpUrl
+
+    @Inject
+    lateinit var networkPrefs: NetworkPrefs
+
+    @Inject
+    lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    lateinit var sessionProvider: SessionProvider
 
     private val viewModel by viewModels<LoginSsoViewModel>()
 
     private val input: LoginSsoInput? by lazy {
         intent?.extras?.getParcelable(ARG_INPUT)
+    }
+
+    private val webViewResultLauncher = registerForActivityResult(ResultContract) {
+        it?.takeIf { it.isSuccess }?.let { result ->
+            val email = binding.emailInput.text.toString()
+            viewModel.createSessionFromUrl(email, result.url)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,19 +89,20 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
             signInWithPasswordButton.onClick { finish() }
         }
 
-        viewModel.state
-            .flowWithLifecycle(lifecycle)
-            .onEach {
-                when (it) {
-                    is LoginSsoViewModel.State.Error -> onError(it)
-                    is LoginSsoViewModel.State.Idle -> showLoading(false)
-                    is LoginSsoViewModel.State.Processing -> showLoading(true)
-                    is LoginSsoViewModel.State.SignInWithSrp -> onSignInWithSrp(it)
-                    is LoginSsoViewModel.State.StartToken -> onStarToken(it)
-                    is LoginSsoViewModel.State.Success -> onSuccess(it)
-                }
+        viewModel.state.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is LoginSsoViewModel.State.Error -> onError(it)
+                is LoginSsoViewModel.State.Idle -> showLoading(false)
+                is LoginSsoViewModel.State.Processing -> showLoading(true)
+                is LoginSsoViewModel.State.SignInWithSrp -> onSignInWithSrp(it)
+                is LoginSsoViewModel.State.StartToken -> onStartToken(it)
+                is LoginSsoViewModel.State.Success -> onSuccess(it)
             }
-            .launchIn(lifecycleScope)
+        }.launchIn(lifecycleScope)
+
+        launchOnScreenView {
+            viewModel.onScreenView(LoginScreenViewTotal.ScreenId.signInWithSso)
+        }
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {
@@ -106,12 +133,23 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
         finish()
     }
 
-    private fun onStarToken(state: LoginSsoViewModel.State.StartToken) {
-        TODO("Start WebView using: ${state.token}")
-    }
-
-    private fun onIdentityProvided(email: String, token: String) {
-        viewModel.createSessionWithToken(email, token, requiredAccountType)
+    private fun onStartToken(state: LoginSsoViewModel.State.StartToken) = lifecycleScope.launch {
+        val sessionId = requireNotNull(sessionProvider.getSessionId(userId = null))
+        val session = requireNotNull(sessionProvider.getSession(sessionId))
+        val extraHeaders = mapOf(AUTH_HEADER to "$BEARER_HEADER ${session.accessToken}")
+        val url = "$baseApiUrl$AUTH_SSO_URL${state.token}"
+        webViewResultLauncher.launch(
+            Input(
+                url = url,
+                successUrlRegex = PREFIX_LOGIN_TOKEN,
+                errorUrlRegex = PREFIX_LOGIN_ERROR,
+                extraHeaders = extraHeaders,
+                javaScriptEnabled = true,
+                domStorageEnabled = true,
+                shouldOpenLinkInBrowser = false
+            )
+        )
+        viewModel.onScreenView(LoginScreenViewTotal.ScreenId.ssoIdentityProvider)
     }
 
     private fun onSuccess(state: LoginSsoViewModel.State.Success) {
@@ -124,6 +162,12 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     }
 
     companion object {
+        private const val AUTH_SSO_URL = "/auth/sso/"
+        private const val AUTH_HEADER = "Authorization"
+        private const val BEARER_HEADER = "Bearer"
+        private const val TOKEN = "token"
+        private const val PREFIX_LOGIN_TOKEN = "login#$TOKEN"
+        private const val PREFIX_LOGIN_ERROR = "login#error"
         const val ARG_INPUT = "arg.loginSsoInput"
         const val ARG_RESULT = "arg.loginSsoResult"
     }

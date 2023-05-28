@@ -73,14 +73,14 @@ class AuthRepositoryImplTest {
     )
     private val testSrpSession = "test-srp-session"
 
-    private val successLoginInfo = AuthInfo(
-        testUsername,
-        "test-modulus",
-        "test-serverephemeral",
-        1,
-        "test-salt",
-        "test-srpSession",
-        null
+    private val successLoginInfo = AuthInfo.Srp(
+        username = testUsername,
+        modulus = "test-modulus",
+        serverEphemeral = "test-serverephemeral",
+        version = 1,
+        salt = "test-salt",
+        srpSession = "test-srpSession",
+        secondFactor = null
     )
 
     private val successSessionInfo = mockk<SessionInfo>()
@@ -116,7 +116,7 @@ class AuthRepositoryImplTest {
         // GIVEN
         coEvery { apiManager.invoke<AuthInfo>(any(), any()) } returns ApiResult.Success(successLoginInfo)
         // WHEN
-        val loginInfoResponse = repository.getAuthInfo(testSessionId, testUsername)
+        val loginInfoResponse = repository.getAuthInfoSrp(testSessionId, testUsername)
         // THEN
         assertNotNull(loginInfoResponse)
         assertEquals(testUsername, loginInfoResponse.username)
@@ -130,7 +130,7 @@ class AuthRepositoryImplTest {
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.getAuthInfo(testSessionId, testUsername)
+            repository.getAuthInfoSrp(testSessionId, testUsername)
         }
         // THEN
         assertEquals("test error", throwable.message)
@@ -335,8 +335,23 @@ class AuthRepositoryImplTest {
         assertEquals(2, responseScopeInfo.scopes.size)
     }
 
-    @Test(expected = NotImplementedError::class)
+    @Test
     fun `performLoginSso return SessionInfo`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Success(mockk())
+        // WHEN
+        repository.performLoginSso("username@domain.com", "token")
+    }
+
+    @Test(expected = ApiException::class)
+    fun `performLoginSso return error`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test login error")
+        )
+        // WHEN
         repository.performLoginSso("username@domain.com", "token")
     }
 }

@@ -50,7 +50,7 @@ class PerformUpdateRecoveryEmail @Inject constructor(
         val user = userRepository.getUser(sessionUserId)
         val username = user.nameNotNull()
         val account = accountRepository.getAccountOrNull(sessionUserId)
-        val loginInfo = authRepository.getAuthInfo(requireNotNull(account?.sessionId), username)
+        val loginInfo = authRepository.getAuthInfoSrp(requireNotNull(account?.sessionId), username)
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
                 username = username,

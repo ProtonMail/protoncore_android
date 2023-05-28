@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.SecondFactor
-import me.proton.core.auth.domain.usecase.GetAuthInfo
+import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -48,7 +48,7 @@ import javax.inject.Inject
 class ConfirmPasswordDialogViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val getAuthInfo: GetAuthInfo,
+    private val getAuthInfoSrp: GetAuthInfoSrp,
     private val obtainLockedScope: ObtainLockedScope,
     private val obtainPasswordScope: ObtainPasswordScope,
     private val missingScopeListener: MissingScopeListener
@@ -78,7 +78,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             emit(State.Error.InvalidAccount)
             return@flow
         }
-        val authInfo = getAuthInfo(requireNotNull(account.sessionId), account.username)
+        val authInfo = getAuthInfoSrp(requireNotNull(account.sessionId), account.username)
         val isSecondFactorNeeded = when (missingScope) {
             Scope.PASSWORD -> authInfo.secondFactor is SecondFactor.Enabled
             Scope.LOCKED -> false

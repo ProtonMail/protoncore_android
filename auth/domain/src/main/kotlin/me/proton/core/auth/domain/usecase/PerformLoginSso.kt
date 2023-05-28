@@ -29,7 +29,7 @@ class PerformLoginSso @Inject constructor(
     suspend operator fun invoke(
         email: String,
         token: String,
-    ): SessionInfo = result("performLogin") {
+    ): SessionInfo = result("performLoginSso") {
         authRepository.performLoginSso(email = email, token = token)
     }
 }
