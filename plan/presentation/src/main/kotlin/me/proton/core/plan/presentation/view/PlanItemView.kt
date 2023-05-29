@@ -66,7 +66,7 @@ class PlanItemView @JvmOverloads constructor(
 
     private fun getMappedLayout(plan: PlanDetailsItem, mappedPlanLayouts: Array<String>?): String {
         val indexOfPlanName = mappedPlanIds?.indexOf(plan.name) ?: return "plan_id_${plan.name}"
-        return mappedPlanLayouts?.get(indexOfPlanName) ?: "plan_id_${plan.name}"
+        return mappedPlanLayouts?.getOrNull(indexOfPlanName) ?: "plan_id_${plan.name}"
     }
 
     private fun getCurrentLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedCurrentPlanLayouts)
