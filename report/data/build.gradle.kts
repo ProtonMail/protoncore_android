@@ -34,6 +34,10 @@ protonDagger {
     workManagerHiltIntegration = true
 }
 
+android {
+    namespace = "me.proton.core.report.data"
+}
+
 dependencies {
     api(
         project(Module.networkData),

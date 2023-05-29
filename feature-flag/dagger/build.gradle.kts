@@ -25,6 +25,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.featureflag.dagger"
+}
+
 dependencies {
     implementation(
         project(Module.featureFlagData),

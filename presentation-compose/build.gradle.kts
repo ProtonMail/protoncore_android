@@ -29,6 +29,10 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.presentation.compose"
+}
+
 dependencies {
     api(
         activity,

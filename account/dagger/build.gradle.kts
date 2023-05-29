@@ -26,6 +26,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.account.dagger"
+}
+
 dependencies {
     api(
         project(Module.accountDomain),

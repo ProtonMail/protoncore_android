@@ -25,6 +25,10 @@ plugins {
 protonCoverage.disabled.set(true)
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.key"
+}
+
 dependencies {
     api(
         project(Module.keyDagger),

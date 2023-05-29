@@ -36,6 +36,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.network.data"
+}
+
 dependencies {
     api(
         project(Module.kotlinUtil),

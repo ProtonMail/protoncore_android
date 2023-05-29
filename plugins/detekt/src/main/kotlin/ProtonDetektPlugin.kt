@@ -50,7 +50,7 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val configuration = target.extensions.create<ProtonDetektConfiguration>("protonDetekt")
-        target.beforeEvaluate { setupDetekt(configuration) }
+        target.afterEvaluate { setupDetekt(configuration) }
     }
 }
 
@@ -101,7 +101,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
     // val libs = project.rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
     // `detekt version` = libs.findVersion("detekt").get().toString()
-    `detekt version` = "1.22.0"
+    `detekt version` = "1.23.0"
 
     val defaultConfigFilePath = "config/detekt/config.yml"
 

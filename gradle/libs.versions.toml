@@ -1,11 +1,10 @@
 [versions]
-androidGradle = "7.4.2"
-arturboschDetektGradle = "1.19.0"
+androidGradle = "8.0.2"
+arturboschDetektGradle = "1.23.0"
 benManesVersions = "0.44.0"
 daggerHiltAndroid = "2.46.1"
 dependencyAnalysis = "1.20.0"
-detekt = "1.22.0"
-detekt-codeanalysis = "0.2.0"
+detekt = "1.23.0"
 easyGradle = "2.8"
 gradleNexusPublish = "1.1.0"
 kotlin = "1.8.10"
@@ -36,7 +35,6 @@ dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-p
 
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt", version.ref = "detekt" }
 detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
-detekt-codeanalysis = { module = "pm.algirdas.detekt:codeanalysis", version.ref = "detekt-codeanalysis" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-rules-libraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
 

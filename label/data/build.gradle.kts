@@ -40,6 +40,10 @@ protonDagger {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.label.data"
+}
+
 dependencies {
     api(
         project(Module.dataRoom),

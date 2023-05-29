@@ -39,6 +39,10 @@ protonDagger {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.mailsettings.data"
+}
+
 dependencies {
     api(
         project(Module.dataRoom),

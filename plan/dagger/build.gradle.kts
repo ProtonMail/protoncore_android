@@ -25,6 +25,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.plan.dagger"
+}
+
 dependencies {
     api(
         project(Module.planData),

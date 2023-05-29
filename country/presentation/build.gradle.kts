@@ -36,6 +36,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.country.presentation"
+}
+
 dependencies {
     api(
         project(Module.countryDomain),

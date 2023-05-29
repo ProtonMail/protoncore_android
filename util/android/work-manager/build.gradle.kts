@@ -35,6 +35,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.util.android.workmanager"
+}
+
 dependencies {
     api(
         `lifecycle-common`,

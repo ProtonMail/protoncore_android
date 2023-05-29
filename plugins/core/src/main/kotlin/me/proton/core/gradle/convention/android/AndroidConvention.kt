@@ -24,7 +24,7 @@ import java.io.File
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import com.android.build.api.dsl.PackagingOptions
+import com.android.build.api.dsl.Packaging
 import com.android.build.api.dsl.TestExtension
 import me.proton.core.gradle.convention.BuildConvention
 import me.proton.core.gradle.plugin.CommonConfigurationExtension
@@ -80,7 +80,7 @@ private fun <T> T.applyConvention(
         textOutput = File("stdout")
     }
 
-    packagingOptions {
+    packaging {
         applyExclusions()
     }
 
@@ -96,7 +96,7 @@ private fun <T> T.applyConvention(
     }
 }
 
-private fun PackagingOptions.applyExclusions() {
+private fun Packaging.applyExclusions() {
     resources.excludes.addAll(
         listOf(
             "go/*.java",

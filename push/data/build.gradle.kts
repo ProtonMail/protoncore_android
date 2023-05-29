@@ -54,6 +54,10 @@ protonDagger {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.push.data"
+}
+
 dependencies {
     api(
         project(Module.dataRoom),

@@ -35,6 +35,10 @@ protonDagger {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.featureflag.data"
+}
+
 dependencies {
 
     api(

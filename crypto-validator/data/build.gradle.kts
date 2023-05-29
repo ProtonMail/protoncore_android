@@ -25,6 +25,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.crypto.validator.data"
+}
+
 dependencies {
     api(
         project(Module.cryptoValidatorDomain),

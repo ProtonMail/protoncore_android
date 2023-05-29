@@ -25,6 +25,10 @@ plugins {
 protonCoverage.disabled.set(true)
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.payment"
+}
+
 dependencies {
     api(
         project(Module.paymentDagger),

@@ -26,6 +26,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.push.dagger"
+}
+
 dependencies {
     implementation(
         project(Module.pushData),

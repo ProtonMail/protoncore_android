@@ -32,6 +32,10 @@ protonBuild {
 
 protonCoverage.disabled.set(true)
 
+android {
+    namespace = "me.proton.core.test.android.instrumented"
+}
+
 dependencies {
     api(
         project(Module.humanVerificationPresentation),

@@ -34,6 +34,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.usersettings.data"
+}
+
 dependencies {
     api(
         project(Module.cryptoCommon),

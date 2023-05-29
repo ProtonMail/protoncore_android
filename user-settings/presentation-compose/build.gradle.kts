@@ -30,6 +30,10 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.usersettings.presentation.compose"
+}
+
 dependencies {
     api(
         project(Module.presentationCompose),

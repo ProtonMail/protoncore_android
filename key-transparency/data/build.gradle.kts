@@ -39,6 +39,7 @@ protonBuild {
 }
 
 android {
+    namespace = "me.proton.core.keytransparency.data"
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

@@ -31,6 +31,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.crypto.validator.presentation"
+}
+
 dependencies {
     api(
         project(Module.accountManagerDomain),

@@ -39,6 +39,8 @@ protonDagger {
 protonTestsOptions.unitTestFlavor = "dev"
 
 android {
+    namespace = "me.proton.android.core.coreexample"
+
     buildFeatures.compose = true
 
     composeOptions {

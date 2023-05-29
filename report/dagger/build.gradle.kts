@@ -26,6 +26,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.report.dagger"
+}
+
 dependencies {
     androidTestImplementation(
         `android-test-core`,

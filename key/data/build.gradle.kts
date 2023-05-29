@@ -34,6 +34,7 @@ protonCoverage {
 }
 
 android {
+    namespace = "me.proton.core.key.data"
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

@@ -37,6 +37,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.auth.presentation"
+}
+
 dependencies {
     api(
         project(Module.accountDomain),

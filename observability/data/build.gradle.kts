@@ -35,6 +35,7 @@ protonDagger {
 }
 
 android {
+    namespace = "me.proton.core.observability.data"
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

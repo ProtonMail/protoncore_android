@@ -32,6 +32,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.challenge.presentation"
+}
+
 dependencies {
     api(
         project(Module.challengeDomain),

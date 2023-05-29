@@ -32,6 +32,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.paymentiap.presentation"
+}
+
 dependencies {
     api(
         project(Module.countryDomain),

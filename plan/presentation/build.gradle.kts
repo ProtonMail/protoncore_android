@@ -37,6 +37,7 @@ protonCoverage {
 publishOption.shouldBePublishedAsLib = true
 
 android {
+    namespace = "me.proton.core.plan.presentation"
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

@@ -30,6 +30,10 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.accountmanager.dagger"
+}
+
 dependencies {
     api(
         project(Module.accountManagerData),

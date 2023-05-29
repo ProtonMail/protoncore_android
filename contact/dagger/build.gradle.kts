@@ -30,6 +30,10 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.contact.dagger"
+}
+
 dependencies {
     api(
         project(Module.contactData),

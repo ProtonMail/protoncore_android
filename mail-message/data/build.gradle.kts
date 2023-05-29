@@ -29,6 +29,10 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.mailmessage.data"
+}
+
 dependencies {
     api(
         project(Module.domain),

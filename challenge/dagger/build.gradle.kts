@@ -44,6 +44,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.challenge.dagger"
+}
+
 dependencies {
     api(
         project(Module.challengeDomain),

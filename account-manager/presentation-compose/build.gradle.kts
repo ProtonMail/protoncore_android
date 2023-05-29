@@ -29,6 +29,10 @@ protonBuild {
     apiModeDisabled()
 }
 
+android {
+    namespace = "me.proton.core.accountmanager.presentation.compose"
+}
+
 dependencies {
     api(
         project(Module.accountManagerPresentation),

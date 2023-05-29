@@ -26,6 +26,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.keytransparency.dagger"
+}
+
 dependencies {
     implementation(
         project(Module.keyTransparencyData),

@@ -34,6 +34,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.plan.data"
+}
+
 dependencies {
     api(
         project(Module.domain),

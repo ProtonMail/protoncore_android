@@ -30,6 +30,7 @@ protonBuild {
 }
 
 android {
+    namespace = "me.proton.core.user.data"
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

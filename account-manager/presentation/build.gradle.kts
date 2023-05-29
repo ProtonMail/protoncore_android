@@ -30,6 +30,10 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.accountmanager.presentation"
+}
+
 dependencies {
     api(
         project(Module.accountDomain),

@@ -26,6 +26,10 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.metrics.dagger"
+}
+
 dependencies {
     implementation(
         project(Module.metricsData),

@@ -17,8 +17,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="me.proton.core.auth.presentation">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application>
 

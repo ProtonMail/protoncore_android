@@ -30,6 +30,10 @@ protonBuild {
 protonCoverage.disabled.set(true)
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.test.android"
+}
+
 dependencies {
     implementation(
         `lifecycle-runtime`,
