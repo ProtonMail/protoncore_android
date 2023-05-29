@@ -328,7 +328,7 @@
         <item>@drawable/ic_proton_user</item>
     </integer-array>
     <integer-array name="plan_id_family2022">
-        <item>@string/plan_id_visionary_header</item>
+        <item>@string/plan_id_family_header</item>
         <item>@plurals/item_storage</item>
         <item>@plurals/item_address</item>
         <item>@plurals/item_calendar</item>

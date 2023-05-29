@@ -32,6 +32,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -128,7 +129,16 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         currentPlan.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
-                            setData(it.subscribedPlan.copy(currency = currency, collapsible = false))
+                            val result = setData(it.subscribedPlan.copy(currency = currency, collapsible = false))
+                            if (!result) {
+                                manageSubscriptionText.setText(R.string.plans_manage_your_subscription)
+                                root.errorSnack(
+                                    message = getString(R.string.payments_general_error),
+                                    action = null,
+                                    actionOnClick = {},
+                                    length = Snackbar.LENGTH_LONG
+                                )
+                            }
                         }
 
                         if (it.unredeemedGooglePurchase != null) {

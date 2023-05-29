@@ -21,6 +21,7 @@ package me.proton.core.plan.presentation.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.content.res.TypedArray
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.ArrayRes
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -35,8 +36,13 @@ object LogTag {
     const val PLAN_RESOURCE_ERROR = "core.plan.presentation.resource"
 }
 
-internal fun Context.getStringArrayByName(aString: String) =
-    getStringArrayByName(resources.getIdentifier(aString, "array", packageName))
+internal fun Context.getStringArrayByName(aString: String): Array<out String>? {
+    val result = getStringArrayByName(resources.getIdentifier(aString, "array", packageName))
+    if (result == null) {
+        CoreLogger.d(LogTag.PLAN_RESOURCE_ERROR, "Resource not found $aString")
+    }
+    return result
+}
 
 internal fun Context.getStringArrayByName(@ArrayRes res: Int) =
     try {
@@ -46,8 +52,13 @@ internal fun Context.getStringArrayByName(@ArrayRes res: Int) =
         null
     }
 
-internal fun Context.getIntegerArrayByName(aString: String) =
-    getIntegerArrayByName(resources.getIdentifier(aString, "array", packageName))
+internal fun Context.getIntegerArrayByName(aString: String): TypedArray? {
+    val result = getIntegerArrayByName(resources.getIdentifier(aString, "array", packageName))
+    if (result == null) {
+        CoreLogger.d(LogTag.PLAN_RESOURCE_ERROR, "Resource not found $aString")
+    }
+    return result
+}
 
 @SuppressLint("Recycle")
 internal fun Context.getIntegerArrayByName(@ArrayRes aString: Int) =

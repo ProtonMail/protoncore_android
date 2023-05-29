@@ -19,6 +19,7 @@
 package me.proton.core.plan.presentation.view
 
 import android.content.Context
+import android.content.res.Resources.NotFoundException
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import java.text.DateFormat
 
@@ -60,7 +62,9 @@ class PlanItemView @JvmOverloads constructor(
     private val mappedPlanIds by lazy { context.getStringArrayByName(R.array.plan_mapping_plan_ids) }
 
     // There are 3 type of layouts: current, free and paid.
-    private val mappedCurrentPlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_current_plan_layouts) }
+    private val mappedCurrentPlanLayouts by lazy {
+        context.getStringArrayByName(R.array.plan_mapping_current_plan_layouts)
+    }
     private val mappedFreePlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_free_plan_layouts) }
     private val mappedPaidPlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_paid_plan_layouts) }
 
@@ -70,19 +74,25 @@ class PlanItemView @JvmOverloads constructor(
     }
 
     private fun getCurrentLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedCurrentPlanLayouts)
+
     private fun getFreeLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedFreePlanLayouts)
+
     private fun getPaidLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedPaidPlanLayouts)
 
+    /**
+     * Sets plans data and binds to according plan item UIs.
+     * Returns a result of the operation boolean true or false.
+     */
     fun setData(
         subscribedPlan: SubscribedPlan
-    ) {
+    ): Boolean {
         this.planDetailsItem = subscribedPlan.plan
         this.cycle = subscribedPlan.cycle
         this.currency = subscribedPlan.currency ?: PlanCurrency.EUR
         this.collapsible = subscribedPlan.collapsible
 
         initCommonViews(subscribedPlan.plan)
-        when (subscribedPlan.plan) {
+        return when (subscribedPlan.plan) {
             is PlanDetailsItem.FreePlanDetailsItem -> bindFreePlan(subscribedPlan.plan)
             is PlanDetailsItem.PaidPlanDetailsItem -> bindPaidPlan(subscribedPlan.plan)
             is PlanDetailsItem.CurrentPlanDetailsItem -> bindCurrentPlan(
@@ -105,11 +115,14 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Binds the current plan to the plan item UI. Returns a result of the operation boolean true or false.
+     */
     private fun bindCurrentPlan(
         amount: Price?,
         storageBar: Boolean,
         plan: PlanDetailsItem.CurrentPlanDetailsItem
-    ) = with(binding) {
+    ): Boolean = with(binding) {
         currentPlanGroup.visibility = VISIBLE
         storageProgress.apply {
             val usedPercentage = plan.usedSpace.toDouble() / plan.maxSpace
@@ -131,20 +144,24 @@ class PlanItemView @JvmOverloads constructor(
         val mappedLayout = getCurrentLayout(plan)
         val featureOrder = context.getStringArrayByName("${mappedLayout}_order")
         val featureIcons = context.getIntegerArrayByName("${mappedLayout}_icons")
+        if (featureOrder == null || featureIcons == null) {
+            featureIcons?.recycle()
+            return false
+        }
         context.getIntegerArrayByName(mappedLayout)?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->
                 createCurrentPlanFeature(
-                    featureOrder!![index - 1],
-                    featureIcons?.getResourceId(index - 1, 0) ?: 0,
+                    featureOrder[index - 1],
+                    featureIcons.getResourceId(index - 1, 0),
                     it,
                     index,
                     context,
                     plan
                 )
             }
-            featureIcons?.recycle()
+            featureIcons.recycle()
             it.recycle()
         }
 
@@ -182,9 +199,13 @@ class PlanItemView @JvmOverloads constructor(
         val amount = amount ?: plan.price?.let { price -> plan.cycle?.getPrice(price) } ?: PRICE_ZERO
         billableAmount = amount
         planPriceText.text = amount.formatCentsPriceDefaultLocale(currency.name)
+        return true
     }
 
-    private fun bindFreePlan(plan: PlanDetailsItem.FreePlanDetailsItem) = with(binding) {
+    /**
+     * Binds a free plan to the plan item UI. Returns a result of the operation boolean true or false.
+     */
+    private fun bindFreePlan(plan: PlanDetailsItem.FreePlanDetailsItem): Boolean = with(binding) {
         select.text = context.getString(R.string.plans_proton_for_free)
         planCycleText.visibility = View.GONE
         planPriceText.text = PRICE_ZERO.formatCentsPriceDefaultLocale(currency.name)
@@ -192,13 +213,17 @@ class PlanItemView @JvmOverloads constructor(
         val mappedLayout = getFreeLayout(plan)
         val featureOrder = context.getStringArrayByName("${mappedLayout}_order")
         val featureIcons = context.getIntegerArrayByName("${mappedLayout}_icons")
+        if (featureOrder == null || featureIcons == null) {
+            featureIcons?.recycle()
+            return false
+        }
         context.getIntegerArrayByName(mappedLayout)?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->
                 createPlanFeature(
-                    featureOrder!![index - 1],
-                    featureIcons?.getResourceId(index - 1, 0) ?: 0,
+                    featureOrder[index - 1],
+                    featureIcons.getResourceId(index - 1, 0),
                     it,
                     index,
                     context,
@@ -206,27 +231,35 @@ class PlanItemView @JvmOverloads constructor(
                 )
             }
             binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
-            featureIcons?.recycle()
+            featureIcons.recycle()
             it.recycle()
         }
         select.onClick {
             planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount, 0, PLAN_PRODUCT)
         }
+        return true
     }
 
-    private fun bindPaidPlan(plan: PlanDetailsItem.PaidPlanDetailsItem) = with(binding) {
+    /**
+     * Binds a paid plan to the plan item UI. Returns a result of the operation boolean true or false.
+     */
+    private fun bindPaidPlan(plan: PlanDetailsItem.PaidPlanDetailsItem): Boolean = with(binding) {
         select.text = String.format(context.getString(R.string.plans_get_proton), plan.displayName)
         starred.visibility = if (plan.starred) VISIBLE else INVISIBLE
         val mappedLayout = getPaidLayout(plan)
         val featureOrder = context.getStringArrayByName("${mappedLayout}_order")
         val featureIcons = context.getIntegerArrayByName("${mappedLayout}_icons")
+        if (featureOrder == null || featureIcons == null) {
+            featureIcons?.recycle()
+            return false
+        }
         context.getIntegerArrayByName(mappedLayout)?.let {
             bindPlanFeatures(
                 length = it.length().minus(1)
             ) { index: Int ->
                 createPlanFeature(
-                    featureOrder!![index - 1],
-                    featureIcons?.getResourceId(index - 1, 0) ?: 0,
+                    featureOrder[index - 1],
+                    featureIcons.getResourceId(index - 1, 0),
                     it,
                     index,
                     context,
@@ -235,7 +268,7 @@ class PlanItemView @JvmOverloads constructor(
             }
             binding.planDescriptionText.text = context.getString(it.getResourceId(0, 0))
             it.recycle()
-            featureIcons?.recycle()
+            featureIcons.recycle()
         }
 
         val maxPrice = cycle.getPrice(plan.price) ?: PRICE_ZERO
@@ -248,6 +281,7 @@ class PlanItemView @JvmOverloads constructor(
         select.onClick {
             planSelectionListener?.invoke(plan.name, plan.displayName, billableAmount, plan.services, plan.type)
         }
+        return true
     }
 
     private fun bindPlanFeatures(

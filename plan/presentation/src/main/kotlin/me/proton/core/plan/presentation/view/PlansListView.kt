@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanListViewItemBinding
 import me.proton.core.plan.presentation.databinding.PlansListViewBinding
@@ -37,6 +38,7 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.SubscribedPlan
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
 import me.proton.core.presentation.utils.PRICE_ZERO
+import me.proton.core.presentation.utils.errorSnack
 
 internal class PlansListView @JvmOverloads constructor(
     context: Context,
@@ -49,12 +51,24 @@ internal class PlansListView @JvmOverloads constructor(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
             planDetails.apply {
-                setData(
+                val result = setData(
                     SubscribedPlan(
                         plan = plan, amount = null, currency = selectedCurrency, collapsible = plansSize != 1
                     )
                 )
-
+                if (!result) {
+                    this@PlansListView.binding.apply {
+                        manageSubscriptionText.setText(R.string.plans_manage_your_subscription)
+                        root.errorSnack(
+                            message = resources.getString(R.string.payments_general_error),
+                            action = null,
+                            actionOnClick = {},
+                            length = Snackbar.LENGTH_LONG
+                        )
+                        planListRecyclerView.visibility = GONE
+                        setSpinnersVisibility(View.GONE)
+                    }
+                }
                 planSelectionListener = { planId, planName, amount, services, type ->
                     selectPlanListener(
                         SelectedPlan(

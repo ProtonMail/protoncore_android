@@ -930,7 +930,7 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 	public final fun getBillableAmount ()D
 	public final fun getPlanSelectionListener ()Lkotlin/jvm/functions/Function5;
 	public final fun setBillableAmount (D)V
-	public final fun setData (Lme/proton/core/plan/presentation/entity/SubscribedPlan;)V
+	public final fun setData (Lme/proton/core/plan/presentation/entity/SubscribedPlan;)Z
 	public final fun setPlanSelectionListener (Lkotlin/jvm/functions/Function5;)V
 }
 

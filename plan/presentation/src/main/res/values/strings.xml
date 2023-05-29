@@ -117,6 +117,7 @@
     <string name="plan_id_professional_header">Professional</string>
     <string name="plan_id_professional_multiuser">Multi-user support</string>
     <string name="plan_id_visionary_header">Visionary</string>
+    <string name="plan_id_family_header">Family</string>
     <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
     <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
     <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
