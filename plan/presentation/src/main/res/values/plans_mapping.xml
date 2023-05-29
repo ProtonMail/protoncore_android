@@ -29,9 +29,11 @@
         <item>drive2022</item>
         <item>bundle2022</item>
         <item>pass2023</item>
+        <item>family2022</item>
     </string-array>
     <!-- region current plan mapping -->
     <string-array name="plan_mapping_current_plan_layouts">
+        <item>plan_current</item>
         <item>plan_current</item>
         <item>plan_current</item>
         <item>plan_current</item>
@@ -58,6 +60,7 @@
         <item>plan_id_drive2022</item>
         <item>plan_id_bundle2022</item>
         <item>plan_id_pass2023</item>
+        <item>plan_id_family2022</item>
     </string-array>
     <!-- endregion -->
     <!-- region paid plan mapping -->
@@ -73,6 +76,7 @@
         <item>plan_id_drive2022</item>
         <item>plan_id_bundle2022</item>
         <item>plan_id_pass2023</item>
+        <item>plan_id_family2022</item>
     </string-array>
     <!-- endregion -->
 
