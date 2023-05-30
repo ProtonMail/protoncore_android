@@ -39,7 +39,11 @@ object LogTag {
 internal fun Context.getStringArrayByName(aString: String): Array<out String>? {
     val result = getStringArrayByName(resources.getIdentifier(aString, "array", packageName))
     if (result == null) {
-        CoreLogger.d(LogTag.PLAN_RESOURCE_ERROR, "Resource not found $aString")
+        CoreLogger.e(
+            LogTag.PLAN_RESOURCE_ERROR,
+            Resources.NotFoundException("Plan config resource not found $aString"),
+            "Plan config resource not found $aString"
+        )
     }
     return result
 }
@@ -55,7 +59,11 @@ internal fun Context.getStringArrayByName(@ArrayRes res: Int) =
 internal fun Context.getIntegerArrayByName(aString: String): TypedArray? {
     val result = getIntegerArrayByName(resources.getIdentifier(aString, "array", packageName))
     if (result == null) {
-        CoreLogger.d(LogTag.PLAN_RESOURCE_ERROR, "Resource not found $aString")
+        CoreLogger.e(
+            LogTag.PLAN_RESOURCE_ERROR,
+            Resources.NotFoundException("Plan config resource not found $aString"),
+            "Plan config resource not found $aString"
+        )
     }
     return result
 }
