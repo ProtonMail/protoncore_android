@@ -11,6 +11,50 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.7.0] - 2023-05-30
+
+### Chores
+
+- Upgraded Kover to 0.7.0.
+- Fix gradle build cache on ci.
+- observability:
+  - Update checkout grafana.
+  - Update GIAP status enum.
+- presentation:
+  - Add new icons.
+
+### Features
+
+- auth:
+  - Added SignIn with SSO handling.
+  - Added MinimalSignInExternalTests.
+  - Added SSO Local Feature Flag (R.bool.core_feature_auth_sso_enabled).
+  - Added New SSO Login Activity.
+  - Update login screen.
+    - Add SSO button (VPN-only).
+    - Display Help button in top-right corner.
+- crypto:
+  - Add API to add context on embedded signatures.
+  - Add verification context for SKLs.
+- plan:
+  - Add offers and promotions support.
+- user:
+  - Add signature context for new SKLs.
+- util-kotlin:
+  - Added ResultCoroutineContext.
+
+### Bug Fixes
+
+- key-transparency:
+  - strip plus alias from email address.
+- payment-iap:
+  - Prevent crash when Google Billing library returns a `null` response code.
+- plan:
+  - Defending a plans misconfiguration.
+  - Add family plan support.
+  - Unknown plans fix.
+  - Update plan mapping.
+
 ## [10.6.0] - 2023-05-18
 
 ### Chores
