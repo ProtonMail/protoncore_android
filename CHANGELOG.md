@@ -13,6 +13,8 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [10.7.0] - 2023-05-30
 
+**Note:** do not consume this release.
+
 ### Chores
 
 - Upgraded Kover to 0.7.0.
@@ -57,6 +59,8 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [10.6.0] - 2023-05-18
 
+**Note:** do not consume this release.
+
 ### Chores
 
 - presentation:
@@ -83,6 +87,8 @@ If needed, you can also manually update this file (provided the general structur
   - strip plus alias from email address.
 
 ## [10.5.0] - 2023-05-03
+
+**Note:** do not consume this release.
 
 ### Chores
 
