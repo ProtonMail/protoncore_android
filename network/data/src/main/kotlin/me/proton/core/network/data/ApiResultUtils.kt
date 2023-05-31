@@ -18,6 +18,7 @@
 package me.proton.core.network.data
 
 import kotlinx.serialization.SerializationException
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.util.kotlin.CoreLogger
@@ -33,7 +34,7 @@ import javax.net.ssl.SSLPeerUnverifiedException
 /**
  * Wrap the result with [ApiResult], catching expected Network related exceptions.
  */
-suspend fun <Api, T> Api.safeCall(
+suspend fun <Api: BaseRetrofitApi, T> Api.safeCall(
     networkManager: NetworkManager,
     block: suspend Api.() -> T
 ): ApiResult<T> {

@@ -17,13 +17,14 @@
  */
 package me.proton.core.network.data.doh
 
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import org.minidns.dnsmessage.DnsMessage
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface DnsOverHttpsRetrofitApi {
+interface DnsOverHttpsRetrofitApi : BaseRetrofitApi {
 
     @Headers("Accept: application/dns-message")
     @GET

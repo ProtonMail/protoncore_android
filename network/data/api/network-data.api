@@ -28,7 +28,7 @@ public final class me/proton/core/network/data/ApiProvider_Factory : dagger/inte
 }
 
 public final class me/proton/core/network/data/ApiResultUtilsKt {
-	public static final fun safeCall (Ljava/lang/Object;Lme/proton/core/network/domain/NetworkManager;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun safeCall (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;Lme/proton/core/network/domain/NetworkManager;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/data/BuildConfig {
@@ -221,7 +221,7 @@ public final class me/proton/core/network/data/doh/DnsOverHttpsProviderRFC8484 :
 public final class me/proton/core/network/data/doh/DnsOverHttpsProviderRFC8484$Companion {
 }
 
-public abstract interface class me/proton/core/network/data/doh/DnsOverHttpsRetrofitApi {
+public abstract interface class me/proton/core/network/data/doh/DnsOverHttpsRetrofitApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
 	public abstract fun getServers (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
