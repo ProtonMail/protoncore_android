@@ -31,13 +31,22 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentTermsConditionsBinding
 import me.proton.core.auth.presentation.viewmodel.signup.TermsConditionsViewModel
+import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_terms_conditions) {
+
+    @Inject
+    lateinit var networkPrefs: NetworkPrefs
+
+    @Inject
+    lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     private val viewModel by viewModels<TermsConditionsViewModel>()
     private val binding by viewBinding(FragmentTermsConditionsBinding::bind)
@@ -67,7 +76,7 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
         dismissAllowingStateLoss()
     }
 
-    inner class CustomWebViewClient : ProtonWebViewClient() {
+    inner class CustomWebViewClient : ProtonWebViewClient(networkPrefs, extraHeaderProvider) {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)

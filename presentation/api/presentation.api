@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_presentation_ui_ProtonWebViewActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/presentation/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -11,12 +15,28 @@ public final class me/proton/core/presentation/app/ActivityProvider : me/proton/
 	public fun onActivityResumed (Landroid/app/Activity;)V
 }
 
+public final class me/proton/core/presentation/app/ActivityProvider_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/presentation/app/ActivityProvider_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/presentation/app/ActivityProvider;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/presentation/app/ActivityProvider;
+}
+
 public final class me/proton/core/presentation/app/AppLifecycleObserver : androidx/lifecycle/DefaultLifecycleObserver, me/proton/core/presentation/app/AppLifecycleProvider {
 	public fun <init> ()V
 	public fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
 	public fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun onStart (Landroidx/lifecycle/LifecycleOwner;)V
 	public fun onStop (Landroidx/lifecycle/LifecycleOwner;)V
+}
+
+public final class me/proton/core/presentation/app/AppLifecycleObserver_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/presentation/app/AppLifecycleObserver_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/presentation/app/AppLifecycleObserver;
+	public static fun newInstance ()Lme/proton/core/presentation/app/AppLifecycleObserver;
 }
 
 public abstract interface class me/proton/core/presentation/app/AppLifecycleProvider {
@@ -76,6 +96,19 @@ public final class me/proton/core/presentation/databinding/ProtonToastErrorBindi
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
 }
 
+public final class me/proton/core/presentation/databinding/ProtonWebviewActivityBinding : androidx/viewbinding/ViewBinding {
+	public final field appbar Lcom/google/android/material/appbar/AppBarLayout;
+	public final field progress Landroid/widget/ProgressBar;
+	public final field scrollView Landroid/widget/ScrollView;
+	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
+	public final field webView Lme/proton/core/presentation/ui/webview/ProtonWebView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonWebviewActivityBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/presentation/databinding/ProtonWebviewActivityBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonWebviewActivityBinding;
+}
+
 public abstract class me/proton/core/presentation/savedstate/BaseSavedState : kotlin/properties/ReadWriteProperty {
 	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;)V
 	public abstract fun getCurrentValue ()Ljava/lang/Object;
@@ -116,6 +149,15 @@ public final class me/proton/core/presentation/savedstate/SavedStateKt {
 	public static synthetic fun state$default (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/presentation/savedstate/SavedState;
 }
 
+public abstract class me/proton/core/presentation/ui/Hilt_ProtonWebViewActivity : me/proton/core/presentation/ui/ProtonSecureActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+}
+
 public abstract class me/proton/core/presentation/ui/ProtonActivity : androidx/appcompat/app/AppCompatActivity {
 	public fun <init> ()V
 }
@@ -149,6 +191,115 @@ public abstract class me/proton/core/presentation/ui/ProtonViewBindingActivity :
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public final fun getBinding ()Landroidx/viewbinding/ViewBinding;
 	protected fun onCreate (Landroid/os/Bundle;)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity : me/proton/core/presentation/ui/ProtonSecureActivity {
+	public static final field ARG_INPUT Ljava/lang/String;
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/presentation/ui/ProtonWebViewActivity$Companion;
+	public field baseApiUrl Lokhttp3/HttpUrl;
+	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public field networkPrefs Lme/proton/core/network/domain/NetworkPrefs;
+	public fun <init> ()V
+	public final fun getBaseApiUrl ()Lokhttp3/HttpUrl;
+	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public final fun getNetworkPrefs ()Lme/proton/core/network/domain/NetworkPrefs;
+	public final fun setBaseApiUrl (Lokhttp3/HttpUrl;)V
+	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public final fun setNetworkPrefs (Lme/proton/core/network/domain/NetworkPrefs;)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Companion {
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Companion$ResultContract : androidx/activity/result/contract/ActivityResultContract {
+	public static final field INSTANCE Lme/proton/core/presentation/ui/ProtonWebViewActivity$Companion$ResultContract;
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;)Landroid/content/Intent;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$CustomWebViewClient : me/proton/core/presentation/ui/webview/ProtonWebViewClient {
+	public fun <init> (Lme/proton/core/presentation/ui/ProtonWebViewActivity;Lkotlin/jvm/functions/Function1;)V
+	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
+	public fun onPageStarted (Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
+	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Input : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZ)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Z
+	public final fun component8 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZ)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDomStorageEnabled ()Z
+	public final fun getErrorUrlRegex ()Ljava/lang/String;
+	public final fun getExtraHeaders ()Ljava/util/Map;
+	public final fun getJavaScriptEnabled ()Z
+	public final fun getShouldOpenLinkInBrowser ()Z
+	public final fun getShouldUseAlternativeUrl ()Z
+	public final fun getSuccessUrlRegex ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Input$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Z)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Z
+	public final fun copy (Ljava/lang/String;Z)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isSuccess ()Z
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+}
+
+public abstract interface class me/proton/core/presentation/ui/ProtonWebViewActivity_GeneratedInjector {
+	public abstract fun injectProtonWebViewActivity (Lme/proton/core/presentation/ui/ProtonWebViewActivity;)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectBaseApiUrl (Lme/proton/core/presentation/ui/ProtonWebViewActivity;Lokhttp3/HttpUrl;)V
+	public static fun injectExtraHeaderProvider (Lme/proton/core/presentation/ui/ProtonWebViewActivity;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/presentation/ui/ProtonWebViewActivity;)V
+	public static fun injectNetworkPrefs (Lme/proton/core/presentation/ui/ProtonWebViewActivity;Lme/proton/core/network/domain/NetworkPrefs;)V
 }
 
 public abstract interface class me/proton/core/presentation/ui/adapter/ClickableAdapter {
@@ -490,12 +641,20 @@ public final class me/proton/core/presentation/ui/webview/ProtonWebView$Companio
 }
 
 public class me/proton/core/presentation/ui/webview/ProtonWebViewClient : android/webkit/WebViewClient {
-	public fun <init> ()V
-	public final fun isFinished ()Z
+	public fun <init> (Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public final fun getShouldOpenLinkInBrowser ()Z
+	public final fun isAlternativeHost (Landroid/net/Uri;)Z
 	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
-	public final fun setFinished (Z)V
+	public fun onReceivedSslError (Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
+	public final fun setShouldOpenLinkInBrowser (Z)V
 	public fun shouldKeepInWebView (Ljava/lang/String;)Z
 	public fun shouldOverrideUrlLoading (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Z
+}
+
+public final class me/proton/core/presentation/ui/webview/SSLCertificateKt {
+	public static final fun getCompatX509Cert (Landroid/net/http/SslCertificate;)Ljava/security/cert/X509Certificate;
+	public static final fun isTrustedByLeafSPKIPinning (Landroid/net/http/SslCertificate;)Z
+	public static final fun isTrustedByLeafSPKIPinning (Ljava/security/cert/X509Certificate;)Z
 }
 
 public final class me/proton/core/presentation/utils/ActivityScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {

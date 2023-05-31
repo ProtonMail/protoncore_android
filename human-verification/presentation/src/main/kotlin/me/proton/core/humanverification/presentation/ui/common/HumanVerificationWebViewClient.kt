@@ -18,41 +18,44 @@
 
 package me.proton.core.humanverification.presentation.ui.common
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.net.http.SslError
 import android.webkit.CookieManager
-import android.webkit.SslErrorHandler
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.core.net.toUri
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.LogTag.HV_REQUEST_ERROR
-import me.proton.core.humanverification.presentation.utils.getCompatX509Cert
-import me.proton.core.network.data.LeafSPKIPinningTrustManager
-import me.proton.core.network.data.di.Constants
+import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.takeIfNotBlank
 
 /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
 class HumanVerificationWebViewClient(
     private val apiHost: String,
-    private val extraHeaders: List<Pair<String, String>>,
-    private val alternativeUrl: String?,
+    private val extraHeaderProvider: ExtraHeaderProvider,
+    private val networkPrefs: NetworkPrefs,
     private val networkRequestOverrider: NetworkRequestOverrider,
     private val onResourceLoadingError: (request: WebResourceRequest?, response: WebResponseError?) -> Unit,
     @HumanVerificationApiHost private val verifyAppUrl: String
-) : WebViewClient() {
+) : ProtonWebViewClient(networkPrefs, extraHeaderProvider) {
+
+    private val extraHeaders = extraHeaderProvider.headers
+
     private val rootDomain: String = when {
         apiHost.isIpAddress() -> apiHost
         else -> apiHost.split(".").takeLast(2).joinToString(".")
     }
 
-    override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+    override fun shouldInterceptRequest(
+        view: WebView,
+        request: WebResourceRequest
+    ): WebResourceResponse? {
         val needsExtraHeaderForAPI = extraHeaders.isNotEmpty() && request.url.matchesRootDomain()
         return when {
             request.method != "GET" -> {
@@ -60,7 +63,8 @@ class HumanVerificationWebViewClient(
                 // WebResourceRequest doesn't provide access to POST body.
                 null
             }
-            request.url.isAlternativeUrl() -> overrideForDoH(request, extraHeaders)
+
+            request.url.isAlternativeHost() -> overrideForDoH(request, extraHeaders)
             needsExtraHeaderForAPI -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
         }
@@ -78,21 +82,14 @@ class HumanVerificationWebViewClient(
         onResourceLoadingError(request, errorResponse?.let { WebResponseError.Http(it) })
     }
 
-    @SuppressLint("WebViewClientOnReceivedSslError")
-    override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-        CoreLogger.log(HV_REQUEST_ERROR, "SSL error: ${error.url} ${error.primaryError}")
-        if (tryAllowingSelfSignedDoHCert(error)) {
-            handler.proceed()
-        } else {
-            handler.cancel()
-            onResourceLoadingError(null, WebResponseError.Ssl(error))
-        }
-    }
-
-    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+    override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+    ) {
         super.onReceivedError(view, request, error)
         val logMessage = "Request failed: ${request?.method} ${request?.url} with " +
-            "code ${error?.errorCode} ${error?.description}"
+                "code ${error?.errorCode} ${error?.description}"
         CoreLogger.log(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, error?.let { WebResponseError.Resource(it) })
     }
@@ -100,20 +97,6 @@ class HumanVerificationWebViewClient(
     private fun Uri.matchesRootDomain(): Boolean {
         if (host == apiHost) return true
         return host?.endsWith(rootDomain) == true
-    }
-
-    private fun tryAllowingSelfSignedDoHCert(error: SslError): Boolean {
-        val isAlternativeUrl = error.url.toUri().isAlternativeUrl()
-        return if (error.primaryError == SslError.SSL_UNTRUSTED && isAlternativeUrl) {
-            val x509Certificate = error.certificate.getCompatX509Cert()
-            if (x509Certificate == null) {
-                false
-            } else {
-                LeafSPKIPinningTrustManager(Constants.ALTERNATIVE_API_SPKI_PINS).runCatching {
-                    checkServerTrusted(arrayOf(x509Certificate), "generic")
-                }.isSuccess
-            }
-        } else false
     }
 
     private fun overrideWithExtraHeaders(
@@ -154,16 +137,21 @@ class HumanVerificationWebViewClient(
         headers: List<Pair<String, String>>,
         acceptSelfSignedCertificates: Boolean
     ): WebResourceResponse? = runCatching {
-        val response = networkRequestOverrider.overrideRequest(url, method, headers, acceptSelfSignedCertificates)
+        val response = networkRequestOverrider.overrideRequest(
+            url,
+            method,
+            headers,
+            acceptSelfSignedCertificates
+        )
 
         if (response.httpStatusCode !in 200 until 400) {
             val logMessage = "Request with override failed: $method $url with " +
-                "code ${response.httpStatusCode} ${response.reasonPhrase}"
+                    "code ${response.httpStatusCode} ${response.reasonPhrase}"
             CoreLogger.log(HV_REQUEST_ERROR, logMessage)
         }
 
         // We need to remove the CSP header for DoH to work
-        val isAlternativeUrl = Uri.parse(url).isAlternativeUrl()
+        val isAlternativeUrl = Uri.parse(url).isAlternativeHost()
         val needsCspRemoval = isAlternativeUrl && response.responseHeaders.containsKey(CSP_HEADER)
         val filteredHeaders = if (needsCspRemoval) {
             response.responseHeaders.toMutableMap().also { it.remove(CSP_HEADER) }
@@ -194,9 +182,6 @@ class HumanVerificationWebViewClient(
     }.getOrNull()
 
     private fun Uri.isLoadCaptchaUrl() = path?.endsWith("/core/v4/captcha") == true
-    private fun Uri.isAlternativeUrl() = alternativeUrl?.toUri()?.let { alternativeUri ->
-        host == alternativeUri.host
-    } ?: false
 
     companion object {
         const val TAG = "HumanVerificationWebViewClient"

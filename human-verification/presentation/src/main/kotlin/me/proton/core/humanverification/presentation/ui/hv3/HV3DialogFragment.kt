@@ -55,6 +55,7 @@ import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.utils.toHvPageLoadStatus
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ExtraParams
 import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ViewModel
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -79,6 +80,9 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
     @Inject
     lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    lateinit var networkPrefs: NetworkPrefs
 
     @Inject
     lateinit var networkRequestOverrider: NetworkRequestOverrider
@@ -133,10 +137,10 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         val apiHost = requireNotNull(Uri.parse(baseUrl).host)
 
         webView.webViewClient = HumanVerificationWebViewClient(
-            apiHost,
-            extraHeaderProvider.headers,
-            viewModel.activeAltUrlForDoH,
-            networkRequestOverrider,
+            apiHost = apiHost,
+            extraHeaderProvider = extraHeaderProvider,
+            networkPrefs = networkPrefs,
+            networkRequestOverrider = networkRequestOverrider,
             onResourceLoadingError = { _, response ->
                 lifecycleScope.launch { handleResourceLoadingError(response) }
             },

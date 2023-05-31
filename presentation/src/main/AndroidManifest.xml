@@ -27,9 +27,16 @@
     </queries>
 
     <application android:theme="@style/ProtonTheme">
+
         <activity
             android:name=".ui.alert.ForceUpdateActivity"
             android:theme="@style/ProtonTheme.Transparent" />
+
+        <activity
+            android:name="me.proton.core.presentation.ui.ProtonWebViewActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

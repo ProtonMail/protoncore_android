@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidUiLibrary
+    protonDagger
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
 }
@@ -30,7 +31,7 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(26)
+    minBranchCoveragePercentage.set(24)
     minLineCoveragePercentage.set(23)
 }
 

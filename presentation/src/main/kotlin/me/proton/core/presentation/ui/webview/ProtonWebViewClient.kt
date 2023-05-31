@@ -18,33 +18,73 @@
 
 package me.proton.core.presentation.ui.webview
 
+import android.annotation.SuppressLint
+import android.net.Uri
+import android.net.http.SslError
+import android.webkit.SslErrorHandler
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.net.toUri
+import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.utils.openBrowserLink
 
+/**
+ * Proton WebViewClient supporting:
+ * - Proton alternative Ssl Cert pinning.
+ * - Proton Extra Headers.
+ */
 // See: https://commonsware.com/blog/2015/06/11/psa-webview-regression.html.
-open class ProtonWebViewClient : WebViewClient() {
+open class ProtonWebViewClient(
+    private val networkPrefs: NetworkPrefs,
+    private val extraHeaderProvider: ExtraHeaderProvider,
+) : WebViewClient() {
 
-    var isFinished = false
+    private val alternativeUrl: Uri?
+        get() = networkPrefs.activeAltBaseUrl?.toUri()
+
+    private var isFinished = false
+
+    var shouldOpenLinkInBrowser = true
+
+    fun Uri.isAlternativeHost() = alternativeUrl?.let { host == it.host } ?: false
 
     override fun onPageFinished(view: WebView?, url: String?) {
-        super.onPageFinished(view, url)
         isFinished = true
     }
 
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        val url = request.url.toString()
-        if (shouldKeepInWebView(url)) {
-            view.loadUrl(url)
-        } else {
-            view.context.openBrowserLink(url)
+        if (shouldOpenLinkInBrowser) {
+            val url = request.url.toString()
+            return if (shouldKeepInWebView(url)) {
+                view.loadUrl(url, extraHeaderProvider.headers.toMap())
+                true
+            } else {
+                view.context.openBrowserLink(url)
+                true
+            }
         }
-        return true
+        return false
     }
 
     open fun shouldKeepInWebView(url: String): Boolean {
         if (!isFinished) return true
         return false
+    }
+
+    @SuppressLint("WebViewClientOnReceivedSslError")
+    override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+        if (error.isAlternativeSelfSignedCert()) {
+            handler.proceed()
+        } else {
+            handler.cancel()
+        }
+    }
+
+    private fun SslError.isAlternativeSelfSignedCert(): Boolean = when {
+        !url.toUri().isAlternativeHost() -> false
+        primaryError == SslError.SSL_UNTRUSTED -> certificate.isTrustedByLeafSPKIPinning()
+        else -> false
     }
 }
