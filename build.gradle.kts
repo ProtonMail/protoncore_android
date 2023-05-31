@@ -151,7 +151,12 @@ dependencyAnalysis {
     }
 }
 
-// Only evaluate binary api for to be published projects, see https://github.com/Kotlin/binary-compatibility-validator
+// Don't evaluate binary for some projects (see https://github.com/Kotlin/binary-compatibility-validator).
+rootProject.apiValidation {
+    ignoredProjects.add(rootProject.name)
+    ignoredProjects.add("proguard-rules")
+}
+// Ignore non-published projects.
 subprojects {
     afterEvaluate {
         val publishOption = extensions.findByType(PublishOptionExtension::class.java)
