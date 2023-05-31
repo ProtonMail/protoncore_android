@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [10.7.1] - 2023-05-31
+
+### Chores
+
+- plan:
+  - Update plan misconfig report message.
+
 ## [10.7.0] - 2023-05-30
 
 **Note:** do not consume this release.
