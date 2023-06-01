@@ -1,0 +1,17 @@
+public final class me/proton/core/accountrecovery/domain/AccountRecoveryNotificationManager {
+	public fun <init> (Lme/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel;Lme/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled;)V
+	public final fun setupNotificationChannel ()V
+}
+
+public abstract interface class me/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel {
+	public abstract fun invoke (Ljava/lang/String;)V
+}
+
+public abstract interface class me/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId {
+	public abstract fun invoke ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled {
+	public abstract fun invoke ()Z
+}
+

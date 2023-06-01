@@ -1,0 +1,17 @@
+public class hilt_aggregated_deps/_me_proton_core_accountrecovery_dagger_CoreAccountRecoveryModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountrecovery/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/accountrecovery/dagger/CoreAccountRecoveryModule {
+	public abstract fun bindConfigureAccountRecoveryChannel (Lme/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl;)Lme/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel;
+	public abstract fun bindGetAccountRecoveryChannelId (Lme/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl;)Lme/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId;
+	public abstract fun bindIsAccountRecoveryEnabled (Lme/proton/core/accountrecovery/data/IsAccountRecoveryEnabledImpl;)Lme/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled;
+}
+

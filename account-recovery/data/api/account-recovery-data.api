@@ -1,0 +1,12 @@
+public final class me/proton/core/accountrecovery/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountrecovery/data/IsAccountRecoveryEnabledImpl : me/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled {
+	public fun <init> (Landroid/content/Context;)V
+	public fun invoke ()Z
+}
+

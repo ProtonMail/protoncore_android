@@ -32,16 +32,21 @@ android {
 
 dependencies {
     api(
-        project(Module.domain),
-        project(Module.presentation),
-        `startup-runtime`
+        project(Module.presentation)
     )
 
     implementation(
         project(Module.accountManagerDomain),
         project(Module.accountRecoveryDomain),
         activity,
-        `androidx-core`,
-        `lifecycle-process`
+        `androidx-core`
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
     )
 }

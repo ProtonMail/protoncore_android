@@ -1,0 +1,117 @@
+public class hilt_aggregated_deps/_me_proton_core_accountrecovery_presentation_ui_NotificationPermissionActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_accountrecovery_presentation_viewmodel_NotificationPermissionViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_accountrecovery_presentation_viewmodel_NotificationPermissionViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountrecovery/presentation/AccountRecoverySetup : androidx/lifecycle/DefaultLifecycleObserver {
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/accountrecovery/presentation/AccountRecoverySetup_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/AccountRecoverySetup_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/AccountRecoverySetup;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled;Lme/proton/core/accountrecovery/domain/AccountRecoveryNotificationManager;)Lme/proton/core/accountrecovery/presentation/AccountRecoverySetup;
+}
+
+public final class me/proton/core/accountrecovery/presentation/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl : me/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel {
+	public fun <init> (Landroid/content/Context;)V
+	public fun invoke (Ljava/lang/String;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl;
+}
+
+public final class me/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl : me/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId {
+	public fun <init> (Landroid/content/Context;)V
+	public fun invoke ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl;
+}
+
+public final class me/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel;
+	public static fun newInstance ()Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel;
+}
+
+public final class me/proton/core/accountrecovery/presentation/internal/HasNotificationPermission_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel;)Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission;
+}
+
+public abstract class me/proton/core/accountrecovery/presentation/ui/Hilt_NotificationPermissionActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+}
+
+public final class me/proton/core/accountrecovery/presentation/ui/NotificationPermissionActivity : me/proton/core/presentation/ui/ProtonActivity {
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/accountrecovery/presentation/ui/NotificationPermissionActivity_GeneratedInjector {
+	public abstract fun injectNotificationPermissionActivity (Lme/proton/core/accountrecovery/presentation/ui/NotificationPermissionActivity;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel;
+	public static fun newInstance (Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel;Lme/proton/core/accountrecovery/domain/AccountRecoveryNotificationManager;)Lme/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel;
+}
+
+public final class me/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/accountrecovery/presentation/viewmodel/NotificationPermissionViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+

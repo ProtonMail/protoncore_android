@@ -27,8 +27,8 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(15)
-    minLineCoveragePercentage.set(30)
+    minBranchCoveragePercentage.set(16)
+    minLineCoveragePercentage.set(50)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -48,10 +48,12 @@ dependencies {
     implementation(
         project(Module.cryptoCommon),
         project(Module.keyDomain),
+        project(Module.accountRecoveryPresentation),
         `coroutines-core`,
     )
 
     testImplementation(
+        project(Module.kotlinTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,
