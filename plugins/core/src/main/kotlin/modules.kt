@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,13 @@ public object Module {
     public const val accountManagerData: String = "$accountManager:account-manager-data"
     public const val accountManagerDataDb: String = "$accountManager:account-manager-data-db"
     public const val accountManagerDagger: String = "$accountManager:account-manager-dagger"
+
+    // AccountRecovery
+    public const val accountRecovery: String = ":account-recovery"
+    public const val accountRecoveryDagger: String = "$accountRecovery:account-recovery-dagger"
+    public const val accountRecoveryData: String = "$accountRecovery:account-recovery-data"
+    public const val accountRecoveryDomain: String = "$accountRecovery:account-recovery-domain"
+    public const val accountRecoveryPresentation: String = "$accountRecovery:account-recovery-presentation"
 
     // Crypto
     public const val crypto: String = ":crypto"

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,6 +86,7 @@ internal fun initVersions(libs: VersionCatalog) {
 
 // region Android
 public const val `android-tools version`: String =             "30.0.3"
+public const val `androidx-core version`: String =             "1.8.0"
 public const val `core-splashscreen version`: String =         "1.0.0"
 public const val `androidx-collection version`: String =       "1.2.0"
 public const val `compose version`: String =                   "1.3.2"

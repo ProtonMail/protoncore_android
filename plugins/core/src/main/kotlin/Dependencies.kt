@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 // region AndroidX
+public val DependencyHandler.`androidx-core`: Any
+    get() = androidx("core") version `androidx-core version`
 public val DependencyHandler.`core-splashscreen`: Any
     get() = androidx("core", moduleSuffix = "splashscreen") version `core-splashscreen version`
 // end region

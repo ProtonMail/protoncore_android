@@ -189,6 +189,7 @@ dependencies {
 
         project(Module.account),
         project(Module.accountManager),
+        project(Module.accountRecovery),
         project(Module.auth),
         project(Module.challenge),
         project(Module.contact),
