@@ -27,7 +27,6 @@ import io.gitlab.arturbosch.detekt.Detekt
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import net.rubygrapefruit.platform.file.FilePermissionException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -296,9 +295,7 @@ internal open class MergeDetektReports : DefaultTask() {
 private fun downloadDetektConfig(githubConfigFilePath: String, to: File) {
 
     val dir = to.parentFile
-    if (dir.exists().not() && dir.mkdirs().not()) {
-        throw FilePermissionException("Cannot create directory ${dir.canonicalPath}")
-    }
+    check(dir.exists() || dir.mkdirs()) { "Cannot create directory ${dir.canonicalPath}" }
 
     if (to.isLessThanADayOld) {
         println("Detekt rule-set is less than a day old, skipping download.")
