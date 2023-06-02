@@ -6,9 +6,6 @@ settings.gradle.kts
 
 pluginManagement {
     repositories {
-        maven {
-            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/") // for snapshot release
-        }
         mavenCentral() // for stable release
     }
 }
@@ -155,7 +152,5 @@ This plugin should be applied to the root `build.gradle` file. It adds an `allTe
 Release process is based on [trunk branch for release process](https://trunkbaseddevelopment.com/branch-for-release/).
 Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch named `release/gradle-plugins/X.Y.Z`.
 When the release is successfully done, a tag `release/gradle-plugins/X.Y.Z` is created from the commit used to do the release.
-
-Snapshot releases are also automatically made for every commit on `main` branch. Corresponding version is `main-SNAPSHOT`.
 
 Release implementation is orchestrated by project [publish-core-plugins](./publish-core-plugins).
