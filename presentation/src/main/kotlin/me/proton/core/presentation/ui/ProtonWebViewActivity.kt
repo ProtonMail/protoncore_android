@@ -99,6 +99,11 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
             return shouldInterceptRequest.invoke(request)
         }
 
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            val overrideUrl = shouldInterceptRequest.invoke(request) != null
+            return overrideUrl || super.shouldOverrideUrlLoading(view, request)
+        }
+
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             binding.progress.isVisible = true
