@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Aktuální přihlašovací heslo</string>
   <string name="auth_enter_six_digit_code">Zadejte 6-místný kód</string>
   <string name="auth_second_factor_code">Kód pro dvoufaktorové ověření</string>
+  <string name="auth_email">E-mail</string>
   <string name="auth_email_username">Uživatelské jméno nebo e-mail</string>
   <string name="auth_account_details">Zadejte údaje Vašeho účtu Proton.</string>
   <string name="auth_sign_in">Přihlásit se</string>
   <string name="auth_sign_in_action">Přihlásit se</string>
-  <string name="auth_need_help">Potřebujete poradit?</string>
+  <string name="auth_sign_in_sso">Přihlaste se ke své organizaci</string>
+  <string name="auth_sign_in_with_password">Přihlásit se pomocí hesla</string>
+  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Přihlásit se pomocí SSO</string>
+  <string name="auth_help_label">Nápověda</string>
   <string name="auth_login_assistive_text">Prosím, zadejte Váš Proton e-mail nebo uživatelské jméno.</string>
+  <string name="auth_login_sso_assistive_text">Zadejte prosím váš e-mail.</string>
   <string name="auth_help_title">Jak můžeme pomoci?</string>
   <string name="auth_help_option_forgot_username">Zapomenuté uživatelské jméno</string>
   <string name="auth_help_option_forgot_password">Zapomenuté heslo</string>

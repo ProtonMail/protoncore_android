@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">目前的登入密碼</string>
   <string name="auth_enter_six_digit_code">請輸入 6 位數代碼</string>
   <string name="auth_second_factor_code">兩步驟代碼</string>
+  <string name="auth_email">電子郵件</string>
   <string name="auth_email_username">使用者名稱或電子郵件</string>
   <string name="auth_account_details">輸入您的 Proton 帳號詳細資料。</string>
   <string name="auth_sign_in">登入</string>
   <string name="auth_sign_in_action">登入</string>
-  <string name="auth_need_help">需要幫助嗎？</string>
+  <string name="auth_sign_in_sso">登入您的組織</string>
+  <string name="auth_sign_in_with_password">使用密碼登入</string>
+  <string name="auth_continue_to_proton_vpn">以繼續使用 Proton VPN</string>
+  <string name="auth_sign_in_with_sso">使用 SSO 登入</string>
+  <string name="auth_help_label">幫助</string>
   <string name="auth_login_assistive_text">請輸入您的 Proton 電郵或使用者名稱。</string>
+  <string name="auth_login_sso_assistive_text">請輸入您的電子郵件</string>
   <string name="auth_help_title">有什麼我們能幫忙的地方？</string>
   <string name="auth_help_option_forgot_username">忘記了使用者名稱</string>
   <string name="auth_help_option_forgot_password">忘記密碼</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
   <string name="welcome_subtitle">暗号化でデータをプライベートに保ちます。データは完全にあなたのものです。</string>
   <string name="welcome_subtitle_mail">メールの暗号化で会話をプライベートに保ちます。受信トレイは完全にあなたのものです。</string>
   <string name="welcome_subtitle_mail_alt">プライバシー、セキュリティ、かつ便利。暗号メールで個人データを完全にコントロールします。</string>
-  <string name="welcome_subtitle_drive">The convenience of cloud storage and the security of encryption technology. Finally a cloud storage solution you can trust.</string>
+  <string name="welcome_subtitle_drive">クラウドストレージの利便性と暗号化技術の安全性。 信頼できるクラウドストレージソリューションがついに登場しました。</string>
   <string name="welcome_subtitle_drive_alt">ファイルを保管する最も安全な方法。強力な暗号化を使いファイルのアップロード、同期および共有が利用できます。</string>
   <string name="welcome_subtitle_calendar">暗号化されたカレンダーで予定をプライベートかつ、安心安全に保ちます。</string>
   <string name="welcome_subtitle_calendar_alt">私たちのエンドツーエンド暗号化されたカレンダーは、予定の整理や管理に役立ちます。</string>
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">現在のログインパスワード</string>
   <string name="auth_enter_six_digit_code">6 桁のコードを入力</string>
   <string name="auth_second_factor_code">2 要素認証コード</string>
+  <string name="auth_email">Email</string>
   <string name="auth_email_username">ユーザー名またはメールアドレス</string>
   <string name="auth_account_details">Proton アカウントの詳細を入力してください。</string>
   <string name="auth_sign_in">サインイン</string>
   <string name="auth_sign_in_action">サインイン</string>
-  <string name="auth_need_help">お困りですか?</string>
+  <string name="auth_sign_in_sso">Sign in to your organization</string>
+  <string name="auth_sign_in_with_password">Sign in with a password</string>
+  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Sign in with SSO</string>
+  <string name="auth_help_label">Help</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
+  <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">お困りですか?</string>
   <string name="auth_help_option_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_help_option_forgot_password">パスワードを忘れた</string>

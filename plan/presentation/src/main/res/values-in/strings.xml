@@ -47,6 +47,7 @@
   <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat dikelola dari aplikasi seluler.</string>
   <string name="plans_autorenew_subscriptions">Hanya langganan tahunan yang terbarui secara otomatis yang dapat dibeli via aplikasi ini.</string>
   <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan akun dari aplikasi seluler.</string>
+  <string name="plans_limited_offer">Penawaran terbatas</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">Kuota penyimpanan #proton_storage#</item>
@@ -102,8 +103,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Dukungan multi-pengguna</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Keluarga</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Layanan penyimpanan cloud aman yang memudahkan Anda untuk menyimpan, menyinkronkan, dan membagikan berkas secara aman.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Manajemen kata sandi dan perlindungan identitas tingkat lanjut.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Tanpa batasan jumlah folder, label, dan filter</string>
   <string name="highest_vpn_speed" comment="new_plans">Kecepatan VPN tertinggi</string>
   <string name="servers_in_countries" comment="new_plans">1500+ server di 63 negara</string>
@@ -112,14 +124,15 @@
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Layanan penyimpanan cloud aman yang memudahkan Anda untuk menyimpan, menyinkronkan, dan membagikan berkas secara aman.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
+  <string name="unlimited_logins_and_notes">Tanpa batasan jumlah login dan catatan</string>
+  <string name="unlimited_devices">Tanpa batasan jumlah perangkat</string>
+  <string name="integrated_2fa_authenticator">Autentikator 2FA terintegrasi</string>
+  <string name="multiple_vaults">Brankas berganda</string>
+  <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide My Email</string>
+  <string name="custom_email_alias_domains">Domain khusus untuk alias email</string>
+  <string name="multiple_forwarding_mailboxes">Kotak surat penerusan berganda</string>
+  <string name="priority_support">Dukungan prioritas</string>
+  <string name="one_vault">1 brankas</string>
+  <string name="ten_hide_my_email_aliases">10 alias Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

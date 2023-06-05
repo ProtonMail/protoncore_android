@@ -41,13 +41,14 @@
   <string name="plans_upgrade_your_plan">Milloreu-vos el pla</string>
   <string name="plans_proton_for_free">Obtingueu Proton gratuïtament</string>
   <string name="plans_get_proton">Obtingueu %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Gestioneu la subscripció en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">La seva suscripció es gestionada per Google Play.</string>
   <string name="plans_manage_your_subscription_other">La seva subscripció no es pot gestionar des de l\'aplicació mòbil.</string>
   <string name="plans_autorenew_subscriptions">Només les subscripcions anuals de renovació automàtica estan disponibles mitjançant aquesta aplicació.</string>
   <string name="plans_can_not_upgrade_from_mobile">No podeu millorar el pla des de l\'aplicació mòbil.</string>
+  <string name="plans_limited_offer">Oferta temporal limitada.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# emmagatzematge</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suport multiusuari</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Correu electrònic segur amb funcions avançades per a les vostres comunicacions diàries.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">La vostra privadesa i seguretat són la nostra prioritat.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Emmagatzematge al núvol segur que us permet emmagatzemar, sincronitzar i compartir fitxers de manera fàcil i segura.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privadesa i seguretat integrals amb tots els serveis de Proton combinats.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Per a una gestió de contrasenyes i identitat del més alt nivell.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Carpetes, etiquetes i filtres sense límit</string>
   <string name="highest_vpn_speed" comment="new_plans">La velocitat VPN més alta</string>
   <string name="servers_in_countries" comment="new_plans">Més de 1500 servidors en 63 països</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Servidors Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">La vostra privadesa i seguretat són la nostra prioritat.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
+  <string name="unlimited_logins_and_notes">Nombre il·limitat de connexions i de notes</string>
+  <string name="unlimited_devices">Dispositius il·limitats</string>
+  <string name="integrated_2fa_authenticator">Autenticador de dos factors integrat</string>
+  <string name="multiple_vaults">Diverses caixes fortes</string>
+  <string name="unlimited_email_alias">Nombre il·limitat d\'àlies de Hide My Email</string>
+  <string name="custom_email_alias_domains">Dominis personalitzats per a àlies de correu electrònic</string>
+  <string name="multiple_forwarding_mailboxes">Diverses bústies de reenviament</string>
+  <string name="priority_support">Suport prioritari</string>
+  <string name="one_vault"> 1 caixa forta</string>
+  <string name="ten_hide_my_email_aliases">10 àlies de Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

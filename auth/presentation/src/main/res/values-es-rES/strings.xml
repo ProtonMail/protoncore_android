@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -27,34 +27,40 @@
   <string name="welcome_subtitle_calendar_alt">Nuestro calendario cifrado de extremo a extremo te ayuda a organizarte, mantenerte enfocado y en control.</string>
   <string name="welcome_subtitle_vpn">VPN suiza de alta velocidad que salvaguarda tu privacidad cifrando tu conexión a internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suizo de alta velocidad que protege tu privacidad. Máxima seguridad, más de 1,600 servidores sin restricciones.</string>
-  <string name="welcome_subtitle_pass">Todas tus contraseñas aseguradas en un solo lugar y protegidas por el nombre más confiable en privacidad.</string>
-  <string name="welcome_subtitle_pass_alt">Todas tus contraseñas aseguradas en un solo lugar y protegidas por el nombre más confiable en privacidad.</string>
+  <string name="welcome_subtitle_pass">Todas tus contraseñas a buen recaudo en un único lugar y protegidas por el nombre de mayor confianza en privacidad.</string>
+  <string name="welcome_subtitle_pass_alt">Todas tus contraseñas a buen recaudo en un único lugar y protegidas por el nombre de mayor confianza en privacidad.</string>
   <string name="welcome_privacy_by_default">Privacidad por defecto</string>
   <string name="auth_password_label">Contraseña</string>
   <string name="auth_password_help">La contraseña debe contener al menos $ caracteres</string>
   <string name="auth_current_login_password">Contraseña de inicio de sesión actual</string>
   <string name="auth_enter_six_digit_code">Introduce el código de 6 dígitos</string>
-  <string name="auth_second_factor_code">Código de dos factores</string>
+  <string name="auth_second_factor_code">Código de doble factor</string>
+  <string name="auth_email">Correo electrónico</string>
   <string name="auth_email_username">Nombre de usuario o correo electrónico</string>
   <string name="auth_account_details">Introduce los datos de tu cuenta de Proton.</string>
   <string name="auth_sign_in">Iniciar sesión</string>
   <string name="auth_sign_in_action">Iniciar sesión</string>
-  <string name="auth_need_help">¿Necesitas ayuda?</string>
+  <string name="auth_sign_in_sso">Iniciar sesión en tu organización</string>
+  <string name="auth_sign_in_with_password">Iniciar sesión con contraseña</string>
+  <string name="auth_continue_to_proton_vpn">para continuar en Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Iniciar sesión con SSO</string>
+  <string name="auth_help_label">Ayuda</string>
   <string name="auth_login_assistive_text">Introduce tu correo electrónico o nombre de usuario de Proton.</string>
+  <string name="auth_login_sso_assistive_text">Introduce tu dirección de correo electrónico.</string>
   <string name="auth_help_title">¿En qué podemos ayudarte?</string>
   <string name="auth_help_option_forgot_username">He olvidado mi nombre de usuario</string>
   <string name="auth_help_option_forgot_password">He olvidado mi contraseña</string>
   <string name="auth_help_option_other">Otras cuestiones relacionadas con el registro</string>
   <string name="auth_help_other">¿Aún necesita ayuda? Contacta con nosotros directamente.</string>
   <string name="auth_help_option_customer_support">Soporte técnico</string>
-  <string name="auth_2fa_title">Autenticación de dos factores</string>
-  <string name="auth_2fa_label">Código de dos factores</string>
+  <string name="auth_2fa_title">Autenticación de doble factor</string>
+  <string name="auth_2fa_label">Código de doble factor</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperación</string>
   <string name="auth_2fa_assistive_text">Introduce el código de 6 dígitos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduce un código de recuperación de 8 caracteres.</string>
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Utilizar un código de recuperación</string>
-  <string name="auth_2fa_use_2fa_code">Utilizar código de dos factores</string>
+  <string name="auth_2fa_use_2fa_code">Utilizar código de doble factor</string>
   <string name="auth_2fa_error_empty_code">Introduce el código de 6 dígitos.</string>
   <string name="auth_mailbox_title">Desbloquea tu buzón de correo</string>
   <string name="auth_mailbox_password_label">Contraseña del buzón</string>
@@ -72,7 +78,7 @@
   <string name="auth_username_next_action">Continuar</string>
   <string name="auth_create_address_result_title">%s está disponible</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s será tu nueva dirección de correo electrónico de Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">Utilizarás esta dirección para iniciar sesión a todos los servicios de Proton.</string>
+  <string name="auth_create_address_result_subtitle">Utilizarás esta dirección para iniciar sesión en todos los servicios de Proton.</string>
   <string name="auth_create_address_result_recovery_title">Tu dirección de correo electrónico de recuperación:</string>
   <string name="auth_create_address_create">Crear dirección</string>
   <string name="auth_create_address_creating">Creando dirección</string>

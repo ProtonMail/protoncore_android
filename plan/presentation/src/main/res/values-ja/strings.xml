@@ -47,6 +47,7 @@
   <string name="plans_manage_your_subscription_other">モバイルアプリではサブスクリプションを管理できません。</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードできません。</string>
+  <string name="plans_limited_offer">Limited time offer</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# ストレージ</item>
@@ -102,8 +103,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">複数ユーザー対応</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">毎日の会話のための、高度な機能を備えた安全なメールのプランです。</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">あなたのプライバシーとセキュリティは私たちの最優先事項です。</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">包括的なプライバシーとセキュリティを提供する、すべての Proton サービスが利用できるプランです。</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">For next-level password management and identity protection.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">制限なしのフォルダー、ラベル、フィルター</string>
   <string name="highest_vpn_speed" comment="new_plans">最高の VPN 速度</string>
   <string name="servers_in_countries" comment="new_plans">63 か国にある 1500 台を超えるサーバー</string>
@@ -112,14 +124,15 @@
   <string name="secure_core" comment="new_plans">Secure Core サーバー</string>
   <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">毎日の会話のための、高度な機能を備えた安全なメールのプランです。</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">あなたのプライバシーとセキュリティは私たちの最優先事項です。</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">包括的なプライバシーとセキュリティを提供する、すべての Proton サービスが利用できるプランです。</string>
+  <string name="unlimited_logins_and_notes">Unlimited logins and notes</string>
+  <string name="unlimited_devices">Unlimited devices</string>
+  <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
+  <string name="multiple_vaults">複数の保管庫</string>
+  <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
+  <string name="custom_email_alias_domains">Custom domains for email aliases</string>
+  <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
+  <string name="priority_support">Priority support</string>
+  <string name="one_vault">1 個の保管庫</string>
+  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

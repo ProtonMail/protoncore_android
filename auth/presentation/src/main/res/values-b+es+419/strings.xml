@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Contraseña de inicio de sesión actual</string>
   <string name="auth_enter_six_digit_code">Ingresar código de 6 dígitos</string>
   <string name="auth_second_factor_code">Código de dos factores</string>
+  <string name="auth_email">Correo electrónico</string>
   <string name="auth_email_username">Nombre de usuario o correo</string>
   <string name="auth_account_details">Ingrese los datos de su cuenta de Proton.</string>
   <string name="auth_sign_in">Iniciar sesión</string>
   <string name="auth_sign_in_action">Iniciar sesión</string>
-  <string name="auth_need_help">¿Necesita ayuda?</string>
+  <string name="auth_sign_in_sso">Iniciar sesión en su organización</string>
+  <string name="auth_sign_in_with_password">Iniciar sesión con su contraseña</string>
+  <string name="auth_continue_to_proton_vpn">para continuar en Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Iniciar sesión con SSO</string>
+  <string name="auth_help_label">Ayuda</string>
   <string name="auth_login_assistive_text">Ingrese su correo electrónico o nombre de usuario.</string>
+  <string name="auth_login_sso_assistive_text">Ingrese su dirección de correo electrónico</string>
   <string name="auth_help_title">¿Cómo podemos ayudarle?</string>
   <string name="auth_help_option_forgot_username">Nombre de usuario olvidado</string>
   <string name="auth_help_option_forgot_password">Contraseña olvidada</string>

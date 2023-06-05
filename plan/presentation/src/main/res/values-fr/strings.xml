@@ -19,7 +19,7 @@
 <resources>
   <string name="plans_select_a_plan">Sélectionnez un abonnement</string>
   <string name="plans_select_a_plan_subtitle">Un seul abonnement pour tous les services Proton</string>
-  <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des abonnements.</string>
+  <string name="plans_fetching_general_error">Une erreur s\'est produite pendant la récupération des abonnements.</string>
   <string name="plans_payment_error">Une erreur de paiement s\'est produite. Nous vous invitons à réessayer plus tard ou à créer un compte gratuit.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">par mois</string>
@@ -41,13 +41,14 @@
   <string name="plans_upgrade_your_plan">Passez à un abonnement supérieur</string>
   <string name="plans_proton_for_free">Obtenir Proton gratuitement</string>
   <string name="plans_get_proton">Obtenir %s</string>
-  <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.protonmail.com">account.proton.me</a>.</string>
+  <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.proton.me">account.proton.me</a>.</string>
   <string name="plans_used_space">%s sur %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Google Play gère votre abonnement.</string>
   <string name="plans_manage_your_subscription_other">Vous ne pouvez pas gérer votre abonnement dans l\'application mobile.</string>
   <string name="plans_autorenew_subscriptions">Seuls les abonnements annuels qui se renouvellent automatiquement sont disponibles depuis cette application.</string>
   <string name="plans_can_not_upgrade_from_mobile">Vous ne pouvez pas passer à l\'abonnement supérieur depuis l\'application mobile.</string>
+  <string name="plans_limited_offer">Offre à durée limitée</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# d\'espace de stockage</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Prise en charge du multi-utilisateur</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Une messagerie sécurisée avec des fonctionnalités avancées pour vos communications quotidiennes.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Votre vie privée et votre sécurité sont notre priorité.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Un stockage sécurisé dans le cloud qui vous permet de stocker, synchroniser et partager facilement des fichiers, en toute sécurité.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Une confidentialité et une sécurité totales en utilisant tous les services Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Passez au niveau supérieur pour gérer vos mots de passe et protéger votre identité.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Dossiers, labels et filtres illimités</string>
   <string name="highest_vpn_speed" comment="new_plans">Vitesse VPN maximale</string>
   <string name="servers_in_countries" comment="new_plans">Plus de 1 500 serveurs dans 63 pays</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Serveurs Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Une messagerie sécurisée avec des fonctionnalités avancées pour vos communications quotidiennes.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Votre vie privée et votre sécurité sont notre priorité.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Un stockage sécurisé dans le cloud qui vous permet de stocker, synchroniser et partager facilement des fichiers, en toute sécurité.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Une confidentialité et une sécurité totales en utilisant tous les services Proton.</string>
+  <string name="unlimited_logins_and_notes">Nombre illimité de connexions et de notes</string>
+  <string name="unlimited_devices">Nombre illimité d\'appareils</string>
+  <string name="integrated_2fa_authenticator">Authentification à deux facteurs (A2F) intégrée</string>
+  <string name="multiple_vaults">Plusieurs coffres-forts</string>
+  <string name="unlimited_email_alias">Nombre illimité d\'alias « Hide My Email »</string>
+  <string name="custom_email_alias_domains">Domaines personnalisés pour les alias d\'adresses e-mail</string>
+  <string name="multiple_forwarding_mailboxes">Plusieurs messageries de transfert</string>
+  <string name="priority_support">Assistance prioritaire</string>
+  <string name="one_vault">1 coffre-fort</string>
+  <string name="ten_hide_my_email_aliases">10 alias « Hide My Email »</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

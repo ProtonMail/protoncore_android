@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Sua assinatura não pode ser gerenciada no aplicativo móvel.</string>
   <string name="plans_autorenew_subscriptions">Apenas assinaturas anuais com renovação automática estão disponíveis por meio deste aplicativo.</string>
   <string name="plans_can_not_upgrade_from_mobile">Você não pode fazer upgrade do aplicativo móvel.</string>
+  <string name="plans_limited_offer">Oferta por tempo limitado</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# de armazenamento</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suporte para múltiplos usuários</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">E-mail seguro com recursos avançados para suas comunicações do dia a dia.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Sua privacidade e segurança são nossa prioridade.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Armazenamento em nuvem seguro que permite armazenar, sincronizar e compartilhar arquivos com facilidade e segurança.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privacidade e segurança abrangentes com todos os serviços da Proton combinados.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Para um próximo nível em gerenciamento de senhas e proteção de identidade.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Pastas ilimitadas, marcadores e filtros</string>
   <string name="highest_vpn_speed" comment="new_plans">Velocidade máxima de VPN</string>
   <string name="servers_in_countries" comment="new_plans">1500+ servidores em 63 países</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Servidores Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">E-mail seguro com recursos avançados para suas comunicações do dia a dia.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Sua privacidade e segurança são nossa prioridade.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Armazenamento em nuvem seguro que permite armazenar, sincronizar e compartilhar arquivos com facilidade e segurança.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Privacidade e segurança abrangentes com todos os serviços da Proton combinados.</string>
+  <string name="unlimited_logins_and_notes">Notas e senhas ilimitadas</string>
+  <string name="unlimited_devices">Dispositivos ilimitados</string>
+  <string name="integrated_2fa_authenticator">Autenticador 2FA integrado</string>
+  <string name="multiple_vaults">Múltiplos cofres</string>
+  <string name="unlimited_email_alias">Endereços ilimitados do Hide My Email</string>
+  <string name="custom_email_alias_domains">Domínios customizados para encaminhamento de mensagens</string>
+  <string name="multiple_forwarding_mailboxes">Múltiplos redirecionadores de emails</string>
+  <string name="priority_support">Suporte prioritário</string>
+  <string name="one_vault">1 cofre</string>
+  <string name="ten_hide_my_email_aliases">10 encaminhamentos do Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

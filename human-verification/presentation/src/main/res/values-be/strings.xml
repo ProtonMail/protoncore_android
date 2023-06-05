@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- base common strings -->
-  <string name="human_verification_help">Дапамога</string>
+  <string name="human_verification_help">Даведка</string>
   <string name="human_verification_title">Антыспамавая праверка</string>
   <string name="human_verification_main_subtitle">Для прадухілення злоўжывання, пацвердзіце, што вы чалавек выкарыстоўваючы наступныя параметры</string>
   <string name="human_verification_enter_code_subtitle">Увядзіце праверачны код, які быў адпраўлены на %s.</string>

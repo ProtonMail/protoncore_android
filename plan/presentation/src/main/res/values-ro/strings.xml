@@ -49,6 +49,7 @@
   <string name="plans_manage_your_subscription_other">Abonamentul nu poate fi gestionat din aplicația mobilă.</string>
   <string name="plans_autorenew_subscriptions">Numai abonamentele anuale cu autoreînnoire sunt disponibile prin intermediul acestei aplicații.</string>
   <string name="plans_can_not_upgrade_from_mobile">Nu puteți moderniza abonamentul din aplicația mobilă.</string>
+  <string name="plans_limited_offer">Ofertă limitată</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# spațiu stocare</item>
@@ -130,8 +131,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suport utilizatori multipli</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Familie</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">E-mail securizat cu funcții avansate pentru comunicațiile personale zilnice.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Intimitatea și securitatea dvs. sunt prioritatea noastră.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Stocare sigură în cloud care permite stocarea, sincronizarea și partajarea ușoară și sigură a fișierelor.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Confidențialitate și securitate cuprinzătoare cu toate serviciile Proton combinate.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Pentru gestionarea parolelor la un nivel superior și protecția identității.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Foldere, etichete și filtre nelimitate</string>
   <string name="highest_vpn_speed" comment="new_plans">Viteză VPN maximă</string>
   <string name="servers_in_countries" comment="new_plans">Peste 1500 de servere în peste 63 de țări</string>
@@ -140,14 +152,15 @@
   <string name="secure_core" comment="new_plans">Servere Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor peste VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">E-mail securizat cu funcții avansate pentru comunicațiile personale zilnice.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Intimitatea și securitatea dvs. sunt prioritatea noastră.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Stocare sigură în cloud care permite stocarea, sincronizarea și partajarea ușoară și sigură a fișierelor.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Confidențialitate și securitate cuprinzătoare cu toate serviciile Proton combinate.</string>
+  <string name="unlimited_logins_and_notes">Autentificări și note nelimitate</string>
+  <string name="unlimited_devices">Dispozitive nelimitate</string>
+  <string name="integrated_2fa_authenticator">Autentificator 2FA integrat</string>
+  <string name="multiple_vaults">Seifuri multiple</string>
+  <string name="unlimited_email_alias">Aliasuri nelimitate „Hide My Email”</string>
+  <string name="custom_email_alias_domains">Domenii personale pentru aliasuri de e-mail</string>
+  <string name="multiple_forwarding_mailboxes">Adrese multiple pentru redirecționare</string>
+  <string name="priority_support">Asistență prioritară</string>
+  <string name="one_vault">Un seif</string>
+  <string name="ten_hide_my_email_aliases">10 aliasuri „Hide My Email”</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

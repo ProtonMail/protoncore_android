@@ -45,5 +45,5 @@
   <string name="presentation_general_connection_error">サーバーに接続できません。</string>
   <string name="presentation_check_your_connection">接続をご確認ください</string>
   <string name="presentation_connectivity_issues">接続の問題</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_field_required">この項目の入力は必須です。</string>
 </resources>

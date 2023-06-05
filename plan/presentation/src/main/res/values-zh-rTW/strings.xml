@@ -41,12 +41,13 @@
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">取得 %s</string>
   <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
-  <string name="plans_used_space">%s 中的 %s</string>
+  <string name="plans_used_space">已用 %s，最多 %s</string>
   <string name="plans_payments_info_not_available">不適用</string>
   <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
   <string name="plans_manage_your_subscription_other">您的訂閱無法在行動裝置應用程式內管理。</string>
   <string name="plans_autorenew_subscriptions">此應用程式僅提供自動續購型年約授權.</string>
   <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置內的應用程式升級。</string>
+  <string name="plans_limited_offer">限時優惠</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 儲存空間</item>
@@ -64,7 +65,7 @@
     <item quantity="other">#proton_addresses# 組電郵位址 / 使用者</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d 本 #proton_addresses# 通訊錄</item>
+    <item quantity="other">%d 個，最多 #proton_addresses# 個電子郵件地址</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">支援 #proton_domains# 個自訂電郵網域</item>
@@ -73,7 +74,7 @@
     <item quantity="other">#proton_calendars# 本個人行事曆</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d 本 #proton_calendars# 行事曆</item>
+    <item quantity="other">%d 個，最多 #proton_calendars# 個行事曆</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">配備 #proton_vpn# 裝置上進行飆速 VPN</item>
@@ -85,7 +86,7 @@
     <item quantity="other">#proton_users# 個使用者</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d 位 #proton_users# 使用者</item>
+    <item quantity="other">%d 位，最多 #proton_users# 位使用者</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -102,8 +103,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">多使用者支援</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">家庭</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">為您的日常通訊提供進階功能的安全電子郵件。</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">安全的雲端儲存空間，讓您輕鬆安全地儲存、同步與分享檔案。</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">結合所有 Proton 服務的全面隱私與安全性。</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">用於下一個層級的密碼管理與身份保護。</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">不限數量的資料夾、標籤與篩選器</string>
   <string name="highest_vpn_speed" comment="new_plans">頂尖 VPN 速度</string>
   <string name="servers_in_countries" comment="new_plans">超過 1500 臺伺服器，遍布於 63 個國家</string>
@@ -112,14 +124,15 @@
   <string name="secure_core" comment="new_plans">Secure Core 伺服器</string>
   <string name="tor_vpn" comment="new_plans">透過 VPN 使用 Tor</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">為您的日常通訊提供進階功能的安全電子郵件。</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">安全的雲端儲存空間，讓您輕鬆安全地儲存、同步與分享檔案。</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">結合所有 Proton 服務的全面隱私與安全性。</string>
+  <string name="unlimited_logins_and_notes">無限制的登入與註記</string>
+  <string name="unlimited_devices">無限裝置數量</string>
+  <string name="integrated_2fa_authenticator">整合 2FA 驗證程式</string>
+  <string name="multiple_vaults">多重保險庫</string>
+  <string name="unlimited_email_alias">無限制的 Hide My Email 別名</string>
+  <string name="custom_email_alias_domains">電子郵件別名的自訂網域</string>
+  <string name="multiple_forwarding_mailboxes">多重轉寄郵件匣</string>
+  <string name="priority_support">優先支援</string>
+  <string name="one_vault">1 個保險庫</string>
+  <string name="ten_hide_my_email_aliases">10 個 Hide My Email 別名</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Nuværende login-adgangskode</string>
   <string name="auth_enter_six_digit_code">Indtast den sekscifrede kode</string>
   <string name="auth_second_factor_code">To-faktor-kode</string>
+  <string name="auth_email">Email</string>
   <string name="auth_email_username">Brugernavn eller e-mail</string>
   <string name="auth_account_details">Indtast oplysninger om din Proton-konto.</string>
   <string name="auth_sign_in">Log ind</string>
   <string name="auth_sign_in_action">Log ind</string>
-  <string name="auth_need_help">Behov for hjælp?</string>
+  <string name="auth_sign_in_sso">Sign in to your organization</string>
+  <string name="auth_sign_in_with_password">Sign in with a password</string>
+  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Log ind med SSO</string>
+  <string name="auth_help_label">Hjælp</string>
   <string name="auth_login_assistive_text">Indtast venligst din Proton e-mail eller brugernavn.</string>
+  <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">Hvordan kan vi hjælpe?</string>
   <string name="auth_help_option_forgot_username">Glemte brugernavn</string>
   <string name="auth_help_option_forgot_password">Glemt adgangskode</string>

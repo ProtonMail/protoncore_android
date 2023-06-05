@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Núverandi lykilorð innskráningar</string>
   <string name="auth_enter_six_digit_code">Settu inn 6-stafa kóðann</string>
   <string name="auth_second_factor_code">Tveggja-þátta kóði</string>
+  <string name="auth_email">Email</string>
   <string name="auth_email_username">Notandanafn eða tölvupóstfang</string>
   <string name="auth_account_details">Sláðu inn þínum Proton reikningsupplýsingum.</string>
   <string name="auth_sign_in">Skrá inn</string>
   <string name="auth_sign_in_action">Skrá inn</string>
-  <string name="auth_need_help">Þarftu hjálp?</string>
+  <string name="auth_sign_in_sso">Sign in to your organization</string>
+  <string name="auth_sign_in_with_password">Sign in with a password</string>
+  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Sign in with SSO</string>
+  <string name="auth_help_label">Help</string>
   <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
+  <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">Hvernig getum við aðstoðað?</string>
   <string name="auth_help_option_forgot_username">Gleymt notandanafn</string>
   <string name="auth_help_option_forgot_password">Gleymt lykilorð</string>

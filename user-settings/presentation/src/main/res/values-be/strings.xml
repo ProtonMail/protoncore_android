@@ -48,6 +48,6 @@
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Ананімная тэлеметрыя</string>
   <string name="device_settings_telemetry_hint">Для ўдасканалення нашага сэрвісу час ад часу мы ананімна збіраем даныя аб выкарыстанні.</string>
-  <string name="device_settings_crashreport_title">Ананімная справаздача аб збоях</string>
+  <string name="device_settings_crashreport_title">Ананімная справаздачы пра збоі</string>
   <string name="device_settings_crashreport_hint">Справаздача з падрабязнасцямі будзе адпраўлена нашым інжынерам у выпадку, калі ў праграме адбыўся збой. Гэтыя даныя выкарыстоўваюцца толькі для выпраўлення памылак у праграме.</string>
 </resources>

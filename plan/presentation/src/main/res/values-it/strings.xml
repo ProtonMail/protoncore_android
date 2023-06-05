@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Il tuo abbonamento non può essere gestito all\'interno dell\'app mobile.</string>
   <string name="plans_autorenew_subscriptions">Solo gli abbonamenti annuali con rinnovo automatico sono disponibili tramite questa app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Non è possibile eseguire l\'aggiornamento dall\'app mobile.</string>
+  <string name="plans_limited_offer">Offerta a tempo limitato</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# archiviazione</item>
@@ -87,7 +88,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN gratuita su un unico dispositivo</item>
-    <item quantity="other">VPN ad Alta Velocità su dispositivi #proton_vpn#</item>
+    <item quantity="other">VPN ad Alta Velocità su #proton_vpn# dispositivi</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# connessione VPN ad alta velocità</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Supporto multi-utente</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Famiglia</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Email sicura con funzioni avanzate per le tue comunicazioni quotidiane.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">La tua privacy e la tua sicurezza sono la nostra priorità.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Archiviazione cloud sicura che ti consente di archiviare, sincronizzare e condividere file in modo semplice e in sicurezza.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privacy e sicurezza complete con tutti i servizi Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Per una gestione password e protezione dell\'identità di livello superiore.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Cartelle, etichette e filtri illimitati</string>
   <string name="highest_vpn_speed" comment="new_plans">Massima velocità VPN</string>
   <string name="servers_in_countries" comment="new_plans">1500+ server in 63 paesi</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor su VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Email sicura con funzioni avanzate per le tue comunicazioni quotidiane.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">La tua privacy e la tua sicurezza sono la nostra priorità.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Archiviazione cloud sicura che ti consente di archiviare, sincronizzare e condividere file in modo semplice e in sicurezza.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Privacy e sicurezza complete con tutti i servizi Proton.</string>
+  <string name="unlimited_logins_and_notes">Login e note illimitati</string>
+  <string name="unlimited_devices">Dispositivi illimitati</string>
+  <string name="integrated_2fa_authenticator">Autenticazione 2FA integrata</string>
+  <string name="multiple_vaults">Molteplici casseforti</string>
+  <string name="unlimited_email_alias">Numero illimitato di alias Hide My Email</string>
+  <string name="custom_email_alias_domains">Domini personalizzati per alias email</string>
+  <string name="multiple_forwarding_mailboxes">Molteplici caselle email d\'inoltro</string>
+  <string name="priority_support">Assistenza prioritaria</string>
+  <string name="one_vault">1 cassaforte</string>
+  <string name="ten_hide_my_email_aliases">10 alias Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Dein Abonnement kann nicht in der mobilen App verwaltet werden.</string>
   <string name="plans_autorenew_subscriptions">Über diese App sind nur automatisch verlängerbare Jahresabonnements verfügbar.</string>
   <string name="plans_can_not_upgrade_from_mobile">Über die mobile App kann kein Upgrade durchgeführt werden.</string>
+  <string name="plans_limited_offer">Zeitlich begrenztes Angebot</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Mehrbenutzerunterstützung</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Sichere E-Mails mit erweiterten Funktionen für deine tägliche Kommunikation.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Sicherer Cloud-Speicher, mit dem du Dateien einfach und sicher speichern, synchronisieren und gemeinsam nutzen kannst.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Umfassender Schutz der Privatsphäre und Sicherheit bei allen Proton-Diensten.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Für die nächste Stufe der Passwortverwaltung und des Identitätsschutzes.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Unbegrenzte Anzahl an Ordnern, Kategorien und Filtern</string>
   <string name="highest_vpn_speed" comment="new_plans">Höchste VPN-Geschwindigkeit</string>
   <string name="servers_in_countries" comment="new_plans">Mehr als 1.500 Server in 63 Ländern</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Secure Core‐Server</string>
   <string name="tor_vpn" comment="new_plans">Tor über VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Sichere E-Mails mit erweiterten Funktionen für deine tägliche Kommunikation.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Deine Privatsphäre und deine Sicherheit haben für uns höchste Priorität.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Sicherer Cloud-Speicher, mit dem du Dateien einfach und sicher speichern, synchronisieren und gemeinsam nutzen kannst.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Umfassender Schutz der Privatsphäre und Sicherheit bei allen Proton-Diensten.</string>
+  <string name="unlimited_logins_and_notes">Unbegrenzte Zugangsdaten und Notizen</string>
+  <string name="unlimited_devices">Unbegrenzte Geräte</string>
+  <string name="integrated_2fa_authenticator">Integrierter 2FA-Authentifikator</string>
+  <string name="multiple_vaults">Mehrere Tresore</string>
+  <string name="unlimited_email_alias">Unbegrenzte Hide My Email-Aliasse</string>
+  <string name="custom_email_alias_domains">Eigene Domains für E-Mail-Aliasse</string>
+  <string name="multiple_forwarding_mailboxes">Mehrere Weiterleitungs-Postfächer</string>
+  <string name="priority_support">Priorisierter Support</string>
+  <string name="one_vault">1 Tresor</string>
+  <string name="ten_hide_my_email_aliases">10 Hide My Email-Aliasse</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

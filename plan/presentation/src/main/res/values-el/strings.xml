@@ -41,13 +41,14 @@
   <string name="plans_upgrade_your_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_proton_for_free">Αποκτήστε το Proton δωρεάν</string>
   <string name="plans_get_proton">Αποκτήστε %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Διαχειριστείτε τη συνδρομή σας στο <a href="https://account.protonmail.com">account.protonmail.com</a></string>
   <string name="plans_used_space">%s από %s</string>
   <string name="plans_payments_info_not_available">δ/υ</string>
   <string name="plans_manage_your_subscription_google">Η συνδρομή σας διαχειρίζεται από το Google Play.</string>
   <string name="plans_manage_your_subscription_other">Δεν είναι δυνατή η διαχείριση της συνδρομής σας εντός της εφαρμογής για κινητές συσκευές.</string>
   <string name="plans_autorenew_subscriptions">Μόνο οι ετήσιες συνδρομές αυτόματης ανανέωσης είναι διαθέσιμες μέσω αυτής της εφαρμογής.</string>
   <string name="plans_can_not_upgrade_from_mobile">Δεν γίνεται να αναβαθμίσετε από την εφαρμογή κινητού.</string>
+  <string name="plans_limited_offer">Προσφορά για περιορισμένο διάστημα</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# αποθηκευτικό χώρο</item>
@@ -103,7 +104,7 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Τα βασικά για ιδιωτική και διασφαλισμένη επικοινωνία.</string>
+  <string name="plan_id_free_header">Τα βασικά για ιδιωτική και ασφαλή επικοινωνία.</string>
   <string name="plan_id_plus_header">Πλήρως εξοπλισμένο γραμματοκιβώτιο με προηγμένη προστασία.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 χώρες</string>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Υποστήριξη πολλαπλών χρηστών</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Οικογένεια</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Ασφαλές ηλεκτρονικό ταχυδρομείο με προηγμένες δυνατότητες για τις καθημερινές σας επικοινωνίες.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Η ιδιωτικότητα και η ασφάλειά σας είναι η προτεραιότητά μας.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Ασφαλής αποθηκευτικός χώρος νέφους που επιτρέπει αποθήκευση, συγχρονισμό και κοινοποίηση αρχείων, εύκολα και διασφαλισμένα.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Ολοκληρωμένη ιδιωτικότητα και ασφάλεια με όλες τις συνδιασμένες Proton υπηρεσίες .</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Για διαχείριση κωδικών πρόσβασης και προστασία ταυτότητας επόμενου επιπέδου.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Απεριόριστοι φάκελοι, ετικέτες και φίλτρα</string>
   <string name="highest_vpn_speed" comment="new_plans">Ύψιστη ταχύτητα VPN</string>
   <string name="servers_in_countries" comment="new_plans">1500+ διακομιστές σε 63 χώρες</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Διακομιστές Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor μέσω VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Ασφαλές ηλεκτρονικό ταχυδρομείο με προηγμένες δυνατότητες για τις καθημερινές σας επικοινωνίες.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Η ιδιωτικότητα και διασφάλισή σας είναι η προτεραιότητά μας.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Ολοκληρωμένη ιδιωτικότητα και ασφάλεια με όλες τις συνδιασμένες υπηρεσίες Proton.</string>
+  <string name="unlimited_logins_and_notes">Απεριόριστες συνδέσεις και σημειώσεις</string>
+  <string name="unlimited_devices">Απεριόριστες συσκευές</string>
+  <string name="integrated_2fa_authenticator">Ενσωματωμένος ελεγκτής 2FA</string>
+  <string name="multiple_vaults">Πολλαπλά θησαυροφυλάκια</string>
+  <string name="unlimited_email_alias">Απεριόριστα ψευδώνυμα απόκρυψης του email μου</string>
+  <string name="custom_email_alias_domains">Προσαρμοσμένοι τομείς για ψευδώνυμα email</string>
+  <string name="multiple_forwarding_mailboxes">Πολλαπλά προωθούμενα γραμματοκιβώτια</string>
+  <string name="priority_support">Υποστήριξη κατά προτεραιότητα</string>
+  <string name="one_vault">1 θησαυροφυλάκιο</string>
+  <string name="ten_hide_my_email_aliases">10 ψευδώνυμα Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

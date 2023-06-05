@@ -50,6 +50,7 @@
   <string name="plans_manage_your_subscription_other">Вашай падпіска нельга кіраваць унутры мабільнай праграмы.</string>
   <string name="plans_autorenew_subscriptions">Праз гэту праграму даступны толькі гадавыя падпіскі з аўтаматычным падаўжэннем.</string>
   <string name="plans_can_not_upgrade_from_mobile">Вы не можаце змяніць тарыфны план праз мабільную праграму.</string>
+  <string name="plans_limited_offer">Прапанова абмежавана па часе</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховішча</item>
@@ -144,8 +145,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Падтрымка шматкарыстальніцкага рэжыму</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Сям\'я</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Бяспечная электронная пошта з дадатковымі функцыямі для штодзённых камунікацый.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Ваша прыватнасць і бяспека - наш прыярытэт.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Бяспечнае воблачнае сховішча, якое дазваляе вам лёгка і бяспечна захоўваць, сінхранізаваць і абагуляць файлы.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная прыватнасць і бяспека ў спалучэнні з усімі сэрвісамі Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Для больш высокага ўзроўню кіравання паролямі і абароны асобы.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Неабмежаваная колькасць папак, метак і фільтраў</string>
   <string name="highest_vpn_speed" comment="new_plans">Найвышэйшая хуткасць VPN</string>
   <string name="servers_in_countries" comment="new_plans">Больш за 1500 сервераў у 63 краінах</string>
@@ -154,14 +166,15 @@
   <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor праз VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Бяспечная электронная пошта з дадатковымі функцыямі для штодзённых камунікацый.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Ваша прыватнасць і бяспека - наш прыярытэт.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Бяспечнае воблачнае сховішча, якое дазваляе вам лёгка і бяспечна захоўваць, сінхранізаваць і абагуляць файлы.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная прыватнасць і бяспека ў спалучэнні з усімі сэрвісамі Proton.</string>
+  <string name="unlimited_logins_and_notes">Неабмежаваная колькасць лагінаў і нататак</string>
+  <string name="unlimited_devices">Неабмежаваная колькасць прылад</string>
+  <string name="integrated_2fa_authenticator">Інтэграваная аўтэнтыфікацыя 2ФА</string>
+  <string name="multiple_vaults">Некалькі сховішчаў</string>
+  <string name="unlimited_email_alias">Неабмежаваная колькасць псеўданімаў Hide My Email</string>
+  <string name="custom_email_alias_domains">Карыстальніцкія дамены для псеўданімаў электроннай пошты</string>
+  <string name="multiple_forwarding_mailboxes">Некалькі паштовых скрынь для пераадрасацыі</string>
+  <string name="priority_support">Прыярытэтная падтрымка</string>
+  <string name="one_vault">1 сховішча</string>
+  <string name="ten_hide_my_email_aliases">10 псеўданімаў Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

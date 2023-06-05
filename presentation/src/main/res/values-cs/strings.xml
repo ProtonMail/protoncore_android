@@ -45,5 +45,5 @@
   <string name="presentation_general_connection_error">Nelze se připojit k serveru.</string>
   <string name="presentation_check_your_connection">Zkontrolujte své připojení</string>
   <string name="presentation_connectivity_issues">Chyba připojení</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_field_required">Toto pole je povinné.</string>
 </resources>

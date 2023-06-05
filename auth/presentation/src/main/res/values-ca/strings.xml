@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -27,20 +27,26 @@
   <string name="welcome_subtitle_calendar_alt">El nostre calendari xifrat d\'extrem a extrem us ajuda a mantenir-vos organitzat, al dia i en control.</string>
   <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privadesa xifrant la vostra connexió a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que us protegeix la privadesa. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
-  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
-  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass">Totes les teves contrasenyes. De forma segura en un sol lloc i protegit pel nom més fiable en la privadesa.</string>
+  <string name="welcome_subtitle_pass_alt">Totes les teves contrasenyes. De forma segura en un sol lloc i protegit pel nom més fiable en la privadesa.</string>
   <string name="welcome_privacy_by_default">Privadesa per defecte</string>
   <string name="auth_password_label">Contrasenya</string>
   <string name="auth_password_help">La contrasenya ha de tenir com a mínim 8 caràcters</string>
   <string name="auth_current_login_password">Contrasenya actual</string>
   <string name="auth_enter_six_digit_code">Introduïu el codi de 6 dígits</string>
   <string name="auth_second_factor_code">Codi de dos factors</string>
+  <string name="auth_email">Corrreu electrònic</string>
   <string name="auth_email_username">Nom d\'usuari o correu electrònic</string>
   <string name="auth_account_details">Introduïu la informació del vostre compte de Proton.</string>
   <string name="auth_sign_in">Inicia la sessió</string>
   <string name="auth_sign_in_action">Inicia la sessió</string>
-  <string name="auth_need_help">Necessiteu ajuda?</string>
+  <string name="auth_sign_in_sso">Inicieu la sessió a la vostra organització</string>
+  <string name="auth_sign_in_with_password">Incicieu la sessió amb una contrasenya</string>
+  <string name="auth_continue_to_proton_vpn">per a continuar a Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Inicia la sessió amb SSO</string>
+  <string name="auth_help_label">Ajuda</string>
   <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>
+  <string name="auth_login_sso_assistive_text">Introduïu la vostra adreça electrònica.</string>
   <string name="auth_help_title">Com us podem ajudar?</string>
   <string name="auth_help_option_forgot_username">Nom d\'usuari oblidat</string>
   <string name="auth_help_option_forgot_password">Contrasenya oblidada</string>
@@ -76,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">S\'està creant l\'adreça</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">Clicant a Crear adreça accepteu els <a href="https://proton.me/legal/terms">Termes i Condicions</a> de Proton</string>
   <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">Ha fallat la generació de la clau privada.</string>
@@ -143,6 +149,6 @@
   <string name="auth_signup_start_using_mail">Comenceu a utilitzar Proton Mail</string>
   <string name="auth_signup_start_using_drive">Comenceu a utilitzar Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Comenceu a utilitzar Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">Comenceu a utilitzar Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">La destinació de recuperació és invàlida.</string>
 </resources>

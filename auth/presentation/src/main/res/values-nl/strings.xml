@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Huidig loginwachtwoord</string>
   <string name="auth_enter_six_digit_code">Voer 6-cijferige code in</string>
   <string name="auth_second_factor_code">Tweestapsverificatiecode</string>
+  <string name="auth_email">E-mail</string>
   <string name="auth_email_username">Gebruikersnaam of e-mailadres</string>
   <string name="auth_account_details">Vul uw Proton Account gegevens in.</string>
   <string name="auth_sign_in">Inloggen</string>
   <string name="auth_sign_in_action">Inloggen</string>
-  <string name="auth_need_help">Hulp nodig?</string>
+  <string name="auth_sign_in_sso">Aanmelden bij uw organisatie</string>
+  <string name="auth_sign_in_with_password">Aanmelden met wachtwoord</string>
+  <string name="auth_continue_to_proton_vpn">om verder to gaan naar Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Inloggen met SSO</string>
+  <string name="auth_help_label">Hulp</string>
   <string name="auth_login_assistive_text">Voer uw Proton e-mail of gebruikersnaam in.</string>
+  <string name="auth_login_sso_assistive_text">Voer uw e-mailadres in.</string>
   <string name="auth_help_title">Hoe kunnen we helpen?</string>
   <string name="auth_help_option_forgot_username">Gebruikersnaam vergeten</string>
   <string name="auth_help_option_forgot_password">Wachtwoord vergeten</string>

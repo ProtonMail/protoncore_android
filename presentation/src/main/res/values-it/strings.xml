@@ -45,5 +45,5 @@
   <string name="presentation_general_connection_error">Impossibile connettersi al server.</string>
   <string name="presentation_check_your_connection">Controlla la tua connessione</string>
   <string name="presentation_connectivity_issues">Problemi di connessione</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_field_required">Questo campo è richiesto.</string>
 </resources>

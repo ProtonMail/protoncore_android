@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Бягучы пароль уваходу</string>
   <string name="auth_enter_six_digit_code">Увядзіце код з 6 лічбаў</string>
   <string name="auth_second_factor_code">Двухфактарны код</string>
+  <string name="auth_email">Электронная пошта</string>
   <string name="auth_email_username">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="auth_account_details">Увядзіце звесткі ўліковага запісу Proton.</string>
   <string name="auth_sign_in">Увайсці</string>
   <string name="auth_sign_in_action">Увайсці</string>
-  <string name="auth_need_help">Неабходна дапамога?</string>
+  <string name="auth_sign_in_sso">Увайсці ў сваю арганізацыю</string>
+  <string name="auth_sign_in_with_password">Увайсці з паролем</string>
+  <string name="auth_continue_to_proton_vpn">каб перайсці ў Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Увайсці з SSO</string>
+  <string name="auth_help_label">Даведка</string>
   <string name="auth_login_assistive_text">Увядзіце вашу электронную пошту Proton або імя карыстальніка.</string>
+  <string name="auth_login_sso_assistive_text">Увядзіце сваю электронную пошту.</string>
   <string name="auth_help_title">Як мы можам дапамагчы?</string>
   <string name="auth_help_option_forgot_username">Забылі сваё імя карыстальніка</string>
   <string name="auth_help_option_forgot_password">Забылі пароль</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">Awal uffir amiran</string>
   <string name="auth_enter_six_digit_code">Sekcem tangalt n 6 n yizwilen</string>
   <string name="auth_second_factor_code">Tangalt n snat n tarrayin</string>
+  <string name="auth_email">Email</string>
   <string name="auth_email_username">Isem n useqdac neɣ imayl</string>
   <string name="auth_account_details">Enter your Proton Account details.</string>
   <string name="auth_sign_in">Qqen</string>
   <string name="auth_sign_in_action">Qqen</string>
-  <string name="auth_need_help">Tesriḍ tallelt?</string>
+  <string name="auth_sign_in_sso">Sign in to your organization</string>
+  <string name="auth_sign_in_with_password">Sign in with a password</string>
+  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Sign in with SSO</string>
+  <string name="auth_help_label">Help</string>
   <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
+  <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">How can we help?</string>
   <string name="auth_help_option_forgot_username">Tettuḍ isem n useqdac</string>
   <string name="auth_help_option_forgot_password">Tettud awal uffir</string>

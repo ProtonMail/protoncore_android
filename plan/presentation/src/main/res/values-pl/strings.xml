@@ -50,6 +50,7 @@
   <string name="plans_manage_your_subscription_other">Twoja subskrypcja nie może być zarządzana w aplikacji mobilnej.</string>
   <string name="plans_autorenew_subscriptions">Za pośrednictwem tej aplikacji dostępne są tylko odnawialne roczne subskrypcje.</string>
   <string name="plans_can_not_upgrade_from_mobile">Nie możesz ulepszyć planu za pomocą aplikacji mobilnej.</string>
+  <string name="plans_limited_offer">Oferta ograniczona czasowo</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# przestrzeni dyskowej</item>
@@ -144,8 +145,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Obsługa wielu użytkowników</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Bezpieczna poczta e-mail z zaawansowanymi funkcjami do codziennej komunikacji.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Twoja prywatność i bezpieczeństwo są naszym priorytetem.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Bezpieczna przestrzeń dyskowa w chmurze, w której możesz przechowywać, synchronizować i udostępniać pliki w łatwy sposób.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Wszechstronna ochrona prywatności i bezpieczeństwo dzięki połączeniu wszystkich usług Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Zarządzanie hasłami i ochrona tożsamości na najwyższym poziomie.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Nieograniczona liczba folderów, etykiet i filtrów</string>
   <string name="highest_vpn_speed" comment="new_plans">Najwyższa prędkość VPN</string>
   <string name="servers_in_countries" comment="new_plans">Ponad 1500 serwerów w 63 krajach</string>
@@ -154,14 +166,15 @@
   <string name="secure_core" comment="new_plans">Serwery Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor przez VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Bezpieczna poczta e-mail z zaawansowanymi funkcjami do codziennej komunikacji.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Twoja prywatność i bezpieczeństwo są naszym priorytetem.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Bezpieczna przestrzeń dyskowa w chmurze, w której możesz przechowywać, synchronizować i udostępniać pliki w łatwy sposób.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Wszechstronna ochrona prywatności i bezpieczeństwo dzięki połączeniu wszystkich usług Proton.</string>
+  <string name="unlimited_logins_and_notes">Nieograniczona liczba danych logowania i notatek</string>
+  <string name="unlimited_devices">Nieograniczona liczba urządzeń</string>
+  <string name="integrated_2fa_authenticator">Zintegrowana aplikacja uwierzytelniająca</string>
+  <string name="multiple_vaults">Wiele sejfów</string>
+  <string name="unlimited_email_alias">Nieograniczona liczba aliasów Hide My Email</string>
+  <string name="custom_email_alias_domains">Niestandardowe domeny dla aliasów</string>
+  <string name="multiple_forwarding_mailboxes">Wiele przekierowujących skrzynek pocztowych</string>
+  <string name="priority_support">Priorytetowe wsparcie</string>
+  <string name="one_vault">1 sejf</string>
+  <string name="ten_hide_my_email_aliases">10 aliasów Hide My Email</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

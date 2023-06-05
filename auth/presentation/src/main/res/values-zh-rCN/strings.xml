@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -35,12 +35,18 @@
   <string name="auth_current_login_password">当前登录密码</string>
   <string name="auth_enter_six_digit_code">请输入 6 位验证码</string>
   <string name="auth_second_factor_code">双重验证码</string>
+  <string name="auth_email">Email</string>
   <string name="auth_email_username">用户名或电子邮箱</string>
   <string name="auth_account_details">请输入您的 Proton 账户信息。</string>
   <string name="auth_sign_in">登录</string>
   <string name="auth_sign_in_action">登录</string>
-  <string name="auth_need_help">需要帮助？</string>
+  <string name="auth_sign_in_sso">Sign in to your organization</string>
+  <string name="auth_sign_in_with_password">Sign in with a password</string>
+  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Sign in with SSO</string>
+  <string name="auth_help_label">Help</string>
   <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>
+  <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">您需要什么帮助？</string>
   <string name="auth_help_option_forgot_username">忘记用户名</string>
   <string name="auth_help_option_forgot_password">忘记密码</string>
@@ -62,12 +68,12 @@
   <string name="auth_forgot_password">忘记密码</string>
   <string name="auth_login_general_error">出错了。</string>
   <string name="auth_login_external_account_unsupported_title">需要使用 Proton 地址</string>
-  <string name="auth_login_external_account_unsupported_message">在 Proton web 设置中获取该账户链接的 Proton 电子邮件地址。</string>
+  <string name="auth_login_external_account_unsupported_message">在 Proton 网页版设置中可为此账户创建 Proton Mail 邮箱地址。</string>
   <string name="auth_login_external_account_unsupported_help_action">了解详情</string>
   <string name="auth_login_empty_credentials">凭证不能为空。</string>
   <string name="auth_mailbox_empty_credentials">凭证不能为空。</string>
   <string name="auth_create_address_title">需要使用 Proton 地址</string>
-  <string name="auth_create_address_subtitle">Your recovery address will be %1$s. To secure your data a Proton address is required. You still will be able to sign in with %2$s.</string>
+  <string name="auth_create_address_subtitle">%1$s 将作为您的密保邮箱，但为了保护数据安全，您仍需注册一个 Proton 地址。以后您也可以使用 %2$s 登录账户。</string>
   <string name="auth_username">用户名</string>
   <string name="auth_username_next_action">继续</string>
   <string name="auth_create_address_result_title">%s 可以注册</string>
@@ -76,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">您的密保邮箱：</string>
   <string name="auth_create_address_create">创建地址</string>
   <string name="auth_create_address_creating">正在创建地址</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">点击创建地址即表示您同意 Proton 的<a href="https://proton.me/legal/terms">服务条款</a>。</string>
   <string name="auth_create_address_error_credentials">凭证不能为空。</string>
   <string name="auth_create_address_error_no_available_domain">没有可用的域名。</string>
   <string name="auth_create_address_error_private_key">生成私钥失败。</string>
@@ -143,6 +149,6 @@
   <string name="auth_signup_start_using_mail">开始使用 Proton Mail</string>
   <string name="auth_signup_start_using_drive">开始使用 Proton Drive</string>
   <string name="auth_signup_start_using_vpn">开始使用 Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">开始使用 Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">密保方式无效。</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -27,20 +27,26 @@
   <string name="welcome_subtitle_calendar_alt">Наш наскрізно зашифрований календар допоможе вам бути організованими, не пропускати жодної події та контролювати ситуацію.</string>
   <string name="welcome_subtitle_vpn">Високошвидкісна швейцарська VPN, що захищає вашу приватність, шифруючи ваше інтернет-з\'єднання.</string>
   <string name="welcome_subtitle_vpn_alt">Високошвидкісна швейцарська VPN, що захищає вашу приватність. Максимальна безпека, понад 1600 серверів і ніяких обмежень.</string>
-  <string name="welcome_subtitle_pass">Всі ваші паролі надійно збережені в одному місці та захищені найнадійнішим іменем у сфері конфіденційності.</string>
-  <string name="welcome_subtitle_pass_alt">Всі ваші паролі надійно збережені в одному місці та захищені найнадійнішим іменем у сфері конфіденційності.</string>
+  <string name="welcome_subtitle_pass">Усі ваші паролі надійно зберігаються в одному місці та захищаються найбільш довіреним іменем у сфері приватності.</string>
+  <string name="welcome_subtitle_pass_alt">Усі ваші паролі надійно зберігаються в одному місці та захищаються найбільш довіреним іменем у сфері приватності.</string>
   <string name="welcome_privacy_by_default">Усталена приватність</string>
   <string name="auth_password_label">Пароль</string>
   <string name="auth_password_help">Пароль повинен містити принаймні 8 символів</string>
   <string name="auth_current_login_password">Поточний пароль для входу</string>
   <string name="auth_enter_six_digit_code">Введіть 6-значний код</string>
   <string name="auth_second_factor_code">Код двоетапної перевірки</string>
+  <string name="auth_email">Е-пошта</string>
   <string name="auth_email_username">Ім\'я користувача або е-пошта</string>
   <string name="auth_account_details">Введіть дані свого облікового запису Proton.</string>
   <string name="auth_sign_in">Увійти</string>
   <string name="auth_sign_in_action">Увійти</string>
-  <string name="auth_need_help">Потрібна допомога?</string>
+  <string name="auth_sign_in_sso">Увійдіть до своєї організації</string>
+  <string name="auth_sign_in_with_password">Увійти за допомогою пароля</string>
+  <string name="auth_continue_to_proton_vpn">щоб перейти до Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Увійти за допомогою SSO</string>
+  <string name="auth_help_label">Допомога</string>
   <string name="auth_login_assistive_text">Введіть свою електронну адресу або ім\'я користувача Proton.</string>
+  <string name="auth_login_sso_assistive_text">Введіть свою адресу електронної пошти.</string>
   <string name="auth_help_title">Як ми можемо допомогти?</string>
   <string name="auth_help_option_forgot_username">Забули ім\'я користувача</string>
   <string name="auth_help_option_forgot_password">Забули пароль</string>

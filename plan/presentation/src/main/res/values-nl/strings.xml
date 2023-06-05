@@ -41,13 +41,14 @@
   <string name="plans_upgrade_your_plan">Upgrade uw abonnement</string>
   <string name="plans_proton_for_free">Krijg Proton gratis</string>
   <string name="plans_get_proton">Krijg %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Beheer uw abonnement op <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space">%s van %s</string>
   <string name="plans_payments_info_not_available">n.v.t.</string>
   <string name="plans_manage_your_subscription_google">Uw abonnement wordt beheerd door Google Play.</string>
   <string name="plans_manage_your_subscription_other">Uw abonnement kan niet beheerd worden in de mobiele app.</string>
   <string name="plans_autorenew_subscriptions">Enkel abonnementen met automatische jaarlijkse verlenging zijn beschikbaar via deze app.</string>
   <string name="plans_can_not_upgrade_from_mobile">U kan niet upgraden vanuit de mobiele app.</string>
+  <string name="plans_limited_offer">Tijdelijke aanbieding</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# opslagruimte</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Ondersteuning voor meerdere gebruikers</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Gezin</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Veilige e-mail met geavanceerde functies voor uw dagelijkse communicatie.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Uw privacy en veiligheid zijn onze prioriteit.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Veilige cloudopslag die u alles laat opslaan, synchroniseren, en u makkelijk en veilig bestanden laat delen.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Uitgebreide privacy en beveiliging met alle Proton-diensten gecombineerd.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Voor wachtwoordbeheer en identiteitsbescherming op een hoger niveau.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Ongelimiteerde mappen, labels en filters</string>
   <string name="highest_vpn_speed" comment="new_plans">Hoogste VPN-snelheid</string>
   <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 landen</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Secure Core-servers</string>
   <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Veilige e-mail met geavanceerde functies voor uw dagelijkse communicatie.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Uw privacy en veiligheid zijn onze prioriteit.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Veilige cloudopslag die u alles laat opslaan, synchroniseren, en u makkelijk en veilig bestanden laat delen.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Uitgebreide privacy en beveiliging met alle Proton-diensten gecombineerd.</string>
+  <string name="unlimited_logins_and_notes">Onbeperkt aantal wachtwoorden en notities</string>
+  <string name="unlimited_devices">Onbeperkt aantal apparaten</string>
+  <string name="integrated_2fa_authenticator">Geïntegreerde 2FA-authenticator</string>
+  <string name="multiple_vaults">Meerdere kluizen</string>
+  <string name="unlimited_email_alias">Onbeperkt aantal Hide My Email-alliassen</string>
+  <string name="custom_email_alias_domains">Aangepaste domeinen voor e-mailalliassen</string>
+  <string name="multiple_forwarding_mailboxes">Meerdere doorstuurpostvakken</string>
+  <string name="priority_support">Prioriteitsondersteuning</string>
+  <string name="one_vault">1 kluis</string>
+  <string name="ten_hide_my_email_aliases">10 Hide My Email-aliassen</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

@@ -50,6 +50,7 @@
   <string name="plans_manage_your_subscription_other">Вы не можете управлять подпиской из мобильного приложения.</string>
   <string name="plans_autorenew_subscriptions">Через это приложение доступны только автопродлеваемые годовые подписки.</string>
   <string name="plans_can_not_upgrade_from_mobile">Обновление через мобильное приложение невозможно.</string>
+  <string name="plans_limited_offer">Ограниченное предложение</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# хранилища</item>
@@ -144,8 +145,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Многопользовательская поддержка</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Семья</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Защищенная электронная почта с дополнительными возможностями для повседневного общения.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Наш приоритет — ваша конфиденциальность и безопасность.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Защищённое облачное хранилище для удобного и надежного хранения, синхронизации и обмена файлами.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная конфиденциальность и безопасность со всеми службами Proton вместе взятыми.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Для нового уровня управления паролями и защиты личных данных.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Неограниченное количество папок, ярлыков и фильтров</string>
   <string name="highest_vpn_speed" comment="new_plans">Наивысшая скорость VPN</string>
   <string name="servers_in_countries" comment="new_plans">Более 1500 серверов в 63 странах</string>
@@ -154,14 +166,15 @@
   <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Защищенная электронная почта с дополнительными возможностями для повседневного общения.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Наш приоритет — ваша конфиденциальность и безопасность.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Защищённое облачное хранилище для удобного и надежного хранения, синхронизации и обмена файлами.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная конфиденциальность и безопасность со всеми службами Proton вместе взятыми.</string>
+  <string name="unlimited_logins_and_notes">Неограниченное количество логинов и заметок</string>
+  <string name="unlimited_devices">Неограниченное количество устройств</string>
+  <string name="integrated_2fa_authenticator">Встроенный 2FA аутентификатор</string>
+  <string name="multiple_vaults">Несколько хранилищ</string>
+  <string name="unlimited_email_alias">Неограниченное число псевдонимов Hide My Email</string>
+  <string name="custom_email_alias_domains">Пользовательские домены для псевдонимов электронной почты</string>
+  <string name="multiple_forwarding_mailboxes">Несколько почтовых ящиков для пересылки</string>
+  <string name="priority_support">Приоритетная поддержка</string>
+  <string name="one_vault">1 хранилище</string>
+  <string name="ten_hide_my_email_aliases">10 Hide My Email псевдонимов</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

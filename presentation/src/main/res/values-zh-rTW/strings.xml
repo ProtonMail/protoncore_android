@@ -45,5 +45,5 @@
   <string name="presentation_general_connection_error">無法連線至伺服器。</string>
   <string name="presentation_check_your_connection">檢查您的網路連線</string>
   <string name="presentation_connectivity_issues">連線問題</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_field_required">此為必填欄位。</string>
 </resources>

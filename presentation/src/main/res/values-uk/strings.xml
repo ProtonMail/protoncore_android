@@ -45,5 +45,5 @@
   <string name="presentation_general_connection_error">Не вдалося під\'єднатися до сервера.</string>
   <string name="presentation_check_your_connection">Перевірте з\'єднання</string>
   <string name="presentation_connectivity_issues">Проблеми зі з\'єднанням</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_field_required">Це поле обов\'язкове.</string>
 </resources>

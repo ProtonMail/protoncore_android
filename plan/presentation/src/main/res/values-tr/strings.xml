@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Aboneliğiniz mobil uygulama içinden yönetilemez.</string>
   <string name="plans_autorenew_subscriptions">Bu uygulamada yalnızca otomatik yenilenen yıllık abonelikler kullanılabilir.</string>
   <string name="plans_can_not_upgrade_from_mobile">Mobil uygulamadan yükseltme yapamazsınız.</string>
+  <string name="plans_limited_offer">Sınırlı süreli teklif</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# depolama alanı</item>
@@ -116,8 +117,19 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Çok kullanıcı desteği</string>
   <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Günlük iletişim gereksinimleriniz için gelişmiş özellikleri olan güvenli e-posta.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Gizliliğinizi korumak ve güvenliğinizi sağlamak önceliğimizdir.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Dosyaları kolayca ve güvenle saklama, eşitleme ve paylaşmayı sağlayan güvenli bulut depolama alanı.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Tüm Proton hizmetlerinin bir arada olduğu kapsamlı gizlilik ve güvenlik.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Gelecek nesil parola yönetimi ve kimlik koruması için.</string>
   <!-- endregion -->
-  <!-- region new plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Sınırsız klasör, etiket, süzgeç</string>
   <string name="highest_vpn_speed" comment="new_plans">En yüksek VPN hızı</string>
   <string name="servers_in_countries" comment="new_plans">63 ülkede 1500 üzerinde sunucu</string>
@@ -126,14 +138,15 @@
   <string name="secure_core" comment="new_plans">Secure Core sunucuları</string>
   <string name="tor_vpn" comment="new_plans">VPN üzerinden Tor</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Günlük iletişim gereksinimleriniz için gelişmiş özellikleri olan güvenli e-posta.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Gizliliğinizi korumak ve güvenliğinizi sağlamak önceliğimizdir.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Dosyaları kolayca ve güvenle saklama, eşitleme ve paylaşmayı sağlayan güvenli bulut depolaması.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Tüm Proton hizmetlerinin bir arada olduğu kapsamlı gizlilik ve güvenlik.</string>
+  <string name="unlimited_logins_and_notes">Sınırsız sayıda oturum açma bilgisi ve not</string>
+  <string name="unlimited_devices">Sınırsız sayıda aygıt</string>
+  <string name="integrated_2fa_authenticator">Bütünleşik iki adımlı kimlik doğrulayıcı</string>
+  <string name="multiple_vaults">Birden çok kasa</string>
+  <string name="unlimited_email_alias">Sınırsız sayıda e-postamı gizle takma adı</string>
+  <string name="custom_email_alias_domains">E-posta takma adları için özel etki alanları</string>
+  <string name="multiple_forwarding_mailboxes">Çok sayıda iletici e-posta kutusu</string>
+  <string name="priority_support">Öncelikli destek</string>
+  <string name="one_vault">1 kasa</string>
+  <string name="ten_hide_my_email_aliases">10 e-postamı gizle takma adı</string>
   <!-- endregion -->
-  <string-array name="supported_currencies">
-    <item>EUR</item>
-    <item>USD</item>
-    <item>CHF</item>
-  </string-array>
 </resources>

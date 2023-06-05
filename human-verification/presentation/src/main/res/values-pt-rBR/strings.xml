@@ -26,7 +26,7 @@
   <string name="human_verification_enter_code_subtitle_already_have_code">Digite o código de verificação que você já tem:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">Seu e-mail será usado apenas esta única verificação. Se você não encontrar o e-mail em sua caixa de entrada, confira a pasta de spam.</string>
+  <string name="human_verification_option_email_subtitle">Seu e-mail será usado apenas para esta única verificação. Se você não encontrar o e-mail na sua caixa de entrada, por favor confira sua pasta de spam.</string>
   <string name="human_verification_option_sms">Número de telefone</string>
   <string name="human_verification_option_sms_subtitle">O seu número de telefone será utilizado somente nesta verificação única.</string>
   <string name="human_verification_get_verification_code">Obter código de verificação</string>

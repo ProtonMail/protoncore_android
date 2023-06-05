@@ -62,7 +62,7 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Confirmar upgrade da conta</string>
-  <string name="payments_giap_unredeemed_description">Seu pagamento no Google Pay foi processado com sucesso, mas o processo de upgrade da conta foi interrompido. Aplique agora o pagamento para fazer upgrade da sua conta?</string>
+  <string name="payments_giap_unredeemed_description">Seu pagamento no Google Pay foi processado com sucesso, mas o processo de atualização da conta foi interrompido. Aplicar o pagamento para atualizar sua conta agora?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmar upgrade</string>
   <string name="payments_giap_redeem_success">Sua conta foi atualizada com sucesso</string>
   <string name="payments_giap_redeem_error">Incapaz de completar o upgrade. Por favor, tente novamente mais tarde.</string>
