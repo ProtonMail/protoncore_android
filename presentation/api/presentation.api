@@ -225,13 +225,15 @@ public final class me/proton/core/presentation/ui/ProtonWebViewActivity$CustomWe
 	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
 	public fun onPageStarted (Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
 	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
+	public fun shouldOverrideUrlLoading (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Z
 }
 
 public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Input : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZ)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZZZ)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/util/Map;
@@ -239,14 +241,17 @@ public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Input : 
 	public final fun component6 ()Z
 	public final fun component7 ()Z
 	public final fun component8 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZ)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
-	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
+	public final fun component9 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZZZ)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ZZZZZZILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAcceptCookie ()Z
 	public final fun getDomStorageEnabled ()Z
 	public final fun getErrorUrlRegex ()Ljava/lang/String;
 	public final fun getExtraHeaders ()Ljava/util/Map;
 	public final fun getJavaScriptEnabled ()Z
+	public final fun getRemoveAllCookies ()Z
 	public final fun getShouldOpenLinkInBrowser ()Z
 	public final fun getShouldUseAlternativeUrl ()Z
 	public final fun getSuccessUrlRegex ()Ljava/lang/String;

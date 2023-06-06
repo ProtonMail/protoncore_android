@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Parcelable
+import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -53,6 +54,10 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
         with(settings) {
             javaScriptEnabled = input.javaScriptEnabled
             domStorageEnabled = input.domStorageEnabled
+        }
+        with(CookieManager.getInstance()) {
+            if (input.removeAllCookies) { removeAllCookies(null) }
+            setAcceptCookie(input.acceptCookie)
         }
         webViewClient = CustomWebViewClient(::shouldInterceptRequest).apply {
             shouldOpenLinkInBrowser = input.shouldOpenLinkInBrowser
@@ -125,6 +130,8 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
         val extraHeaders: Map<String, String>,
         val javaScriptEnabled: Boolean = false,
         val domStorageEnabled: Boolean = false,
+        val removeAllCookies: Boolean = false,
+        val acceptCookie: Boolean = true,
         val shouldUseAlternativeUrl: Boolean = true,
         val shouldOpenLinkInBrowser: Boolean = true,
     ) : Parcelable
