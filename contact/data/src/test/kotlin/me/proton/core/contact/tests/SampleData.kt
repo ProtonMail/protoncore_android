@@ -79,6 +79,7 @@ fun UserId.userEntity() = UserEntity(
     subscribed = 0,
     services = 0,
     delinquent = null,
+    recovery = null,
     passphrase = null
 )
 

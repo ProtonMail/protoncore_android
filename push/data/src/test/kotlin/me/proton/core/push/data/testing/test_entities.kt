@@ -28,10 +28,33 @@ import me.proton.core.user.data.entity.UserEntity
 
 internal val testUserId = UserId("a")
 
-internal fun testUserEntity(userId: UserId) =
-    UserEntity(userId, null, null, null, "", 0, 0, 0, 0, null, false, 0, 0, null, null)
+internal fun testUserEntity(userId: UserId) = UserEntity(
+    userId = userId,
+    email = null,
+    name = null,
+    displayName = null,
+    currency = "",
+    credit = 0,
+    usedSpace = 0,
+    maxSpace = 0,
+    maxUpload = 0,
+    role = null,
+    isPrivate = false,
+    subscribed = 0,
+    services = 0,
+    delinquent = null,
+    recovery = null,
+    passphrase = null
+)
 
-internal fun testAccountEntity(userId: UserId) = AccountEntity(userId, "", null, AccountState.Ready, null, null)
+internal fun testAccountEntity(userId: UserId) = AccountEntity(
+    userId = userId,
+    username = "",
+    email = null,
+    state = AccountState.Ready,
+    sessionId = null,
+    sessionState = null
+)
 
 internal val testPush1 = Push(testUserId, PushId("1"), "obj-1", "TestType1")
 internal val testPush2 = Push(testUserId, PushId("2"), "obj-2", PushObjectType.Messages.value)

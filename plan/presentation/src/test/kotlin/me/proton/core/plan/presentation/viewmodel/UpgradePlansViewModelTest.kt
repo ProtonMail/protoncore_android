@@ -209,6 +209,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         services = 1,
         subscribed = 0,
         delinquent = null,
+        recovery = null,
         keys = emptyList()
     )
 

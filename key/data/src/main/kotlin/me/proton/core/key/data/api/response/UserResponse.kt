@@ -57,6 +57,8 @@ data class UserResponse(
     val email: String? = null,
     @SerialName("DisplayName")
     val displayName: String? = null,
+    @SerialName("Recovery")
+    val recovery: UserRecoveryResponse? = null,
     @SerialName("Keys")
     val keys: List<UserKeyResponse>
 )

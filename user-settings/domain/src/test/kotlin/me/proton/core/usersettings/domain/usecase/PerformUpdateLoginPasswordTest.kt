@@ -91,6 +91,7 @@ class PerformUpdateLoginPasswordTest {
         services = 1,
         subscribed = 0,
         delinquent = null,
+        recovery = null,
         keys = emptyList()
     )
 

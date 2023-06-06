@@ -66,5 +66,20 @@ interface UserDatabase : Database, UserKeyDatabase {
                 )
             }
         }
+
+        /**
+         * - Added UserEntity.recovery.
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                with(database) {
+                    addTableColumn("UserEntity", column = "recovery_state", type = "INTEGER")
+                    addTableColumn("UserEntity", column = "recovery_startTime", type = "INTEGER")
+                    addTableColumn("UserEntity", column = "recovery_endTime", type = "INTEGER")
+                    addTableColumn("UserEntity", column = "recovery_sessionId", type = "TEXT")
+                    addTableColumn("UserEntity", column = "recovery_reason", type = "INTEGER")
+                }
+            }
+        }
     }
 }

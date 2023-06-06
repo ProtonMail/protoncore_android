@@ -95,6 +95,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         services = 1,
         subscribed = 0,
         delinquent = null,
+        recovery = null,
         keys = emptyList()
     )
     // endregion

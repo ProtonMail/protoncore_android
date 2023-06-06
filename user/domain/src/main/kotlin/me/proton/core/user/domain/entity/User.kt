@@ -71,6 +71,8 @@ data class User(
     val subscribed: Int,
     /** Invoice delinquent. */
     val delinquent: Delinquent?,
+    /** Account Recovery. */
+    val recovery: UserRecovery?,
     /**
      * User Private Keys used by crypto functions (e.g. encrypt, decrypt, sign, verify).
      *
