@@ -89,7 +89,7 @@ class AuthRepositoryImpl(
             getFrameMap(frames)
         )
         val response = performLogin(request)
-        validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "login failed" }
+        validateServerProof(requireNotNull(response.serverProof), srpProofs.expectedServerProof) { "login failed" }
         response.toSessionInfo(username)
     }.valueOrThrow
 

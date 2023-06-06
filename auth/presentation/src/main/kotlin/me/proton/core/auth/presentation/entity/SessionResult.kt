@@ -33,7 +33,7 @@ data class SessionResult(
     val userId: String,
     val refreshToken: String,
     val eventId: String,
-    val serverProof: String,
+    val serverProof: String?,
     val localId: Int,
     val passwordMode: Int,
     val isSecondFactorNeeded: Boolean

@@ -41,7 +41,7 @@ data class LoginResponse(
     @SerialName("EventID")
     val eventId: String,
     @SerialName("ServerProof")
-    val serverProof: String,
+    val serverProof: String? = null,
     @SerialName("LocalID")
     val localId: Int,
     @SerialName("PasswordMode")

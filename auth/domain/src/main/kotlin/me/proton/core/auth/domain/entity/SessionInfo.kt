@@ -33,7 +33,7 @@ data class SessionInfo(
     val userId: UserId,
     val refreshToken: String,
     val eventId: String,
-    val serverProof: String,
+    val serverProof: String?,
     val localId: Int,
     val passwordMode: Int,
     val secondFactor: SecondFactor?,
