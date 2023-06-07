@@ -26,6 +26,10 @@ include:
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      variables:
+        # deploy to Atlas with prep job
+        ATLAS_DEPLOY_ENV: "true"
+        ATLAS_DEPLOY_PREP: "true"
     - if: $CI_COMMIT_REF_NAME =~ /^release/
     - if: $CI_COMMIT_REF_NAME == 'main'
 
@@ -63,25 +67,18 @@ prepare-environment:
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_SLUG} --data tag=${CI_COMMIT_REF_SLUG}"
     SENSITIVE_DIR: "test/quark/src/main/resources/sensitive"
   script:
-    - |
-      if [ $CI_PIPELINE_SOURCE == "merge_request_event" ]; then
-        get_name.py -v -o deploy.env -d "$ATLAS_BASE_DOMAIN" --release "$ATLAS_RELEASE_SUFFIX" "${ENV_TAG:-$CI_COMMIT_REF_SLUG}" "$CI_PROJECT_PATH" "$CI_COMMIT_REF_SLUG"
-        export $(cat deploy.env)
-        echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
-        echo HOST="$DYNAMIC_DOMAIN" >> local.properties
-        mkdir -p $SENSITIVE_DIR
-        cat $TEST_USERS > $SENSITIVE_DIR/users.json
-        cat $TEST_USERS_VPN_USERNAME > $SENSITIVE_DIR/users-vpn-username.json
-        cat $TEST_INTERNAL_API_V4 > $SENSITIVE_DIR/internal_apis.json
-      else
-        echo "No need to prepare env"
-      fi
+    - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
+    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
+    - mkdir -p $SENSITIVE_DIR
+    - cat $TEST_USERS > $SENSITIVE_DIR/users.json
+    - cat $TEST_USERS_VPN_USERNAME > $SENSITIVE_DIR/users-vpn-username.json
+    - cat $TEST_INTERNAL_API_V4 > $SENSITIVE_DIR/internal_apis.json
+  rules:
+    - if: $ATLAS_DEPLOY_ENV == "true"
   artifacts:
     paths:
       - $SENSITIVE_DIR
       - local.properties
-    reports:
-      dotenv: deploy.env
     expire_in: never
 
 detekt-analyze:
@@ -110,21 +107,6 @@ i18n-commit-locales:
     I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
     I18N_COMMIT_BRANCH_PUSH: 'main'
     I18N_COMMIT_BRANCH_ALLOWED: 'main'
-
-## deploy stage ####################################################################################
-deploy:review:
-  tags:
-    - medium
-  allow_failure: true
-  retry: 1
-  needs:
-    - job: prepare-environment
-      artifacts: true
-  rules:
-    # We deploy automatically if the ATLAS_DEPLOY_ENV variable is set to true
-    - if: $ATLAS_DEPLOY_ENV == "true" && $CI_PIPELINE_SOURCE == "merge_request_event"
-    # But never otherwise
-    - when: never
 
 ## build stage #####################################################################################
 assemble:
@@ -507,21 +489,6 @@ danger-review:
   interruptible: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-
-## cleanup stage ###################################################################################
-cleanup:review:
-  tags:
-    - medium
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: manual
-      allow_failure: true
-
-finish:review:
-  # Apply same rules to finish:review job as to deploy:review.
-  rules:
-    - if: $ATLAS_DEPLOY_ENV == "true" && $CI_PIPELINE_SOURCE == "merge_request_event"
-    - when: never
 
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
