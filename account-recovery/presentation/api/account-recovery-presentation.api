@@ -107,6 +107,11 @@ public final class me/proton/core/accountrecovery/presentation/notification/Show
 	public fun invoke (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;Lme/proton/core/domain/entity/UserId;)V
 }
 
+public final class me/proton/core/accountrecovery/presentation/notification/ShowNotificationImplKt {
+	public static final fun getContentTextResource (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;)Ljava/lang/Integer;
+	public static final fun getSmallIconResId (Lme/proton/core/domain/entity/Product;)I
+}
+
 public final class me/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl_Factory;

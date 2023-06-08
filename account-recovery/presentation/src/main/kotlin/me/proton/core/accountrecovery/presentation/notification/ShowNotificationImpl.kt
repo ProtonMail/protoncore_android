@@ -24,6 +24,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresPermission
+import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
@@ -57,7 +58,7 @@ public class ShowNotificationImpl @Inject internal constructor(
         val notification = NotificationCompat.Builder(context, getAccountRecoveryChannelId())
             .setSmallIcon(getSmallIcon())
             .setContentTitle(context.getString(R.string.account_recovery_notification_channel_name))
-            .setContentText(getContentText(forState))
+            .setContentText(getContentText(forState.getContentTextResource()))
             .addAction(makeDismissAction(userId))
             .addAction(makeLearnMoreAction(userId))
             .setAutoCancel(true)
@@ -68,23 +69,12 @@ public class ShowNotificationImpl @Inject internal constructor(
         notificationManager.notify(getNotificationTag(userId), getNotificationId(), notification)
     }
 
-    private fun getContentText(state: AccountRecoveryState): String? = when (state) {
-        AccountRecoveryState.None -> null
-        AccountRecoveryState.GracePeriod -> R.string.account_recovery_notification_content_grace_period
-        AccountRecoveryState.ResetPassword -> R.string.account_recovery_notification_content_reset_password
-        AccountRecoveryState.Cancelled -> R.string.account_recovery_notification_content_cancelled
-    }?.let { context.getString(it) }
+    private fun getContentText(@StringRes resourceString: Int?): String? =
+        if (resourceString != null) context.getString(resourceString)
+        else null
 
-    private fun getSmallIcon(): IconCompat {
-        val resId = when (product) {
-            Product.Calendar -> R.drawable.ic_proton_brand_proton_calendar
-            Product.Drive -> R.drawable.ic_proton_brand_proton_drive
-            Product.Mail -> R.drawable.ic_proton_brand_proton_mail
-            Product.Vpn -> R.drawable.ic_proton_brand_proton_vpn
-            Product.Pass -> R.drawable.ic_proton_brand_proton_pass
-        }
-        return IconCompat.createWithResource(context, resId)
-    }
+    private fun getSmallIcon(): IconCompat =
+        IconCompat.createWithResource(context, product.getSmallIconResId())
 
     private fun makeDismissAction(
         userId: UserId
@@ -125,3 +115,19 @@ public class ShowNotificationImpl @Inject internal constructor(
         ).build()
     }
 }
+
+public fun AccountRecoveryState.getContentTextResource(): Int? = when (this) {
+    AccountRecoveryState.None -> null
+    AccountRecoveryState.GracePeriod -> R.string.account_recovery_notification_content_grace_period
+    AccountRecoveryState.ResetPassword -> R.string.account_recovery_notification_content_reset_password
+    AccountRecoveryState.Cancelled -> R.string.account_recovery_notification_content_cancelled
+}
+
+public fun Product.getSmallIconResId(): Int = when (this) {
+    Product.Calendar -> R.drawable.ic_proton_brand_proton_calendar
+    Product.Drive -> R.drawable.ic_proton_brand_proton_drive
+    Product.Mail -> R.drawable.ic_proton_brand_proton_mail
+    Product.Vpn -> R.drawable.ic_proton_brand_proton_vpn
+    Product.Pass -> R.drawable.ic_proton_brand_proton_pass
+}
+

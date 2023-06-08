@@ -19,22 +19,35 @@
 package me.proton.core.accountrecovery.presentation.notification
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.res.Resources
+import androidx.core.graphics.drawable.IconCompat
 import androidx.test.core.app.ApplicationProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.accountrecovery.domain.GetAccountRecoveryChannelId
+import me.proton.core.accountrecovery.presentation.R
 import me.proton.core.accountrecovery.presentation.internal.GetNotificationId
 import me.proton.core.accountrecovery.presentation.internal.GetNotificationTag
 import me.proton.core.accountrecovery.presentation.internal.HasNotificationPermission
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.humanverification.HumanVerificationState
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 class ShowNotificationImplTest {
@@ -57,13 +70,21 @@ class ShowNotificationImplTest {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+        mockkStatic(IconCompat::class)
+        mockkStatic("me.proton.core.accountrecovery.presentation.notification.ShowNotificationImplKt")
         context = ApplicationProvider.getApplicationContext()
+    }
+
+    @AfterTest
+    fun afterEveryTest() {
+        unmockkStatic(IconCompat::class)
+        unmockkStatic("me.proton.core.accountrecovery.presentation.notification.ShowNotificationImplKt")
     }
 
     @Test
     fun noNotificationPermission() {
         // GIVEN
-        makeTested()
+        makeTested(context = context)
         every { hasNotificationPermission() } returns false
 
         // WHEN
@@ -77,7 +98,7 @@ class ShowNotificationImplTest {
     @Test
     fun voidState() {
         // GIVEN
-        makeTested()
+        makeTested(context = context)
         every { hasNotificationPermission() } returns true
 
         // WHEN
@@ -92,7 +113,7 @@ class ShowNotificationImplTest {
     fun postNotification() {
         // GIVEN
         val userId = UserId("user-id")
-        makeTested()
+        makeTested(context = context)
 
         every { hasNotificationPermission() } returns true
         every { getAccountRecoveryChannelId() } returns "channel-id"
@@ -107,7 +128,146 @@ class ShowNotificationImplTest {
         verify { getNotificationTag(userId) }
     }
 
-    private fun makeTested(product: Product = Product.Mail) {
+    @Test
+    fun postNotificationResetPasswordStateTextTest() {
+        // GIVEN
+        val userId = UserId("user-id")
+        val testState = AccountRecoveryState.ResetPassword
+        val packageManager = spyk<PackageManager>()
+        val contextSpy = spyk(context)
+        val stringResourceSlot = mutableListOf<Int>()
+
+        every { contextSpy.packageManager } returns packageManager
+        every { packageManager.getLaunchIntentForPackage(any()) } returns mockk(relaxed = true)
+        every { IconCompat.createWithResource(any(), any()) } returns mockk(relaxed = true)
+
+        every { contextSpy.getString(capture(stringResourceSlot)) } returns "test3"
+
+        makeTested(context = contextSpy)
+
+        every { hasNotificationPermission() } returns true
+        every { getAccountRecoveryChannelId() } returns "channel-id"
+        every { getNotificationId() } returns 1
+        every { getNotificationTag(any()) } returns "notification-tag"
+
+        // WHEN
+        tested(testState, userId)
+
+        // THEN
+        assertEquals(4, stringResourceSlot.size)
+        assertTrue(stringResourceSlot.contains(R.string.account_recovery_notification_content_reset_password))
+        assertEquals(R.string.account_recovery_notification_channel_name, stringResourceSlot[0])
+        assertEquals(R.string.account_recovery_notification_content_reset_password, stringResourceSlot[1])
+        assertEquals(R.string.account_recovery_notification_action_dismiss, stringResourceSlot[2])
+        assertEquals(R.string.account_recovery_notification_action_learn_more, stringResourceSlot[3])
+        verify { getNotificationId() }
+        verify { getNotificationTag(userId) }
+    }
+
+    @Test
+    fun postNotificationGracePeriodStateTextTest() {
+        // GIVEN
+        val userId = UserId("user-id")
+        val testState = AccountRecoveryState.GracePeriod
+        val packageManager = spyk<PackageManager>()
+        val contextSpy = spyk(context)
+        val stringResourceSlot = mutableListOf<Int>()
+
+        every { contextSpy.packageManager } returns packageManager
+        every { packageManager.getLaunchIntentForPackage(any()) } returns mockk(relaxed = true)
+        every { IconCompat.createWithResource(any(), any()) } returns mockk(relaxed = true)
+
+        every { contextSpy.getString(capture(stringResourceSlot)) } returns "test3"
+
+        makeTested(context = contextSpy)
+
+        every { hasNotificationPermission() } returns true
+        every { getAccountRecoveryChannelId() } returns "channel-id"
+        every { getNotificationId() } returns 1
+        every { getNotificationTag(any()) } returns "notification-tag"
+
+        // WHEN
+        tested(testState, userId)
+
+        // THEN
+        assertEquals(4, stringResourceSlot.size)
+        assertTrue(stringResourceSlot.contains(R.string.account_recovery_notification_content_grace_period))
+        assertEquals(R.string.account_recovery_notification_channel_name, stringResourceSlot[0])
+        assertEquals(R.string.account_recovery_notification_content_grace_period, stringResourceSlot[1])
+        assertEquals(R.string.account_recovery_notification_action_dismiss, stringResourceSlot[2])
+        assertEquals(R.string.account_recovery_notification_action_learn_more, stringResourceSlot[3])
+        verify { getNotificationId() }
+        verify { getNotificationTag(userId) }
+    }
+
+    @Test
+    fun postNotificationVoidStateTextTest() {
+        // GIVEN
+        val userId = UserId("user-id")
+        val testState = AccountRecoveryState.None
+        val packageManager = spyk<PackageManager>()
+        val contextSpy = spyk(context)
+        val stringResourceSlot = mutableListOf<Int>()
+
+        every { contextSpy.packageManager } returns packageManager
+        every { packageManager.getLaunchIntentForPackage(any()) } returns mockk(relaxed = true)
+        every { IconCompat.createWithResource(any(), any()) } returns mockk(relaxed = true)
+
+        every { contextSpy.getString(capture(stringResourceSlot)) } returns "test3"
+
+        makeTested(context = contextSpy)
+
+        every { hasNotificationPermission() } returns true
+        every { getAccountRecoveryChannelId() } returns "channel-id"
+        every { getNotificationId() } returns 1
+        every { getNotificationTag(any()) } returns "notification-tag"
+
+        // WHEN
+        tested(testState, userId)
+
+        // THEN
+        assertEquals(0, stringResourceSlot.size)
+        verify(exactly = 0) { getNotificationId() }
+        verify(exactly = 0) { getNotificationTag(userId) }
+    }
+
+    @Test
+    fun postNotificationCancelledStateTextTest() {
+        // GIVEN
+        val userId = UserId("user-id")
+        val testState = AccountRecoveryState.Cancelled
+        val packageManager = spyk<PackageManager>()
+        val contextSpy = spyk(context)
+        val stringResourceSlot = mutableListOf<Int>()
+
+        every { contextSpy.packageManager } returns packageManager
+        every { packageManager.getLaunchIntentForPackage(any()) } returns mockk(relaxed = true)
+        every { IconCompat.createWithResource(any(), any()) } returns mockk(relaxed = true)
+
+        every { contextSpy.getString(capture(stringResourceSlot)) } returns "test3"
+
+        makeTested(context = contextSpy)
+
+        every { hasNotificationPermission() } returns true
+        every { getAccountRecoveryChannelId() } returns "channel-id"
+        every { getNotificationId() } returns 1
+        every { getNotificationTag(any()) } returns "notification-tag"
+
+        // WHEN
+        tested(testState, userId)
+
+        // THEN
+        assertEquals(4, stringResourceSlot.size)
+        assertTrue(stringResourceSlot.contains(R.string.account_recovery_notification_content_cancelled))
+        assertEquals(R.string.account_recovery_notification_channel_name, stringResourceSlot[0])
+        assertEquals(R.string.account_recovery_notification_content_cancelled, stringResourceSlot[1])
+        assertEquals(R.string.account_recovery_notification_action_dismiss, stringResourceSlot[2])
+        assertEquals(R.string.account_recovery_notification_action_learn_more, stringResourceSlot[3])
+        verify { getNotificationId() }
+        verify { getNotificationTag(userId) }
+    }
+
+    private fun makeTested(product: Product = Product.Mail, context: Context) {
         tested = ShowNotificationImpl(
             context,
             getAccountRecoveryChannelId,
