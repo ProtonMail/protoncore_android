@@ -82,11 +82,12 @@ public object SignInFlow {
      * - Identity Provider.
      * - Logged in.
      */
-    public fun signInSso(email: String) {
+    public fun signInSso() {
         LoginSsoRobot
-            .fillEmail(email)
+            .fillEmail("tobbe@ssotest.protonhub.org")
             .login()
         IdentityProviderRobot
+            .waitWebViewIsDisplayed()
             .fillAuth()
             .clickVerify()
     }

@@ -19,12 +19,11 @@
 package me.proton.core.auth.test
 
 import android.content.Context
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.login.LoginRobot
-import me.proton.core.auth.test.robot.login.LoginSsoRobot
 import kotlin.test.Test
 
 /**
@@ -33,12 +32,10 @@ import kotlin.test.Test
 public interface MinimalSignInExternalTests {
 
     public val context: Context
-        get() = InstrumentationRegistry.getInstrumentation().context
+        get() = ApplicationProvider.getApplicationContext()
 
     public val isSsoEnabled: Boolean
         get() = context.resources.getBoolean(R.bool.core_feature_auth_sso_enabled)
-
-    public val isCongratsDisplayed: Boolean
 
     public fun verifyAfter()
 
@@ -46,7 +43,8 @@ public interface MinimalSignInExternalTests {
     public fun signInWithSsoHappyPath() {
         if (isSsoEnabled) {
             AddAccountRobot.clickSignIn()
-            SignInFlow.signInSso("username@domain.com")
+            LoginRobot.signInWithSSO()
+            SignInFlow.signInSso()
 
             verifyAfter()
         }

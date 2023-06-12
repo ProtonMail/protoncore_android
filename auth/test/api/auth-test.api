@@ -83,7 +83,6 @@ public final class me/proton/core/auth/test/BuildConfig {
 
 public abstract interface class me/proton/core/auth/test/MinimalSignInExternalTests {
 	public abstract fun getContext ()Landroid/content/Context;
-	public abstract fun isCongratsDisplayed ()Z
 	public abstract fun isSsoEnabled ()Z
 	public abstract fun signInWithSsoHappyPath ()V
 	public abstract fun verifyAfter ()V
@@ -131,7 +130,7 @@ public final class me/proton/core/auth/test/flow/SignInFlow {
 	public final fun signInExternal (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun signInInternal (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun signInInternalTwoPass (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun signInSso (Ljava/lang/String;)V
+	public final fun signInSso ()V
 }
 
 public final class me/proton/core/auth/test/flow/SignUpFlow {
@@ -151,6 +150,7 @@ public final class me/proton/core/auth/test/robot/login/IdentityProviderRobot {
 	public static final field INSTANCE Lme/proton/core/auth/test/robot/login/IdentityProviderRobot;
 	public final fun clickVerify ()V
 	public final fun fillAuth ()Lme/proton/core/auth/test/robot/login/IdentityProviderRobot;
+	public final fun waitWebViewIsDisplayed ()Lme/proton/core/auth/test/robot/login/IdentityProviderRobot;
 }
 
 public final class me/proton/core/auth/test/robot/login/LoginHelpRobot {

@@ -157,7 +157,6 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
                 extraHeaders = extraHeaders,
                 javaScriptEnabled = true,
                 domStorageEnabled = true,
-                removeAllCookies = true,
                 shouldOpenLinkInBrowser = false
             )
         )
