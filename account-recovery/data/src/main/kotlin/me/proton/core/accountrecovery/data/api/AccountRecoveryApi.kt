@@ -16,37 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountrecovery.data.api
 
-plugins {
-    protonAndroidLibrary
-    kotlin("plugin.serialization")
-}
+import me.proton.core.accountrecovery.data.api.request.CancelRecoveryAttemptRequest
+import me.proton.core.accountrecovery.data.api.response.CancelRecoveryAttemptResponse
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.accountrecovery.data"
-}
-
-dependencies {
-    api(
-        project(Module.accountRecoveryDomain),
-        `hilt-android`,
-        `javax-inject`
-    )
-
-    implementation(
-        project(Module.networkData),
-        `serialization-core`
-    )
-
-    testImplementation(
-        project(Module.androidTest),
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk
-    )
+internal interface AccountRecoveryApi : BaseRetrofitApi {
+    @POST("account/recovery/session/abort")
+    suspend fun cancelRecoveryAttempt(@Body request: CancelRecoveryAttemptRequest): CancelRecoveryAttemptResponse
 }

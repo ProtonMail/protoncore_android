@@ -104,7 +104,7 @@ public abstract class me/proton/core/accountrecovery/presentation/compose/ui/Hil
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel : androidx/lifecycle/ViewModel {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;)V
+	public fun <init> (Lme/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
 	public final fun getInitialState ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Loading;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun setUser (Lme/proton/core/domain/entity/UserId;)V
@@ -176,11 +176,11 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;
-	public static fun newInstance (Lme/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;
+	public static fun newInstance (Lme/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_HiltModules {

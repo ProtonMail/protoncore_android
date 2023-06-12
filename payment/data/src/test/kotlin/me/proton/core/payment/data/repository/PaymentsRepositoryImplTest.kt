@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -117,7 +117,7 @@ class PaymentsRepositoryImplTest {
                 )
             )
         )
-        coEvery { apiManager.invoke<List<PaymentMethod>>(any(), any()) } returns ApiResult.Success(paymentMethods)
+        coEvery { apiManager.invoke<List<PaymentMethod>>(any()) } returns ApiResult.Success(paymentMethods)
         // WHEN
         val paymentMethodsResponse = repository.getAvailablePaymentMethods(sessionUserId = SessionUserId(testUserId))
         // THEN
@@ -147,7 +147,7 @@ class PaymentsRepositoryImplTest {
                 )
             )
         )
-        coEvery { apiManager.invoke<List<PaymentMethod>>(any(), any()) } returns ApiResult.Success(paymentMethods)
+        coEvery { apiManager.invoke<List<PaymentMethod>>(any()) } returns ApiResult.Success(paymentMethods)
         // WHEN
         val paymentMethodsResponse = repository.getAvailablePaymentMethods(sessionUserId = SessionUserId(testUserId))
         // THEN
@@ -166,7 +166,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `payment methods return error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<List<PaymentMethod>>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<List<PaymentMethod>>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
@@ -185,10 +185,7 @@ class PaymentsRepositoryImplTest {
         // GIVEN
         val testPaymentToken = ProtonPaymentToken("test-payment-token")
         coEvery {
-            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(
-                any(),
-                any()
-            )
+            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any())
         } returns ApiResult.Success(
             PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
         )
@@ -206,10 +203,7 @@ class PaymentsRepositoryImplTest {
         // GIVEN
         val testPaymentToken = ProtonPaymentToken("test-payment-token")
         coEvery {
-            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(
-                any(),
-                any()
-            )
+            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any())
         } returns ApiResult.Success(
             PaymentTokenResult.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         )
@@ -227,10 +221,7 @@ class PaymentsRepositoryImplTest {
         // GIVEN
         val testPaymentToken = ProtonPaymentToken("test-payment-token")
         coEvery {
-            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(
-                any(),
-                any()
-            )
+            apiManager.invoke<PaymentTokenResult.PaymentTokenStatusResult>(any())
         } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
@@ -253,7 +244,7 @@ class PaymentsRepositoryImplTest {
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
-        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
@@ -274,7 +265,7 @@ class PaymentsRepositoryImplTest {
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
-        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
@@ -292,7 +283,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `create payment token logged in new credit card error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Error.Http(
                 httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
             )
@@ -318,7 +309,7 @@ class PaymentsRepositoryImplTest {
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
-        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any(), any()) } returns
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
@@ -347,7 +338,7 @@ class PaymentsRepositoryImplTest {
             cycle = SubscriptionCycle.YEARLY,
             gift = null
         )
-        coEvery { apiManager.invoke<SubscriptionStatus>(any(), any()) } returns ApiResult.Success(subscriptionStatus)
+        coEvery { apiManager.invoke<SubscriptionStatus>(any()) } returns ApiResult.Success(subscriptionStatus)
         // WHEN
         val validationResult = repository.validateSubscription(
             sessionUserId = SessionUserId(testUserId),
@@ -362,7 +353,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `validate subscription returns error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<SubscriptionStatus>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<SubscriptionStatus>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
@@ -400,7 +391,7 @@ class PaymentsRepositoryImplTest {
             external = SubscriptionManagement.PROTON_MANAGED,
             customerId = null
         )
-        coEvery { apiManager.invoke<Subscription>(any(), any()) } returns ApiResult.Success(subscription)
+        coEvery { apiManager.invoke<Subscription>(any()) } returns ApiResult.Success(subscription)
         // WHEN
         val createSubscriptionResult = repository.createOrUpdateSubscription(
             sessionUserId = SessionUserId(testUserId),
@@ -419,7 +410,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `create subscription returns error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<Subscription>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<Subscription>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
@@ -445,7 +436,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `payment status success google play`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
+        coEvery { apiManager.invoke<PaymentStatus>(any()) } returns ApiResult.Success(
             PaymentStatus(
                 card = true,
                 inApp = true,
@@ -463,7 +454,7 @@ class PaymentsRepositoryImplTest {
     @Test
     fun `payment status success f-droid`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<PaymentStatus>(any(), any()) } returns ApiResult.Success(
+        coEvery { apiManager.invoke<PaymentStatus>(any()) } returns ApiResult.Success(
             PaymentStatus(
                 card = true,
                 inApp = false,

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,16 @@ package me.proton.core.network.domain
  * @param Api interface that describe the API
  */
 interface ApiManager<Api> {
+    /**
+     * Performs API call.
+     *
+     * @param T Call result type.
+     * @param block Lambda performing the call on [Api] interface instance.
+     * @return
+     */
+    suspend operator fun <T> invoke(
+        block: suspend Api.() -> T
+    ): ApiResult<T> = invoke(forceNoRetryOnConnectionErrors = false, block)
 
     /**
      * Performs API call.
@@ -34,7 +44,7 @@ interface ApiManager<Api> {
      * @return
      */
     suspend operator fun <T> invoke(
-        forceNoRetryOnConnectionErrors: Boolean = false,
+        forceNoRetryOnConnectionErrors: Boolean,
         block: suspend Api.() -> T
     ): ApiResult<T>
 

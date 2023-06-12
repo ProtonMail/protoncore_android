@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveAccountRecoveryState
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -42,6 +43,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
 
     private val observeAccountRecoveryState = mockk<ObserveAccountRecoveryState>(relaxed = true)
     private val cancelRecovery = mockk<CancelRecovery>(relaxed = true)
+    private val keyStoreCrypto = mockk<KeyStoreCrypto>()
 
     private val testUserId = UserId("test-user-id")
 
@@ -49,16 +51,18 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
 
     @Before
     fun beforeEveryTest() {
+        every { keyStoreCrypto.encrypt(any<String>()) } answers { firstArg() }
         coEvery {
             observeAccountRecoveryState.invoke(
                 testUserId,
                 true
             )
         } returns flowOf(AccountRecoveryState.GracePeriod)
-        coEvery { cancelRecovery.invoke(testUserId) } returns true
+        coEvery { cancelRecovery.invoke(any(), testUserId) } returns true
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
 
     }
@@ -83,7 +87,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(AccountRecoveryState.Cancelled)
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // WHEN
@@ -103,7 +108,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
             flowOf(AccountRecoveryState.Expired)
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // WHEN
@@ -127,7 +133,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         } returns flowOf(AccountRecoveryState.ResetPassword)
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // WHEN
@@ -146,7 +153,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(AccountRecoveryState.None)
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // WHEN
@@ -164,7 +172,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         // GIVEN
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // THEN
@@ -194,7 +203,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
     @Test
     fun `start recovery cancellation failure`() = coroutinesTest {
         // GIVEN
-        coEvery { cancelRecovery.invoke(testUserId) } throws ApiException(
+        coEvery { cancelRecovery.invoke(any(), testUserId) } throws ApiException(
             ApiResult.Error.Http(
                 500, "Server error", ApiResult.Error.ProtonData(
                     code = 1000, error = "Cancellation error"
@@ -203,7 +212,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         )
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // WHEN
@@ -231,7 +241,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         )
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
-            cancelRecovery
+            cancelRecovery,
+            keyStoreCrypto
         )
         viewModel.state.test {
             // WHEN

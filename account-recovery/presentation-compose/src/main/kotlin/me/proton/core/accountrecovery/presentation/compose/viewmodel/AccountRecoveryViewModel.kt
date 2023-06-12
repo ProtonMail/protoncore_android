@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -38,6 +38,8 @@ import me.proton.core.accountrecovery.domain.usecase.ObserveAccountRecoveryState
 import me.proton.core.accountrecovery.presentation.compose.LogTag
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogType
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
@@ -46,12 +48,13 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountRecoveryViewModel @Inject constructor(
     private val observeAccountRecoveryState: ObserveAccountRecoveryState,
-    private val cancelRecovery: CancelRecovery
+    private val cancelRecovery: CancelRecovery,
+    private val keyStoreCrypto: KeyStoreCrypto,
 ) : ViewModel() {
 
     private val userIdFlow: MutableStateFlow<UserId?> = MutableStateFlow(null)
     private val ackFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val gracePeriodCancellationFlow: MutableStateFlow<GracePeriodCancellationState?> =
+    private val gracePeriodCancellationFlow: MutableStateFlow<GracePeriodCancellationState> =
         MutableStateFlow(GracePeriodCancellationState())
 
     val initialState = State.Loading
@@ -97,13 +100,13 @@ class AccountRecoveryViewModel @Inject constructor(
                 else when (dialogType) {
                     AccountRecoveryDialogType.GRACE_PERIOD_STARTED -> {
                         when {
-                            gracePeriodCancellationProcessing?.error != null -> State.Error(
+                            gracePeriodCancellationProcessing.error != null -> State.Error(
                                 gracePeriodCancellationProcessing.error.message
                             )
 
-                            gracePeriodCancellationProcessing?.success == true -> State.Closed
+                            gracePeriodCancellationProcessing.success == true -> State.Closed
                             else -> State.Opened.GracePeriodStarted(
-                                processing = gracePeriodCancellationProcessing?.processing ?: false
+                                processing = gracePeriodCancellationProcessing.processing
                             )
                         }
                     }
@@ -126,11 +129,12 @@ class AccountRecoveryViewModel @Inject constructor(
     )
 
     fun startAccountRecoveryCancel() = viewModelScope.launch {
+        val password: String by lazy { TODO("Obtain password from the input field.") }
         userIdFlow.first().let { userId ->
             if (userId != null) {
                 gracePeriodCancellationFlow.update { GracePeriodCancellationState(processing = true) }
                 runCatching {
-                    cancelRecovery(userId)
+                    cancelRecovery(password.encrypt(keyStoreCrypto), userId)
                 }.fold(
                     onSuccess = {
                         gracePeriodCancellationFlow.update { GracePeriodCancellationState(success = true) }

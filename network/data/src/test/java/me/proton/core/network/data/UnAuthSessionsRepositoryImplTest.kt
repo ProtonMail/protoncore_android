@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -78,7 +78,7 @@ class UnAuthSessionsRepositoryImplTest {
     @Test
     fun `successful response handled properly`() = runTest {
         val block = slot<suspend BaseRetrofitApi.() -> Session>()
-        coEvery { apiManager.invoke(any(), capture(block)) } coAnswers {
+        coEvery { apiManager.invoke(capture(block)) } coAnswers {
             val mockedApiCall = mockk<BaseRetrofitApi> {
                 coEvery { requestToken(any()) } returns TokenResponse(
                     "test-at",
@@ -100,7 +100,7 @@ class UnAuthSessionsRepositoryImplTest {
     @Test
     fun `error response handled properly`() = runTest {
         // GIVEN
-        coEvery { apiManager.invoke<TokenResponse>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<TokenResponse>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN

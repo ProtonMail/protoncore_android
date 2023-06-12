@@ -16,37 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountrecovery.domain.repository
 
-plugins {
-    protonAndroidLibrary
-    kotlin("plugin.serialization")
-}
+import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.domain.entity.UserId
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.accountrecovery.data"
-}
-
-dependencies {
-    api(
-        project(Module.accountRecoveryDomain),
-        `hilt-android`,
-        `javax-inject`
-    )
-
-    implementation(
-        project(Module.networkData),
-        `serialization-core`
-    )
-
-    testImplementation(
-        project(Module.androidTest),
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk
-    )
+public interface AccountRecoveryRepository {
+    /**
+     * Cancels an existing account recovery attempt for a given [userId].
+     * To cancel, we need to perform "inline re-authentication" of the user,
+     * (i.e. provide [srpProofs] and [srpSession]),
+     * so that we verify the user knows the password.
+     */
+    public suspend fun cancelRecoveryAttempt(
+        srpProofs: SrpProofs,
+        srpSession: String,
+        userId: UserId
+    ): Boolean
 }

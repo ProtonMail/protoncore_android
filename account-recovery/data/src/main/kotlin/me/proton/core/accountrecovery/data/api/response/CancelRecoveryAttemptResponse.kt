@@ -16,37 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountrecovery.data.api.response
 
-plugins {
-    protonAndroidLibrary
-    kotlin("plugin.serialization")
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.ServerProof
+import me.proton.core.network.domain.ResponseCodes
 
-publishOption.shouldBePublishedAsLib = true
+@Serializable
+internal class CancelRecoveryAttemptResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("ServerProof")
+    val serverProof: ServerProof
+)
 
-android {
-    namespace = "me.proton.core.accountrecovery.data"
-}
-
-dependencies {
-    api(
-        project(Module.accountRecoveryDomain),
-        `hilt-android`,
-        `javax-inject`
-    )
-
-    implementation(
-        project(Module.networkData),
-        `serialization-core`
-    )
-
-    testImplementation(
-        project(Module.androidTest),
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk
-    )
-}
+internal fun CancelRecoveryAttemptResponse.isSuccess(): Boolean =
+    code == ResponseCodes.OK

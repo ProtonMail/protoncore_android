@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ class PlansRepositoryImplTest {
                 )
             )
         )
-        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
+        coEvery { apiManager.invoke<List<Plan>>(any()) } returns ApiResult.Success(plans)
         // WHEN
         val plansResponse = repository.getPlans(sessionUserId = null)
         // THEN
@@ -155,7 +155,7 @@ class PlansRepositoryImplTest {
                 )
             )
         )
-        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
+        coEvery { apiManager.invoke<List<Plan>>(any()) } returns ApiResult.Success(plans)
         // WHEN
         val plansResponse = repository.getPlans(sessionUserId = null)
         // THEN
@@ -174,7 +174,7 @@ class PlansRepositoryImplTest {
     fun `plans return data no user returns empty list`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plans = emptyList<Plan>()
-        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
+        coEvery { apiManager.invoke<List<Plan>>(any()) } returns ApiResult.Success(plans)
         // WHEN
         val plansResponse = repository.getPlans(sessionUserId = null)
         // THEN
@@ -214,7 +214,7 @@ class PlansRepositoryImplTest {
                 offers = emptyList()
             )
         )
-        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
+        coEvery { apiManager.invoke<List<Plan>>(any()) } returns ApiResult.Success(plans)
         // WHEN
         val plansResponse = repository.getPlans(sessionUserId = SessionUserId(testUserId))
         // THEN
@@ -228,7 +228,7 @@ class PlansRepositoryImplTest {
     fun `plans return data for user id returns empty list`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plans = emptyList<Plan>()
-        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Success(plans)
+        coEvery { apiManager.invoke<List<Plan>>(any()) } returns ApiResult.Success(plans)
         // WHEN
         val plansResponse = repository.getPlans(sessionUserId = SessionUserId(testUserId))
         // THEN
@@ -239,7 +239,7 @@ class PlansRepositoryImplTest {
     @Test
     fun `plans return error`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<List<Plan>>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<List<Plan>>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
         )
         // WHEN
@@ -279,7 +279,7 @@ class PlansRepositoryImplTest {
                 1, 10, 20
             )
         )
-        coEvery { apiManager.invoke<Plan>(any(), any()) } returns ApiResult.Success(planDefault)
+        coEvery { apiManager.invoke<Plan>(any()) } returns ApiResult.Success(planDefault)
         // WHEN
         val plansResponse = repository.getPlansDefault(sessionUserId = null)
         // THEN

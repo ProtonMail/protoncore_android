@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,10 +77,7 @@ internal class ReportRepositoryImplTest {
     @Test
     fun `successful report`() = runTest(dispatcherProvider.Main) {
         coEvery {
-            mockApiManager.invoke<GenericResponse>(
-                any(),
-                any()
-            )
+            mockApiManager.invoke<GenericResponse>(any())
         } returns ApiResult.Success(GenericResponse(ResponseCodes.OK))
         tested.sendReport(testBugReport, testBugReportMeta)
     }
@@ -88,10 +85,7 @@ internal class ReportRepositoryImplTest {
     @Test
     fun `failed report http error`() = runTest(dispatcherProvider.Main) {
         coEvery {
-            mockApiManager.invoke<GenericResponse>(
-                any(),
-                any()
-            )
+            mockApiManager.invoke<GenericResponse>(any())
         } returns ApiResult.Error.Http(400, "Bad request", ApiResult.Error.ProtonData(123, "Invalid data"))
 
         val throwable = assertFailsWith<ApiException> {
@@ -103,10 +97,7 @@ internal class ReportRepositoryImplTest {
     @Test
     fun `failed report bad result`() = runTest(dispatcherProvider.Main) {
         coEvery {
-            mockApiManager.invoke<GenericResponse>(
-                any(),
-                any()
-            )
+            mockApiManager.invoke<GenericResponse>(any())
         } returns ApiResult.Success(GenericResponse(ResponseCodes.NOT_ALLOWED))
 
         assertFailsWith<IllegalStateException> {

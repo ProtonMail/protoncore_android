@@ -58,6 +58,7 @@ public class me/proton/core/network/domain/ApiException : java/lang/Exception {
 }
 
 public abstract interface class me/proton/core/network/domain/ApiManager {
+	public abstract fun invoke (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun invoke (ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -75,11 +76,12 @@ public final class me/proton/core/network/domain/ApiManager$Call {
 }
 
 public final class me/proton/core/network/domain/ApiManager$DefaultImpls {
-	public static synthetic fun invoke$default (Lme/proton/core/network/domain/ApiManager;ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static fun invoke (Lme/proton/core/network/domain/ApiManager;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/network/domain/ApiManagerImpl : me/proton/core/network/domain/ApiManager {
 	public fun <init> (Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/ApiBackend;Ljava/util/List;Lkotlin/jvm/functions/Function0;)V
+	public fun invoke (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

@@ -34,9 +34,13 @@ public abstract interface class me/proton/core/accountrecovery/domain/ShowNotifi
 	public abstract fun invoke (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;Lme/proton/core/domain/entity/UserId;)V
 }
 
+public abstract interface class me/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository {
+	public abstract fun cancelRecoveryAttempt (Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/accountrecovery/domain/usecase/CancelRecovery {
-	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public final fun invoke (Ljava/lang/String;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState {

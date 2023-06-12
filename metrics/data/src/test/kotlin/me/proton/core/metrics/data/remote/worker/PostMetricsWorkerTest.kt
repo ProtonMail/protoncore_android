@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -72,6 +72,20 @@ internal class PostMetricsWorkerTest {
         // then
         coVerify {
             metricsRepository.post(userId, metrics)
+        }
+    }
+
+    @Test
+    fun `worker posts the metrics to the backend without userId`() = runTest {
+        // given
+        every { params.inputData.getString(PostMetricsWorker.INPUT_USER_ID) } returns null
+        every { params.inputData.getString(PostMetricsWorker.INPUT_METRICS) } returns metrics.serialize()
+        coJustRun { metricsRepository.post(any(), any()) }
+        // when
+        worker.doWork()
+        // then
+        coVerify {
+            metricsRepository.post(null, metrics)
         }
     }
 }

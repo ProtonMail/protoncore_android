@@ -1,20 +1,19 @@
 /*
- * Copyright (c) 2022 Proton AG
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
- * This file is part of Proton Mail.
- *
- * Proton Mail is free software: you can redistribute it and/or modify
+ * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Proton Mail is distributed in the hope that it will be useful,
+ * ProtonCore is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Proton Mail. If not, see https://www.gnu.org/licenses/.
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package me.proton.core.featureflag.data.remote.worker
@@ -60,7 +59,7 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
     private val featuresApi: FeaturesApi = mockk()
     private val apiProvider: ApiProvider = mockk {
         coEvery { get<FeaturesApi>(userId).invoke<PutFeatureResponse>(block = any()) } coAnswers {
-            val block = secondArg<suspend FeaturesApi.() -> PutFeatureResponse>()
+            val block = firstArg<suspend FeaturesApi.() -> PutFeatureResponse>()
             try {
                 ApiResult.Success(block(featuresApi))
             } catch (e: Exception) {

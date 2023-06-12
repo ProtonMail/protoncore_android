@@ -17,6 +17,7 @@
  */
 
 import studio.forface.easygradle.dsl.api
+import studio.forface.easygradle.dsl.`coroutines-test`
 import studio.forface.easygradle.dsl.`kotlin-test`
 import studio.forface.easygradle.dsl.mockk
 import studio.forface.easygradle.dsl.testImplementation
@@ -34,12 +35,16 @@ protonCoverage {
 
 dependencies {
     api(
+        project(Module.authDomain),
+        project(Module.cryptoCommon),
         project(Module.domain),
+        project(Module.networkDomain),
         project(Module.userDomain),
         `javax-inject`
     )
 
     testImplementation(
+        `coroutines-test`,
         junit,
         `kotlin-test`,
         mockk

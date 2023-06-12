@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,17 +18,68 @@
 
 package me.proton.core.accountrecovery.domain.usecase
 
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 public class CancelRecovery @Inject constructor(
-    private val userRepository: UserRepository
+    private val accountManager: AccountManager,
+    private val accountRecoveryRepository: AccountRecoveryRepository,
+    private val authRepository: AuthRepository,
+    private val cryptoContext: CryptoContext
 ) {
-    public suspend operator fun invoke(userId: UserId): Boolean {
-        // todo add real implementation here
-        delay(2000)
-        return true
+    public suspend operator fun invoke(
+        password: EncryptedString,
+        userId: UserId
+    ): Boolean {
+        val account = requireNotNull(accountManager.getAccount(userId).firstOrNull()) {
+            "Could not find account for user $userId."
+        }
+        val sessionId = requireNotNull(account.sessionId) {
+            "Missing sessionId for user $userId."
+        }
+        return invoke(
+            username = account.username,
+            password = password,
+            sessionId = sessionId,
+            userId = userId
+        )
+    }
+
+    private suspend operator fun invoke(
+        username: String,
+        password: EncryptedString,
+        sessionId: SessionId,
+        userId: UserId
+    ): Boolean {
+        val authInfo = authRepository.getAuthInfoSrp(
+            sessionId = sessionId,
+            username = username
+        )
+
+        val clientProofs = password.decrypt(cryptoContext.keyStoreCrypto).toByteArray().use {
+            cryptoContext.srpCrypto.generateSrpProofs(
+                username = username,
+                password = it.array,
+                version = authInfo.version.toLong(),
+                salt = authInfo.salt,
+                modulus = authInfo.modulus,
+                serverEphemeral = authInfo.serverEphemeral
+            )
+        }
+
+        return accountRecoveryRepository.cancelRecoveryAttempt(
+            clientProofs,
+            authInfo.srpSession,
+            userId
+        )
     }
 }

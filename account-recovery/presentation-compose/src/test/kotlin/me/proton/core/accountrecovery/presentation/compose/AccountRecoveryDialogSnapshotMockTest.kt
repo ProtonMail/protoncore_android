@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@ import me.proton.core.accountrecovery.domain.usecase.ObserveAccountRecoveryState
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
 import me.proton.core.compose.theme.ProtonDimens
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
@@ -41,6 +42,7 @@ class AccountRecoveryDialogSnapshotMockTest {
 
     private val observeAccountRecoveryState = mockk<ObserveAccountRecoveryState>(relaxed = true)
     private val cancelRecovery = mockk<CancelRecovery>(relaxed = true)
+    private val keyStoreCrypto = mockk<KeyStoreCrypto>()
 
     @get:Rule
     val paparazzi = Paparazzi(
@@ -53,7 +55,7 @@ class AccountRecoveryDialogSnapshotMockTest {
 
     @Before
     fun beforeEveryTest() {
-        viewModel = spyk(AccountRecoveryViewModel(observeAccountRecoveryState, cancelRecovery))
+        viewModel = spyk(AccountRecoveryViewModel(observeAccountRecoveryState, cancelRecovery, keyStoreCrypto))
     }
 
     @Test

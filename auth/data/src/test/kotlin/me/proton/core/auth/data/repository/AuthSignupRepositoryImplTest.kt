@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ class AuthSignupRepositoryImplTest {
     @Test
     fun `validate email returns success result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
+        coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Success(true)
         // WHEN
         val response = repository.validateEmail("test-email")
         // THEN
@@ -82,7 +82,7 @@ class AuthSignupRepositoryImplTest {
     @Test
     fun `validate email returns error result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Error.Http(
             httpCode = 401,
             message = "test http error",
             proton = ApiResult.Error.ProtonData(1, "test email validation error")
@@ -101,7 +101,7 @@ class AuthSignupRepositoryImplTest {
     @Test
     fun `validate phone returns success result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
+        coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Success(true)
         // WHEN
         val response = repository.validatePhone("test-phone")
         // THEN
@@ -111,7 +111,7 @@ class AuthSignupRepositoryImplTest {
     @Test
     fun `validate phone returns error result`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
+        coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Error.Http(
             httpCode = 401,
             message = "test http error",
             proton = ApiResult.Error.ProtonData(1, "test phone validation error")

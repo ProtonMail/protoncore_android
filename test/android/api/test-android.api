@@ -52,6 +52,7 @@ public final class me/proton/core/test/android/api/FakeNetworkManager : me/proto
 public final class me/proton/core/test/android/api/TestApiManager : me/proton/core/network/domain/ApiManager {
 	public fun <init> (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;Lme/proton/core/network/domain/NetworkManager;)V
 	public synthetic fun <init> (Lme/proton/core/network/data/protonApi/BaseRetrofitApi;Lme/proton/core/network/domain/NetworkManager;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun invoke (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
