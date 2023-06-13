@@ -177,6 +177,12 @@ fun setupFlavors(testedExtension: TestedExtension) {
 dependencies {
     coreLibraryDesugaring(`desugar-jdk-libs`)
 
+    api(
+        project(Module.presentationCompose),
+        `compose-runtime`,
+        `compose-ui`,
+    )
+
     implementation(
 
         project(Module.androidUtilDagger),
@@ -216,6 +222,7 @@ dependencies {
         project(Module.userSettings),
         project(Module.strictModeUtil),
         project(Module.keyTransparency),
+        project(Module.accountRecoveryPresentationCompose),
 
         // Android
         activity,

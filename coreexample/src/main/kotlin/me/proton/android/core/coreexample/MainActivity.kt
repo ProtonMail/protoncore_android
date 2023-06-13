@@ -55,7 +55,9 @@ import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
-import me.proton.core.auth.presentation.ui.AddAccountActivity
+import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
+import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogType
+import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
@@ -101,6 +103,14 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             composeUi.onClick { startActivity(Intent(this@MainActivity, ComposeViewsActivity::class.java)) }
+            accountRecoveryDialog.onClick {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    accountViewModel.getPrimaryUserId().first().let {
+                        if (it == null) return@launch
+                        AccountRecoveryDialogActivity.start(this@MainActivity, AccountRecoveryDialogInput(it.id))
+                    }
+                }
+            }
             textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
             addAccount.onClick { accountViewModel.add() }
             signIn.onClick { accountViewModel.signIn() }

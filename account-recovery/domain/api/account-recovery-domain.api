@@ -3,6 +3,16 @@ public final class me/proton/core/accountrecovery/domain/AccountRecoveryNotifica
 	public final fun setupNotificationChannel ()V
 }
 
+public final class me/proton/core/accountrecovery/domain/AccountRecoveryState : java/lang/Enum {
+	public static final field Cancelled Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public static final field Expired Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public static final field GracePeriod Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public static final field None Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public static final field ResetPassword Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public static fun values ()[Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+}
+
 public abstract interface class me/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel {
 	public abstract fun invoke (Ljava/lang/String;)V
 }
@@ -13,5 +23,15 @@ public abstract interface class me/proton/core/accountrecovery/domain/GetAccount
 
 public abstract interface class me/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled {
 	public abstract fun invoke ()Z
+}
+
+public final class me/proton/core/accountrecovery/domain/usecase/CancelRecovery {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 }
 

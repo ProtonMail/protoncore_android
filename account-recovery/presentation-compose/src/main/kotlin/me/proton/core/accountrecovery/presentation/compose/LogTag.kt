@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,32 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.api
-import studio.forface.easygradle.dsl.`kotlin-test`
-import studio.forface.easygradle.dsl.mockk
-import studio.forface.easygradle.dsl.testImplementation
+package me.proton.core.accountrecovery.presentation.compose
 
-plugins {
-    protonKotlinLibrary
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-protonCoverage {
-    // change when stubs implemented
-    minLineCoveragePercentage.set(35)
-}
-
-dependencies {
-    api(
-        project(Module.domain),
-        project(Module.userDomain),
-        `javax-inject`
-    )
-
-    testImplementation(
-        junit,
-        `kotlin-test`,
-        mockk
-    )
+object LogTag {
+    /** Tag for Account Recovery User observation. */
+    const val ERROR_OBSERVING_USER = "core.accountrecovery.error.observing.user"
 }

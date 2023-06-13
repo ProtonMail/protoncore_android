@@ -47,4 +47,5 @@
     <string name="presentation_check_your_connection">Check your connection</string>
     <string name="presentation_connectivity_issues">Connectivity issues</string>
     <string name="presentation_field_required">This field is required.</string>
+    <string name="presentation_error_general">An error occurred.</string>
 </resources>

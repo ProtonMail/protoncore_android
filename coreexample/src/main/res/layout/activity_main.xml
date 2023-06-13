@@ -99,6 +99,14 @@
                     android:layout_weight="1"
                     android:text="@string/auth_sign_in" />
 
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/accountRecoveryDialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="Acc Recovery" />
+
             </LinearLayout>
 
             <LinearLayout

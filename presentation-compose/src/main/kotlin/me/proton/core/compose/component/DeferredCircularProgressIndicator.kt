@@ -18,7 +18,7 @@
 package me.proton.core.compose.component
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +28,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
+import me.proton.core.compose.theme.ProtonTheme
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -44,10 +48,18 @@ fun DeferredCircularProgressIndicator(
     }
     if (showProgress) {
         Box(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier,
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewDeferredCircularProgressIndicator() {
+    ProtonTheme {
+        DeferredCircularProgressIndicator()
     }
 }

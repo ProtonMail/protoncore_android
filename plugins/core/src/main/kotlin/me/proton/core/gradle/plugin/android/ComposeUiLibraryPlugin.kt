@@ -39,5 +39,7 @@ public class ComposeUiLibraryPlugin : BaseAndroidPlugin<ComposeUiLibraryExtensio
     override fun apply(target: Project) {
         super.apply(target)
         target.applyComposeUiConvention()
+
+        target.pluginManager.apply(PluginIds.paparazzi)
     }
 }
