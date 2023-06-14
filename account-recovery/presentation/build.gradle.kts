@@ -44,9 +44,11 @@ dependencies {
 
     testImplementation(
         project(Module.kotlinTest),
+        `android-test-core`,
         `coroutines-test`,
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        robolectric
     )
 }

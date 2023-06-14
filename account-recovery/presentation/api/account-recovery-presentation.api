@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_accountrecovery_presentation_receiver_DismissNotificationReceiver_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_accountrecovery_presentation_ui_NotificationPermissionActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -63,12 +67,75 @@ public final class me/proton/core/accountrecovery/presentation/internal/GetAndro
 	public static fun newInstance ()Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel;
 }
 
+public final class me/proton/core/accountrecovery/presentation/internal/GetNotificationId_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/internal/GetNotificationId_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/internal/GetNotificationId;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/accountrecovery/presentation/internal/GetNotificationId;
+}
+
+public final class me/proton/core/accountrecovery/presentation/internal/GetNotificationTag_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/accountrecovery/presentation/internal/GetNotificationTag_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/internal/GetNotificationTag;
+	public static fun newInstance ()Lme/proton/core/accountrecovery/presentation/internal/GetNotificationTag;
+}
+
 public final class me/proton/core/accountrecovery/presentation/internal/HasNotificationPermission_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission;
 	public static fun newInstance (Landroid/content/Context;Lme/proton/core/accountrecovery/presentation/internal/GetAndroidSdkLevel;)Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission;
+}
+
+public final class me/proton/core/accountrecovery/presentation/notification/CancelNotificationsImpl : me/proton/core/accountrecovery/domain/CancelNotifications {
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/notification/CancelNotificationsImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/notification/CancelNotificationsImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/notification/CancelNotificationsImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/accountrecovery/presentation/internal/GetNotificationId;Lme/proton/core/accountrecovery/presentation/internal/GetNotificationTag;)Lme/proton/core/accountrecovery/presentation/notification/CancelNotificationsImpl;
+}
+
+public final class me/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl : me/proton/core/accountrecovery/domain/ShowNotification {
+	public fun invoke (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;Lme/proton/core/domain/entity/UserId;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId;Lme/proton/core/accountrecovery/presentation/internal/GetNotificationId;Lme/proton/core/accountrecovery/presentation/internal/GetNotificationTag;Lme/proton/core/accountrecovery/presentation/internal/HasNotificationPermission;Lme/proton/core/domain/entity/Product;)Lme/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl;
+}
+
+public final class me/proton/core/accountrecovery/presentation/receiver/DismissNotificationReceiver : android/content/BroadcastReceiver {
+	public fun <init> ()V
+	public fun onReceive (Landroid/content/Context;Landroid/content/Intent;)V
+}
+
+public abstract interface class me/proton/core/accountrecovery/presentation/receiver/DismissNotificationReceiver_GeneratedInjector {
+	public abstract fun injectDismissNotificationReceiver (Lme/proton/core/accountrecovery/presentation/receiver/DismissNotificationReceiver;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/receiver/DismissNotificationReceiver_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/accountrecovery/presentation/receiver/DismissNotificationReceiver;)V
+	public static fun injectNotificationManager (Lme/proton/core/accountrecovery/presentation/receiver/DismissNotificationReceiver;Lme/proton/core/accountrecovery/domain/AccountRecoveryNotificationManager;)V
+}
+
+public abstract class me/proton/core/accountrecovery/presentation/receiver/Hilt_DismissNotificationReceiver : android/content/BroadcastReceiver {
+	public fun <init> ()V
+	protected fun inject (Landroid/content/Context;)V
+	public fun onReceive (Landroid/content/Context;Landroid/content/Intent;)V
 }
 
 public abstract class me/proton/core/accountrecovery/presentation/ui/Hilt_NotificationPermissionActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {

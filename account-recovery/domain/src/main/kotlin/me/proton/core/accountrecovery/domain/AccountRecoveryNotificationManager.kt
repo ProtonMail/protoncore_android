@@ -18,12 +18,15 @@
 
 package me.proton.core.accountrecovery.domain
 
+import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
 public class AccountRecoveryNotificationManager @Inject constructor(
+    private val cancelNotifications: CancelNotifications,
     private val configureAccountRecoveryChannel: ConfigureAccountRecoveryChannel,
     private val getAccountRecoveryChannelId: GetAccountRecoveryChannelId,
-    private val isAccountRecoveryEnabled: IsAccountRecoveryEnabled
+    private val isAccountRecoveryEnabled: IsAccountRecoveryEnabled,
+    private val showNotification: ShowNotification
 ) {
     /** Sets up the notification channel for the use of account recovery process.
      * The setup is only performed if [isAccountRecoveryEnabled] returns `true`.
@@ -32,5 +35,20 @@ public class AccountRecoveryNotificationManager @Inject constructor(
         if (!isAccountRecoveryEnabled()) return
         val channelId = getAccountRecoveryChannelId()
         configureAccountRecoveryChannel(channelId = channelId)
+    }
+
+    /** Shows a notification for a given [forState].
+     * Any previous notifications for account recovery for the [userId] are cancelled if:
+     * - the [forState] is equal to [AccountRecoveryState.None];
+     * - the method [updateNotification] is called again.
+     */
+    public fun updateNotification(forState: AccountRecoveryState, userId: UserId) {
+        if (!isAccountRecoveryEnabled()) return
+        if (forState == AccountRecoveryState.None) {
+            cancelNotifications(userId)
+            return
+        }
+
+        showNotification(forState, userId)
     }
 }

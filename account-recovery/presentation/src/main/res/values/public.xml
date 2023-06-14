@@ -18,4 +18,5 @@
 
 <resources>
     <public name="core_feature_account_recovery_notification_channel_id" type="string" />
+    <public name="core_feature_account_recovery_notification_id" type="integer" />
 </resources>

@@ -18,12 +18,14 @@
 
 package me.proton.core.accountrecovery.presentation.internal
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -47,12 +49,17 @@ class HasNotificationPermissionTest {
     @Test
     fun beforeTiramisu() {
         mockSdkInt(Build.VERSION_CODES.S)
+        every { context.getSystemService(any()) } returns mockk<NotificationManager> {
+            every { areNotificationsEnabled() } returns true
+        }
         assertTrue(tested())
     }
 
     @Test
     fun permissionDenied() {
-        every { context.checkSelfPermission(any()) } returns PackageManager.PERMISSION_DENIED
+        every {
+            context.checkSelfPermission(any())
+        } returns PackageManager.PERMISSION_DENIED
         mockSdkInt(Build.VERSION_CODES.TIRAMISU)
 
         assertFalse(tested())
@@ -60,7 +67,9 @@ class HasNotificationPermissionTest {
 
     @Test
     fun permissionGranted() {
-        every { context.checkSelfPermission(any()) } returns PackageManager.PERMISSION_GRANTED
+        every {
+            context.checkSelfPermission(any())
+        } returns PackageManager.PERMISSION_GRANTED
         mockSdkInt(Build.VERSION_CODES.TIRAMISU)
 
         assertTrue(tested())

@@ -24,5 +24,9 @@
         <activity
             android:name=".ui.NotificationPermissionActivity"
             android:theme="@style/ProtonTheme.Transparent" />
+
+        <receiver
+            android:name=".receiver.DismissNotificationReceiver"
+            android:exported="false" />
     </application>
 </manifest>

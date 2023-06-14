@@ -18,6 +18,9 @@
 
 package me.proton.core.accountrecovery.domain
 
-public interface IsAccountRecoveryEnabled {
-    public operator fun invoke(): Boolean
+import me.proton.core.domain.entity.UserId
+
+public interface CancelNotifications {
+    /** Cancels any notifications (with regard to account recovery) for the same [userId]. */
+    public operator fun invoke(userId: UserId)
 }

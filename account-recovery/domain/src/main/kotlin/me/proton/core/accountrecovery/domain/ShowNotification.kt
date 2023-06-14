@@ -18,6 +18,11 @@
 
 package me.proton.core.accountrecovery.domain
 
-public interface IsAccountRecoveryEnabled {
-    public operator fun invoke(): Boolean
+import me.proton.core.domain.entity.UserId
+
+public interface ShowNotification {
+    /** Shows a notification for the given [forState].
+     * Any previous notifications for the same [userId] are cancelled.
+     */
+    public operator fun invoke(forState: AccountRecoveryState, userId: UserId)
 }
