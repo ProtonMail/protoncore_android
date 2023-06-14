@@ -24,4 +24,5 @@
     <string name="account_recovery_notification_content_grace_period">Account recovery process has been started.</string>
     <string name="account_recovery_notification_content_reset_password">You can now reset your password.</string>
     <string name="account_recovery_notification_content_cancelled">Account recovery process has been cancelled.</string>
+    <string name="account_recovery_notification_content_expired">Account recovery process has expired.</string>
 </resources>

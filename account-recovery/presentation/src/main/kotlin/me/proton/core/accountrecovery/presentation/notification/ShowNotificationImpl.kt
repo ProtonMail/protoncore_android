@@ -121,6 +121,7 @@ public fun AccountRecoveryState.getContentTextResource(): Int? = when (this) {
     AccountRecoveryState.GracePeriod -> R.string.account_recovery_notification_content_grace_period
     AccountRecoveryState.ResetPassword -> R.string.account_recovery_notification_content_reset_password
     AccountRecoveryState.Cancelled -> R.string.account_recovery_notification_content_cancelled
+    AccountRecoveryState.Expired -> R.string.account_recovery_notification_content_expired
 }
 
 public fun Product.getSmallIconResId(): Int = when (this) {
