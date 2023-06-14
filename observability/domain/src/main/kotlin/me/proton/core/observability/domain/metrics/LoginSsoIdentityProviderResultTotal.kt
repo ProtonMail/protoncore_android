@@ -43,6 +43,9 @@ public data class LoginSsoIdentityProviderResultTotal(
         success,
 
         /** Error while obtaining the token. */
-        error
+        error,
+
+        /** Cancelled by user. */
+        cancel,
     }
 }

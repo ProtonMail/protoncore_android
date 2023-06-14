@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Parcelable
 import android.webkit.CookieManager
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -42,10 +43,12 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
     private val successUrlRegex by lazy { input.successUrlRegex?.toRegex() }
     private val errorUrlRegex by lazy { input.errorUrlRegex?.toRegex() }
 
+    private var pageLoadErrorCode: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener { onCancel() }
         binding.webView.setAllowForceDark()
         binding.webView.setupWebViewClient()
     }
@@ -59,7 +62,11 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
             if (input.removeAllCookies) { removeAllCookies(null) }
             setAcceptCookie(input.acceptCookie)
         }
-        webViewClient = CustomWebViewClient(::shouldInterceptRequest).apply {
+        webViewClient = CustomWebViewClient(
+            ::shouldInterceptRequest,
+            ::onPageLoadSuccess,
+            ::onPageLoadError,
+        ).apply {
             shouldOpenLinkInBrowser = input.shouldOpenLinkInBrowser
         }
         val inputUrl = input.url.toHttpUrl()
@@ -80,21 +87,33 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
         return null
     }
 
+    private fun onPageLoadSuccess() = Unit
+
+    private fun onPageLoadError(errorCode: Int?) {
+        pageLoadErrorCode = errorCode
+    }
+
+    private fun onCancel() {
+        setResultAndFinish(Result.Cancel(pageLoadErrorCode))
+    }
+
     private fun onSuccess(url: String) {
-        setResultAndFinish(url = url, isSuccess = true)
+        setResultAndFinish(Result.Success(url = url, pageLoadErrorCode))
     }
 
     private fun onError(url: String) {
-        setResultAndFinish(url = url, isSuccess = false)
+        setResultAndFinish(Result.Error(url = url, pageLoadErrorCode))
     }
 
-    private fun setResultAndFinish(url: String, isSuccess: Boolean) {
-        setResult(RESULT_OK, Intent().putExtra(ARG_RESULT, Result(url, isSuccess)))
+    private fun setResultAndFinish(result: Result) {
+        setResult(RESULT_OK, Intent().putExtra(ARG_RESULT, result))
         finish()
     }
 
     inner class CustomWebViewClient(
-        private val shouldInterceptRequest: (request: WebResourceRequest) -> WebResourceResponse?
+        private val shouldInterceptRequest: (request: WebResourceRequest) -> WebResourceResponse?,
+        private val onPageLoadSuccess: () -> Unit,
+        private val onPageLoadError: (Int?) -> Unit,
     ) : ProtonWebViewClient(networkPrefs, extraHeaderProvider) {
 
         override fun shouldInterceptRequest(
@@ -119,6 +138,17 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
             super.onPageFinished(view, url)
             binding.progress.isVisible = false
             binding.webView.isVisible = true
+            onPageLoadSuccess()
+        }
+
+        override fun onReceivedError(v: WebView?, r: WebResourceRequest?, e: WebResourceError?) {
+            super.onReceivedError(v, r, e)
+            onPageLoadError(e?.errorCode)
+        }
+
+        override fun onReceivedHttpError(v: WebView?, r: WebResourceRequest?, e: WebResourceResponse?) {
+            super.onReceivedHttpError(v, r, e)
+            onPageLoadError(e?.statusCode)
         }
     }
 
@@ -137,10 +167,24 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
     ) : Parcelable
 
     @Parcelize
-    data class Result(
-        val url: String,
-        val isSuccess: Boolean,
-    ) : Parcelable
+    sealed class Result(
+        open val pageLoadErrorCode: Int?
+    ) : Parcelable {
+        data class Cancel(
+            override val pageLoadErrorCode: Int?
+        ) : Result(pageLoadErrorCode)
+
+        data class Success(
+            val url: String,
+            override val pageLoadErrorCode: Int?
+        ) : Result(pageLoadErrorCode = null)
+
+        data class Error(
+            val url: String,
+            override val pageLoadErrorCode: Int?
+        ) : Result(pageLoadErrorCode)
+
+    }
 
     companion object {
         const val ARG_INPUT = "arg.protonWebViewActivityInput"

@@ -31,6 +31,8 @@ public data class LoginSsoIdentityProviderPageLoadTotal(
     @Required override val Value: Long = 1,
 ) : ObservabilityData() {
 
+    public constructor(errorCode: Int?) : this(LabelsData(errorCode.toStatus()))
+
     @Serializable
     public data class LabelsData constructor(
         val status: Status
@@ -44,4 +46,12 @@ public data class LoginSsoIdentityProviderPageLoadTotal(
         connectionError,
         sslError
     }
+}
+
+private fun Int?.toStatus(): LoginSsoIdentityProviderPageLoadTotal.Status = when (this) {
+    null -> LoginSsoIdentityProviderPageLoadTotal.Status.http2xx
+    in 200..299 -> LoginSsoIdentityProviderPageLoadTotal.Status.http2xx
+    in 400..499 -> LoginSsoIdentityProviderPageLoadTotal.Status.http4xx
+    in 500..599 -> LoginSsoIdentityProviderPageLoadTotal.Status.http5xx
+    else -> LoginSsoIdentityProviderPageLoadTotal.Status.connectionError
 }

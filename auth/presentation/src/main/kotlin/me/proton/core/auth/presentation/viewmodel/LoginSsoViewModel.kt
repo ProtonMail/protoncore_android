@@ -21,6 +21,10 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.LoginAuthWithSsoTotal
 import me.proton.core.observability.domain.metrics.LoginObtainSsoChallengeTokenTotal
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
+import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderPageLoadTotal
+import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal
+import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal.Status
+import me.proton.core.presentation.ui.ProtonWebViewActivity
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
@@ -55,20 +59,20 @@ class LoginSsoViewModel @Inject constructor(
             emit(State.Processing)
             val result = getAuthInfoSso(email = email)
             emit(State.StartToken(result.ssoChallengeToken))
-            emit(State.Idle)
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))
         }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
             emit(State.Error(it))
         }.onEach { state ->
-            mutableState.tryEmit(state)
+            mutableState.emit(state)
         }.collect()
     }
 
-    fun createSessionFromUrl(
+    fun onIdentityProviderSuccess(
         email: String,
         url: String,
     ) = viewModelScope.launchWithResultContext {
+        enqueue(LoginSsoIdentityProviderResultTotal(Status.success))
         onResultEnqueue("performLoginSso") { LoginAuthWithSsoTotal(this) }
         flow {
             emit(State.Processing)
@@ -85,8 +89,22 @@ class LoginSsoViewModel @Inject constructor(
         }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
             emit(State.Error(it))
         }.onEach { state ->
-            mutableState.tryEmit(state)
+            mutableState.emit(state)
         }.collect()
+    }
+
+    fun onIdentityProviderError() {
+        enqueue(LoginSsoIdentityProviderResultTotal(Status.error))
+        mutableState.tryEmit(State.Idle)
+    }
+
+    fun onIdentityProviderCancel() {
+        enqueue(LoginSsoIdentityProviderResultTotal(Status.cancel))
+        mutableState.tryEmit(State.Idle)
+    }
+
+    fun onIdentityProviderPageLoad(result: ProtonWebViewActivity.Result) {
+        manager.enqueue(LoginSsoIdentityProviderPageLoadTotal(result.pageLoadErrorCode))
     }
 
     fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {

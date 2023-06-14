@@ -1404,6 +1404,7 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Integer;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;
@@ -1541,6 +1542,7 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status : java/lang/Enum {
+	public static final field cancel Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
 	public static final field error Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
 	public static final field success Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;

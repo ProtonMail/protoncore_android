@@ -221,9 +221,11 @@ public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Companio
 }
 
 public final class me/proton/core/presentation/ui/ProtonWebViewActivity$CustomWebViewClient : me/proton/core/presentation/ui/webview/ProtonWebViewClient {
-	public fun <init> (Lme/proton/core/presentation/ui/ProtonWebViewActivity;Lkotlin/jvm/functions/Function1;)V
+	public fun <init> (Lme/proton/core/presentation/ui/ProtonWebViewActivity;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
 	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
 	public fun onPageStarted (Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
+	public fun onReceivedError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceError;)V
+	public fun onReceivedHttpError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceResponse;)V
 	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
 	public fun shouldOverrideUrlLoading (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Z
 }
@@ -269,28 +271,79 @@ public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Input$Cr
 	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Input;
 }
 
-public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result : android/os/Parcelable {
+public abstract class me/proton/core/presentation/ui/ProtonWebViewActivity$Result : android/os/Parcelable {
+	public synthetic fun <init> (Ljava/lang/Integer;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getPageLoadErrorCode ()Ljava/lang/Integer;
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel : me/proton/core/presentation/ui/ProtonWebViewActivity$Result {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Z)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Z
-	public final fun copy (Ljava/lang/String;Z)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
-	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+	public fun <init> (Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/Integer;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getUrl ()Ljava/lang/String;
+	public fun getPageLoadErrorCode ()Ljava/lang/Integer;
 	public fun hashCode ()I
-	public final fun isSuccess ()Z
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Creator : android/os/Parcelable$Creator {
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel$Creator : android/os/Parcelable$Creator {
 	public fun <init> ()V
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;
+	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Cancel;
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error : me/proton/core/presentation/ui/ProtonWebViewActivity$Result {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Integer;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getPageLoadErrorCode ()Ljava/lang/Integer;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Error;
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success : me/proton/core/presentation/ui/ProtonWebViewActivity$Result {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Integer;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getPageLoadErrorCode ()Ljava/lang/Integer;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result$Success;
 }
 
 public abstract interface class me/proton/core/presentation/ui/ProtonWebViewActivity_GeneratedInjector {

@@ -40,6 +40,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.presentation.ui.ProtonWebViewActivity.Companion.ResultContract
 import me.proton.core.presentation.ui.ProtonWebViewActivity.Input
+import me.proton.core.presentation.ui.ProtonWebViewActivity.Result
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
@@ -72,10 +73,20 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
         intent?.extras?.getParcelable(ARG_INPUT)
     }
 
-    private val webViewResultLauncher = registerForActivityResult(ResultContract) {
-        it?.takeIf { it.isSuccess }?.let { result ->
-            val email = binding.emailInput.text.toString()
-            viewModel.createSessionFromUrl(email, result.url)
+    private val webViewResultLauncher = registerForActivityResult(ResultContract) { result ->
+        when (result) {
+            null -> viewModel.onIdentityProviderCancel()
+            else -> {
+                viewModel.onIdentityProviderPageLoad(result)
+                when (result) {
+                    is Result.Cancel -> viewModel.onIdentityProviderCancel()
+                    is Result.Error -> viewModel.onIdentityProviderError()
+                    is Result.Success -> {
+                        val email = binding.emailInput.text.toString()
+                        viewModel.onIdentityProviderSuccess(email, result.url)
+                    }
+                }
+            }
         }
     }
 

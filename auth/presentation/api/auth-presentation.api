@@ -2186,12 +2186,15 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun createSessionFromUrl (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun onIdentityProviderCancel ()V
+	public final fun onIdentityProviderError ()V
+	public final fun onIdentityProviderPageLoad (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;)V
+	public final fun onIdentityProviderSuccess (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)V
 	public final fun startLoginWorkflow (Ljava/lang/String;)Lkotlinx/coroutines/Job;
