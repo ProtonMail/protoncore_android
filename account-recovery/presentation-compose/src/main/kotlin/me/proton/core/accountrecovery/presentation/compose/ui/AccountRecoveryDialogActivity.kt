@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,16 +22,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
+import me.proton.core.presentation.utils.getUserMessage
 
 @AndroidEntryPoint
 class AccountRecoveryDialogActivity : ProtonActivity() {
@@ -49,7 +48,10 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
                     userId = UserId(input.userId),
                     onClosed = { setResultAndFinish() },
                     onError = {
-                        errorToast(it ?: getString(R.string.presentation_error_general))
+                        errorToast(
+                            it?.getUserMessage(resources)
+                                ?: getString(R.string.presentation_error_general)
+                        )
                         setResultAndFinish()
                     }
                 )

@@ -41,7 +41,10 @@ import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.hasProtonErrorCode
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -49,7 +52,7 @@ import javax.inject.Inject
 class AccountRecoveryViewModel @Inject constructor(
     private val observeAccountRecoveryState: ObserveAccountRecoveryState,
     private val cancelRecovery: CancelRecovery,
-    private val keyStoreCrypto: KeyStoreCrypto,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : ViewModel() {
 
     private val userIdFlow: MutableStateFlow<UserId?> = MutableStateFlow(null)
@@ -63,7 +66,8 @@ class AccountRecoveryViewModel @Inject constructor(
 
         sealed class Opened : State() {
             data class GracePeriodStarted(
-                val processing: Boolean = false
+                val processing: Boolean = false,
+                val passwordError: Boolean = false
             ) : Opened()
 
             object PasswordChangePeriodStarted : Opened()
@@ -75,7 +79,7 @@ class AccountRecoveryViewModel @Inject constructor(
         object Closed : State()
         object Loading : State()
 
-        data class Error(val message: String?) : State()
+        data class Error(val throwable: Throwable?) : State()
     }
 
     fun setUser(userId: UserId) {
@@ -101,12 +105,13 @@ class AccountRecoveryViewModel @Inject constructor(
                     AccountRecoveryDialogType.GRACE_PERIOD_STARTED -> {
                         when {
                             gracePeriodCancellationProcessing.error != null -> State.Error(
-                                gracePeriodCancellationProcessing.error.message
+                                gracePeriodCancellationProcessing.error
                             )
 
                             gracePeriodCancellationProcessing.success == true -> State.Closed
                             else -> State.Opened.GracePeriodStarted(
-                                processing = gracePeriodCancellationProcessing.processing
+                                processing = gracePeriodCancellationProcessing.processing,
+                                passwordError = gracePeriodCancellationProcessing.passwordError
                             )
                         }
                     }
@@ -119,17 +124,25 @@ class AccountRecoveryViewModel @Inject constructor(
                 }
             }
         }
+    }.catchWhen({ it.hasProtonErrorCode(ResponseCodes.PASSWORD_WRONG) }) {
+        emit(State.Opened.GracePeriodStarted(passwordError = true))
     }.catch {
         CoreLogger.e(LogTag.ERROR_OBSERVING_USER, it)
-        emit(State.Error(it.message))
+        emit(State.Error(it))
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
         initialValue = initialState
     )
 
-    fun startAccountRecoveryCancel() = viewModelScope.launch {
-        val password: String by lazy { TODO("Obtain password from the input field.") }
+    fun startAccountRecoveryCancel(password: String) = viewModelScope.launch {
+        if (password.isEmpty()) {
+            gracePeriodCancellationFlow.update {
+                GracePeriodCancellationState(passwordError = true)
+            }
+            return@launch
+        }
+
         userIdFlow.first().let { userId ->
             if (userId != null) {
                 gracePeriodCancellationFlow.update { GracePeriodCancellationState(processing = true) }
@@ -164,7 +177,8 @@ class AccountRecoveryViewModel @Inject constructor(
 private data class GracePeriodCancellationState(
     val processing: Boolean = false,
     val success: Boolean? = null,
-    val error: Throwable? = null
+    val error: Throwable? = null,
+    val passwordError: Boolean = false
 )
 
 fun AccountRecoveryState.toDialogType(): AccountRecoveryDialogType? {

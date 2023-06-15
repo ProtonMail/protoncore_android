@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@ package me.proton.core.compose.component
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.LocalTextStyle
@@ -28,22 +30,23 @@ import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.caption
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.captionNorm
+import me.proton.core.compose.theme.defaultNorm
 
+const val PROTON_OUTLINED_TEXT_INPUT_TAG = "PROTON_OUTLINED_TEXT_INPUT_TAG"
 private const val MaxLines = 2
 
 @Composable
@@ -112,56 +115,91 @@ fun ProtonOutlinedTextField(
 fun ProtonOutlinedTextFieldWithError(
     text: String,
     modifier: Modifier = Modifier,
-    selection: IntRange = IntRange(text.length, text.length),
+    enabled: Boolean = true,
     errorText: String? = null,
     focusRequester: FocusRequester = remember { FocusRequester() },
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    label: (@Composable () -> Unit)? = null,
     maxLines: Int = MaxLines,
+    placeholder: (@Composable () -> Unit)? = null,
+    singleLine: Boolean = false,
     onValueChanged: (String) -> Unit,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
-    val textFieldValue = remember(text, selection) {
-        mutableStateOf(
-            TextFieldValue(
-                text = text,
-                selection = TextRange(selection.first, selection.last)
-            )
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = text,
+            onValueChange = onValueChanged,
+            colors = TextFieldDefaults.protonOutlineTextFieldColors(),
+            enabled = enabled,
+            isError = errorText != null,
+            keyboardOptions = keyboardOptions,
+            label = label,
+            maxLines = maxLines,
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+                .testTag(PROTON_OUTLINED_TEXT_INPUT_TAG),
+            placeholder = placeholder,
+            singleLine = singleLine,
+            textStyle = ProtonTheme.typography.defaultNorm,
+            visualTransformation = visualTransformation
         )
-    }
-    ProtonOutlinedTextFieldWithError(
-        textFieldValue = textFieldValue,
-        modifier = modifier,
-        errorText = errorText,
-        focusRequester = focusRequester,
-        maxLines = maxLines,
-    ) { textField ->
-        textFieldValue.value = textField
-        onValueChanged(textField.text)
+        Text(
+            text = errorText ?: "",
+            maxLines = maxLines,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = ProtonDimens.ExtraSmallSpacing),
+            overflow = TextOverflow.Ellipsis,
+            style = ProtonTheme.typography.captionNorm,
+            color = ProtonTheme.colors.notificationError
+        )
     }
 }
 
 @Composable
 fun ProtonOutlinedTextFieldWithError(
     textFieldValue: MutableState<TextFieldValue>,
+    onValueChanged: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     errorText: String? = null,
     focusRequester: FocusRequester = remember { FocusRequester() },
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    label: (@Composable () -> Unit)? = null,
     maxLines: Int = MaxLines,
-    onValueChanged: (TextFieldValue) -> Unit,
+    placeholder: (@Composable () -> Unit)? = null,
+    singleLine: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(modifier = modifier) {
         OutlinedTextField(
             value = textFieldValue.value,
             onValueChange = onValueChanged,
-            maxLines = maxLines,
-            modifier = Modifier.focusRequester(focusRequester),
+            colors = TextFieldDefaults.protonOutlineTextFieldColors(),
+            enabled = enabled,
             isError = errorText != null,
-            textStyle = ProtonTheme.typography.default,
-            colors = TextFieldDefaults.protonOutlineTextFieldColors()
+            keyboardOptions = keyboardOptions,
+            label = label,
+            maxLines = maxLines,
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+                .testTag(PROTON_OUTLINED_TEXT_INPUT_TAG),
+            placeholder = placeholder,
+            singleLine = singleLine,
+            textStyle = ProtonTheme.typography.defaultNorm,
+            visualTransformation = visualTransformation
         )
         Text(
             text = errorText ?: "",
             maxLines = maxLines,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = ProtonDimens.ExtraSmallSpacing),
             overflow = TextOverflow.Ellipsis,
-            style = ProtonTheme.typography.caption,
+            style = ProtonTheme.typography.captionNorm,
             color = ProtonTheme.colors.notificationError
         )
     }
@@ -180,5 +218,9 @@ fun PreviewOutlinedTextFieldWithProtonColors() {
 @Preview
 @Composable
 fun PreviewOutlinedTextFieldWithError() {
-    ProtonOutlinedTextFieldWithError(text = "Some text", onValueChanged = {}, errorText = "Validation failed!")
+    ProtonOutlinedTextFieldWithError(
+        text = "Some text",
+        onValueChanged = {},
+        errorText = "Validation failed!"
+    )
 }

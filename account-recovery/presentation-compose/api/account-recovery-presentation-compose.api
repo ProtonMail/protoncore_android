@@ -28,7 +28,7 @@ public final class me/proton/core/accountrecovery/presentation/compose/dialog/Ac
 	public static final fun AccountRecoveryAlertDialogGracePeriodPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogGracePeriodProcessingPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogLoadingPreview (Landroidx/compose/runtime/Composer;I)V
-	public static final fun AccountRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun AccountRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/domain/entity/UserId;Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
@@ -38,11 +38,15 @@ public final class me/proton/core/accountrecovery/presentation/compose/dialog/Co
 	public static field lambda-2 Lkotlin/jvm/functions/Function2;
 	public static field lambda-3 Lkotlin/jvm/functions/Function2;
 	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+	public static field lambda-5 Lkotlin/jvm/functions/Function2;
+	public static field lambda-6 Lkotlin/jvm/functions/Function2;
 	public fun <init> ()V
 	public final fun getLambda-1$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-2$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-3$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-4$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-5$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-6$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/entity/AccountRecoveryDialogInput : android/os/Parcelable {
@@ -108,7 +112,7 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 	public final fun getInitialState ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Loading;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun setUser (Lme/proton/core/domain/entity/UserId;)V
-	public final fun startAccountRecoveryCancel ()Lkotlinx/coroutines/Job;
+	public final fun startAccountRecoveryCancel (Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun userAcknowledged ()V
 }
 
@@ -123,12 +127,12 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error;
-	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error;
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Error;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getThrowable ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -150,12 +154,14 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Z)V
-	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZ)V
+	public synthetic fun <init> (ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Z
-	public final fun copy (Z)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted;
-	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted;ZILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted;
+	public final fun component2 ()Z
+	public final fun copy (ZZ)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted;
+	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted;ZZILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$GracePeriodStarted;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPasswordError ()Z
 	public final fun getProcessing ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

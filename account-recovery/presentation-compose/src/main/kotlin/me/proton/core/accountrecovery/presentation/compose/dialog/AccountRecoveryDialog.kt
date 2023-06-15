@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,16 +19,24 @@
 package me.proton.core.accountrecovery.presentation.compose.dialog
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.core.accountrecovery.presentation.compose.R
@@ -37,11 +45,15 @@ import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogButton
 import me.proton.core.compose.component.ProtonAlertDialogText
+import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
 import me.proton.core.compose.flow.rememberAsState
+import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.exhaustive
 import kotlin.time.Duration.Companion.milliseconds
+
+internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 
 @Composable
 fun AccountRecoveryDialog(
@@ -49,7 +61,7 @@ fun AccountRecoveryDialog(
     userId: UserId,
     viewModel: AccountRecoveryViewModel = hiltViewModel(),
     onClosed: () -> Unit,
-    onError: (String?) -> Unit
+    onError: (Throwable?) -> Unit
 ) {
     val state by rememberAsState(viewModel.state, viewModel.initialState)
 
@@ -57,7 +69,7 @@ fun AccountRecoveryDialog(
         when (val current = state) {
             is AccountRecoveryViewModel.State.Loading -> viewModel.setUser(userId)
             is AccountRecoveryViewModel.State.Closed -> onClosed()
-            is AccountRecoveryViewModel.State.Error -> onError(current.message)
+            is AccountRecoveryViewModel.State.Error -> onError(current.throwable)
             is AccountRecoveryViewModel.State.Opened -> Unit
         }
     }
@@ -65,7 +77,7 @@ fun AccountRecoveryDialog(
     AccountRecoveryDialog(
         modifier = modifier,
         state = state,
-        onGracePeriodCancel = { viewModel.startAccountRecoveryCancel() },
+        onGracePeriodCancel = { viewModel.startAccountRecoveryCancel(it) },
         onDismiss = { viewModel.userAcknowledged() }
     )
 }
@@ -74,7 +86,7 @@ fun AccountRecoveryDialog(
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
     state: AccountRecoveryViewModel.State,
-    onGracePeriodCancel: () -> Unit = { },
+    onGracePeriodCancel: (String) -> Unit = { },
     onDismiss: () -> Unit = { }
 ) {
     when (state) {
@@ -90,11 +102,14 @@ fun AccountRecoveryDialog(
         }
 
         is AccountRecoveryViewModel.State.Opened.GracePeriodStarted -> {
+            val password = remember { mutableStateOf("") }
             AccountRecoveryGracePeriodDialog(
                 modifier = modifier,
                 isActionButtonLoading = state.processing,
-                onGracePeriodCancel = onGracePeriodCancel,
-                onDismiss = onDismiss
+                onGracePeriodCancel = { onGracePeriodCancel(password.value) },
+                onDismiss = onDismiss,
+                password = password,
+                passwordError = state.passwordError
             )
         }
 
@@ -125,6 +140,8 @@ internal fun AccountRecoveryGracePeriodDialog(
     isActionButtonLoading: Boolean = false,
     onGracePeriodCancel: () -> Unit,
     onDismiss: () -> Unit,
+    password: MutableState<String>,
+    passwordError: Boolean?
 ) {
     AccountRecoveryDialog(
         modifier = modifier,
@@ -134,7 +151,9 @@ internal fun AccountRecoveryGracePeriodDialog(
         actionText = stringResource(id = R.string.account_recovery_cancel),
         dismissText = stringResource(id = R.string.presentation_alert_ok),
         onAction = onGracePeriodCancel,
-        onDismiss = onDismiss
+        onDismiss = onDismiss,
+        password = password,
+        passwordError = passwordError
     )
 }
 
@@ -191,7 +210,9 @@ private fun AccountRecoveryDialog(
     actionText: String? = null,
     onAction: (() -> Unit)? = null,
     dismissText: String? = null,
-    onDismiss: () -> Unit = { }
+    onDismiss: () -> Unit = { },
+    password: MutableState<String>? = null,
+    passwordError: Boolean? = null
 ) {
     val show = remember { mutableStateOf(true) }
 
@@ -211,7 +232,16 @@ private fun AccountRecoveryDialog(
                     defer = 0.milliseconds
                 )
             else
-                ProtonAlertDialogText(text = subtitle)
+                Column {
+                    ProtonAlertDialogText(text = subtitle)
+                    if (password != null) {
+                        PasswordField(
+                            password = password,
+                            passwordError = passwordError,
+                            enabled = !isActionButtonLoading
+                        )
+                    }
+                }
         },
         confirmButton = {
             if (!actionText.isNullOrEmpty()) {
@@ -235,6 +265,36 @@ private fun AccountRecoveryDialog(
                 )
             }
         }
+    )
+}
+
+@Composable
+private fun PasswordField(
+    password: MutableState<String>,
+    passwordError: Boolean?,
+    enabled: Boolean
+) {
+    ProtonOutlinedTextFieldWithError(
+        text = password.value,
+        onValueChanged = { password.value = it },
+        enabled = enabled,
+        errorText = if (passwordError == true) stringResource(id = R.string.presentation_field_required) else null,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password
+        ),
+        label = {
+            Text(text = stringResource(id = R.string.account_recovery_password_label))
+        },
+        maxLines = 1,
+        placeholder = {
+            Text(text = stringResource(id = R.string.account_recovery_password_placeholder))
+        },
+        singleLine = true,
+        visualTransformation = PasswordVisualTransformation(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = DefaultSpacing)
+            .testTag(PASSWORD_FIELD_TAG)
     )
 }
 

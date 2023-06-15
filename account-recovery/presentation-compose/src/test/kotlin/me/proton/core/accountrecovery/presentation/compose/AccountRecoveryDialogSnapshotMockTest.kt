@@ -164,7 +164,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryOnErrorTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Error(message = "test error message")
+            AccountRecoveryViewModel.State.Error(throwable = Throwable("test error message"))
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
@@ -194,7 +194,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryOnCancellationProgressErrorOccurredTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Error(message = "test error message")
+            AccountRecoveryViewModel.State.Error(throwable = Throwable("test error message"))
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(

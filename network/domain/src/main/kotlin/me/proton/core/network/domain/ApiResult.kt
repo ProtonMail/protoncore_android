@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,6 +156,13 @@ open class ApiException(val error: ApiResult.Error) : Exception(
 )
 
 /**
+ * Checks if the [ApiException.error] is an [ApiResult.Error.Http] with the given
+ * proton [code] (e.g. one of the values in [ResponseCodes]).
+ */
+fun ApiException.hasProtonErrorCode(code: Int): Boolean =
+    (error as? ApiResult.Error.Http)?.proton?.code == code
+
+/**
  * Return true if [ApiException.error] is an unauthorized error (401).
  *
  * @see ApiResult.isUnauthorized
@@ -239,3 +246,11 @@ inline fun <T> ApiResult<T>.onSuccess(
     if (this is ApiResult.Success) action(value)
     return this
 }
+
+/**
+ * Casts [this][Throwable] into [ApiException] and checks
+ * if the [ApiException.error] is an [ApiResult.Error.Http] with the given
+ * proton [code] (e.g. one of the values in [ResponseCodes]).
+ */
+fun Throwable.hasProtonErrorCode(code: Int): Boolean =
+    (this as? ApiException)?.hasProtonErrorCode(code) ?: false

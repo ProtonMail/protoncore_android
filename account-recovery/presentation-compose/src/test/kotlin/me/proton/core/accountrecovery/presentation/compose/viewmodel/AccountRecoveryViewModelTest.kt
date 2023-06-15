@@ -31,6 +31,7 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -39,7 +40,8 @@ import org.junit.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
+internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
+    CoroutinesTest by CoroutinesTest() {
 
     private val observeAccountRecoveryState = mockk<ObserveAccountRecoveryState>(relaxed = true)
     private val cancelRecovery = mockk<CancelRecovery>(relaxed = true)
@@ -58,6 +60,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
                 true
             )
         } returns flowOf(AccountRecoveryState.GracePeriod)
+        every { keyStoreCrypto.encrypt(any<String>()) } answers { firstArg() }
         coEvery { cancelRecovery.invoke(any(), testUserId) } returns true
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
@@ -84,7 +87,9 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
     @Test
     fun `initial state is opened state cancellation`() = coroutinesTest {
         // GIVEN
-        coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(AccountRecoveryState.Cancelled)
+        coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(
+            AccountRecoveryState.Cancelled
+        )
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
             cancelRecovery,
@@ -105,7 +110,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
     fun `initial state is opened state recovery ended`() = coroutinesTest {
         // GIVEN
         coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns
-            flowOf(AccountRecoveryState.Expired)
+                flowOf(AccountRecoveryState.Expired)
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
             cancelRecovery,
@@ -150,7 +155,9 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
     @Test
     fun `initial state is opened state none`() = coroutinesTest {
         // GIVEN
-        coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(AccountRecoveryState.None)
+        coEvery { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(
+            AccountRecoveryState.None
+        )
         viewModel = AccountRecoveryViewModel(
             observeAccountRecoveryState,
             cancelRecovery,
@@ -187,10 +194,12 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
     fun `start recovery cancellation success`() = coroutinesTest {
         // GIVEN
         viewModel.state.test {
-            every { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(AccountRecoveryState.None)
+            every { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(
+                AccountRecoveryState.None
+            )
             // WHEN
             viewModel.setUser(testUserId)
-            viewModel.startAccountRecoveryCancel()
+            viewModel.startAccountRecoveryCancel("password")
 
             // THEN
             assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
@@ -218,13 +227,43 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
         viewModel.state.test {
             // WHEN
             viewModel.setUser(testUserId)
-            viewModel.startAccountRecoveryCancel()
+            viewModel.startAccountRecoveryCancel("password")
 
             // THEN
             assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
             val event = awaitItem()
             assertTrue(event is AccountRecoveryViewModel.State.Error)
-            assertNotNull(event.message)
+            assertNotNull(event.throwable)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `start recovery cancellation invalid password`() = coroutinesTest {
+        // GIVEN
+        coEvery { cancelRecovery.invoke("invalid-password", testUserId) } throws ApiException(
+            ApiResult.Error.Http(
+                422, "Unprocessable Content", ApiResult.Error.ProtonData(
+                    code = ResponseCodes.PASSWORD_WRONG,
+                    error = "Incorrect login credentials. Please try again"
+                )
+            )
+        )
+        viewModel = AccountRecoveryViewModel(
+            observeAccountRecoveryState,
+            cancelRecovery,
+            keyStoreCrypto
+        )
+        viewModel.state.test {
+            // WHEN
+            viewModel.setUser(testUserId)
+            viewModel.startAccountRecoveryCancel("invalid-password")
+
+            // THEN
+            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
+            val event = awaitItem()
+            assertTrue(event is AccountRecoveryViewModel.State.Error)
+            assertNotNull(event.throwable)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -275,9 +314,11 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(), Coroutines
     fun `start recovery cancellation no user success`() = coroutinesTest {
         // GIVEN
         viewModel.state.test {
-            every { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(AccountRecoveryState.None)
+            every { observeAccountRecoveryState.invoke(testUserId, true) } returns flowOf(
+                AccountRecoveryState.None
+            )
             // WHEN
-            viewModel.startAccountRecoveryCancel()
+            viewModel.startAccountRecoveryCancel("password")
 
             // THEN
             assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())

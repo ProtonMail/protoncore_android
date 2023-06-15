@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ Copyright (c) 2023 Proton AG
   ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -26,4 +26,6 @@
     <string name="account_recovery_window_ended_title">Account recovery window ended</string>
     <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
     <string name="account_recovery_cancel">Cancel recovery</string>
+    <string name="account_recovery_password_label">Enter password to cancel</string>
+    <string name="account_recovery_password_placeholder">Password</string>
 </resources>

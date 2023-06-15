@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,8 @@
 
 package me.proton.core.accountrecovery.presentation.compose
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryCancelledDialog
@@ -41,8 +43,23 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryGracePeriodTest() {
         paparazzi.snapshot {
             AccountRecoveryGracePeriodDialog(
-                onGracePeriodCancel = {}
-            ) { }
+                onGracePeriodCancel = {},
+                onDismiss = { },
+                password = remember { mutableStateOf("") },
+                passwordError = false,
+            )
+        }
+    }
+
+    @Test
+    fun accountRecoveryInvalidPasswordTest() {
+        paparazzi.snapshot {
+            AccountRecoveryGracePeriodDialog(
+                onGracePeriodCancel = {},
+                onDismiss = { },
+                password = remember { mutableStateOf("invalid") },
+                passwordError = true,
+            )
         }
     }
 
@@ -71,7 +88,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateErrorTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Error("test")
+                state = AccountRecoveryViewModel.State.Error(Throwable("test"))
             )
         }
     }

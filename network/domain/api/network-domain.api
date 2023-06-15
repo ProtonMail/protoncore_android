@@ -169,6 +169,8 @@ public final class me/proton/core/network/domain/ApiResult$Success : me/proton/c
 
 public final class me/proton/core/network/domain/ApiResultKt {
 	public static final fun doThrow (Lme/proton/core/network/domain/ApiResult$Error;)V
+	public static final fun hasProtonErrorCode (Ljava/lang/Throwable;I)Z
+	public static final fun hasProtonErrorCode (Lme/proton/core/network/domain/ApiException;I)Z
 	public static final fun isForceUpdate (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun isForceUpdate (Lme/proton/core/network/domain/ApiResult;)Z
 	public static final fun isPotentialBlocking (Ljava/lang/Throwable;)Z

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -29,10 +29,6 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.accountrecovery.presentation.compose"
-}
-
-protonCoverage {
-    minBranchCoveragePercentage.set(83)
 }
 
 protonBuild {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,10 +19,18 @@
 package me.proton.core.accountrecovery.presentation.compose.dialog
 
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.SemanticsNodeInteraction
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onChild
+import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.every
 import io.mockk.mockk
@@ -31,6 +39,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
+import me.proton.core.compose.component.PROTON_OUTLINED_TEXT_INPUT_TAG
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import org.junit.Rule
@@ -42,6 +51,11 @@ class AccountRecoveryDialogTest {
 
     @get: Rule
     val composeTestRule = createComposeRule()
+
+    private val passwordInput: SemanticsNodeInteraction
+        get() = composeTestRule.onNodeWithTag(PASSWORD_FIELD_TAG)
+            .onChildren()
+            .filterToOne(hasTestTag(PROTON_OUTLINED_TEXT_INPUT_TAG))
 
     private val testUserId = UserId("test-user-id")
     private val viewModel = mockk<AccountRecoveryViewModel>(relaxed = true)
@@ -66,7 +80,11 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -87,7 +105,7 @@ class AccountRecoveryDialogTest {
         var txtTitle = ""
 
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Error(message = "error occurred")
+            AccountRecoveryViewModel.State.Error(throwable = Throwable("error occurred"))
         ).asStateFlow()
 
         // WHEN
@@ -96,7 +114,11 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -124,7 +146,11 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -149,7 +175,11 @@ class AccountRecoveryDialogTest {
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -164,7 +194,7 @@ class AccountRecoveryDialogTest {
         val idCancelRecovery = R.string.account_recovery_cancel
         var btnCancelRecovery = ""
 
-        every { viewModel.startAccountRecoveryCancel() } returns mockk()
+        every { viewModel.startAccountRecoveryCancel("password") } returns mockk()
         every { viewModel.state } returns MutableStateFlow(
             AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
         ).asStateFlow()
@@ -174,13 +204,53 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
 
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
-        // THEN
+        passwordInput.performTextInput("password")
         composeTestRule.onNodeWithText(btnCancelRecovery).performClick()
-        verify { viewModel.startAccountRecoveryCancel() }
+
+        // THEN
+        verify { viewModel.startAccountRecoveryCancel("password") }
+    }
+
+    @Test
+    fun gracePeriodInvalidPassword() {
+        // GIVEN
+        val idCancelRecovery = R.string.account_recovery_cancel
+        var btnCancelRecovery = ""
+        val stateFlow = MutableStateFlow(AccountRecoveryViewModel.State.Opened.GracePeriodStarted())
+
+        every { viewModel.startAccountRecoveryCancel(any()) } coAnswers {
+            stateFlow.value =
+                AccountRecoveryViewModel.State.Opened.GracePeriodStarted(passwordError = true)
+            mockk()
+        }
+        every { viewModel.state } returns stateFlow.asStateFlow()
+
+        // WHEN
+        composeTestRule.setContent {
+            btnCancelRecovery = stringResource(id = idCancelRecovery)
+
+            ProtonTheme {
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
+            }
+        }
+        passwordInput.performTextInput("invalid")
+        composeTestRule.onNodeWithText(btnCancelRecovery).performClick()
+
+        // THEN
+        verify { viewModel.startAccountRecoveryCancel("invalid") }
+        passwordInput.assertIsEnabled()
     }
 
     @Test
@@ -203,7 +273,11 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -227,7 +301,11 @@ class AccountRecoveryDialogTest {
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -256,7 +334,11 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -280,7 +362,11 @@ class AccountRecoveryDialogTest {
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -309,7 +395,11 @@ class AccountRecoveryDialogTest {
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
@@ -333,7 +423,11 @@ class AccountRecoveryDialogTest {
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
-                AccountRecoveryDialog(userId = testUserId, viewModel = viewModel, onClosed = {}, onError = {})
+                AccountRecoveryDialog(
+                    userId = testUserId,
+                    viewModel = viewModel,
+                    onClosed = {},
+                    onError = {})
             }
         }
 
