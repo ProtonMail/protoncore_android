@@ -22,11 +22,12 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DispatcherProvider
 
 /**
- * Implementation of [DispatcherProvider] meant to be used for tests
+ * Implementation of [DispatcherProvider] meant to be used for tests.
  */
 class TestDispatcherProvider(
     mainDispatcher: TestDispatcher,
@@ -37,12 +38,26 @@ class TestDispatcherProvider(
     override val Io: TestDispatcher = ioDispatcher
     override val Comp: TestDispatcher = compDispatcher
 
-    constructor(dispatcher: TestDispatcher = StandardTestDispatcher()) : this(dispatcher, dispatcher, dispatcher)
+    constructor(dispatcher: TestDispatcher = StandardTestDispatcher()) : this(
+        dispatcher,
+        dispatcher,
+        dispatcher
+    )
 }
 
-class TestCoroutineScopeProvider(
+/**
+ * [CoroutineScopeProvider] for tests, using [StandardTestDispatcher].
+ */
+open class TestCoroutineScopeProvider(
     dispatcherProvider: DispatcherProvider = TestDispatcherProvider()
 ) : CoroutineScopeProvider {
     override val GlobalDefaultSupervisedScope = TestScope(dispatcherProvider.Comp + SupervisorJob())
     override val GlobalIOSupervisedScope = TestScope(dispatcherProvider.Io + SupervisorJob())
 }
+
+/**
+ * [CoroutineScopeProvider] for tests, using [UnconfinedTestDispatcher].
+ */
+class UnconfinedTestCoroutineScopeProvider : TestCoroutineScopeProvider(
+    TestDispatcherProvider(UnconfinedTestDispatcher())
+)

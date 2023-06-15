@@ -42,7 +42,7 @@ public final class me/proton/core/test/kotlin/TestBuildersKt {
 	public static synthetic fun runTestWithResultContext$default (Lkotlin/coroutines/CoroutineContext;JLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
 }
 
-public final class me/proton/core/test/kotlin/TestCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {
+public class me/proton/core/test/kotlin/TestCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {
 	public fun <init> ()V
 	public fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;)V
 	public synthetic fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -80,5 +80,9 @@ public final class me/proton/core/test/kotlin/TestScopeWithResults$DefaultImpls 
 
 public final class me/proton/core/test/kotlin/TurbineUtilsKt {
 	public static final fun flowTest (Lkotlinx/coroutines/test/TestScope;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/test/kotlin/UnconfinedTestCoroutineScopeProvider : me/proton/core/test/kotlin/TestCoroutineScopeProvider {
+	public fun <init> ()V
 }
 
