@@ -57,6 +57,12 @@ public object Module {
     public const val networkPresentation: String = "$network:network-presentation"
     // endregion
 
+    // Notification
+    public const val notification: String = ":notification"
+    public const val notificationDagger: String = "$notification:notification-dagger"
+    public const val notificationData: String = "$notification:notification-data"
+    public const val notificationDomain: String = "$notification:notification-domain"
+
     // region Features
 
     // Authentication

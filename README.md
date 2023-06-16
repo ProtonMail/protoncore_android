@@ -163,6 +163,10 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:network-data                          |
 | me.proton.core:network-domain                        |
 | me.proton.core:network-presentation                  |
+| me.proton.core:notification                          |
+| me.proton.core:notification-dagger                   |
+| me.proton.core:notification-data                     |
+| me.proton.core:notification-domain                   |
 | me.proton.core:observability                         |
 | me.proton.core:observability-dagger                  |
 | me.proton.core:observability-data                    |
