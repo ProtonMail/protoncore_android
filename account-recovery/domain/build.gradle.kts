@@ -26,12 +26,12 @@ plugins {
     protonKotlinLibrary
 }
 
-publishOption.shouldBePublishedAsLib = true
-
 protonCoverage {
-    // change when stubs implemented
-    minLineCoveragePercentage.set(35)
+    minBranchCoveragePercentage.set(82)
+    minLineCoveragePercentage.set(86)
 }
+
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
@@ -43,10 +43,23 @@ dependencies {
         `javax-inject`
     )
 
+    implementation(
+        project(Module.kotlinUtil)
+    )
+
     testImplementation(
         `coroutines-test`,
         junit,
         `kotlin-test`,
         mockk
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        turbine
     )
 }

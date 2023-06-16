@@ -18,6 +18,9 @@
 
 package me.proton.core.accountrecovery.domain
 
+import me.proton.core.domain.type.IntEnum
+import me.proton.core.user.domain.entity.UserRecovery
+
 public enum class AccountRecoveryState {
     None,
     GracePeriod,
@@ -25,3 +28,13 @@ public enum class AccountRecoveryState {
     Cancelled,
     Expired
 }
+
+public fun IntEnum<UserRecovery.State>.toAccountRecoveryState(): AccountRecoveryState =
+    when (this.enum) {
+        UserRecovery.State.None -> AccountRecoveryState.None
+        UserRecovery.State.Grace -> AccountRecoveryState.GracePeriod
+        UserRecovery.State.Cancelled -> AccountRecoveryState.Cancelled
+        UserRecovery.State.Insecure -> AccountRecoveryState.ResetPassword
+        UserRecovery.State.Expired -> AccountRecoveryState.Expired
+        null -> AccountRecoveryState.None
+    }

@@ -21,15 +21,19 @@ package me.proton.core.accountrecovery.domain.usecase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.accountrecovery.domain.AccountRecoveryState
-import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
+import me.proton.core.accountrecovery.domain.toAccountRecoveryState
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 public class ObserveAccountRecoveryState @Inject constructor(
-    private val userRepository: UserRepository
+    private val userManager: UserManager
 ) {
-    public operator fun invoke(userId: UserId, refresh: Boolean): Flow<AccountRecoveryState> = userRepository.observeUser(userId).map {
-        AccountRecoveryState.GracePeriod // todo: hardcoded change later
-    }
+    public operator fun invoke(userId: UserId, refresh: Boolean = true): Flow<AccountRecoveryState> =
+        userManager.observeUser(sessionUserId = userId, refresh = refresh)
+            .map { user ->
+                if (user == null) AccountRecoveryState.None
+                else
+                    user.recovery?.state?.toAccountRecoveryState() ?: AccountRecoveryState.None
+            }
 }
