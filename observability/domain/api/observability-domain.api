@@ -76,6 +76,163 @@ public abstract interface annotation class me/proton/core/observability/domain/e
 	public abstract fun id ()Ljava/lang/String;
 }
 
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;
+	public fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus : java/lang/Enum {
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field notConnected Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field parseError Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field wrongPassword Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotalKt {
+	public static final fun toApiStatus (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;
+	public final fun component2 ()J
+	public final fun copy (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;
+	public fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId : java/lang/Enum {
+	public static final field gracePeriodInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public static final field passwordChangeInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public static final field recoveryCancelledInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public static final field recoveryExpiredInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
+}
+
 public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
