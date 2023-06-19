@@ -44,7 +44,7 @@
   <string name="auth_sign_in_with_password">Sign in with a password</string>
   <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
   <string name="auth_sign_in_with_sso">Sign in with SSO</string>
-  <string name="auth_help_label">Help</string>
+  <string name="auth_help_label">ヘルプ</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
   <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">お困りですか?</string>

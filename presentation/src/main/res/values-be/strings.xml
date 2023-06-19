@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -30,9 +30,10 @@
   <string name="presentation_alert_ok">Добра</string>
   <string name="presentation_alert_enter">Увесці</string>
   <string name="presentation_alert_cancel">Скасаваць</string>
+  <string name="presentation_alert_continue">Працягнуць</string>
   <string name="presentation_alert_submit">Адправіць</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Паведаміць пра праблему</string>
+  <string name="presentation_menu_item_title_report_a_bug">Паведаміць аб праблеме</string>
   <string name="presentation_menu_item_title_settings">Налады</string>
   <string name="presentation_menu_item_title_subscription">Падпіска</string>
   <string name="presentation_menu_item_title_sign_out">Выйсці</string>
@@ -46,4 +47,5 @@
   <string name="presentation_check_your_connection">Праверце сваё падключэнне</string>
   <string name="presentation_connectivity_issues">Праблемы з падключэннем</string>
   <string name="presentation_field_required">Гэта абавязковае поле.</string>
+  <string name="presentation_error_general">Адбылася памылка.</string>
 </resources>

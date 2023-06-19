@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
   <string name="presentation_alert_ok">确定</string>
   <string name="presentation_alert_enter">输入</string>
   <string name="presentation_alert_cancel">取消</string>
+  <string name="presentation_alert_continue">继续</string>
   <string name="presentation_alert_submit">提交</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">反馈问题</string>
@@ -39,11 +40,12 @@
   <!-- Other -->
   <string name="presentation_back">后退</string>
   <string name="presentation_close">关闭</string>
-  <string name="presentation_retry">Retry</string>
+  <string name="presentation_retry">重试</string>
   <string name="presentation_skip">跳过</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">无法连接服务器。</string>
   <string name="presentation_check_your_connection">检查您的网络连接</string>
   <string name="presentation_connectivity_issues">连接问题</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_field_required">此项必须填写。</string>
+  <string name="presentation_error_general">出错了。</string>
 </resources>

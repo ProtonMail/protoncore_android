@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Паведаміць пра праблему</string>
+  <string name="core_report_bug_activity_title">Паведаміць аб праблеме</string>
   <string name="core_report_bug_close">Закрыць</string>
   <string name="core_report_bug_subject_field_hint">Тэма</string>
   <string name="core_report_bug_subject_field_required">Увядзіце тэму</string>

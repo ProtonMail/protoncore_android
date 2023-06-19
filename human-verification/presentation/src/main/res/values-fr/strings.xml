@@ -46,7 +46,7 @@
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Demander une invitation</string>
   <string name="human_verification_help_manual">Si vous avez des difficultés à créer votre compte, vous pouvez demander une invitation et nous vous répondrons dans un délai d\'un jour ouvrable.</string>
-  <string name="human_verification_help_website_title">Consultez notre espace Aide &amp; Support</string>
+  <string name="human_verification_help_website_title">Consultez notre espace Aide &amp; Support</string>
   <string name="human_verification_help_website">En savoir plus sur la vérification que vous n\'êtes pas un robot et pourquoi nous la demandons.</string>
   <string name="human_verification_sending_failed">Le code de vérification n\'a pas pu être envoyé. Nous vous invitons à réessayer.</string>
   <string name="human_verification_incorrect_code">Le code n\'est pas correct. Nous vous invitons à réessayer.</string>

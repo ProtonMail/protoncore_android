@@ -170,11 +170,11 @@
   <string name="unlimited_devices">Необмежена кількість пристроїв</string>
   <string name="integrated_2fa_authenticator">Інтегрований 2FA автентифікатор</string>
   <string name="multiple_vaults">Кілька сховищ</string>
-  <string name="unlimited_email_alias">Необмежена кількість псевдонімів Hide My Email</string>
+  <string name="unlimited_email_alias">Необмежена кількість псевдонімів Hide-my-email</string>
   <string name="custom_email_alias_domains">Власні домени для псевдонімів електронної пошти</string>
   <string name="multiple_forwarding_mailboxes">Кілька поштових скриньок для переадресації</string>
   <string name="priority_support">Пріоритетна підтримка</string>
   <string name="one_vault">1 сховище</string>
-  <string name="ten_hide_my_email_aliases">10 псевдонімів Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 псевдонімів Hide-my-email</string>
   <!-- endregion -->
 </resources>

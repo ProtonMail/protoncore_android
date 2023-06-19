@@ -142,11 +142,11 @@
   <string name="unlimited_devices">Dispositius il·limitats</string>
   <string name="integrated_2fa_authenticator">Autenticador de dos factors integrat</string>
   <string name="multiple_vaults">Diverses caixes fortes</string>
-  <string name="unlimited_email_alias">Nombre il·limitat d\'àlies de Hide My Email</string>
+  <string name="unlimited_email_alias">Nombre il·limitat d\'àlies de Hide-my-email</string>
   <string name="custom_email_alias_domains">Dominis personalitzats per a àlies de correu electrònic</string>
   <string name="multiple_forwarding_mailboxes">Diverses bústies de reenviament</string>
   <string name="priority_support">Suport prioritari</string>
   <string name="one_vault"> 1 caixa forta</string>
-  <string name="ten_hide_my_email_aliases">10 àlies de Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 àlies de Hide-my-email</string>
   <!-- endregion -->
 </resources>

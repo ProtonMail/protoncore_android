@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">必须填写持卡人姓名。</string>
   <string name="payments_error_card_number">卡号无效。</string>
   <string name="payments_error_cvc">请输入有效的安全代码。</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">订阅登录用户时需要有效的会话 ID。</string>
   <string name="payments_error_signup_paymentmethod">无法使用现有的支付方式注册。</string>
   <string name="payments_error_invalid_session">无效会话。</string>
   <string name="payments_no_payment_provider">未发现有效支付提供商。</string>

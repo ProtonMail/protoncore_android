@@ -133,6 +133,6 @@
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
   <string name="priority_support">Priority support</string>
   <string name="one_vault">1 個の保管庫</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
+  <string name="ten_hide_my_email_aliases">10 件の Hide-my-email エイリアス</string>
   <!-- endregion -->
 </resources>

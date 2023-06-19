@@ -170,11 +170,11 @@
   <string name="unlimited_devices">Nieograniczona liczba urządzeń</string>
   <string name="integrated_2fa_authenticator">Zintegrowana aplikacja uwierzytelniająca</string>
   <string name="multiple_vaults">Wiele sejfów</string>
-  <string name="unlimited_email_alias">Nieograniczona liczba aliasów Hide My Email</string>
+  <string name="unlimited_email_alias">Nieograniczona liczba aliasów Hide-my-email</string>
   <string name="custom_email_alias_domains">Niestandardowe domeny dla aliasów</string>
   <string name="multiple_forwarding_mailboxes">Wiele przekierowujących skrzynek pocztowych</string>
   <string name="priority_support">Priorytetowe wsparcie</string>
   <string name="one_vault">1 sejf</string>
-  <string name="ten_hide_my_email_aliases">10 aliasów Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 aliasów Hide-my-email</string>
   <!-- endregion -->
 </resources>

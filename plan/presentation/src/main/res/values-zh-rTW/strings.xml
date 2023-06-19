@@ -128,11 +128,11 @@
   <string name="unlimited_devices">無限裝置數量</string>
   <string name="integrated_2fa_authenticator">整合 2FA 驗證程式</string>
   <string name="multiple_vaults">多重保險庫</string>
-  <string name="unlimited_email_alias">無限制的 Hide My Email 別名</string>
+  <string name="unlimited_email_alias">無限制的 Hide-my-email 別名</string>
   <string name="custom_email_alias_domains">電子郵件別名的自訂網域</string>
   <string name="multiple_forwarding_mailboxes">多重轉寄郵件匣</string>
   <string name="priority_support">優先支援</string>
   <string name="one_vault">1 個保險庫</string>
-  <string name="ten_hide_my_email_aliases">10 個 Hide My Email 別名</string>
+  <string name="ten_hide_my_email_aliases">10 個 Hide-my-email 別名</string>
   <!-- endregion -->
 </resources>

@@ -19,9 +19,9 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">密保邮箱</string>
-  <string name="settings_recovery_email_current">Current recovery email address</string>
-  <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_current">当前密保邮箱</string>
+  <string name="settings_recovery_email_new">新密保邮箱</string>
+  <string name="settings_recovery_email_confirm">确认密保邮箱</string>
   <string name="settings_recovery_email_new_hint">输入邮箱地址</string>
   <string name="settings_recovery_email_confirm_hint">再次输入邮箱地址</string>
   <string name="settings_save">保存</string>

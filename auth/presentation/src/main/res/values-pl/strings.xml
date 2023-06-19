@@ -35,14 +35,14 @@
   <string name="auth_current_login_password">Obecne hasło logowania</string>
   <string name="auth_enter_six_digit_code">Wpisz 6-cyfrowy kod</string>
   <string name="auth_second_factor_code">Kod uwierzytelniający</string>
-  <string name="auth_email">Email</string>
+  <string name="auth_email">Adres e-mail</string>
   <string name="auth_email_username">Nazwa użytkownika lub adres e-mail</string>
   <string name="auth_account_details">Wpisz szczegóły konta Proton.</string>
   <string name="auth_sign_in">Zaloguj się</string>
   <string name="auth_sign_in_action">Zaloguj się</string>
   <string name="auth_sign_in_sso">Zaloguj się do organizacji</string>
   <string name="auth_sign_in_with_password">Zaloguj się za pomocą hasła</string>
-  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
+  <string name="auth_continue_to_proton_vpn">i przejdź do Proton VPN</string>
   <string name="auth_sign_in_with_sso">Zaloguj się przez SSO</string>
   <string name="auth_help_label">Pomoc</string>
   <string name="auth_login_assistive_text">Wpisz adres e-mail Proton lub nazwę użytkownika.</string>

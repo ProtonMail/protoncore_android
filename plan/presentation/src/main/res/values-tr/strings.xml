@@ -142,7 +142,7 @@
   <string name="unlimited_devices">Sınırsız sayıda aygıt</string>
   <string name="integrated_2fa_authenticator">Bütünleşik iki adımlı kimlik doğrulayıcı</string>
   <string name="multiple_vaults">Birden çok kasa</string>
-  <string name="unlimited_email_alias">Sınırsız sayıda e-postamı gizle takma adı</string>
+  <string name="unlimited_email_alias">Sınırsız e-postamı gizle takma adı</string>
   <string name="custom_email_alias_domains">E-posta takma adları için özel etki alanları</string>
   <string name="multiple_forwarding_mailboxes">Çok sayıda iletici e-posta kutusu</string>
   <string name="priority_support">Öncelikli destek</string>

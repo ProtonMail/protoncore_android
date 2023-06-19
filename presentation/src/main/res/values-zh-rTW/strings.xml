@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
   <string name="presentation_alert_ok">確定</string>
   <string name="presentation_alert_enter">輸入</string>
   <string name="presentation_alert_cancel">取消</string>
+  <string name="presentation_alert_continue">繼續</string>
   <string name="presentation_alert_submit">遞交</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">回報問題</string>
@@ -46,4 +47,5 @@
   <string name="presentation_check_your_connection">檢查您的網路連線</string>
   <string name="presentation_connectivity_issues">連線問題</string>
   <string name="presentation_field_required">此為必填欄位。</string>
+  <string name="presentation_error_general">發生錯誤</string>
 </resources>

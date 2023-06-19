@@ -142,11 +142,11 @@
   <string name="unlimited_devices">Onbeperkt aantal apparaten</string>
   <string name="integrated_2fa_authenticator">Geïntegreerde 2FA-authenticator</string>
   <string name="multiple_vaults">Meerdere kluizen</string>
-  <string name="unlimited_email_alias">Onbeperkt aantal Hide My Email-alliassen</string>
+  <string name="unlimited_email_alias">Onbeperkt aantal Hide-my-email-alliassen</string>
   <string name="custom_email_alias_domains">Aangepaste domeinen voor e-mailalliassen</string>
   <string name="multiple_forwarding_mailboxes">Meerdere doorstuurpostvakken</string>
   <string name="priority_support">Prioriteitsondersteuning</string>
   <string name="one_vault">1 kluis</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email-aliassen</string>
+  <string name="ten_hide_my_email_aliases">10 Hide-my-email-aliassen</string>
   <!-- endregion -->
 </resources>

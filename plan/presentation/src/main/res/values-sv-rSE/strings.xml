@@ -142,11 +142,11 @@
   <string name="unlimited_devices">Obegränsat antal enheter</string>
   <string name="integrated_2fa_authenticator">Integrerad 2FA-autentisering</string>
   <string name="multiple_vaults">Flera valv</string>
-  <string name="unlimited_email_alias">Obegränsat antal Hide My Email-alias</string>
+  <string name="unlimited_email_alias">Obegränsat antal Hide-my-email-alias</string>
   <string name="custom_email_alias_domains">Anpassade domäner för e-postalias</string>
   <string name="multiple_forwarding_mailboxes">Flera vidarebefordrade brevlådor</string>
   <string name="priority_support">Prioriterad support</string>
   <string name="one_vault">1 valv</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email-alias</string>
+  <string name="ten_hide_my_email_aliases">10 Hide-my-email-alias</string>
   <!-- endregion -->
 </resources>

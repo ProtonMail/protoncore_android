@@ -142,11 +142,11 @@
   <string name="unlimited_devices">Unbegrenzte Geräte</string>
   <string name="integrated_2fa_authenticator">Integrierter 2FA-Authentifikator</string>
   <string name="multiple_vaults">Mehrere Tresore</string>
-  <string name="unlimited_email_alias">Unbegrenzte Hide My Email-Aliasse</string>
+  <string name="unlimited_email_alias">Unbegrenzte Hide-my-email-Aliasse</string>
   <string name="custom_email_alias_domains">Eigene Domains für E-Mail-Aliasse</string>
   <string name="multiple_forwarding_mailboxes">Mehrere Weiterleitungs-Postfächer</string>
   <string name="priority_support">Priorisierter Support</string>
   <string name="one_vault">1 Tresor</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email-Aliasse</string>
+  <string name="ten_hide_my_email_aliases">10 Hide-my-email-Aliasse</string>
   <!-- endregion -->
 </resources>

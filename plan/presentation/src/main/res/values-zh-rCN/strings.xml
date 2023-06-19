@@ -40,14 +40,14 @@
   <string name="plans_upgrade_your_plan">升级您的计划</string>
   <string name="plans_proton_for_free">免费获得Proton</string>
   <string name="plans_get_proton">获得 %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">登录 <a href="https://account.proton.me">account.proton.me</a> 调整账户等级</string>
   <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
   <string name="plans_payments_info_not_available">不适用</string>
   <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
   <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>
   <string name="plans_autorenew_subscriptions">此应用仅提供自动续订年度订阅。</string>
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
-  <string name="plans_limited_offer">Limited time offer</string>
+  <string name="plans_limited_offer">限时优惠</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间</item>
@@ -103,12 +103,12 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">支持多用户</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">家庭</string>
   <string name="plan_id_mail2022_header" comment="new_plans">包含多种高级功能的安全邮箱，充分满足您的日常通讯需求。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隐私和安全是我们的首要任务。</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">安全的云存储，让您轻松安全地存储、同步和共享文件。</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">各项 Proton 服务深度融合，为您提供全方位的隐私保护。</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">For next-level password management and identity protection.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">用于下一级密码管理和身份保护。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -124,15 +124,15 @@
   <string name="secure_core" comment="new_plans">安全的核心服务器</string>
   <string name="tor_vpn" comment="new_plans">Tor + VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Unlimited logins and notes</string>
-  <string name="unlimited_devices">Unlimited devices</string>
-  <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
-  <string name="multiple_vaults">Multiple vaults</string>
-  <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
-  <string name="custom_email_alias_domains">Custom domains for email aliases</string>
-  <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
-  <string name="priority_support">Priority support</string>
-  <string name="one_vault">1 vault</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
+  <string name="unlimited_logins_and_notes">无限登录和注释</string>
+  <string name="unlimited_devices">无设备数量限制</string>
+  <string name="integrated_2fa_authenticator">集成 2FA 验证器</string>
+  <string name="multiple_vaults">多个保险库</string>
+  <string name="unlimited_email_alias">无限制地 Hide-my-email</string>
+  <string name="custom_email_alias_domains">在邮箱别名中使用自有域名</string>
+  <string name="multiple_forwarding_mailboxes">多个转发邮箱</string>
+  <string name="priority_support">优先支持</string>
+  <string name="one_vault">1 个保险库</string>
+  <string name="ten_hide_my_email_aliases">10个 Hide-my-email 别名</string>
   <!-- endregion -->
 </resources>

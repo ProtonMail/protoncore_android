@@ -27,13 +27,13 @@
     <item quantity="one">Enter at least %d character</item>
     <item quantity="other">Enter at least %d characters</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
+  <string name="core_report_bug_discard_changes_title">Fechar o relatório de erro?</string>
   <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
   <string name="core_report_bug_discard_changes_cancel">Continuar a escrever</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_confirm">Fechar sem guardar</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">Máximo de %d caractere</item>
+    <item quantity="other">Máximo de %d caracteres</item>
   </plurals>
   <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
   <string name="core_report_bug_send">Enviar relatório</string>

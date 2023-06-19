@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Entrer</string>
   <string name="presentation_alert_cancel">Annuler</string>
+  <string name="presentation_alert_continue">Continuer</string>
   <string name="presentation_alert_submit">Envoyer</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Signaler un bug</string>
@@ -46,4 +47,5 @@
   <string name="presentation_check_your_connection">Vérifiez votre connexion</string>
   <string name="presentation_connectivity_issues">Problèmes de connectivité</string>
   <string name="presentation_field_required">Ce champ est nécessaire.</string>
+  <string name="presentation_error_general">Une erreur s’est produite.</string>
 </resources>

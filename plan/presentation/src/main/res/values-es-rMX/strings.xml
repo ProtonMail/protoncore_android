@@ -142,11 +142,11 @@
   <string name="unlimited_devices">Dispositivos ilimitados</string>
   <string name="integrated_2fa_authenticator">Autenticador 2FA integrado</string>
   <string name="multiple_vaults">Bóvedas múltiples</string>
-  <string name="unlimited_email_alias">Alias de Hide My Email ilimitados</string>
+  <string name="unlimited_email_alias">Alias de Hide-my-email ilimitados</string>
   <string name="custom_email_alias_domains">Dominios personalizados para alias de correo electrónico</string>
   <string name="multiple_forwarding_mailboxes">Múltiples buzones de reenvío</string>
   <string name="priority_support">Soporte prioritario</string>
   <string name="one_vault">1 bóveda</string>
-  <string name="ten_hide_my_email_aliases">10 alias de Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 alias de Hide-my-email</string>
   <!-- endregion -->
 </resources>
