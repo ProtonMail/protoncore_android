@@ -11,6 +11,50 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [11.0.0] - 2023-06-19
+
+### Chores
+
+- QuarkCommand improvements
+- Upgraded Kover to 0.7.1.
+- Added ObservabilityContext and onResultEnqueue functions.
+- Update grafana dashboards.
+
+### Features
+
+- account-recovery:
+  - Add recovery state observer.
+  - Cancelling account recovery attempt.
+  - Add Notification unit tests.
+  - Add Notification unit tests.
+  - Notifications for account recovery.
+  - Account Recovery popup and tests added.
+  - Set up notification channel for account recovery.
+- auth:
+  - Added SSO UI Tests.
+  - Added SSO IdentityProvider Metrics.
+  - Added SignIn with SSO WebView handling.
+
+### Bug Fixes
+
+- auth:
+  - Make SessionInfo ServerProof optional (SSO flow).
+- presentation:
+  - Added Cookie option to ProtonWebViewActivity.
+  - Added shouldOverrideUrlLoading in ProtonWebViewActivity to intercept loading/redirect.
+
+### Internationalization
+
+- Upgrade translations from crowdin (b4741134).
+- Upgrade translations from crowdin (d2c6b526).
+
+### Refactoring
+
+- Added BaseRetrofitApi scope for `Api.safeCall`.
+
+  fixup! feat(auth): Added SignIn with SSO WebView handling.
+- Added ProtonWebView Client/Activity.
+
 ## [10.7.1] - 2023-05-31
 
 ### Chores
