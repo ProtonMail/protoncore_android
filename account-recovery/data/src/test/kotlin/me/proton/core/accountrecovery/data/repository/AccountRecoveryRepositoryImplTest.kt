@@ -24,7 +24,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
 import io.mockk.mockk
-import kotlinx.coroutines.test.runTest
 import me.proton.core.accountrecovery.data.api.AccountRecoveryApi
 import me.proton.core.accountrecovery.data.api.response.CancelRecoveryAttemptResponse
 import me.proton.core.auth.domain.usecase.ValidateServerProof
@@ -34,9 +33,10 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.api.TestApiManager
+import me.proton.core.test.kotlin.runTestWithResultContext
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
+import kotlin.test.assertFails
 import kotlin.test.assertTrue
 
 class AccountRecoveryRepositoryImplTest {
@@ -55,7 +55,7 @@ class AccountRecoveryRepositoryImplTest {
     }
 
     @Test
-    fun cancellingRecoveryAttempt() = runTest {
+    fun cancellingRecoveryAttempt() = runTestWithResultContext {
         // GIVEN
         val testUserId = UserId("user-id")
         val srpProofs = mockk<SrpProofs>(relaxed = true)
@@ -71,14 +71,14 @@ class AccountRecoveryRepositoryImplTest {
         justRun { validateServerProof(any(), any(), any()) }
 
         // WHEN
-        val result = tested.cancelRecoveryAttempt(srpProofs, "srpSession", testUserId)
+        tested.cancelRecoveryAttempt(srpProofs, "srpSession", testUserId)
 
         // THEN
-        assertTrue(result)
+        assertTrue(assertSingleResult("account_recovery.cancellation").isSuccess)
     }
 
     @Test
-    fun cancellingRecoveryAttemptUnsuccessful() = runTest {
+    fun cancellingRecoveryAttemptUnsuccessful() = runTestWithResultContext {
         // GIVEN
         val testUserId = UserId("user-id")
         val srpProofs = mockk<SrpProofs>(relaxed = true)
@@ -94,10 +94,12 @@ class AccountRecoveryRepositoryImplTest {
         }
         justRun { validateServerProof(any(), any(), any()) }
 
-        // WHEN
-        val result = tested.cancelRecoveryAttempt(srpProofs, "srpSession", testUserId)
+        assertFails {
+            // WHEN
+            tested.cancelRecoveryAttempt(srpProofs, "srpSession", testUserId)
+        }
 
         // THEN
-        assertFalse(result)
+        assertTrue(assertSingleResult("account_recovery.cancellation").isFailure)
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -30,23 +30,23 @@ import kotlinx.coroutines.launch
 private val SCREEN_VIEW_COLLECTION_STATE = Lifecycle.State.CREATED
 
 /** Executes [block] whenever we are in a state that corresponds to a "screen view".
- * This function should be called in [ComponentActivity.onCreate].
+ * The best practice is to call this function when the lifecycle is initialized,
+ * (e.g. in [ComponentActivity.onCreate]),
+ * to avoid multiple repeating coroutines doing the same thing.
+ * @see [Lifecycle.repeatOnLifecycle]
  */
-fun ComponentActivity.launchOnScreenView(block: suspend () -> Unit) {
-    launchScreenViewCollection(block)
-}
-
-/** Executes [block] whenever we are in a state that corresponds to a "screen view".
- * This function should be called in [Fragment.onCreateView] or [Fragment.onViewCreated].
- */
-fun Fragment.launchOnScreenView(block: suspend () -> Unit) {
-    viewLifecycleOwner.launchScreenViewCollection(block)
-}
-
-private fun LifecycleOwner.launchScreenViewCollection(block: suspend () -> Unit) {
+fun LifecycleOwner.launchOnScreenView(block: suspend () -> Unit) {
     lifecycleScope.launch {
         repeatOnLifecycle(SCREEN_VIEW_COLLECTION_STATE) {
             block()
         }
     }
+}
+
+/** Executes [block] whenever we are in a state that corresponds to a "screen view".
+ * This function should be called in [Fragment.onCreateView] or [Fragment.onViewCreated].
+ * @see [LifecycleOwner.launchOnScreenView]
+ */
+fun Fragment.launchOnScreenView(block: suspend () -> Unit) {
+    viewLifecycleOwner.launchOnScreenView(block)
 }

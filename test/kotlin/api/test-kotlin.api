@@ -37,6 +37,11 @@ public final class me/proton/core/test/kotlin/MockWebServerExtKt {
 	public static final fun enqueueFromResourceFile (Lokhttp3/mockwebserver/MockWebServer;Ljava/lang/String;Ljava/lang/ClassLoader;)V
 }
 
+public final class me/proton/core/test/kotlin/TestBuildersKt {
+	public static final fun runTestWithResultContext (Lkotlin/coroutines/CoroutineContext;JLkotlin/jvm/functions/Function2;)V
+	public static synthetic fun runTestWithResultContext$default (Lkotlin/coroutines/CoroutineContext;JLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+}
+
 public final class me/proton/core/test/kotlin/TestCoroutineScopeProvider : me/proton/core/util/kotlin/CoroutineScopeProvider {
 	public fun <init> ()V
 	public fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;)V
@@ -57,6 +62,20 @@ public final class me/proton/core/test/kotlin/TestDispatcherProvider : me/proton
 	public fun getIo ()Lkotlinx/coroutines/test/TestDispatcher;
 	public synthetic fun getMain ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public fun getMain ()Lkotlinx/coroutines/test/TestDispatcher;
+}
+
+public abstract interface class me/proton/core/test/kotlin/TestScopeWithResults : me/proton/core/util/kotlin/coroutine/ResultCollector {
+	public abstract fun assertNoResult (Ljava/lang/String;)V
+	public abstract fun assertResults (Ljava/lang/String;)Ljava/util/List;
+	public abstract fun assertSingleResult-IoAF18A (Ljava/lang/String;)Ljava/lang/Object;
+	public abstract fun getBackgroundScope ()Lkotlinx/coroutines/CoroutineScope;
+	public abstract fun getTestScheduler ()Lkotlinx/coroutines/test/TestCoroutineScheduler;
+}
+
+public final class me/proton/core/test/kotlin/TestScopeWithResults$DefaultImpls {
+	public static fun key (Lme/proton/core/test/kotlin/TestScopeWithResults;)Ljava/lang/String;
+	public static fun onComplete (Lme/proton/core/test/kotlin/TestScopeWithResults;Lkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onResult (Lme/proton/core/test/kotlin/TestScopeWithResults;Lkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/test/kotlin/TurbineUtilsKt {

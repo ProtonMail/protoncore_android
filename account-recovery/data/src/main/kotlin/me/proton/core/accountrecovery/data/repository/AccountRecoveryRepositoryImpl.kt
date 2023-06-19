@@ -26,6 +26,7 @@ import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 public class AccountRecoveryRepositoryImpl @Inject constructor(
@@ -36,8 +37,8 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
         srpProofs: SrpProofs,
         srpSession: String,
         userId: UserId
-    ): Boolean {
-        return apiProvider.get<AccountRecoveryApi>(userId).invoke {
+    ): Unit = result("account_recovery.cancellation") {
+        apiProvider.get<AccountRecoveryApi>(userId).invoke {
             val request = CancelRecoveryAttemptRequest(
                 srpProofs.clientEphemeral,
                 srpProofs.clientProof,
@@ -50,7 +51,7 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
                 srpProofs.expectedServerProof
             ) { "Cancelling recovery attempt failed." }
 
-            response.isSuccess()
+            require(response.isSuccess())
         }.valueOrThrow
     }
 }

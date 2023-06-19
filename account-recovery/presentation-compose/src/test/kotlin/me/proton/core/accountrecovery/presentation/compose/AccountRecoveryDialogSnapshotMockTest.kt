@@ -23,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.SavedStateHandle
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import io.mockk.MockKAnnotations
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,19 +38,27 @@ import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountReco
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class AccountRecoveryDialogSnapshotMockTest {
-
     private val testUserId = UserId("test-user-id")
-    private val savedStateHandle = mockk<SavedStateHandle> {
-        every { this@mockk.get<String>(Arg.UserId) } returns testUserId.id
-    }
-    private val observeUserRecoveryState = mockk<ObserveUserRecoveryState>(relaxed = true)
-    private val cancelRecovery = mockk<CancelRecovery>(relaxed = true)
-    private val keyStoreCrypto = mockk<KeyStoreCrypto>()
+
+    private lateinit var savedStateHandle: SavedStateHandle
+
+    @MockK(relaxed = true)
+    private lateinit var observeUserRecoveryState: ObserveUserRecoveryState
+
+    @MockK(relaxed = true)
+    private lateinit var cancelRecovery: CancelRecovery
+
+    @MockK
+    private lateinit var keyStoreCrypto: KeyStoreCrypto
+
+    @MockK
+    private lateinit var observabilityManager: ObservabilityManager
 
     @get:Rule
     val paparazzi = Paparazzi(
@@ -60,12 +70,17 @@ class AccountRecoveryDialogSnapshotMockTest {
 
     @Before
     fun beforeEveryTest() {
+        savedStateHandle = mockk {
+            every { this@mockk.get<String>(Arg.UserId) } returns testUserId.id
+        }
+        MockKAnnotations.init(this)
         viewModel = spyk(
             AccountRecoveryViewModel(
                 savedStateHandle = savedStateHandle,
                 observeUserRecoveryState = observeUserRecoveryState,
                 cancelRecovery = cancelRecovery,
-                keyStoreCrypto = keyStoreCrypto
+                keyStoreCrypto = keyStoreCrypto,
+                manager = observabilityManager
             )
         )
     }

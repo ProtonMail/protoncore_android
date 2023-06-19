@@ -32,5 +32,5 @@ public interface AccountRecoveryRepository {
         srpProofs: SrpProofs,
         srpSession: String,
         userId: UserId
-    ): Boolean
+    )
 }

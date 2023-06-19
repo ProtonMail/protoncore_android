@@ -19,13 +19,11 @@
 package me.proton.core.accountrecovery.presentation.compose.dialog
 
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -39,9 +37,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.toScreenId
 import me.proton.core.compose.component.PROTON_OUTLINED_TEXT_INPUT_TAG
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,7 +56,6 @@ class AccountRecoveryDialogTest {
             .onChildren()
             .filterToOne(hasTestTag(PROTON_OUTLINED_TEXT_INPUT_TAG))
 
-    private val testUserId = UserId("test-user-id")
     private val viewModel = mockk<AccountRecoveryViewModel>(relaxed = true)
 
     @Test
@@ -70,9 +68,9 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.GracePeriodStarted(false)
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(false)
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -81,7 +79,6 @@ class AccountRecoveryDialogTest {
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -92,6 +89,10 @@ class AccountRecoveryDialogTest {
         composeTestRule.onNodeWithText(btnOk).assertExists()
         composeTestRule.onNodeWithText(btnCancelRecovery).assertExists()
         composeTestRule.onNodeWithText(txtTitle).assertExists()
+
+        verify {
+            viewModel.onScreenView(AccountRecoveryScreenViewTotal.ScreenId.gracePeriodInfo)
+        }
     }
 
     @Test
@@ -104,9 +105,9 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Error(throwable = Throwable("error occurred"))
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Error(throwable = Throwable("error occurred"))
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -115,7 +116,6 @@ class AccountRecoveryDialogTest {
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -138,7 +138,9 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        every { viewModel.state } returns MutableStateFlow(AccountRecoveryViewModel.State.Loading).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Loading
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -147,7 +149,6 @@ class AccountRecoveryDialogTest {
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -167,16 +168,15 @@ class AccountRecoveryDialogTest {
         val idOk = R.string.presentation_alert_ok
         var btnOk = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -193,11 +193,11 @@ class AccountRecoveryDialogTest {
         // GIVEN
         val idCancelRecovery = R.string.account_recovery_cancel
         var btnCancelRecovery = ""
+        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
 
         every { viewModel.startAccountRecoveryCancel("password") } returns mockk()
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
-        ).asStateFlow()
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -205,7 +205,6 @@ class AccountRecoveryDialogTest {
 
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -224,7 +223,8 @@ class AccountRecoveryDialogTest {
         // GIVEN
         val idCancelRecovery = R.string.account_recovery_cancel
         var btnCancelRecovery = ""
-        val stateFlow = MutableStateFlow(AccountRecoveryViewModel.State.Opened.GracePeriodStarted())
+        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+        val stateFlow = MutableStateFlow(state)
 
         every { viewModel.startAccountRecoveryCancel(any()) } coAnswers {
             stateFlow.value =
@@ -232,6 +232,7 @@ class AccountRecoveryDialogTest {
             mockk()
         }
         every { viewModel.state } returns stateFlow.asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -239,7 +240,6 @@ class AccountRecoveryDialogTest {
 
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -263,9 +263,9 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.CancellationHappened
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.CancellationHappened
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -274,7 +274,6 @@ class AccountRecoveryDialogTest {
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -285,6 +284,10 @@ class AccountRecoveryDialogTest {
         composeTestRule.onNodeWithText(btnOk).assertExists()
         composeTestRule.onNodeWithText(btnCancelRecovery).assertDoesNotExist()
         composeTestRule.onNodeWithText(txtTitle).assertExists()
+
+        verify {
+            viewModel.onScreenView(AccountRecoveryScreenViewTotal.ScreenId.recoveryCancelledInfo)
+        }
     }
 
     @Test
@@ -293,16 +296,15 @@ class AccountRecoveryDialogTest {
         val idOk = R.string.presentation_alert_ok
         var btnOk = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.CancellationHappened
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.CancellationHappened
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -324,9 +326,9 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -335,7 +337,6 @@ class AccountRecoveryDialogTest {
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -346,6 +347,10 @@ class AccountRecoveryDialogTest {
         composeTestRule.onNodeWithText(btnOk).assertExists()
         composeTestRule.onNodeWithText(btnCancelRecovery).assertDoesNotExist()
         composeTestRule.onNodeWithText(txtTitle).assertExists()
+
+        verify {
+            viewModel.onScreenView(AccountRecoveryScreenViewTotal.ScreenId.passwordChangeInfo)
+        }
     }
 
     @Test
@@ -354,16 +359,15 @@ class AccountRecoveryDialogTest {
         val idOk = R.string.presentation_alert_ok
         var btnOk = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -385,9 +389,9 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.RecoveryEnded
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.RecoveryEnded
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
@@ -396,7 +400,6 @@ class AccountRecoveryDialogTest {
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})
@@ -407,6 +410,10 @@ class AccountRecoveryDialogTest {
         composeTestRule.onNodeWithText(btnOk).assertExists()
         composeTestRule.onNodeWithText(btnCancelRecovery).assertDoesNotExist()
         composeTestRule.onNodeWithText(txtTitle).assertExists()
+
+        verify {
+            viewModel.onScreenView(AccountRecoveryScreenViewTotal.ScreenId.recoveryExpiredInfo)
+        }
     }
 
     @Test
@@ -415,16 +422,15 @@ class AccountRecoveryDialogTest {
         val idOk = R.string.presentation_alert_ok
         var btnOk = ""
 
-        every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.RecoveryEnded
-        ).asStateFlow()
+        val state = AccountRecoveryViewModel.State.Opened.RecoveryEnded
+        every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
+        every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
             btnOk = stringResource(id = idOk)
             ProtonTheme {
                 AccountRecoveryDialog(
-                    userId = testUserId,
                     viewModel = viewModel,
                     onClosed = {},
                     onError = {})

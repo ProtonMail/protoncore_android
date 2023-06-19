@@ -39,7 +39,7 @@ public class CancelRecovery @Inject constructor(
     public suspend operator fun invoke(
         password: EncryptedString,
         userId: UserId
-    ): Boolean {
+    ) {
         val account = requireNotNull(accountManager.getAccount(userId).firstOrNull()) {
             "Could not find account for user $userId."
         }
@@ -59,7 +59,7 @@ public class CancelRecovery @Inject constructor(
         password: EncryptedString,
         sessionId: SessionId,
         userId: UserId
-    ): Boolean {
+    ) {
         val authInfo = authRepository.getAuthInfoSrp(
             sessionId = sessionId,
             username = username

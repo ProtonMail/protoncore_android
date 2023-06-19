@@ -20,6 +20,7 @@ package me.proton.core.accountrecovery.domain.usecase
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -35,7 +36,6 @@ import me.proton.core.network.domain.session.SessionId
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 private val testUserId = UserId("user-id")
 
@@ -108,18 +108,15 @@ class CancelRecoveryTest {
         every { cryptoContext.srpCrypto } returns mockk {
             every { generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns mockk()
         }
-        coEvery {
+        coJustRun {
             accountRecoveryRepository.cancelRecoveryAttempt(
                 any(),
                 any(),
                 testUserId
             )
-        } returns true
+        }
 
         // WHEN
-        val result = tested("password", testUserId)
-
-        // THEN
-        assertTrue(result)
+        tested("password", testUserId)
     }
 }

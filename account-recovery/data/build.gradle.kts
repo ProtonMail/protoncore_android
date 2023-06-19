@@ -38,12 +38,14 @@ dependencies {
     )
 
     implementation(
+        project(Module.kotlinUtil),
         project(Module.networkData),
         `serialization-core`
     )
 
     testImplementation(
         project(Module.androidTest),
+        project(Module.kotlinTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,

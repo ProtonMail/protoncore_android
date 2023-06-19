@@ -63,6 +63,7 @@ dependencies {
     )
 
     implementation(
+        project(Module.observabilityDomain),
         `coroutines-core`,
         `android-ktx`,
         `appcompat`,

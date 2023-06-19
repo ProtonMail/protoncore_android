@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -49,7 +50,7 @@ import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
 import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.util.kotlin.exhaustive
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -62,7 +63,16 @@ fun AccountRecoveryDialog(
     onClosed: () -> Unit,
     onError: (Throwable?) -> Unit
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     val state by rememberAsState(viewModel.state, viewModel.initialState)
+
+    LaunchedEffect(Unit) {
+        lifecycleOwner.launchOnScreenView {
+            viewModel.screenId.collect { screenId ->
+                screenId?.let { viewModel.onScreenView(it) }
+            }
+        }
+    }
 
     LaunchedEffect(state) {
         when (val current = state) {
