@@ -16,26 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.quark.v2.command
+package me.proton.core.test.quark
 
-import me.proton.core.test.quark.data.User
+import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
-import me.proton.core.test.quark.v2.toEncodedArgs
-import okhttp3.Response
+import me.proton.core.util.kotlin.EMPTY_STRING
 
-public const val DRIVE_POPULATE_USER_WITH_DATA: String = "quark/drive:populate"
+open class BaseTest {
 
-public fun QuarkCommand.populateUserWithData(user: User): Response =
-    route(DRIVE_POPULATE_USER_WITH_DATA)
-        .args(
-            listOf(
-                "-u" to user.name,
-                "-p" to user.password,
-                "-S" to user.dataSetScenario
-            ).toEncodedArgs()
-        )
-        .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
+    val host: String =
+        InstrumentationRegistry
+            .getArguments()
+            .getString("host", "proton.black")
+
+    private val proxyToken =
+        InstrumentationRegistry
+            .getArguments()
+            .getString("proxyToken", EMPTY_STRING)
+
+    val quarkCommand =
+        QuarkCommand()
+            .baseUrl("https://$host/api/internal")
+            .proxyToken(proxyToken)
+}

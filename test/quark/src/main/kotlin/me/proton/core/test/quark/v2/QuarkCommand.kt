@@ -20,6 +20,7 @@ package me.proton.core.test.quark.v2
 
 import kotlinx.serialization.json.Json
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.EMPTY_STRING
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -28,8 +29,12 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
-public object QuarkCommand {
+/**
+ * Represents a command for making HTTP requests with Quark internal api.
+ */
+public class QuarkCommand {
 
+    /** Properties **/
     private var route: String? = null
     private var proxyToken: String? = null
     private var baseUrl: String? = null
@@ -39,10 +44,12 @@ public object QuarkCommand {
     private var httpClientReadTimeout: Duration = 30.seconds
     private var httpClientWriteTimeout: Duration = 30.seconds
 
-    private const val quarkCommandTag = "quark_command"
-
+    /** JSON parser with configuration to ignore unknown keys **/
     public val json: Json = Json { ignoreUnknownKeys = true }
 
+    /**
+     * The HTTP client used to send requests.
+     */
     public val client: OkHttpClient
         get() = OkHttpClient
             .Builder()
@@ -51,19 +58,56 @@ public object QuarkCommand {
             .writeTimeout(httpClientWriteTimeout.toJavaDuration())
             .build()
 
+    /**
+     * Sets the route for the request.
+     * @param route the route as a string
+     * @return the QuarkCommand instance for chaining
+     */
     public fun route(route: String): QuarkCommand = apply { this.route = route }
 
-    public fun args(args: Array<String>): QuarkCommand = apply { this.args += args }
+    /**
+     * Sets the arguments for the request.
+     * @param args the array of strings to set as arguments
+     * @return the QuarkCommand instance for chaining
+     */
+    public fun args(args: Array<String>): QuarkCommand = apply { this.args = args.toMutableList() }
 
+    /**
+     * Adds a single argument to the request.
+     * @param arg the argument to add
+     * @return the QuarkCommand instance for chaining
+     */
     public fun arg(arg: String): QuarkCommand = apply { this.args.add(arg) }
 
+    /**
+     * Sets the base URL for the request.
+     * @param baseUrl the base URL as a string
+     * @return the QuarkCommand instance for chaining
+     */
     public fun baseUrl(baseUrl: String): QuarkCommand = apply { this.baseUrl = baseUrl }
 
+    /**
+     * Sets the proxy token for the request.
+     * @param proxyToken the proxy token as a string
+     * @return the QuarkCommand instance for chaining
+     */
     public fun proxyToken(proxyToken: String): QuarkCommand = apply { this.proxyToken = proxyToken }
 
+    /**
+     * Customizes the request using a builder block.
+     * @param requestBuilderBlock the block with custom request configuration
+     * @return the QuarkCommand instance for chaining
+     */
     public fun onRequestBuilder(requestBuilderBlock: Request.Builder.() -> Unit): QuarkCommand =
         apply { this.onRequestBuilder = requestBuilderBlock }
 
+    /**
+     * Sets timeouts for the HTTP client.
+     * @param clientTimeout the timeout for the client connection
+     * @param readTimeout the timeout for reading responses. Default - [clientTimeout]
+     * @param writeTimeout the timeout for writing requests. Default - [clientTimeout]
+     * @return the QuarkCommand instance for chaining
+     */
     public fun httpClientTimeout(
         clientTimeout: Duration,
         readTimeout: Duration = clientTimeout,
@@ -74,6 +118,11 @@ public object QuarkCommand {
         this.httpClientWriteTimeout = writeTimeout
     }
 
+    /**
+     * Builds the Request object to be sent.
+     * @return the Request object
+     * @throws IllegalStateException if the base URL or route is not specified
+     */
     public fun build(): Request = Request
         .Builder()
         .internalUrl(
@@ -87,14 +136,7 @@ public object QuarkCommand {
         }
         .build()
 
-    public fun Request.execute(): Response = client.newCall(this).execute().apply {
-        CoreLogger.i(quarkCommandTag, "Sent request to : ${request.url}; Response Code: $code")
-        requireNotNull(body).string().apply {
-            CoreLogger.d(quarkCommandTag, "Response body:\n$this")
-            check(code <= 201) { this }
-        }
-    }
-
+    /** build the internal URL with parameters **/
     private fun Request.Builder.internalUrl(
         baseUrl: String,
         route: String,
@@ -106,26 +148,36 @@ public object QuarkCommand {
             url("$baseUrl/$route?$it")
         }
 
-    public object Route {
-        /** Users **/
-        public const val USERS_CREATE: String = "quark/raw::user:create"
-        public const val USERS_CREATE_ADDRESS: String = "quark/user:create:address"
-        public const val USERS_EXPIRE_SESSIONS: String = "quark/raw::user:expire:sessions"
-
-        /** Payments **/
-        public const val SEED_PAYMENT_METHOD: String = "quark/raw::payments:seed-payment-method"
-        public const val SEED_SUBSCRIBER: String = "quark/raw::payments:seed-subscriber"
-
-        /** Jails **/
-        public const val JAIL_UNBAN: String = "quark/raw::jail:unban"
-
-        /** Drive **/
-        public const val DRIVE_POPULATE_USER_WITH_DATA: String = "quark/drive:populate"
-
-        /** System **/
-        public const val SYSTEM_ENV: String = "system/env"
+    public companion object {
+        public const val quarkCommandTag: String = "quark_command"
     }
-
-    public fun List<Pair<String, String>?>.toEncodedArgs(): Array<String> =
-        filterNotNull().map { (key, value) -> "$key=${URLEncoder.encode(value, "UTF-8")}" }.toTypedArray()
 }
+
+/**
+ * Converts a list of key-value pairs into an array of URL-encoded strings.
+ * @param ignoreEmpty skips argument if value is empty
+ * @return the array of URL-encoded strings.
+ */
+public fun List<Pair<String, String>?>.toEncodedArgs(ignoreEmpty: Boolean = true): Array<String> =
+    filterNotNull()
+        .map { (key, value) ->
+            if (value.isEmpty() && ignoreEmpty)
+                EMPTY_STRING
+            else
+                "$key=${URLEncoder.encode(value, "UTF-8")}"
+        }.toTypedArray()
+
+/**
+ * Executes a Quark HTTP request using the given HTTP client.
+ * @param request the Request to execute
+ * @return the Response from the server
+ */
+public fun OkHttpClient.executeQuarkRequest(request: Request): Response =
+    newCall(request)
+        .execute()
+        .apply {
+            CoreLogger.i(QuarkCommand.quarkCommandTag, "Sent request to : ${request.url}; Response Code: $code")
+            if (code > 300) {
+                error(body!!.string())
+            }
+        }

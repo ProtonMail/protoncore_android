@@ -22,50 +22,59 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.randomPaidPlan
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.QuarkCommand.Route
+import me.proton.core.test.quark.v2.executeQuarkRequest
+import me.proton.core.test.quark.v2.toEncodedArgs
 import me.proton.core.util.kotlin.toInt
 import okhttp3.Response
 
+public const val SEED_PAYMENT_METHOD: String = "quark/raw::payments:seed-payment-method"
+public const val SEED_SUBSCRIBER: String = "quark/raw::payments:seed-subscriber"
 
 public fun QuarkCommand.seedNewSubscriber(user: User = User(plan = randomPaidPlan())): Response =
-    route(Route.SEED_SUBSCRIBER)
+    route(SEED_SUBSCRIBER)
         .args(
-            arrayOf(
-                "username=${user.name}",
-                "password=${user.password}",
-                "plan=${user.plan.planName}"
-            )
+            listOf(
+                "username" to user.name,
+                "password" to user.password,
+                "plan" to user.plan.planName,
+            ).toEncodedArgs()
         )
         .build()
-        .execute()
+        .let {
+            client.executeQuarkRequest(it)
+        }
 
 public fun QuarkCommand.seedNewSubscriberWithCycle(
     user: User = User(plan = randomPaidPlan()),
     cycleDurationMonths: Int
 ): Response =
-    route(Route.SEED_SUBSCRIBER)
+    route(SEED_SUBSCRIBER)
         .args(
-            arrayOf(
-                "username=${user.name}",
-                "password=${user.password}",
-                "plan=${user.plan.planName}",
-                "cycle=$cycleDurationMonths"
-            )
+            listOf(
+                "username" to user.name,
+                "password" to user.password,
+                "plan" to user.plan.planName,
+                "cycle" to cycleDurationMonths.toString(),
+            ).toEncodedArgs()
         )
         .build()
-        .execute()
+        .let {
+            client.executeQuarkRequest(it)
+        }
 
 public fun QuarkCommand.seedUserWithCreditCard(user: User = User()): Response =
-    route(Route.SEED_PAYMENT_METHOD)
+    route(SEED_PAYMENT_METHOD)
         .args(
-            arrayOf(
-                "-u=${user.name}",
-                "-p=${user.password}",
-                "-t=card"
-            )
+            listOf(
+                "-u" to user.name,
+                "-p" to user.password,
+                "-t" to "card"
+            ).toEncodedArgs()
         )
         .build()
-        .execute()
+        .let {
+            client.executeQuarkRequest(it)
+        }
 
 /** WARNING:
  * Should be used only in [me.proton.core.test.android.uitests.tests.medium.plans]

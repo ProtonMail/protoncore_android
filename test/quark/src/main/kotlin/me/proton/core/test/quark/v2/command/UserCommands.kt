@@ -24,29 +24,39 @@ import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse
 import me.proton.core.test.quark.response.CreateUserQuarkResponse
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.QuarkCommand.Route
+import me.proton.core.test.quark.v2.executeQuarkRequest
+import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.Response
-import java.net.URLEncoder
+
+public const val USERS_CREATE: String = "quark/raw::user:create"
+public const val USERS_CREATE_ADDRESS: String = "quark/user:create:address"
+public const val USERS_EXPIRE_SESSIONS: String = "quark/raw::user:expire:sessions"
 
 public fun QuarkCommand.userCreate(
     user: User = User(),
     createAddress: CreateAddress? = CreateAddress.WithKey(GenKeys.Curve25519)
 ): CreateUserQuarkResponse {
-    val args = arrayOf(
-        if (user.isExternal) "-e=true" else "",
-        if (user.isExternal) "-em=${URLEncoder.encode(user.email, "UTF-8")}" else "",
-        if (user.name.isNotEmpty()) "-N=${user.name}" else "",
-        if (user.password.isNotEmpty()) "-p=${user.password}" else "",
-        if (user.passphrase.isNotEmpty()) "-m=${user.passphrase}" else "",
-        if (user.recoveryEmail.isNotEmpty()) "-r=${user.recoveryEmail}" else "",
-        if (createAddress is CreateAddress.NoKey) "-c=true" else "",
-        if (createAddress is CreateAddress.WithKey) "-k=${createAddress.genKeys.name}" else "",
-        "--format=json"
-    )
-    val response = route(Route.USERS_CREATE).args(args).build().execute().let {
-        json.decodeFromString<CreateUserQuarkResponse>(it.body!!.string())
-    }
-    return response
+    val args = listOf(
+        "-e" to if (user.isExternal) "true" else "",
+        "-em" to if (user.isExternal) user.email else "",
+        "-N" to user.name,
+        "-p" to user.password,
+        "-m" to user.passphrase,
+        "-r" to user.recoveryEmail,
+        "-c" to if (createAddress is CreateAddress.NoKey) "true" else "",
+        "-k" to if (createAddress is CreateAddress.WithKey) createAddress.genKeys.name else "",
+        "--format" to "json"
+    ).toEncodedArgs(ignoreEmpty = true)
+
+    val response =
+        route(USERS_CREATE)
+            .args(args)
+            .build()
+            .let {
+                client.executeQuarkRequest(it)
+            }
+
+    return json.decodeFromString(response.body!!.string())
 }
 
 public fun QuarkCommand.userCreateAddress(
@@ -55,7 +65,7 @@ public fun QuarkCommand.userCreateAddress(
     email: String,
     genKeys: GenKeys = GenKeys.Curve25519
 ): CreateUserAddressQuarkResponse =
-    route(Route.USERS_CREATE_ADDRESS)
+    route(USERS_CREATE_ADDRESS)
         .args(
             listOf(
                 "userID" to decryptedUserId.toString(),
@@ -66,21 +76,26 @@ public fun QuarkCommand.userCreateAddress(
             ).toEncodedArgs()
         )
         .build()
-        .execute().let {
+        .let {
+            client.executeQuarkRequest(it)
+        }
+        .let {
             json.decodeFromString(it.body!!.string())
         }
 
 
 public fun QuarkCommand.expireSession(username: String, expireRefreshToken: Boolean = false): Response =
-    route(Route.USERS_EXPIRE_SESSIONS)
+    route(USERS_EXPIRE_SESSIONS)
         .args(
-            arrayOf(
-                "User=$username",
-                if (expireRefreshToken) "--refresh=null" else ""
-            )
+            listOf(
+                "User" to username,
+                "--refresh" to if (expireRefreshToken) "null" else ""
+            ).toEncodedArgs()
         )
         .build()
-        .execute()
+        .let {
+            client.executeQuarkRequest(it)
+        }
 
 
 public sealed class CreateAddress {

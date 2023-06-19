@@ -1,3 +1,10 @@
+public final class me/proton/core/test/quark/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
 public final class me/proton/core/test/quark/Quark {
 	public static final field Companion Lme/proton/core/test/quark/Quark$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$InternalApi;)V
@@ -367,12 +374,13 @@ public final class me/proton/core/test/quark/response/CreateUserQuarkResponse$Co
 }
 
 public final class me/proton/core/test/quark/v2/QuarkCommand {
-	public static final field INSTANCE Lme/proton/core/test/quark/v2/QuarkCommand;
+	public static final field Companion Lme/proton/core/test/quark/v2/QuarkCommand$Companion;
+	public static final field quarkCommandTag Ljava/lang/String;
+	public fun <init> ()V
 	public final fun arg (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun args ([Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun baseUrl (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun build ()Lokhttp3/Request;
-	public final fun execute (Lokhttp3/Request;)Lokhttp3/Response;
 	public final fun getClient ()Lokhttp3/OkHttpClient;
 	public final fun getJson ()Lkotlinx/serialization/json/Json;
 	public final fun httpClientTimeout-WzaCiaA (JJJ)Lme/proton/core/test/quark/v2/QuarkCommand;
@@ -380,19 +388,15 @@ public final class me/proton/core/test/quark/v2/QuarkCommand {
 	public final fun onRequestBuilder (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun proxyToken (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun route (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
-	public final fun toEncodedArgs (Ljava/util/List;)[Ljava/lang/String;
 }
 
-public final class me/proton/core/test/quark/v2/QuarkCommand$Route {
-	public static final field DRIVE_POPULATE_USER_WITH_DATA Ljava/lang/String;
-	public static final field INSTANCE Lme/proton/core/test/quark/v2/QuarkCommand$Route;
-	public static final field JAIL_UNBAN Ljava/lang/String;
-	public static final field SEED_PAYMENT_METHOD Ljava/lang/String;
-	public static final field SEED_SUBSCRIBER Ljava/lang/String;
-	public static final field SYSTEM_ENV Ljava/lang/String;
-	public static final field USERS_CREATE Ljava/lang/String;
-	public static final field USERS_CREATE_ADDRESS Ljava/lang/String;
-	public static final field USERS_EXPIRE_SESSIONS Ljava/lang/String;
+public final class me/proton/core/test/quark/v2/QuarkCommand$Companion {
+}
+
+public final class me/proton/core/test/quark/v2/QuarkCommandKt {
+	public static final fun executeQuarkRequest (Lokhttp3/OkHttpClient;Lokhttp3/Request;)Lokhttp3/Response;
+	public static final fun toEncodedArgs (Ljava/util/List;Z)[Ljava/lang/String;
+	public static synthetic fun toEncodedArgs$default (Ljava/util/List;ZILjava/lang/Object;)[Ljava/lang/String;
 }
 
 public abstract class me/proton/core/test/quark/v2/command/CreateAddress {
@@ -416,14 +420,18 @@ public final class me/proton/core/test/quark/v2/command/CreateAddress$WithKey : 
 }
 
 public final class me/proton/core/test/quark/v2/command/DriveCommandsKt {
+	public static final field DRIVE_POPULATE_USER_WITH_DATA Ljava/lang/String;
 	public static final fun populateUserWithData (Lme/proton/core/test/quark/v2/QuarkCommand;Lme/proton/core/test/quark/data/User;)Lokhttp3/Response;
 }
 
 public final class me/proton/core/test/quark/v2/command/JailCommandsKt {
+	public static final field JAIL_UNBAN Ljava/lang/String;
 	public static final fun jailUnban (Lme/proton/core/test/quark/v2/QuarkCommand;)Lokhttp3/Response;
 }
 
 public final class me/proton/core/test/quark/v2/command/PaymentsCommandsKt {
+	public static final field SEED_PAYMENT_METHOD Ljava/lang/String;
+	public static final field SEED_SUBSCRIBER Ljava/lang/String;
 	public static final fun seedNewSubscriber (Lme/proton/core/test/quark/v2/QuarkCommand;Lme/proton/core/test/quark/data/User;)Lokhttp3/Response;
 	public static synthetic fun seedNewSubscriber$default (Lme/proton/core/test/quark/v2/QuarkCommand;Lme/proton/core/test/quark/data/User;ILjava/lang/Object;)Lokhttp3/Response;
 	public static final fun seedNewSubscriberWithCycle (Lme/proton/core/test/quark/v2/QuarkCommand;Lme/proton/core/test/quark/data/User;I)Lokhttp3/Response;
@@ -436,15 +444,24 @@ public final class me/proton/core/test/quark/v2/command/PaymentsCommandsKt {
 }
 
 public final class me/proton/core/test/quark/v2/command/SystemCommandsKt {
+	public static final field SYSTEM_ENV Ljava/lang/String;
 	public static final fun systemEnv (Lme/proton/core/test/quark/v2/QuarkCommand;Ljava/lang/String;Ljava/lang/String;)Lokhttp3/Response;
 }
 
 public final class me/proton/core/test/quark/v2/command/UserCommandsKt {
+	public static final field USERS_CREATE Ljava/lang/String;
+	public static final field USERS_CREATE_ADDRESS Ljava/lang/String;
+	public static final field USERS_EXPIRE_SESSIONS Ljava/lang/String;
 	public static final fun expireSession (Lme/proton/core/test/quark/v2/QuarkCommand;Ljava/lang/String;Z)Lokhttp3/Response;
 	public static synthetic fun expireSession$default (Lme/proton/core/test/quark/v2/QuarkCommand;Ljava/lang/String;ZILjava/lang/Object;)Lokhttp3/Response;
 	public static final fun userCreate (Lme/proton/core/test/quark/v2/QuarkCommand;Lme/proton/core/test/quark/data/User;Lme/proton/core/test/quark/v2/command/CreateAddress;)Lme/proton/core/test/quark/response/CreateUserQuarkResponse;
 	public static synthetic fun userCreate$default (Lme/proton/core/test/quark/v2/QuarkCommand;Lme/proton/core/test/quark/data/User;Lme/proton/core/test/quark/v2/command/CreateAddress;ILjava/lang/Object;)Lme/proton/core/test/quark/response/CreateUserQuarkResponse;
 	public static final fun userCreateAddress (Lme/proton/core/test/quark/v2/QuarkCommand;JLjava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$GenKeys;)Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse;
 	public static synthetic fun userCreateAddress$default (Lme/proton/core/test/quark/v2/QuarkCommand;JLjava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/Quark$GenKeys;ILjava/lang/Object;)Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse;
+}
+
+public final class me/proton/core/test/quark/v2/extension/QuarkCommandKt {
+	public static final fun isReady (Lme/proton/core/test/quark/v2/QuarkCommand;Lkotlin/jvm/functions/Function1;)Z
+	public static synthetic fun isReady$default (Lme/proton/core/test/quark/v2/QuarkCommand;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Z
 }
 

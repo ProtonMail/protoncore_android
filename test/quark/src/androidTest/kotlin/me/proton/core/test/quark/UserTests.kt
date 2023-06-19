@@ -16,26 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.quark.v2.command
+package me.proton.core.test.quark
 
 import me.proton.core.test.quark.data.User
-import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
-import me.proton.core.test.quark.v2.toEncodedArgs
-import okhttp3.Response
+import me.proton.core.test.quark.v2.command.userCreate
+import org.junit.Test
+import kotlin.test.assertEquals
 
-public const val DRIVE_POPULATE_USER_WITH_DATA: String = "quark/drive:populate"
+class UserTests : BaseTest() {
+    @Test
+    fun testUserCreate() {
+        val user = User()
 
-public fun QuarkCommand.populateUserWithData(user: User): Response =
-    route(DRIVE_POPULATE_USER_WITH_DATA)
-        .args(
-            listOf(
-                "-u" to user.name,
-                "-p" to user.password,
-                "-S" to user.dataSetScenario
-            ).toEncodedArgs()
-        )
-        .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
+        val response = quarkCommand.userCreate(user)
+
+        assertEquals(user.name, response.name)
+        assertEquals(user.password, response.password)
+        assertEquals(response.statusInfo, "2 (ACTIVE)")
+        assertEquals("${user.name}@${host}", response.email)
+    }
+}

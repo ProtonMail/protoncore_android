@@ -16,26 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.quark.v2.command
+package me.proton.core.test.quark.v2.extension
 
-import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
-import me.proton.core.test.quark.v2.toEncodedArgs
+import me.proton.core.test.quark.v2.command.jailUnban
 import okhttp3.Response
 
-public const val DRIVE_POPULATE_USER_WITH_DATA: String = "quark/drive:populate"
-
-public fun QuarkCommand.populateUserWithData(user: User): Response =
-    route(DRIVE_POPULATE_USER_WITH_DATA)
-        .args(
-            listOf(
-                "-u" to user.name,
-                "-p" to user.password,
-                "-S" to user.dataSetScenario
-            ).toEncodedArgs()
-        )
-        .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
+public fun QuarkCommand.isReady(
+    checkCommand: QuarkCommand.() -> Response = { jailUnban() }
+): Boolean = checkCommand().code < 300

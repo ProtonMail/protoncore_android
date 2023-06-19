@@ -1,7 +1,7 @@
 package me.proton.core.test.quark.v2.command
 
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.QuarkCommand.Route
+import me.proton.core.test.quark.v2.executeQuarkRequest
 import okhttp3.Response
 
 /*
@@ -22,4 +22,6 @@ import okhttp3.Response
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-public fun QuarkCommand.jailUnban(): Response = route(Route.JAIL_UNBAN).build().execute()
+public const val JAIL_UNBAN: String = "quark/raw::jail:unban"
+
+public fun QuarkCommand.jailUnban(): Response = route(JAIL_UNBAN).build().let { client.executeQuarkRequest(it) }

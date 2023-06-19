@@ -16,7 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.implementation
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
@@ -39,7 +38,7 @@ import studio.forface.easygradle.dsl.android.*
  */
 
 plugins {
-    protonKotlinLibrary
+    protonAndroidLibrary
     kotlin("plugin.serialization")
 }
 
@@ -53,4 +52,12 @@ dependencies {
         project(Module.domain),
         project(Module.kotlinUtil),
     )
+
+    testImplementation(junit)
+    testImplementation(mockk)
+
+    androidTestImplementation(junit)
+    androidTestImplementation(`androidx-test-monitor`)
+    androidTestImplementation(`android-test-runner`)
+    androidTestImplementation(`kotlin-test`)
 }

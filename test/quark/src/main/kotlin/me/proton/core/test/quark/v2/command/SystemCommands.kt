@@ -1,7 +1,7 @@
 package me.proton.core.test.quark.v2.command
 
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.QuarkCommand.Route
+import me.proton.core.test.quark.v2.executeQuarkRequest
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
@@ -23,9 +23,13 @@ import okhttp3.Response
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+public const val SYSTEM_ENV: String = "system/env"
+
 public fun QuarkCommand.systemEnv(variable: String, value: String): Response =
-    route(Route.SYSTEM_ENV)
-        .args(arrayOf("$variable=$value"))
+    route(SYSTEM_ENV)
+        .arg("$variable=$value")
         .onRequestBuilder { post("".toRequestBody()) }
         .build()
-        .execute()
+        .let {
+            client.executeQuarkRequest(it)
+        }
