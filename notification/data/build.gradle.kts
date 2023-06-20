@@ -16,14 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.`hilt-android`
-import studio.forface.easygradle.dsl.api
+import org.gradle.kotlin.dsl.implementation
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
+    kotlin("plugin.serialization")
 }
 
 publishOption.shouldBePublishedAsLib = true
+
+protonCoverage {
+    minBranchCoveragePercentage.set(50)
+}
 
 android {
     namespace = "me.proton.core.notification.data"
@@ -32,7 +39,44 @@ android {
 dependencies {
     api(
         project(Module.notificationDomain),
+        project(Module.dataRoom),
+        project(Module.domain),
+        project(Module.networkData),
         `hilt-android`,
-        `javax-inject`
+        `coroutines-core`,
+        `javax-inject`,
     )
+
+    implementation(
+        project(Module.userData),
+        project(Module.data),
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
+        retrofit,
+        `room-ktx`,
+        `serialization-core`,
+        store4
+    )
+
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.accountData),
+        project(Module.accountDomain),
+        project(Module.cryptoAndroid),
+        project(Module.cryptoCommon),
+        project(Module.keyDomain),
+        project(Module.kotlinTest),
+        `android-test-core`,
+        `android-work-testing`,
+        `coroutines-test`,
+        `hilt-android-testing`,
+        junit,
+        `kotlin-test`,
+        mockk,
+        robolectric,
+        turbine
+    )
+
+    kaptTest(`hilt-android-compiler`)
+    kaptTest(`room-compiler`)
 }

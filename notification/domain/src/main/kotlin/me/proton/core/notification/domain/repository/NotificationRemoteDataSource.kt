@@ -16,18 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.notification.entity
+package me.proton.core.notification.domain.repository
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.notification.domain.entity.Notification
+import me.proton.core.notification.domain.entity.NotificationId
 
-public data class NotificationId(val id: String)
+public interface NotificationRemoteDataSource {
 
-public data class Notification(
-    val notificationId: NotificationId,
-    val userId: UserId,
-    val time: Long,
-    val type: String,
-    val title: String?,
-    val subtitle: String?,
-    val body: String?
-)
+    public suspend fun getNotifications(userId: UserId): List<Notification>
+
+    public suspend fun getNotificationsByType(userId: UserId, type: String): List<Notification>
+}

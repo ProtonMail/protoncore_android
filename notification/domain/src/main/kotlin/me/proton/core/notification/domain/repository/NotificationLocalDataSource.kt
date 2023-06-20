@@ -16,24 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.notification.repository
+package me.proton.core.notification.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import me.proton.core.notification.entity.Notification
-import me.proton.core.notification.entity.NotificationId
+import me.proton.core.notification.domain.entity.Notification
+import me.proton.core.notification.domain.entity.NotificationId
 
 public interface NotificationLocalDataSource {
 
-    public suspend fun getNotificationById(userId: UserId, notificationId: NotificationId): Notification
+    public suspend fun getNotificationById(userId: UserId, notificationId: NotificationId): Notification?
 
     public suspend fun getNotificationsByUser(userId: UserId): List<Notification>
 
     public fun observeAllNotificationsByUser(userId: UserId): Flow<List<Notification>>
 
-    public suspend fun deleteAllNotificationsByUser(userId: UserId)
+    public suspend fun deleteAllNotificationsByUser(vararg userIds: UserId)
 
-    public suspend fun deleteNotificationById(userId: UserId, notificationId: NotificationId)
+    public suspend fun deleteNotificationsById(userId: UserId, vararg notificationIds: NotificationId)
 
     public suspend fun upsertNotifications(vararg notifications: Notification)
 }

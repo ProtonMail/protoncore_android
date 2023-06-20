@@ -16,17 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.notification.repository
+package me.proton.core.notification.data.local.db
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.notification.entity.Notification
-import me.proton.core.notification.entity.NotificationId
+import androidx.room.TypeConverter
+import me.proton.core.notification.domain.entity.NotificationId
 
-public interface NotificationRemoteDataSource {
+public class NotificationConverters {
 
-    public suspend fun getNotifications(userId: UserId): List<Notification>
+    @TypeConverter
+    public fun fromNotificationIdToString(value: NotificationId?): String? = value?.id
 
-    public suspend fun getNotificationsByType(userId: UserId, type: String): List<Notification>
-
-    public suspend fun deleteNotification(userId: UserId, notificationId: NotificationId)
+    @TypeConverter
+    public fun fromStringToNotificationId(value: String?): NotificationId? = value?.let { NotificationId(it) }
 }

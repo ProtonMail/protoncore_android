@@ -1,0 +1,104 @@
+public final class me/proton/core/notification/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/notification/data/local/NotificationLocalDataSourceImpl : me/proton/core/notification/domain/repository/NotificationLocalDataSource {
+	public fun <init> (Lme/proton/core/notification/data/local/db/NotificationDatabase;)V
+	public fun deleteAllNotificationsByUser ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteNotificationsById (Lme/proton/core/domain/entity/UserId;[Lme/proton/core/notification/domain/entity/NotificationId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getNotificationById (Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getNotificationsByUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllNotificationsByUser (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun upsertNotifications ([Lme/proton/core/notification/domain/entity/Notification;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/notification/data/local/NotificationLocalDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/notification/data/local/NotificationLocalDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/data/local/NotificationLocalDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/notification/data/local/db/NotificationDatabase;)Lme/proton/core/notification/data/local/NotificationLocalDataSourceImpl;
+}
+
+public final class me/proton/core/notification/data/local/db/NotificationConverters {
+	public fun <init> ()V
+	public final fun fromNotificationIdToString (Lme/proton/core/notification/domain/entity/NotificationId;)Ljava/lang/String;
+	public final fun fromStringToNotificationId (Ljava/lang/String;)Lme/proton/core/notification/domain/entity/NotificationId;
+}
+
+public abstract class me/proton/core/notification/data/local/db/NotificationDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteNotifications (Lme/proton/core/domain/entity/UserId;[Lme/proton/core/notification/domain/entity/NotificationId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteNotifications ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAllNotifications (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getNotification (Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllNotifications (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract interface class me/proton/core/notification/data/local/db/NotificationDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/notification/data/local/db/NotificationDatabase$Companion;
+	public abstract fun notificationDao ()Lme/proton/core/notification/data/local/db/NotificationDao;
+}
+
+public final class me/proton/core/notification/data/local/db/NotificationDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public final class me/proton/core/notification/data/local/db/NotificationEntity {
+	public fun <init> (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/notification/domain/entity/NotificationId;
+	public final fun component2 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component3 ()J
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/notification/data/local/db/NotificationEntity;
+	public static synthetic fun copy$default (Lme/proton/core/notification/data/local/db/NotificationEntity;Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/notification/data/local/db/NotificationEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBody ()Ljava/lang/String;
+	public final fun getNotificationId ()Lme/proton/core/notification/domain/entity/NotificationId;
+	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getTime ()J
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl : me/proton/core/notification/domain/repository/NotificationRemoteDataSource {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun getNotifications (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getNotificationsByType (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl;
+}
+
+public final class me/proton/core/notification/data/repository/NotificationRepositoryImpl : me/proton/core/notification/domain/repository/NotificationRepository {
+	public fun <init> (Lme/proton/core/notification/domain/repository/NotificationLocalDataSource;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public fun deleteAllNotificationsByUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteNotificationById (Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllNotificationsByUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getNotificationById (Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllNotificationsByUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun upsertNotifications ([Lme/proton/core/notification/domain/entity/Notification;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/notification/data/repository/NotificationRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/data/repository/NotificationRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/data/repository/NotificationRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/notification/domain/repository/NotificationLocalDataSource;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/notification/data/repository/NotificationRepositoryImpl;
+}
+

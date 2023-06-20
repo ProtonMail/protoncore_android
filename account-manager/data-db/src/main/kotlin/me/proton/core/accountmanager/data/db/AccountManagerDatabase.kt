@@ -60,6 +60,9 @@ import me.proton.core.label.data.local.LabelDatabase
 import me.proton.core.label.data.local.LabelEntity
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
+import me.proton.core.notification.data.local.db.NotificationConverters
+import me.proton.core.notification.data.local.db.NotificationDatabase
+import me.proton.core.notification.data.local.db.NotificationEntity
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
@@ -127,7 +130,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         ObservabilityEventEntity::class,
         // key-transparency
         AddressChangeEntity::class,
-        SelfAuditResultEntity::class
+        SelfAuditResultEntity::class,
+        // notifications
+        NotificationEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -144,6 +149,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     LabelConverters::class,
     ChallengeConverters::class,
     PushConverters::class,
+    NotificationConverters::class,
 )
 abstract class AccountManagerDatabase :
     BaseDatabase(),
@@ -164,11 +170,12 @@ abstract class AccountManagerDatabase :
     PushDatabase,
     PaymentDatabase,
     ObservabilityDatabase,
-    KeyTransparencyDatabase {
+    KeyTransparencyDatabase,
+    NotificationDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 30
+        const val version = 31
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -200,6 +207,7 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_27_28,
             AccountManagerDatabaseMigrations.MIGRATION_28_29,
             AccountManagerDatabaseMigrations.MIGRATION_29_30,
+            AccountManagerDatabaseMigrations.MIGRATION_30_31,
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

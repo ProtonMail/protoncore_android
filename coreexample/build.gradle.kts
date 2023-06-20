@@ -223,6 +223,7 @@ dependencies {
         project(Module.strictModeUtil),
         project(Module.keyTransparency),
         project(Module.accountRecoveryPresentationCompose),
+        project(Module.notification),
 
         // Android
         activity,
