@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.implementation
+@file:Suppress("WildcardImport")
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
@@ -38,6 +38,9 @@ android {
 
 dependencies {
     api(
+        project(Module.dataRoom),
+        project(Module.domain),
+        project(Module.eventManagerDomain),
         project(Module.notificationDomain),
         project(Module.dataRoom),
         project(Module.domain),

@@ -31,6 +31,7 @@ android {
 dependencies {
     api(
         project(Module.notificationDagger),
+        project(Module.notificationData),
         project(Module.notificationDomain)
     )
 }

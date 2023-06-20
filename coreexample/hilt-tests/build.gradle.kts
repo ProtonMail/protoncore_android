@@ -93,6 +93,7 @@ dependencies {
         project(Module.mailMessage),
         project(Module.mailSettings),
         project(Module.network),
+        project(Module.notification),
         project(Module.observabilityDagger),
         project(Module.payment),
         project(Module.paymentIap),

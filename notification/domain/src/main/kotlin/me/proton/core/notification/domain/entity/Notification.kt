@@ -18,8 +18,10 @@
 
 package me.proton.core.notification.domain.entity
 
+import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 
+@Serializable
 public data class NotificationId(val id: String)
 
 public data class Notification(

@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.api
 
 plugins {
     protonKotlinLibrary
+    kotlin("plugin.serialization")
 }
 
 publishOption.shouldBePublishedAsLib = true

@@ -25,7 +25,7 @@ import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationId
 
 @Serializable
-internal data class NotificationResponse(
+public data class NotificationResponse(
     @SerialName("ID")
     val notificationId: String,
     @SerialName("Time")

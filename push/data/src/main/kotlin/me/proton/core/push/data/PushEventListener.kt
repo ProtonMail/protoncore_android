@@ -43,7 +43,7 @@ public open class PushEventListener @Inject constructor(
 ) : EventListener<String, Push>() {
 
     override val type: Type = Type.Core
-    override val order: Int = 1
+    override val order: Int = 99 // Latest to execute.
 
     override suspend fun deserializeEvents(
         config: EventManagerConfig,
