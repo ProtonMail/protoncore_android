@@ -22,9 +22,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountrecovery.presentation.compose.R
-import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
@@ -39,24 +40,31 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
+    private val userId by lazy { UserId(input.userId) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             ProtonTheme {
-                AccountRecoveryDialog(
-                    userId = UserId(input.userId),
-                    onClosed = { setResultAndFinish() },
-                    onError = {
-                        errorToast(
-                            it?.getUserMessage(resources)
-                                ?: getString(R.string.presentation_error_general)
-                        )
-                        setResultAndFinish()
-                    }
-                )
+                NavHost(
+                    navController = rememberNavController(),
+                    startDestination = Route.Recovery.Deeplink
+                ) {
+                    addAccountRecoveryDialog(
+                        userId = userId,
+                        onClosed = { setResultAndFinish() },
+                        onError = { showErrorAndFinish(it) }
+                    )
+                }
             }
         }
+    }
+
+    private fun showErrorAndFinish(error: Throwable?) {
+        val message = error?.getUserMessage(resources)
+        errorToast(message ?: getString(R.string.presentation_error_general))
+        setResultAndFinish()
     }
 
     private fun setResultAndFinish() {
@@ -68,9 +76,8 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
 
         const val ARG_INPUT = "arg.accountRecoveryDialogInput"
 
-        fun start(context: Context, input: AccountRecoveryDialogInput) {
+        fun start(context: Context, input: AccountRecoveryDialogInput) =
             context.startActivity(getIntent(context, input))
-        }
 
         fun getIntent(context: Context, input: AccountRecoveryDialogInput): Intent =
             Intent(context, AccountRecoveryDialogActivity::class.java).apply {

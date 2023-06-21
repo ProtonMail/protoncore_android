@@ -56,7 +56,6 @@ import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
-import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogType
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity

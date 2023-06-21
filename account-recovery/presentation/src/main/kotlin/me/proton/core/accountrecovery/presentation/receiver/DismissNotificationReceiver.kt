@@ -23,8 +23,8 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountrecovery.domain.AccountRecoveryNotificationManager
-import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserRecovery
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,7 +38,7 @@ public class DismissNotificationReceiver : BroadcastReceiver() {
         }
 
     override fun onReceive(context: Context, intent: Intent) {
-        notificationManager.updateNotification(AccountRecoveryState.None, intent.userId)
+        notificationManager.updateNotification(UserRecovery.State.None, intent.userId)
     }
 
     internal companion object {

@@ -20,7 +20,6 @@ package me.proton.core.accountrecovery.presentation.notification
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import androidx.core.graphics.drawable.IconCompat
 import androidx.test.core.app.ApplicationProvider
 import io.mockk.MockKAnnotations
@@ -28,11 +27,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
 import io.mockk.verify
-import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.accountrecovery.domain.GetAccountRecoveryChannelId
 import me.proton.core.accountrecovery.presentation.R
 import me.proton.core.accountrecovery.presentation.internal.GetNotificationId
@@ -40,7 +37,7 @@ import me.proton.core.accountrecovery.presentation.internal.GetNotificationTag
 import me.proton.core.accountrecovery.presentation.internal.HasNotificationPermission
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.user.domain.entity.UserRecovery
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.AfterTest
@@ -88,7 +85,7 @@ class ShowNotificationImplTest {
         every { hasNotificationPermission() } returns false
 
         // WHEN
-        tested(AccountRecoveryState.ResetPassword, UserId("user-id"))
+        tested(UserRecovery.State.Insecure, UserId("user-id"))
 
         // THEN
         verify(exactly = 0) { getNotificationId() }
@@ -102,7 +99,7 @@ class ShowNotificationImplTest {
         every { hasNotificationPermission() } returns true
 
         // WHEN
-        tested(AccountRecoveryState.None, UserId("user-id"))
+        tested(UserRecovery.State.None, UserId("user-id"))
 
         // THEN
         verify(exactly = 0) { getNotificationId() }
@@ -121,7 +118,7 @@ class ShowNotificationImplTest {
         every { getNotificationTag(any()) } returns "notification-tag"
 
         // WHEN
-        tested(AccountRecoveryState.ResetPassword, userId)
+        tested(UserRecovery.State.Insecure, userId)
 
         // THEN
         verify { getNotificationId() }
@@ -132,7 +129,7 @@ class ShowNotificationImplTest {
     fun postNotificationResetPasswordStateTextTest() {
         // GIVEN
         val userId = UserId("user-id")
-        val testState = AccountRecoveryState.ResetPassword
+        val testState = UserRecovery.State.Insecure
         val packageManager = spyk<PackageManager>()
         val contextSpy = spyk(context)
         val stringResourceSlot = mutableListOf<Int>()
@@ -168,7 +165,7 @@ class ShowNotificationImplTest {
     fun postNotificationGracePeriodStateTextTest() {
         // GIVEN
         val userId = UserId("user-id")
-        val testState = AccountRecoveryState.GracePeriod
+        val testState = UserRecovery.State.Grace
         val packageManager = spyk<PackageManager>()
         val contextSpy = spyk(context)
         val stringResourceSlot = mutableListOf<Int>()
@@ -204,7 +201,7 @@ class ShowNotificationImplTest {
     fun postNotificationVoidStateTextTest() {
         // GIVEN
         val userId = UserId("user-id")
-        val testState = AccountRecoveryState.None
+        val testState = UserRecovery.State.None
         val packageManager = spyk<PackageManager>()
         val contextSpy = spyk(context)
         val stringResourceSlot = mutableListOf<Int>()
@@ -235,7 +232,7 @@ class ShowNotificationImplTest {
     fun postNotificationCancelledStateTextTest() {
         // GIVEN
         val userId = UserId("user-id")
-        val testState = AccountRecoveryState.Cancelled
+        val testState = UserRecovery.State.Cancelled
         val packageManager = spyk<PackageManager>()
         val contextSpy = spyk(context)
         val stringResourceSlot = mutableListOf<Int>()

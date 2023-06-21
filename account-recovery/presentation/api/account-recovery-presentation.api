@@ -104,11 +104,11 @@ public final class me/proton/core/accountrecovery/presentation/notification/Canc
 }
 
 public final class me/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl : me/proton/core/accountrecovery/domain/ShowNotification {
-	public fun invoke (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;Lme/proton/core/domain/entity/UserId;)V
+	public fun invoke (Lme/proton/core/user/domain/entity/UserRecovery$State;Lme/proton/core/domain/entity/UserId;)V
 }
 
 public final class me/proton/core/accountrecovery/presentation/notification/ShowNotificationImplKt {
-	public static final fun getContentTextResource (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;)Ljava/lang/Integer;
+	public static final fun getContentTextResource (Lme/proton/core/user/domain/entity/UserRecovery$State;)Ljava/lang/Integer;
 	public static final fun getSmallIconResId (Lme/proton/core/domain/entity/Product;)I
 }
 

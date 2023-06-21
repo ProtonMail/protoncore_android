@@ -25,6 +25,11 @@ plugins {
     id("kotlin-parcelize")
 }
 
+protonCoverage {
+    minBranchCoveragePercentage.set(82)
+    minLineCoveragePercentage.set(78)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 android {

@@ -1,21 +1,7 @@
 public final class me/proton/core/accountrecovery/domain/AccountRecoveryNotificationManager {
 	public fun <init> (Lme/proton/core/accountrecovery/domain/CancelNotifications;Lme/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel;Lme/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled;Lme/proton/core/accountrecovery/domain/ShowNotification;)V
 	public final fun setupNotificationChannel ()V
-	public final fun updateNotification (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;Lme/proton/core/domain/entity/UserId;)V
-}
-
-public final class me/proton/core/accountrecovery/domain/AccountRecoveryState : java/lang/Enum {
-	public static final field Cancelled Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-	public static final field Expired Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-	public static final field GracePeriod Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-	public static final field None Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-	public static final field ResetPassword Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-	public static fun values ()[Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
-}
-
-public final class me/proton/core/accountrecovery/domain/AccountRecoveryStateKt {
-	public static final fun toAccountRecoveryState (Lme/proton/core/domain/type/IntEnum;)Lme/proton/core/accountrecovery/domain/AccountRecoveryState;
+	public final fun updateNotification (Lme/proton/core/user/domain/entity/UserRecovery$State;Lme/proton/core/domain/entity/UserId;)V
 }
 
 public abstract interface class me/proton/core/accountrecovery/domain/CancelNotifications {
@@ -35,7 +21,7 @@ public abstract interface class me/proton/core/accountrecovery/domain/IsAccountR
 }
 
 public abstract interface class me/proton/core/accountrecovery/domain/ShowNotification {
-	public abstract fun invoke (Lme/proton/core/accountrecovery/domain/AccountRecoveryState;Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun invoke (Lme/proton/core/user/domain/entity/UserRecovery$State;Lme/proton/core/domain/entity/UserId;)V
 }
 
 public abstract interface class me/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository {
@@ -47,9 +33,9 @@ public final class me/proton/core/accountrecovery/domain/usecase/CancelRecovery 
 	public final fun invoke (Ljava/lang/String;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState {
+public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserRecoveryState {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
-	public static synthetic fun invoke$default (Lme/proton/core/accountrecovery/domain/usecase/ObserveAccountRecoveryState;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun invoke$default (Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecoveryState;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 }
 

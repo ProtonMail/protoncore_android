@@ -30,7 +30,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.graphics.drawable.IconCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.accountrecovery.domain.GetAccountRecoveryChannelId
 import me.proton.core.accountrecovery.domain.ShowNotification
 import me.proton.core.accountrecovery.presentation.R
@@ -40,6 +39,7 @@ import me.proton.core.accountrecovery.presentation.internal.HasNotificationPermi
 import me.proton.core.accountrecovery.presentation.receiver.DismissNotificationReceiver
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserRecovery
 import javax.inject.Inject
 
 public class ShowNotificationImpl @Inject internal constructor(
@@ -52,8 +52,8 @@ public class ShowNotificationImpl @Inject internal constructor(
 ) : ShowNotification {
     @SuppressLint("InlinedApi")
     @RequiresPermission(POST_NOTIFICATIONS)
-    override fun invoke(forState: AccountRecoveryState, userId: UserId) {
-        if (!hasNotificationPermission() || forState == AccountRecoveryState.None) return
+    override fun invoke(forState: UserRecovery.State, userId: UserId) {
+        if (!hasNotificationPermission() || forState == UserRecovery.State.None) return
 
         val notification = NotificationCompat.Builder(context, getAccountRecoveryChannelId())
             .setSmallIcon(getSmallIcon())
@@ -116,12 +116,12 @@ public class ShowNotificationImpl @Inject internal constructor(
     }
 }
 
-public fun AccountRecoveryState.getContentTextResource(): Int? = when (this) {
-    AccountRecoveryState.None -> null
-    AccountRecoveryState.GracePeriod -> R.string.account_recovery_notification_content_grace_period
-    AccountRecoveryState.ResetPassword -> R.string.account_recovery_notification_content_reset_password
-    AccountRecoveryState.Cancelled -> R.string.account_recovery_notification_content_cancelled
-    AccountRecoveryState.Expired -> R.string.account_recovery_notification_content_expired
+public fun UserRecovery.State.getContentTextResource(): Int? = when (this) {
+    UserRecovery.State.None -> null
+    UserRecovery.State.Grace -> R.string.account_recovery_notification_content_grace_period
+    UserRecovery.State.Insecure -> R.string.account_recovery_notification_content_reset_password
+    UserRecovery.State.Cancelled -> R.string.account_recovery_notification_content_cancelled
+    UserRecovery.State.Expired -> R.string.account_recovery_notification_content_expired
 }
 
 public fun Product.getSmallIconResId(): Int = when (this) {
@@ -131,4 +131,3 @@ public fun Product.getSmallIconResId(): Int = when (this) {
     Product.Vpn -> R.drawable.ic_proton_brand_proton_vpn
     Product.Pass -> R.drawable.ic_proton_brand_proton_pass
 }
-

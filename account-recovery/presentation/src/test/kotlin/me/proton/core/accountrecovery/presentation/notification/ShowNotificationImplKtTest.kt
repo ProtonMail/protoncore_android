@@ -20,9 +20,9 @@ package me.proton.core.accountrecovery.presentation.notification
 
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.accountrecovery.presentation.R
 import me.proton.core.domain.entity.Product
+import me.proton.core.user.domain.entity.UserRecovery
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -43,19 +43,19 @@ class ShowNotificationImplKtTest {
 
     @Test
     fun testContentTextResourcesPerState() {
-        var state = AccountRecoveryState.None
+        var state = UserRecovery.State.None
         var result = state.getContentTextResource()
         assertNull(result)
 
-        state = AccountRecoveryState.ResetPassword
+        state = UserRecovery.State.Insecure
         result = state.getContentTextResource()
         assertEquals(R.string.account_recovery_notification_content_reset_password, result)
 
-        state = AccountRecoveryState.Cancelled
+        state = UserRecovery.State.Cancelled
         result = state.getContentTextResource()
         assertEquals(R.string.account_recovery_notification_content_cancelled, result)
 
-        state = AccountRecoveryState.GracePeriod
+        state = UserRecovery.State.Grace
         result = state.getContentTextResource()
         assertEquals(R.string.account_recovery_notification_content_grace_period, result)
     }

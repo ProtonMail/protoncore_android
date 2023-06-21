@@ -19,6 +19,7 @@
 package me.proton.core.accountrecovery.domain
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserRecovery
 import javax.inject.Inject
 
 public class AccountRecoveryNotificationManager @Inject constructor(
@@ -39,12 +40,12 @@ public class AccountRecoveryNotificationManager @Inject constructor(
 
     /** Shows a notification for a given [forState].
      * Any previous notifications for account recovery for the [userId] are cancelled if:
-     * - the [forState] is equal to [AccountRecoveryState.None];
+     * - the [forState] is equal to [UserRecovery.State.None];
      * - the method [updateNotification] is called again.
      */
-    public fun updateNotification(forState: AccountRecoveryState, userId: UserId) {
+    public fun updateNotification(forState: UserRecovery.State, userId: UserId) {
         if (!isAccountRecoveryEnabled()) return
-        if (forState == AccountRecoveryState.None) {
+        if (forState == UserRecovery.State.None) {
             cancelNotifications(userId)
             return
         }

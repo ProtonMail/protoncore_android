@@ -58,7 +58,6 @@ internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 @Composable
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
-    userId: UserId,
     viewModel: AccountRecoveryViewModel = hiltViewModel(),
     onClosed: () -> Unit,
     onError: (Throwable?) -> Unit
@@ -67,7 +66,7 @@ fun AccountRecoveryDialog(
 
     LaunchedEffect(state) {
         when (val current = state) {
-            is AccountRecoveryViewModel.State.Loading -> viewModel.setUser(userId)
+            is AccountRecoveryViewModel.State.Loading -> Unit
             is AccountRecoveryViewModel.State.Closed -> onClosed()
             is AccountRecoveryViewModel.State.Error -> onError(current.throwable)
             is AccountRecoveryViewModel.State.Opened -> Unit

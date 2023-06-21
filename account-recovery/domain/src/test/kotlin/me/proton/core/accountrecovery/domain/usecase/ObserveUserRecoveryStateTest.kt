@@ -23,7 +23,6 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
-import me.proton.core.accountrecovery.domain.AccountRecoveryState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.network.domain.session.SessionId
@@ -34,10 +33,9 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class ObserveAccountRecoveryStateTest {
+class ObserveUserRecoveryStateTest {
 
     private val testUserId = UserId("test-user-id")
-
     private val testUser = User(
         userId = testUserId,
         email = null,
@@ -62,33 +60,27 @@ class ObserveAccountRecoveryStateTest {
     ),
         keys = emptyList()
     )
-    private val user = MutableStateFlow<User?>(null)
-    private val observeUser = mockk<UserManager>(relaxed = true) {
+    private val testUserNullRecovery = testUser.copy(recovery = null)
+
+    private val user = MutableStateFlow(testUserNullRecovery)
+    private val userManager = mockk<UserManager>(relaxed = true) {
+        coEvery { this@mockk.getUser(testUserId, any()) } returns user.value
         coEvery { this@mockk.observeUser(testUserId, any()) } returns user
     }
 
-    private lateinit var useCase: ObserveAccountRecoveryState
+    private lateinit var useCase: ObserveUserRecoveryState
 
     @Before
     fun beforeEveryTest() {
-        useCase = ObserveAccountRecoveryState(observeUser)
+        useCase = ObserveUserRecoveryState(userManager)
     }
 
     @Test
-    fun `null user returns state none`() = runTest {
+    fun `null user recovery returns state none`() = runTest {
         // WHEN
         useCase.invoke(testUserId, true).test {
             // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
-        }
-    }
-
-    @Test
-    fun `null user returns state none default refresh`() = runTest {
-        // WHEN
-        useCase.invoke(testUserId).test {
-            // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            assertEquals(UserRecovery.State.None, awaitItem())
         }
     }
 
@@ -97,10 +89,10 @@ class ObserveAccountRecoveryStateTest {
         // WHEN
         useCase.invoke(testUserId, true).test {
             // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            assertEquals(UserRecovery.State.None, awaitItem())
 
             user.emit(testUser)
-            assertEquals(AccountRecoveryState.GracePeriod, awaitItem())
+            assertEquals(UserRecovery.State.Grace, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -110,13 +102,13 @@ class ObserveAccountRecoveryStateTest {
         // WHEN
         useCase.invoke(testUserId, true).test {
             // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            assertEquals(UserRecovery.State.None, awaitItem())
 
             user.emit(testUser)
-            assertEquals(AccountRecoveryState.GracePeriod, awaitItem())
+            assertEquals(UserRecovery.State.Grace, awaitItem())
 
-            user.emit(null)
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            user.emit(testUserNullRecovery)
+            assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -126,34 +118,13 @@ class ObserveAccountRecoveryStateTest {
         // WHEN
         useCase.invoke(testUserId, false).test {
             // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            assertEquals(UserRecovery.State.None, awaitItem())
 
             user.emit(testUser)
-            assertEquals(AccountRecoveryState.GracePeriod, awaitItem())
+            assertEquals(UserRecovery.State.Grace, awaitItem())
 
-            user.emit(null)
-            assertEquals(AccountRecoveryState.None, awaitItem())
-            cancelAndConsumeRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `user returns state none`() = runTest {
-        // WHEN
-        useCase.invoke(testUserId, false).test {
-            // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
-
-            user.emit(testUser.copy(
-                recovery = UserRecovery(
-                    state = IntEnum(1, null),
-                    startTime = 1L,
-                    endTime = 10L,
-                    sessionId = SessionId("test-session-id"),
-                    reason = UserRecovery.Reason.Authentication
-                )
-            ))
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            user.emit(testUserNullRecovery)
+            assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -163,7 +134,7 @@ class ObserveAccountRecoveryStateTest {
         // WHEN
         useCase.invoke(testUserId, false).test {
             // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            assertEquals(UserRecovery.State.None, awaitItem())
 
             user.emit(testUser.copy(
                 recovery = UserRecovery(
@@ -174,10 +145,10 @@ class ObserveAccountRecoveryStateTest {
                     reason = UserRecovery.Reason.Authentication
                 )
             ))
-            assertEquals(AccountRecoveryState.ResetPassword, awaitItem())
+            assertEquals(UserRecovery.State.Insecure, awaitItem())
 
-            user.emit(null)
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            user.emit(testUserNullRecovery)
+            assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -187,7 +158,7 @@ class ObserveAccountRecoveryStateTest {
         // WHEN
         useCase.invoke(testUserId, false).test {
             // THEN
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            assertEquals(UserRecovery.State.None, awaitItem())
 
             user.emit(testUser.copy(
                 recovery = UserRecovery(
@@ -198,10 +169,10 @@ class ObserveAccountRecoveryStateTest {
                     reason = UserRecovery.Reason.Authentication
                 )
             ))
-            assertEquals(AccountRecoveryState.Cancelled, awaitItem())
+            assertEquals(UserRecovery.State.Cancelled, awaitItem())
 
-            user.emit(null)
-            assertEquals(AccountRecoveryState.None, awaitItem())
+            user.emit(testUserNullRecovery)
+            assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }

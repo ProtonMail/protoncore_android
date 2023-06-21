@@ -24,6 +24,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
 import io.mockk.verify
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserRecovery
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -91,7 +92,7 @@ class AccountRecoveryNotificationManagerTest {
         every { isAccountRecoveryEnabled() } returns false
 
         // WHEN
-        tested.updateNotification(AccountRecoveryState.GracePeriod, UserId("user-id"))
+        tested.updateNotification(UserRecovery.State.Grace, UserId("user-id"))
 
         // THEN
         verify(exactly = 0) { getAccountRecoveryChannelId() }
@@ -106,7 +107,7 @@ class AccountRecoveryNotificationManagerTest {
         justRun { cancelNotifications(any()) }
 
         // WHEN
-        tested.updateNotification(AccountRecoveryState.None, UserId("user-id"))
+        tested.updateNotification(UserRecovery.State.None, UserId("user-id"))
 
         // THEN
         verify(exactly = 1) { cancelNotifications(UserId("user-id")) }
@@ -120,13 +121,13 @@ class AccountRecoveryNotificationManagerTest {
         justRun { showNotification(any(), any()) }
 
         // WHEN
-        tested.updateNotification(AccountRecoveryState.ResetPassword, UserId("user-id"))
+        tested.updateNotification(UserRecovery.State.Insecure, UserId("user-id"))
 
         // THEN
         verify(exactly = 0) { cancelNotifications(any()) }
         verify(exactly = 1) {
             showNotification(
-                AccountRecoveryState.ResetPassword,
+                UserRecovery.State.Insecure,
                 UserId("user-id")
             )
         }

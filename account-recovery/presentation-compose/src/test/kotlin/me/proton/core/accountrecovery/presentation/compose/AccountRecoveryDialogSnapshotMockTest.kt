@@ -20,6 +20,7 @@ package me.proton.core.accountrecovery.presentation.compose
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.SavedStateHandle
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import io.mockk.every
@@ -28,8 +29,9 @@ import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
-import me.proton.core.accountrecovery.domain.usecase.ObserveAccountRecoveryState
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoveryState
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
+import me.proton.core.accountrecovery.presentation.compose.ui.Arg
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -40,7 +42,11 @@ import org.junit.Test
 
 class AccountRecoveryDialogSnapshotMockTest {
 
-    private val observeAccountRecoveryState = mockk<ObserveAccountRecoveryState>(relaxed = true)
+    private val testUserId = UserId("test-user-id")
+    private val savedStateHandle = mockk<SavedStateHandle> {
+        every { this@mockk.get<String>(Arg.UserId) } returns testUserId.id
+    }
+    private val observeUserRecoveryState = mockk<ObserveUserRecoveryState>(relaxed = true)
     private val cancelRecovery = mockk<CancelRecovery>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
 
@@ -50,12 +56,18 @@ class AccountRecoveryDialogSnapshotMockTest {
         theme = "ProtonTheme"
     )
 
-    private val testUserId = UserId("test-user-id")
     private lateinit var viewModel: AccountRecoveryViewModel
 
     @Before
     fun beforeEveryTest() {
-        viewModel = spyk(AccountRecoveryViewModel(observeAccountRecoveryState, cancelRecovery, keyStoreCrypto))
+        viewModel = spyk(
+            AccountRecoveryViewModel(
+                savedStateHandle = savedStateHandle,
+                observeUserRecoveryState = observeUserRecoveryState,
+                cancelRecovery = cancelRecovery,
+                keyStoreCrypto = keyStoreCrypto
+            )
+        )
     }
 
     @Test
@@ -63,7 +75,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         every { viewModel.state } returns MutableStateFlow(AccountRecoveryViewModel.State.Loading).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -78,7 +89,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -93,7 +103,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -108,7 +117,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -123,7 +131,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -138,7 +145,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -153,7 +159,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -168,7 +173,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -183,7 +187,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -198,7 +201,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}
@@ -214,7 +216,6 @@ class AccountRecoveryDialogSnapshotMockTest {
         paparazzi.snapshot {
             AccountRecoveryDialog(
                 modifier = Modifier.padding(end = ProtonDimens.DefaultSpacing),
-                userId = testUserId,
                 viewModel = viewModel,
                 onClosed = {},
                 onError = {}

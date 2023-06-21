@@ -19,6 +19,6 @@
 package me.proton.core.accountrecovery.presentation.compose
 
 object LogTag {
-    /** Tag for Account Recovery User observation. */
-    const val ERROR_OBSERVING_USER = "core.accountrecovery.error.observing.user"
+    /** Tag for Account Recovery User Recovery State observation. */
+    const val ERROR_OBSERVING_STATE = "core.accountrecovery.error.observing.state"
 }

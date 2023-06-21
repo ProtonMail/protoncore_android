@@ -19,10 +19,11 @@
 package me.proton.core.accountrecovery.domain
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserRecovery
 
 public interface ShowNotification {
     /** Shows a notification for the given [forState].
      * Any previous notifications for the same [userId] are cancelled.
      */
-    public operator fun invoke(forState: AccountRecoveryState, userId: UserId)
+    public operator fun invoke(forState: UserRecovery.State, userId: UserId)
 }

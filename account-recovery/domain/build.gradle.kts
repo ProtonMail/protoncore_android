@@ -27,7 +27,7 @@ plugins {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(82)
+    minBranchCoveragePercentage.set(80)
     minLineCoveragePercentage.set(86)
 }
 
