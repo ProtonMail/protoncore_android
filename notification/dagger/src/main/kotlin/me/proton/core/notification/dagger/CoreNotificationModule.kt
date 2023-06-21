@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,17 +28,47 @@ import me.proton.core.notification.data.repository.NotificationRepositoryImpl
 import me.proton.core.notification.domain.repository.NotificationLocalDataSource
 import me.proton.core.notification.domain.repository.NotificationRemoteDataSource
 import me.proton.core.notification.domain.repository.NotificationRepository
+import me.proton.core.notification.domain.usecase.CancelNotificationView
+import me.proton.core.notification.domain.usecase.ConfigureNotificationChannel
+import me.proton.core.notification.domain.usecase.GetNotificationChannelId
+import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.ShowNotificationView
+import me.proton.core.notification.presentation.usecase.CancelNotificationViewImpl
+import me.proton.core.notification.presentation.usecase.ConfigureNotificationChannelImpl
+import me.proton.core.notification.presentation.usecase.GetNotificationChannelIdImpl
+import me.proton.core.notification.presentation.usecase.IsNotificationsEnabledImpl
+import me.proton.core.notification.presentation.usecase.ShowNotificationViewImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-public abstract class CoreNotificationModule {
+public interface CoreNotificationModule {
+    @Binds
+    public fun bindCancelNotification(impl: CancelNotificationViewImpl): CancelNotificationView
 
     @Binds
-    public abstract fun bindNotificationLocalDataSource(impl: NotificationLocalDataSourceImpl): NotificationLocalDataSource
+    public fun bindConfigureNotificationChannel(
+        impl: ConfigureNotificationChannelImpl
+    ): ConfigureNotificationChannel
 
     @Binds
-    public abstract fun bindNotificationRemoteDataSource(impl: NotificationRemoteDataSourceImpl): NotificationRemoteDataSource
+    public fun bindGetNotificationChannelId(
+        impl: GetNotificationChannelIdImpl
+    ): GetNotificationChannelId
 
     @Binds
-    public abstract fun provideNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
+    public fun bindIsNotificationsEnabled(
+        impl: IsNotificationsEnabledImpl
+    ): IsNotificationsEnabled
+
+    @Binds
+    public fun bindNotificationLocalDataSource(impl: NotificationLocalDataSourceImpl): NotificationLocalDataSource
+
+    @Binds
+    public fun bindNotificationRemoteDataSource(impl: NotificationRemoteDataSourceImpl): NotificationRemoteDataSource
+
+    @Binds
+    public fun bindNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
+
+    @Binds
+    public fun bindShowNotification(impl: ShowNotificationViewImpl): ShowNotificationView
 }

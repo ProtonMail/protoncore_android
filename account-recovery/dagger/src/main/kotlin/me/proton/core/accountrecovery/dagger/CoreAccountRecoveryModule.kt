@@ -22,18 +22,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.accountrecovery.presentation.notification.CancelNotificationsImpl
 import me.proton.core.accountrecovery.data.IsAccountRecoveryEnabledImpl
 import me.proton.core.accountrecovery.data.repository.AccountRecoveryRepositoryImpl
-import me.proton.core.accountrecovery.presentation.notification.ShowNotificationImpl
-import me.proton.core.accountrecovery.domain.CancelNotifications
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
-import me.proton.core.accountrecovery.domain.ConfigureAccountRecoveryChannel
-import me.proton.core.accountrecovery.presentation.ConfigureAccountRecoveryChannelImpl
-import me.proton.core.accountrecovery.presentation.GetAccountRecoveryChannelIdImpl
-import me.proton.core.accountrecovery.domain.GetAccountRecoveryChannelId
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
-import me.proton.core.accountrecovery.domain.ShowNotification
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,23 +36,7 @@ public interface CoreAccountRecoveryModule {
     ): AccountRecoveryRepository
 
     @Binds
-    public fun bindCancelNotification(impl: CancelNotificationsImpl): CancelNotifications
-
-    @Binds
-    public fun bindConfigureAccountRecoveryChannel(
-        impl: ConfigureAccountRecoveryChannelImpl
-    ): ConfigureAccountRecoveryChannel
-
-    @Binds
-    public fun bindGetAccountRecoveryChannelId(
-        impl: GetAccountRecoveryChannelIdImpl
-    ): GetAccountRecoveryChannelId
-
-    @Binds
     public fun bindIsAccountRecoveryEnabled(
         impl: IsAccountRecoveryEnabledImpl
     ): IsAccountRecoveryEnabled
-
-    @Binds
-    public fun bindShowNotification(impl: ShowNotificationImpl): ShowNotification
 }

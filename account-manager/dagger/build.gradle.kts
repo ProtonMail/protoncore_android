@@ -38,6 +38,6 @@ dependencies {
         project(Module.networkDomain),
     )
     implementation(
-        project(Module.accountRecoveryDagger)
+        project(Module.notificationDagger),
     )
 }

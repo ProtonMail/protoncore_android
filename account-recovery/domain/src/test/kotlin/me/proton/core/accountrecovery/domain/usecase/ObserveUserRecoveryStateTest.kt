@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
@@ -62,17 +63,30 @@ class ObserveUserRecoveryStateTest {
     )
     private val testUserNullRecovery = testUser.copy(recovery = null)
 
-    private val user = MutableStateFlow(testUserNullRecovery)
-    private val userManager = mockk<UserManager>(relaxed = true) {
-        coEvery { this@mockk.getUser(testUserId, any()) } returns user.value
-        coEvery { this@mockk.observeUser(testUserId, any()) } returns user
-    }
+    private lateinit var userFlow: MutableStateFlow<User?>
+    private lateinit var userManager: UserManager
 
     private lateinit var useCase: ObserveUserRecoveryState
 
     @Before
     fun beforeEveryTest() {
+        prepareMocks(testUserNullRecovery)
         useCase = ObserveUserRecoveryState(userManager)
+    }
+
+    @Test
+    fun `null user returns state none`() = runTest {
+        // WHEN
+        useCase.invoke(testUserId, true).test {
+            // THEN
+            assertEquals(UserRecovery.State.None, awaitItem())
+
+            userFlow.emit(testUser)
+            assertEquals(UserRecovery.State.Grace, awaitItem())
+
+            userFlow.emit(null)
+            assertEquals(UserRecovery.State.None, awaitItem())
+        }
     }
 
     @Test
@@ -91,7 +105,7 @@ class ObserveUserRecoveryStateTest {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
-            user.emit(testUser)
+            userFlow.emit(testUser)
             assertEquals(UserRecovery.State.Grace, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -104,10 +118,10 @@ class ObserveUserRecoveryStateTest {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
-            user.emit(testUser)
+            userFlow.emit(testUser)
             assertEquals(UserRecovery.State.Grace, awaitItem())
 
-            user.emit(testUserNullRecovery)
+            userFlow.emit(testUserNullRecovery)
             assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -120,10 +134,10 @@ class ObserveUserRecoveryStateTest {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
-            user.emit(testUser)
+            userFlow.emit(testUser)
             assertEquals(UserRecovery.State.Grace, awaitItem())
 
-            user.emit(testUserNullRecovery)
+            userFlow.emit(testUserNullRecovery)
             assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -136,7 +150,7 @@ class ObserveUserRecoveryStateTest {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
-            user.emit(testUser.copy(
+            userFlow.emit(testUser.copy(
                 recovery = UserRecovery(
                     state = IntEnum(1, UserRecovery.State.Insecure),
                     startTime = 1L,
@@ -147,7 +161,7 @@ class ObserveUserRecoveryStateTest {
             ))
             assertEquals(UserRecovery.State.Insecure, awaitItem())
 
-            user.emit(testUserNullRecovery)
+            userFlow.emit(testUserNullRecovery)
             assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -160,7 +174,7 @@ class ObserveUserRecoveryStateTest {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
-            user.emit(testUser.copy(
+            userFlow.emit(testUser.copy(
                 recovery = UserRecovery(
                     state = IntEnum(1, UserRecovery.State.Cancelled),
                     startTime = 1L,
@@ -171,9 +185,17 @@ class ObserveUserRecoveryStateTest {
             ))
             assertEquals(UserRecovery.State.Cancelled, awaitItem())
 
-            user.emit(testUserNullRecovery)
+            userFlow.emit(testUserNullRecovery)
             assertEquals(UserRecovery.State.None, awaitItem())
             cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    private fun prepareMocks(user: User) {
+        userFlow = MutableStateFlow(user)
+        userManager = mockk(relaxed = true) {
+            coEvery { this@mockk.getUser(testUserId, any()) } returns user
+            coEvery { this@mockk.observeUser(testUserId, any()) } returns userFlow
         }
     }
 }

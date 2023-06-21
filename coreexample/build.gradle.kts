@@ -195,6 +195,7 @@ dependencies {
 
         project(Module.account),
         project(Module.accountManager),
+        project(Module.accountRecovery),
         project(Module.auth),
         project(Module.challenge),
         project(Module.contact),
@@ -223,8 +224,6 @@ dependencies {
         project(Module.userSettings),
         project(Module.strictModeUtil),
         project(Module.keyTransparency),
-        project(Module.accountRecoveryPresentationCompose),
-        project(Module.notification),
 
         // Android
         activity,

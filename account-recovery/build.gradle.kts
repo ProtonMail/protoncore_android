@@ -32,7 +32,7 @@ android {
 dependencies {
     api(
         project(Module.accountRecoveryDagger),
-        project(Module.accountRecoveryPresentation),
+        project(Module.accountRecoveryPresentationCompose),
         project(Module.accountRecoveryDomain)
     )
     implementation(

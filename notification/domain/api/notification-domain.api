@@ -1,3 +1,11 @@
+public final class me/proton/core/notification/domain/ProtonNotificationManager {
+	public fun <init> (Lme/proton/core/notification/domain/usecase/CancelNotificationView;Lme/proton/core/notification/domain/usecase/ConfigureNotificationChannel;Lme/proton/core/notification/domain/usecase/GetNotificationChannelId;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)V
+	public final fun dismiss (Lme/proton/core/notification/domain/entity/Notification;)V
+	public final fun dismiss (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;)V
+	public final fun setupNotificationChannel ()V
+	public final fun show (Lme/proton/core/notification/domain/entity/Notification;)V
+}
+
 public final class me/proton/core/notification/domain/entity/Notification {
 	public fun <init> (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Lme/proton/core/notification/domain/entity/NotificationPayload;)V
 	public final fun component1 ()Lme/proton/core/notification/domain/entity/NotificationId;
@@ -108,5 +116,26 @@ public final class me/proton/core/notification/domain/repository/NotificationRep
 	public static synthetic fun getAllNotificationsByUser$default (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getNotificationById$default (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun observeAllNotificationsByUser$default (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract interface class me/proton/core/notification/domain/usecase/CancelNotificationView {
+	public abstract fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
+	public abstract fun invoke (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;)V
+}
+
+public abstract interface class me/proton/core/notification/domain/usecase/ConfigureNotificationChannel {
+	public abstract fun invoke (Ljava/lang/String;)V
+}
+
+public abstract interface class me/proton/core/notification/domain/usecase/GetNotificationChannelId {
+	public abstract fun invoke ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/notification/domain/usecase/IsNotificationsEnabled {
+	public abstract fun invoke ()Z
+}
+
+public abstract interface class me/proton/core/notification/domain/usecase/ShowNotificationView {
+	public abstract fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
 }
 

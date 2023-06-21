@@ -33,6 +33,5 @@ dependencies {
     api(
         project(Module.accountRecoveryData),
         project(Module.accountRecoveryDomain),
-        project(Module.accountRecoveryPresentation),
     )
 }

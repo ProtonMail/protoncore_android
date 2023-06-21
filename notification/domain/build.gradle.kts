@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -17,6 +17,10 @@
  */
 
 import studio.forface.easygradle.dsl.api
+import studio.forface.easygradle.dsl.`coroutines-test`
+import studio.forface.easygradle.dsl.`kotlin-test`
+import studio.forface.easygradle.dsl.mockk
+import studio.forface.easygradle.dsl.testImplementation
 
 plugins {
     protonKotlinLibrary
@@ -25,8 +29,18 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    minLineCoveragePercentage.set(88)
+}
+
 dependencies {
     api(
         project(Module.domain)
+    )
+
+    testImplementation(
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
     )
 }

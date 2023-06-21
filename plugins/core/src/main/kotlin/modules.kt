@@ -62,6 +62,7 @@ public object Module {
     public const val notificationDagger: String = "$notification:notification-dagger"
     public const val notificationData: String = "$notification:notification-data"
     public const val notificationDomain: String = "$notification:notification-domain"
+    public const val notificationPresentation: String = "$notification:notification-presentation"
 
     // region Features
 
@@ -94,7 +95,6 @@ public object Module {
     public const val accountRecoveryDagger: String = "$accountRecovery:account-recovery-dagger"
     public const val accountRecoveryData: String = "$accountRecovery:account-recovery-data"
     public const val accountRecoveryDomain: String = "$accountRecovery:account-recovery-domain"
-    public const val accountRecoveryPresentation: String = "$accountRecovery:account-recovery-presentation"
     public const val accountRecoveryPresentationCompose: String = "$accountRecovery:account-recovery-presentation-compose"
 
     // Crypto

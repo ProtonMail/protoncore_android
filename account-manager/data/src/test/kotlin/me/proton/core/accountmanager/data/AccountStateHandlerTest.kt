@@ -27,8 +27,8 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
-import me.proton.core.accountrecovery.presentation.AccountRecoverySetup
 import me.proton.core.domain.entity.Product
+import me.proton.core.notification.presentation.NotificationSetup
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.user.domain.UserManager
@@ -43,7 +43,7 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var accountMigrator: AccountMigrator
 
     @MockK
-    private lateinit var accountRecoverySetup: AccountRecoverySetup
+    private lateinit var notificationSetup: NotificationSetup
 
     @MockK
     private lateinit var accountRepository: AccountRepository
@@ -70,7 +70,7 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
         testScheduler.runCurrent()
 
         // THEN
-        coVerify { accountRecoverySetup() }
+        coVerify { notificationSetup() }
     }
 
     private fun makeTested(product: Product = Product.Mail) {
@@ -78,9 +78,9 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
             scopeProvider = TestCoroutineScopeProvider(dispatchers),
             userManager = userManager,
             accountManager = accountManager,
-            accountRecoverySetup = accountRecoverySetup,
             accountRepository = accountRepository,
             accountMigrator = accountMigrator,
+            notificationSetup = notificationSetup,
             product = product
         ).let { spyk(it) }
     }

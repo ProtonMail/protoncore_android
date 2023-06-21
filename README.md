@@ -88,7 +88,6 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:account-recovery-dagger               |
 | me.proton.core:account-recovery-data                 |
 | me.proton.core:account-recovery-domain               |
-| me.proton.core:account-recovery-presentation         |
 | me.proton.core:account-recovery-presentation-compose |
 | me.proton.core:auth                                  |
 | me.proton.core:auth-dagger                           |
@@ -167,6 +166,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:notification-dagger                   |
 | me.proton.core:notification-data                     |
 | me.proton.core:notification-domain                   |
+| me.proton.core:notification-presentation             |
 | me.proton.core:observability                         |
 | me.proton.core:observability-dagger                  |
 | me.proton.core:observability-data                    |

@@ -11,10 +11,6 @@ public final class me/proton/core/accountrecovery/dagger/BuildConfig {
 
 public abstract interface class me/proton/core/accountrecovery/dagger/CoreAccountRecoveryModule {
 	public abstract fun bindAccountRecoveryRepository (Lme/proton/core/accountrecovery/data/repository/AccountRecoveryRepositoryImpl;)Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;
-	public abstract fun bindCancelNotification (Lme/proton/core/accountrecovery/presentation/notification/CancelNotificationsImpl;)Lme/proton/core/accountrecovery/domain/CancelNotifications;
-	public abstract fun bindConfigureAccountRecoveryChannel (Lme/proton/core/accountrecovery/presentation/ConfigureAccountRecoveryChannelImpl;)Lme/proton/core/accountrecovery/domain/ConfigureAccountRecoveryChannel;
-	public abstract fun bindGetAccountRecoveryChannelId (Lme/proton/core/accountrecovery/presentation/GetAccountRecoveryChannelIdImpl;)Lme/proton/core/accountrecovery/domain/GetAccountRecoveryChannelId;
 	public abstract fun bindIsAccountRecoveryEnabled (Lme/proton/core/accountrecovery/data/IsAccountRecoveryEnabledImpl;)Lme/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled;
-	public abstract fun bindShowNotification (Lme/proton/core/accountrecovery/presentation/notification/ShowNotificationImpl;)Lme/proton/core/accountrecovery/domain/ShowNotification;
 }
 

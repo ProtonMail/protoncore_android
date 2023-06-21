@@ -27,8 +27,8 @@ import me.proton.core.accountmanager.data.job.onInvalidUserKey
 import me.proton.core.accountmanager.data.job.onMigrationNeeded
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
-import me.proton.core.accountrecovery.presentation.AccountRecoverySetup
 import me.proton.core.domain.entity.Product
+import me.proton.core.notification.presentation.NotificationSetup
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
@@ -41,9 +41,9 @@ class AccountStateHandler @Inject constructor(
     internal val scopeProvider: CoroutineScopeProvider,
     internal val userManager: UserManager,
     internal val accountManager: AccountManager,
-    private val accountRecoverySetup: AccountRecoverySetup,
     private val accountRepository: AccountRepository,
     private val accountMigrator: AccountMigrator,
+    private val notificationSetup: NotificationSetup,
     private val product: Product,
 ) {
     fun start() {
@@ -64,7 +64,7 @@ class AccountStateHandler @Inject constructor(
             }
         }
         scopeProvider.GlobalDefaultSupervisedScope.launch {
-            accountRecoverySetup()
+            notificationSetup()
         }
     }
 }

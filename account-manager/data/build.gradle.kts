@@ -48,7 +48,7 @@ dependencies {
     implementation(
         project(Module.cryptoCommon),
         project(Module.keyDomain),
-        project(Module.accountRecoveryPresentation),
+        project(Module.notificationPresentation),
         `coroutines-core`,
     )
 
