@@ -1,0 +1,18 @@
+public class hilt_aggregated_deps/_me_proton_core_notification_dagger_CoreNotificationModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/notification/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract class me/proton/core/notification/dagger/CoreNotificationModule {
+	public fun <init> ()V
+	public abstract fun bindNotificationLocalDataSource (Lme/proton/core/notification/data/local/NotificationLocalDataSourceImpl;)Lme/proton/core/notification/domain/repository/NotificationLocalDataSource;
+	public abstract fun bindNotificationRemoteDataSource (Lme/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl;)Lme/proton/core/notification/domain/repository/NotificationRemoteDataSource;
+	public abstract fun provideNotificationRepository (Lme/proton/core/notification/data/repository/NotificationRepositoryImpl;)Lme/proton/core/notification/domain/repository/NotificationRepository;
+}
+
