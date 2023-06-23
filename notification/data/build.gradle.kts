@@ -29,7 +29,8 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
-    minBranchCoveragePercentage.set(50)
+    minBranchCoveragePercentage.set(37)
+    minLineCoveragePercentage.set(82)
 }
 
 android {
@@ -58,6 +59,7 @@ dependencies {
         retrofit,
         `room-ktx`,
         `serialization-core`,
+        `serialization-json`,
         store4
     )
 

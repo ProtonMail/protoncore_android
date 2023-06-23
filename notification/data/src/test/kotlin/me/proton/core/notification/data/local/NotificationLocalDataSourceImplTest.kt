@@ -125,9 +125,7 @@ internal class NotificationLocalDataSourceImplTest {
             testUserId,
             time = 1,
             type = "TestType1",
-            title = "Title 1",
-            subtitle = "Subtitle 1",
-            body = "Body 1"
+            payload = "{}"
         )
         val result = mockedLocalDataSource.getNotificationById(testUserId, testNotification1.notificationId)
         assertEquals(NotificationId("1"), result?.notificationId)
@@ -142,9 +140,7 @@ internal class NotificationLocalDataSourceImplTest {
                 testUserId,
                 time = 1,
                 type = "TestType1",
-                title = "Title 1",
-                subtitle = "Subtitle 1",
-                body = "Body 1"
+                payload = "{}"
             )
         )
         val result = mockedLocalDataSource.getNotificationsByUser(testUserId)
@@ -162,9 +158,7 @@ internal class NotificationLocalDataSourceImplTest {
                     testUserId,
                     time = 1,
                     type = "TestType1",
-                    title = "Title 1",
-                    subtitle = "Subtitle 1",
-                    body = "Body 1"
+                    payload = "{}"
                 )
             )
         )

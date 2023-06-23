@@ -29,7 +29,20 @@ public data class Notification(
     val userId: UserId,
     val time: Long,
     val type: String,
-    val title: String?,
-    val subtitle: String?,
-    val body: String?
+    val payload: NotificationPayload
 )
+
+public sealed class NotificationPayload(
+    public open val raw: String
+) {
+    public data class Unknown(
+        override val raw: String
+    ) : NotificationPayload(raw)
+
+    public data class Unencrypted(
+        override val raw: String,
+        val title: String? = null,
+        val subtitle: String? = null,
+        val body: String? = null
+    ) : NotificationPayload(raw)
+}

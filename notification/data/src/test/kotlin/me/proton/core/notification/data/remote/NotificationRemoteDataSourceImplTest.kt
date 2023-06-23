@@ -22,6 +22,9 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
@@ -59,9 +62,7 @@ internal class NotificationRemoteDataSourceImplTest {
                             notificationId = "notification-id",
                             time = 1,
                             type = "type",
-                            title = "title",
-                            subtitle = null,
-                            body = null
+                            payload = JsonObject(mapOf("Title" to JsonPrimitive("title")))
                         )
                     )
                 )
@@ -87,17 +88,13 @@ internal class NotificationRemoteDataSourceImplTest {
                             notificationId = "notification-id",
                             time = 1,
                             type = "type",
-                            title = "title",
-                            subtitle = null,
-                            body = null
+                            payload = JsonObject(mapOf("Title" to JsonPrimitive("title")))
                         ),
                         NotificationResponse(
                             notificationId = "notification-id2",
                             time = 1,
                             type = "type 2",
-                            title = "title 2",
-                            subtitle = null,
-                            body = null
+                            payload = JsonObject(mapOf("Title" to JsonPrimitive("title 2")))
                         )
                     )
                 )

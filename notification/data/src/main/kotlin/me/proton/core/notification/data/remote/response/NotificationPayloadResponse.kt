@@ -20,29 +20,27 @@ package me.proton.core.notification.data.remote.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
-import me.proton.core.domain.entity.UserId
-import me.proton.core.notification.domain.entity.Notification
-import me.proton.core.notification.domain.entity.NotificationId
+import me.proton.core.notification.domain.entity.NotificationPayload
+import me.proton.core.util.kotlin.deserializeOrNull
 
 @Serializable
-public data class NotificationResponse(
-    @SerialName("ID")
-    val notificationId: String,
-    @SerialName("Time")
-    val time: Long,
-    @SerialName("Type")
-    val type: String,
-    @SerialName("Payload")
-    val payload: JsonElement
+public data class NotificationPayloadResponse(
+    @SerialName("Title")
+    val title: String? = null,
+    @SerialName("Subtitle")
+    val subtitle: String? = null,
+    @SerialName("Body")
+    val body: String? = null
 )
 
-internal fun NotificationResponse.toNotification(userId: UserId): Notification {
-    return Notification(
-        notificationId = NotificationId(notificationId),
-        userId = userId,
-        time = time,
-        type = type,
-        payload = payload.toString().toNotificationPayload()
-    )
+internal fun String.toNotificationPayload(): NotificationPayload {
+    return when (val response: NotificationPayloadResponse? = this.deserializeOrNull()) {
+        null -> NotificationPayload.Unknown(raw = this)
+        else -> NotificationPayload.Unencrypted(
+            raw = this,
+            title = response.title,
+            subtitle = response.subtitle,
+            body = response.body
+        )
+    }
 }

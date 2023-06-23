@@ -232,4 +232,10 @@ object AppDatabaseMigrations {
             NotificationDatabase.MIGRATION_0.migrate(database)
         }
     }
+
+    val MIGRATION_31_32 = object : Migration(31, 32) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            NotificationDatabase.MIGRATION_1.migrate(database)
+        }
+    }
 }

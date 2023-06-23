@@ -21,7 +21,9 @@ package me.proton.core.notification.data.local.db
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import kotlinx.serialization.json.JsonObject
 import me.proton.core.domain.entity.UserId
+import me.proton.core.notification.data.remote.response.toNotificationPayload
 import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.user.data.entity.UserEntity
@@ -46,27 +48,23 @@ public data class NotificationEntity(
     val userId: UserId,
     val time: Long,
     val type: String,
-    val title: String?,
-    val subtitle: String?,
-    val body: String?
+    val payload: String,
 )
 
-internal fun NotificationEntity.toNotification(): Notification = Notification(
-    notificationId = notificationId,
-    userId = userId,
-    time = time,
-    type = type,
-    title = title,
-    subtitle = subtitle,
-    body = body
-)
+internal fun NotificationEntity.toNotification(): Notification {
+    return Notification(
+        notificationId = notificationId,
+        userId = userId,
+        time = time,
+        type = type,
+        payload = payload.toNotificationPayload()
+    )
+}
 
 internal fun Notification.toNotificationEntity(): NotificationEntity = NotificationEntity(
     notificationId = notificationId,
     userId = userId,
     time = time,
     type = type,
-    title = title,
-    subtitle = subtitle,
-    body = body
+    payload = payload.raw
 )
