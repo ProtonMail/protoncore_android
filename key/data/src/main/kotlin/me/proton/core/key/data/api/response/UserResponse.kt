@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ data class UserResponse(
     val email: String? = null,
     @SerialName("DisplayName")
     val displayName: String? = null,
-    @SerialName("Recovery")
+    @SerialName("AccountRecovery")
     val recovery: UserRecoveryResponse? = null,
     @SerialName("Keys")
     val keys: List<UserKeyResponse>

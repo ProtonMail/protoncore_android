@@ -86,4 +86,25 @@ class CancelNotificationViewImplTest {
         // THEN
         verify { notificationManager.cancel("notification-tag", 123) }
     }
+
+    @Test
+    fun cancelNotificationById() {
+        // GIVEN
+        val notificationManager = mockk<NotificationManager> {
+            justRun { cancel(any(), any()) }
+        }
+
+        every { context.getSystemService(Context.NOTIFICATION_SERVICE) } returns notificationManager
+        every { context.packageName } returns "package.name"
+        every { context.applicationContext } returns mockk()
+
+        every { getNotificationId(any<NotificationId>()) } returns 123
+        every { getNotificationTag(any<UserId>()) } returns "notification-tag"
+
+        // WHEN
+        tested(NotificationId("notification_2"), UserId("user_2"))
+
+        // THEN
+        verify { notificationManager.cancel("notification-tag", 123) }
+    }
 }

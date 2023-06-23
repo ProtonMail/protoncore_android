@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.os.bundleOf
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -41,6 +42,8 @@ import me.proton.core.notification.presentation.internal.HasNotificationPermissi
 import me.proton.core.notification.presentation.receiver.OnDismissNotificationReceiver
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
 import me.proton.core.notification.domain.usecase.ShowNotificationView
+import me.proton.core.notification.domain.usecase.ShowNotificationView.Companion.ExtraNotificationId
+import me.proton.core.notification.domain.usecase.ShowNotificationView.Companion.ExtraUserId
 import javax.inject.Inject
 
 public class ShowNotificationViewImpl @Inject internal constructor(
@@ -62,9 +65,17 @@ public class ShowNotificationViewImpl @Inject internal constructor(
             .setContentTitle(payload.title)
             .setSubText(payload.subtitle)
             .setContentText(payload.body)
+            .setWhen(notification.time)
+            .setShowWhen(true)
             .setContentIntent(makeContentIntent(notification.notificationId, notification.userId))
             .setDeleteIntent(makeOnDeleteIntent(notification.notificationId, notification.userId))
             .setAutoCancel(true)
+            .addExtras(
+                bundleOf(
+                    ExtraNotificationId to notification.notificationId.id,
+                    ExtraUserId to notification.userId.id
+                )
+            )
 
         NotificationManagerCompat.from(context).notify(
             getNotificationTag(notification),
@@ -113,7 +124,7 @@ public class ShowNotificationViewImpl @Inject internal constructor(
     }
 }
 
-public fun Product.getSmallIconResId(): Int = when (this) {
+internal fun Product.getSmallIconResId(): Int = when (this) {
     Product.Calendar -> R.drawable.ic_proton_brand_proton_calendar
     Product.Drive -> R.drawable.ic_proton_brand_proton_drive
     Product.Mail -> R.drawable.ic_proton_brand_proton_mail

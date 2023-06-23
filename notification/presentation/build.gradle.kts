@@ -38,8 +38,10 @@ dependencies {
     implementation(
         project(Module.accountManagerDomain),
         project(Module.notificationDomain),
+        project(Module.pushDomain),
         activity,
-        `androidx-core`
+        `androidx-core`,
+        `coroutines-android`
     )
 
     testImplementation(

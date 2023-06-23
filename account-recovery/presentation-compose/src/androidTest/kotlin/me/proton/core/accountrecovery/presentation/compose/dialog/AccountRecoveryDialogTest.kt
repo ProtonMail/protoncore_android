@@ -41,6 +41,7 @@ import me.proton.core.accountrecovery.presentation.compose.viewmodel.toScreenId
 import me.proton.core.compose.component.PROTON_OUTLINED_TEXT_INPUT_TAG
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
+import me.proton.core.presentation.utils.StringBox
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -228,7 +229,9 @@ class AccountRecoveryDialogTest {
 
         every { viewModel.startAccountRecoveryCancel(any()) } coAnswers {
             stateFlow.value =
-                AccountRecoveryViewModel.State.Opened.GracePeriodStarted(passwordError = true)
+                AccountRecoveryViewModel.State.Opened.GracePeriodStarted(
+                    passwordError = StringBox("Password cannot be empty")
+                )
             mockk()
         }
         every { viewModel.state } returns stateFlow.asStateFlow()

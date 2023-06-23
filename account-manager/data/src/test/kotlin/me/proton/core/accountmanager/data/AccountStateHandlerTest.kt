@@ -22,6 +22,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.justRun
 import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.account.domain.repository.AccountRepository
@@ -59,15 +60,15 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun noAccounts() = coroutinesTest {
+    fun noAccounts() {
         // GIVEN
         makeTested()
         every { accountManager.onAccountStateChanged(true) } returns flowOf()
         every { accountManager.getAccounts() } returns flowOf()
+        justRun { notificationSetup.invoke() }
 
         // WHEN
         tested.start()
-        testScheduler.runCurrent()
 
         // THEN
         coVerify { notificationSetup() }

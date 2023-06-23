@@ -19,17 +19,24 @@
 package me.proton.core.notification.presentation
 
 import androidx.lifecycle.DefaultLifecycleObserver
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.notification.domain.ProtonNotificationManager
+import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.notification.presentation.ui.NotificationPermissionActivity
-import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
 import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 public class NotificationSetup @Inject internal constructor(
@@ -38,21 +45,32 @@ public class NotificationSetup @Inject internal constructor(
     private val appLifecycleObserver: AppLifecycleObserver,
     private val hasNotificationPermission: HasNotificationPermission,
     private val isNotificationsEnabled: IsNotificationsEnabled,
-    private val notificationManager: ProtonNotificationManager
+    private val notificationManager: ProtonNotificationManager,
+    private val observePushNotifications: ObservePushNotifications,
+    private val scopeProvider: CoroutineScopeProvider
 ) : DefaultLifecycleObserver {
-    public suspend operator fun invoke() {
+    public operator fun invoke() {
         if (!isNotificationsEnabled()) return
 
-        waitForForeground()
-        waitForAccountStateReady()
-        setupNotifications()
+        accountManager.onAccountState(AccountState.Ready).onEach { account ->
+            observePushNotifications(account.userId)
+        }.launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+
+        // Setup for notification permissions:
+        scopeProvider.GlobalDefaultSupervisedScope.launch {
+            waitForConditions()
+            setupNotifications()
+        }
     }
 
-    private suspend fun waitForForeground() =
-        appLifecycleObserver.state.first { it == AppLifecycleProvider.State.Foreground }
-
-    private suspend fun waitForAccountStateReady() =
-        accountManager.onAccountState(AccountState.Ready).first()
+    /** App in foreground, an account is ready. */
+    private suspend fun waitForConditions() {
+        appLifecycleObserver.state
+            .combine(accountManager.onAccountStateChanged(initialState = true), ::Pair)
+            .filter { (state, account) ->
+                state == AppLifecycleProvider.State.Foreground && account.state == AccountState.Ready
+            }.first()
+    }
 
     private fun setupNotifications() {
         if (hasNotificationPermission()) {
@@ -63,7 +81,6 @@ public class NotificationSetup @Inject internal constructor(
     }
 
     private fun startNotificationPermissionActivity() {
-        if (appLifecycleObserver.state.value != AppLifecycleProvider.State.Foreground) return
         val activity = activityProvider.lastResumed ?: return
         activity.startActivity(NotificationPermissionActivity(activity))
     }

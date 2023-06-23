@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -50,6 +51,7 @@ import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
 import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.presentation.utils.StringBox
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.util.kotlin.exhaustive
 import kotlin.time.Duration.Companion.milliseconds
@@ -150,7 +152,7 @@ internal fun AccountRecoveryGracePeriodDialog(
     onGracePeriodCancel: () -> Unit,
     onDismiss: () -> Unit,
     password: MutableState<String>,
-    passwordError: Boolean?
+    passwordError: StringBox?
 ) {
     AccountRecoveryDialog(
         modifier = modifier,
@@ -221,7 +223,7 @@ private fun AccountRecoveryDialog(
     dismissText: String? = null,
     onDismiss: () -> Unit = { },
     password: MutableState<String>? = null,
-    passwordError: Boolean? = null
+    passwordError: StringBox? = null
 ) {
     val show = remember { mutableStateOf(true) }
 
@@ -280,14 +282,14 @@ private fun AccountRecoveryDialog(
 @Composable
 private fun PasswordField(
     password: MutableState<String>,
-    passwordError: Boolean?,
+    passwordError: StringBox?,
     enabled: Boolean
 ) {
     ProtonOutlinedTextFieldWithError(
         text = password.value,
         onValueChanged = { password.value = it },
         enabled = enabled,
-        errorText = if (passwordError == true) stringResource(id = R.string.presentation_field_required) else null,
+        errorText = passwordError?.get(LocalContext.current),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
         ),

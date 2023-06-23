@@ -16,18 +16,31 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.notification.domain.usecase
+package me.proton.core.presentation.utils
 
-import me.proton.core.notification.domain.entity.Notification
+import android.content.Context
+import io.mockk.every
+import io.mockk.mockk
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-public fun interface ShowNotificationView {
-    /** Shows a [notification] view.
-     * Any previous notifications for the same [Notification.notificationId] and [Notification.userId] are cancelled.
-     */
-    public operator fun invoke(notification: Notification)
+class StringBoxTest {
+    @Test
+    fun plainString() {
+        val context = mockk<Context> {
+            every { resources } returns mockk()
+        }
+        assertEquals("test", StringBox("test").get(context))
+    }
 
-    public companion object {
-        public const val ExtraNotificationId: String = "me.proton.core.notification.notificationId"
-        public const val ExtraUserId: String = "me.proton.core.notification.userId"
+    @Test
+    fun resourceString() {
+        val resId = 1
+        val context = mockk<Context> {
+            every { resources } returns mockk {
+                every { getString(resId) } returns "test"
+            }
+        }
+        assertEquals("test", StringBox(resId).get(context))
     }
 }

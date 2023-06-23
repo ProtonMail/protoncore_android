@@ -18,7 +18,6 @@
 
 package me.proton.core.accountmanager.data
 
-import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.job.disableInitialNotReadyAccounts
@@ -63,9 +62,8 @@ class AccountStateHandler @Inject constructor(
                 accountManager.disableAccount(userId)
             }
         }
-        scopeProvider.GlobalDefaultSupervisedScope.launch {
-            notificationSetup()
-        }
+
+        notificationSetup()
     }
 }
 

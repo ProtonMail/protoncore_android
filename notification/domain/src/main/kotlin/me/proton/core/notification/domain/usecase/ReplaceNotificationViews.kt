@@ -18,16 +18,9 @@
 
 package me.proton.core.notification.domain.usecase
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
 
-public fun interface ShowNotificationView {
-    /** Shows a [notification] view.
-     * Any previous notifications for the same [Notification.notificationId] and [Notification.userId] are cancelled.
-     */
-    public operator fun invoke(notification: Notification)
-
-    public companion object {
-        public const val ExtraNotificationId: String = "me.proton.core.notification.notificationId"
-        public const val ExtraUserId: String = "me.proton.core.notification.userId"
-    }
+public fun interface ReplaceNotificationViews {
+    public operator fun invoke(notifications: List<Notification>, userId: UserId)
 }

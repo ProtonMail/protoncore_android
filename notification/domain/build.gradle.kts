@@ -35,10 +35,12 @@ protonCoverage {
 
 dependencies {
     api(
-        project(Module.domain)
+        project(Module.domain),
+        project(Module.pushDomain)
     )
 
     testImplementation(
+        project(Module.kotlinTest),
         `coroutines-test`,
         `kotlin-test`,
         mockk,

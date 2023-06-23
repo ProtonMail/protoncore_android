@@ -28,6 +28,7 @@ import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecover
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryPasswordPeriodStartedDialog
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryWindowEndedDialog
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
+import me.proton.core.presentation.utils.StringBox
 import org.junit.Rule
 import org.junit.Test
 
@@ -46,7 +47,7 @@ class AccountRecoveryDialogSnapshotTest {
                 onGracePeriodCancel = {},
                 onDismiss = { },
                 password = remember { mutableStateOf("") },
-                passwordError = false,
+                passwordError = null,
             )
         }
     }
@@ -58,7 +59,7 @@ class AccountRecoveryDialogSnapshotTest {
                 onGracePeriodCancel = {},
                 onDismiss = { },
                 password = remember { mutableStateOf("invalid") },
-                passwordError = true,
+                passwordError = StringBox("Invalid password"),
             )
         }
     }

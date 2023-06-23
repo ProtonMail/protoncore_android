@@ -291,7 +291,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
             val event = awaitItem()
             assertTrue(event is AccountRecoveryViewModel.State.Opened.GracePeriodStarted)
-            assertTrue(event.passwordError)
+            assertNotNull(event.passwordError)
             assertFalse(event.processing)
             cancelAndIgnoreRemainingEvents()
         }

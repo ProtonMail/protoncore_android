@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.update
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoveryState
 import me.proton.core.accountrecovery.presentation.compose.LogTag
+import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -47,6 +48,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.AccountRecoveryCancellationTotal
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
 import me.proton.core.observability.domain.metrics.toApiStatus
+import me.proton.core.presentation.utils.StringBox
 import me.proton.core.user.domain.entity.UserRecovery.State.Cancelled
 import me.proton.core.user.domain.entity.UserRecovery.State.Expired
 import me.proton.core.user.domain.entity.UserRecovery.State.Grace
@@ -77,7 +79,7 @@ class AccountRecoveryViewModel @Inject constructor(
         sealed class Opened : State() {
             data class GracePeriodStarted(
                 val processing: Boolean = false,
-                val passwordError: Boolean = false
+                val passwordError: StringBox? = null
             ) : Opened()
 
             object PasswordChangePeriodStarted : Opened()
@@ -122,7 +124,10 @@ class AccountRecoveryViewModel @Inject constructor(
             None -> State.Closed
             Grace -> when {
                 cancellationState.error?.hasProtonErrorCode(PASSWORD_WRONG) == true ->
-                    State.Opened.GracePeriodStarted(passwordError = true)
+                    State.Opened.GracePeriodStarted(passwordError = cancellationState.error.message?.let {
+                        StringBox(it)
+                    } ?: StringBox(R.string.presentation_error_general))
+
                 cancellationState.error != null -> State.Error(cancellationState.error)
                 cancellationState.success == true -> State.Closed
                 else -> State.Opened.GracePeriodStarted(
@@ -142,7 +147,7 @@ class AccountRecoveryViewModel @Inject constructor(
 
         cancellationFlow.update { CancellationState(processing = true) }
         cancellationFlow.value = when {
-            password.isEmpty() -> CancellationState(passwordError = true)
+            password.isEmpty() -> CancellationState(passwordError = StringBox(R.string.presentation_field_required))
             else -> runCatching { cancelRecovery(password.encrypt(keyStoreCrypto), userId) }.fold(
                 onSuccess = { CancellationState(success = true) },
                 onFailure = { error -> CancellationState(success = false, error = error) }
@@ -159,7 +164,7 @@ private data class CancellationState(
     val processing: Boolean = false,
     val success: Boolean? = null,
     val error: Throwable? = null,
-    val passwordError: Boolean = false
+    val passwordError: StringBox? = null
 )
 
 internal fun AccountRecoveryViewModel.State.toScreenId(): AccountRecoveryScreenViewTotal.ScreenId? =

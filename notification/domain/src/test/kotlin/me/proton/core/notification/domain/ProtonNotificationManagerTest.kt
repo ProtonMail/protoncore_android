@@ -19,6 +19,8 @@
 package me.proton.core.notification.domain
 
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
@@ -32,11 +34,19 @@ import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.ConfigureNotificationChannel
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.ReplaceNotificationViews
 import me.proton.core.notification.domain.usecase.ShowNotificationView
+import me.proton.core.push.domain.entity.Push
+import me.proton.core.push.domain.entity.PushId
+import me.proton.core.push.domain.entity.PushObjectType
+import me.proton.core.push.domain.repository.PushRepository
+import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
-class ProtonNotificationManagerTest {
+class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var cancelNotificationView: CancelNotificationView
 
@@ -48,6 +58,12 @@ class ProtonNotificationManagerTest {
 
     @MockK
     private lateinit var isNotificationsEnabled: IsNotificationsEnabled
+
+    @MockK
+    private lateinit var pushRepository: PushRepository
+
+    @MockK
+    private lateinit var replaceNotificationViews: ReplaceNotificationViews
 
     @MockK
     private lateinit var showNotificationView: ShowNotificationView
@@ -62,6 +78,9 @@ class ProtonNotificationManagerTest {
             configureNotificationChannel,
             getNotificationChannelId,
             isNotificationsEnabled,
+            pushRepository,
+            replaceNotificationViews,
+            TestCoroutineScopeProvider(dispatchers),
             showNotificationView
         )
     }
@@ -123,6 +142,18 @@ class ProtonNotificationManagerTest {
     }
 
     @Test
+    fun noReplaceIfDisabled() {
+        // GIVEN
+        every { isNotificationsEnabled() } returns false
+
+        // WHEN
+        tested.replace(mockk(), mockk())
+
+        // THEN
+        verify(exactly = 0) { replaceNotificationViews(any(), any()) }
+    }
+
+    @Test
     fun dismissNotification() {
         // GIVEN
         val notification = Notification(
@@ -147,8 +178,88 @@ class ProtonNotificationManagerTest {
 
         // THEN
         verify(exactly = 1) { cancelNotificationView(notification) }
-        verify(exactly = 1) { cancelNotificationView(notification.notificationId, notification.userId) }
+        verify(exactly = 1) {
+            cancelNotificationView(
+                notification.notificationId,
+                notification.userId
+            )
+        }
         verify(exactly = 0) { showNotificationView(any()) }
+    }
+
+    @Test
+    fun notificationConsumed() = coroutinesTest {
+        // GIVEN
+        val notificationId = NotificationId("notification_1")
+        val userId = UserId("user_id")
+
+        coEvery {
+            pushRepository.getAllPushes(userId, PushObjectType.Notifications, any())
+        } returns listOf(
+            Push(userId, PushId("1"), "notification_1", PushObjectType.Notifications.value),
+            Push(userId, PushId("2"), "notification_2", PushObjectType.Notifications.value)
+        )
+        coJustRun { pushRepository.deletePush(any(), any()) }
+
+        // WHEN
+        tested.onNotificationConsumed(notificationId, userId).join()
+
+        // THEN
+        pushRepository.deletePush(userId, PushId("1"))
+    }
+
+    @Test
+    fun replaceWithInvalidUser() {
+        // GIVEN
+        val notification = Notification(
+            notificationId = NotificationId("notification_id"),
+            userId = UserId("user_id"),
+            time = 11,
+            type = "type",
+            payload = NotificationPayload.Unencrypted(
+                raw = "",
+                title = "title",
+                subtitle = "subtitle",
+                body = "body"
+            )
+        )
+
+        every { isNotificationsEnabled() } returns true
+        justRun { replaceNotificationViews(any(), any()) }
+
+        // THEN
+        assertFailsWith<IllegalArgumentException> {
+            // WHEN
+            tested.replace(listOf(notification), UserId("different_user"))
+        }
+    }
+
+    @Test
+    fun replaceNotifications() {
+        // GIVEN
+        val notifications = listOf(
+            Notification(
+                notificationId = NotificationId("notification_id"),
+                userId = UserId("user_id"),
+                time = 11,
+                type = "type",
+                payload = NotificationPayload.Unencrypted(
+                    raw = "",
+                    title = "title",
+                    subtitle = "subtitle",
+                    body = "body"
+                )
+            )
+        )
+
+        every { isNotificationsEnabled() } returns true
+        justRun { replaceNotificationViews(any(), any()) }
+
+        // WHEN
+        tested.replace(notifications, UserId("user_id"))
+
+        // THEN
+        verify { replaceNotificationViews(notifications, UserId("user_id")) }
     }
 
     @Test

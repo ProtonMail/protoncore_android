@@ -32,11 +32,15 @@ import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.ConfigureNotificationChannel
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.ObservePushNotifications
+import me.proton.core.notification.domain.usecase.ReplaceNotificationViews
 import me.proton.core.notification.domain.usecase.ShowNotificationView
 import me.proton.core.notification.presentation.usecase.CancelNotificationViewImpl
 import me.proton.core.notification.presentation.usecase.ConfigureNotificationChannelImpl
 import me.proton.core.notification.presentation.usecase.GetNotificationChannelIdImpl
 import me.proton.core.notification.presentation.usecase.IsNotificationsEnabledImpl
+import me.proton.core.notification.presentation.usecase.ObservePushNotificationsImpl
+import me.proton.core.notification.presentation.usecase.ReplaceNotificationViewsImpl
 import me.proton.core.notification.presentation.usecase.ShowNotificationViewImpl
 
 @Module
@@ -68,6 +72,16 @@ public interface CoreNotificationModule {
 
     @Binds
     public fun bindNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
+
+    @Binds
+    public fun bindObservePushNotifications(
+        impl: ObservePushNotificationsImpl
+    ): ObservePushNotifications
+
+    @Binds
+    public fun bindReplaceNotifications(
+        impl: ReplaceNotificationViewsImpl
+    ): ReplaceNotificationViews
 
     @Binds
     public fun bindShowNotification(impl: ShowNotificationViewImpl): ShowNotificationView

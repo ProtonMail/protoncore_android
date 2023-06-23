@@ -28,17 +28,21 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.yield
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
-import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.ObservePushNotifications
+import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -61,7 +65,12 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var notificationManager: ProtonNotificationManager
 
+    @MockK
+    private lateinit var observePushNotifications: ObservePushNotifications
+
     private lateinit var tested: NotificationSetup
+
+    private val testUserId = UserId("test_user_id")
 
     @BeforeTest
     fun setUp() {
@@ -73,7 +82,9 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
             appLifecycleObserver,
             hasNotificationPermission,
             isNotificationsEnabled,
-            notificationManager
+            notificationManager,
+            observePushNotifications,
+            TestCoroutineScopeProvider(dispatchers)
         )
     }
 
@@ -81,6 +92,7 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
     fun notificationsDisabled() = coroutinesTest {
         every { isNotificationsEnabled() } returns false
         tested()
+        runCurrent()
         verify { isNotificationsEnabled() }
     }
 
@@ -95,6 +107,7 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns true
         justRun { notificationManager.setupNotificationChannel() }
+        justRun { observePushNotifications(any()) }
 
         // WHEN
         launch {
@@ -104,9 +117,11 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
             accountStateFlow.value = mockAccount(AccountState.Ready)
         }
         tested()
+        runCurrent()
 
         // THEN
         verify { notificationManager.setupNotificationChannel() }
+        verify { observePushNotifications(testUserId) }
     }
 
     @Test
@@ -123,9 +138,11 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
             every { packageName } returns "package_name"
         }
         every { activityProvider.lastResumed } returns activity
+        justRun { observePushNotifications(any()) }
 
         // WHEN
         tested()
+        runCurrent()
 
         // THEN
         verify { activity.startActivity(any()) }
@@ -141,9 +158,11 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
         )
         every { hasNotificationPermission.invoke() } returns false
         every { activityProvider.lastResumed } returns null
+        justRun { observePushNotifications(any()) }
 
         // WHEN
         tested()
+        runCurrent()
 
         // THEN
         verify(exactly = 0) { notificationManager.setupNotificationChannel() }
@@ -159,6 +178,7 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns false
+        justRun { observePushNotifications(any()) }
 
         // WHEN
         launch {
@@ -167,12 +187,15 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
             appStateFlow.value = AppLifecycleProvider.State.Background
         }
         tested()
+        runCurrent()
 
         // THEN
         verify(exactly = 0) { notificationManager.setupNotificationChannel() }
     }
 
-    private fun mockAccount(s: AccountState): Account = mockk {
-        every { state } returns s
-    }
+    private fun mockAccount(s: AccountState, userId: UserId = testUserId): Account =
+        mockk {
+            every { state } returns s
+            every { this@mockk.userId } returns userId
+        }
 }

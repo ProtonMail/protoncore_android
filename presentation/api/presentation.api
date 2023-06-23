@@ -934,6 +934,52 @@ public final class me/proton/core/presentation/utils/SnackbarKt {
 	public static synthetic fun warningSnack$default (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
 }
 
+public abstract interface class me/proton/core/presentation/utils/StringBox {
+	public static final field Companion Lme/proton/core/presentation/utils/StringBox$Companion;
+	public abstract fun get (Landroid/content/Context;)Ljava/lang/String;
+	public abstract fun get (Landroid/content/res/Resources;)Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/StringBox$Companion {
+	public final fun invoke (I)Lme/proton/core/presentation/utils/StringBox$ResourceString;
+	public final fun invoke-CrltthU (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/StringBox$DefaultImpls {
+	public static fun get (Lme/proton/core/presentation/utils/StringBox;Landroid/content/Context;)Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/StringBox$PlainString : me/proton/core/presentation/utils/StringBox {
+	public static final synthetic fun box-impl (Ljava/lang/String;)Lme/proton/core/presentation/utils/StringBox$PlainString;
+	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public fun get (Landroid/content/Context;)Ljava/lang/String;
+	public fun get (Landroid/content/res/Resources;)Ljava/lang/String;
+	public static fun get-impl (Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;
+	public static fun get-impl (Ljava/lang/String;Landroid/content/res/Resources;)Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/StringBox$ResourceString : me/proton/core/presentation/utils/StringBox {
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lme/proton/core/presentation/utils/StringBox$ResourceString;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/StringBox$ResourceString;IILjava/lang/Object;)Lme/proton/core/presentation/utils/StringBox$ResourceString;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun get (Landroid/content/Context;)Ljava/lang/String;
+	public fun get (Landroid/content/res/Resources;)Ljava/lang/String;
+	public final fun getId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/presentation/utils/TextUtils {
 	public static final fun errorToast (Landroid/content/Context;Ljava/lang/String;I)V
 	public static synthetic fun errorToast$default (Landroid/content/Context;Ljava/lang/String;IILjava/lang/Object;)V

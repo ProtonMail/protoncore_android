@@ -22,15 +22,15 @@ public final class me/proton/core/notification/presentation/BuildConfig {
 }
 
 public final class me/proton/core/notification/presentation/NotificationSetup : androidx/lifecycle/DefaultLifecycleObserver {
-	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke ()V
 }
 
 public final class me/proton/core/notification/presentation/NotificationSetup_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/NotificationSetup_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/NotificationSetup_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/notification/presentation/NotificationSetup;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/ProtonNotificationManager;)Lme/proton/core/notification/presentation/NotificationSetup;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/notification/domain/usecase/ObservePushNotifications;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/notification/presentation/NotificationSetup;
 }
 
 public final class me/proton/core/notification/presentation/internal/GetAndroidSdkLevel_Factory : dagger/internal/Factory {
@@ -158,12 +158,34 @@ public final class me/proton/core/notification/presentation/usecase/IsNotificati
 	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl;
 }
 
-public final class me/proton/core/notification/presentation/usecase/ShowNotificationViewImpl : me/proton/core/notification/domain/usecase/ShowNotificationView {
-	public fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
+public final class me/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl : me/proton/core/notification/domain/usecase/ObservePushNotifications {
+	public fun <init> (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/push/domain/repository/PushRepository;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)V
 }
 
-public final class me/proton/core/notification/presentation/usecase/ShowNotificationViewImplKt {
-	public static final fun getSmallIconResId (Lme/proton/core/domain/entity/Product;)I
+public final class me/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl;
+	public static fun newInstance (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/push/domain/repository/PushRepository;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl;
+}
+
+public final class me/proton/core/notification/presentation/usecase/ReplaceNotificationViewsImpl : me/proton/core/notification/domain/usecase/ReplaceNotificationViews {
+	public fun <init> (Lme/proton/core/notification/domain/usecase/CancelNotificationView;Landroid/content/Context;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)V
+	public fun invoke (Ljava/util/List;Lme/proton/core/domain/entity/UserId;)V
+}
+
+public final class me/proton/core/notification/presentation/usecase/ReplaceNotificationViewsImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/ReplaceNotificationViewsImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/presentation/usecase/ReplaceNotificationViewsImpl;
+	public static fun newInstance (Lme/proton/core/notification/domain/usecase/CancelNotificationView;Landroid/content/Context;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)Lme/proton/core/notification/presentation/usecase/ReplaceNotificationViewsImpl;
+}
+
+public final class me/proton/core/notification/presentation/usecase/ShowNotificationViewImpl : me/proton/core/notification/domain/usecase/ShowNotificationView {
+	public fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
 }
 
 public final class me/proton/core/notification/presentation/usecase/ShowNotificationViewImpl_Factory : dagger/internal/Factory {

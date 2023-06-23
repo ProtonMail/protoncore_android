@@ -1,7 +1,9 @@
 public final class me/proton/core/notification/domain/ProtonNotificationManager {
-	public fun <init> (Lme/proton/core/notification/domain/usecase/CancelNotificationView;Lme/proton/core/notification/domain/usecase/ConfigureNotificationChannel;Lme/proton/core/notification/domain/usecase/GetNotificationChannelId;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)V
+	public fun <init> (Lme/proton/core/notification/domain/usecase/CancelNotificationView;Lme/proton/core/notification/domain/usecase/ConfigureNotificationChannel;Lme/proton/core/notification/domain/usecase/GetNotificationChannelId;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/push/domain/repository/PushRepository;Lme/proton/core/notification/domain/usecase/ReplaceNotificationViews;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)V
 	public final fun dismiss (Lme/proton/core/notification/domain/entity/Notification;)V
 	public final fun dismiss (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;)V
+	public final fun onNotificationConsumed (Lme/proton/core/notification/domain/entity/NotificationId;Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+	public final fun replace (Ljava/util/List;Lme/proton/core/domain/entity/UserId;)V
 	public final fun setupNotificationChannel ()V
 	public final fun show (Lme/proton/core/notification/domain/entity/Notification;)V
 }
@@ -135,7 +137,23 @@ public abstract interface class me/proton/core/notification/domain/usecase/IsNot
 	public abstract fun invoke ()Z
 }
 
+public abstract interface class me/proton/core/notification/domain/usecase/ObservePushNotifications {
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)V
+}
+
+public abstract interface class me/proton/core/notification/domain/usecase/ReplaceNotificationViews {
+	public abstract fun invoke (Ljava/util/List;Lme/proton/core/domain/entity/UserId;)V
+}
+
 public abstract interface class me/proton/core/notification/domain/usecase/ShowNotificationView {
+	public static final field Companion Lme/proton/core/notification/domain/usecase/ShowNotificationView$Companion;
+	public static final field ExtraNotificationId Ljava/lang/String;
+	public static final field ExtraUserId Ljava/lang/String;
 	public abstract fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
+}
+
+public final class me/proton/core/notification/domain/usecase/ShowNotificationView$Companion {
+	public static final field ExtraNotificationId Ljava/lang/String;
+	public static final field ExtraUserId Ljava/lang/String;
 }
 
