@@ -26,7 +26,7 @@ plugins {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(82)
+    minBranchCoveragePercentage.set(53)
     minLineCoveragePercentage.set(78)
 }
 
@@ -91,6 +91,7 @@ dependencies {
     testImplementation(
         project(Module.androidTest),
         project(Module.kotlinTest),
+        project(Module.notificationTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,

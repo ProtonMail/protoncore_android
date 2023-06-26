@@ -113,6 +113,7 @@ internal class NotificationRepositoryImplTest : CoroutinesTest by UnconfinedCoro
         tested.observeAllNotificationsByUser(testUserId).test {
             assertContentEquals(listOf(testNotification1, testNotification2), awaitItem())
             tested.deleteAllNotificationsByUser(testUserId)
+            assertContentEquals(emptyList(), awaitItem())
             expectNoEvents()
         }
     }

@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_notification_presentation_deeplink_DeeplinkBroadcastReceiver_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_notification_presentation_receiver_OnDismissNotificationReceiver_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -31,6 +35,98 @@ public final class me/proton/core/notification/presentation/NotificationSetup_Fa
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/notification/presentation/NotificationSetup;
 	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/notification/domain/usecase/ObservePushNotifications;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/notification/presentation/NotificationSetup;
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkActivityKt {
+	public static final fun onActivityCreate (Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;Landroidx/activity/ComponentActivity;Landroid/os/Bundle;)V
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkBroadcastReceiver : android/content/BroadcastReceiver {
+	public field deeplinkManager Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;
+	public fun <init> ()V
+	public final fun getDeeplinkManager ()Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;
+	public fun onReceive (Landroid/content/Context;Landroid/content/Intent;)V
+	public final fun setDeeplinkManager (Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)V
+}
+
+public abstract interface class me/proton/core/notification/presentation/deeplink/DeeplinkBroadcastReceiver_GeneratedInjector {
+	public abstract fun injectDeeplinkBroadcastReceiver (Lme/proton/core/notification/presentation/deeplink/DeeplinkBroadcastReceiver;)V
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkBroadcastReceiver_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectDeeplinkManager (Lme/proton/core/notification/presentation/deeplink/DeeplinkBroadcastReceiver;Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/notification/presentation/deeplink/DeeplinkBroadcastReceiver;)V
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkContext {
+	public fun <init> (Landroid/content/Context;Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Landroid/content/Context;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Landroid/content/Context;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/notification/presentation/deeplink/DeeplinkContext;
+	public static synthetic fun copy$default (Lme/proton/core/notification/presentation/deeplink/DeeplinkContext;Landroid/content/Context;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/notification/presentation/deeplink/DeeplinkContext;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArgs ()Ljava/util/List;
+	public final fun getContext ()Landroid/content/Context;
+	public final fun getPath ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider {
+	public abstract fun getActivityIntent (Ljava/lang/String;)Landroid/content/Intent;
+	public abstract fun getActivityPendingIntent (Ljava/lang/String;II)Landroid/app/PendingIntent;
+	public abstract fun getBroadcastIntent (Ljava/lang/String;)Landroid/content/Intent;
+	public abstract fun getBroadcastPendingIntent (Ljava/lang/String;II)Landroid/app/PendingIntent;
+	public abstract fun setPath (Landroid/content/Intent;Ljava/lang/String;)Landroid/content/Intent;
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider$DefaultImpls {
+	public static synthetic fun getActivityPendingIntent$default (Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider;Ljava/lang/String;IIILjava/lang/Object;)Landroid/app/PendingIntent;
+	public static synthetic fun getBroadcastPendingIntent$default (Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider;Ljava/lang/String;IIILjava/lang/Object;)Landroid/app/PendingIntent;
+	public static fun setPath (Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider;Landroid/content/Intent;Ljava/lang/String;)Landroid/content/Intent;
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkIntentProviderImpl : me/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider {
+	public fun <init> (Landroid/content/Context;)V
+	public fun getActivityIntent (Ljava/lang/String;)Landroid/content/Intent;
+	public fun getActivityPendingIntent (Ljava/lang/String;II)Landroid/app/PendingIntent;
+	public fun getBroadcastIntent (Ljava/lang/String;)Landroid/content/Intent;
+	public fun getBroadcastPendingIntent (Ljava/lang/String;II)Landroid/app/PendingIntent;
+	public fun setPath (Landroid/content/Intent;Ljava/lang/String;)Landroid/content/Intent;
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkIntentProviderImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProviderImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProviderImpl;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProviderImpl;
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkManager {
+	public static final field uriPrefix Ljava/lang/String;
+	public fun <init> ()V
+	public final fun handle (Landroid/content/Intent;Landroid/content/Context;)Z
+	public static synthetic fun handle$default (Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;Landroid/content/Intent;Landroid/content/Context;ILjava/lang/Object;)Z
+	public final fun register (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/notification/presentation/deeplink/DeeplinkManager_Factory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/notification/presentation/deeplink/DeeplinkManager_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;
+	public static fun newInstance ()Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;
+}
+
+public abstract class me/proton/core/notification/presentation/deeplink/Hilt_DeeplinkBroadcastReceiver : android/content/BroadcastReceiver {
+	public fun <init> ()V
+	protected fun inject (Landroid/content/Context;)V
+	public fun onReceive (Landroid/content/Context;Landroid/content/Intent;)V
 }
 
 public final class me/proton/core/notification/presentation/internal/GetAndroidSdkLevel_Factory : dagger/internal/Factory {

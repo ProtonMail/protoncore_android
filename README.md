@@ -167,6 +167,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:notification-data                     |
 | me.proton.core:notification-domain                   |
 | me.proton.core:notification-presentation             |
+| me.proton.core:notification-test                     |
 | me.proton.core:observability                         |
 | me.proton.core:observability-dagger                  |
 | me.proton.core:observability-data                    |

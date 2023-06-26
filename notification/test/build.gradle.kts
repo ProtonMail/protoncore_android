@@ -16,47 +16,32 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    protonAndroidUiLibrary
-    protonDagger
+    protonAndroidLibrary
 }
 
-protonCoverage {
-    minBranchCoveragePercentage.set(79)
-    minLineCoveragePercentage.set(85)
-}
+protonCoverage.disabled.set(true)
 
 publishOption.shouldBePublishedAsLib = true
 
 android {
-    namespace = "me.proton.core.notification.presentation"
+    namespace = "me.proton.core.notification.test"
 }
 
 dependencies {
     api(
-        project(Module.presentation)
+        project(Module.quark),
+        `espresso-intents`
     )
 
     implementation(
-        project(Module.accountManagerDomain),
-        project(Module.notificationDomain),
-        project(Module.pushDomain),
-        activity,
-        `androidx-core`,
-        `coroutines-android`
-    )
-
-    testImplementation(
-        project(Module.kotlinTest),
-        project(Module.notificationTest),
-        `android-test-core`,
-        `coroutines-test`,
-        junit,
+        project(Module.androidInstrumentedTest),
+        project(Module.notification),
+        fusion,
         `kotlin-test`,
-        mockk,
-        robolectric
+        `kotlin-test-junit`
     )
 }

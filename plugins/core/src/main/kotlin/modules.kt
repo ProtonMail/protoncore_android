@@ -63,6 +63,7 @@ public object Module {
     public const val notificationData: String = "$notification:notification-data"
     public const val notificationDomain: String = "$notification:notification-domain"
     public const val notificationPresentation: String = "$notification:notification-presentation"
+    public const val notificationTest: String = "$notification:notification-test"
 
     // region Features
 

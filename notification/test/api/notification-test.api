@@ -1,0 +1,16 @@
+public final class me/proton/core/notification/test/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/notification/test/deeplink/TestDeeplinkIntentProvider : me/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider {
+	public fun <init> ()V
+	public fun getActivityIntent (Ljava/lang/String;)Landroid/content/Intent;
+	public fun getActivityPendingIntent (Ljava/lang/String;II)Landroid/app/PendingIntent;
+	public fun getBroadcastIntent (Ljava/lang/String;)Landroid/content/Intent;
+	public fun getBroadcastPendingIntent (Ljava/lang/String;II)Landroid/app/PendingIntent;
+	public fun setPath (Landroid/content/Intent;Ljava/lang/String;)Landroid/content/Intent;
+}
+

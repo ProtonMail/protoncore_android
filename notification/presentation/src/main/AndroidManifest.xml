@@ -24,8 +24,10 @@
             android:theme="@style/ProtonTheme.Transparent" />
 
         <receiver
-            android:name=".receiver.OnDismissNotificationReceiver"
-            android:exported="false" />
+            android:name=".deeplink.DeeplinkBroadcastReceiver"
+            android:exported="false">
+        </receiver>
+
     </application>
 
 </manifest>
