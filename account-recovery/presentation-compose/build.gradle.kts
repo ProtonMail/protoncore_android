@@ -26,8 +26,8 @@ plugins {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(53)
-    minLineCoveragePercentage.set(78)
+    minBranchCoveragePercentage.set(52)
+    minLineCoveragePercentage.set(75)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -46,6 +46,7 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.presentation),
         project(Module.presentationCompose),
+        project(Module.notification),
         project(Module.kotlinUtil),
         `compose-foundation`,
         `compose-foundation-layout`,

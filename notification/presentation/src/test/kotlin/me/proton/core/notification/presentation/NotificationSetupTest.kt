@@ -38,6 +38,7 @@ import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
+import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
 import me.proton.core.presentation.app.AppLifecycleProvider
@@ -68,6 +69,9 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var observePushNotifications: ObservePushNotifications
 
+    @MockK(relaxed = true)
+    private lateinit var deeplinkManager: DeeplinkManager
+
     private lateinit var tested: NotificationSetup
 
     private val testUserId = UserId("test_user_id")
@@ -84,7 +88,8 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
             isNotificationsEnabled,
             notificationManager,
             observePushNotifications,
-            TestCoroutineScopeProvider(dispatchers)
+            TestCoroutineScopeProvider(dispatchers),
+            deeplinkManager
         )
     }
 
@@ -94,6 +99,31 @@ class NotificationSetupTest : CoroutinesTest by CoroutinesTest() {
         tested()
         runCurrent()
         verify { isNotificationsEnabled() }
+    }
+
+    @Test
+    fun notificationsEnabled() = coroutinesTest {
+        // GIVEN
+        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Background)
+        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
+
+        every { isNotificationsEnabled() } returns true
+        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
+        every { hasNotificationPermission.invoke() } returns true
+        justRun { notificationManager.setupNotificationChannel() }
+
+        // WHEN
+        launch {
+            yield()
+            appStateFlow.value = AppLifecycleProvider.State.Foreground
+            yield()
+            accountStateFlow.value = mockAccount(AccountState.Ready)
+        }
+        tested()
+
+        // THEN
+        verify { deeplinkManager.register(NotificationDeeplink.Delete.Deeplink, any()) }
     }
 
     @Test

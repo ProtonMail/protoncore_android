@@ -24,10 +24,12 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
 import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
+import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup
 import me.proton.core.domain.entity.Product
 import me.proton.core.notification.presentation.NotificationSetup
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -45,6 +47,9 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var notificationSetup: NotificationSetup
+
+    @MockK(relaxed = true)
+    private lateinit var accountRecoveryNotificationSetup: AccountRecoveryNotificationSetup
 
     @MockK
     private lateinit var accountRepository: AccountRepository
@@ -72,6 +77,7 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
 
         // THEN
         coVerify { notificationSetup() }
+        verify { accountRecoveryNotificationSetup() }
     }
 
     private fun makeTested(product: Product = Product.Mail) {
@@ -82,6 +88,7 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
             accountRepository = accountRepository,
             accountMigrator = accountMigrator,
             notificationSetup = notificationSetup,
+            accountRecoveryNotificationSetup = accountRecoveryNotificationSetup,
             product = product
         ).let { spyk(it) }
     }

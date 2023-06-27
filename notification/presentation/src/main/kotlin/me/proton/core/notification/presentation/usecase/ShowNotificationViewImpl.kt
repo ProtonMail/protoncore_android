@@ -22,26 +22,23 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.TaskStackBuilder
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
-import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.notification.domain.entity.NotificationPayload
+import me.proton.core.notification.domain.usecase.GetNotificationChannelId
+import me.proton.core.notification.domain.usecase.ShowNotificationView
+import me.proton.core.notification.presentation.NotificationDeeplink
 import me.proton.core.notification.presentation.R
+import me.proton.core.notification.presentation.deeplink.DeeplinkIntentProvider
 import me.proton.core.notification.presentation.internal.GetNotificationId
 import me.proton.core.notification.presentation.internal.GetNotificationTag
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
-import me.proton.core.notification.presentation.receiver.OnDismissNotificationReceiver
-import me.proton.core.notification.domain.usecase.GetNotificationChannelId
-import me.proton.core.notification.domain.usecase.ShowNotificationView
 import me.proton.core.notification.domain.usecase.ShowNotificationView.Companion.ExtraNotificationId
 import me.proton.core.notification.domain.usecase.ShowNotificationView.Companion.ExtraUserId
 import javax.inject.Inject
@@ -52,6 +49,7 @@ public class ShowNotificationViewImpl @Inject internal constructor(
     private val getNotificationId: GetNotificationId,
     private val getNotificationTag: GetNotificationTag,
     private val hasNotificationPermission: HasNotificationPermission,
+    private val deeplinkIntentProvider: DeeplinkIntentProvider,
     private val product: Product
 ) : ShowNotificationView {
     @SuppressLint("InlinedApi")
@@ -67,8 +65,8 @@ public class ShowNotificationViewImpl @Inject internal constructor(
             .setContentText(payload.body)
             .setWhen(notification.time)
             .setShowWhen(true)
-            .setContentIntent(makeContentIntent(notification.notificationId, notification.userId))
-            .setDeleteIntent(makeOnDeleteIntent(notification.notificationId, notification.userId))
+            .setContentIntent(makeContentIntent(notification))
+            .setDeleteIntent(makeOnDeleteIntent(notification))
             .setAutoCancel(true)
             .addExtras(
                 bundleOf(
@@ -88,40 +86,18 @@ public class ShowNotificationViewImpl @Inject internal constructor(
         IconCompat.createWithResource(context, product.getSmallIconResId())
 
     private fun makeOnDeleteIntent(
-        notificationId: NotificationId,
-        userId: UserId
-    ): PendingIntent = PendingIntent.getBroadcast(
-        context,
-        0,
-        OnDismissNotificationReceiver(context, notificationId, userId),
-        PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        notification: Notification
+    ): PendingIntent = deeplinkIntentProvider.getBroadcastPendingIntent(
+        path = NotificationDeeplink.Delete.get(notification.userId, notification.notificationId),
+        flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     private fun makeContentIntent(
-        notificationId: NotificationId,
-        userId: UserId
-    ): PendingIntent {
-        val intent = Intent(
-            // TODO activity for the alert dialog
-        ).apply {
-            addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-            // TODO pass notificationId and userId, so the receiver can cancel the notification if needed
-        }
-
-        return TaskStackBuilder.create(context)
-            .apply {
-                context.packageManager.getLaunchIntentForPackage(context.packageName)?.let {
-                    addNextIntent(it)
-                }
-            }
-            .addNextIntent(intent)
-            .getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            .let {
-                requireNotNull(it) {
-                    "Received null pending intent. Make sure that PendingIntent.FLAG_NO_CREATE flag is not applied."
-                }
-            }
-    }
+        notification: Notification
+    ): PendingIntent = deeplinkIntentProvider.getActivityPendingIntent(
+        path = NotificationDeeplink.Open.get(notification.userId, notification.notificationId, notification.type),
+        flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
 }
 
 internal fun Product.getSmallIconResId(): Int = when (this) {

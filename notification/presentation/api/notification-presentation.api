@@ -2,10 +2,6 @@ public class hilt_aggregated_deps/_me_proton_core_notification_presentation_deep
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_notification_presentation_receiver_OnDismissNotificationReceiver_GeneratedInjector {
-	public fun <init> ()V
-}
-
 public class hilt_aggregated_deps/_me_proton_core_notification_presentation_ui_NotificationPermissionActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -25,16 +21,32 @@ public final class me/proton/core/notification/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/notification/presentation/NotificationDeeplink {
+	public static final field INSTANCE Lme/proton/core/notification/presentation/NotificationDeeplink;
+}
+
+public final class me/proton/core/notification/presentation/NotificationDeeplink$Delete {
+	public static final field Deeplink Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/notification/presentation/NotificationDeeplink$Delete;
+	public final fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;)Ljava/lang/String;
+}
+
+public final class me/proton/core/notification/presentation/NotificationDeeplink$Open {
+	public static final field Deeplink Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/notification/presentation/NotificationDeeplink$Open;
+	public final fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/notification/domain/entity/NotificationId;Ljava/lang/String;)Ljava/lang/String;
+}
+
 public final class me/proton/core/notification/presentation/NotificationSetup : androidx/lifecycle/DefaultLifecycleObserver {
 	public final fun invoke ()V
 }
 
 public final class me/proton/core/notification/presentation/NotificationSetup_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/NotificationSetup_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/NotificationSetup_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/notification/presentation/NotificationSetup;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/notification/domain/usecase/ObservePushNotifications;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/notification/presentation/NotificationSetup;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/notification/domain/usecase/ObservePushNotifications;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)Lme/proton/core/notification/presentation/NotificationSetup;
 }
 
 public final class me/proton/core/notification/presentation/deeplink/DeeplinkActivityKt {
@@ -161,30 +173,6 @@ public final class me/proton/core/notification/presentation/internal/HasNotifica
 	public static fun newInstance (Landroid/content/Context;Lme/proton/core/notification/presentation/internal/GetAndroidSdkLevel;)Lme/proton/core/notification/presentation/internal/HasNotificationPermission;
 }
 
-public abstract class me/proton/core/notification/presentation/receiver/Hilt_OnDismissNotificationReceiver : android/content/BroadcastReceiver {
-	public fun <init> ()V
-	protected fun inject (Landroid/content/Context;)V
-	public fun onReceive (Landroid/content/Context;Landroid/content/Intent;)V
-}
-
-public final class me/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver : android/content/BroadcastReceiver {
-	public fun <init> ()V
-	public fun onReceive (Landroid/content/Context;Landroid/content/Intent;)V
-}
-
-public abstract interface class me/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver_GeneratedInjector {
-	public abstract fun injectOnDismissNotificationReceiver (Lme/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver;)V
-}
-
-public final class me/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
-	public synthetic fun injectMembers (Ljava/lang/Object;)V
-	public fun injectMembers (Lme/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver;)V
-	public static fun injectNotificationManager (Lme/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver;Lme/proton/core/notification/domain/ProtonNotificationManager;)V
-	public static fun injectScopeProvider (Lme/proton/core/notification/presentation/receiver/OnDismissNotificationReceiver;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
-}
-
 public abstract class me/proton/core/notification/presentation/ui/Hilt_NotificationPermissionActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
@@ -285,11 +273,11 @@ public final class me/proton/core/notification/presentation/usecase/ShowNotifica
 }
 
 public final class me/proton/core/notification/presentation/usecase/ShowNotificationViewImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/ShowNotificationViewImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/ShowNotificationViewImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/notification/presentation/usecase/ShowNotificationViewImpl;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/notification/domain/usecase/GetNotificationChannelId;Lme/proton/core/notification/presentation/internal/GetNotificationId;Lme/proton/core/notification/presentation/internal/GetNotificationTag;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/domain/entity/Product;)Lme/proton/core/notification/presentation/usecase/ShowNotificationViewImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/notification/domain/usecase/GetNotificationChannelId;Lme/proton/core/notification/presentation/internal/GetNotificationId;Lme/proton/core/notification/presentation/internal/GetNotificationTag;Lme/proton/core/notification/presentation/internal/HasNotificationPermission;Lme/proton/core/notification/presentation/deeplink/DeeplinkIntentProvider;Lme/proton/core/domain/entity/Product;)Lme/proton/core/notification/presentation/usecase/ShowNotificationViewImpl;
 }
 
 public final class me/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel_Factory : dagger/internal/Factory {

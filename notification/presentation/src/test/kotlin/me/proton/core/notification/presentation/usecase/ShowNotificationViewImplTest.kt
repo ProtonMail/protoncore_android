@@ -23,7 +23,6 @@ import android.app.Notification.EXTRA_TEXT
 import android.app.Notification.EXTRA_TITLE
 import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.PackageManager
 import androidx.core.graphics.drawable.IconCompat
 import androidx.test.core.app.ApplicationProvider
 import io.mockk.MockKAnnotations
@@ -43,6 +42,7 @@ import me.proton.core.notification.presentation.internal.GetNotificationId
 import me.proton.core.notification.presentation.internal.GetNotificationTag
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
+import me.proton.core.notification.presentation.deeplink.DeeplinkIntentProvider
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
@@ -67,6 +67,9 @@ class ShowNotificationViewImplTest {
 
     @MockK
     private lateinit var hasNotificationPermission: HasNotificationPermission
+
+    @MockK(relaxed = true)
+    private lateinit var deeplinkIntentProvider: DeeplinkIntentProvider
 
     private lateinit var tested: ShowNotificationViewImpl
 
@@ -136,13 +139,10 @@ class ShowNotificationViewImplTest {
             )
         )
 
-        val packageManager = spyk<PackageManager>()
         val contextSpy = spyk(context)
         val notificationManager =
             shadowOf(context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
 
-        every { contextSpy.packageManager } returns packageManager
-        every { packageManager.getLaunchIntentForPackage(any()) } returns mockk(relaxed = true)
         every { IconCompat.createWithResource(any(), any()) } returns mockk(relaxed = true)
 
         makeTested(context = contextSpy)
@@ -158,6 +158,8 @@ class ShowNotificationViewImplTest {
         // THEN
         verify { getNotificationId(any<Notification>()) }
         verify { getNotificationTag(notification) }
+        verify { deeplinkIntentProvider.getActivityPendingIntent(any(), any(), any()) }
+        verify { deeplinkIntentProvider.getBroadcastPendingIntent(any(), any(), any()) }
 
         val result = notificationManager.getNotification("notification-tag", 1)
         assertEquals("title", result.extras.getString(EXTRA_TITLE))
@@ -172,6 +174,7 @@ class ShowNotificationViewImplTest {
             getNotificationId,
             getNotificationTag,
             hasNotificationPermission,
+            deeplinkIntentProvider,
             product
         )
     }

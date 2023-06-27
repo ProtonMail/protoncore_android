@@ -57,6 +57,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
+import me.proton.core.notification.presentation.deeplink.DeeplinkManager
+import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
@@ -71,6 +73,9 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
     @Inject
     lateinit var coreExampleRepository: CoreExampleRepository
+
+    @Inject
+    lateinit var deeplinkManager: DeeplinkManager
 
     private val accountViewModel: AccountViewModel by viewModels()
     private val reportsViewModel: ReportsViewModel by viewModels()
@@ -91,6 +96,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             accountViewModel.state.value !is AccountViewModel.State.AccountList
         }
         super.onCreate(savedInstanceState)
+        deeplinkManager.onActivityCreate(this, savedInstanceState)
 
         accountViewModel.register(this)
         reportsViewModel.register(this)

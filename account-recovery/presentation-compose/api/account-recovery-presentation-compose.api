@@ -10,6 +10,25 @@ public class hilt_aggregated_deps/_me_proton_core_accountrecovery_presentation_c
 	public fun <init> ()V
 }
 
+public final class me/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup {
+	public static final field $stable I
+	public static final field Companion Lme/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup$Companion;
+	public static final field type Ljava/lang/String;
+	public final fun invoke ()V
+}
+
+public final class me/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup$Companion {
+	public final fun getDeeplink ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup;
+	public static fun newInstance (Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)Lme/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup;
+}
+
 public final class me/proton/core/accountrecovery/presentation/compose/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z

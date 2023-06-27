@@ -32,7 +32,7 @@ public final class me/proton/core/accountmanager/data/AccountMigratorImpl : me/p
 }
 
 public final class me/proton/core/accountmanager/data/AccountStateHandler {
-	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;Lme/proton/core/notification/presentation/NotificationSetup;Lme/proton/core/domain/entity/Product;)V
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;Lme/proton/core/notification/presentation/NotificationSetup;Lme/proton/core/accountrecovery/presentation/compose/AccountRecoveryNotificationSetup;Lme/proton/core/domain/entity/Product;)V
 	public final fun start ()V
 }
 

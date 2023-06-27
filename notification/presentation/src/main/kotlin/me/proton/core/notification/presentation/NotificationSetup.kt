@@ -28,9 +28,13 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onAccountState
+import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
+import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
+import me.proton.core.notification.presentation.deeplink.DeeplinkContext
+import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.notification.presentation.ui.NotificationPermissionActivity
 import me.proton.core.presentation.app.ActivityProvider
@@ -39,6 +43,7 @@ import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 public class NotificationSetup @Inject internal constructor(
     private val accountManager: AccountManager,
     private val activityProvider: ActivityProvider,
@@ -47,10 +52,14 @@ public class NotificationSetup @Inject internal constructor(
     private val isNotificationsEnabled: IsNotificationsEnabled,
     private val notificationManager: ProtonNotificationManager,
     private val observePushNotifications: ObservePushNotifications,
-    private val scopeProvider: CoroutineScopeProvider
+    private val scopeProvider: CoroutineScopeProvider,
+    private val deeplinkManager: DeeplinkManager
 ) : DefaultLifecycleObserver {
+
     public operator fun invoke() {
         if (!isNotificationsEnabled()) return
+
+        setupDeeplink()
 
         accountManager.onAccountState(AccountState.Ready).onEach { account ->
             observePushNotifications(account.userId)
@@ -83,5 +92,19 @@ public class NotificationSetup @Inject internal constructor(
     private fun startNotificationPermissionActivity() {
         val activity = activityProvider.lastResumed ?: return
         activity.startActivity(NotificationPermissionActivity(activity))
+    }
+
+    private fun setupDeeplink() {
+        deeplinkManager.register(NotificationDeeplink.Delete.Deeplink) { onNotificationConsumed(it) }
+        deeplinkManager.register(NotificationDeeplink.Open.Deeplink) { onNotificationConsumed(it) }
+    }
+
+    private fun onNotificationConsumed(link: DeeplinkContext): Boolean {
+        val userId = UserId(link.args[0])
+        val notificationId = NotificationId(link.args[1])
+        scopeProvider.GlobalDefaultSupervisedScope.launch {
+            notificationManager.onNotificationConsumed(notificationId, userId)
+        }
+        return true
     }
 }

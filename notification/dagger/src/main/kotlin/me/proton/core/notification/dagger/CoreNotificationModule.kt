@@ -35,6 +35,8 @@ import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.domain.usecase.ReplaceNotificationViews
 import me.proton.core.notification.domain.usecase.ShowNotificationView
+import me.proton.core.notification.presentation.deeplink.DeeplinkIntentProvider
+import me.proton.core.notification.presentation.deeplink.DeeplinkIntentProviderImpl
 import me.proton.core.notification.presentation.usecase.CancelNotificationViewImpl
 import me.proton.core.notification.presentation.usecase.ConfigureNotificationChannelImpl
 import me.proton.core.notification.presentation.usecase.GetNotificationChannelIdImpl
@@ -85,4 +87,11 @@ public interface CoreNotificationModule {
 
     @Binds
     public fun bindShowNotification(impl: ShowNotificationViewImpl): ShowNotificationView
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CoreNotificationDeeplinkModule {
+    @Binds
+    public fun bindDeeplinkIntentProvider(impl: DeeplinkIntentProviderImpl): DeeplinkIntentProvider
 }

@@ -66,7 +66,7 @@ public class DeeplinkManager @Inject constructor() {
      *
      *     override fun onCreate(savedInstanceState: Bundle?) {
      *         super.onCreate(savedInstanceState)
-     *         addOnNewIntentListener { deeplinkManager.handle(intent = it, context = context) }
+     *         addOnNewIntentListener { deeplinkManager.handle(intent = it, context = this) }
      *         ...
      *     }
      *     ...

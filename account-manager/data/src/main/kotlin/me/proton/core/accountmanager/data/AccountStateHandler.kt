@@ -26,6 +26,7 @@ import me.proton.core.accountmanager.data.job.onInvalidUserKey
 import me.proton.core.accountmanager.data.job.onMigrationNeeded
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
+import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup
 import me.proton.core.domain.entity.Product
 import me.proton.core.notification.presentation.NotificationSetup
 import me.proton.core.user.domain.UserManager
@@ -43,6 +44,7 @@ class AccountStateHandler @Inject constructor(
     private val accountRepository: AccountRepository,
     private val accountMigrator: AccountMigrator,
     private val notificationSetup: NotificationSetup,
+    private val accountRecoveryNotificationSetup: AccountRecoveryNotificationSetup,
     private val product: Product,
 ) {
     fun start() {
@@ -64,6 +66,7 @@ class AccountStateHandler @Inject constructor(
         }
 
         notificationSetup()
+        accountRecoveryNotificationSetup()
     }
 }
 

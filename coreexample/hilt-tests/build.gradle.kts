@@ -75,6 +75,7 @@ dependencies {
 
         project(Module.account),
         project(Module.accountManager),
+        project(Module.accountRecovery),
         project(Module.androidUtilDagger),
         project(Module.auth),
         project(Module.authTest),

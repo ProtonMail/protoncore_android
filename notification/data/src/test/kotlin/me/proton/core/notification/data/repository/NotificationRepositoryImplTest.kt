@@ -22,9 +22,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.notification.data.local.NotificationLocalDataSourceImpl
 import me.proton.core.notification.data.repository.testing.TestDatabase
@@ -34,7 +31,6 @@ import me.proton.core.notification.data.repository.testing.testNotification2
 import me.proton.core.notification.data.repository.testing.testNotification3
 import me.proton.core.notification.data.repository.testing.testUserId
 import me.proton.core.notification.domain.repository.NotificationLocalDataSource
-import me.proton.core.notification.domain.repository.NotificationRemoteDataSource
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
