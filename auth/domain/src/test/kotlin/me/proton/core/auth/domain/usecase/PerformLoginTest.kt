@@ -77,7 +77,7 @@ class PerformLoginTest {
         tested.invoke(
             username = "test-username",
             password = "encrypted-test-password",
-            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus()) }
+            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus(), SignupLoginTotal.Type.internal) }
         )
 
         // THEN

@@ -195,7 +195,7 @@ internal class SignupViewModel @Inject constructor(
             username = username, password = encryptedPassword,
             recoveryEmail = recoveryEmail, recoveryPhone = recoveryPhone,
             referrer = null, type = currentAccountType.createUserType(), domain = domain,
-            metricData = { SignupAccountCreationTotal(it) }
+            metricData = { SignupAccountCreationTotal(it, SignupAccountCreationTotal.Type.proton) }
         )
         emit(State.CreateUserSuccess(result.id, username, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {
@@ -208,7 +208,7 @@ internal class SignupViewModel @Inject constructor(
             email = externalEmail,
             password = encryptedPassword,
             referrer = null,
-            metricData = { SignupAccountCreationTotal(it) }
+            metricData = { SignupAccountCreationTotal(it, SignupAccountCreationTotal.Type.external) }
         )
         emit(State.CreateUserSuccess(userId.id, externalEmail, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {

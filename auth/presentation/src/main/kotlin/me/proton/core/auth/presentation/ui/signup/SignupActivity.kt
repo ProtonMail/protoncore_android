@@ -53,6 +53,7 @@ import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.observability.domain.metrics.toObservabilityAccountType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput
@@ -212,7 +213,12 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             state.password,
             signUpViewModel.currentAccountType,
             billingDetails,
-            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus()) },
+            loginMetricData = {
+                SignupLoginTotal(
+                    it.toHttpApiStatus(),
+                    signUpViewModel.currentAccountType.toObservabilityAccountType()
+                )
+            },
             unlockUserMetricData = { SignupUnlockUserTotalV1(it.toUnlockUserStatus()) },
             userCheckMetricData = { SignupUserCheckTotalV1(it.toUserCheckStatus()) }
         )

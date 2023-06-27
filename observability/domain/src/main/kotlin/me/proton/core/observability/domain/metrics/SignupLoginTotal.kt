@@ -21,16 +21,39 @@ package me.proton.core.observability.domain.metrics
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
 @Schema(description = "Logging in just after the signup.")
-@SchemaId("https://proton.me/android_core_signup_login_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_signup_login_total_v3.schema.json")
 public data class SignupLoginTotal(
-    override val Labels: HttpStatusLabels,
+    override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
-    public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
+    public constructor(status: HttpApiStatus, type: Type) : this(LabelsData(status, type))
+
+    @Serializable
+    public data class LabelsData constructor(
+        @get:Schema(required = true)
+        val status: HttpApiStatus,
+
+        @get:Schema(required = true)
+        val accountType: Type
+    )
+
+    @Suppress("EnumEntryName", "EnumNaming")
+    public enum class Type {
+        internal,
+        external,
+        username
+    }
 }
+
+public fun AccountType.toObservabilityAccountType(): SignupLoginTotal.Type = when (this) {
+    AccountType.Internal -> SignupLoginTotal.Type.internal
+    AccountType.Username -> SignupLoginTotal.Type.username
+    AccountType.External -> SignupLoginTotal.Type.external
+}
+

@@ -31,20 +31,29 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Account creation.")
-@SchemaId("https://proton.me/android_core_signup_accountCreation_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_signup_accountCreation_total_v3.schema.json")
 public data class SignupAccountCreationTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,
 ) : ObservabilityData() {
-    public constructor(status: ApiStatus) : this(LabelsData(status))
+    public constructor(status: ApiStatus, accountType: Type) : this(LabelsData(status, accountType))
 
-    public constructor(result: Result<*>) : this(result.toApiStatus())
+    public constructor(result: Result<*>, accountType: Type) : this(result.toApiStatus(), accountType)
 
     @Serializable
     public data class LabelsData constructor(
         @get:Schema(required = true)
-        val status: ApiStatus
+        val status: ApiStatus,
+
+        @get:Schema(required = true)
+        val accountType: Type
     )
+
+    @Suppress("EnumEntryName", "EnumNaming")
+    public enum class Type {
+        proton,
+        external
+    }
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
