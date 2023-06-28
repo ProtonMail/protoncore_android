@@ -24,7 +24,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 
 @Suppress("MaxLineLength")
 class FakeSrpCrypto : SrpCrypto {
-    override fun generateSrpProofs(
+    override suspend fun generateSrpProofs(
         username: String,
         password: ByteArray,
         version: Long,
@@ -39,7 +39,7 @@ class FakeSrpCrypto : SrpCrypto {
         )
     }
 
-    override fun calculatePasswordVerifier(
+    override suspend fun calculatePasswordVerifier(
         username: String,
         password: ByteArray,
         modulusId: String,

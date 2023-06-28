@@ -60,6 +60,7 @@ dependencies {
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
         project(Module.androidTest),
+        project(Module.kotlinTest),
         project(Module.gopenpgp),
         `kotlin-test`,
         `mockk-android`,

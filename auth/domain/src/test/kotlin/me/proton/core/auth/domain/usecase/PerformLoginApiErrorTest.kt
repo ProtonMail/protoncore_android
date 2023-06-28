@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,14 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.AuthInfo
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
@@ -87,7 +85,7 @@ class PerformLoginApiErrorTest {
         // GIVEN
         useCase =
             PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig, mockk())
-        every {
+        coEvery {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs
         coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } throws ApiException(
@@ -111,7 +109,7 @@ class PerformLoginApiErrorTest {
         // WHEN
         useCase.invoke(testUsername, testPassword)
         // THEN
-        verify {
+        coVerify {
             srpCrypto.generateSrpProofs(
                 testUsername,
                 testPassword.toByteArray(),
@@ -157,7 +155,7 @@ class PerformLoginApiErrorTest {
                 frames = emptyList()
             )
         }
-        verify(exactly = 1) {
+        coVerify(exactly = 1) {
             srpCrypto.generateSrpProofs(
                 testUsername,
                 testPassword.toByteArray(),

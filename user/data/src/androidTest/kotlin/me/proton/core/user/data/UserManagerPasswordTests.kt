@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -178,7 +178,7 @@ class UserManagerPasswordTests {
         val srpCrypto: SrpCrypto = mockk(relaxed = true)
         val cryptoContext = spyk(cryptoContext)
 
-        every { srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns SrpProofs(
+        coEvery { srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns SrpProofs(
             "clientEphemeral", "clientProof", "expectedServerProof"
         )
         every { cryptoContext.srpCrypto } returns srpCrypto

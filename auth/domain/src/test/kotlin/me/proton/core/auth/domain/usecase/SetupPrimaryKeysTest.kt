@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -351,7 +351,7 @@ class SetupPrimaryKeysTest {
     }
 
     private fun SrpCrypto.mockCalculatePasswordVerifier(email: String) {
-        every {
+        coEvery {
             calculatePasswordVerifier(
                 email,
                 any(),

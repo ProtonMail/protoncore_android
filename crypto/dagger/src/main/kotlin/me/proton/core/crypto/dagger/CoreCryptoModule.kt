@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpChallenge
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.util.kotlin.DispatcherProvider
 import javax.inject.Singleton
 
 @Module
@@ -44,13 +45,14 @@ public object CoreCryptoModule {
     @Provides
     @Singleton
     public fun provideCryptoContext(
-        keyStoreCrypto: KeyStoreCrypto
-    ): CryptoContext =
-        AndroidCryptoContext(keyStoreCrypto)
+        keyStoreCrypto: KeyStoreCrypto,
+        srpCrypto: SrpCrypto
+    ): CryptoContext = AndroidCryptoContext(keyStoreCrypto, srpCrypto = srpCrypto)
 
     @Provides
     @Singleton
-    public fun provideSrpCrypto(): SrpCrypto = GOpenPGPSrpCrypto()
+    public fun provideSrpCrypto(scopeProvider: DispatcherProvider): SrpCrypto =
+        GOpenPGPSrpCrypto(scopeProvider)
 
     @Provides
     @Singleton

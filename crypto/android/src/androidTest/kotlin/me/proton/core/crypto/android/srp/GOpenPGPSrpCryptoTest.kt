@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,18 @@ package me.proton.core.crypto.android.srp
 
 import android.util.Base64
 import com.proton.gopenpgp.srp.Srp
+import me.proton.core.test.kotlin.CoroutinesTest
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-internal class GOpenPGPSrpCryptoTest {
+internal class GOpenPGPSrpCryptoTest : CoroutinesTest by CoroutinesTest() {
 
     private fun ByteArray.encodeBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
     private fun String.decodeBase64(): ByteArray = Base64.decode(this, Base64.NO_WRAP)
 
-    private val crypto = GOpenPGPSrpCrypto(
-        saltGenerator = { Base64.decode(testSalt, Base64.DEFAULT) }
-    )
+    private lateinit var crypto: GOpenPGPSrpCrypto
 
     private val testModulusId = "modulusId"
 
@@ -59,8 +59,16 @@ internal class GOpenPGPSrpCryptoTest {
 
     private val testUsername = "username"
 
+    @Before
+    fun setUp() {
+        crypto = GOpenPGPSrpCrypto(
+            dispatcherProvider = dispatchers,
+            saltGenerator = { Base64.decode(testSalt, Base64.DEFAULT) }
+        )
+    }
+
     @Test
-    fun verifierGenerationTest() {
+    fun verifierGenerationTest() = coroutinesTest {
         // GIVEN
         val expectedVersion = 4
         // WHEN
@@ -78,7 +86,7 @@ internal class GOpenPGPSrpCryptoTest {
     }
 
     @Test
-    fun proofGenerationTest() {
+    fun proofGenerationTest() = coroutinesTest {
         // GIVEN
         val server = Srp.newServerFromSigned(
             testModulusClearSign,

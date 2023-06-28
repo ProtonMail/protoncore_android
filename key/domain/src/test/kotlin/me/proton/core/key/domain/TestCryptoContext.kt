@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -548,7 +548,7 @@ open class TestCryptoContext : CryptoContext {
     override val pgpCrypto = TestPGPCrypto()
 
     override val srpCrypto = object : SrpCrypto {
-        override fun generateSrpProofs(
+        override suspend fun generateSrpProofs(
             username: String,
             password: ByteArray,
             version: Long,
@@ -557,7 +557,7 @@ open class TestCryptoContext : CryptoContext {
             serverEphemeral: String
         ): SrpProofs = SrpProofs(mockk(), mockk(), mockk())
 
-        override fun calculatePasswordVerifier(
+        override suspend fun calculatePasswordVerifier(
             username: String,
             password: ByteArray,
             modulusId: String,

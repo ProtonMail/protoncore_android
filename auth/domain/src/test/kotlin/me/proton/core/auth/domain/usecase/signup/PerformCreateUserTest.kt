@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -82,7 +81,7 @@ class PerformCreateUserTest {
             signupChallengeConfig,
             mockk()
         )
-        every {
+        coEvery {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())
         } returns testAuth
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
@@ -108,7 +107,7 @@ class PerformCreateUserTest {
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
-        verify(exactly = 1) {
+        coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testUsername,
                 password = any(),
@@ -152,7 +151,7 @@ class PerformCreateUserTest {
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
-        verify(exactly = 1) {
+        coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testUsername,
                 password = any(),
@@ -197,7 +196,7 @@ class PerformCreateUserTest {
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
-        verify(exactly = 1) {
+        coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
                 username = testUsername,
                 password = any(),

@@ -62,7 +62,7 @@ class CancelRecoveryTest {
             every { decrypt(any<String>()) } answers { firstArg() }
         }
         every { cryptoContext.srpCrypto } returns mockk {
-            every { generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns mockk()
+            coEvery { generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns mockk()
         }
 
         tested = CancelRecovery(
@@ -106,7 +106,7 @@ class CancelRecoveryTest {
             every { srpSession } returns "srpSession"
         }
         every { cryptoContext.srpCrypto } returns mockk {
-            every { generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns mockk()
+            coEvery { generateSrpProofs(any(), any(), any(), any(), any(), any()) } returns mockk()
         }
         coJustRun {
             accountRecoveryRepository.cancelRecoveryAttempt(

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.util.kotlin.DefaultDispatcherProvider
 
 /**
  * [CryptoContext] for Android platform.
@@ -36,5 +37,5 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 class AndroidCryptoContext(
     override val keyStoreCrypto: KeyStoreCrypto = AndroidKeyStoreCrypto.default,
     override val pgpCrypto: PGPCrypto = GOpenPGPCrypto(),
-    override val srpCrypto: SrpCrypto = GOpenPGPSrpCrypto()
+    override val srpCrypto: SrpCrypto = GOpenPGPSrpCrypto(DefaultDispatcherProvider())
 ) : CryptoContext

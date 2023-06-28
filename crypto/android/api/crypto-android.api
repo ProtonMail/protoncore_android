@@ -129,11 +129,10 @@ public final class me/proton/core/crypto/android/srp/GOpenPGPSrpChallenge : me/p
 public final class me/proton/core/crypto/android/srp/GOpenPGPSrpCrypto : me/proton/core/crypto/common/srp/SrpCrypto {
 	public static final field Companion Lme/proton/core/crypto/android/srp/GOpenPGPSrpCrypto$Companion;
 	public static final field SRP_BIT_LENGTH I
-	public fun <init> ()V
-	public fun <init> (Lkotlin/jvm/functions/Function0;)V
-	public synthetic fun <init> (Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun calculatePasswordVerifier (Ljava/lang/String;[BLjava/lang/String;Ljava/lang/String;)Lme/proton/core/crypto/common/srp/Auth;
-	public fun generateSrpProofs (Ljava/lang/String;[BJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/crypto/common/srp/SrpProofs;
+	public fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;Lkotlin/jvm/functions/Function0;)V
+	public synthetic fun <init> (Lme/proton/core/util/kotlin/DispatcherProvider;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun calculatePasswordVerifier (Ljava/lang/String;[BLjava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun generateSrpProofs (Ljava/lang/String;[BJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/crypto/android/srp/GOpenPGPSrpCrypto$Companion {
