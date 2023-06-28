@@ -47,7 +47,6 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.AccountRecoveryCancellationTotal
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
-import me.proton.core.observability.domain.metrics.toApiStatus
 import me.proton.core.presentation.utils.StringBox
 import me.proton.core.user.domain.entity.UserRecovery.State.Cancelled
 import me.proton.core.user.domain.entity.UserRecovery.State.Expired
@@ -143,7 +142,7 @@ class AccountRecoveryViewModel @Inject constructor(
     }
 
     fun startAccountRecoveryCancel(password: String) = viewModelScope.launchWithResultContext {
-        onResultEnqueue("account_recovery.cancellation") { AccountRecoveryCancellationTotal(toApiStatus()) }
+        onResultEnqueue("account_recovery.cancellation") { AccountRecoveryCancellationTotal(this) }
 
         cancellationFlow.update { CancellationState(processing = true) }
         cancellationFlow.value = when {

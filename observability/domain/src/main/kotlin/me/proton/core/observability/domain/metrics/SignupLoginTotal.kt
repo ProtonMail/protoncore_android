@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@ package me.proton.core.observability.domain.metrics
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.observability.domain.entity.SchemaId
+import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 
 @Serializable
@@ -32,7 +32,7 @@ public data class SignupLoginTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
-    public constructor(status: HttpApiStatus, type: Type) : this(LabelsData(status, type))
+    public constructor(status: HttpApiStatus, type: AccountTypeLabels) : this(LabelsData(status, type))
 
     @Serializable
     public data class LabelsData constructor(
@@ -40,20 +40,6 @@ public data class SignupLoginTotal(
         val status: HttpApiStatus,
 
         @get:Schema(required = true)
-        val accountType: Type
+        val accountType: AccountTypeLabels
     )
-
-    @Suppress("EnumEntryName", "EnumNaming")
-    public enum class Type {
-        internal,
-        external,
-        username
-    }
 }
-
-public fun AccountType.toObservabilityAccountType(): SignupLoginTotal.Type = when (this) {
-    AccountType.Internal -> SignupLoginTotal.Type.internal
-    AccountType.Username -> SignupLoginTotal.Type.username
-    AccountType.External -> SignupLoginTotal.Type.external
-}
-

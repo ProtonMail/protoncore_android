@@ -31,6 +31,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
@@ -61,6 +62,7 @@ class PerformCreateExternalEmailUserTest {
         salt = "test-salt",
         verifier = "test-verifier"
     )
+    private val testUserId = UserId("user_id")
 
     // endregion
     private val signupChallengeConfig = SignupChallengeConfig()
@@ -75,8 +77,7 @@ class PerformCreateExternalEmailUserTest {
             srpCrypto,
             keyStoreCrypto,
             challengeManager,
-            signupChallengeConfig,
-            mockk()
+            signupChallengeConfig
         )
         coEvery {
             srpCrypto.calculatePasswordVerifier(testEmail, any(), any(), any())
@@ -88,17 +89,21 @@ class PerformCreateExternalEmailUserTest {
 
         coEvery {
             userRepository.createExternalEmailUser(any(), any(), any(), any(), any(), any())
-        } returns mockk(relaxed = true)
+        } returns mockk {
+            every { userId } returns testUserId
+        }
     }
 
     @Test
     fun `create external user success`() = runTest {
+        // WHEN
         useCase.invoke(
             testEmail,
             keyStoreCrypto.encrypt(testPassword),
             referrer = null
         )
 
+        // THEN
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
         coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(

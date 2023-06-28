@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,9 +48,12 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
+import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
+import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
 import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
@@ -58,6 +61,7 @@ import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.catchWhen
+import me.proton.core.util.kotlin.coroutine.withResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,10 +75,10 @@ internal class SignupViewModel @Inject constructor(
     private val performLogin: PerformLogin,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
-    private val observabilityManager: ObservabilityManager,
+    override val manager: ObservabilityManager,
     private val canUpgradeToPaid: CanUpgradeToPaid,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : ViewModel(), ObservabilityContext {
 
     private val _state by savedStateHandle.flowState(
         mutableSharedFlow = MutableSharedFlow<State>(replay = 1).apply { tryEmit(State.Idle) },
@@ -119,7 +123,7 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun onScreenView(screenId: SignupScreenViewTotalV1.ScreenId) {
-        observabilityManager.enqueue(SignupScreenViewTotalV1(screenId))
+        enqueue(SignupScreenViewTotalV1(screenId))
     }
 
     private fun setExternalRecoveryEmail(recoveryMethod: RecoveryMethod?) {
@@ -157,7 +161,7 @@ internal class SignupViewModel @Inject constructor(
             AccountType.Internal -> {
                 val username = requireNotNull(username) { "Username is not set." }
                 val password = requireNotNull(_password) { "Password is not set (initialized)." }
-                emitAll(createUser(username, password, domain))
+                emitAll(createUser(username, password, domain, currentAccountType))
             }
             AccountType.External -> {
                 val email = requireNotNull(externalEmail) { "External email is not set." }
@@ -186,17 +190,30 @@ internal class SignupViewModel @Inject constructor(
         _state.tryEmit(State.Idle)
     }
 
-    private fun createUser(username: String, encryptedPassword: EncryptedString, domain: String?) = flow<State> {
+    private fun createUser(
+        username: String,
+        encryptedPassword: EncryptedString,
+        domain: String?,
+        accountType: AccountType
+    ) = flow<State> {
         val destination = _recoveryMethod?.destination
         val type = _recoveryMethod?.type
         val recoveryEmail = destination.takeIf { type == RecoveryMethodType.EMAIL }
         val recoveryPhone = destination.takeIf { type == RecoveryMethodType.SMS }
-        val result = performCreateUser(
-            username = username, password = encryptedPassword,
-            recoveryEmail = recoveryEmail, recoveryPhone = recoveryPhone,
-            referrer = null, type = currentAccountType.createUserType(), domain = domain,
-            metricData = { SignupAccountCreationTotal(it, SignupAccountCreationTotal.Type.proton) }
-        )
+        val result = withResultContext {
+            onResultEnqueue("createUser") {
+                SignupAccountCreationTotal(this, accountType.toObservabilityAccountType())
+            }
+            performCreateUser(
+                username = username,
+                password = encryptedPassword,
+                recoveryEmail = recoveryEmail,
+                recoveryPhone = recoveryPhone,
+                referrer = null,
+                type = currentAccountType.createUserType(),
+                domain = domain
+            )
+        }
         emit(State.CreateUserSuccess(result.id, username, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {
         val userId = performLogin.invoke(username, encryptedPassword).userId
@@ -204,12 +221,16 @@ internal class SignupViewModel @Inject constructor(
     }
 
     private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) = flow<State> {
-        val userId = performCreateExternalEmailUser(
-            email = externalEmail,
-            password = encryptedPassword,
-            referrer = null,
-            metricData = { SignupAccountCreationTotal(it, SignupAccountCreationTotal.Type.external) }
-        )
+        val userId = withResultContext {
+            onResultEnqueue("createExternalEmailUser") {
+                SignupAccountCreationTotal(this, AccountTypeLabels.external)
+            }
+            performCreateExternalEmailUser(
+                email = externalEmail,
+                password = encryptedPassword,
+                referrer = null
+            )
+        }
         emit(State.CreateUserSuccess(userId.id, externalEmail, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {
         val userId = performLogin.invoke(externalEmail, encryptedPassword).userId

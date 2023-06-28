@@ -31,6 +31,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
@@ -63,6 +64,7 @@ class PerformCreateUserTest {
         salt = "test-salt",
         verifier = "test-verifier"
     )
+    private val testUserId = UserId("user_id")
 
     // endregion
 
@@ -78,8 +80,7 @@ class PerformCreateUserTest {
             srpCrypto,
             keyStoreCrypto,
             challengeManager,
-            signupChallengeConfig,
-            mockk()
+            signupChallengeConfig
         )
         coEvery {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())
@@ -90,12 +91,17 @@ class PerformCreateUserTest {
         coEvery { authRepository.randomModulus(null) } returns testModulus
         coEvery {
             userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
-        } returns mockk(relaxed = true)
+        } returns mockk {
+            every { userId } returns testUserId
+        }
     }
 
     @Test
     fun `create user no recovery success`() = runTest {
+        // GIVEN
         coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
+
+        // WHEN
         useCase.invoke(
             testUsername,
             domain = "proton.me",
@@ -106,6 +112,7 @@ class PerformCreateUserTest {
             type = CreateUserType.Normal,
         )
 
+        // THEN
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
         coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
@@ -139,7 +146,10 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user email recovery success`() = runTest {
+        // GIVEN
         coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
+
+        // WHEN
         useCase.invoke(
             testUsername,
             domain = "proton.me",
@@ -150,6 +160,7 @@ class PerformCreateUserTest {
             type = CreateUserType.Normal,
         )
 
+        // THEN
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
         coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
@@ -184,7 +195,10 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user phone recovery success`() = runTest {
+        // GIVEN
         coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
+
+        // WHEN
         useCase.invoke(
             testUsername,
             domain = "proton.me",
@@ -195,6 +209,7 @@ class PerformCreateUserTest {
             type = CreateUserType.Normal,
         )
 
+        // THEN
         coVerify(exactly = 1) { authRepository.randomModulus(null) }
         coVerify(exactly = 1) {
             srpCrypto.calculatePasswordVerifier(
@@ -228,7 +243,7 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `create user phone and email recovery success`() = runTest {
+    fun `create user phone and email recovery failure`() = runTest {
         val throwable = assertFailsWith<IllegalArgumentException> {
             useCase.invoke(
                 testUsername,
@@ -240,9 +255,10 @@ class PerformCreateUserTest {
                 type = CreateUserType.Normal,
             )
         }
+        val expectedMessage = "Recovery Email and Phone could not be set together"
         assertNotNull(throwable)
         assertEquals(
-            "Recovery Email and Phone could not be set together",
+            expectedMessage,
             throwable.message
         )
     }

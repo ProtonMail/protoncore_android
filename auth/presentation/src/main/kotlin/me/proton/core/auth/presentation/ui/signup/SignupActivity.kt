@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
-import me.proton.core.observability.domain.metrics.toObservabilityAccountType
+import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanInput

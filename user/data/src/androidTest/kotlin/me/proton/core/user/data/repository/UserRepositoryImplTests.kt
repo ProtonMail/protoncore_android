@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -53,11 +54,14 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.runTestWithResultContext
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
 import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
+import me.proton.core.user.data.extension.toUser
+import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
@@ -81,8 +85,11 @@ class UserRepositoryImplTests {
             override fun isUsingKeyStore(): Boolean = false
             override fun encrypt(value: String): EncryptedString = value
             override fun decrypt(value: EncryptedString): String = value
-            override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())
-            override fun decrypt(value: EncryptedByteArray): PlainByteArray = PlainByteArray(value.array.copyOf())
+            override fun encrypt(value: PlainByteArray): EncryptedByteArray =
+                EncryptedByteArray(value.array.copyOf())
+
+            override fun decrypt(value: EncryptedByteArray): PlainByteArray =
+                PlainByteArray(value.array.copyOf())
         }
     )
 
@@ -110,14 +117,27 @@ class UserRepositoryImplTests {
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
         coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
-        every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
+        every {
+            apiManagerFactory.create(
+                any(),
+                interfaceClass = UserApi::class
+            )
+        } returns TestApiManager(userApi)
 
         val dispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
         val scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider, context, cryptoContext, product, validateServerProof, scopeProvider)
+        userRepository = UserRepositoryImpl(
+            db,
+            apiProvider,
+            context,
+            cryptoContext,
+            product,
+            validateServerProof,
+            scopeProvider
+        )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
@@ -494,5 +514,86 @@ class UserRepositoryImplTests {
                 "test-srp-session"
             )
         }
+    }
+
+    @Test
+    fun createUser_result() = runTestWithResultContext {
+        // GIVEN
+        coEvery { userApi.createUser(any()) } returns UsersResponse(TestUsers.User1.response)
+
+        // WHEN
+        userRepository.createUser(
+            username = "username",
+            domain = null,
+            password = "encrypted",
+            recoveryEmail = null,
+            recoveryPhone = null,
+            referrer = null,
+            type = CreateUserType.Normal,
+            auth = mockk(relaxed = true),
+            frames = listOf(
+                ChallengeFrameDetails(
+                    "signup",
+                    "username",
+                    listOf(),
+                    0,
+                    listOf(),
+                    listOf(),
+                    listOf()
+                ),
+                ChallengeFrameDetails(
+                    "signup",
+                    "recovery",
+                    listOf(),
+                    0,
+                    listOf(),
+                    listOf(),
+                    listOf()
+                )
+            )
+        )
+
+        // THEN
+        val createUserResult = assertSingleResult("createUser")
+        assertEquals(Result.success(TestUsers.User1.response.toUser()), createUserResult)
+    }
+
+    @Test
+    fun createExternalEmailUser_result() = runTestWithResultContext {
+        // GIVEN
+        coEvery { userApi.createExternalUser(any()) } returns UsersResponse(TestUsers.User1.response)
+
+        // WHEN
+        userRepository.createExternalEmailUser(
+            email = "user@external.test",
+            password = "encrypted",
+            referrer = null,
+            type = CreateUserType.Normal,
+            auth = mockk(relaxed = true),
+            frames = listOf(
+                ChallengeFrameDetails(
+                    "signup",
+                    "username",
+                    listOf(),
+                    0,
+                    listOf(),
+                    listOf(),
+                    listOf()
+                ),
+                ChallengeFrameDetails(
+                    "signup",
+                    "recovery",
+                    listOf(),
+                    0,
+                    listOf(),
+                    listOf(),
+                    listOf()
+                )
+            )
+        )
+
+        // THEN
+        val createUserResult = assertSingleResult("createExternalEmailUser")
+        assertEquals(Result.success(TestUsers.User1.response.toUser()), createUserResult)
     }
 }

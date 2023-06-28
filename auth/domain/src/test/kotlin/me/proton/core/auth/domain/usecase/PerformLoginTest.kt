@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupLoginTotal
+import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import kotlin.test.BeforeTest
@@ -77,7 +78,7 @@ class PerformLoginTest {
         tested.invoke(
             username = "test-username",
             password = "encrypted-test-password",
-            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus(), SignupLoginTotal.Type.internal) }
+            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus(), AccountTypeLabels.internal) }
         )
 
         // THEN

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@ import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -156,19 +157,21 @@ class UserRepositoryImpl @Inject constructor(
         type: CreateUserType,
         auth: Auth,
         frames: List<ChallengeFrameDetails>
-    ): User = provider.get<UserApi>().invoke {
-        val request = CreateUserRequest(
-            username,
-            recoveryEmail,
-            recoveryPhone,
-            referrer,
-            type.value,
-            AuthRequest.from(auth),
-            domain,
-            getUserSignUpFrameMap(frames)
-        )
-        createUser(request).user.toUser()
-    }.valueOrThrow
+    ): User = result("createUser") {
+        provider.get<UserApi>().invoke {
+            val request = CreateUserRequest(
+                username,
+                recoveryEmail,
+                recoveryPhone,
+                referrer,
+                type.value,
+                AuthRequest.from(auth),
+                domain,
+                getUserSignUpFrameMap(frames)
+            )
+            createUser(request).user.toUser()
+        }.valueOrThrow
+    }
 
     /**
      * Create new [User]. Used during signup.
@@ -180,16 +183,18 @@ class UserRepositoryImpl @Inject constructor(
         type: CreateUserType,
         auth: Auth,
         frames: List<ChallengeFrameDetails>
-    ): User = provider.get<UserApi>().invoke {
-        val request = CreateExternalUserRequest(
-            email,
-            referrer,
-            type.value,
-            AuthRequest.from(auth),
-            getUserSignUpFrameMap(frames)
-        )
-        createExternalUser(request).user.toUser()
-    }.valueOrThrow
+    ): User = result("createExternalEmailUser") {
+        provider.get<UserApi>().invoke {
+            val request = CreateExternalUserRequest(
+                email,
+                referrer,
+                type.value,
+                AuthRequest.from(auth),
+                getUserSignUpFrameMap(frames)
+            )
+            createExternalUser(request).user.toUser()
+        }.valueOrThrow
+    }
 
     override suspend fun removeLockedAndPasswordScopes(sessionUserId: SessionUserId): Boolean =
         provider.get<UserApi>(sessionUserId).invoke {

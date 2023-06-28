@@ -34,6 +34,8 @@ public data class AccountRecoveryCancellationTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,
 ) : ObservabilityData() {
+    public constructor(result: Result<*>) : this(result.toApiStatus())
+
     public constructor(status: ApiStatus) : this(LabelsData(status))
 
     @Serializable
@@ -55,7 +57,7 @@ public data class AccountRecoveryCancellationTotal(
     }
 }
 
-public fun <R> Result<R>.toApiStatus(): AccountRecoveryCancellationTotal.ApiStatus = when {
+private fun <R> Result<R>.toApiStatus(): AccountRecoveryCancellationTotal.ApiStatus = when {
     exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.PASSWORD_WRONG) == true ->
         AccountRecoveryCancellationTotal.ApiStatus.wrongPassword
 

@@ -26,11 +26,8 @@ plugins {
 }
 
 protonCoverage {
-    excludes.add {
-        packages("me.proton.core.observability.domain.metrics")
-    }
-    minBranchCoveragePercentage.set(48)
-    minLineCoveragePercentage.set(63)
+    minBranchCoveragePercentage.set(47)
+    minLineCoveragePercentage.set(36)
 }
 
 publishOption.shouldBePublishedAsLib = true

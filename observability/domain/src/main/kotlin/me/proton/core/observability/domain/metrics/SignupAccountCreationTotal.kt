@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -23,9 +23,14 @@ import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.HttpResponseCodes
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_BAD_REQUEST
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_CONFLICT
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNAUTHORIZED
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNPROCESSABLE
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.hasProtonErrorCode
 import me.proton.core.observability.domain.entity.SchemaId
+import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
@@ -36,9 +41,9 @@ public data class SignupAccountCreationTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,
 ) : ObservabilityData() {
-    public constructor(status: ApiStatus, accountType: Type) : this(LabelsData(status, accountType))
+    public constructor(status: ApiStatus, accountType: AccountTypeLabels) : this(LabelsData(status, accountType))
 
-    public constructor(result: Result<*>, accountType: Type) : this(result.toApiStatus(), accountType)
+    public constructor(result: Result<*>, accountType: AccountTypeLabels) : this(result.toApiStatus(), accountType)
 
     @Serializable
     public data class LabelsData constructor(
@@ -46,20 +51,18 @@ public data class SignupAccountCreationTotal(
         val status: ApiStatus,
 
         @get:Schema(required = true)
-        val accountType: Type
+        val accountType: AccountTypeLabels
     )
-
-    @Suppress("EnumEntryName", "EnumNaming")
-    public enum class Type {
-        proton,
-        external
-    }
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
         http2xx,
         http409UsernameConflict,
         http422HvRequired,
+        http400,
+        http401,
+        http409,
+        http422,
         http4xx,
         http5xx,
         connectionError,
@@ -73,20 +76,21 @@ public data class SignupAccountCreationTotal(
 private fun Result<*>.toApiStatus(): SignupAccountCreationTotal.ApiStatus = when {
     isHvRequiredError() -> SignupAccountCreationTotal.ApiStatus.http422HvRequired
     isUsernameConflictError() -> SignupAccountCreationTotal.ApiStatus.http409UsernameConflict
+    isHttpError(HTTP_BAD_REQUEST) -> SignupAccountCreationTotal.ApiStatus.http400
+    isHttpError(HTTP_UNAUTHORIZED) -> SignupAccountCreationTotal.ApiStatus.http401
+    isHttpError(HTTP_CONFLICT) -> SignupAccountCreationTotal.ApiStatus.http409
+    isHttpError(HTTP_UNPROCESSABLE) -> SignupAccountCreationTotal.ApiStatus.http422
     else -> toHttpApiStatus().toAccountCreationApiStatus()
 }
 
-private fun Result<*>.isHvRequiredError(): Boolean =
-    toProtonErrorCode(HttpResponseCodes.HTTP_UNPROCESSABLE) == ResponseCodes.HUMAN_VERIFICATION_REQUIRED
+private fun Result<*>.isHvRequiredError(): Boolean = isHttpError(HTTP_UNPROCESSABLE) &&
+        exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.HUMAN_VERIFICATION_REQUIRED) == true
 
-private fun Result<*>.isUsernameConflictError(): Boolean =
-    toProtonErrorCode(HttpResponseCodes.HTTP_CONFLICT) == ResponseCodes.NOT_ALLOWED
+private fun Result<*>.isUsernameConflictError(): Boolean = isHttpError(HTTP_CONFLICT) &&
+        exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.NOT_ALLOWED) == true
 
-private fun Result<*>.toProtonErrorCode(filterByHttpCode: Int): Int? =
-    ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)
-        ?.takeIf { it.httpCode == filterByHttpCode }
-        ?.proton
-        ?.code
+private fun Result<*>.isHttpError(httpCode: Int): Boolean =
+    ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)?.httpCode == httpCode
 
 private fun HttpApiStatus.toAccountCreationApiStatus(): SignupAccountCreationTotal.ApiStatus =
     when (this) {

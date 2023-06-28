@@ -79,6 +79,7 @@ public abstract interface annotation class me/proton/core/observability/domain/e
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -153,10 +154,6 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotalKt {
-	public static final fun toApiStatus (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
@@ -1904,8 +1901,8 @@ public final class me/proton/core/observability/domain/metrics/SessionRefreshTok
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/Object;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;)V
+	public fun <init> (Ljava/lang/Object;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;
@@ -1936,7 +1933,11 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus : java/lang/Enum {
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
+	public static final field http400 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
+	public static final field http401 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
+	public static final field http409 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http409UsernameConflict Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
+	public static final field http422 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http422HvRequired Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
@@ -1954,14 +1955,14 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;)V
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
-	public final fun component2 ()Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;
+	public final fun component2 ()Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAccountType ()Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;
+	public final fun getAccountType ()Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1982,13 +1983,6 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type : java/lang/Enum {
-	public static final field external Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;
-	public static final field proton Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Type;
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
@@ -2066,7 +2060,7 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal 
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;
 	public final fun component2 ()J
 	public final fun copy (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;J)Lme/proton/core/observability/domain/metrics/SignupLoginTotal;
@@ -2098,14 +2092,14 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;)V
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
-	public final fun component2 ()Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;
+	public final fun component2 ()Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAccountType ()Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
+	public final fun getAccountType ()Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2126,18 +2120,6 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$Type : java/lang/Enum {
-	public static final field external Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
-	public static final field internal Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
-	public static final field username Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
-}
-
-public final class me/proton/core/observability/domain/metrics/SignupLoginTotalKt {
-	public static final fun toObservabilityAccountType (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Type;
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
@@ -2319,6 +2301,18 @@ public final class me/proton/core/observability/domain/metrics/SignupUsernameAva
 
 public final class me/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/AccountTypeLabels : java/lang/Enum {
+	public static final field external Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+	public static final field internal Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+	public static final field username Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/AccountTypeLabelsKt {
+	public static final fun toObservabilityAccountType (Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;
 }
 
 public final class me/proton/core/observability/domain/metrics/common/EmptyStatusLabels {

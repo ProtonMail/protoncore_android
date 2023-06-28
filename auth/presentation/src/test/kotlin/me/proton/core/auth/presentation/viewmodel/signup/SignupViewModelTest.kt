@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -162,8 +163,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 srpCrypto,
                 keyStoreCrypto,
                 challengeManager,
-                signupChallengeConfig,
-                observabilityManager
+                signupChallengeConfig
             )
         )
 
@@ -174,8 +174,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 srpCrypto,
                 keyStoreCrypto,
                 challengeManager,
-                signupChallengeConfig,
-                observabilityManager
+                signupChallengeConfig
             )
         )
 
@@ -247,8 +246,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = null,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
         }
@@ -284,8 +282,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = null,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
         }
@@ -321,8 +318,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = null,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
         }
@@ -359,8 +355,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = testPhone,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
         }
@@ -397,8 +392,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = testPhone,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
         }
@@ -449,8 +443,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = null,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
         }
@@ -476,8 +469,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
-                    referrer = null,
-                    metricData = any()
+                    referrer = null
                 )
             }
         }
@@ -523,8 +515,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
-                    referrer = null,
-                    metricData = any()
+                    referrer = null
                 )
             }
         }
@@ -572,8 +563,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     recoveryPhone = null,
                     referrer = null,
                     type = CreateUserType.Normal,
-                    domain = any(),
-                    metricData = any()
+                    domain = any()
                 )
             }
 
@@ -621,8 +611,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
-                    referrer = null,
-                    metricData = any()
+                    referrer = null
                 )
             }
 
@@ -650,7 +639,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 auth = any(),
                 frames = any()
             )
-        } returns testUser
+        } coAnswers {
+            result("createUser") { testUser }
+        }
 
         viewModel.currentAccountType = AccountType.Internal
         viewModel.username = testUsername
@@ -672,18 +663,17 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     fun `observability data for external accounts`() = coroutinesTest {
         // GIVEN
         coEvery {
-            userRepository.createUser(
-                username = testUsername,
-                domain = any(),
+            userRepository.createExternalEmailUser(
+                email = testEmail,
                 password = any(),
-                recoveryEmail = any(),
-                recoveryPhone = any(),
                 referrer = any(),
                 type = any(),
                 auth = any(),
                 frames = any()
             )
-        } returns testUser
+        } coAnswers {
+            result("createExternalEmailUser") { testUser }
+        }
 
         viewModel.currentAccountType = AccountType.External
         viewModel.externalEmail = testEmail
