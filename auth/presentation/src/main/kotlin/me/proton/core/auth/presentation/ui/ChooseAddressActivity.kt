@@ -88,7 +88,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(
             subtitleText.text = String.format(
                 getString(R.string.auth_create_address_subtitle),
                 input.recoveryEmail,
-                input.recoveryEmail
+                input.recoveryEmail // TODO: Remove when not used by any translations.
             )
         }
 
