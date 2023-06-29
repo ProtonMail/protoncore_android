@@ -261,7 +261,7 @@ pass-integration-tests:
     FLAKY_TEST_RERUN: "0"
   tags:
     - medium
-  allow_failure: true
+  allow_failure: false
   script:
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
@@ -301,27 +301,30 @@ pass-integration-tests:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 uitest:signup:
+  allow_failure: true
   variables:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.signup"
   extends: .firebase-tests-common
 
 uitest:login-and-hv:
+  allow_failure: true
   variables:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.login,package me.proton.core.test.android.uitests.tests.medium.humanverification"
   extends: .firebase-tests-common
 
 uitest:plans-and-payments:
+  allow_failure: true
   variables:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.plans,package me.proton.core.test.android.uitests.tests.medium.payments"
   extends: .firebase-tests-common
 
 uitest:usersettings:
+  allow_failure: true
   variables:
     TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.usersettings"
   extends: .firebase-tests-common
 
 uitest:mocked-tests:
-  allow_failure: false
   variables:
     APP_APK: "coreexample/build/outputs/apk/mock/debug/coreexample-mock-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/mock/debug/coreexample-mock-debug-androidTest.apk"
