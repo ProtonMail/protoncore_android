@@ -216,4 +216,16 @@ internal class SerializationUtilsTest {
 
         assertEquals(expected, input.deserialize())
     }
+
+    @Serializable
+    data class TwoProperties(val first: String, val second: String)
+
+    @Test
+    fun `deserialize known properties`() = `run only on Java 1_8-242` {
+        val input = "{\"first\":\"1\",\"second\":\"2\",\"third\":\"3\"}"
+
+        val expected = TwoProperties(first = "1", second = "2")
+
+        assertEquals(expected, input.deserialize())
+    }
 }
